@@ -40,7 +40,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  self.window.backgroundColor = [UIColor whiteColor];
+  self.window.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
 
   // Setup Facebook
   _facebook = [[Facebook alloc] initWithAppId:FB_APP_ID];
@@ -48,7 +48,16 @@
   // LoginVC
   _loginViewController = [[LoginViewController alloc] init];
   _loginViewController.delegate = self;
-  [self.window addSubview:_loginViewController.view];
+  
+  // Login if necessary
+  if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
+    if (!_launcherViewcontroller) {
+      _launcherViewcontroller = [[LauncherViewController alloc] init];
+    }
+    [self.window addSubview:_launcherViewcontroller.view];
+  } else {
+    [self.window addSubview:_loginViewController.view];
+  }
   
   [self.window makeKeyAndVisible];
   return YES;
