@@ -20,8 +20,8 @@
 		25CEF8291339F279006F23A7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80C1339F278006F23A7 /* CoreData.framework */; };
 		25CEF8341339F279006F23A7 /* MoogleTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 25CEF8331339F279006F23A7 /* MoogleTests.h */; };
 		25CEF8361339F279006F23A7 /* MoogleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8351339F279006F23A7 /* MoogleTests.m */; };
-		25CEF8831339F6E9006F23A7 /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8801339F6E9006F23A7 /* CoreDataStack.m */; };
-		25CEF8841339F6E9006F23A7 /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8801339F6E9006F23A7 /* CoreDataStack.m */; };
+		25CEF8831339F6E9006F23A7 /* LICoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8801339F6E9006F23A7 /* LICoreDataStack.m */; };
+		25CEF8841339F6E9006F23A7 /* LICoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8801339F6E9006F23A7 /* LICoreDataStack.m */; };
 		25CEF89A1339FB8B006F23A7 /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8891339FB8B006F23A7 /* NSData+Compression.m */; };
 		25CEF89B1339FB8B006F23A7 /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8891339FB8B006F23A7 /* NSData+Compression.m */; };
 		25CEF89C1339FB8B006F23A7 /* NSDate+HumanInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF88B1339FB8B006F23A7 /* NSDate+HumanInterval.m */; };
@@ -122,8 +122,8 @@
 		25CEF8321339F279006F23A7 /* MoogleTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MoogleTests-Prefix.pch"; sourceTree = "<group>"; };
 		25CEF8331339F279006F23A7 /* MoogleTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoogleTests.h; sourceTree = "<group>"; };
 		25CEF8351339F279006F23A7 /* MoogleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoogleTests.m; sourceTree = "<group>"; };
-		25CEF87F1339F6E9006F23A7 /* CoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStack.h; sourceTree = "<group>"; };
-		25CEF8801339F6E9006F23A7 /* CoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStack.m; sourceTree = "<group>"; };
+		25CEF87F1339F6E9006F23A7 /* LICoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; path = LICoreDataStack.h; sourceTree = "<group>"; };
+		25CEF8801339F6E9006F23A7 /* LICoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LICoreDataStack.m; sourceTree = "<group>"; };
 		25CEF8881339FB8B006F23A7 /* NSData+Compression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Compression.h"; sourceTree = "<group>"; };
 		25CEF8891339FB8B006F23A7 /* NSData+Compression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Compression.m"; sourceTree = "<group>"; };
 		25CEF88A1339FB8B006F23A7 /* NSDate+HumanInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+HumanInterval.h"; sourceTree = "<group>"; };
@@ -323,8 +323,8 @@
 		25CEF8481339F5E4006F23A7 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				25CEF87F1339F6E9006F23A7 /* CoreDataStack.h */,
-				25CEF8801339F6E9006F23A7 /* CoreDataStack.m */,
+				25CEF87F1339F6E9006F23A7 /* LICoreDataStack.h */,
+				25CEF8801339F6E9006F23A7 /* LICoreDataStack.m */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -599,7 +599,7 @@
 				25CEF8161339F278006F23A7 /* main.m in Sources */,
 				25CEF8191339F278006F23A7 /* MoogleAppDelegate.m in Sources */,
 				25CEF81F1339F279006F23A7 /* Moogle.xcdatamodeld in Sources */,
-				25CEF8831339F6E9006F23A7 /* CoreDataStack.m in Sources */,
+				25CEF8831339F6E9006F23A7 /* LICoreDataStack.m in Sources */,
 				25CEF89A1339FB8B006F23A7 /* NSData+Compression.m in Sources */,
 				25CEF89C1339FB8B006F23A7 /* NSDate+HumanInterval.m in Sources */,
 				25CEF89E1339FB8B006F23A7 /* NSDate+Util.m in Sources */,
@@ -639,7 +639,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				25CEF8361339F279006F23A7 /* MoogleTests.m in Sources */,
-				25CEF8841339F6E9006F23A7 /* CoreDataStack.m in Sources */,
+				25CEF8841339F6E9006F23A7 /* LICoreDataStack.m in Sources */,
 				25CEF89B1339FB8B006F23A7 /* NSData+Compression.m in Sources */,
 				25CEF89D1339FB8B006F23A7 /* NSDate+HumanInterval.m in Sources */,
 				25CEF89F1339FB8B006F23A7 /* NSDate+Util.m in Sources */,

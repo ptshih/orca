@@ -1,5 +1,5 @@
 //
-//  CoreDataStack.h
+//  LICoreDataStack.h
 //  Moogle
 //
 //  Created by Peter Shih on 2/16/11.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@interface CoreDataStack : NSObject {
+@interface LICoreDataStack : NSObject {
 
 }
 

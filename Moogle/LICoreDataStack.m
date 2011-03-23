@@ -1,25 +1,25 @@
 //
-//  CoreDataStack.m
+//  LICoreDataStack.m
 //  Moogle
 //
 //  Created by Peter Shih on 2/16/11.
 //  Copyright 2011 Seven Minute Apps. All rights reserved.
 //
 
-#import "CoreDataStack.h"
+#import "LICoreDataStack.h"
 
 static NSPersistentStoreCoordinator *_persistentStoreCoordinator = nil;
 static NSManagedObjectModel *_managedObjectModel = nil;
 static NSManagedObjectContext *_managedObjectContext = nil;
 
-@interface CoreDataStack (Private)
+@interface LICoreDataStack (Private)
 
 + (void)resetStoreState;
 + (NSURL *)applicationDocumentsDirectory;
 
 @end
 
-@implementation CoreDataStack
+@implementation LICoreDataStack
 
 #pragma mark Initialization Methods
 + (void)resetPersistentStore {

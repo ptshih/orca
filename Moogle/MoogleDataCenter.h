@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 #import "MoogleObject.h"
 #import "MoogleDataCenterDelegate.h"
 #import "LINetworkOperation.h"
+#import "LINetworkQueue.h"
+#import "LICoreDataStack.h"
 #import "JSON.h"
 
 @interface MoogleDataCenter : MoogleObject <MoogleDataCenterDelegate> {
