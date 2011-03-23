@@ -129,6 +129,10 @@
 		25FB8C11133ABCDD00C130A8 /* FeedDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C10133ABCDA00C130A8 /* FeedDataCenter.m */; };
 		25FB8C12133ABCDD00C130A8 /* FeedDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C10133ABCDA00C130A8 /* FeedDataCenter.m */; };
 		25FB8C15133ABD3200C130A8 /* PodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C14133ABD2300C130A8 /* PodViewController.m */; };
+		25FB8C18133ABE1F00C130A8 /* Pod+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C17133ABE1C00C130A8 /* Pod+Serialize.m */; };
+		25FB8C19133ABE1F00C130A8 /* Pod+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C17133ABE1C00C130A8 /* Pod+Serialize.m */; };
+		25FB8C1C133ABEDC00C130A8 /* Feed+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C1B133ABED700C130A8 /* Feed+Serialize.m */; };
+		25FB8C1D133ABEDC00C130A8 /* Feed+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C1B133ABED700C130A8 /* Feed+Serialize.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -287,6 +291,10 @@
 		25FB8C10133ABCDA00C130A8 /* FeedDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedDataCenter.m; sourceTree = "<group>"; };
 		25FB8C13133ABD1200C130A8 /* PodViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PodViewController.h; sourceTree = "<group>"; };
 		25FB8C14133ABD2300C130A8 /* PodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PodViewController.m; sourceTree = "<group>"; };
+		25FB8C16133ABE1800C130A8 /* Pod+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Pod+Serialize.h"; sourceTree = "<group>"; };
+		25FB8C17133ABE1C00C130A8 /* Pod+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Pod+Serialize.m"; sourceTree = "<group>"; };
+		25FB8C1A133ABED100C130A8 /* Feed+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Feed+Serialize.h"; sourceTree = "<group>"; };
+		25FB8C1B133ABED700C130A8 /* Feed+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Feed+Serialize.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -476,6 +484,10 @@
 				25FB8C08133ABC8000C130A8 /* Pod.m */,
 				25FB8C03133ABC7E00C130A8 /* Feed.h */,
 				25FB8C04133ABC7E00C130A8 /* Feed.m */,
+				25FB8C16133ABE1800C130A8 /* Pod+Serialize.h */,
+				25FB8C17133ABE1C00C130A8 /* Pod+Serialize.m */,
+				25FB8C1A133ABED100C130A8 /* Feed+Serialize.h */,
+				25FB8C1B133ABED700C130A8 /* Feed+Serialize.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -828,6 +840,8 @@
 				25FB8C0D133ABCCB00C130A8 /* PodDataCenter.m in Sources */,
 				25FB8C11133ABCDD00C130A8 /* FeedDataCenter.m in Sources */,
 				25FB8C15133ABD3200C130A8 /* PodViewController.m in Sources */,
+				25FB8C18133ABE1F00C130A8 /* Pod+Serialize.m in Sources */,
+				25FB8C1C133ABEDC00C130A8 /* Feed+Serialize.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -871,6 +885,8 @@
 				25FB8C0A133ABC8100C130A8 /* Pod.m in Sources */,
 				25FB8C0E133ABCCB00C130A8 /* PodDataCenter.m in Sources */,
 				25FB8C12133ABCDD00C130A8 /* FeedDataCenter.m in Sources */,
+				25FB8C19133ABE1F00C130A8 /* Pod+Serialize.m in Sources */,
+				25FB8C1D133ABEDC00C130A8 /* Feed+Serialize.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
