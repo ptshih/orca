@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "MoogleViewController.h"
+#import "LoginDelegate.h"
 #import "FBConnect.h"
 
 @interface LoginViewController : MoogleViewController <FBSessionDelegate> {
   Facebook *_facebook;
+  
+  id <LoginDelegate> _delegate;
 }
+
+@property (nonatomic, assign) id <LoginDelegate> delegate;
 
 @end

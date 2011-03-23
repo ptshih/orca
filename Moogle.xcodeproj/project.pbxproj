@@ -106,6 +106,7 @@
 		25FB8BC6133A137700C130A8 /* logo-white-280@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BC4133A137700C130A8 /* logo-white-280@2x.png */; };
 		25FB8BD0133A1B9500C130A8 /* InitialDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */; };
 		25FB8BD1133A1B9500C130A8 /* InitialDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */; };
+		25FB8BD6133A1EDC00C130A8 /* LauncherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BD5133A1EDA00C130A8 /* LauncherViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -228,6 +229,9 @@
 		25FB8BC3133A137700C130A8 /* logo-white-280.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-white-280.png"; sourceTree = "<group>"; };
 		25FB8BC4133A137700C130A8 /* logo-white-280@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-white-280@2x.png"; sourceTree = "<group>"; };
 		25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InitialDefaults.plist; sourceTree = "<group>"; };
+		25FB8BD3133A1DE400C130A8 /* LoginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginDelegate.h; sourceTree = "<group>"; };
+		25FB8BD4133A1ED900C130A8 /* LauncherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LauncherViewController.h; sourceTree = "<group>"; };
+		25FB8BD5133A1EDA00C130A8 /* LauncherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LauncherViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -301,6 +305,7 @@
 		25CEF80E1339F278006F23A7 /* Moogle */ = {
 			isa = PBXGroup;
 			children = (
+				25FB8BD2133A1DCF00C130A8 /* Delegates */,
 				25FB8B96133A065200C130A8 /* DataCenters */,
 				25CEF8F21339FE27006F23A7 /* Models */,
 				25FB8B8D133A056700C130A8 /* Views */,
@@ -527,6 +532,8 @@
 				25FB8BB0133A0D0800C130A8 /* MoogleViewController.m */,
 				25FB8BB3133A0D3C00C130A8 /* LoginViewController.h */,
 				25FB8BB4133A0D3D00C130A8 /* LoginViewController.m */,
+				25FB8BD4133A1ED900C130A8 /* LauncherViewController.h */,
+				25FB8BD5133A1EDA00C130A8 /* LauncherViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -542,6 +549,14 @@
 				25FB8BBC133A0E0800C130A8 /* btn-white@2x.png */,
 			);
 			name = Buttons;
+			sourceTree = "<group>";
+		};
+		25FB8BD2133A1DCF00C130A8 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				25FB8BD3133A1DE400C130A8 /* LoginDelegate.h */,
+			);
+			name = Delegates;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -698,6 +713,7 @@
 				25FB8B9A133A069E00C130A8 /* MoogleDataCenter.m in Sources */,
 				25FB8BB1133A0D0800C130A8 /* MoogleViewController.m in Sources */,
 				25FB8BB5133A0D3D00C130A8 /* LoginViewController.m in Sources */,
+				25FB8BD6133A1EDC00C130A8 /* LauncherViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

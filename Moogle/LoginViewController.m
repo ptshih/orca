@@ -10,6 +10,8 @@
 
 @implementation LoginViewController
 
+@synthesize delegate = _delegate;
+
 - (id)init {
   self = [super init];
   if (self) {
@@ -59,6 +61,10 @@
   // ignore the expiration since we request non-expiring offline access
   [[NSUserDefaults standardUserDefaults] setObject:_facebook.accessToken forKey:@"facebookAccessToken"];
   [[NSUserDefaults standardUserDefaults] synchronize];
+  
+  if (self.delegate && [self.delegate respondsToSelector:@selector(moogleDidLogin)]) {
+    [self.delegate performSelector:@selector(moogleDidLogin)];
+  }
 }
 
 - (void)fbDidNotLogin:(BOOL)cancelled {

@@ -7,14 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LoginDelegate.h"
 
 @class Facebook;
 @class LoginViewController;
+@class LauncherViewController;
 
-@interface MoogleAppDelegate : NSObject <UIApplicationDelegate> {
+@interface MoogleAppDelegate : NSObject <UIApplicationDelegate, LoginDelegate> {
   UIWindow *_window;
   Facebook *_facebook;
   LoginViewController *_loginViewController;
+  LauncherViewController *_launcherViewcontroller;
 }
 
 @property (nonatomic, retain) UIWindow *window;
@@ -23,5 +26,6 @@
 // Private
 + (void)setupDefaults;
 - (void)saveContext;
+- (void)animateHideLogin;
 
 @end

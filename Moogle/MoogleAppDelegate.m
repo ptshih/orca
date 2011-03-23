@@ -11,6 +11,7 @@
 #import "FBConnect.h"
 #import "LICoreDataStack.h"
 #import "LoginViewController.h"
+#import "LauncherViewController.h"
 
 @implementation MoogleAppDelegate
 
@@ -46,6 +47,7 @@
   
   // LoginVC
   _loginViewController = [[LoginViewController alloc] init];
+  _loginViewController.delegate = self;
   [self.window addSubview:_loginViewController.view];
   
   [self.window makeKeyAndVisible];
@@ -99,8 +101,33 @@
   }
 }
 
+#pragma mark -
+#pragma mark LoginDelegate
+- (void)moogleDidLogin {
+  DLog(@"Moogle Logged In");
+  if (!_launcherViewcontroller) {
+    _launcherViewcontroller = [[LauncherViewController alloc] init];
+  }
+  [self.window insertSubview:_launcherViewcontroller.view atIndex:0];
+  [self animateHideLogin];
+}
+
+#pragma mark -
+#pragma mark Animations
+- (void)animateHideLogin {
+  [UIView beginAnimations:@"HideLogin" context:nil];
+  [UIView setAnimationDelegate:self];
+  [UIView setAnimationBeginsFromCurrentState:YES];
+  [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+  [UIView setAnimationDuration:0.6]; // Fade out is configurable in seconds (FLOAT)
+  [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.window cache:YES];
+  [self.window exchangeSubviewAtIndex:0 withSubviewAtIndex:1];
+  [UIView commitAnimations];
+}
+
 - (void)dealloc {
   RELEASE_SAFELY(_loginViewController);
+  RELEASE_SAFELY(_launcherViewcontroller);
   RELEASE_SAFELY(_facebook);
   RELEASE_SAFELY(_window);
   [super dealloc];
