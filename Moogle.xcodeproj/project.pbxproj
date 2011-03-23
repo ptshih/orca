@@ -89,6 +89,10 @@
 		25FB8B51133A038D00C130A8 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B3F133A038D00C130A8 /* SBJsonWriter.m */; };
 		25FB8B55133A03A100C130A8 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B54133A03A100C130A8 /* Appirater.m */; };
 		25FB8B59133A03AD00C130A8 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B58133A03AD00C130A8 /* EGORefreshTableHeaderView.m */; };
+		25FB8B90133A057900C130A8 /* MoogleImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B8F133A057900C130A8 /* MoogleImageView.m */; };
+		25FB8B91133A057900C130A8 /* MoogleImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B8F133A057900C130A8 /* MoogleImageView.m */; };
+		25FB8B9A133A069E00C130A8 /* MoogleDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B98133A069E00C130A8 /* MoogleDataCenter.m */; };
+		25FB8B9B133A069E00C130A8 /* MoogleDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B98133A069E00C130A8 /* MoogleDataCenter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -193,6 +197,11 @@
 		25FB8B54133A03A100C130A8 /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
 		25FB8B57133A03AD00C130A8 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		25FB8B58133A03AD00C130A8 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
+		25FB8B8E133A057900C130A8 /* MoogleImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleImageView.h; sourceTree = "<group>"; };
+		25FB8B8F133A057900C130A8 /* MoogleImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoogleImageView.m; sourceTree = "<group>"; };
+		25FB8B97133A069E00C130A8 /* MoogleDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleDataCenter.h; sourceTree = "<group>"; };
+		25FB8B98133A069E00C130A8 /* MoogleDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoogleDataCenter.m; sourceTree = "<group>"; };
+		25FB8B99133A069E00C130A8 /* MoogleDataCenterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleDataCenterDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,8 +275,10 @@
 		25CEF80E1339F278006F23A7 /* Moogle */ = {
 			isa = PBXGroup;
 			children = (
-				25FB8B2B133A036600C130A8 /* Vendor */,
+				25FB8B96133A065200C130A8 /* DataCenters */,
 				25CEF8F21339FE27006F23A7 /* Models */,
+				25FB8B8D133A056700C130A8 /* Views */,
+				25FB8B2B133A036600C130A8 /* Vendor */,
 				25CEF8E21339FD3B006F23A7 /* Libraries */,
 				25CEF8871339FB76006F23A7 /* Categories */,
 				25CEF8481339F5E4006F23A7 /* CoreData */,
@@ -346,7 +357,6 @@
 		25CEF8E21339FD3B006F23A7 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				25CEF8E71339FD84006F23A7 /* NetworkStack */,
 				25CEF8E31339FD49006F23A7 /* LocationManager.h */,
 				25CEF8E41339FD49006F23A7 /* LocationManager.m */,
 			);
@@ -408,6 +418,7 @@
 		25FB8B2B133A036600C130A8 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				25CEF8E71339FD84006F23A7 /* NetworkStack */,
 				25FB8B56133A03A600C130A8 /* EGO */,
 				25FB8B52133A039300C130A8 /* Appirater */,
 				25FB8B2C133A036E00C130A8 /* SBJSON */,
@@ -457,6 +468,25 @@
 				25FB8B58133A03AD00C130A8 /* EGORefreshTableHeaderView.m */,
 			);
 			name = EGO;
+			sourceTree = "<group>";
+		};
+		25FB8B8D133A056700C130A8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				25FB8B8E133A057900C130A8 /* MoogleImageView.h */,
+				25FB8B8F133A057900C130A8 /* MoogleImageView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		25FB8B96133A065200C130A8 /* DataCenters */ = {
+			isa = PBXGroup;
+			children = (
+				25FB8B97133A069E00C130A8 /* MoogleDataCenter.h */,
+				25FB8B98133A069E00C130A8 /* MoogleDataCenter.m */,
+				25FB8B99133A069E00C130A8 /* MoogleDataCenterDelegate.h */,
+			);
+			name = DataCenters;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -599,6 +629,8 @@
 				25FB8B50133A038D00C130A8 /* SBJsonWriter.m in Sources */,
 				25FB8B55133A03A100C130A8 /* Appirater.m in Sources */,
 				25FB8B59133A03AD00C130A8 /* EGORefreshTableHeaderView.m in Sources */,
+				25FB8B90133A057900C130A8 /* MoogleImageView.m in Sources */,
+				25FB8B9A133A069E00C130A8 /* MoogleDataCenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,6 +667,8 @@
 				25FB8B4D133A038D00C130A8 /* SBJsonStreamWriterState.m in Sources */,
 				25FB8B4F133A038D00C130A8 /* SBJsonTokeniser.m in Sources */,
 				25FB8B51133A038D00C130A8 /* SBJsonWriter.m in Sources */,
+				25FB8B91133A057900C130A8 /* MoogleImageView.m in Sources */,
+				25FB8B9B133A069E00C130A8 /* MoogleDataCenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
