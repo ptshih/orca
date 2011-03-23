@@ -1,0 +1,426 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		25CEF8071339F278006F23A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8061339F278006F23A7 /* UIKit.framework */; };
+		25CEF8091339F278006F23A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8081339F278006F23A7 /* Foundation.framework */; };
+		25CEF80B1339F278006F23A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80A1339F278006F23A7 /* CoreGraphics.framework */; };
+		25CEF80D1339F278006F23A7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80C1339F278006F23A7 /* CoreData.framework */; };
+		25CEF8161339F278006F23A7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8151339F278006F23A7 /* main.m */; };
+		25CEF8191339F278006F23A7 /* MoogleAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8181339F278006F23A7 /* MoogleAppDelegate.m */; };
+		25CEF81F1339F279006F23A7 /* Moogle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF81D1339F278006F23A7 /* Moogle.xcdatamodeld */; };
+		25CEF8261339F279006F23A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8061339F278006F23A7 /* UIKit.framework */; };
+		25CEF8271339F279006F23A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8081339F278006F23A7 /* Foundation.framework */; };
+		25CEF8281339F279006F23A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80A1339F278006F23A7 /* CoreGraphics.framework */; };
+		25CEF8291339F279006F23A7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80C1339F278006F23A7 /* CoreData.framework */; };
+		25CEF8341339F279006F23A7 /* MoogleTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 25CEF8331339F279006F23A7 /* MoogleTests.h */; };
+		25CEF8361339F279006F23A7 /* MoogleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8351339F279006F23A7 /* MoogleTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		25CEF82A1339F279006F23A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25CEF7F91339F278006F23A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25CEF8011339F278006F23A7;
+			remoteInfo = Moogle;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		25CEF8021339F278006F23A7 /* Moogle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moogle.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		25CEF8061339F278006F23A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		25CEF8081339F278006F23A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		25CEF80A1339F278006F23A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		25CEF80C1339F278006F23A7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		25CEF8101339F278006F23A7 /* Moogle-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Moogle-Info.plist"; sourceTree = "<group>"; };
+		25CEF8141339F278006F23A7 /* Moogle-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Moogle-Prefix.pch"; sourceTree = "<group>"; };
+		25CEF8151339F278006F23A7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		25CEF8171339F278006F23A7 /* MoogleAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoogleAppDelegate.h; sourceTree = "<group>"; };
+		25CEF8181339F278006F23A7 /* MoogleAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoogleAppDelegate.m; sourceTree = "<group>"; };
+		25CEF81E1339F279006F23A7 /* Moogle.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Moogle.xcdatamodel; sourceTree = "<group>"; };
+		25CEF8251339F279006F23A7 /* MoogleTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoogleTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		25CEF82E1339F279006F23A7 /* MoogleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MoogleTests-Info.plist"; sourceTree = "<group>"; };
+		25CEF8321339F279006F23A7 /* MoogleTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MoogleTests-Prefix.pch"; sourceTree = "<group>"; };
+		25CEF8331339F279006F23A7 /* MoogleTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoogleTests.h; sourceTree = "<group>"; };
+		25CEF8351339F279006F23A7 /* MoogleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoogleTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		25CEF7FF1339F278006F23A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25CEF8071339F278006F23A7 /* UIKit.framework in Frameworks */,
+				25CEF8091339F278006F23A7 /* Foundation.framework in Frameworks */,
+				25CEF80B1339F278006F23A7 /* CoreGraphics.framework in Frameworks */,
+				25CEF80D1339F278006F23A7 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25CEF8211339F279006F23A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25CEF8261339F279006F23A7 /* UIKit.framework in Frameworks */,
+				25CEF8271339F279006F23A7 /* Foundation.framework in Frameworks */,
+				25CEF8281339F279006F23A7 /* CoreGraphics.framework in Frameworks */,
+				25CEF8291339F279006F23A7 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		25CEF7F71339F278006F23A7 = {
+			isa = PBXGroup;
+			children = (
+				25CEF80E1339F278006F23A7 /* Moogle */,
+				25CEF82C1339F279006F23A7 /* MoogleTests */,
+				25CEF8051339F278006F23A7 /* Frameworks */,
+				25CEF8031339F278006F23A7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		25CEF8031339F278006F23A7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				25CEF8021339F278006F23A7 /* Moogle.app */,
+				25CEF8251339F279006F23A7 /* MoogleTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		25CEF8051339F278006F23A7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				25CEF8061339F278006F23A7 /* UIKit.framework */,
+				25CEF8081339F278006F23A7 /* Foundation.framework */,
+				25CEF80A1339F278006F23A7 /* CoreGraphics.framework */,
+				25CEF80C1339F278006F23A7 /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		25CEF80E1339F278006F23A7 /* Moogle */ = {
+			isa = PBXGroup;
+			children = (
+				25CEF8171339F278006F23A7 /* MoogleAppDelegate.h */,
+				25CEF8181339F278006F23A7 /* MoogleAppDelegate.m */,
+				25CEF81D1339F278006F23A7 /* Moogle.xcdatamodeld */,
+				25CEF80F1339F278006F23A7 /* Supporting Files */,
+			);
+			path = Moogle;
+			sourceTree = "<group>";
+		};
+		25CEF80F1339F278006F23A7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				25CEF8101339F278006F23A7 /* Moogle-Info.plist */,
+				25CEF8141339F278006F23A7 /* Moogle-Prefix.pch */,
+				25CEF8151339F278006F23A7 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		25CEF82C1339F279006F23A7 /* MoogleTests */ = {
+			isa = PBXGroup;
+			children = (
+				25CEF8331339F279006F23A7 /* MoogleTests.h */,
+				25CEF8351339F279006F23A7 /* MoogleTests.m */,
+				25CEF82D1339F279006F23A7 /* Supporting Files */,
+			);
+			path = MoogleTests;
+			sourceTree = "<group>";
+		};
+		25CEF82D1339F279006F23A7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				25CEF82E1339F279006F23A7 /* MoogleTests-Info.plist */,
+				25CEF8321339F279006F23A7 /* MoogleTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		25CEF8011339F278006F23A7 /* Moogle */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25CEF8391339F279006F23A7 /* Build configuration list for PBXNativeTarget "Moogle" */;
+			buildPhases = (
+				25CEF7FE1339F278006F23A7 /* Sources */,
+				25CEF7FF1339F278006F23A7 /* Frameworks */,
+				25CEF8001339F278006F23A7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Moogle;
+			productName = Moogle;
+			productReference = 25CEF8021339F278006F23A7 /* Moogle.app */;
+			productType = "com.apple.product-type.application";
+		};
+		25CEF8241339F279006F23A7 /* MoogleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25CEF83C1339F279006F23A7 /* Build configuration list for PBXNativeTarget "MoogleTests" */;
+			buildPhases = (
+				25CEF8201339F279006F23A7 /* Sources */,
+				25CEF8211339F279006F23A7 /* Frameworks */,
+				25CEF8221339F279006F23A7 /* Resources */,
+				25CEF8231339F279006F23A7 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				25CEF82B1339F279006F23A7 /* PBXTargetDependency */,
+			);
+			name = MoogleTests;
+			productName = MoogleTests;
+			productReference = 25CEF8251339F279006F23A7 /* MoogleTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		25CEF7F91339F278006F23A7 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 25CEF7FC1339F278006F23A7 /* Build configuration list for PBXProject "Moogle" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 25CEF7F71339F278006F23A7;
+			productRefGroup = 25CEF8031339F278006F23A7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				25CEF8011339F278006F23A7 /* Moogle */,
+				25CEF8241339F279006F23A7 /* MoogleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		25CEF8001339F278006F23A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25CEF8221339F279006F23A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25CEF8341339F279006F23A7 /* MoogleTests.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		25CEF8231339F279006F23A7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		25CEF7FE1339F278006F23A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25CEF8161339F278006F23A7 /* main.m in Sources */,
+				25CEF8191339F278006F23A7 /* MoogleAppDelegate.m in Sources */,
+				25CEF81F1339F279006F23A7 /* Moogle.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25CEF8201339F279006F23A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25CEF8361339F279006F23A7 /* MoogleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		25CEF82B1339F279006F23A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 25CEF8011339F278006F23A7 /* Moogle */;
+			targetProxy = 25CEF82A1339F279006F23A7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		25CEF8371339F279006F23A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		25CEF8381339F279006F23A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		25CEF83A1339F279006F23A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Moogle/Moogle-Prefix.pch";
+				INFOPLIST_FILE = "Moogle/Moogle-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		25CEF83B1339F279006F23A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Moogle/Moogle-Prefix.pch";
+				INFOPLIST_FILE = "Moogle/Moogle-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		25CEF83D1339F279006F23A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Moogle.app/Moogle";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MoogleTests/MoogleTests-Prefix.pch";
+				INFOPLIST_FILE = "MoogleTests/MoogleTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		25CEF83E1339F279006F23A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Moogle.app/Moogle";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MoogleTests/MoogleTests-Prefix.pch";
+				INFOPLIST_FILE = "MoogleTests/MoogleTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		25CEF7FC1339F278006F23A7 /* Build configuration list for PBXProject "Moogle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25CEF8371339F279006F23A7 /* Debug */,
+				25CEF8381339F279006F23A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25CEF8391339F279006F23A7 /* Build configuration list for PBXNativeTarget "Moogle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25CEF83A1339F279006F23A7 /* Debug */,
+				25CEF83B1339F279006F23A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25CEF83C1339F279006F23A7 /* Build configuration list for PBXNativeTarget "MoogleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25CEF83D1339F279006F23A7 /* Debug */,
+				25CEF83E1339F279006F23A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		25CEF81D1339F278006F23A7 /* Moogle.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				25CEF81E1339F279006F23A7 /* Moogle.xcdatamodel */,
+			);
+			currentVersion = 25CEF81E1339F279006F23A7 /* Moogle.xcdatamodel */;
+			path = Moogle.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 25CEF7F91339F278006F23A7 /* Project object */;
+}
