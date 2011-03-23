@@ -7,7 +7,7 @@
 //
 
 #import "LauncherViewController.h"
-#import "FeedViewController.h"
+#import "PodViewController.h"
 #import "MeViewController.h"
 
 @implementation LauncherViewController
@@ -49,13 +49,13 @@
 
 - (void)setupControllers {
   // init the controllers
-  _feedViewController = [[FeedViewController alloc] init];
+  _podViewController = [[PodViewController alloc] init];
   _meViewController = [[MeViewController alloc] init];
-  _feedNavController = [[UINavigationController alloc] initWithRootViewController:_feedViewController];
+  _feedNavController = [[UINavigationController alloc] initWithRootViewController:_podViewController];
   _meNavController = [[UINavigationController alloc] initWithRootViewController:_meViewController];
   
   // Set nav delegates
-  _feedNavController.delegate = _feedViewController;
+  _feedNavController.delegate = _podViewController;
   _meNavController.delegate = _meViewController;
   
   // Add controllers to array
@@ -235,7 +235,7 @@
   RELEASE_SAFELY(_cardScrollView);
   
   // Controllers
-  RELEASE_SAFELY(_feedViewController);
+  RELEASE_SAFELY(_podViewController);
   RELEASE_SAFELY(_meViewController);
   
   // Card State

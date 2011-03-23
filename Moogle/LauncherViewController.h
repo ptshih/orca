@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MoogleViewController.h"
 
-@class FeedViewController;
+@class PodViewController;
 @class MeViewController;
 
 @interface LauncherViewController : MoogleViewController <UIScrollViewDelegate> {
@@ -20,7 +20,7 @@
   UINavigationController *_feedNavController;
   UINavigationController *_meNavController;
   
-  FeedViewController *_feedViewController;
+  PodViewController *_podViewController;
   MeViewController *_meViewController;
   
   // Card State
