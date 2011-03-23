@@ -8,17 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+@class Facebook;
+@class LoginViewController;
+
 @interface MoogleAppDelegate : NSObject <UIApplicationDelegate> {
   UIWindow *_window;
+  Facebook *_facebook;
+  LoginViewController *_loginViewController;
 }
 
 @property (nonatomic, retain) UIWindow *window;
+@property (readonly) Facebook *facebook;
 
-@property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
+// Private
++ (void)setupDefaults;
 - (void)saveContext;
-- (NSURL *)applicationDocumentsDirectory;
 
 @end

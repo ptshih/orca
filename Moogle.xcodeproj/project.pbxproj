@@ -93,6 +93,19 @@
 		25FB8B91133A057900C130A8 /* MoogleImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B8F133A057900C130A8 /* MoogleImageView.m */; };
 		25FB8B9A133A069E00C130A8 /* MoogleDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B98133A069E00C130A8 /* MoogleDataCenter.m */; };
 		25FB8B9B133A069E00C130A8 /* MoogleDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B98133A069E00C130A8 /* MoogleDataCenter.m */; };
+		25FB8BB1133A0D0800C130A8 /* MoogleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BB0133A0D0800C130A8 /* MoogleViewController.m */; };
+		25FB8BB2133A0D0800C130A8 /* MoogleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BB0133A0D0800C130A8 /* MoogleViewController.m */; };
+		25FB8BB5133A0D3D00C130A8 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BB4133A0D3D00C130A8 /* LoginViewController.m */; };
+		25FB8BBD133A0E0800C130A8 /* btn-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BB7133A0E0800C130A8 /* btn-blue.png */; };
+		25FB8BBE133A0E0800C130A8 /* btn-blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BB8133A0E0800C130A8 /* btn-blue@2x.png */; };
+		25FB8BBF133A0E0800C130A8 /* btn-green.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BB9133A0E0800C130A8 /* btn-green.png */; };
+		25FB8BC0133A0E0800C130A8 /* btn-green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BBA133A0E0800C130A8 /* btn-green@2x.png */; };
+		25FB8BC1133A0E0800C130A8 /* btn-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BBB133A0E0800C130A8 /* btn-white.png */; };
+		25FB8BC2133A0E0800C130A8 /* btn-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BBC133A0E0800C130A8 /* btn-white@2x.png */; };
+		25FB8BC5133A137700C130A8 /* logo-white-280.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BC3133A137700C130A8 /* logo-white-280.png */; };
+		25FB8BC6133A137700C130A8 /* logo-white-280@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BC4133A137700C130A8 /* logo-white-280@2x.png */; };
+		25FB8BD0133A1B9500C130A8 /* InitialDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */; };
+		25FB8BD1133A1B9500C130A8 /* InitialDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,7 +135,7 @@
 		25CEF8321339F279006F23A7 /* MoogleTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MoogleTests-Prefix.pch"; sourceTree = "<group>"; };
 		25CEF8331339F279006F23A7 /* MoogleTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoogleTests.h; sourceTree = "<group>"; };
 		25CEF8351339F279006F23A7 /* MoogleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoogleTests.m; sourceTree = "<group>"; };
-		25CEF87F1339F6E9006F23A7 /* LICoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; path = LICoreDataStack.h; sourceTree = "<group>"; };
+		25CEF87F1339F6E9006F23A7 /* LICoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LICoreDataStack.h; sourceTree = "<group>"; };
 		25CEF8801339F6E9006F23A7 /* LICoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LICoreDataStack.m; sourceTree = "<group>"; };
 		25CEF8881339FB8B006F23A7 /* NSData+Compression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Compression.h"; sourceTree = "<group>"; };
 		25CEF8891339FB8B006F23A7 /* NSData+Compression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Compression.m"; sourceTree = "<group>"; };
@@ -202,6 +215,19 @@
 		25FB8B97133A069E00C130A8 /* MoogleDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleDataCenter.h; sourceTree = "<group>"; };
 		25FB8B98133A069E00C130A8 /* MoogleDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoogleDataCenter.m; sourceTree = "<group>"; };
 		25FB8B99133A069E00C130A8 /* MoogleDataCenterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleDataCenterDelegate.h; sourceTree = "<group>"; };
+		25FB8BAF133A0D0800C130A8 /* MoogleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleViewController.h; sourceTree = "<group>"; };
+		25FB8BB0133A0D0800C130A8 /* MoogleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoogleViewController.m; sourceTree = "<group>"; };
+		25FB8BB3133A0D3C00C130A8 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		25FB8BB4133A0D3D00C130A8 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		25FB8BB7133A0E0800C130A8 /* btn-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-blue.png"; sourceTree = "<group>"; };
+		25FB8BB8133A0E0800C130A8 /* btn-blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-blue@2x.png"; sourceTree = "<group>"; };
+		25FB8BB9133A0E0800C130A8 /* btn-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-green.png"; sourceTree = "<group>"; };
+		25FB8BBA133A0E0800C130A8 /* btn-green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-green@2x.png"; sourceTree = "<group>"; };
+		25FB8BBB133A0E0800C130A8 /* btn-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-white.png"; sourceTree = "<group>"; };
+		25FB8BBC133A0E0800C130A8 /* btn-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-white@2x.png"; sourceTree = "<group>"; };
+		25FB8BC3133A137700C130A8 /* logo-white-280.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-white-280.png"; sourceTree = "<group>"; };
+		25FB8BC4133A137700C130A8 /* logo-white-280@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-white-280@2x.png"; sourceTree = "<group>"; };
+		25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InitialDefaults.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +304,7 @@
 				25FB8B96133A065200C130A8 /* DataCenters */,
 				25CEF8F21339FE27006F23A7 /* Models */,
 				25FB8B8D133A056700C130A8 /* Views */,
+				25FB8BA4133A09A000C130A8 /* Controllers */,
 				25FB8B2B133A036600C130A8 /* Vendor */,
 				25CEF8E21339FD3B006F23A7 /* Libraries */,
 				25CEF8871339FB76006F23A7 /* Categories */,
@@ -295,6 +322,7 @@
 			children = (
 				25CEF8FD1339FFD3006F23A7 /* Constants.h */,
 				25CEF8101339F278006F23A7 /* Moogle-Info.plist */,
+				25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */,
 				25CEF8141339F278006F23A7 /* Moogle-Prefix.pch */,
 				25CEF8151339F278006F23A7 /* main.m */,
 			);
@@ -389,6 +417,9 @@
 		25CEF8FE133A000C006F23A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				25FB8BC3133A137700C130A8 /* logo-white-280.png */,
+				25FB8BC4133A137700C130A8 /* logo-white-280@2x.png */,
+				25FB8BB6133A0DFB00C130A8 /* Buttons */,
 				25CEF907133A00A3006F23A7 /* Default.png */,
 				25CEF908133A00A3006F23A7 /* Default@2x.png */,
 				25CEF903133A0086006F23A7 /* Icon.png */,
@@ -489,6 +520,30 @@
 			name = DataCenters;
 			sourceTree = "<group>";
 		};
+		25FB8BA4133A09A000C130A8 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				25FB8BAF133A0D0800C130A8 /* MoogleViewController.h */,
+				25FB8BB0133A0D0800C130A8 /* MoogleViewController.m */,
+				25FB8BB3133A0D3C00C130A8 /* LoginViewController.h */,
+				25FB8BB4133A0D3D00C130A8 /* LoginViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		25FB8BB6133A0DFB00C130A8 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				25FB8BB7133A0E0800C130A8 /* btn-blue.png */,
+				25FB8BB8133A0E0800C130A8 /* btn-blue@2x.png */,
+				25FB8BB9133A0E0800C130A8 /* btn-green.png */,
+				25FB8BBA133A0E0800C130A8 /* btn-green@2x.png */,
+				25FB8BBB133A0E0800C130A8 /* btn-white.png */,
+				25FB8BBC133A0E0800C130A8 /* btn-white@2x.png */,
+			);
+			name = Buttons;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -561,6 +616,15 @@
 				25CEF909133A00A3006F23A7 /* Default.png in Resources */,
 				25CEF90A133A00A3006F23A7 /* Default@2x.png in Resources */,
 				25CEF92D133A021A006F23A7 /* FBDialog.bundle in Resources */,
+				25FB8BBD133A0E0800C130A8 /* btn-blue.png in Resources */,
+				25FB8BBE133A0E0800C130A8 /* btn-blue@2x.png in Resources */,
+				25FB8BBF133A0E0800C130A8 /* btn-green.png in Resources */,
+				25FB8BC0133A0E0800C130A8 /* btn-green@2x.png in Resources */,
+				25FB8BC1133A0E0800C130A8 /* btn-white.png in Resources */,
+				25FB8BC2133A0E0800C130A8 /* btn-white@2x.png in Resources */,
+				25FB8BC5133A137700C130A8 /* logo-white-280.png in Resources */,
+				25FB8BC6133A137700C130A8 /* logo-white-280@2x.png in Resources */,
+				25FB8BD0133A1B9500C130A8 /* InitialDefaults.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,6 +634,7 @@
 			files = (
 				25CEF8341339F279006F23A7 /* MoogleTests.h in Resources */,
 				25CEF92E133A021A006F23A7 /* FBDialog.bundle in Resources */,
+				25FB8BD1133A1B9500C130A8 /* InitialDefaults.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,6 +696,8 @@
 				25FB8B59133A03AD00C130A8 /* EGORefreshTableHeaderView.m in Sources */,
 				25FB8B90133A057900C130A8 /* MoogleImageView.m in Sources */,
 				25FB8B9A133A069E00C130A8 /* MoogleDataCenter.m in Sources */,
+				25FB8BB1133A0D0800C130A8 /* MoogleViewController.m in Sources */,
+				25FB8BB5133A0D3D00C130A8 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,6 +736,7 @@
 				25FB8B51133A038D00C130A8 /* SBJsonWriter.m in Sources */,
 				25FB8B91133A057900C130A8 /* MoogleImageView.m in Sources */,
 				25FB8B9B133A069E00C130A8 /* MoogleDataCenter.m in Sources */,
+				25FB8BB2133A0D0800C130A8 /* MoogleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
