@@ -8,7 +8,7 @@
 
 #import "PodCell.h"
 
-#define NAME_FONT_SIZE 13.0
+#define NAME_FONT_SIZE 14.0
 #define CELL_FONT_SIZE 13.0
 #define TIMESTAMP_FONT_SIZE 12.0
 
@@ -46,7 +46,7 @@
     
     _nameLabel.numberOfLines = 1;
     _timestampLabel.numberOfLines = 1;
-    _summaryLabel.numberOfLines = 4;
+    _summaryLabel.numberOfLines = 8;
     _activityLabel.numberOfLines = 1;
     
     [self.contentView addSubview:_nameLabel];
@@ -138,10 +138,10 @@
   CGSize labelSize = CGSizeZero;
   UIFont *font = nil;
   
-  // Name
+  // Name (Row 1)
   font = [UIFont boldSystemFontOfSize:NAME_FONT_SIZE];
   labelSize = [pod.name sizeWithFont:font constrainedToSize:textSize lineBreakMode:UILineBreakModeTailTruncation];
-  calculatedHeight += 15;
+  calculatedHeight += labelSize.height;
   
   // Summary
   font = [UIFont systemFontOfSize:CELL_FONT_SIZE];

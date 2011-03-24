@@ -86,12 +86,12 @@
   [self resetFetchedResultsController];
   [self.tableView reloadData];
   [self dataSourceDidLoad];
-//  [self performSelector:@selector(dataSourceDidLoad) withObject:nil afterDelay:1.0];
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
   [self resetFetchedResultsController];
   [self.tableView reloadData];
+  [self dataSourceDidLoad];
 }
 
 #pragma mark -

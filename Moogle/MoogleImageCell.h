@@ -15,8 +15,8 @@
 #define IMAGE_HEIGHT_PLAIN 40.0
 #define IMAGE_WIDTH_GROUPED 34.0
 #define IMAGE_HEIGHT_GROUPED 34.0
-#define SPACING_X 5.0
-#define SPACING_Y 5.0
+#define SPACING_X 10.0
+#define SPACING_Y 10.0
 
 @interface MoogleImageCell : MoogleCell {
   MoogleImageView *_moogleImageView;

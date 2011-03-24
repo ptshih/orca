@@ -132,10 +132,14 @@
 #pragma mark UINavigationControllerDelegate
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
   DLog(@"nav will show controller: %@", [viewController class]);
+  if ([viewController respondsToSelector:@selector(reloadCardController)]) {
+    [viewController performSelector:@selector(reloadCardController)];
+  }
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
   DLog(@"nav did show controller: %@", [viewController class]);
+
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

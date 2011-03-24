@@ -21,6 +21,7 @@
     newFeed.authorId = [dictionary valueForKey:@"author_id"];
     newFeed.authorName = [dictionary valueForKey:@"author_name"];
     newFeed.authorPictureUrl = [dictionary valueForKey:@"author_picture_url"];
+    newFeed.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     
     // Conditional
     newFeed.comment = [dictionary valueForKey:@"comment"] ? [dictionary valueForKey:@"comment"] : nil;

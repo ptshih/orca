@@ -8,6 +8,7 @@
 
 #import "FeedViewController.h"
 #import "FeedDataCenter.h"
+#import "FeedCell.h"
 
 @implementation FeedViewController
 
@@ -31,9 +32,40 @@
   
   // Pull Refresh
   [self setupPullRefresh];
+}
+
+#pragma mark -
+#pragma mark TableView
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  Feed *feed = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  return [FeedCell variableRowHeightWithFeed:feed];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  FeedCell *cell = nil;
+  NSString *reuseIdentifier = [NSString stringWithFormat:@"%@_TableViewCell_%d", [self class], indexPath.section];
   
-  // Load Fixtures
+  cell = (FeedCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+  if(cell == nil) { 
+    cell = [[[FeedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+  }
+  
+  Feed *feed = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
+  [cell fillCellWithFeed:feed];
+  
+  return cell;
+}
+
+#pragma mark -
+#pragma mark CardViewController
+- (void)reloadCardController {
+  [super reloadCardController];
   [_feedDataCenter loadFeedsFromFixture];
+}
+
+- (void)unloadCardController {
+  [super unloadCardController];
 }
 
 #pragma mark -
@@ -41,10 +73,13 @@
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
   [self resetFetchedResultsController];
   [self.tableView reloadData];
+  [self dataSourceDidLoad];
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
-  
+  [self resetFetchedResultsController];
+  [self.tableView reloadData];
+  [self dataSourceDidLoad];
 }
 
 #pragma mark -

@@ -7,10 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MoogleImageCell.h"
+#import "Feed.h"
 
-
-@interface FeedCell : UITableViewCell {
-    
+@interface FeedCell : MoogleImageCell {
+  UILabel *_nameLabel;
+  UILabel *_timestampLabel;
+  UILabel *_statusLabel;
+  UILabel *_commentLabel; // optional
+  MoogleImageView *_photoImageView; // optional
 }
+
+- (void)fillCellWithFeed:(Feed *)feed;
++ (CGFloat)variableRowHeightWithFeed:(Feed *)feed;
 
 @end

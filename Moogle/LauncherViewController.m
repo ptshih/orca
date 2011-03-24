@@ -31,9 +31,6 @@
   
   // Setup Controllers
   [self setupControllers];
-  
-  // Load visible card
-  [self reloadVisibleCard];
 }
 
 - (void)setupChrome { 
