@@ -51,7 +51,7 @@ static UIImage *_btnSelected;
       [button setBackgroundImage:_btnSelected forState:UIControlStateHighlighted];
       
       [button setTitle:title forState:UIControlStateNormal];
-      [button setTitleColor:FILTER_COLOR_BLUE forState:UIControlStateNormal];
+      [button setTitleColor:FB_COLOR_DARK_GRAY_BLUE forState:UIControlStateNormal];
       button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
       button.titleLabel.lineBreakMode = UILineBreakModeTailTruncation;
       

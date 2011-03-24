@@ -40,7 +40,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  self.window.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
+  self.window.backgroundColor = FB_COLOR_DARK_GRAY_BLUE;
 
   // Setup Facebook
   _facebook = [[Facebook alloc] initWithAppId:FB_APP_ID];
