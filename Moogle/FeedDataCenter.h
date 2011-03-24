@@ -10,7 +10,8 @@
 #import "MoogleDataCenter.h"
 
 @interface FeedDataCenter : MoogleDataCenter {
-    
 }
+
+- (void)serializeFeedsWithDictionary:(NSDictionary *)dictionary;
 
 @end

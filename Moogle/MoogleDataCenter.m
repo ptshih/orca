@@ -89,6 +89,29 @@
   }
 }
 
+#pragma mark Send Operation
+- (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andParams:(NSDictionary *)params {
+  if (_op) {
+    _op = [[LINetworkOperation alloc] initWithURL:url];
+    _op.delegate = self;
+  }
+  
+  // Set op method (defaults to GET)
+  _op.requestMethod = method ? method : GET;
+  
+  // Build Params if exists
+  if (params) {
+    NSArray *allKeys = [params allKeys];
+    NSArray *allValues = [params allValues];
+    for (int i = 0; i < [params count]; i++) {
+      // NOTE: should probably type transform coerce in the future
+      [_op addRequestParam:[allKeys objectAtIndex:i] value:[allValues objectAtIndex:i]];
+    }
+  }
+  
+  [[LINetworkQueue sharedQueue] addOperation:_op];
+}
+
 /**
  Network Operation Delegate Callbacks
  */
@@ -154,6 +177,8 @@
 }
 
 - (void)dealloc {
+  if (_op) [_op clearDelegatesAndCancel];
+  RELEASE_SAFELY(_op);
   RELEASE_SAFELY (_response);
   RELEASE_SAFELY(_rawResponse);
   [super dealloc];

@@ -19,12 +19,20 @@
   id <MoogleDataCenterDelegate> _delegate;
   id _response;
   id _rawResponse;
+  LINetworkOperation *_op;
 }
 
 @property (nonatomic, retain) id <MoogleDataCenterDelegate> delegate;
 @property (nonatomic, retain) id response;
 @property (nonatomic, retain) id rawResponse;
 
+/**
+ Send network operation to server (GET/POST)
+ url - required defined in Constants.h
+ method - optional (defaults to GET) defined in Constants.h (should be GET or POST)
+ params - optional
+ */
+- (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andParams:(NSDictionary *)params;
 
 // Subclass should Implement AND call super's implementation
 - (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation;

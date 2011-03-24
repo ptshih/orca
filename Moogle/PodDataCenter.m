@@ -8,7 +8,17 @@
 
 #import "PodDataCenter.h"
 
-
 @implementation PodDataCenter
+
+#pragma mark MoogleDataCenterDelegate
+- (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {  
+  [self serializePodsWithDictionary:_response];
+  [super dataCenterFinishedWithOperation:operation];
+}
+
+#pragma mark Serialize Response
+- (void)serializePodsWithDictionary:(NSDictionary *)dictionary {
+  // Core Data Serialize
+}
 
 @end

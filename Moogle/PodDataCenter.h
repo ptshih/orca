@@ -10,7 +10,11 @@
 #import "MoogleDataCenter.h"
 
 @interface PodDataCenter : MoogleDataCenter {
-    
 }
+
+/**
+ Serialize server response into Pod entities
+ */
+- (void)serializePodsWithDictionary:(NSDictionary *)dictionary;
 
 @end

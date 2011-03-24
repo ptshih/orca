@@ -592,7 +592,6 @@
 				25FB8B8F133A057900C130A8 /* MoogleImageView.m */,
 				25FB8BE7133AA7C300C130A8 /* HeaderTabView.h */,
 				25FB8BE8133AA7C300C130A8 /* HeaderTabView.m */,
-				25FB8BE9133AA7C400C130A8 /* HeaderTabViewDelegate.h */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -602,7 +601,6 @@
 			children = (
 				25FB8B97133A069E00C130A8 /* MoogleDataCenter.h */,
 				25FB8B98133A069E00C130A8 /* MoogleDataCenter.m */,
-				25FB8B99133A069E00C130A8 /* MoogleDataCenterDelegate.h */,
 				25FB8C0B133ABCC900C130A8 /* PodDataCenter.h */,
 				25FB8C0C133ABCCA00C130A8 /* PodDataCenter.m */,
 				25FB8C0F133ABCD900C130A8 /* FeedDataCenter.h */,
@@ -652,6 +650,8 @@
 			isa = PBXGroup;
 			children = (
 				25FB8BD3133A1DE400C130A8 /* LoginDelegate.h */,
+				25FB8B99133A069E00C130A8 /* MoogleDataCenterDelegate.h */,
+				25FB8BE9133AA7C400C130A8 /* HeaderTabViewDelegate.h */,
 			);
 			name = Delegates;
 			sourceTree = "<group>";

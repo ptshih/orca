@@ -52,6 +52,11 @@
   #define MOOGLE_BASE_URL @"http://moogle.heroku.com"
 #endif
 
+#define MOOGLE_PODS_URL [NSURL URLWithString:[NSString stringWithFormat:@"%@/pods", MOOGLE_BASE_URL]]
+
+#define GET @"GET"
+#define POST @"POST"
+
 #define MOOGLE_TERMS_URL @"http://www.sevenminuteapps.com/terms"
 #define MOOGLE_PRIVACY_URL @"http://www.sevenminuteapps.com/privacy"
 

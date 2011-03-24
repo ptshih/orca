@@ -8,7 +8,17 @@
 
 #import "FeedDataCenter.h"
 
-
 @implementation FeedDataCenter
+
+#pragma mark MoogleDataCenterDelegate
+- (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {  
+  [self serializeFeedsWithDictionary:_response];
+  [super dataCenterFinishedWithOperation:operation];
+}
+
+#pragma mark Serialize Response
+- (void)serializeFeedsWithDictionary:(NSDictionary *)dictionary {
+  // Core Data Serialize
+}
 
 @end
