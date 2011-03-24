@@ -50,4 +50,14 @@
   }
 }
 
+#pragma mark FetchRequests
+- (NSFetchRequest *)getFeedsFetchRequestForPod:(NSNumber *)podId {
+  NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO selector:@selector(compare:)];
+  NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+  [sortDescriptor release];
+  NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getFeedsForPod" substitutionVariables:[NSDictionary dictionaryWithObject:podId forKey:@"desiredPodId"]];
+  [fetchRequest setSortDescriptors:sortDescriptors];
+  return fetchRequest;
+}
+
 @end

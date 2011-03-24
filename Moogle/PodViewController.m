@@ -8,6 +8,8 @@
 
 #import "PodViewController.h"
 #import "PodDataCenter.h"
+#import "FeedViewController.h"
+#import "Pod.h"
 
 @implementation PodViewController
 
@@ -34,14 +36,35 @@
   [_podDataCenter loadPodsFromFixture];
 }
 
+
+#pragma mark -
+#pragma mark TableView
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+  
+  Pod *pod = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
+  FeedViewController *fvc = [[FeedViewController alloc] init];
+  fvc.podId = pod.id;
+  [self.navigationController pushViewController:fvc animated:YES];
+  [fvc release];
+}
+
 #pragma mark -
 #pragma mark MoogleDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
-  
+  [self resetFetchedResultsController];
+  [self.tableView reloadData];
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
   
+}
+
+#pragma mark -
+#pragma mark FetchRequest
+- (NSFetchRequest *)getFetchRequest {
+  return [_podDataCenter getPodsFetchRequest];
 }
 
 - (void)dealloc {

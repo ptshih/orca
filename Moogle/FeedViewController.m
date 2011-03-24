@@ -7,8 +7,20 @@
 //
 
 #import "FeedViewController.h"
+#import "FeedDataCenter.h"
 
 @implementation FeedViewController
+
+@synthesize podId = _podId;
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    _feedDataCenter = [[FeedDataCenter alloc] init];
+    _feedDataCenter.delegate = self;
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -19,9 +31,31 @@
   
   // Pull Refresh
   [self setupPullRefresh];
+  
+  // Load Fixtures
+  [_feedDataCenter loadFeedsFromFixture];
+}
+
+#pragma mark -
+#pragma mark MoogleDataCenterDelegate
+- (void)dataCenterDidFinish:(LINetworkOperation *)operation {
+  [self resetFetchedResultsController];
+  [self.tableView reloadData];
+}
+
+- (void)dataCenterDidFail:(LINetworkOperation *)operation {
+  
+}
+
+#pragma mark -
+#pragma mark FetchRequest
+- (NSFetchRequest *)getFetchRequest {
+  return [_feedDataCenter getFeedsFetchRequestForPod:self.podId];
 }
 
 - (void)dealloc {
+  RELEASE_SAFELY(_feedDataCenter);
+  RELEASE_SAFELY(_podId);
   [super dealloc];
 }
 

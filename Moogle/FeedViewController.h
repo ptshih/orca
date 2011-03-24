@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CardTableViewController.h"
+#import "CardCoreDataTableViewController.h"
 
-@interface FeedViewController : CardTableViewController {
+@class FeedDataCenter;
 
+@interface FeedViewController : CardCoreDataTableViewController {
+  FeedDataCenter *_feedDataCenter;
+  NSNumber *_podId;
 }
+
+@property (nonatomic, retain) NSNumber *podId;
 
 @end

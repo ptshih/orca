@@ -121,13 +121,9 @@
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
-  return YES;
-}
-
 #pragma mark UITableViewDataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  return [MoogleCell rowHeight];
+  return 44.0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {  

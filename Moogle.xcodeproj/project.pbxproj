@@ -13,6 +13,7 @@
 		2538FF2C133AD0D100ACE127 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF2A133AD0D100ACE127 /* Feed.m */; };
 		2538FF2F133AD0D200ACE127 /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF2E133AD0D200ACE127 /* Pod.m */; };
 		2538FF30133AD0D200ACE127 /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF2E133AD0D200ACE127 /* Pod.m */; };
+		2538FF3D133AD22900ACE127 /* CardCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */; };
 		25CEF8071339F278006F23A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8061339F278006F23A7 /* UIKit.framework */; };
 		25CEF8091339F278006F23A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8081339F278006F23A7 /* Foundation.framework */; };
 		25CEF80B1339F278006F23A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80A1339F278006F23A7 /* CoreGraphics.framework */; };
@@ -155,6 +156,8 @@
 		2538FF2A133AD0D100ACE127 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
 		2538FF2D133AD0D200ACE127 /* Pod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pod.h; sourceTree = "<group>"; };
 		2538FF2E133AD0D200ACE127 /* Pod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pod.m; sourceTree = "<group>"; };
+		2538FF3B133AD22700ACE127 /* CardCoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCoreDataTableViewController.h; sourceTree = "<group>"; };
+		2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCoreDataTableViewController.m; sourceTree = "<group>"; };
 		25CEF8021339F278006F23A7 /* Moogle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moogle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25CEF8061339F278006F23A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		25CEF8081339F278006F23A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -623,6 +626,8 @@
 				25FB8BDF133AA6AB00C130A8 /* CardViewController.m */,
 				25FB8BE0133AA6B100C130A8 /* CardTableViewController.h */,
 				25FB8BE1133AA6BA00C130A8 /* CardTableViewController.m */,
+				2538FF3B133AD22700ACE127 /* CardCoreDataTableViewController.h */,
+				2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */,
 				25FB8BDD133AA69800C130A8 /* CardStateMachine.h */,
 				25FB8BAF133A0D0800C130A8 /* MoogleViewController.h */,
 				25FB8BB0133A0D0800C130A8 /* MoogleViewController.m */,
@@ -862,6 +867,7 @@
 				25FB8C1C133ABEDC00C130A8 /* Feed+Serialize.m in Sources */,
 				2538FF2B133AD0D100ACE127 /* Feed.m in Sources */,
 				2538FF2F133AD0D200ACE127 /* Pod.m in Sources */,
+				2538FF3D133AD22900ACE127 /* CardCoreDataTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

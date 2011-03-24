@@ -19,4 +19,9 @@
  */
 - (void)serializePodsWithDictionary:(NSDictionary *)dictionary;
 
+/**
+ Fetch Requests
+ */
+- (NSFetchRequest *)getPodsFetchRequest;
+
 @end

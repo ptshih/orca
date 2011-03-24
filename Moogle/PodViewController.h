@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CardTableViewController.h"
+#import "CardCoreDataTableViewController.h"
 
 @class PodDataCenter;
 
-@interface PodViewController : CardTableViewController {
+@interface PodViewController : CardCoreDataTableViewController {
   PodDataCenter *_podDataCenter;
 }
 
