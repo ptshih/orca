@@ -52,7 +52,7 @@
 
 #pragma mark Fetch Requests
 - (NSFetchRequest *)getPodsFetchRequest {
-  NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastActivity" ascending:NO selector:@selector(compare:)];
+  NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO selector:@selector(compare:)];
   NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
   [sortDescriptor release];
   NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPods" substitutionVariables:[NSDictionary dictionary]];

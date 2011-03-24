@@ -14,27 +14,52 @@
 
 @synthesize urlPath = _urlPath;
 @synthesize placeholderImage = _placeholderImage;
+@synthesize delegate = _delegate;
 
 // Override Setter
-- (void)setUrlPath:(NSString *)urlPath {
-  if (urlPath) {
-    NSString* urlPathCopy = [urlPath copy];
-    [_urlPath release];
-    _urlPath = urlPathCopy;
-    
-    // Image not found in cache, fire a request
-    LINetworkOperation *op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:_urlPath]];
-    op.delegate = self;
-    [op setQueuePriority:NSOperationQueuePriorityVeryLow];
-    [[LINetworkQueue sharedQueue] addOperation:op];
-    [op release];
+//- (void)setUrlPath:(NSString *)urlPath {
+//  if (urlPath) {
+//    NSString* urlPathCopy = [urlPath copy];
+//    [_urlPath release];
+//    _urlPath = urlPathCopy;
+//    
+//    // Image not found in cache, fire a request
+//    LINetworkOperation *op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:_urlPath]];
+//    op.delegate = self;
+//    [op setQueuePriority:NSOperationQueuePriorityVeryLow];
+//    [[LINetworkQueue sharedQueue] addOperation:op];
+//    [op release];
+//  }
+//}
+
+- (void)loadImage {
+  if (_urlPath) {    
+    _op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:_urlPath]];
+    _op.delegate = self;
+    _op.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
+    [_op setQueuePriority:NSOperationQueuePriorityVeryLow];
+    [[LINetworkQueue sharedQueue] addOperation:_op];
+  }
+}
+
+- (void)unloadImage {
+  self.image = self.placeholderImage;
+}
+
+- (void)imageDidLoad {
+  if (self.delegate && [self.delegate respondsToSelector:@selector(imageDidLoad:)]) {
+    [self.delegate imageDidLoad:self.image];
   }
 }
 
 #pragma mark LINetworkOperationDelegate
 - (void)networkOperationDidFinish:(LINetworkOperation *)operation {
   UIImage *image = [UIImage imageWithData:[operation responseData]];
+  
   self.image = image;
+  [self imageDidLoad];
+  
+  //  NSLog(@"Image width: %f, height: %f", image.size.width, image.size.height);
 }
 
 - (void)networkOperationDidFail:(LINetworkOperation *)operation {
@@ -42,8 +67,10 @@
 }
 
 - (void)dealloc {
-  [_urlPath release], _urlPath = nil;
-  [_placeholderImage release], _placeholderImage = nil;
+  if (_op) [_op clearDelegatesAndCancel];
+  RELEASE_SAFELY(_op);
+  RELEASE_SAFELY(_urlPath);
+  RELEASE_SAFELY(_placeholderImage);
   
   [super dealloc];
 }

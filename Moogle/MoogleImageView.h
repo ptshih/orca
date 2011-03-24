@@ -8,13 +8,23 @@
 
 #import <Foundation/Foundation.h>
 #import "LINetworkOperationDelegate.h"
+#import "MoogleImageViewDelegate.h"
+#import "Constants.h"
 
-@interface MoogleImageView : UIImageView <LINetworkOperationDelegate> {
+@interface MoogleImageView : UIImageView <LINetworkOperationDelegate, MoogleImageViewDelegate> {
   NSString *_urlPath;
   UIImage *_placeholderImage;
+  
+  LINetworkOperation *_op;
+  id <MoogleImageViewDelegate> _delegate;
 }
 
 @property (nonatomic, copy) NSString *urlPath;
 @property (nonatomic, retain) UIImage *placeholderImage;
+@property (nonatomic, assign) id <MoogleImageViewDelegate> delegate;
+
+- (void)loadImage;
+- (void)unloadImage;
+- (void)imageDidLoad;
 
 @end

@@ -2,7 +2,7 @@
 //  Feed.h
 //  Moogle
 //
-//  Created by Peter Shih on 3/23/11.
+//  Created by Peter Shih on 3/24/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 

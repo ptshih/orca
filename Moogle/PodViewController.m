@@ -10,6 +10,7 @@
 #import "PodDataCenter.h"
 #import "FeedViewController.h"
 #import "Pod.h"
+#import "PodCell.h"
 
 @implementation PodViewController
 
@@ -31,14 +32,16 @@
   
   // Pull Refresh
   [self setupPullRefresh];
-
-  // Load Fixtures
-  [_podDataCenter loadPodsFromFixture];
 }
 
 
 #pragma mark -
 #pragma mark TableView
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  Pod *pod = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  return [PodCell variableRowHeightWithPod:pod];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   
@@ -50,15 +53,45 @@
   [fvc release];
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  PodCell *cell = nil;
+  NSString *reuseIdentifier = [NSString stringWithFormat:@"%@_TableViewCell_%d", [self class], indexPath.section];
+  
+  cell = (PodCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+  if(cell == nil) { 
+    cell = [[[PodCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+  }
+  
+  Pod *pod = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
+  [cell fillCellWithPod:pod];
+  
+  return cell;
+}
+
+#pragma mark -
+#pragma mark CardViewController
+- (void)reloadCardController {
+  [super reloadCardController];
+  [_podDataCenter loadPodsFromFixture];
+}
+
+- (void)unloadCardController {
+  [super unloadCardController];
+}
+
 #pragma mark -
 #pragma mark MoogleDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
   [self resetFetchedResultsController];
   [self.tableView reloadData];
+  [self dataSourceDidLoad];
+//  [self performSelector:@selector(dataSourceDidLoad) withObject:nil afterDelay:1.0];
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
-  
+  [self resetFetchedResultsController];
+  [self.tableView reloadData];
 }
 
 #pragma mark -

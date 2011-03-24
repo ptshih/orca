@@ -20,7 +20,7 @@
     newPod.pictureUrl = [dictionary valueForKey:@"picture_url"];
     newPod.checkinCount = [dictionary valueForKey:@"checkin_count"];
     newPod.commentCount = [dictionary valueForKey:@"comment_count"];
-    newPod.lastActivity = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"last_activity"] longLongValue]];
+    newPod.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     
     return newPod;
   } else {

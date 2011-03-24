@@ -28,6 +28,8 @@ typedef enum {
   NSURLConnection *_connection;
   BOOL _isExecuting;
   BOOL _isFinished;
+  BOOL _isCancelled;
+  BOOL _isConcurrent;
   
   // Request
   NSMutableURLRequest *_request;
@@ -39,6 +41,7 @@ typedef enum {
   NSMutableDictionary *_requestHeaders;
   NSMutableDictionary *_requestParams; // A dictionary of parameters
   NSData *_requestData;
+  NSMutableString *_encodedParameterPairs;
   
   // Response
   NSDictionary *_responseHeaders;
@@ -55,15 +58,18 @@ typedef enum {
   NSStringEncoding _defaultResponseEncoding;
   NSTimeInterval _timeoutInterval;
   NSInteger _numberOfTimesToRetryOnTimeout;
+  NSURLRequestCachePolicy _cachePolicy; // defaults to ignore local
   BOOL _shouldCompressRequestBody;
   BOOL _allowCompressedResponse;
   BOOL _shouldTimeout; // defaults to YES
   
   // Request State
   NetworkOperationState _operationState;
-
+  
   // Delegate
   id <LINetworkOperationDelegate> _delegate;
+  
+  NSLock *_opLock;
   
   // Stuff to reuse from NSOperation
   // queuePriority
@@ -74,6 +80,8 @@ typedef enum {
 @property (retain) NSURLConnection *connection;
 @property (readonly) BOOL isExecuting;
 @property (readonly) BOOL isFinished;
+@property (readonly) BOOL isCancelled;
+@property (readonly) BOOL isConcurrent;
 
 // Request
 @property (retain) NSMutableURLRequest *request;
@@ -85,6 +93,7 @@ typedef enum {
 @property (retain) NSMutableDictionary *requestHeaders;
 @property (retain) NSMutableDictionary *requestParams;
 @property (retain) NSData *requestData;
+@property (retain) NSMutableString *encodedParameterPairs;
 
 // Response
 @property (retain) NSDictionary *responseHeaders;
@@ -101,6 +110,7 @@ typedef enum {
 @property (assign) NSStringEncoding defaultResponseEncoding;
 @property (assign) NSTimeInterval timeoutInterval;
 @property (assign) NSInteger numberOfTimesToRetryOnTimeout;
+@property (assign) NSURLRequestCachePolicy cachePolicy;
 @property (assign) BOOL shouldCompressRequestBody;
 @property (assign) BOOL allowCompressedResponse;
 @property (assign) BOOL shouldTimeout;
@@ -120,6 +130,7 @@ typedef enum {
 - (void)addRequestParam:(NSString *)param value:(NSString *)value;
 
 #pragma mark Cleanup
+- (void)cancelOperation;
 - (void)clearDelegatesAndCancel;
 
 @end

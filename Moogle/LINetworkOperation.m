@@ -12,11 +12,14 @@
 #define JSON_REQUEST_HEADER @"application/json"
 
 #pragma mark Static Veriables
+
 // The default number of seconds to use for a timeout
 static NSTimeInterval _defaultTimeOutSeconds = 30;
 
 // Used to track how many operations are active
 static NSUInteger _activeOperationCount = 0;
+
+static NSThread *_opThread = nil;
 
 @interface LINetworkOperation (Private)
 
@@ -47,6 +50,8 @@ static NSUInteger _activeOperationCount = 0;
 @synthesize connection = _connection;
 @synthesize isExecuting = _isExecuting;
 @synthesize isFinished = _isFinished;
+@synthesize isCancelled = _isCancelled;
+@synthesize isConcurrent = _isConcurrent;
 
 // Request
 @synthesize request = _request;
@@ -58,6 +63,7 @@ static NSUInteger _activeOperationCount = 0;
 @synthesize requestHeaders = _requestHeaders;
 @synthesize requestParams = _requestParams;
 @synthesize requestData = _requestData;
+@synthesize encodedParameterPairs = _encodedParameterPairs;
 
 // Response
 @synthesize responseHeaders = _responseHeaders;
@@ -74,6 +80,7 @@ static NSUInteger _activeOperationCount = 0;
 @synthesize defaultResponseEncoding = _defaultResponseEncoding;
 @synthesize timeoutInterval = _timeoutInterval;
 @synthesize numberOfTimesToRetryOnTimeout = _numberOfTimesToRetryOnTimeout;
+@synthesize cachePolicy = _cachePolicy;
 @synthesize shouldCompressRequestBody = _shouldCompressRequestBody;
 @synthesize allowCompressedResponse = _allowCompressedResponse;
 @synthesize shouldTimeout = _shouldTimeout;
@@ -85,7 +92,8 @@ static NSUInteger _activeOperationCount = 0;
 + (void)initialize {
   if (self == [LINetworkOperation class]) {
     // Allocs for class (statics)
-    
+    _opThread = [[NSThread alloc] initWithTarget:[self class] selector:@selector(opThreadMain) object:nil];
+    [_opThread start];
   }
 }
 
@@ -108,8 +116,14 @@ static NSUInteger _activeOperationCount = 0;
     self.shouldTimeout = YES; // NOT IMPLEMENTED
     _operationState = NetworkOperationStateIdle;
     
+    self.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+    
     _isExecuting = NO;
     _isFinished = NO;
+    _isCancelled = NO;
+    _isConcurrent = YES;
+    
+    _opLock = [[NSLock alloc] init];
   }
   return self;
 }
@@ -122,50 +136,109 @@ static NSUInteger _activeOperationCount = 0;
   return self;
 }
 
+#pragma mark -
+#pragma mark Thread
++ (void)opThreadMain {
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  //  NSLog(@"op thread main started on thread: %@", [NSThread currentThread]);
+  [[NSRunLoop currentRunLoop] addPort:[NSMachPort port] forMode:NSDefaultRunLoopMode];
+  [[NSRunLoop currentRunLoop] run];
+  [pool release];
+}
+
 #pragma mark Operation Methods
 - (void)start {
+  // Called on MAIN THREAD
+  
   // Force all our work to be async off the MAIN THREAD
   if (![NSThread isMainThread]) {
     [self performSelectorOnMainThread:@selector(start) withObject:nil waitUntilDone:NO];
     return;
   }
   
-  NSLog(@"#start called on thread: %@, isMainThread: %d", [NSThread currentThread], [NSThread isMainThread] );
+  if ([self isCancelled]) {
+    return;
+  }
   
-  // Fire KVO notifications
-  [self willChangeValueForKey:@"isExecuting"];
-  _isExecuting = YES;
-  [self didChangeValueForKey:@"isExecuting"];
-
   // Actually begin the operation
   _operationState = NetworkOperationStateStart;
-
+  
   // Inform delegate that operation started
   if (self.delegate && [self.delegate respondsToSelector:@selector(networkOperationDidStart:)]) {
     [self.delegate performSelector:@selector(networkOperationDidStart:) withObject:self];
   }
   
-  // Increment the number of active operations
-  _activeOperationCount++;
-  
-  // Show network indicator
-  [LINetworkOperation showNetworkActivityIndicator];
-  
   // Prepare Request
   [self prepareRequest];
   
   // Prepare Connection
+  [self performSelector:@selector(startConnection) onThread:_opThread withObject:nil waitUntilDone:NO];
+  
+}
+
+- (void)startConnection {
+  [_opLock lock];
+  // Called on OP THREAD
+  
+  if ([self isCancelled]) {
+    return;
+  }
+  
+  // Fire KVO notifications
+  [self willChangeValueForKey:@"isExecuting"];
+  _isExecuting = YES;
+  [self didChangeValueForKey:@"isExecuting"];
+  
+  // Increment the number of active operations
+  _activeOperationCount++;
+  
+  // Show network indicator
+  [[self class] performSelectorOnMainThread:@selector(showNetworkActivityIndicator) withObject:nil waitUntilDone:NO];
+  
   _connection = [[NSURLConnection alloc] initWithRequest:self.request delegate:self];
+  [_opLock unlock];
 }
 
 - (void)finish {
-  NSLog(@"#finish called on thread: %@, isMainThread: %d", [NSThread currentThread], [NSThread isMainThread] );
+  [_opLock lock];
   
-  // Decrement the number of active operations
-  _activeOperationCount--;
+  // Called on OP THREAD
   
-  // Hide network indicator if needed
-  [LINetworkOperation hideNetworkActivityIndicatorIfNeeded];
+  if ([self isExecuting]) {
+    // Decrement the number of active operations
+    _activeOperationCount--;
+    
+    // Hide network indicator if needed
+    [[self class] performSelectorOnMainThread:@selector(hideNetworkActivityIndicatorIfNeeded) withObject:nil waitUntilDone:NO];
+  }
+  
+  // Inform Delegate IF NOT CANCELLED
+  if (![self isCancelled]) {
+    switch (_operationState) {
+      case NetworkOperationStateFinished:
+        // Inform delegate operation succeeded
+        if (self.delegate && [self.delegate respondsToSelector:@selector(networkOperationDidFinish:)]) {
+          [self.delegate performSelectorOnMainThread:@selector(networkOperationDidFinish:) withObject:self waitUntilDone:NO];
+        }
+        break;
+      case NetworkOperationStateFailed:
+        // Inform delegate that operation failed with generic error
+        if (self.delegate && [self.delegate respondsToSelector:@selector(networkOperationDidFail:)]) {
+          [self.delegate performSelectorOnMainThread:@selector(networkOperationDidFail:) withObject:self waitUntilDone:NO];
+        }
+        break;
+      case NetworkOperationStateTimeout:
+        // Inform delegate that operation timed out
+        if (self.delegate && [self.delegate respondsToSelector:@selector(networkOperationDidTimeout:)]) {
+          [self.delegate performSelectorOnMainThread:@selector(networkOperationDidTimeout:) withObject:self waitUntilDone:NO];
+        }
+        break;
+      default:
+        break;
+    }
+  }
+  
+  [_opLock unlock];
   
   // Fire KVO notifications
   [self willChangeValueForKey:@"isExecuting"];
@@ -174,29 +247,55 @@ static NSUInteger _activeOperationCount = 0;
   _isFinished = YES;
   [self didChangeValueForKey:@"isExecuting"];
   [self didChangeValueForKey:@"isFinished"];
+  
+  // END OF OPERATION
 }
 
 - (void)cancel {
-  NSLog(@"#cancel called on thread: %@, isMainThread: %d", [NSThread currentThread], [NSThread isMainThread] );
-  // Clear the delegate
-  self.delegate = nil;
+  // Called on OP THREAD
   
-  // Cancel the async connection
-  [_connection cancel];
+  if ([self isFinished]) {
+    return;
+  }
   
   // cancel the operation
-  [super cancel];
+  // Fire KVO notifications
+  [self willChangeValueForKey:@"isCancelled"];
+  _isCancelled = YES;
+  [self didChangeValueForKey:@"isCancelled"];
+  
+  // Cancel the async connection
+  if (_connection) {
+    [_connection cancel];
+  }
+  
+  [self finish];
 }
 
 #pragma mark Cancel Operation
+- (void)cancelOperation {
+  // CALLED on REQUESTOR THREAD
+  
+  [self performSelector:@selector(cancel) onThread:_opThread withObject:nil waitUntilDone:NO];
+}
+
 - (void)clearDelegatesAndCancel {
-  [self performSelectorOnMainThread:@selector(cancel) withObject:nil waitUntilDone:NO];
+  // Called on REQUESTOR THREAD
+  
+  // Don't let the delegate disappear until we can safely cancel
+  [_opLock lock];
+  self.delegate = nil;
+  [_opLock unlock];
+  
+  [self cancelOperation];
 }
 
 #pragma mark -
 #pragma mark NSURLConnection Delegate
 // Connection received HTTP response, ready to begin receiving data
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+  [_opLock lock];
+  
   // Reset or Initialize responseData
   if (_responseData) {
     [_responseData release], _responseData = nil;
@@ -211,38 +310,31 @@ static NSUInteger _activeOperationCount = 0;
   
   // Parse the response cookies
   [self parseCookies];
+  
+  [_opLock unlock];
 }
 
 // Connection is receiving data
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+  [_opLock lock];
   [_responseData appendData:data];
+  [_opLock unlock];
 }
 
 // Connection finished receiving all data
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-  // Update Op State
-  if ([self isCancelled]) {
-    _operationState = NetworkOperationStateCancelled;
-    
-    // Inform delegate operation was cancelled
-    if (self.delegate && [self.delegate respondsToSelector:@selector(networkOperationDidCancel:)]) {
-      [self.delegate performSelector:@selector(networkOperationDidCancel:) withObject:self];
-    }
-  } else {
-    _operationState = NetworkOperationStateFinished;
-    
-    // Inform delegate operation succeeded
-    if (self.delegate && [self.delegate respondsToSelector:@selector(networkOperationDidFinish:)]) {
-      [self.delegate performSelector:@selector(networkOperationDidFinish:) withObject:self];
-    }
-  }
+  [_opLock lock];
+  _operationState = NetworkOperationStateFinished;
+  [_opLock unlock];
   
   // Finish op
-  [self performSelectorOnMainThread:@selector(finish) withObject:nil waitUntilDone:NO];
+  [self finish];
 }
 
 // Connection failed
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+  [_opLock lock];
+  
   // Read the error
   _responseError = [error copy];
   
@@ -261,25 +353,10 @@ static NSUInteger _activeOperationCount = 0;
     }
   }
   
-  NSLog(@"#failed with state: %d", _operationState);
-  
-  // Update Op State
-  _operationState = NetworkOperationStateFailed;
-  
-  if (_operationState == NetworkOperationStateTimeout) {
-    // Inform delegate that operation timed out
-    if (self.delegate && [self.delegate respondsToSelector:@selector(networkOperationDidTimeout:)]) {
-      [self.delegate performSelector:@selector(networkOperationDidTimeout:) withObject:self];
-    }
-  } else {
-    // Inform delegate that operation failed with generic error
-    if (self.delegate && [self.delegate respondsToSelector:@selector(networkOperationDidFail:)]) {
-      [self.delegate performSelector:@selector(networkOperationDidFail:) withObject:self];
-    }
-  }
+  [_opLock unlock];
   
   // Finish op
-  [self performSelectorOnMainThread:@selector(finish) withObject:nil waitUntilDone:NO];
+  [self finish];
 }
 
 #pragma mark -
@@ -287,7 +364,7 @@ static NSUInteger _activeOperationCount = 0;
 - (void)prepareRequest {
   // Prepare asynchronous request
   // NSMutableURLRequest timeoutInterval must be at least 240 seconds (apple docs) or else it is ignored -- synchronous only
-  self.request = [NSMutableURLRequest requestWithURL:self.requestURL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:self.timeoutInterval];
+  self.request = [NSMutableURLRequest requestWithURL:self.requestURL cachePolicy:self.cachePolicy timeoutInterval:self.timeoutInterval];
   
   // Request method
   [self.request setHTTPMethod:self.requestMethod];
@@ -344,34 +421,38 @@ static NSUInteger _activeOperationCount = 0;
 }
 
 - (void)buildRequestParams {
+  // When PARAMS are embedded in the URL, this doesn't work!!!
   if ([self.requestParams count] == 0) return;
   
-  NSMutableString *encodedParameterPairs = [[NSMutableString alloc] initWithCapacity:256];
+  if (_encodedParameterPairs) {
+    [_encodedParameterPairs release], _encodedParameterPairs = nil;
+  }
+  _encodedParameterPairs = [[NSMutableString alloc] initWithCapacity:256];
+  
   
   NSArray *allKeys = [self.requestParams allKeys];
   NSArray *allValues = [self.requestParams allValues];
   
   for (int i = 0; i < [self.requestParams count]; i++) {
-    [encodedParameterPairs appendFormat:@"%@=%@", [[allKeys objectAtIndex:i] encodedURLParameterString], [[allValues objectAtIndex:i] encodedURLParameterString]];
+    [_encodedParameterPairs appendFormat:@"%@=%@", [[allKeys objectAtIndex:i] encodedURLParameterString], [[allValues objectAtIndex:i] encodedURLParameterString]];
     if (i < [self.requestParams count] - 1) {
-      [encodedParameterPairs appendString:@"&"];
+      [_encodedParameterPairs appendString:@"&"];
     }
   }
   
   if ([[self.request HTTPMethod] isEqualToString:@"GET"] || [[self.request HTTPMethod] isEqualToString:@"DELETE"]) {
     // GET / DELETE
-    [self.request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?%@", [self.request URL], encodedParameterPairs]]];
+    [self.request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?%@", [self.request URL], _encodedParameterPairs]]];
     self.requestData = nil;
   } else {
     // POST / PUT
-    self.requestData = [encodedParameterPairs dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    self.requestData = [_encodedParameterPairs dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     
     // Set content field and content type
     self.requestContentType = @"application/x-www-form-urlencoded";
     self.requestContentLength = [self.requestData length];
   }
   
-  [encodedParameterPairs release];
   // Uses NSMutableURLRequest+Parameters category to set the HTTPbody
   // [self.request setParameters:self.requestParams];
 }
@@ -393,7 +474,7 @@ static NSUInteger _activeOperationCount = 0;
 
 #pragma mark Response Methods
 - (void)parseUrlResponse {
-//  NSLog(@"Begin Parsing URL Response");
+  //  NSLog(@"Begin Parsing URL Response");
   
   if ([self.urlResponse isKindOfClass:[NSHTTPURLResponse class]]) {
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)self.urlResponse;
@@ -413,8 +494,8 @@ static NSUInteger _activeOperationCount = 0;
 }
 
 - (void)parseCookies {
-//  NSLog(@"Begin Parsing Cookies");
-
+  //  NSLog(@"Begin Parsing Cookies");
+  
   NSArray *newCookies = [NSHTTPCookie cookiesWithResponseHeaderFields:self.responseHeaders forURL:self.requestURL];
   self.responseCookies = newCookies;
 }
@@ -447,7 +528,7 @@ static NSUInteger _activeOperationCount = 0;
 
 + (void)hideNetworkActivityIndicatorIfNeeded {
   if (_activeOperationCount == 0) {
-    [self hideNetworkActivityIndicator];
+    [[self class] performSelectorOnMainThread:@selector(hideNetworkActivityIndicator) withObject:nil waitUntilDone:NO];
   }
 }
 
@@ -456,9 +537,9 @@ static NSUInteger _activeOperationCount = 0;
 - (NSString *)responseString {
 	NSData *data = [self responseData];
 	if (data) {
-      return [[[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:self.responseEncoding] autorelease];
+    return [[[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:self.responseEncoding] autorelease];
 	} else {
-      return nil;
+    return nil;
   }
 }
 
@@ -466,7 +547,7 @@ static NSUInteger _activeOperationCount = 0;
 	NSString *encoding = [self.responseHeaders objectForKey:@"Content-Encoding"];
 	return encoding && [encoding rangeOfString:@"gzip"].location != NSNotFound;
 }
-        
+
 #pragma Utility Methods
 - (NSString *)description {
   NSMutableDictionary *descDict = [NSMutableDictionary dictionary];
@@ -507,6 +588,7 @@ static NSUInteger _activeOperationCount = 0;
   if (_requestHeaders) [_requestHeaders release], _requestHeaders = nil;
   if (_requestParams) [_requestParams release], _requestParams = nil;
   if (_requestData) [_requestData release], _requestData = nil;
+  if (_encodedParameterPairs) [_encodedParameterPairs release], _encodedParameterPairs = nil;
   
   // Response
   if (_responseHeaders) [_responseHeaders release], _responseHeaders = nil;
@@ -515,6 +597,8 @@ static NSUInteger _activeOperationCount = 0;
   if (_responseError) [_responseError release], _responseError = nil;
   if (_responseCookies) [_responseCookies release], _responseCookies = nil;
   if (_responseStatusMessage) [_responseStatusMessage release], _responseStatusMessage = nil;
+  
+  if (_opLock) [_opLock release], _opLock = nil;
   
   [super dealloc];
 }

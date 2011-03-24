@@ -34,6 +34,20 @@
   return MoogleCellTypePlain;
 }
 
++ (CGFloat)rowWidth {
+  switch ([[self class] cellType]) {
+    case MoogleCellTypePlain:
+      return 320.0;
+      break;
+    case MoogleCellTypeGrouped:
+      return 300.0;
+      break;
+    default:
+      return 320.0;
+      break;
+  }
+}
+
 + (CGFloat)rowHeight {
   // Subclasses should override
   return 44.0;

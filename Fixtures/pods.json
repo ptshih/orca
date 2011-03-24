@@ -5,7 +5,7 @@
 			"name" : "Cafe Zoë",
 			"picture_url" : "http://profile.ak.fbcdn.net/hprofile-ak-snc4/50256_57167660895_1422855_q.jpg",
 			"summary" : "You, Tom, Nathan, James, Gene, Jessa",
-			"last_activity" : 1300930808,
+			"timestamp" : 1300930808,
 			"checkin_count" : 12,
 			"comment_count" : 5
 		},
@@ -14,7 +14,7 @@
 			"name" : "Verde Tea Cafe",
 			"picture_url" : "http://profile.ak.fbcdn.net/hprofile-ak-snc4/23292_120382007997793_5083_q.jpg",
 			"summary" : "You, Tom, Nathan, James, Gene, Jessa",
-			"last_activity" : 1300930808,
+			"timestamp" : 1300930808,
 			"checkin_count" : 25,
 			"comment_count" : 15
 		}
