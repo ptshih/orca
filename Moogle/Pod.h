@@ -13,12 +13,12 @@
 @interface Pod : NSManagedObject {
 @private
 }
+@property (nonatomic, retain) NSString * summary;
+@property (nonatomic, retain) NSNumber * checkinCount;
 @property (nonatomic, retain) NSNumber * id;
-@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSDate * lastActivity;
 @property (nonatomic, retain) NSString * pictureUrl;
-@property (nonatomic, retain) NSString * summary;
+@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * commentCount;
-@property (nonatomic, retain) NSNumber * checkinCount;
 
 @end

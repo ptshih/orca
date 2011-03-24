@@ -10,13 +10,14 @@
 
 
 @implementation Feed
-@dynamic id;
-@dynamic comment;
-@dynamic timestamp;
-@dynamic authorName;
-@dynamic authorId;
-@dynamic photoUrl;
 @dynamic authorPictureUrl;
+@dynamic id;
+@dynamic authorId;
+@dynamic authorName;
+@dynamic photoUrl;
 @dynamic type;
+@dynamic timestamp;
+@dynamic comment;
+@dynamic podId;
 
 @end

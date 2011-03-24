@@ -10,12 +10,12 @@
 
 
 @implementation Pod
+@dynamic summary;
+@dynamic checkinCount;
 @dynamic id;
-@dynamic name;
 @dynamic lastActivity;
 @dynamic pictureUrl;
-@dynamic summary;
+@dynamic name;
 @dynamic commentCount;
-@dynamic checkinCount;
 
 @end

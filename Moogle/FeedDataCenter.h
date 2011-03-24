@@ -12,6 +12,8 @@
 @interface FeedDataCenter : MoogleDataCenter {
 }
 
+- (void)loadFeedsFromFixture;
+
 - (void)serializeFeedsWithDictionary:(NSDictionary *)dictionary;
 
 @end

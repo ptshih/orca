@@ -12,6 +12,8 @@
 @interface PodDataCenter : MoogleDataCenter {
 }
 
+- (void)loadPodsFromFixture;
+
 /**
  Serialize server response into Pod entities
  */

@@ -7,8 +7,20 @@
 //
 
 #import "PodDataCenter.h"
+#import "Pod.h"
+#import "Pod+Serialize.h"
 
 @implementation PodDataCenter
+
+#pragma mark Fixtures
+- (void)loadPodsFromFixture {
+  NSString *filePath = [[NSBundle mainBundle] pathForResource:@"pods" ofType:@"json"];
+  NSData *fixtureData = [NSData dataWithContentsOfFile:filePath];
+  NSDictionary *fixtureDict = [fixtureData JSONValue];
+  [self serializePodsWithDictionary:fixtureDict];
+  
+  [super dataCenterFinishedWithOperation:nil];
+}
 
 #pragma mark MoogleDataCenterDelegate
 - (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {  
@@ -19,6 +31,23 @@
 #pragma mark Serialize Response
 - (void)serializePodsWithDictionary:(NSDictionary *)dictionary {
   // Core Data Serialize
+  NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
+  
+  // Fetch and Unique the IDs
+  // MUST IMPLEMENT
+  
+  // Insert into Core Data
+  for (NSDictionary *podDict in [dictionary objectForKey:@"values"]) {
+    [Pod addPodWithDictionary:podDict inContext:context];
+  }
+  
+  // Save to Core Data
+  if ([context hasChanges]) {
+    if (![context save:nil]) {
+      // CoreData ERROR!
+      abort(); // NOTE: DO NOT SHIP
+    }
+  }
 }
 
 @end

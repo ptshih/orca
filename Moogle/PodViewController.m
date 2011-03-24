@@ -7,9 +7,19 @@
 //
 
 #import "PodViewController.h"
-
+#import "PodDataCenter.h"
 
 @implementation PodViewController
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    _podDataCenter = [[PodDataCenter alloc] init];
+    _podDataCenter.delegate = self;
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   
@@ -19,9 +29,23 @@
   
   // Pull Refresh
   [self setupPullRefresh];
+
+  // Load Fixtures
+  [_podDataCenter loadPodsFromFixture];
+}
+
+#pragma mark -
+#pragma mark MoogleDataCenterDelegate
+- (void)dataCenterDidFinish:(LINetworkOperation *)operation {
+  
+}
+
+- (void)dataCenterDidFail:(LINetworkOperation *)operation {
+  
 }
 
 - (void)dealloc {
+  RELEASE_SAFELY(_podDataCenter);
   [super dealloc];
 }
 

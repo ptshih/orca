@@ -15,6 +15,17 @@
   if (dictionary) {
     Feed *newFeed = [NSEntityDescription insertNewObjectForEntityForName:@"Feed" inManagedObjectContext:context];
     
+    newFeed.id = [dictionary valueForKey:@"id"];
+    newFeed.type = [dictionary valueForKey:@"type"];
+    newFeed.podId = [dictionary valueForKey:@"pod_id"];
+    newFeed.authorId = [dictionary valueForKey:@"author_id"];
+    newFeed.authorName = [dictionary valueForKey:@"author_name"];
+    newFeed.authorPictureUrl = [dictionary valueForKey:@"author_picture_url"];
+    
+    // Conditional
+    newFeed.comment = [dictionary valueForKey:@"comment"] ? [dictionary valueForKey:@"comment"] : nil;
+    newFeed.photoUrl = [dictionary valueForKey:@"photo_url"] ? [dictionary valueForKey:@"photo_url"] : nil;
+    
     return newFeed;
   } else {
     return nil;

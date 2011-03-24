@@ -10,8 +10,9 @@
 #import "MoogleViewController.h"
 #import "CardStateMachine.h"
 #import "UINavigationBar+Custom.h"
+#import "MoogleDataCenterDelegate.h"
 
-@interface CardViewController : MoogleViewController <CardStateMachine, UINavigationControllerDelegate> {
+@interface CardViewController : MoogleViewController <CardStateMachine, MoogleDataCenterDelegate, UINavigationControllerDelegate> {
   UIScrollView *_activeScrollView; // subclasses should set this if they have a scrollView
 }
 

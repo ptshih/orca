@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2538FF26133AD07100ACE127 /* feeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* feeds.json */; };
+		2538FF27133AD07100ACE127 /* feeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* feeds.json */; };
+		2538FF2B133AD0D100ACE127 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF2A133AD0D100ACE127 /* Feed.m */; };
+		2538FF2C133AD0D100ACE127 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF2A133AD0D100ACE127 /* Feed.m */; };
+		2538FF2F133AD0D200ACE127 /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF2E133AD0D200ACE127 /* Pod.m */; };
+		2538FF30133AD0D200ACE127 /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF2E133AD0D200ACE127 /* Pod.m */; };
 		25CEF8071339F278006F23A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8061339F278006F23A7 /* UIKit.framework */; };
 		25CEF8091339F278006F23A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8081339F278006F23A7 /* Foundation.framework */; };
 		25CEF80B1339F278006F23A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80A1339F278006F23A7 /* CoreGraphics.framework */; };
@@ -120,10 +126,6 @@
 		25FB8BFE133AAE3C00C130A8 /* bg-navigation.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BFD133AAE3C00C130A8 /* bg-navigation.png */; };
 		25FB8C01133AAF2900C130A8 /* nav-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BFF133AAF2600C130A8 /* nav-logo.png */; };
 		25FB8C02133AAF2900C130A8 /* nav-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8C00133AAF2700C130A8 /* nav-logo@2x.png */; };
-		25FB8C05133ABC7F00C130A8 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C04133ABC7E00C130A8 /* Feed.m */; };
-		25FB8C06133ABC7F00C130A8 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C04133ABC7E00C130A8 /* Feed.m */; };
-		25FB8C09133ABC8100C130A8 /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C08133ABC8000C130A8 /* Pod.m */; };
-		25FB8C0A133ABC8100C130A8 /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C08133ABC8000C130A8 /* Pod.m */; };
 		25FB8C0D133ABCCB00C130A8 /* PodDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C0C133ABCCA00C130A8 /* PodDataCenter.m */; };
 		25FB8C0E133ABCCB00C130A8 /* PodDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C0C133ABCCA00C130A8 /* PodDataCenter.m */; };
 		25FB8C11133ABCDD00C130A8 /* FeedDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C10133ABCDA00C130A8 /* FeedDataCenter.m */; };
@@ -133,6 +135,8 @@
 		25FB8C19133ABE1F00C130A8 /* Pod+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C17133ABE1C00C130A8 /* Pod+Serialize.m */; };
 		25FB8C1C133ABEDC00C130A8 /* Feed+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C1B133ABED700C130A8 /* Feed+Serialize.m */; };
 		25FB8C1D133ABEDC00C130A8 /* Feed+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C1B133ABED700C130A8 /* Feed+Serialize.m */; };
+		25FB8C20133ACB2400C130A8 /* pods.json in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8C1F133ACB2400C130A8 /* pods.json */; };
+		25FB8C21133ACB2400C130A8 /* pods.json in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8C1F133ACB2400C130A8 /* pods.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +150,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2538FF25133AD07100ACE127 /* feeds.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = feeds.json; sourceTree = "<group>"; };
+		2538FF29133AD0D100ACE127 /* Feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feed.h; sourceTree = "<group>"; };
+		2538FF2A133AD0D100ACE127 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
+		2538FF2D133AD0D200ACE127 /* Pod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pod.h; sourceTree = "<group>"; };
+		2538FF2E133AD0D200ACE127 /* Pod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pod.m; sourceTree = "<group>"; };
 		25CEF8021339F278006F23A7 /* Moogle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moogle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25CEF8061339F278006F23A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		25CEF8081339F278006F23A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -281,10 +290,6 @@
 		25FB8BFD133AAE3C00C130A8 /* bg-navigation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-navigation.png"; sourceTree = "<group>"; };
 		25FB8BFF133AAF2600C130A8 /* nav-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-logo.png"; sourceTree = "<group>"; };
 		25FB8C00133AAF2700C130A8 /* nav-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-logo@2x.png"; sourceTree = "<group>"; };
-		25FB8C03133ABC7E00C130A8 /* Feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feed.h; sourceTree = "<group>"; };
-		25FB8C04133ABC7E00C130A8 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
-		25FB8C07133ABC8000C130A8 /* Pod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pod.h; sourceTree = "<group>"; };
-		25FB8C08133ABC8000C130A8 /* Pod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pod.m; sourceTree = "<group>"; };
 		25FB8C0B133ABCC900C130A8 /* PodDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PodDataCenter.h; sourceTree = "<group>"; };
 		25FB8C0C133ABCCA00C130A8 /* PodDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PodDataCenter.m; sourceTree = "<group>"; };
 		25FB8C0F133ABCD900C130A8 /* FeedDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedDataCenter.h; sourceTree = "<group>"; };
@@ -295,6 +300,7 @@
 		25FB8C17133ABE1C00C130A8 /* Pod+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Pod+Serialize.m"; sourceTree = "<group>"; };
 		25FB8C1A133ABED100C130A8 /* Feed+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Feed+Serialize.h"; sourceTree = "<group>"; };
 		25FB8C1B133ABED700C130A8 /* Feed+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Feed+Serialize.m"; sourceTree = "<group>"; };
+		25FB8C1F133ACB2400C130A8 /* pods.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pods.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,6 +341,7 @@
 				25CEF8FE133A000C006F23A7 /* Resources */,
 				25CEF90B133A0219006F23A7 /* Facebook */,
 				25CEF82C1339F279006F23A7 /* MoogleTests */,
+				25FB8C1E133ACB1800C130A8 /* Fixtures */,
 				25CEF8051339F278006F23A7 /* Frameworks */,
 				25CEF8031339F278006F23A7 /* Products */,
 			);
@@ -480,14 +487,14 @@
 			children = (
 				25CEF8F31339FE46006F23A7 /* MoogleObject.h */,
 				25CEF8F41339FE46006F23A7 /* MoogleObject.m */,
-				25FB8C07133ABC8000C130A8 /* Pod.h */,
-				25FB8C08133ABC8000C130A8 /* Pod.m */,
-				25FB8C03133ABC7E00C130A8 /* Feed.h */,
-				25FB8C04133ABC7E00C130A8 /* Feed.m */,
 				25FB8C16133ABE1800C130A8 /* Pod+Serialize.h */,
 				25FB8C17133ABE1C00C130A8 /* Pod+Serialize.m */,
 				25FB8C1A133ABED100C130A8 /* Feed+Serialize.h */,
 				25FB8C1B133ABED700C130A8 /* Feed+Serialize.m */,
+				2538FF29133AD0D100ACE127 /* Feed.h */,
+				2538FF2A133AD0D100ACE127 /* Feed.m */,
+				2538FF2D133AD0D200ACE127 /* Pod.h */,
+				2538FF2E133AD0D200ACE127 /* Pod.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -667,6 +674,15 @@
 			name = Cells;
 			sourceTree = "<group>";
 		};
+		25FB8C1E133ACB1800C130A8 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				2538FF25133AD07100ACE127 /* feeds.json */,
+				25FB8C1F133ACB2400C130A8 /* pods.json */,
+			);
+			path = Fixtures;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -753,6 +769,8 @@
 				25FB8BFE133AAE3C00C130A8 /* bg-navigation.png in Resources */,
 				25FB8C01133AAF2900C130A8 /* nav-logo.png in Resources */,
 				25FB8C02133AAF2900C130A8 /* nav-logo@2x.png in Resources */,
+				25FB8C20133ACB2400C130A8 /* pods.json in Resources */,
+				2538FF26133AD07100ACE127 /* feeds.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -763,6 +781,8 @@
 				25CEF8341339F279006F23A7 /* MoogleTests.h in Resources */,
 				25CEF92E133A021A006F23A7 /* FBDialog.bundle in Resources */,
 				25FB8BD1133A1B9500C130A8 /* InitialDefaults.plist in Resources */,
+				25FB8C21133ACB2400C130A8 /* pods.json in Resources */,
+				2538FF27133AD07100ACE127 /* feeds.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -835,13 +855,13 @@
 				25FB8BEA133AA7C400C130A8 /* HeaderTabView.m in Sources */,
 				25FB8BEF133AA7E800C130A8 /* MoogleCell.m in Sources */,
 				25FB8BF0133AA7E800C130A8 /* MoogleImageCell.m in Sources */,
-				25FB8C05133ABC7F00C130A8 /* Feed.m in Sources */,
-				25FB8C09133ABC8100C130A8 /* Pod.m in Sources */,
 				25FB8C0D133ABCCB00C130A8 /* PodDataCenter.m in Sources */,
 				25FB8C11133ABCDD00C130A8 /* FeedDataCenter.m in Sources */,
 				25FB8C15133ABD3200C130A8 /* PodViewController.m in Sources */,
 				25FB8C18133ABE1F00C130A8 /* Pod+Serialize.m in Sources */,
 				25FB8C1C133ABEDC00C130A8 /* Feed+Serialize.m in Sources */,
+				2538FF2B133AD0D100ACE127 /* Feed.m in Sources */,
+				2538FF2F133AD0D200ACE127 /* Pod.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -881,12 +901,12 @@
 				25FB8B91133A057900C130A8 /* MoogleImageView.m in Sources */,
 				25FB8B9B133A069E00C130A8 /* MoogleDataCenter.m in Sources */,
 				25FB8BB2133A0D0800C130A8 /* MoogleViewController.m in Sources */,
-				25FB8C06133ABC7F00C130A8 /* Feed.m in Sources */,
-				25FB8C0A133ABC8100C130A8 /* Pod.m in Sources */,
 				25FB8C0E133ABCCB00C130A8 /* PodDataCenter.m in Sources */,
 				25FB8C12133ABCDD00C130A8 /* FeedDataCenter.m in Sources */,
 				25FB8C19133ABE1F00C130A8 /* Pod+Serialize.m in Sources */,
 				25FB8C1D133ABEDC00C130A8 /* Feed+Serialize.m in Sources */,
+				2538FF2C133AD0D100ACE127 /* Feed.m in Sources */,
+				2538FF30133AD0D200ACE127 /* Pod.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

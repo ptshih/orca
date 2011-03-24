@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "CardTableViewController.h"
 
+@class PodDataCenter;
+
 @interface PodViewController : CardTableViewController {
-    
+  PodDataCenter *_podDataCenter;
 }
 
 @end
