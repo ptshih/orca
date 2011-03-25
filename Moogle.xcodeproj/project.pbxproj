@@ -34,6 +34,7 @@
 		2538FFB1133BFEF700ACE127 /* navigationbar_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FFA9133BFEF700ACE127 /* navigationbar_bg.png */; };
 		2538FFB2133BFEF700ACE127 /* navigationbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FFAA133BFEF700ACE127 /* navigationbar_bg@2x.png */; };
 		2538FFB3133BFEF700ACE127 /* navigationbar_button_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FFAB133BFEF700ACE127 /* navigationbar_button_back.png */; };
+		2538FFBD133C90A100ACE127 /* photo_frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FFBC133C90A100ACE127 /* photo_frame.png */; };
 		25CEF8071339F278006F23A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8061339F278006F23A7 /* UIKit.framework */; };
 		25CEF8091339F278006F23A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8081339F278006F23A7 /* Foundation.framework */; };
 		25CEF80B1339F278006F23A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80A1339F278006F23A7 /* CoreGraphics.framework */; };
@@ -200,6 +201,7 @@
 		2538FFA9133BFEF700ACE127 /* navigationbar_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigationbar_bg.png; sourceTree = "<group>"; };
 		2538FFAA133BFEF700ACE127 /* navigationbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationbar_bg@2x.png"; sourceTree = "<group>"; };
 		2538FFAB133BFEF700ACE127 /* navigationbar_button_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigationbar_button_back.png; sourceTree = "<group>"; };
+		2538FFBC133C90A100ACE127 /* photo_frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_frame.png; sourceTree = "<group>"; };
 		25CEF8021339F278006F23A7 /* Moogle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moogle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25CEF8061339F278006F23A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		25CEF8081339F278006F23A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -563,6 +565,7 @@
 		25CEF8FE133A000C006F23A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2538FFBC133C90A100ACE127 /* photo_frame.png */,
 				2538FFA4133BFEF700ACE127 /* navigationbar_button_back@2x.png */,
 				2538FFA5133BFEF700ACE127 /* navigationbar_button_standard.png */,
 				2538FFA6133BFEF700ACE127 /* navigationbar_button_standard@2x.png */,
@@ -862,6 +865,7 @@
 				2538FFB1133BFEF700ACE127 /* navigationbar_bg.png in Resources */,
 				2538FFB2133BFEF700ACE127 /* navigationbar_bg@2x.png in Resources */,
 				2538FFB3133BFEF700ACE127 /* navigationbar_button_back.png in Resources */,
+				2538FFBD133C90A100ACE127 /* photo_frame.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

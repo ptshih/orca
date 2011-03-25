@@ -8,10 +8,13 @@
 
 #import "MoogleImageCell.h"
 
+static UIImage *_photoFrame = nil;
+
 @implementation MoogleImageCell
 
-@synthesize moogleImageView = _moogleImageView;
-@synthesize imageLoadingIndicator = _imageLoadingIndicator;
++ (void)initialize {
+  _photoFrame = [[[UIImage imageNamed:@"photo_frame.png"] stretchableImageWithLeftCapWidth:16 topCapHeight:16] retain];  
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -19,6 +22,9 @@
     _moogleImageView = [[MoogleImageView alloc] init];
     _imageLoadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [_imageLoadingIndicator startAnimating];
+    _photoFrameView = [[UIImageView alloc] initWithImage:_photoFrame];
+    
+    [self.contentView addSubview:_photoFrameView];
     [self.contentView addSubview:_imageLoadingIndicator];
     [self.contentView addSubview:_moogleImageView];
     
@@ -36,20 +42,27 @@
   [super layoutSubviews];
   
   if ([[self class] cellType] == MoogleCellTypePlain) {
-    self.moogleImageView.width = IMAGE_WIDTH_PLAIN;
-    self.moogleImageView.height = IMAGE_HEIGHT_PLAIN;
+    _photoFrameView.width = IMAGE_WIDTH_PLAIN + SPACING_X * 2;
+    _photoFrameView.height = IMAGE_HEIGHT_PLAIN + SPACING_Y * 2;
+    _moogleImageView.width = IMAGE_WIDTH_PLAIN;
+    _moogleImageView.height = IMAGE_HEIGHT_PLAIN;
   } else {
-    self.moogleImageView.width = IMAGE_WIDTH_GROUPED;
-    self.moogleImageView.height = IMAGE_HEIGHT_GROUPED;
+    _photoFrameView.width = IMAGE_WIDTH_GROUPED + SPACING_X * 2;
+    _photoFrameView.height = IMAGE_HEIGHT_GROUPED + SPACING_Y * 2;
+    _moogleImageView.width = IMAGE_WIDTH_GROUPED;
+    _moogleImageView.height = IMAGE_HEIGHT_GROUPED;
   }
-  self.moogleImageView.top = SPACING_Y;
-  self.moogleImageView.left = SPACING_X;
-  self.moogleImageView.layer.masksToBounds = YES;
-  self.moogleImageView.layer.cornerRadius = 4.0;
+  _photoFrameView.top = 0;
+  _photoFrameView.left = 0;
+  _moogleImageView.top = SPACING_Y;
+  _moogleImageView.left = SPACING_X;
+  
+//  _moogleImageView.layer.masksToBounds = YES;
+//  _moogleImageView.layer.cornerRadius = 4.0;
   
   _imageLoadingIndicator.frame = CGRectMake(15, 15, 20, 20);
 
-  self.textLabel.left = self.moogleImageView.right + SPACING_X;
+  self.textLabel.left = _moogleImageView.right + SPACING_X;
   
 }
 
@@ -65,6 +78,7 @@
 - (void)dealloc {
   RELEASE_SAFELY(_moogleImageView);
   RELEASE_SAFELY(_imageLoadingIndicator);
+  RELEASE_SAFELY(_photoFrameView);
   [super dealloc];
 }
 

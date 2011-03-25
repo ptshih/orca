@@ -55,7 +55,7 @@
   op.isFormData = YES;
   
   [op addRequestParam:@"comment" value:@"hello world!"];
-  [op addRequestParam:@"timestamp" value:[NSString stringWithFormat:@"%d", [[NSDate date] timeIntervalSince1970]]];
+  [op addRequestParam:@"timestamp" value:[NSString stringWithFormat:@"%0.0f", [[NSDate date] timeIntervalSince1970]]];
   [op addRequestParam:@"photo" value:[UIImage imageNamed:@"Icon.png"]];
   
   [[LINetworkQueue sharedQueue] addOperation:op];

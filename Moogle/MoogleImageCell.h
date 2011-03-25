@@ -20,9 +20,8 @@
 
 @interface MoogleImageCell : MoogleCell {
   MoogleImageView *_moogleImageView;
+  UIImageView *_photoFrameView;
   UIActivityIndicatorView *_imageLoadingIndicator;
 }
 
-@property (nonatomic, retain) MoogleImageView *moogleImageView;
-@property (nonatomic, retain) UIActivityIndicatorView *imageLoadingIndicator;
 @end
