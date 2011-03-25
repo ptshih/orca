@@ -31,9 +31,26 @@
   self.view.autoresizingMask = UIViewAutoresizingNone;
   self.view.autoresizesSubviews = NO;
   self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
+
+  // Setup Nav Bar
+  UIView *navTitleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+  navTitleView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+  _navTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+  _navTitleLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+  _navTitleLabel.textAlignment = UITextAlignmentCenter;
+  _navTitleLabel.textColor = FB_COLOR_VERY_LIGHT_BLUE;
+  _navTitleLabel.font = [UIFont boldSystemFontOfSize:17];
+  _navTitleLabel.numberOfLines = 3;
+  _navTitleLabel.shadowColor = [UIColor blackColor];
+  _navTitleLabel.shadowOffset = CGSizeMake(0, 1);
+  _navTitleLabel.backgroundColor = [UIColor clearColor];
+  [navTitleView addSubview:_navTitleLabel];
   
-  self.navigationController.navigationBar.tintColor = MOOGLE_BLUE_COLOR;
-  self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-logo.png"]] autorelease];
+  self.navigationItem.titleView = navTitleView;
+  [navTitleView release];
+  
+//  self.navigationController.navigationBar.tintColor = MOOGLE_BLUE_COLOR;
+//  self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-logo.png"]] autorelease];
 }
 
 // Subclasses may implement
@@ -160,6 +177,7 @@
 }
 
 - (void)dealloc {
+  RELEASE_SAFELY(_navTitleLabel);
   [super dealloc];
 }
 

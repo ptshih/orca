@@ -9,6 +9,7 @@
 #import "MoogleImageView.h"
 #import "LINetworkQueue.h"
 #import "LINetworkOperation.h"
+#import "LIImageCache.h"
 
 @implementation MoogleImageView
 
@@ -33,12 +34,17 @@
 //}
 
 - (void)loadImage {
-  if (_urlPath) {    
-    _op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:_urlPath]];
-    _op.delegate = self;
-    _op.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
-    [_op setQueuePriority:NSOperationQueuePriorityVeryLow];
-    [[LINetworkQueue sharedQueue] addOperation:_op];
+  if (_urlPath) {
+    UIImage *image = [[LIImageCache sharedCache] imageForURLPath:_urlPath];
+    if (image) {
+      self.image = image;
+    } else {
+      _op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:_urlPath]];
+      _op.delegate = self;
+      _op.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
+      [_op setQueuePriority:NSOperationQueuePriorityVeryLow];
+      [[LINetworkQueue sharedQueue] addOperation:_op];
+    }
   }
 }
 
@@ -55,7 +61,7 @@
 #pragma mark LINetworkOperationDelegate
 - (void)networkOperationDidFinish:(LINetworkOperation *)operation {
   UIImage *image = [UIImage imageWithData:[operation responseData]];
-  
+  [[LIImageCache sharedCache] cacheImage:image forURLPath:[[operation requestURL] absoluteString]];
   self.image = image;
   [self imageDidLoad];
   

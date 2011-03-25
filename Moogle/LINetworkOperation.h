@@ -40,7 +40,7 @@ typedef enum {
   NSString *_requestAccept;
   NSMutableDictionary *_requestHeaders;
   NSMutableDictionary *_requestParams; // A dictionary of parameters
-  NSData *_requestData;
+  NSMutableData *_requestData;
   NSMutableString *_encodedParameterPairs;
   
   // Response
@@ -62,6 +62,7 @@ typedef enum {
   BOOL _shouldCompressRequestBody;
   BOOL _allowCompressedResponse;
   BOOL _shouldTimeout; // defaults to YES
+  BOOL _isFormData; // defaults to NO
   
   // Request State
   NetworkOperationState _operationState;
@@ -92,7 +93,7 @@ typedef enum {
 @property (retain) NSString *requestAccept;
 @property (retain) NSMutableDictionary *requestHeaders;
 @property (retain) NSMutableDictionary *requestParams;
-@property (retain) NSData *requestData;
+@property (retain) NSMutableData *requestData;
 @property (retain) NSMutableString *encodedParameterPairs;
 
 // Response
@@ -114,6 +115,7 @@ typedef enum {
 @property (assign) BOOL shouldCompressRequestBody;
 @property (assign) BOOL allowCompressedResponse;
 @property (assign) BOOL shouldTimeout;
+@property (assign) BOOL isFormData;
 
 // Delegate
 @property (assign) id delegate;
@@ -127,7 +129,7 @@ typedef enum {
 
 #pragma mark Configuring Request
 - (void)addRequestHeader:(NSString *)header value:(NSString *)value;
-- (void)addRequestParam:(NSString *)param value:(NSString *)value;
+- (void)addRequestParam:(NSString *)param value:(id)value;
 
 #pragma mark Cleanup
 - (void)cancelOperation;

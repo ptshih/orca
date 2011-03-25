@@ -12,6 +12,10 @@
 #import "Pod.h"
 #import "PodCell.h"
 
+// Test
+#import "LINetworkQueue.h"
+#import "LINetworkOperation.h"
+
 @implementation PodViewController
 
 - (id)init {
@@ -26,14 +30,40 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  // Nav Title
+  _navTitleLabel.text = @"Places";
+  
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT_WITH_NAV);
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
   // Pull Refresh
   [self setupPullRefresh];
+  
+  UIBarButtonItem *post = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(post)];
+  self.navigationItem.rightBarButtonItem = post;
+  [post release];
 }
 
+// Test post
+- (void)post {
+  NSString *baseURLString = [NSString stringWithFormat:@"%@/%@/moogle/test", MOOGLE_BASE_URL, API_VERSION];
+  
+  LINetworkOperation *op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:baseURLString]];
+  op.delegate = self;
+  op.requestMethod = POST;
+  op.isFormData = YES;
+  
+  [op addRequestParam:@"comment" value:@"hello world!"];
+  [op addRequestParam:@"timestamp" value:[NSString stringWithFormat:@"%d", [[NSDate date] timeIntervalSince1970]]];
+  [op addRequestParam:@"photo" value:[UIImage imageNamed:@"Icon.png"]];
+  
+  [[LINetworkQueue sharedQueue] addOperation:op];
+}
+
+- (void)networkOperationDidFinish:(LINetworkOperation *)operation {
+  
+}
 
 #pragma mark -
 #pragma mark TableView
