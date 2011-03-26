@@ -30,6 +30,32 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  // Add Profile Button
+  UIButton *profile = [UIButton buttonWithType:UIButtonTypeCustom];
+  profile.frame = CGRectMake(0, 0, 44, 32);
+  [profile setTitle:@"Profile" forState:UIControlStateNormal];
+//  [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
+  [profile setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
+  profile.titleLabel.font = [UIFont boldSystemFontOfSize:10];
+  UIImage *profileImage = [[UIImage imageNamed:@"navigationbar_button_standard.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];  
+  [profile setBackgroundImage:profileImage forState:UIControlStateNormal];  
+  [profile addTarget:self action:@selector(profile) forControlEvents:UIControlEventTouchUpInside];  
+  UIBarButtonItem *profileButton = [[[UIBarButtonItem alloc] initWithCustomView:profile] autorelease];
+  self.navigationItem.leftBarButtonItem = profileButton;
+  
+  // Add Check-In Button
+  UIButton *checkin = [UIButton buttonWithType:UIButtonTypeCustom];
+  checkin.frame = CGRectMake(0, 0, 60, 32);
+  [checkin setTitle:@"Check-In" forState:UIControlStateNormal];
+  //  [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
+  [checkin setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
+  checkin.titleLabel.font = [UIFont boldSystemFontOfSize:10];
+  UIImage *checkinImage = [[UIImage imageNamed:@"navigationbar_button_standard.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];  
+  [checkin setBackgroundImage:checkinImage forState:UIControlStateNormal];  
+  [checkin addTarget:self action:@selector(checkin) forControlEvents:UIControlEventTouchUpInside];  
+  UIBarButtonItem *checkinButton = [[[UIBarButtonItem alloc] initWithCustomView:checkin] autorelease];
+  self.navigationItem.rightBarButtonItem = checkinButton;
+  
   // Nav Title
   _navTitleLabel.text = @"Places";
   
@@ -40,9 +66,9 @@
   // Pull Refresh
   [self setupPullRefresh];
   
-  UIBarButtonItem *post = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(post)];
-  self.navigationItem.rightBarButtonItem = post;
-  [post release];
+//  UIBarButtonItem *post = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(post)];
+//  self.navigationItem.rightBarButtonItem = post;
+//  [post release];
 }
 
 // Test post
@@ -78,7 +104,7 @@
   Pod *pod = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   FeedViewController *fvc = [[FeedViewController alloc] init];
-  fvc.podId = pod.id;
+  fvc.pod = pod;
   [self.navigationController pushViewController:fvc animated:YES];
   [fvc release];
 }

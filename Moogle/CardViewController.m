@@ -30,7 +30,8 @@
   self.view.frame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
   self.view.autoresizingMask = UIViewAutoresizingNone;
   self.view.autoresizesSubviews = NO;
-  self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
+  
+//  self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
 
   // Setup Nav Bar
   UIView *navTitleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
@@ -51,6 +52,10 @@
   
 //  self.navigationController.navigationBar.tintColor = MOOGLE_BLUE_COLOR;
 //  self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-logo.png"]] autorelease];
+}
+
+- (void)back {
+  [self.navigationController popViewControllerAnimated:YES];
 }
 
 // Subclasses may implement

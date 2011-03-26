@@ -21,6 +21,7 @@
 @synthesize delegate = _delegate;
 @synthesize response = _response;
 @synthesize rawResponse = _rawResponse;
+@synthesize op = _op;
 
 - (id)init {
   self = [super init];
@@ -91,7 +92,7 @@
 
 #pragma mark Send Operation
 - (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andParams:(NSDictionary *)params {
-  if (_op) {
+  if (!_op) {
     _op = [[LINetworkOperation alloc] initWithURL:url];
     _op.delegate = self;
   }

@@ -25,6 +25,7 @@
 @property (nonatomic, retain) id <MoogleDataCenterDelegate> delegate;
 @property (nonatomic, retain) id response;
 @property (nonatomic, retain) id rawResponse;
+@property (nonatomic, retain) LINetworkOperation *op;
 
 /**
  Send network operation to server (GET/POST)

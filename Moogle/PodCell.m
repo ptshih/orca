@@ -60,7 +60,7 @@
 - (void)layoutSubviews {
   [super layoutSubviews];
   
-  CGFloat top = SPACING_Y;
+  CGFloat top = SPACING_Y / 2;
   CGFloat left = IMAGE_WIDTH_PLAIN + SPACING_X * 2; // spacers: left of img, right of img
   CGFloat textWidth = self.contentView.width - left;
   CGSize textSize = CGSizeZero;
@@ -131,7 +131,7 @@
 
 // This is a class method because it is called before the cell has finished its layout
 + (CGFloat)variableRowHeightWithPod:(Pod *)pod {
-  CGFloat calculatedHeight = SPACING_Y; // Top Spacer
+  CGFloat calculatedHeight = SPACING_Y / 2; // Top Spacer
   CGFloat left = IMAGE_WIDTH_PLAIN + SPACING_X * 2; // spacers: left of img, right of img
   CGFloat textWidth = [[self class] rowWidth] - left;
   CGSize textSize = CGSizeMake(textWidth, INT_MAX); // Variable height

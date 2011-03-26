@@ -10,12 +10,14 @@
 #import "CardCoreDataTableViewController.h"
 
 @class FeedDataCenter;
+@class Pod;
 
 @interface FeedViewController : CardCoreDataTableViewController {
   FeedDataCenter *_feedDataCenter;
-  NSNumber *_podId;
+  Pod *_pod;
 }
 
-@property (nonatomic, retain) NSNumber *podId;
+@property (nonatomic, retain) Pod *pod;
+
 
 @end

@@ -28,4 +28,13 @@
   }
 }
 
+- (void)updatePodWithDictionary:(NSDictionary *)dictionary {
+  self.name = [dictionary valueForKey:@"name"];
+  self.summary = [dictionary valueForKey:@"summary"];
+  self.pictureUrl = [dictionary valueForKey:@"picture_url"];
+  self.checkinCount = [dictionary valueForKey:@"checkin_count"];
+  self.commentCount = [dictionary valueForKey:@"comment_count"];
+  self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
+}
+
 @end

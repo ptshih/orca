@@ -9,10 +9,11 @@
 #import "FeedViewController.h"
 #import "FeedDataCenter.h"
 #import "FeedCell.h"
+#import "Pod.h"
 
 @implementation FeedViewController
 
-@synthesize podId = _podId;
+@synthesize pod = _pod;
 
 - (id)init {
   self = [super init];
@@ -25,6 +26,22 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  // Add Back Bar Button  
+  UIButton *back = [UIButton buttonWithType:UIButtonTypeCustom];
+  back.frame = CGRectMake(0, 0, 44, 32);
+  [back setTitle:@"Back" forState:UIControlStateNormal];
+  [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
+  [back setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
+  back.titleLabel.font = [UIFont boldSystemFontOfSize:10];
+  UIImage *backImage = [[UIImage imageNamed:@"navigationbar_button_back.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];  
+  [back setBackgroundImage:backImage forState:UIControlStateNormal];  
+  [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];  
+  UIBarButtonItem *backButton = [[[UIBarButtonItem alloc] initWithCustomView:back] autorelease];
+  self.navigationItem.leftBarButtonItem = backButton;
+  
+  // Nav Title
+  _navTitleLabel.text = self.pod.name;
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT_WITH_NAV);
@@ -85,12 +102,12 @@
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [_feedDataCenter getFeedsFetchRequestForPod:self.podId];
+  return [_feedDataCenter getFeedsFetchRequestForPod:self.pod.id];
 }
 
 - (void)dealloc {
   RELEASE_SAFELY(_feedDataCenter);
-  RELEASE_SAFELY(_podId);
+  RELEASE_SAFELY(_pod);
   [super dealloc];
 }
 

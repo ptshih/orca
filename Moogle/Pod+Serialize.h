@@ -13,4 +13,6 @@
 
 + (Pod *)addPodWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
 
+- (void)updatePodWithDictionary:(NSDictionary *)dictionary;
+
 @end
