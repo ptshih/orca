@@ -53,6 +53,7 @@
 // SUBCLASS SHOULD CALL THIS
 - (void)setupTableViewWithFrame:(CGRect)frame andStyle:(UITableViewStyle)style andSeparatorStyle:(UITableViewCellSeparatorStyle)separatorStyle {
   _tableView = [[UITableView alloc] initWithFrame:frame style:style];
+  _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
   _tableView.separatorStyle = separatorStyle;
   _tableView.delegate = self;
   _tableView.dataSource = self;
@@ -79,10 +80,19 @@
 }
 
 - (void)setupHeaderTabView {
-  _headerTabView = [[HeaderTabView alloc] initWithFrame:CGRectMake(0, 0, 320, 44.0) andButtonTitles:[NSArray arrayWithObjects:@"Nearby", @"Popular", @"Followed", nil]];
+  _headerTabView = [[HeaderTabView alloc] initWithFrame:CGRectMake(0, 0, 320.0, 44.0) andButtonTitles:[NSArray arrayWithObjects:@"Nearby", @"Popular", @"Followed", nil]];
   self.headerTabView.delegate = self;
   
   self.tableView.tableHeaderView = self.headerTabView;
+}
+
+// Optional footer view
+- (void)setupFooterView {
+  _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 44.0, 320.0, 44.0)];
+  _footerView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight;
+  _footerView.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
+  _tableView.frame = CGRectMake(_tableView.left, _tableView.top, _tableView.width, _tableView.height - 44);
+  [self.view addSubview:_footerView];
 }
 
 // Called when the user logs out and we need to clear all cached data
@@ -214,6 +224,7 @@
   RELEASE_SAFELY(_searchBar);
   RELEASE_SAFELY(_refreshHeaderView);
   RELEASE_SAFELY(_headerTabView);
+  RELEASE_SAFELY(_footerView);
   [self.searchDisplayController release];
   [super dealloc];
 }

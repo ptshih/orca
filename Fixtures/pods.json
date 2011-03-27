@@ -15,10 +15,28 @@
 			"picture_url" : "http://profile.ak.fbcdn.net/hprofile-ak-snc4/23292_120382007997793_5083_q.jpg",
 			"summary" : "You, Tom, Nathan, James, Gene, Jessa",
 			"timestamp" : 1300930808,
-			"checkin_count" : 22,
-			"comment_count" : 15
+			"checkin_count" : 52,
+			"comment_count" : 25
+		},
+        {
+			"id" : 3,
+			"name" : "LinkedIn HQ",
+			"picture_url" : "http://profile.ak.fbcdn.net/hprofile-ak-snc4/23292_120382007997793_5083_q.jpg",
+			"summary" : "You, Tom, Nathan, James, Gene, Jessa",
+			"timestamp" : 1300932808,
+			"checkin_count" : 32,
+			"comment_count" : 19
+		},
+        {
+			"id" : 4,
+			"name" : "San Francisco International Airport (SFO)",
+			"picture_url" : "http://profile.ak.fbcdn.net/hprofile-ak-snc4/23292_120382007997793_5083_q.jpg",
+			"summary" : "You, Tom, Nathan, James, Gene, Jessa, Sidney, Bowei, Nancy, Sudeep, and 342 more...",
+			"timestamp" : 1300930808,
+			"checkin_count" : 23421,
+			"comment_count" : 1425
 		}
 	],
-	"count" : 2,
+	"count" : 4,
 	"total" : 10
 }

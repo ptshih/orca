@@ -28,19 +28,17 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.view.frame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
-  self.view.autoresizingMask = UIViewAutoresizingNone;
-  self.view.autoresizesSubviews = NO;
   
 //  self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
 
   // Setup Nav Bar
-  UIView *navTitleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-  navTitleView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-  _navTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-  _navTitleLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+  UIView *navTitleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 44)];
+//  navTitleView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+  _navTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 44)];
+//  _navTitleLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
   _navTitleLabel.textAlignment = UITextAlignmentCenter;
   _navTitleLabel.textColor = FB_COLOR_VERY_LIGHT_BLUE;
-  _navTitleLabel.font = [UIFont boldSystemFontOfSize:17];
+  _navTitleLabel.font = [UIFont boldSystemFontOfSize:15];
   _navTitleLabel.numberOfLines = 3;
   _navTitleLabel.shadowColor = [UIColor blackColor];
   _navTitleLabel.shadowOffset = CGSizeMake(0, 1);
@@ -165,7 +163,8 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-  return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+  return YES;
+//  return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 
 - (void)didReceiveMemoryWarning {

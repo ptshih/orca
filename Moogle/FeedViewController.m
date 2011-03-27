@@ -10,6 +10,7 @@
 #import "FeedDataCenter.h"
 #import "FeedCell.h"
 #import "Pod.h"
+#import "KupoComposeViewController.h"
 
 @implementation FeedViewController
 
@@ -29,12 +30,12 @@
   
   // Add Back Bar Button  
   UIButton *back = [UIButton buttonWithType:UIButtonTypeCustom];
-  back.frame = CGRectMake(0, 0, 44, 32);
+  back.frame = CGRectMake(0, 0, 60, 32);
   [back setTitle:@"Back" forState:UIControlStateNormal];
-  [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
+  [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
   [back setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
-  back.titleLabel.font = [UIFont boldSystemFontOfSize:10];
-  UIImage *backImage = [[UIImage imageNamed:@"navigationbar_button_back.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];  
+  back.titleLabel.font = [UIFont boldSystemFontOfSize:11];
+  UIImage *backImage = [[UIImage imageNamed:@"navigationbar_button_back.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];  
   [back setBackgroundImage:backImage forState:UIControlStateNormal];  
   [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];  
   UIBarButtonItem *backButton = [[[UIBarButtonItem alloc] initWithCustomView:back] autorelease];
@@ -44,11 +45,26 @@
   _navTitleLabel.text = self.pod.name;
   
   // Table
-  CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT_WITH_NAV);
+  CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
   // Pull Refresh
   [self setupPullRefresh];
+  
+  // Footer
+  [self setupFooterView];
+}
+
+- (void)setupFooterView {
+  [super setupFooterView];
+  
+  _kupoComposeViewController = [[KupoComposeViewController alloc] init];
+  _kupoComposeViewController.parentView = self.view;
+  _kupoComposeViewController.view.frame = _footerView.bounds;
+  [_footerView addSubview:_kupoComposeViewController.view];
+}
+   
+- (void)composeKupo {
 }
 
 #pragma mark -
@@ -108,6 +124,7 @@
 - (void)dealloc {
   RELEASE_SAFELY(_feedDataCenter);
   RELEASE_SAFELY(_pod);
+  RELEASE_SAFELY(_kupoComposeViewController);
   [super dealloc];
 }
 

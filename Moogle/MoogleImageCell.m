@@ -60,7 +60,7 @@ static UIImage *_photoFrame = nil;
 //  _moogleImageView.layer.masksToBounds = YES;
 //  _moogleImageView.layer.cornerRadius = 4.0;
   
-  _imageLoadingIndicator.frame = CGRectMake(25, 25, 20, 20);
+  _imageLoadingIndicator.frame = CGRectMake(20, 20, 20, 20);
 
   self.textLabel.left = _moogleImageView.right + SPACING_X;
   

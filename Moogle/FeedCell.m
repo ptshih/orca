@@ -65,7 +65,7 @@
 - (void)layoutSubviews {
   [super layoutSubviews];
   
-  CGFloat top = SPACING_Y;
+  CGFloat top = MARGIN_Y;
   CGFloat left = IMAGE_WIDTH_PLAIN + SPACING_X * 2; // spacers: left of img, right of img
   CGFloat textWidth = self.contentView.width - left;
   CGSize textSize = CGSizeZero;
@@ -150,7 +150,7 @@
 
 // This is a class method because it is called before the cell has finished its layout
 + (CGFloat)variableRowHeightWithFeed:(Feed *)feed {
-  CGFloat calculatedHeight = SPACING_Y; // Top Spacer
+  CGFloat calculatedHeight = MARGIN_Y; // Top Spacer
   CGFloat left = IMAGE_WIDTH_PLAIN + SPACING_X * 2; // spacers: left of img, right of img
   CGFloat textWidth = [[self class] rowWidth] - left;
   CGSize textSize = CGSizeMake(textWidth, INT_MAX); // Variable height
@@ -177,7 +177,7 @@
   calculatedHeight += PHOTO_SIZE + PHOTO_SPACING;
   
   // Bottom Spacer
-  calculatedHeight += SPACING_Y; // This is spacing*2 because its for top AND bottom
+  calculatedHeight += MARGIN_Y; // This is spacing*2 because its for top AND bottom
   
   // If height is less than image, adjust
   if (calculatedHeight < IMAGE_HEIGHT_PLAIN + (SPACING_Y * 2)) {

@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		250B3188133EBDE70011EEDD /* CardModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B3187133EBDE70011EEDD /* CardModalViewController.m */; };
+		250B318B133EBF0C0011EEDD /* KupoComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B318A133EBF0B0011EEDD /* KupoComposeViewController.m */; };
+		250B31AE133EC4220011EEDD /* MoogleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31AD133EC4220011EEDD /* MoogleView.m */; };
+		250B31CE133FF7610011EEDD /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31CD133FF7600011EEDD /* HPGrowingTextView.m */; };
+		250B31D1133FF7A70011EEDD /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31D0133FF7A70011EEDD /* HPTextViewInternal.m */; };
+		250B31DC133FFD3C0011EEDD /* LauncherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31DB133FFD330011EEDD /* LauncherViewController.m */; };
 		2538FF26133AD07100ACE127 /* feeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* feeds.json */; };
 		2538FF27133AD07100ACE127 /* feeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* feeds.json */; };
 		2538FF3D133AD22900ACE127 /* CardCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */; };
@@ -134,7 +140,6 @@
 		25FB8BC6133A137700C130A8 /* logo-white-280@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BC4133A137700C130A8 /* logo-white-280@2x.png */; };
 		25FB8BD0133A1B9500C130A8 /* InitialDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */; };
 		25FB8BD1133A1B9500C130A8 /* InitialDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */; };
-		25FB8BD6133A1EDC00C130A8 /* LauncherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BD5133A1EDA00C130A8 /* LauncherViewController.m */; };
 		25FB8BD9133A9B0600C130A8 /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BD8133A9B0300C130A8 /* FeedViewController.m */; };
 		25FB8BDC133A9B1600C130A8 /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BDB133A9B1200C130A8 /* MeViewController.m */; };
 		25FB8BE2133AA6C700C130A8 /* CardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BDF133AA6AB00C130A8 /* CardViewController.m */; };
@@ -171,6 +176,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		250B3186133EBDE70011EEDD /* CardModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardModalViewController.h; sourceTree = "<group>"; };
+		250B3187133EBDE70011EEDD /* CardModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardModalViewController.m; sourceTree = "<group>"; };
+		250B3189133EBF0B0011EEDD /* KupoComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeViewController.h; sourceTree = "<group>"; };
+		250B318A133EBF0B0011EEDD /* KupoComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KupoComposeViewController.m; sourceTree = "<group>"; };
+		250B31AC133EC4220011EEDD /* MoogleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleView.h; sourceTree = "<group>"; };
+		250B31AD133EC4220011EEDD /* MoogleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoogleView.m; sourceTree = "<group>"; };
+		250B31AF133EC86A0011EEDD /* KupoComposeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeDelegate.h; sourceTree = "<group>"; };
+		250B31CC133FF75F0011EEDD /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
+		250B31CD133FF7600011EEDD /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
+		250B31CF133FF7A60011EEDD /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
+		250B31D0133FF7A70011EEDD /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
+		250B31DA133FFD300011EEDD /* LauncherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LauncherViewController.h; sourceTree = "<group>"; };
+		250B31DB133FFD330011EEDD /* LauncherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LauncherViewController.m; sourceTree = "<group>"; };
 		2538FF25133AD07100ACE127 /* feeds.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = feeds.json; sourceTree = "<group>"; };
 		2538FF3B133AD22700ACE127 /* CardCoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCoreDataTableViewController.h; sourceTree = "<group>"; };
 		2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCoreDataTableViewController.m; sourceTree = "<group>"; };
@@ -312,8 +330,6 @@
 		25FB8BC4133A137700C130A8 /* logo-white-280@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-white-280@2x.png"; sourceTree = "<group>"; };
 		25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InitialDefaults.plist; sourceTree = "<group>"; };
 		25FB8BD3133A1DE400C130A8 /* LoginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginDelegate.h; sourceTree = "<group>"; };
-		25FB8BD4133A1ED900C130A8 /* LauncherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LauncherViewController.h; sourceTree = "<group>"; };
-		25FB8BD5133A1EDA00C130A8 /* LauncherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LauncherViewController.m; sourceTree = "<group>"; };
 		25FB8BD7133A9B0000C130A8 /* FeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedViewController.h; sourceTree = "<group>"; };
 		25FB8BD8133A9B0300C130A8 /* FeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedViewController.m; sourceTree = "<group>"; };
 		25FB8BDA133A9B1000C130A8 /* MeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeViewController.h; sourceTree = "<group>"; };
@@ -380,6 +396,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		250B3182133EBD840011EEDD /* Modals */ = {
+			isa = PBXGroup;
+			children = (
+				250B3186133EBDE70011EEDD /* CardModalViewController.h */,
+				250B3187133EBDE70011EEDD /* CardModalViewController.m */,
+			);
+			name = Modals;
+			sourceTree = "<group>";
+		};
 		2538FF6D133B507700ACE127 /* EGO */ = {
 			isa = PBXGroup;
 			children = (
@@ -671,6 +696,12 @@
 				25FB8B8F133A057900C130A8 /* MoogleImageView.m */,
 				25FB8BE7133AA7C300C130A8 /* HeaderTabView.h */,
 				25FB8BE8133AA7C300C130A8 /* HeaderTabView.m */,
+				250B31AC133EC4220011EEDD /* MoogleView.h */,
+				250B31AD133EC4220011EEDD /* MoogleView.m */,
+				250B31CC133FF75F0011EEDD /* HPGrowingTextView.h */,
+				250B31CD133FF7600011EEDD /* HPGrowingTextView.m */,
+				250B31CF133FF7A60011EEDD /* HPTextViewInternal.h */,
+				250B31D0133FF7A70011EEDD /* HPTextViewInternal.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -691,25 +722,28 @@
 		25FB8BA4133A09A000C130A8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				250B31DA133FFD300011EEDD /* LauncherViewController.h */,
+				250B31DB133FFD330011EEDD /* LauncherViewController.m */,
+				250B3182133EBD840011EEDD /* Modals */,
+				25FB8BDD133AA69800C130A8 /* CardStateMachine.h */,
 				25FB8BDE133AA6A900C130A8 /* CardViewController.h */,
 				25FB8BDF133AA6AB00C130A8 /* CardViewController.m */,
 				25FB8BE0133AA6B100C130A8 /* CardTableViewController.h */,
 				25FB8BE1133AA6BA00C130A8 /* CardTableViewController.m */,
 				2538FF3B133AD22700ACE127 /* CardCoreDataTableViewController.h */,
 				2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */,
-				25FB8BDD133AA69800C130A8 /* CardStateMachine.h */,
 				25FB8BAF133A0D0800C130A8 /* MoogleViewController.h */,
 				25FB8BB0133A0D0800C130A8 /* MoogleViewController.m */,
 				25FB8BB3133A0D3C00C130A8 /* LoginViewController.h */,
 				25FB8BB4133A0D3D00C130A8 /* LoginViewController.m */,
-				25FB8BD4133A1ED900C130A8 /* LauncherViewController.h */,
-				25FB8BD5133A1EDA00C130A8 /* LauncherViewController.m */,
 				25FB8C13133ABD1200C130A8 /* PodViewController.h */,
 				25FB8C14133ABD2300C130A8 /* PodViewController.m */,
 				25FB8BDA133A9B1000C130A8 /* MeViewController.h */,
 				25FB8BDB133A9B1200C130A8 /* MeViewController.m */,
 				25FB8BD7133A9B0000C130A8 /* FeedViewController.h */,
 				25FB8BD8133A9B0300C130A8 /* FeedViewController.m */,
+				250B3189133EBF0B0011EEDD /* KupoComposeViewController.h */,
+				250B318A133EBF0B0011EEDD /* KupoComposeViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -734,6 +768,7 @@
 				25FB8B99133A069E00C130A8 /* MoogleDataCenterDelegate.h */,
 				25FB8BE9133AA7C400C130A8 /* HeaderTabViewDelegate.h */,
 				2538FF6C133B49A100ACE127 /* MoogleImageViewDelegate.h */,
+				250B31AF133EC86A0011EEDD /* KupoComposeDelegate.h */,
 			);
 			name = Delegates;
 			sourceTree = "<group>";
@@ -941,7 +976,6 @@
 				25FB8B9A133A069E00C130A8 /* MoogleDataCenter.m in Sources */,
 				25FB8BB1133A0D0800C130A8 /* MoogleViewController.m in Sources */,
 				25FB8BB5133A0D3D00C130A8 /* LoginViewController.m in Sources */,
-				25FB8BD6133A1EDC00C130A8 /* LauncherViewController.m in Sources */,
 				25FB8BD9133A9B0600C130A8 /* FeedViewController.m in Sources */,
 				25FB8BDC133A9B1600C130A8 /* MeViewController.m in Sources */,
 				25FB8BE2133AA6C700C130A8 /* CardViewController.m in Sources */,
@@ -961,6 +995,12 @@
 				2538FF66133B44D500ACE127 /* Feed.m in Sources */,
 				2538FF6A133B44D800ACE127 /* Pod.m in Sources */,
 				2538FF90133BDDBF00ACE127 /* LIImageCache.m in Sources */,
+				250B3188133EBDE70011EEDD /* CardModalViewController.m in Sources */,
+				250B318B133EBF0C0011EEDD /* KupoComposeViewController.m in Sources */,
+				250B31AE133EC4220011EEDD /* MoogleView.m in Sources */,
+				250B31CE133FF7610011EEDD /* HPGrowingTextView.m in Sources */,
+				250B31D1133FF7A70011EEDD /* HPTextViewInternal.m in Sources */,
+				250B31DC133FFD3C0011EEDD /* LauncherViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

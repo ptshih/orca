@@ -64,14 +64,13 @@ static NSMutableDictionary *_pkDict = nil;
     }
   }
   
-  NSError *error = nil;
-  
-  BOOL lol = [context obtainPermanentIDsForObjects:[[context insertedObjects] allObjects] error:nil];
+  [context obtainPermanentIDsForObjects:[[context insertedObjects] allObjects] error:nil];
   for (Pod *newPod in [context insertedObjects]) {
     [_pkDict setValue:[newPod objectID] forKey:[newPod.id stringValue]];
   }
   
   // Save to Core Data
+  NSError *error = nil;
   if ([context hasChanges]) {
     if (![context save:&error]) {
       // CoreData ERROR!

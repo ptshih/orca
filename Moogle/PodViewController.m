@@ -32,11 +32,11 @@
   
   // Add Profile Button
   UIButton *profile = [UIButton buttonWithType:UIButtonTypeCustom];
-  profile.frame = CGRectMake(0, 0, 44, 32);
+  profile.frame = CGRectMake(0, 0, 60, 32);
   [profile setTitle:@"Profile" forState:UIControlStateNormal];
 //  [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
   [profile setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
-  profile.titleLabel.font = [UIFont boldSystemFontOfSize:10];
+  profile.titleLabel.font = [UIFont boldSystemFontOfSize:11];
   UIImage *profileImage = [[UIImage imageNamed:@"navigationbar_button_standard.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];  
   [profile setBackgroundImage:profileImage forState:UIControlStateNormal];  
   [profile addTarget:self action:@selector(profile) forControlEvents:UIControlEventTouchUpInside];  
@@ -49,7 +49,7 @@
   [checkin setTitle:@"Check-In" forState:UIControlStateNormal];
   //  [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
   [checkin setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
-  checkin.titleLabel.font = [UIFont boldSystemFontOfSize:10];
+  checkin.titleLabel.font = [UIFont boldSystemFontOfSize:11];
   UIImage *checkinImage = [[UIImage imageNamed:@"navigationbar_button_standard.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];  
   [checkin setBackgroundImage:checkinImage forState:UIControlStateNormal];  
   [checkin addTarget:self action:@selector(checkin) forControlEvents:UIControlEventTouchUpInside];  
@@ -57,10 +57,10 @@
   self.navigationItem.rightBarButtonItem = checkinButton;
   
   // Nav Title
-  _navTitleLabel.text = @"Places";
+  _navTitleLabel.text = @"Moogle";
   
   // Table
-  CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT_WITH_NAV);
+  CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
   // Pull Refresh
@@ -69,6 +69,8 @@
 //  UIBarButtonItem *post = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(post)];
 //  self.navigationItem.rightBarButtonItem = post;
 //  [post release];
+  
+  [self reloadCardController];
 }
 
 // Test post

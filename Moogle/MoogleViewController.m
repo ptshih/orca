@@ -19,6 +19,13 @@
   return self;
 }
 
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  
+  self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+  self.view.autoresizesSubviews = YES;
+}
+
 - (void)dealloc {
   [super dealloc];
 }

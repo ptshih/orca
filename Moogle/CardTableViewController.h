@@ -21,6 +21,7 @@
   UISearchBar *_searchBar;
   HeaderTabView *_headerTabView;
   EGORefreshTableHeaderView *_refreshHeaderView;
+  UIView *_footerView;
   BOOL _reloading;
 }
 
@@ -34,6 +35,7 @@
 - (void)setupTableViewWithFrame:(CGRect)frame andStyle:(UITableViewStyle)style andSeparatorStyle:(UITableViewCellSeparatorStyle)separatorStyle;
 - (void)setupPullRefresh;
 - (void)setupHeaderTabView;
+- (void)setupFooterView;
 - (void)setupSearchDisplayController;
 
 @end

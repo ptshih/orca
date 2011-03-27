@@ -126,12 +126,17 @@
 - (void)animateHideLogin {
   [UIView beginAnimations:@"HideLogin" context:nil];
   [UIView setAnimationDelegate:self];
+  [UIView setAnimationDidStopSelector:@selector(animateHideLoginFinished)];
   [UIView setAnimationBeginsFromCurrentState:YES];
   [UIView setAnimationCurve:UIViewAnimationCurveLinear];
   [UIView setAnimationDuration:0.6]; // Fade out is configurable in seconds (FLOAT)
   [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.window cache:YES];
   [self.window exchangeSubviewAtIndex:0 withSubviewAtIndex:1];
   [UIView commitAnimations];
+}
+
+- (void)animateHideLoginFinished {
+  [_loginViewController.view removeFromSuperview];
 }
 
 - (void)dealloc {

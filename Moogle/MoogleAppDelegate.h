@@ -12,12 +12,14 @@
 @class Facebook;
 @class LoginViewController;
 @class LauncherViewController;
+@class PodViewController;
 
 @interface MoogleAppDelegate : NSObject <UIApplicationDelegate, LoginDelegate> {
   UIWindow *_window;
   Facebook *_facebook;
   LoginViewController *_loginViewController;
   LauncherViewController *_launcherViewcontroller;
+  PodViewController *_podViewController;
 }
 
 @property (nonatomic, retain) UIWindow *window;

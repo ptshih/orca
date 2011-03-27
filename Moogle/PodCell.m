@@ -39,12 +39,12 @@
     _summaryLabel.textAlignment = UITextAlignmentLeft;
     _activityLabel.textAlignment = UITextAlignmentLeft;
     
-    _nameLabel.lineBreakMode = UILineBreakModeTailTruncation;
+    _nameLabel.lineBreakMode = UILineBreakModeWordWrap;
     _timestampLabel.lineBreakMode = UILineBreakModeTailTruncation;
     _summaryLabel.lineBreakMode = UILineBreakModeWordWrap;
     _activityLabel.lineBreakMode = UILineBreakModeTailTruncation;
     
-    _nameLabel.numberOfLines = 1;
+    _nameLabel.numberOfLines = 2;
     _timestampLabel.numberOfLines = 1;
     _summaryLabel.numberOfLines = 8;
     _activityLabel.numberOfLines = 1;
@@ -60,7 +60,7 @@
 - (void)layoutSubviews {
   [super layoutSubviews];
   
-  CGFloat top = SPACING_Y / 2;
+  CGFloat top = MARGIN_Y;
   CGFloat left = IMAGE_WIDTH_PLAIN + SPACING_X * 2; // spacers: left of img, right of img
   CGFloat textWidth = self.contentView.width - left;
   CGSize textSize = CGSizeZero;
@@ -70,14 +70,14 @@
   
   // Timestamp Label
   textSize = CGSizeMake(textWidth, INT_MAX);
-  labelSize = [_timestampLabel.text sizeWithFont:_timestampLabel.font constrainedToSize:textSize lineBreakMode:_timestampLabel.lineBreakMode];
+  labelSize = [_timestampLabel.text sizeWithFont:_timestampLabel.font forWidth:textWidth lineBreakMode:_timestampLabel.lineBreakMode]; // single line
   _timestampLabel.width = labelSize.width;
   _timestampLabel.height = labelSize.height;
   _timestampLabel.left = self.contentView.width - _timestampLabel.width - SPACING_X;
-  _timestampLabel.top = top;
+  _timestampLabel.top = top + 1;
   
   // Name Label
-  textSize = CGSizeMake(textWidth - _timestampLabel.width - SPACING_X, INT_MAX);
+  textSize = CGSizeMake(textWidth - _timestampLabel.width, INT_MAX);
   labelSize = [_nameLabel.text sizeWithFont:_nameLabel.font constrainedToSize:textSize lineBreakMode:_nameLabel.lineBreakMode];
   _nameLabel.width = labelSize.width;
   _nameLabel.height = labelSize.height;
@@ -100,7 +100,8 @@
   
   // Activity Label
   textSize = CGSizeMake(textWidth, INT_MAX);
-  labelSize = [_activityLabel.text sizeWithFont:_activityLabel.font constrainedToSize:textSize lineBreakMode:_activityLabel.lineBreakMode];
+  labelSize = [_activityLabel.text sizeWithFont:_activityLabel.font forWidth:textWidth lineBreakMode:_activityLabel.lineBreakMode]; // single line
+//  labelSize = [_activityLabel.text sizeWithFont:_activityLabel.font constrainedToSize:textSize lineBreakMode:_activityLabel.lineBreakMode];
   _activityLabel.width = labelSize.width;
   _activityLabel.height = labelSize.height;
   _activityLabel.left = left;
@@ -131,7 +132,7 @@
 
 // This is a class method because it is called before the cell has finished its layout
 + (CGFloat)variableRowHeightWithPod:(Pod *)pod {
-  CGFloat calculatedHeight = SPACING_Y / 2; // Top Spacer
+  CGFloat calculatedHeight = MARGIN_Y;
   CGFloat left = IMAGE_WIDTH_PLAIN + SPACING_X * 2; // spacers: left of img, right of img
   CGFloat textWidth = [[self class] rowWidth] - left;
   CGSize textSize = CGSizeMake(textWidth, INT_MAX); // Variable height
@@ -154,7 +155,7 @@
   calculatedHeight += labelSize.height;
     
   // Bottom Spacer
-  calculatedHeight += SPACING_Y; // This is spacing*2 because its for top AND bottom
+  calculatedHeight += MARGIN_Y; // This is spacing*2 because its for top AND bottom
   
   // If height is less than image, adjust
   if (calculatedHeight < IMAGE_HEIGHT_PLAIN + (SPACING_Y * 2)) {
