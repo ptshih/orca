@@ -74,22 +74,22 @@
 }
 
 //real class properties
-@property int maxNumberOfLines;
-@property int minNumberOfLines;
-@property BOOL animateHeightChange;
-@property (retain) UITextView *internalTextView;	
+@property (nonatomic, assign) int maxNumberOfLines;
+@property (nonatomic, assign) int minNumberOfLines;
+@property (nonatomic, assign) BOOL animateHeightChange;
+@property (nonatomic, retain) UITextView *internalTextView;	
 
 
 //uitextview properties
-@property(assign) NSObject<HPGrowingTextViewDelegate> *delegate;
-@property(nonatomic,assign) NSString *text;
-@property(nonatomic,assign) UIFont *font;
-@property(nonatomic,assign) UIColor *textColor;
-@property(nonatomic) UITextAlignment textAlignment;    // default is UITextAlignmentLeft
-@property(nonatomic) NSRange selectedRange;            // only ranges of length 0 are supported
+@property (nonatomic, assign) NSObject<HPGrowingTextViewDelegate> *delegate;
+@property (nonatomic,assign) NSString *text;
+@property (nonatomic,assign) UIFont *font;
+@property (nonatomic,assign) UIColor *textColor;
+@property (nonatomic, assign) UITextAlignment textAlignment;    // default is UITextAlignmentLeft
+@property(nonatomic, assign) NSRange selectedRange;            // only ranges of length 0 are supported
 @property(nonatomic,getter=isEditable) BOOL editable;
-@property(nonatomic) UIDataDetectorTypes dataDetectorTypes __OSX_AVAILABLE_STARTING(__MAC_NA, __IPHONE_3_0);
-@property (nonatomic) UIReturnKeyType returnKeyType;
+@property(nonatomic, assign) UIDataDetectorTypes dataDetectorTypes __OSX_AVAILABLE_STARTING(__MAC_NA, __IPHONE_3_0);
+@property (nonatomic, assign) UIReturnKeyType returnKeyType;
 
 
 //uitextview methods

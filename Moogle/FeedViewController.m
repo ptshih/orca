@@ -10,7 +10,6 @@
 #import "FeedDataCenter.h"
 #import "FeedCell.h"
 #import "Pod.h"
-#import "KupoComposeViewController.h"
 
 @implementation FeedViewController
 
@@ -34,7 +33,7 @@
   [back setTitle:@"Back" forState:UIControlStateNormal];
   [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
   [back setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
-  back.titleLabel.font = [UIFont boldSystemFontOfSize:11];
+  back.titleLabel.font = [UIFont boldSystemFontOfSize:11.0];
   UIImage *backImage = [[UIImage imageNamed:@"navigationbar_button_back.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];  
   [back setBackgroundImage:backImage forState:UIControlStateNormal];  
   [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];  
@@ -53,15 +52,12 @@
   
   // Footer
   [self setupFooterView];
+  
+  [self reloadCardController];
 }
 
 - (void)setupFooterView {
   [super setupFooterView];
-  
-  _kupoComposeViewController = [[KupoComposeViewController alloc] init];
-  _kupoComposeViewController.parentView = self.view;
-  _kupoComposeViewController.view.frame = _footerView.bounds;
-  [_footerView addSubview:_kupoComposeViewController.view];
 }
    
 - (void)composeKupo {
@@ -124,7 +120,6 @@
 - (void)dealloc {
   RELEASE_SAFELY(_feedDataCenter);
   RELEASE_SAFELY(_pod);
-  RELEASE_SAFELY(_kupoComposeViewController);
   [super dealloc];
 }
 

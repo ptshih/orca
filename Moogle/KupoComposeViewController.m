@@ -12,6 +12,8 @@
 
 @implementation KupoComposeViewController
 
+@synthesize kupoComment = _kupoComment;
+
 @synthesize parentView = _parentView;
 @synthesize delegate = _delegate;
 
@@ -31,7 +33,10 @@
 }
 - (void)viewDidLoad {
   [super viewDidLoad];
-  _kupoComment = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(SPACING, SPACING, self.view.width - SPACING * 2, self.view.height - SPACING * 2)];
+  self.view.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
+  
+  _kupoComment = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(SPACING, SPACING, self.view.width - SPACING * 2, 44 - SPACING * 2)];
+  _kupoComment.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   
   _kupoComment.layer.masksToBounds = YES;
   _kupoComment.layer.cornerRadius = 5.0;
@@ -41,7 +46,7 @@
   _kupoComment.minNumberOfLines = 1;
 	_kupoComment.maxNumberOfLines = 4;
 	_kupoComment.returnKeyType = UIReturnKeyDefault;
-	_kupoComment.font = [UIFont boldSystemFontOfSize:15.0f];
+	_kupoComment.font = [UIFont boldSystemFontOfSize:14.0];
 	_kupoComment.delegate = self;
 	//textView.animateHeightChange = NO; //turns off animation
   
@@ -49,15 +54,17 @@
 }
 
 #pragma mark UITextViewDelegate
-- (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
-{
+- (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height {
 	float diff = (_kupoComment.frame.size.height - height);
   
   // adjust parent view frame also
-  self.parentView.height -= diff;
+  self.parentView.height += diff;
+  
+  // adjust self view
+  self.view.height -= diff;
   
 	CGRect r = _kupoComment.frame;
-	r.origin.y += diff;
+//	r.origin.y += diff;
 	_kupoComment.frame = r;
 }
 

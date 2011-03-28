@@ -18,6 +18,8 @@
   id <KupoComposeDelegate> _delegate;
 }
 
+@property (nonatomic, retain) HPGrowingTextView *kupoComment;
+
 @property (nonatomic, assign) UIView *parentView;
 @property (nonatomic, assign) id <KupoComposeDelegate> delegate;
 

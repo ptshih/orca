@@ -36,7 +36,7 @@
   [profile setTitle:@"Profile" forState:UIControlStateNormal];
 //  [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
   [profile setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
-  profile.titleLabel.font = [UIFont boldSystemFontOfSize:11];
+  profile.titleLabel.font = [UIFont boldSystemFontOfSize:11.0];
   UIImage *profileImage = [[UIImage imageNamed:@"navigationbar_button_standard.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];  
   [profile setBackgroundImage:profileImage forState:UIControlStateNormal];  
   [profile addTarget:self action:@selector(profile) forControlEvents:UIControlEventTouchUpInside];  
@@ -49,7 +49,7 @@
   [checkin setTitle:@"Check-In" forState:UIControlStateNormal];
   //  [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
   [checkin setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
-  checkin.titleLabel.font = [UIFont boldSystemFontOfSize:11];
+  checkin.titleLabel.font = [UIFont boldSystemFontOfSize:11.0];
   UIImage *checkinImage = [[UIImage imageNamed:@"navigationbar_button_standard.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];  
   [checkin setBackgroundImage:checkinImage forState:UIControlStateNormal];  
   [checkin addTarget:self action:@selector(checkin) forControlEvents:UIControlEventTouchUpInside];  
@@ -71,6 +71,14 @@
 //  [post release];
   
   [self reloadCardController];
+}
+
+- (void)profile {
+  
+}
+
+- (void)checkin {
+  
 }
 
 // Test post

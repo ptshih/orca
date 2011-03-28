@@ -219,10 +219,14 @@
 	
 }
 
--(BOOL)resignFirstResponder
-{
+-(BOOL)resignFirstResponder {
 	[super resignFirstResponder];
 	return [internalTextView resignFirstResponder];
+}
+
+- (BOOL)isFirstResponder {
+  [super isFirstResponder];
+  return [internalTextView isFirstResponder];
 }
 
 - (void)dealloc {

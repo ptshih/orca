@@ -27,7 +27,6 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.frame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
   
 //  self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
 
@@ -38,7 +37,7 @@
 //  _navTitleLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
   _navTitleLabel.textAlignment = UITextAlignmentCenter;
   _navTitleLabel.textColor = FB_COLOR_VERY_LIGHT_BLUE;
-  _navTitleLabel.font = [UIFont boldSystemFontOfSize:15];
+  _navTitleLabel.font = [UIFont boldSystemFontOfSize:14.0];
   _navTitleLabel.numberOfLines = 3;
   _navTitleLabel.shadowColor = [UIColor blackColor];
   _navTitleLabel.shadowOffset = CGSizeMake(0, 1);

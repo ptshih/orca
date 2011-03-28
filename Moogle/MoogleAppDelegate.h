@@ -20,6 +20,7 @@
   LoginViewController *_loginViewController;
   LauncherViewController *_launcherViewcontroller;
   PodViewController *_podViewController;
+  UINavigationController *_navigationController;
 }
 
 @property (nonatomic, retain) UIWindow *window;

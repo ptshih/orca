@@ -21,8 +21,19 @@
 			"comment" : "Go Giants!",
 			"photo_url" : "http://yeinjee.com/wp-content/uploads/2008/09/korea-wonder-girls-001.jpg",
 			"timestamp" : 1290130808
-		}
+		},
+    {
+      "id" : 3,
+      "type" : "checkin",
+      "pod_id" : 1,
+      "author_id" : 548430564,
+      "author_name" : "Peter Shih",
+      "author_picture_url" : "http://profile.ak.fbcdn.net/hprofile-ak-snc4/174453_548430564_3413707_q.jpg",
+      "comment" : "Go Giants!",
+      "photo_url" : "http://yeinjee.com/wp-content/uploads/2008/09/korea-wonder-girls-001.jpg",
+      "timestamp" : 1290130808
+    }
 	],
-	"count" : 2,
+	"count" : 3,
 	"total" : 10
 }

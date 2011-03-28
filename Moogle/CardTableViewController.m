@@ -53,7 +53,7 @@
 // SUBCLASS SHOULD CALL THIS
 - (void)setupTableViewWithFrame:(CGRect)frame andStyle:(UITableViewStyle)style andSeparatorStyle:(UITableViewCellSeparatorStyle)separatorStyle {
   _tableView = [[UITableView alloc] initWithFrame:frame style:style];
-  _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+  _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   _tableView.separatorStyle = separatorStyle;
   _tableView.delegate = self;
   _tableView.dataSource = self;
@@ -65,6 +65,11 @@
   
   // Set the active scrollView
   _activeScrollView = _tableView;
+  
+  _dismissKupoGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKupoCompose)];
+  _dismissKupoGesture.numberOfTapsRequired = 1;
+  _dismissKupoGesture.delegate = self;
+  [_tableView addGestureRecognizer:_dismissKupoGesture];
 }
 
 // SUBCLASS CAN OPTIONALLY CALL
@@ -88,10 +93,15 @@
 
 // Optional footer view
 - (void)setupFooterView {
-  _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 44.0, 320.0, 44.0)];
-  _footerView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight;
-  _footerView.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
   _tableView.frame = CGRectMake(_tableView.left, _tableView.top, _tableView.width, _tableView.height - 44);
+  _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 44.0, 320.0, 44.0)];
+  _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+  
+  _kupoComposeViewController = [[KupoComposeViewController alloc] init];
+  _kupoComposeViewController.parentView = self.view;
+  _kupoComposeViewController.view.frame = _footerView.bounds;
+  _kupoComposeViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  [_footerView addSubview:_kupoComposeViewController.view];
   [self.view addSubview:_footerView];
 }
 
@@ -211,6 +221,30 @@
 	return [NSDate date]; // should return date data source was last changed
 }
 
+#pragma mark -
+#pragma mark UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+  if (_footerView) {
+    if ([_kupoComposeViewController.kupoComment isFirstResponder]) {
+      return YES;
+    } else {
+      return NO;
+    }
+  } else {
+    return NO;
+  }
+}
+
+#pragma mark -
+#pragma mark Dismiss Kupo Compose
+- (void)dismissKupoCompose {
+  if (_footerView) {
+    if ([_kupoComposeViewController.kupoComment isFirstResponder]) {
+      [_kupoComposeViewController.kupoComment resignFirstResponder];
+    }
+  }
+}
+
 - (void)didReceiveMemoryWarning {
   // Releases the view if it doesn't have a superview.
   [super didReceiveMemoryWarning];
@@ -225,6 +259,8 @@
   RELEASE_SAFELY(_refreshHeaderView);
   RELEASE_SAFELY(_headerTabView);
   RELEASE_SAFELY(_footerView);
+  RELEASE_SAFELY(_kupoComposeViewController);
+  RELEASE_SAFELY(_dismissKupoGesture);
   [self.searchDisplayController release];
   [super dealloc];
 }

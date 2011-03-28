@@ -12,6 +12,7 @@
 #import "LICoreDataStack.h"
 #import "LoginViewController.h"
 #import "LauncherViewController.h"
+#import "PodViewController.h"
 
 @implementation MoogleAppDelegate
 
@@ -45,20 +46,21 @@
   // Setup Facebook
   _facebook = [[Facebook alloc] initWithAppId:FB_APP_ID];
   
+  _podViewController = [[PodViewController alloc] init];
+  
+  // NavigationController
+  _navigationController = [[UINavigationController alloc] initWithRootViewController:_podViewController];
+  
   // LoginVC
   _loginViewController = [[LoginViewController alloc] init];
   _loginViewController.delegate = self;
   
   // Login if necessary
-  if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
-    if (!_launcherViewcontroller) {
-      _launcherViewcontroller = [[LauncherViewController alloc] init];
-    }
-    [self.window addSubview:_launcherViewcontroller.view];
-  } else {
-    [self.window addSubview:_loginViewController.view];
+  if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
+    [_navigationController presentModalViewController:_loginViewController animated:YES];
   }
   
+  [self.window addSubview:_navigationController.view];
   [self.window makeKeyAndVisible];
   return YES;
 }
@@ -114,11 +116,11 @@
 #pragma mark LoginDelegate
 - (void)moogleDidLogin {
   DLog(@"Moogle Logged In");
-  if (!_launcherViewcontroller) {
-    _launcherViewcontroller = [[LauncherViewController alloc] init];
-  }
-  [self.window insertSubview:_launcherViewcontroller.view atIndex:0];
-  [self animateHideLogin];
+//  if (!_podViewController) {
+//    _podViewController = [[PodViewController alloc] init];
+//  }
+//  [self.window insertSubview:_podViewController.view atIndex:0];
+//  [self animateHideLogin];
 }
 
 #pragma mark -
@@ -142,6 +144,8 @@
 - (void)dealloc {
   RELEASE_SAFELY(_loginViewController);
   RELEASE_SAFELY(_launcherViewcontroller);
+  RELEASE_SAFELY(_podViewController);
+  RELEASE_SAFELY(_navigationController);
   RELEASE_SAFELY(_facebook);
   RELEASE_SAFELY(_window);
   [super dealloc];

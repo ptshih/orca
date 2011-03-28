@@ -11,12 +11,10 @@
 
 @class FeedDataCenter;
 @class Pod;
-@class KupoComposeViewController;
 
 @interface FeedViewController : CardCoreDataTableViewController {
   FeedDataCenter *_feedDataCenter;
   Pod *_pod;
-  KupoComposeViewController *_kupoComposeViewController;
 }
 
 @property (nonatomic, retain) Pod *pod;
