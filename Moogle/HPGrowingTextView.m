@@ -69,6 +69,12 @@
 		animateHeightChange = YES;
 		
 		internalTextView.text = @"";
+      
+    _backgroundView = [[UIImageView alloc]initWithFrame:internalTextView.frame];
+    _backgroundView.image = [[UIImage imageNamed: @"bubble.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+    _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [internalTextView addSubview:_backgroundView];
+    [internalTextView sendSubviewToBack:_backgroundView];
 		
 		[self setMaxNumberOfLines:3];
     }
@@ -230,6 +236,7 @@
 }
 
 - (void)dealloc {
+  [_backgroundView release];
 	[internalTextView release];
     [super dealloc];
 }

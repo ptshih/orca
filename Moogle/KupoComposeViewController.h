@@ -23,4 +23,6 @@
 @property (nonatomic, assign) UIView *parentView;
 @property (nonatomic, assign) id <KupoComposeDelegate> delegate;
 
+- (void)moveTextViewForKeyboard:(NSNotification*)aNotification up:(BOOL) up;
+
 @end

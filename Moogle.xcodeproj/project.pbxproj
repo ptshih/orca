@@ -13,6 +13,8 @@
 		250B31CE133FF7610011EEDD /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31CD133FF7600011EEDD /* HPGrowingTextView.m */; };
 		250B31D1133FF7A70011EEDD /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31D0133FF7A70011EEDD /* HPTextViewInternal.m */; };
 		250B31DC133FFD3C0011EEDD /* LauncherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31DB133FFD330011EEDD /* LauncherViewController.m */; };
+		250B31DF13411DBD0011EEDD /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31DD13411DBD0011EEDD /* bubble.png */; };
+		250B31E013411DBD0011EEDD /* bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31DE13411DBD0011EEDD /* bubble@2x.png */; };
 		2538FF26133AD07100ACE127 /* feeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* feeds.json */; };
 		2538FF27133AD07100ACE127 /* feeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* feeds.json */; };
 		2538FF3D133AD22900ACE127 /* CardCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */; };
@@ -189,6 +191,8 @@
 		250B31D0133FF7A70011EEDD /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
 		250B31DA133FFD300011EEDD /* LauncherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LauncherViewController.h; sourceTree = "<group>"; };
 		250B31DB133FFD330011EEDD /* LauncherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LauncherViewController.m; sourceTree = "<group>"; };
+		250B31DD13411DBD0011EEDD /* bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble.png; sourceTree = "<group>"; };
+		250B31DE13411DBD0011EEDD /* bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble@2x.png"; sourceTree = "<group>"; };
 		2538FF25133AD07100ACE127 /* feeds.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = feeds.json; sourceTree = "<group>"; };
 		2538FF3B133AD22700ACE127 /* CardCoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCoreDataTableViewController.h; sourceTree = "<group>"; };
 		2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCoreDataTableViewController.m; sourceTree = "<group>"; };
@@ -590,6 +594,8 @@
 		25CEF8FE133A000C006F23A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				250B31DD13411DBD0011EEDD /* bubble.png */,
+				250B31DE13411DBD0011EEDD /* bubble@2x.png */,
 				2538FFBC133C90A100ACE127 /* photo_frame.png */,
 				2538FFA4133BFEF700ACE127 /* navigationbar_button_back@2x.png */,
 				2538FFA5133BFEF700ACE127 /* navigationbar_button_standard.png */,
@@ -901,6 +907,8 @@
 				2538FFB2133BFEF700ACE127 /* navigationbar_bg@2x.png in Resources */,
 				2538FFB3133BFEF700ACE127 /* navigationbar_button_back.png in Resources */,
 				2538FFBD133C90A100ACE127 /* photo_frame.png in Resources */,
+				250B31DF13411DBD0011EEDD /* bubble.png in Resources */,
+				250B31E013411DBD0011EEDD /* bubble@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

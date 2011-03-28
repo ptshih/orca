@@ -37,11 +37,7 @@
   
   _kupoComment = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(SPACING, SPACING, self.view.width - SPACING * 2, 44 - SPACING * 2)];
   _kupoComment.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-  
-  _kupoComment.layer.masksToBounds = YES;
-  _kupoComment.layer.cornerRadius = 5.0;
-  _kupoComment.layer.borderColor = [[UIColor grayColor] CGColor];
-  _kupoComment.layer.borderWidth = 1.0;
+
   
   _kupoComment.minNumberOfLines = 1;
 	_kupoComment.maxNumberOfLines = 4;
@@ -69,41 +65,39 @@
 }
 
 #pragma mark UIKeyboard
-- (void)keyboardWillShow:(NSNotification *)keyboardNotification {
-  UIViewAnimationCurve curve;
-  [[[keyboardNotification userInfo] valueForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&curve];
-  
-  NSTimeInterval duration;
-  [[[keyboardNotification userInfo] valueForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&duration];
-  
-  CGRect endFrame;
-  [[[keyboardNotification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&endFrame];
-  
-  //schedule animation
-  [UIView beginAnimations:@"KeyboardAnimationIn" context:NULL];
-  [UIView setAnimationDuration:duration];
-  [UIView setAnimationCurve:curve];
-  
-  self.parentView.height = self.parentView.height - endFrame.size.height;
-  
-  [UIView commitAnimations];
+- (void)keyboardWillShow:(NSNotification *)aNotification {
+  [self moveTextViewForKeyboard:aNotification up:YES];
 }
 
-- (void)keyboardWillHide:(NSNotification *)keyboardNotification {
-  UIViewAnimationCurve curve;
-  [[[keyboardNotification userInfo] valueForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&curve];
+- (void)keyboardWillHide:(NSNotification *)aNotification {
+  [self moveTextViewForKeyboard:aNotification up:NO]; 
+}
+
+- (void)moveTextViewForKeyboard:(NSNotification*)aNotification up:(BOOL) up {
+  NSDictionary* userInfo = [aNotification userInfo];
   
-  NSTimeInterval duration;
-  [[[keyboardNotification userInfo] valueForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&duration];
+  // Get animation info from userInfo
+  NSTimeInterval animationDuration;
+  UIViewAnimationCurve animationCurve;
   
-  CGRect beginFrame;
-  [[[keyboardNotification userInfo] valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue:&beginFrame];
+  CGRect keyboardEndFrame;
   
-  [UIView beginAnimations:@"KeyboardAnimationOut" context:NULL];
-  [UIView setAnimationDuration:duration];
-  [UIView setAnimationCurve:curve];
+  [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&animationCurve];
+  [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
   
-  self.parentView.height = self.parentView.height + beginFrame.size.height;
+  
+  [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
+  
+  
+  // Animate up or down
+  [UIView beginAnimations:nil context:nil];
+  [UIView setAnimationDuration:animationDuration];
+  [UIView setAnimationCurve:animationCurve];
+  
+//  CGRect newFrame = self.parentView.frame;
+  CGRect keyboardFrame = [self.view convertRect:keyboardEndFrame toView:nil];
+  self.parentView.height -= keyboardFrame.size.height * (up? 1 : -1);
+//  self.parentView.frame = newFrame;
   
   [UIView commitAnimations];
 }

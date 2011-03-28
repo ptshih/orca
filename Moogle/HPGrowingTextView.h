@@ -51,6 +51,7 @@
 
 @interface HPGrowingTextView : UIView <UITextViewDelegate> {
 	HPTextViewInternal *internalTextView;	
+  UIImageView *_backgroundView;
 	
 	int minHeight;
 	int maxHeight;
