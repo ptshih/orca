@@ -66,26 +66,22 @@
   [super layoutSubviews];
   
   CGFloat top = MARGIN_Y;
-  CGFloat left = IMAGE_WIDTH_PLAIN + SPACING_X * 2; // spacers: left of img, right of img
-  CGFloat textWidth = self.contentView.width - left;
-  CGSize textSize = CGSizeZero;
-  CGSize labelSize = CGSizeZero;
+  CGFloat left = MARGIN_X;
+  CGFloat textWidth = 0.0;
+  
+  left = _photoFrameView.right;
   
   // Row 1
   
   // Timestamp Label
-  textSize = CGSizeMake(textWidth, INT_MAX);
-  labelSize = [_timestampLabel.text sizeWithFont:_timestampLabel.font constrainedToSize:textSize lineBreakMode:_timestampLabel.lineBreakMode];
-  _timestampLabel.width = labelSize.width;
-  _timestampLabel.height = labelSize.height;
+  textWidth = self.contentView.width - left - SPACING_X;
+  [_timestampLabel sizeToFitFixedWidth:textWidth];
   _timestampLabel.left = self.contentView.width - _timestampLabel.width - SPACING_X;
   _timestampLabel.top = top;
   
   // Name Label
-  textSize = CGSizeMake(textWidth - _timestampLabel.width - SPACING_X, INT_MAX);
-  labelSize = [_nameLabel.text sizeWithFont:_nameLabel.font constrainedToSize:textSize lineBreakMode:_nameLabel.lineBreakMode];
-  _nameLabel.width = labelSize.width;
-  _nameLabel.height = labelSize.height;
+  textWidth = self.contentView.width - left - _timestampLabel.width - SPACING_X * 2;
+  [_nameLabel sizeToFitFixedWidth:textWidth];
   _nameLabel.left = left;
   _nameLabel.top = top;
   
@@ -93,10 +89,8 @@
   top = _nameLabel.bottom;
   
   // Status Label
-  textSize = CGSizeMake(textWidth, INT_MAX);
-  labelSize = [_statusLabel.text sizeWithFont:_statusLabel.font constrainedToSize:textSize lineBreakMode:_statusLabel.lineBreakMode];
-  _statusLabel.width = labelSize.width;
-  _statusLabel.height = labelSize.height;
+  textWidth = self.contentView.width - left - SPACING_X;
+  [_statusLabel sizeToFitFixedWidth:textWidth];
   _statusLabel.left = left;
   _statusLabel.top = top;
   
@@ -104,10 +98,8 @@
   top = _statusLabel.bottom;
   
   // Activity Label
-  textSize = CGSizeMake(textWidth, INT_MAX);
-  labelSize = [_commentLabel.text sizeWithFont:_commentLabel.font constrainedToSize:textSize lineBreakMode:_commentLabel.lineBreakMode];
-  _commentLabel.width = labelSize.width;
-  _commentLabel.height = labelSize.height;
+  textWidth = self.contentView.width - left - SPACING_X;
+  [_commentLabel sizeToFitFixedWidth:textWidth];
   _commentLabel.left = left;
   _commentLabel.top = top;
   
@@ -121,6 +113,9 @@
   _photoImageView.height = PHOTO_SIZE;
   _photoImageView.layer.masksToBounds = YES;
   _photoImageView.layer.cornerRadius = 4.0;
+  
+  // Set desired height
+  _desiredHeight = _photoImageView.bottom + MARGIN_Y;
 }
 
 - (void)prepareForReuse {
@@ -131,7 +126,8 @@
   _commentLabel.text = nil;
 }
 
-- (void)fillCellWithFeed:(Feed *)feed {
+- (void)fillCellWithObject:(id)object {
+  Feed *feed = (Feed *)object;
   _nameLabel.text = feed.authorName;
   _timestampLabel.text = [feed.timestamp humanIntervalSinceNow];
   _statusLabel.text = [NSString stringWithFormat:@"Checked in here."];
@@ -146,45 +142,6 @@
 
 + (MoogleCellType)cellType {
   return MoogleCellTypePlain;
-}
-
-// This is a class method because it is called before the cell has finished its layout
-+ (CGFloat)variableRowHeightWithFeed:(Feed *)feed {
-  CGFloat calculatedHeight = MARGIN_Y; // Top Spacer
-  CGFloat left = IMAGE_WIDTH_PLAIN + SPACING_X * 2; // spacers: left of img, right of img
-  CGFloat textWidth = [[self class] rowWidth] - left;
-  CGSize textSize = CGSizeMake(textWidth, INT_MAX); // Variable height
-  CGSize labelSize = CGSizeZero;
-  UIFont *font = nil;
-  
-  // Name (Row 1)
-  font = [UIFont boldSystemFontOfSize:NAME_FONT_SIZE];
-  labelSize = [feed.authorName sizeWithFont:font constrainedToSize:textSize lineBreakMode:UILineBreakModeTailTruncation];
-  calculatedHeight += labelSize.height;
-  
-  // Status
-  font = [UIFont systemFontOfSize:CELL_FONT_SIZE];
-  NSString *statusString = [NSString stringWithFormat:@"Checked in here."];
-  labelSize = [statusString sizeWithFont:font constrainedToSize:textSize lineBreakMode:UILineBreakModeWordWrap];
-  calculatedHeight += labelSize.height;
-  
-  // Comment
-  font = [UIFont systemFontOfSize:CELL_FONT_SIZE];
-  labelSize = [feed.comment sizeWithFont:font constrainedToSize:textSize lineBreakMode:UILineBreakModeWordWrap];
-  calculatedHeight += labelSize.height;
-  
-  // Photo
-  calculatedHeight += PHOTO_SIZE + PHOTO_SPACING;
-  
-  // Bottom Spacer
-  calculatedHeight += MARGIN_Y; // This is spacing*2 because its for top AND bottom
-  
-  // If height is less than image, adjust
-  if (calculatedHeight < IMAGE_HEIGHT_PLAIN + (SPACING_Y * 2)) {
-    calculatedHeight = IMAGE_HEIGHT_PLAIN + (SPACING_Y * 2);
-  }
-  
-  return calculatedHeight;
 }
 
 - (void)dealloc {

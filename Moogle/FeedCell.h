@@ -18,7 +18,4 @@
   MoogleImageView *_photoImageView; // optional
 }
 
-- (void)fillCellWithFeed:(Feed *)feed;
-+ (CGFloat)variableRowHeightWithFeed:(Feed *)feed;
-
 @end

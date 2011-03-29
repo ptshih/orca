@@ -89,7 +89,7 @@
 #pragma mark TableView
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   Feed *feed = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  return [FeedCell variableRowHeightWithFeed:feed];
+  return [FeedCell rowHeightForObject:feed];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -103,7 +103,7 @@
   
   Feed *feed = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
-  [cell fillCellWithFeed:feed];
+  [cell fillCellWithObject:feed];
   
   return cell;
 }

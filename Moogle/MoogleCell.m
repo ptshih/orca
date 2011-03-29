@@ -11,6 +11,8 @@
 
 @implementation MoogleCell
 
+@synthesize desiredHeight = _desiredHeight;
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
@@ -18,12 +20,14 @@
       self.backgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"table-cell-bg.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:30]] autorelease];
       self.selectedBackgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"table-cell-bg-selected.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:30]] autorelease];
     }
+    _desiredHeight = 0.0;
   }
   return self;
 }
 
 - (void)prepareForReuse {
   [super prepareForReuse];
+  _desiredHeight = 0.0;
 }
 
 - (void)layoutSubviews {
@@ -53,29 +57,28 @@
   return 44.0;
 }
 
-+ (CGFloat)variableRowHeightWithDictionary:(NSDictionary *)dictionary {
-  return 0.0;
+// This is a class method because it is called before the cell has finished its layout
++ (CGFloat)rowHeightForObject:(id)object {
+  static id heightCell = nil;
+  if (!heightCell) {
+    heightCell = [[[self class] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithFormat:@"%@_HeightCell", [self class]]];
+  } else {
+    if ([heightCell isMemberOfClass:[object class]]) {
+      [heightCell prepareForReuse];
+    } else {
+      [heightCell release], heightCell = nil;
+      heightCell = [[[self class] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithFormat:@"%@_HeightCell", [self class]]];
+    }
+  }
+  
+  [heightCell fillCellWithObject:object];
+  [heightCell layoutSubviews];
+  
+  return [(MoogleCell *)heightCell desiredHeight];
 }
 
-+ (CGFloat)variableRowHeightWithText:(NSString *)text andFontSize:(CGFloat)fontSize {
-  CGFloat calculatedHeight = 0.0;
-  
-  CGFloat left = 10;
-  CGFloat textWidth = 300;
-  CGSize textSize = CGSizeZero;
-  CGSize labelSize = CGSizeZero;
-  
-  // Text
-  textWidth = 300 - left - 10;
-  textSize = CGSizeMake(textWidth, INT_MAX);
-  
-  labelSize = [text sizeWithFont:[UIFont systemFontOfSize:fontSize] constrainedToSize:textSize lineBreakMode:UILineBreakModeWordWrap];
-  
-  calculatedHeight = calculatedHeight + labelSize.height;
-  
-  calculatedHeight = calculatedHeight + 10 * 2; // This is spacing*2 because its for top AND bottom
-  
-  return calculatedHeight;
+- (void)fillCellWithObject:(id)object {
+  // Subclasses must override
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -105,7 +105,7 @@
 #pragma mark TableView
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   Pod *pod = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  return [PodCell variableRowHeightWithPod:pod];
+  return [PodCell rowHeightForObject:pod];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -130,7 +130,7 @@
   
   Pod *pod = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
-  [cell fillCellWithPod:pod];
+  [cell fillCellWithObject:pod];
   
   return cell;
 }

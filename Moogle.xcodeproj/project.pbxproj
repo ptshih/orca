@@ -23,6 +23,9 @@
 		250B31F0134165670011EEDD /* bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31EE134165670011EEDD /* bubble@2x.png */; };
 		250B31F31341673B0011EEDD /* gradient_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31F11341673A0011EEDD /* gradient_gray.png */; };
 		250B31F41341673B0011EEDD /* gradient_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31F21341673A0011EEDD /* gradient_gray@2x.png */; };
+		250B31F71341C45B0011EEDD /* unread.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31F51341C4590011EEDD /* unread.png */; };
+		250B31F81341C45B0011EEDD /* unread@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31F61341C45A0011EEDD /* unread@2x.png */; };
+		250B32031341CB9F0011EEDD /* UILabel+SizeToFitWidth.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B32021341CB9F0011EEDD /* UILabel+SizeToFitWidth.m */; };
 		2538FF26133AD07100ACE127 /* feeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* feeds.json */; };
 		2538FF27133AD07100ACE127 /* feeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* feeds.json */; };
 		2538FF3D133AD22900ACE127 /* CardCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */; };
@@ -207,6 +210,10 @@
 		250B31EE134165670011EEDD /* bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble@2x.png"; sourceTree = "<group>"; };
 		250B31F11341673A0011EEDD /* gradient_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradient_gray.png; sourceTree = "<group>"; };
 		250B31F21341673A0011EEDD /* gradient_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient_gray@2x.png"; sourceTree = "<group>"; };
+		250B31F51341C4590011EEDD /* unread.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unread.png; sourceTree = "<group>"; };
+		250B31F61341C45A0011EEDD /* unread@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unread@2x.png"; sourceTree = "<group>"; };
+		250B32011341CB9E0011EEDD /* UILabel+SizeToFitWidth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+SizeToFitWidth.h"; sourceTree = "<group>"; };
+		250B32021341CB9F0011EEDD /* UILabel+SizeToFitWidth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+SizeToFitWidth.m"; sourceTree = "<group>"; };
 		2538FF25133AD07100ACE127 /* feeds.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = feeds.json; sourceTree = "<group>"; };
 		2538FF3B133AD22700ACE127 /* CardCoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCoreDataTableViewController.h; sourceTree = "<group>"; };
 		2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCoreDataTableViewController.m; sourceTree = "<group>"; };
@@ -561,6 +568,8 @@
 				25CEF8991339FB8B006F23A7 /* UIImage+UIView.m */,
 				250B31E1134131FA0011EEDD /* UIScreen+ConvertRect.h */,
 				250B31E2134131FA0011EEDD /* UIScreen+ConvertRect.m */,
+				250B32011341CB9E0011EEDD /* UILabel+SizeToFitWidth.h */,
+				250B32021341CB9F0011EEDD /* UILabel+SizeToFitWidth.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -610,6 +619,8 @@
 		25CEF8FE133A000C006F23A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				250B31F51341C4590011EEDD /* unread.png */,
+				250B31F61341C45A0011EEDD /* unread@2x.png */,
 				250B31F11341673A0011EEDD /* gradient_gray.png */,
 				250B31F21341673A0011EEDD /* gradient_gray@2x.png */,
 				250B31E513413BB80011EEDD /* photo_upload.png */,
@@ -935,6 +946,8 @@
 				250B31F0134165670011EEDD /* bubble@2x.png in Resources */,
 				250B31F31341673B0011EEDD /* gradient_gray.png in Resources */,
 				250B31F41341673B0011EEDD /* gradient_gray@2x.png in Resources */,
+				250B31F71341C45B0011EEDD /* unread.png in Resources */,
+				250B31F81341C45B0011EEDD /* unread@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1035,6 +1048,7 @@
 				250B31DC133FFD3C0011EEDD /* LauncherViewController.m in Sources */,
 				250B31E3134131FA0011EEDD /* UIScreen+ConvertRect.m in Sources */,
 				250B31EB134162A90011EEDD /* MoogleTextView.m in Sources */,
+				250B32031341CB9F0011EEDD /* UILabel+SizeToFitWidth.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

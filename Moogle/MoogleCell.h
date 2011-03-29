@@ -20,12 +20,16 @@ typedef uint32_t MoogleCellType;
 
 
 @interface MoogleCell : UITableViewCell {
+  CGFloat _desiredHeight;
 }
+
+@property (nonatomic, assign) CGFloat desiredHeight;
 
 + (MoogleCellType)cellType;
 + (CGFloat)rowWidth;
 + (CGFloat)rowHeight;
-+ (CGFloat)variableRowHeightWithDictionary:(NSDictionary *)dictionary;
-+ (CGFloat)variableRowHeightWithText:(NSString *)text andFontSize:(CGFloat)fontSize;
++ (CGFloat)rowHeightForObject:(id)object;
+
+- (void)fillCellWithObject:(id)object;
 
 @end

@@ -11,13 +11,11 @@
 #import "Pod.h"
 
 @interface PodCell : MoogleImageCell {
+  UIImageView *_unreadImageView;
   UILabel *_nameLabel;
   UILabel *_timestampLabel;
   UILabel *_summaryLabel;
   UILabel *_activityLabel;
 }
-
-- (void)fillCellWithPod:(Pod *)pod;
-+ (CGFloat)variableRowHeightWithPod:(Pod *)pod;
 
 @end

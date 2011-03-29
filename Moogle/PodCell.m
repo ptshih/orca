@@ -11,8 +11,15 @@
 #define NAME_FONT_SIZE 14.0
 #define CELL_FONT_SIZE 13.0
 #define TIMESTAMP_FONT_SIZE 12.0
+#define UNREAD_WIDTH 13.0
+
+static UIImage *_unreadImage = nil;
 
 @implementation PodCell
+
++ (void)initialize {
+  _unreadImage = [[UIImage imageNamed:@"unread.png"] retain];
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -49,6 +56,9 @@
     _summaryLabel.numberOfLines = 8;
     _activityLabel.numberOfLines = 1;
     
+    _unreadImageView = [[UIImageView alloc] initWithImage:_unreadImage];
+    
+    [self.contentView addSubview:_unreadImageView];
     [self.contentView addSubview:_nameLabel];
     [self.contentView addSubview:_timestampLabel];
     [self.contentView addSubview:_summaryLabel];
@@ -61,26 +71,30 @@
   [super layoutSubviews];
   
   CGFloat top = MARGIN_Y;
-  CGFloat left = IMAGE_WIDTH_PLAIN + SPACING_X * 2; // spacers: left of img, right of img
-  CGFloat textWidth = self.contentView.width - left;
-  CGSize textSize = CGSizeZero;
-  CGSize labelSize = CGSizeZero;
+  CGFloat left = MARGIN_X;
+  CGFloat textWidth = 0.0;
 
+  // Unread Indicator
+  _unreadImageView.left = left;
+  _unreadImageView.top = floor(self.height / 2 - _unreadImageView.height / 2);
+  
+  _photoFrameView.left += _unreadImageView.right;
+  _moogleImageView.left = _photoFrameView.left + SPACING_X;
+  _imageLoadingIndicator.left += _unreadImageView.width;
+  
+  left = _photoFrameView.right;
+  
   // Row 1
   
   // Timestamp Label
-  textSize = CGSizeMake(textWidth, INT_MAX);
-  labelSize = [_timestampLabel.text sizeWithFont:_timestampLabel.font forWidth:textWidth lineBreakMode:_timestampLabel.lineBreakMode]; // single line
-  _timestampLabel.width = labelSize.width;
-  _timestampLabel.height = labelSize.height;
+  textWidth = self.contentView.width - left - SPACING_X;
+  [_timestampLabel sizeToFitFixedWidth:textWidth];
   _timestampLabel.left = self.contentView.width - _timestampLabel.width - SPACING_X;
   _timestampLabel.top = top + 1;
   
   // Name Label
-  textSize = CGSizeMake(textWidth - _timestampLabel.width, INT_MAX);
-  labelSize = [_nameLabel.text sizeWithFont:_nameLabel.font constrainedToSize:textSize lineBreakMode:_nameLabel.lineBreakMode];
-  _nameLabel.width = labelSize.width;
-  _nameLabel.height = labelSize.height;
+  textWidth = self.contentView.width - left - _timestampLabel.width - SPACING_X * 2;
+  [_nameLabel sizeToFitFixedWidth:textWidth];
   _nameLabel.left = left;
   _nameLabel.top = top;
 
@@ -88,10 +102,8 @@
   top = _nameLabel.bottom;
   
   // Summary Label
-  textSize = CGSizeMake(textWidth, INT_MAX);
-  labelSize = [_summaryLabel.text sizeWithFont:_summaryLabel.font constrainedToSize:textSize lineBreakMode:_summaryLabel.lineBreakMode];
-  _summaryLabel.width = labelSize.width;
-  _summaryLabel.height = labelSize.height;
+  textWidth = self.contentView.width - left - SPACING_X;
+  [_summaryLabel sizeToFitFixedWidth:textWidth];
   _summaryLabel.left = left;
   _summaryLabel.top = top;
   
@@ -99,13 +111,13 @@
   top = _summaryLabel.bottom;
   
   // Activity Label
-  textSize = CGSizeMake(textWidth, INT_MAX);
-  labelSize = [_activityLabel.text sizeWithFont:_activityLabel.font forWidth:textWidth lineBreakMode:_activityLabel.lineBreakMode]; // single line
-//  labelSize = [_activityLabel.text sizeWithFont:_activityLabel.font constrainedToSize:textSize lineBreakMode:_activityLabel.lineBreakMode];
-  _activityLabel.width = labelSize.width;
-  _activityLabel.height = labelSize.height;
+  textWidth = self.contentView.width - left - SPACING_X;
+  [_activityLabel sizeToFitFixedWidth:textWidth];
   _activityLabel.left = left;
   _activityLabel.top = top;
+  
+  // Set desired height
+  _desiredHeight = _activityLabel.bottom + MARGIN_Y;
 }
 
 - (void)prepareForReuse {
@@ -116,7 +128,8 @@
   _activityLabel.text = nil;
 }
 
-- (void)fillCellWithPod:(Pod *)pod {
+- (void)fillCellWithObject:(id)object {
+  Pod *pod = (Pod *)object;
   _nameLabel.text = pod.name;
   _timestampLabel.text = [pod.timestamp humanIntervalSinceNow];
   _summaryLabel.text = pod.summary;
@@ -130,42 +143,8 @@
   return MoogleCellTypePlain;
 }
 
-// This is a class method because it is called before the cell has finished its layout
-+ (CGFloat)variableRowHeightWithPod:(Pod *)pod {
-  CGFloat calculatedHeight = MARGIN_Y;
-  CGFloat left = IMAGE_WIDTH_PLAIN + SPACING_X * 2; // spacers: left of img, right of img
-  CGFloat textWidth = [[self class] rowWidth] - left;
-  CGSize textSize = CGSizeMake(textWidth, INT_MAX); // Variable height
-  CGSize labelSize = CGSizeZero;
-  UIFont *font = nil;
-  
-  // Name (Row 1)
-  font = [UIFont boldSystemFontOfSize:NAME_FONT_SIZE];
-  labelSize = [pod.name sizeWithFont:font constrainedToSize:textSize lineBreakMode:UILineBreakModeTailTruncation];
-  calculatedHeight += labelSize.height;
-  
-  // Summary
-  font = [UIFont systemFontOfSize:CELL_FONT_SIZE];
-  labelSize = [pod.summary sizeWithFont:font constrainedToSize:textSize lineBreakMode:UILineBreakModeWordWrap];
-  calculatedHeight += labelSize.height;
-  
-  // Activity
-  font = [UIFont systemFontOfSize:CELL_FONT_SIZE];
-  labelSize = [[NSString stringWithFormat:@"%@ check-ins, %@ comments", pod.checkinCount, pod.commentCount] sizeWithFont:font constrainedToSize:textSize lineBreakMode:UILineBreakModeTailTruncation];
-  calculatedHeight += labelSize.height;
-    
-  // Bottom Spacer
-  calculatedHeight += MARGIN_Y; // This is spacing*2 because its for top AND bottom
-  
-  // If height is less than image, adjust
-  if (calculatedHeight < IMAGE_HEIGHT_PLAIN + (SPACING_Y * 2)) {
-    calculatedHeight = IMAGE_HEIGHT_PLAIN + (SPACING_Y * 2);
-  }
-  
-  return calculatedHeight;
-}
-
 - (void)dealloc {
+  RELEASE_SAFELY(_unreadImageView);
   RELEASE_SAFELY(_nameLabel);
   RELEASE_SAFELY(_timestampLabel);
   RELEASE_SAFELY(_summaryLabel);
