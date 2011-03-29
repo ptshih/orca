@@ -28,6 +28,14 @@
 		250B32031341CB9F0011EEDD /* UILabel+SizeToFitWidth.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B32021341CB9F0011EEDD /* UILabel+SizeToFitWidth.m */; };
 		250B328E1341D49C0011EEDD /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B328D1341D49B0011EEDD /* Pod.m */; };
 		250B328F1341D49C0011EEDD /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B328D1341D49B0011EEDD /* Pod.m */; };
+		250B329C1341DE140011EEDD /* photo_attach.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B329A1341DE0F0011EEDD /* photo_attach.png */; };
+		250B329D1341DE140011EEDD /* photo_attach@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B329B1341DE110011EEDD /* photo_attach@2x.png */; };
+		250B32A41341DE640011EEDD /* geo_loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B329E1341DE4D0011EEDD /* geo_loading.png */; };
+		250B32A51341DE640011EEDD /* geo_loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B329F1341DE4E0011EEDD /* geo_loading@2x.png */; };
+		250B32A61341DE640011EEDD /* geo_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B32A01341DE500011EEDD /* geo_off.png */; };
+		250B32A71341DE640011EEDD /* geo_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B32A11341DE540011EEDD /* geo_off@2x.png */; };
+		250B32A81341DE640011EEDD /* geo_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B32A21341DE580011EEDD /* geo_on.png */; };
+		250B32A91341DE640011EEDD /* geo_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B32A31341DE5D0011EEDD /* geo_on@2x.png */; };
 		2538FF26133AD07100ACE127 /* feeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* feeds.json */; };
 		2538FF27133AD07100ACE127 /* feeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* feeds.json */; };
 		2538FF3D133AD22900ACE127 /* CardCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */; };
@@ -216,6 +224,14 @@
 		250B32021341CB9F0011EEDD /* UILabel+SizeToFitWidth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+SizeToFitWidth.m"; sourceTree = "<group>"; };
 		250B328C1341D49B0011EEDD /* Pod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pod.h; sourceTree = "<group>"; };
 		250B328D1341D49B0011EEDD /* Pod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pod.m; sourceTree = "<group>"; };
+		250B329A1341DE0F0011EEDD /* photo_attach.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_attach.png; sourceTree = "<group>"; };
+		250B329B1341DE110011EEDD /* photo_attach@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_attach@2x.png"; sourceTree = "<group>"; };
+		250B329E1341DE4D0011EEDD /* geo_loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = geo_loading.png; sourceTree = "<group>"; };
+		250B329F1341DE4E0011EEDD /* geo_loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "geo_loading@2x.png"; sourceTree = "<group>"; };
+		250B32A01341DE500011EEDD /* geo_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = geo_off.png; sourceTree = "<group>"; };
+		250B32A11341DE540011EEDD /* geo_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "geo_off@2x.png"; sourceTree = "<group>"; };
+		250B32A21341DE580011EEDD /* geo_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = geo_on.png; sourceTree = "<group>"; };
+		250B32A31341DE5D0011EEDD /* geo_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "geo_on@2x.png"; sourceTree = "<group>"; };
 		2538FF25133AD07100ACE127 /* feeds.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = feeds.json; sourceTree = "<group>"; };
 		2538FF3B133AD22700ACE127 /* CardCoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCoreDataTableViewController.h; sourceTree = "<group>"; };
 		2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCoreDataTableViewController.m; sourceTree = "<group>"; };
@@ -625,6 +641,14 @@
 				250B31F21341673A0011EEDD /* gradient_gray@2x.png */,
 				250B31E513413BB80011EEDD /* photo_upload.png */,
 				250B31E613413BB80011EEDD /* photo_upload@2x.png */,
+				250B329A1341DE0F0011EEDD /* photo_attach.png */,
+				250B329B1341DE110011EEDD /* photo_attach@2x.png */,
+				250B329E1341DE4D0011EEDD /* geo_loading.png */,
+				250B329F1341DE4E0011EEDD /* geo_loading@2x.png */,
+				250B32A01341DE500011EEDD /* geo_off.png */,
+				250B32A11341DE540011EEDD /* geo_off@2x.png */,
+				250B32A21341DE580011EEDD /* geo_on.png */,
+				250B32A31341DE5D0011EEDD /* geo_on@2x.png */,
 				250B31ED134165670011EEDD /* bubble.png */,
 				250B31EE134165670011EEDD /* bubble@2x.png */,
 				250B31DD13411DBD0011EEDD /* textview_bg.png */,
@@ -948,6 +972,14 @@
 				250B31F41341673B0011EEDD /* gradient_gray@2x.png in Resources */,
 				250B31F71341C45B0011EEDD /* unread.png in Resources */,
 				250B31F81341C45B0011EEDD /* unread@2x.png in Resources */,
+				250B329C1341DE140011EEDD /* photo_attach.png in Resources */,
+				250B329D1341DE140011EEDD /* photo_attach@2x.png in Resources */,
+				250B32A41341DE640011EEDD /* geo_loading.png in Resources */,
+				250B32A51341DE640011EEDD /* geo_loading@2x.png in Resources */,
+				250B32A61341DE640011EEDD /* geo_off.png in Resources */,
+				250B32A71341DE640011EEDD /* geo_off@2x.png in Resources */,
+				250B32A81341DE640011EEDD /* geo_on.png in Resources */,
+				250B32A91341DE640011EEDD /* geo_on@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

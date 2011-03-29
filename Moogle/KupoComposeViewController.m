@@ -48,6 +48,11 @@
   
   _navTitleLabel.text = @"Write a comment...";
   
+  _composeView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, 320, self.view.bounds.size.height - 44 - 216)];
+  _composeView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  [self.view addSubview:_composeView];
+
+  
 //  _photoUpload = [[UIButton alloc] initWithFrame:CGRectMake(5, 7, 30, 30)];
 //  _photoUpload.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
 //  [_photoUpload setBackgroundImage:[UIImage imageNamed:@"photo_upload.png"] forState:UIControlStateNormal];
@@ -58,13 +63,30 @@
 //  [_sendComment setBackgroundImage:[UIImage imageNamed:@"photo_upload.png"] forState:UIControlStateNormal];
 //  [self.view addSubview:_sendComment];
                   
-  _kupoComment = [[MoogleTextView alloc] initWithFrame:CGRectMake(10, 54, 300, 30)];
-  _kupoComment.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  _kupoComment = [[MoogleTextView alloc] initWithFrame:CGRectMake(10, 10, 300, 140)];
+  _kupoComment.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_kupoComment.returnKeyType = UIReturnKeyDefault;
 	_kupoComment.font = [UIFont boldSystemFontOfSize:14.0];
 	_kupoComment.delegate = self;
+  [_composeView addSubview:_kupoComment];
   
-  [self.view addSubview:_kupoComment];
+  _photoUpload = [[UIButton alloc] initWithFrame:CGRectZero];
+  _photoUpload.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin;
+  _photoUpload.width = 70;
+  _photoUpload.height = 30;
+  _photoUpload.top = _kupoComment.bottom + 10;
+  _photoUpload.left = _kupoComment.left;
+  [_photoUpload setBackgroundImage:[UIImage imageNamed:@"photo_attach.png"] forState:UIControlStateNormal];
+  [_composeView addSubview:_photoUpload];
+  
+  _locationButton = [[UIButton alloc] initWithFrame:CGRectZero];
+  _locationButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
+  _locationButton.width = 70;
+  _locationButton.height = 30;
+  _locationButton.top = _kupoComment.bottom + 10;
+  _locationButton.left = _kupoComment.right - _locationButton.width;
+  [_locationButton setBackgroundImage:[UIImage imageNamed:@"geo_on.png"] forState:UIControlStateNormal];
+  [_composeView addSubview:_locationButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -107,12 +129,14 @@
   [UIView setAnimationDuration:animationDuration];
   [UIView setAnimationCurve:animationCurve];
   
-//  CGRect keyboardFrame = [UIScreen convertRect:keyboardEndFrame toView:self.view];
-  if (UIInterfaceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
-    _kupoComment.height = PORTRAIT_HEIGHT;
-  } else {
-    _kupoComment.height = LANDSCAPE_HEIGHT;
-  }
+  CGRect keyboardFrame = [UIScreen convertRect:keyboardEndFrame toView:self.view];
+  _composeView.top = _navigationBar.bottom;
+  _composeView.height = self.view.bounds.size.height - _navigationBar.height - keyboardFrame.size.height;
+//  if (UIInterfaceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
+//    _kupoComment.height = self.view.height - keyboardFrame.size.height;
+//  } else {
+//    _kupoComment.height = LANDSCAPE_HEIGHT;
+//  }
   [UIView commitAnimations];
 }
 
@@ -120,9 +144,10 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
   
+  RELEASE_SAFELY(_composeView);
   RELEASE_SAFELY(_photoUpload);
   RELEASE_SAFELY(_kupoComment);
-  RELEASE_SAFELY(_sendComment);
+  RELEASE_SAFELY(_locationButton);
   [super dealloc];
 }
 

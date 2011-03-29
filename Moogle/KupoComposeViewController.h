@@ -12,9 +12,10 @@
 #import "MoogleTextView.h"
 
 @interface KupoComposeViewController : CardModalViewController <UITextViewDelegate> {
+  UIView *_composeView;
   MoogleTextView *_kupoComment;
   UIButton *_photoUpload;
-  UIButton *_sendComment;
+  UIButton *_locationButton;
   
   id <KupoComposeDelegate> _delegate;
 }
