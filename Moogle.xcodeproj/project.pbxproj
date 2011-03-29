@@ -10,11 +10,19 @@
 		250B3188133EBDE70011EEDD /* CardModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B3187133EBDE70011EEDD /* CardModalViewController.m */; };
 		250B318B133EBF0C0011EEDD /* KupoComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B318A133EBF0B0011EEDD /* KupoComposeViewController.m */; };
 		250B31AE133EC4220011EEDD /* MoogleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31AD133EC4220011EEDD /* MoogleView.m */; };
-		250B31CE133FF7610011EEDD /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31CD133FF7600011EEDD /* HPGrowingTextView.m */; };
-		250B31D1133FF7A70011EEDD /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31D0133FF7A70011EEDD /* HPTextViewInternal.m */; };
 		250B31DC133FFD3C0011EEDD /* LauncherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31DB133FFD330011EEDD /* LauncherViewController.m */; };
-		250B31DF13411DBD0011EEDD /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31DD13411DBD0011EEDD /* bubble.png */; };
-		250B31E013411DBD0011EEDD /* bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31DE13411DBD0011EEDD /* bubble@2x.png */; };
+		250B31DF13411DBD0011EEDD /* textview_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31DD13411DBD0011EEDD /* textview_bg.png */; };
+		250B31E013411DBD0011EEDD /* textview_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31DE13411DBD0011EEDD /* textview_bg@2x.png */; };
+		250B31E3134131FA0011EEDD /* UIScreen+ConvertRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31E2134131FA0011EEDD /* UIScreen+ConvertRect.m */; };
+		250B31E4134132020011EEDD /* UIScreen+ConvertRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31E2134131FA0011EEDD /* UIScreen+ConvertRect.m */; };
+		250B31E713413BB80011EEDD /* photo_upload.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31E513413BB80011EEDD /* photo_upload.png */; };
+		250B31E813413BB80011EEDD /* photo_upload@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31E613413BB80011EEDD /* photo_upload@2x.png */; };
+		250B31EB134162A90011EEDD /* MoogleTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31EA134162A30011EEDD /* MoogleTextView.m */; };
+		250B31EC134162A90011EEDD /* MoogleTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31EA134162A30011EEDD /* MoogleTextView.m */; };
+		250B31EF134165670011EEDD /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31ED134165670011EEDD /* bubble.png */; };
+		250B31F0134165670011EEDD /* bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31EE134165670011EEDD /* bubble@2x.png */; };
+		250B31F31341673B0011EEDD /* gradient_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31F11341673A0011EEDD /* gradient_gray.png */; };
+		250B31F41341673B0011EEDD /* gradient_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31F21341673A0011EEDD /* gradient_gray@2x.png */; };
 		2538FF26133AD07100ACE127 /* feeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* feeds.json */; };
 		2538FF27133AD07100ACE127 /* feeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* feeds.json */; };
 		2538FF3D133AD22900ACE127 /* CardCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */; };
@@ -185,14 +193,20 @@
 		250B31AC133EC4220011EEDD /* MoogleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleView.h; sourceTree = "<group>"; };
 		250B31AD133EC4220011EEDD /* MoogleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoogleView.m; sourceTree = "<group>"; };
 		250B31AF133EC86A0011EEDD /* KupoComposeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeDelegate.h; sourceTree = "<group>"; };
-		250B31CC133FF75F0011EEDD /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
-		250B31CD133FF7600011EEDD /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
-		250B31CF133FF7A60011EEDD /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
-		250B31D0133FF7A70011EEDD /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
 		250B31DA133FFD300011EEDD /* LauncherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LauncherViewController.h; sourceTree = "<group>"; };
 		250B31DB133FFD330011EEDD /* LauncherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LauncherViewController.m; sourceTree = "<group>"; };
-		250B31DD13411DBD0011EEDD /* bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble.png; sourceTree = "<group>"; };
-		250B31DE13411DBD0011EEDD /* bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble@2x.png"; sourceTree = "<group>"; };
+		250B31DD13411DBD0011EEDD /* textview_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = textview_bg.png; sourceTree = "<group>"; };
+		250B31DE13411DBD0011EEDD /* textview_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "textview_bg@2x.png"; sourceTree = "<group>"; };
+		250B31E1134131FA0011EEDD /* UIScreen+ConvertRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+ConvertRect.h"; sourceTree = "<group>"; };
+		250B31E2134131FA0011EEDD /* UIScreen+ConvertRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScreen+ConvertRect.m"; sourceTree = "<group>"; };
+		250B31E513413BB80011EEDD /* photo_upload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_upload.png; sourceTree = "<group>"; };
+		250B31E613413BB80011EEDD /* photo_upload@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_upload@2x.png"; sourceTree = "<group>"; };
+		250B31E9134162A20011EEDD /* MoogleTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleTextView.h; sourceTree = "<group>"; };
+		250B31EA134162A30011EEDD /* MoogleTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoogleTextView.m; sourceTree = "<group>"; };
+		250B31ED134165670011EEDD /* bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble.png; sourceTree = "<group>"; };
+		250B31EE134165670011EEDD /* bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble@2x.png"; sourceTree = "<group>"; };
+		250B31F11341673A0011EEDD /* gradient_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradient_gray.png; sourceTree = "<group>"; };
+		250B31F21341673A0011EEDD /* gradient_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient_gray@2x.png"; sourceTree = "<group>"; };
 		2538FF25133AD07100ACE127 /* feeds.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = feeds.json; sourceTree = "<group>"; };
 		2538FF3B133AD22700ACE127 /* CardCoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCoreDataTableViewController.h; sourceTree = "<group>"; };
 		2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCoreDataTableViewController.m; sourceTree = "<group>"; };
@@ -545,6 +559,8 @@
 				25CEF8971339FB8B006F23A7 /* UIImage+ScalingAndCropping.m */,
 				25CEF8981339FB8B006F23A7 /* UIImage+UIView.h */,
 				25CEF8991339FB8B006F23A7 /* UIImage+UIView.m */,
+				250B31E1134131FA0011EEDD /* UIScreen+ConvertRect.h */,
+				250B31E2134131FA0011EEDD /* UIScreen+ConvertRect.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -594,8 +610,14 @@
 		25CEF8FE133A000C006F23A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				250B31DD13411DBD0011EEDD /* bubble.png */,
-				250B31DE13411DBD0011EEDD /* bubble@2x.png */,
+				250B31F11341673A0011EEDD /* gradient_gray.png */,
+				250B31F21341673A0011EEDD /* gradient_gray@2x.png */,
+				250B31E513413BB80011EEDD /* photo_upload.png */,
+				250B31E613413BB80011EEDD /* photo_upload@2x.png */,
+				250B31ED134165670011EEDD /* bubble.png */,
+				250B31EE134165670011EEDD /* bubble@2x.png */,
+				250B31DD13411DBD0011EEDD /* textview_bg.png */,
+				250B31DE13411DBD0011EEDD /* textview_bg@2x.png */,
 				2538FFBC133C90A100ACE127 /* photo_frame.png */,
 				2538FFA4133BFEF700ACE127 /* navigationbar_button_back@2x.png */,
 				2538FFA5133BFEF700ACE127 /* navigationbar_button_standard.png */,
@@ -704,10 +726,8 @@
 				25FB8BE8133AA7C300C130A8 /* HeaderTabView.m */,
 				250B31AC133EC4220011EEDD /* MoogleView.h */,
 				250B31AD133EC4220011EEDD /* MoogleView.m */,
-				250B31CC133FF75F0011EEDD /* HPGrowingTextView.h */,
-				250B31CD133FF7600011EEDD /* HPGrowingTextView.m */,
-				250B31CF133FF7A60011EEDD /* HPTextViewInternal.h */,
-				250B31D0133FF7A70011EEDD /* HPTextViewInternal.m */,
+				250B31E9134162A20011EEDD /* MoogleTextView.h */,
+				250B31EA134162A30011EEDD /* MoogleTextView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -907,8 +927,14 @@
 				2538FFB2133BFEF700ACE127 /* navigationbar_bg@2x.png in Resources */,
 				2538FFB3133BFEF700ACE127 /* navigationbar_button_back.png in Resources */,
 				2538FFBD133C90A100ACE127 /* photo_frame.png in Resources */,
-				250B31DF13411DBD0011EEDD /* bubble.png in Resources */,
-				250B31E013411DBD0011EEDD /* bubble@2x.png in Resources */,
+				250B31DF13411DBD0011EEDD /* textview_bg.png in Resources */,
+				250B31E013411DBD0011EEDD /* textview_bg@2x.png in Resources */,
+				250B31E713413BB80011EEDD /* photo_upload.png in Resources */,
+				250B31E813413BB80011EEDD /* photo_upload@2x.png in Resources */,
+				250B31EF134165670011EEDD /* bubble.png in Resources */,
+				250B31F0134165670011EEDD /* bubble@2x.png in Resources */,
+				250B31F31341673B0011EEDD /* gradient_gray.png in Resources */,
+				250B31F41341673B0011EEDD /* gradient_gray@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1006,9 +1032,9 @@
 				250B3188133EBDE70011EEDD /* CardModalViewController.m in Sources */,
 				250B318B133EBF0C0011EEDD /* KupoComposeViewController.m in Sources */,
 				250B31AE133EC4220011EEDD /* MoogleView.m in Sources */,
-				250B31CE133FF7610011EEDD /* HPGrowingTextView.m in Sources */,
-				250B31D1133FF7A70011EEDD /* HPTextViewInternal.m in Sources */,
 				250B31DC133FFD3C0011EEDD /* LauncherViewController.m in Sources */,
+				250B31E3134131FA0011EEDD /* UIScreen+ConvertRect.m in Sources */,
+				250B31EB134162A90011EEDD /* MoogleTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1055,6 +1081,8 @@
 				2538FF67133B44D500ACE127 /* Feed.m in Sources */,
 				2538FF6B133B44D800ACE127 /* Pod.m in Sources */,
 				2538FF91133BDDBF00ACE127 /* LIImageCache.m in Sources */,
+				250B31E4134132020011EEDD /* UIScreen+ConvertRect.m in Sources */,
+				250B31EC134162A90011EEDD /* MoogleTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

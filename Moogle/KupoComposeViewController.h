@@ -7,22 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MoogleViewController.h"
+#import "CardModalViewController.h"
 #import "KupoComposeDelegate.h"
-#import "HPGrowingTextView.h"
+#import "MoogleTextView.h"
 
-@interface KupoComposeViewController : MoogleViewController <UITextViewDelegate, HPGrowingTextViewDelegate> {
-  HPGrowingTextView *_kupoComment;
+@interface KupoComposeViewController : CardModalViewController <UITextViewDelegate> {
+  MoogleTextView *_kupoComment;
+  UIButton *_photoUpload;
+  UIButton *_sendComment;
   
-  UIView *_parentView;
   id <KupoComposeDelegate> _delegate;
 }
 
-@property (nonatomic, retain) HPGrowingTextView *kupoComment;
-
-@property (nonatomic, assign) UIView *parentView;
+@property (nonatomic, retain) MoogleTextView *kupoComment;
 @property (nonatomic, assign) id <KupoComposeDelegate> delegate;
 
-- (void)moveTextViewForKeyboard:(NSNotification*)aNotification up:(BOOL) up;
+- (void)moveTextViewForKeyboard:(NSNotification*)aNotification up:(BOOL)up;
 
 @end

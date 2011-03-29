@@ -10,6 +10,7 @@
 #import "FeedDataCenter.h"
 #import "FeedCell.h"
 #import "Pod.h"
+#import "KupoComposeViewController.h"
 
 @implementation FeedViewController
 
@@ -58,9 +59,30 @@
 
 - (void)setupFooterView {
   [super setupFooterView];
+  
+  // Setup the fake image view
+  MoogleImageView *profileImage = [[MoogleImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
+  profileImage.urlPath = @"http://profile.ak.fbcdn.net/hprofile-ak-snc4/174453_548430564_3413707_q.jpg";
+  [profileImage loadImage];
+  profileImage.layer.cornerRadius = 5.0;
+  profileImage.layer.masksToBounds = YES;
+  [_footerView addSubview:profileImage];
+  [profileImage release];
+  
+  // Setup the fake comment button
+  UIButton *commentButton = [[UIButton alloc] initWithFrame:CGRectMake(45, 5, 265, 30)];
+  commentButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  [commentButton setBackgroundImage:[[UIImage imageNamed:@"bubble.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15] forState:UIControlStateNormal];
+  [commentButton addTarget:self action:@selector(composeKupo) forControlEvents:UIControlEventTouchUpInside];
+  [_footerView addSubview:commentButton];
+  [commentButton release];
 }
    
 - (void)composeKupo {
+  KupoComposeViewController *kcvc = [[KupoComposeViewController alloc] init];
+  kcvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+  [self presentModalViewController:kcvc animated:YES];
+  [kcvc release];
 }
 
 #pragma mark -

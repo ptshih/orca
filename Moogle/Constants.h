@@ -8,6 +8,7 @@
  */
 
 #import "MoogleAppDelegate.h"
+#import "UIScreen+ConvertRect.h"
 #import "UIView+Additions.h"
 #import "NSDate+HumanInterval.h"
 

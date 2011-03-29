@@ -11,8 +11,6 @@
 #import "HeaderTabView.h"
 #import "EGORefreshTableHeaderView.h"
 #import "HeaderTabViewDelegate.h"
-#import "KupoComposeViewController.h"
-#import "KupoComposeDelegate.h"
 
 @interface CardTableViewController : CardViewController <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate, EGORefreshTableHeaderDelegate, HeaderTabViewDelegate, UIGestureRecognizerDelegate> {
   UITableView *_tableView;
@@ -24,9 +22,7 @@
   HeaderTabView *_headerTabView;
   EGORefreshTableHeaderView *_refreshHeaderView;
   UIView *_footerView;
-  KupoComposeViewController *_kupoComposeViewController;
   BOOL _reloading;
-  UITapGestureRecognizer *_dismissKupoGesture;
 }
 
 @property (nonatomic, retain) UITableView *tableView;
@@ -41,8 +37,5 @@
 - (void)setupHeaderTabView;
 - (void)setupFooterView;
 - (void)setupSearchDisplayController;
-
-// Private
-- (void)dismissKupoCompose;
 
 @end
