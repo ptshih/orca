@@ -10,6 +10,10 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "UIImage+ScalingAndCropping.h"
 
+// Test
+#import "LINetworkQueue.h"
+#import "LINetworkOperation.h"
+
 #define SPACING 4.0
 #define PORTRAIT_HEIGHT 180.0
 #define LANDSCAPE_HEIGHT 74.0
@@ -40,9 +44,16 @@
     
     resizedImage = [imageToSave cropProportionalToSize:CGSizeMake(320, 320)];
     
+    
+    
     // Save the new image (original or edited) to the Camera Roll
     //    UIImageWriteToSavedPhotosAlbum (imageToSave, nil, nil , nil);
+    
+    if (_uploadedImage) {
+      [_uploadedImage release], _uploadedImage = nil;
+    }
     _uploadedImage = [imageToSave retain];
+    [_photoUpload setImage:_uploadedImage forState:UIControlStateNormal];
   }
   
   // Handle a movie capture
@@ -109,29 +120,34 @@
 //  _sendComment.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
 //  [_sendComment setBackgroundImage:[UIImage imageNamed:@"photo_upload.png"] forState:UIControlStateNormal];
 //  [self.view addSubview:_sendComment];
-                  
-  _kupoComment = [[MoogleTextView alloc] initWithFrame:CGRectMake(10, 10, 300, 30)];
-	_kupoComment.returnKeyType = UIReturnKeyDefault;
-	_kupoComment.font = [UIFont boldSystemFontOfSize:14.0];
-	_kupoComment.delegate = self;
-  [_composeView addSubview:_kupoComment];
+  
+  CGFloat top = 10;
+  CGFloat left = 10;
   
   _photoUpload = [[UIButton alloc] initWithFrame:CGRectZero];
   _photoUpload.width = 70;
-  _photoUpload.height = 30;
-  _photoUpload.top = _kupoComment.bottom + 10;
-  _photoUpload.left = _kupoComment.left;
-  [_photoUpload setBackgroundImage:[UIImage imageNamed:@"photo_attach.png"] forState:UIControlStateNormal];
+  _photoUpload.height = 70;
+  _photoUpload.top = top;
+  _photoUpload.left = left;
+  [_photoUpload setBackgroundImage:[UIImage imageNamed:@"photo_add.png"] forState:UIControlStateNormal];
   [_photoUpload addTarget:self action:@selector(uploadPicture) forControlEvents:UIControlEventTouchUpInside];
   [_composeView addSubview:_photoUpload];
   
   _locationButton = [[UIButton alloc] initWithFrame:CGRectZero];
   _locationButton.width = 70;
   _locationButton.height = 30;
-  _locationButton.top = _kupoComment.bottom + 10;
-  _locationButton.left = _kupoComment.right - _locationButton.width;
+  _locationButton.top = _photoUpload.bottom + 10;
+  _locationButton.left = left;
   [_locationButton setBackgroundImage:[UIImage imageNamed:@"geo_on.png"] forState:UIControlStateNormal];
   [_composeView addSubview:_locationButton];
+  
+  left = _photoUpload.right + 10;
+
+  _kupoComment = [[MoogleTextView alloc] initWithFrame:CGRectMake(left, top, 220, 30)];
+	_kupoComment.returnKeyType = UIReturnKeyDefault;
+	_kupoComment.font = [UIFont boldSystemFontOfSize:14.0];
+	_kupoComment.delegate = self;
+  [_composeView addSubview:_kupoComment];
   
   _backgroundView = [[UIImageView alloc] initWithFrame:_kupoComment.frame];
   _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -144,7 +160,28 @@
 }
 
 - (void)send {
+  NSString *baseURLString = [NSString stringWithFormat:@"%@/%@/moogle/test", MOOGLE_BASE_URL, API_VERSION];
   
+  LINetworkOperation *op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:baseURLString]];
+  op.delegate = self;
+  op.requestMethod = POST;
+  
+  [op addRequestParam:@"comment" value:@"hello world!"];
+  [op addRequestParam:@"timestamp" value:[NSString stringWithFormat:@"%0.0f", [[NSDate date] timeIntervalSince1970]]];
+  if (_uploadedImage) {
+    op.isFormData = YES;
+    [op addRequestParam:@"photo" value:_uploadedImage];
+  }
+  
+  [[LINetworkQueue sharedQueue] addOperation:op];
+}
+
+- (void)networkOperationDidFinish:(LINetworkOperation *)operation {
+  [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)networkOperationDidFail:(LINetworkOperation *)operation {
+  [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)uploadPicture {
@@ -221,10 +258,10 @@
   CGRect keyboardFrame = [UIScreen convertRect:keyboardEndFrame toView:self.view];
   _composeView.top = _navigationBar.bottom;
   _composeView.height = self.view.bounds.size.height - _navigationBar.height - keyboardFrame.size.height;
-  _kupoComment.height = up ? 140 : 30;
+  _kupoComment.height = up ? 180 : 30;
   _backgroundView.height = _kupoComment.height;
-  _photoUpload.top = _kupoComment.bottom + 10;
-  _locationButton.top = _kupoComment.bottom + 10;
+//  _photoUpload.top = _kupoComment.bottom + 10;
+//  _locationButton.top = _kupoComment.bottom + 10;
 
   [UIView commitAnimations];
 }
