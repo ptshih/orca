@@ -30,6 +30,9 @@ static NSThread *_opThread = nil;
 + (void)hideNetworkActivityIndicatorAfterDelay;
 + (void)hideNetworkActivityIndicatorIfNeeded;
 
+- (void)startConnection;
+- (void)finishConnection;
+
 - (void)prepareRequest;
 - (void)buildRequestHeaders;
 - (void)buildRequestParams;
@@ -127,8 +130,6 @@ static NSThread *_opThread = nil;
     _isFinished = NO;
     _isCancelled = NO;
     _isConcurrent = YES;
-    
-    _opLock = [[NSLock alloc] init];
   }
   return self;
 }
@@ -182,31 +183,41 @@ static NSThread *_opThread = nil;
 }
 
 - (void)startConnection {
-  [_opLock lock];
-  // Called on OP THREAD
-  
-  if ([self isCancelled]) {
-    return;
+  @synchronized (self) {
+    // Called on OP THREAD
+    
+    if ([self isCancelled]) {
+      return;
+    }
+    
+    // Fire KVO notifications
+    [self willChangeValueForKey:@"isExecuting"];
+    _isExecuting = YES;
+    [self didChangeValueForKey:@"isExecuting"];
+    
+    // Increment the number of active operations
+    _activeOperationCount++;
+    
+    // Show network indicator
+    [[self class] performSelectorOnMainThread:@selector(showNetworkActivityIndicator) withObject:nil waitUntilDone:NO];  
   }
   
-  // Fire KVO notifications
-  [self willChangeValueForKey:@"isExecuting"];
-  _isExecuting = YES;
-  [self didChangeValueForKey:@"isExecuting"];
-  
-  // Increment the number of active operations
-  _activeOperationCount++;
-  
-  // Show network indicator
-  [[self class] performSelectorOnMainThread:@selector(showNetworkActivityIndicator) withObject:nil waitUntilDone:NO];
-  
   _connection = [[NSURLConnection alloc] initWithRequest:self.request delegate:self];
-  [_opLock unlock];
 }
 
 - (void)finish {
-  [_opLock lock];
+  // MAIN THREAD
   
+  // Fire KVO notifications
+  [self willChangeValueForKey:@"isExecuting"];
+  [self willChangeValueForKey:@"isFinished"];
+  _isExecuting = NO;
+  _isFinished = YES;
+  [self didChangeValueForKey:@"isExecuting"];
+  [self didChangeValueForKey:@"isFinished"];
+}
+
+- (void)finishConnection {
   // Called on OP THREAD
   
   if ([self isExecuting]) {
@@ -242,39 +253,31 @@ static NSThread *_opThread = nil;
         break;
     }
   }
-  
-  [_opLock unlock];
-  
-  // Fire KVO notifications
-  [self willChangeValueForKey:@"isExecuting"];
-  [self willChangeValueForKey:@"isFinished"];
-  _isExecuting = NO;
-  _isFinished = YES;
-  [self didChangeValueForKey:@"isExecuting"];
-  [self didChangeValueForKey:@"isFinished"];
+  [self performSelectorOnMainThread:@selector(finish) withObject:nil waitUntilDone:NO];
   
   // END OF OPERATION
 }
 
 - (void)cancel {
   // Called on OP THREAD
-  
-  if ([self isFinished]) {
-    return;
+  @synchronized (self) {
+    if ([self isFinished]) {
+      return;
+    }
+    
+    // cancel the operation
+    // Fire KVO notifications
+    [self willChangeValueForKey:@"isCancelled"];
+    _isCancelled = YES;
+    [self didChangeValueForKey:@"isCancelled"];
+    
+    // Cancel the async connection
+    if (_connection) {
+      [_connection cancel];
+    }
+    
+    [self finishConnection];
   }
-  
-  // cancel the operation
-  // Fire KVO notifications
-  [self willChangeValueForKey:@"isCancelled"];
-  _isCancelled = YES;
-  [self didChangeValueForKey:@"isCancelled"];
-  
-  // Cancel the async connection
-  if (_connection) {
-    [_connection cancel];
-  }
-  
-  [self finish];
 }
 
 #pragma mark Cancel Operation
@@ -288,9 +291,9 @@ static NSThread *_opThread = nil;
   // Called on REQUESTOR THREAD
   
   // Don't let the delegate disappear until we can safely cancel
-  [_opLock lock];
-  self.delegate = nil;
-  [_opLock unlock];
+  @synchronized (self) {
+    self.delegate = nil;
+  }
   
   [self cancelOperation];
 }
@@ -299,69 +302,68 @@ static NSThread *_opThread = nil;
 #pragma mark NSURLConnection Delegate
 // Connection received HTTP response, ready to begin receiving data
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-  [_opLock lock];
+  @synchronized (self) {
   
-  // Reset or Initialize responseData
-  if (_responseData) {
-    [_responseData release], _responseData = nil;
+    // Reset or Initialize responseData
+    if (_responseData) {
+      [_responseData release], _responseData = nil;
+    }
+    _responseData = [[NSMutableData alloc] init];
+    
+    // Store the HTTP response
+    _urlResponse = [response retain];
+    
+    // Parse the response status and headers
+    [self parseUrlResponse];
+    
+    // Parse the response cookies
+    [self parseCookies];
+  
   }
-  _responseData = [[NSMutableData alloc] init];
-  
-  // Store the HTTP response
-  _urlResponse = [response retain];
-  
-  // Parse the response status and headers
-  [self parseUrlResponse];
-  
-  // Parse the response cookies
-  [self parseCookies];
-  
-  [_opLock unlock];
 }
 
 // Connection is receiving data
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-  [_opLock lock];
-  [_responseData appendData:data];
-  [_opLock unlock];
+  @synchronized (self) {
+    [_responseData appendData:data];
+  }
 }
 
 // Connection finished receiving all data
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-  [_opLock lock];
-  _operationState = NetworkOperationStateFinished;
-  [_opLock unlock];
-  
-  // Finish op
-  [self finish];
+  @synchronized (self) {
+    _operationState = NetworkOperationStateFinished;
+    
+    // Finish op
+    [self finishConnection];
+  }
 }
 
 // Connection failed
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-  [_opLock lock];
+  @synchronized (self) {
   
-  // Read the error
-  _responseError = [error copy];
-  
-  // Check for timeout
-  NSString *errorDomain = [_responseError domain];
-  NSInteger errorCode = [_responseError code];
-  
-  if ([errorDomain isEqualToString:@"NSURLErrorDomain"]) {
-    switch (errorCode) {
-      case NSURLErrorTimedOut:
-        _operationState = NetworkOperationStateTimeout;
-        break;
-      default:
-        _operationState = NetworkOperationStateFailed;
-        break;
+    // Read the error
+    _responseError = [error copy];
+    
+    // Check for timeout
+    NSString *errorDomain = [_responseError domain];
+    NSInteger errorCode = [_responseError code];
+    
+    if ([errorDomain isEqualToString:@"NSURLErrorDomain"]) {
+      switch (errorCode) {
+        case NSURLErrorTimedOut:
+          _operationState = NetworkOperationStateTimeout;
+          break;
+        default:
+          _operationState = NetworkOperationStateFailed;
+          break;
+      }
     }
+  
+    // Finish op
+    [self finishConnection];
   }
-  
-  [_opLock unlock];
-  
-  // Finish op
-  [self finish];
 }
 
 #pragma mark -
@@ -663,8 +665,6 @@ static NSThread *_opThread = nil;
   if (_responseError) [_responseError release], _responseError = nil;
   if (_responseCookies) [_responseCookies release], _responseCookies = nil;
   if (_responseStatusMessage) [_responseStatusMessage release], _responseStatusMessage = nil;
-  
-  if (_opLock) [_opLock release], _opLock = nil;
   
   [super dealloc];
 }

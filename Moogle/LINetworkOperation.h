@@ -70,8 +70,6 @@ typedef enum {
   // Delegate
   id <LINetworkOperationDelegate> _delegate;
   
-  NSLock *_opLock;
-  
   // Stuff to reuse from NSOperation
   // queuePriority
   // addDependency:(NSOperation *)operation
