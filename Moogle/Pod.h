@@ -2,7 +2,7 @@
 //  Pod.h
 //  Moogle
 //
-//  Created by Peter Shih on 3/24/11.
+//  Created by Peter Shih on 3/29/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -14,11 +14,12 @@
 @private
 }
 @property (nonatomic, retain) NSString * summary;
+@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * checkinCount;
 @property (nonatomic, retain) NSNumber * id;
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSString * pictureUrl;
-@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * commentCount;
+@property (nonatomic, retain) NSNumber * isRead;
 
 @end

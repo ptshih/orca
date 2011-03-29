@@ -26,6 +26,8 @@
 		250B31F71341C45B0011EEDD /* unread.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31F51341C4590011EEDD /* unread.png */; };
 		250B31F81341C45B0011EEDD /* unread@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31F61341C45A0011EEDD /* unread@2x.png */; };
 		250B32031341CB9F0011EEDD /* UILabel+SizeToFitWidth.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B32021341CB9F0011EEDD /* UILabel+SizeToFitWidth.m */; };
+		250B328E1341D49C0011EEDD /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B328D1341D49B0011EEDD /* Pod.m */; };
+		250B328F1341D49C0011EEDD /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B328D1341D49B0011EEDD /* Pod.m */; };
 		2538FF26133AD07100ACE127 /* feeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* feeds.json */; };
 		2538FF27133AD07100ACE127 /* feeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* feeds.json */; };
 		2538FF3D133AD22900ACE127 /* CardCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */; };
@@ -33,8 +35,6 @@
 		2538FF63133B439600ACE127 /* FeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF62133B439500ACE127 /* FeedCell.m */; };
 		2538FF66133B44D500ACE127 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF65133B44D300ACE127 /* Feed.m */; };
 		2538FF67133B44D500ACE127 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF65133B44D300ACE127 /* Feed.m */; };
-		2538FF6A133B44D800ACE127 /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF69133B44D700ACE127 /* Pod.m */; };
-		2538FF6B133B44D800ACE127 /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF69133B44D700ACE127 /* Pod.m */; };
 		2538FF76133B508500ACE127 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF6E133B508500ACE127 /* blackArrow.png */; };
 		2538FF77133B508500ACE127 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF6F133B508500ACE127 /* blackArrow@2x.png */; };
 		2538FF78133B508500ACE127 /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF70133B508500ACE127 /* blueArrow.png */; };
@@ -214,6 +214,8 @@
 		250B31F61341C45A0011EEDD /* unread@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unread@2x.png"; sourceTree = "<group>"; };
 		250B32011341CB9E0011EEDD /* UILabel+SizeToFitWidth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+SizeToFitWidth.h"; sourceTree = "<group>"; };
 		250B32021341CB9F0011EEDD /* UILabel+SizeToFitWidth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+SizeToFitWidth.m"; sourceTree = "<group>"; };
+		250B328C1341D49B0011EEDD /* Pod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pod.h; sourceTree = "<group>"; };
+		250B328D1341D49B0011EEDD /* Pod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pod.m; sourceTree = "<group>"; };
 		2538FF25133AD07100ACE127 /* feeds.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = feeds.json; sourceTree = "<group>"; };
 		2538FF3B133AD22700ACE127 /* CardCoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCoreDataTableViewController.h; sourceTree = "<group>"; };
 		2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCoreDataTableViewController.m; sourceTree = "<group>"; };
@@ -223,8 +225,6 @@
 		2538FF62133B439500ACE127 /* FeedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedCell.m; sourceTree = "<group>"; };
 		2538FF64133B44D100ACE127 /* Feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feed.h; sourceTree = "<group>"; };
 		2538FF65133B44D300ACE127 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
-		2538FF68133B44D600ACE127 /* Pod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pod.h; sourceTree = "<group>"; };
-		2538FF69133B44D700ACE127 /* Pod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pod.m; sourceTree = "<group>"; };
 		2538FF6C133B49A100ACE127 /* MoogleImageViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleImageViewDelegate.h; sourceTree = "<group>"; };
 		2538FF6E133B508500ACE127 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
 		2538FF6F133B508500ACE127 /* blackArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackArrow@2x.png"; sourceTree = "<group>"; };
@@ -610,8 +610,8 @@
 				25FB8C1B133ABED700C130A8 /* Feed+Serialize.m */,
 				2538FF64133B44D100ACE127 /* Feed.h */,
 				2538FF65133B44D300ACE127 /* Feed.m */,
-				2538FF68133B44D600ACE127 /* Pod.h */,
-				2538FF69133B44D700ACE127 /* Pod.m */,
+				250B328C1341D49B0011EEDD /* Pod.h */,
+				250B328D1341D49B0011EEDD /* Pod.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1040,7 +1040,6 @@
 				2538FF60133B438900ACE127 /* PodCell.m in Sources */,
 				2538FF63133B439600ACE127 /* FeedCell.m in Sources */,
 				2538FF66133B44D500ACE127 /* Feed.m in Sources */,
-				2538FF6A133B44D800ACE127 /* Pod.m in Sources */,
 				2538FF90133BDDBF00ACE127 /* LIImageCache.m in Sources */,
 				250B3188133EBDE70011EEDD /* CardModalViewController.m in Sources */,
 				250B318B133EBF0C0011EEDD /* KupoComposeViewController.m in Sources */,
@@ -1049,6 +1048,7 @@
 				250B31E3134131FA0011EEDD /* UIScreen+ConvertRect.m in Sources */,
 				250B31EB134162A90011EEDD /* MoogleTextView.m in Sources */,
 				250B32031341CB9F0011EEDD /* UILabel+SizeToFitWidth.m in Sources */,
+				250B328E1341D49C0011EEDD /* Pod.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1093,10 +1093,10 @@
 				25FB8C19133ABE1F00C130A8 /* Pod+Serialize.m in Sources */,
 				25FB8C1D133ABEDC00C130A8 /* Feed+Serialize.m in Sources */,
 				2538FF67133B44D500ACE127 /* Feed.m in Sources */,
-				2538FF6B133B44D800ACE127 /* Pod.m in Sources */,
 				2538FF91133BDDBF00ACE127 /* LIImageCache.m in Sources */,
 				250B31E4134132020011EEDD /* UIScreen+ConvertRect.m in Sources */,
 				250B31EC134162A90011EEDD /* MoogleTextView.m in Sources */,
+				250B328F1341D49C0011EEDD /* Pod.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

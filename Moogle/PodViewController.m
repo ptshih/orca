@@ -73,6 +73,11 @@
   [self reloadCardController];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [_tableView reloadData];
+}
+
 - (void)profile {
   
 }
@@ -112,6 +117,17 @@
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   
   Pod *pod = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
+  // Mark isRead state
+  NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
+  pod.isRead = [NSNumber numberWithBool:YES];
+  
+  NSError *error = nil;
+  if ([context hasChanges]) {
+    if (![context save:&error]) {
+      abort(); // NOTE: DO NOT SHIP
+    }
+  }
   
   FeedViewController *fvc = [[FeedViewController alloc] init];
   fvc.pod = pod;

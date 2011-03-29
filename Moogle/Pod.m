@@ -2,7 +2,7 @@
 //  Pod.m
 //  Moogle
 //
-//  Created by Peter Shih on 3/24/11.
+//  Created by Peter Shih on 3/29/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,11 +11,12 @@
 
 @implementation Pod
 @dynamic summary;
+@dynamic name;
 @dynamic checkinCount;
 @dynamic id;
 @dynamic timestamp;
 @dynamic pictureUrl;
-@dynamic name;
 @dynamic commentCount;
+@dynamic isRead;
 
 @end

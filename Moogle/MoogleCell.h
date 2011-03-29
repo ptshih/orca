@@ -27,7 +27,18 @@ typedef uint32_t MoogleCellType;
 
 + (MoogleCellType)cellType;
 + (CGFloat)rowWidth;
+
+/**
+ Used for static height cells
+ Subclasses should implement or else defaults to 44.0
+ */
 + (CGFloat)rowHeight;
+
+/**
+ Used for variable height cells
+ Attempts to call layoutSubviews for the corresponding cell class
+ With the object passed
+ */
 + (CGFloat)rowHeightForObject:(id)object;
 
 - (void)fillCellWithObject:(id)object;

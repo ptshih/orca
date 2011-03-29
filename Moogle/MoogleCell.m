@@ -53,7 +53,6 @@
 }
 
 + (CGFloat)rowHeight {
-  // Subclasses should override
   return 44.0;
 }
 

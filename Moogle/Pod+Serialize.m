@@ -35,6 +35,7 @@
   self.checkinCount = [dictionary valueForKey:@"checkin_count"];
   self.commentCount = [dictionary valueForKey:@"comment_count"];
   self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
+  self.isRead = [NSNumber numberWithBool:NO];
 }
 
 @end

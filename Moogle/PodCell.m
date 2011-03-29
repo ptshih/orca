@@ -126,6 +126,7 @@ static UIImage *_unreadImage = nil;
   _timestampLabel.text = nil;
   _summaryLabel.text = nil;
   _activityLabel.text = nil;
+  _unreadImageView.hidden = NO;
 }
 
 - (void)fillCellWithObject:(id)object {
@@ -137,6 +138,12 @@ static UIImage *_unreadImage = nil;
   
   _moogleImageView.urlPath = pod.pictureUrl;
   [_moogleImageView loadImage];
+  
+  if ([pod.isRead boolValue]) {
+    _unreadImageView.hidden = YES;
+  } else {
+    _unreadImageView.hidden = NO;
+  }
 }
 
 + (MoogleCellType)cellType {
