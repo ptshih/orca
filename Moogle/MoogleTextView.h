@@ -10,9 +10,6 @@
 
 
 @interface MoogleTextView : UITextView {
-  UIImageView *_backgroundView;
 }
-
-@property (nonatomic, retain) UIImageView *backgroundView;
 
 @end

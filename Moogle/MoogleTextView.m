@@ -11,15 +11,10 @@
 
 @implementation MoogleTextView
 
-@synthesize backgroundView = _backgroundView;
-
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _backgroundView = [[UIImageView alloc] initWithFrame:self.bounds];
-    _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    _backgroundView.image = [[UIImage imageNamed:@"textview_bg.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15];
-    [self insertSubview:_backgroundView atIndex:0];
+
     self.backgroundColor = [UIColor clearColor];
   }
   return self;
@@ -52,7 +47,6 @@
 
 
 - (void)dealloc {
-  [_backgroundView release], _backgroundView = nil;
   [super dealloc];
 }
 

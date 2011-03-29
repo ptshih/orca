@@ -62,7 +62,7 @@
   if (!heightCell) {
     heightCell = [[[self class] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithFormat:@"%@_HeightCell", [self class]]];
   } else {
-    if ([heightCell isMemberOfClass:[object class]]) {
+    if ([heightCell isMemberOfClass:[self class]]) {
       [heightCell prepareForReuse];
     } else {
       [heightCell release], heightCell = nil;
@@ -71,7 +71,7 @@
   }
   
   [heightCell fillCellWithObject:object];
-  [heightCell layoutSubviews];
+  [heightCell layoutIfNeeded];
   
   return [(MoogleCell *)heightCell desiredHeight];
 }

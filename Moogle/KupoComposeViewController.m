@@ -7,11 +7,59 @@
 //
 
 #import "KupoComposeViewController.h"
+#import <MobileCoreServices/UTCoreTypes.h>
+#import "UIImage+ScalingAndCropping.h"
 
 #define SPACING 4.0
 #define PORTRAIT_HEIGHT 180.0
 #define LANDSCAPE_HEIGHT 74.0
 
+@implementation KupoComposeViewController (CameraDelegateMethods)
+
+// For responding to the user tapping Cancel.
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+  [[picker parentViewController] dismissModalViewControllerAnimated:YES];
+  [picker release];
+}
+
+// For responding to the user accepting a newly-captured picture or movie
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+  NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+  UIImage *originalImage, *editedImage, *imageToSave, *resizedImage;
+  
+  // Handle a still image capture
+  if (CFStringCompare((CFStringRef)mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
+    editedImage = (UIImage *) [info objectForKey:UIImagePickerControllerEditedImage];
+    originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    if (editedImage) {
+      imageToSave = editedImage;
+    } else {
+      imageToSave = originalImage;
+    }
+    
+    resizedImage = [imageToSave cropProportionalToSize:CGSizeMake(320, 320)];
+    
+    // Save the new image (original or edited) to the Camera Roll
+    //    UIImageWriteToSavedPhotosAlbum (imageToSave, nil, nil , nil);
+    _uploadedImage = [imageToSave retain];
+  }
+  
+  // Handle a movie capture
+  if (CFStringCompare((CFStringRef)mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo) {
+    
+    NSString *moviePath = [[info objectForKey:UIImagePickerControllerMediaURL] path];
+    
+    if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum (moviePath)) {
+      UISaveVideoAtPathToSavedPhotosAlbum(moviePath, nil, nil, nil);
+    }
+  }
+  
+  [[picker parentViewController] dismissModalViewControllerAnimated:YES];
+  [picker release];
+}
+
+@end
 
 @implementation KupoComposeViewController
 
@@ -51,7 +99,6 @@
   _composeView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, 320, self.view.bounds.size.height - 44 - 216)];
   _composeView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:_composeView];
-
   
 //  _photoUpload = [[UIButton alloc] initWithFrame:CGRectMake(5, 7, 30, 30)];
 //  _photoUpload.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
@@ -63,30 +110,33 @@
 //  [_sendComment setBackgroundImage:[UIImage imageNamed:@"photo_upload.png"] forState:UIControlStateNormal];
 //  [self.view addSubview:_sendComment];
                   
-  _kupoComment = [[MoogleTextView alloc] initWithFrame:CGRectMake(10, 10, 300, 140)];
-  _kupoComment.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _kupoComment = [[MoogleTextView alloc] initWithFrame:CGRectMake(10, 10, 300, 30)];
 	_kupoComment.returnKeyType = UIReturnKeyDefault;
 	_kupoComment.font = [UIFont boldSystemFontOfSize:14.0];
 	_kupoComment.delegate = self;
   [_composeView addSubview:_kupoComment];
   
   _photoUpload = [[UIButton alloc] initWithFrame:CGRectZero];
-  _photoUpload.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin;
   _photoUpload.width = 70;
   _photoUpload.height = 30;
   _photoUpload.top = _kupoComment.bottom + 10;
   _photoUpload.left = _kupoComment.left;
   [_photoUpload setBackgroundImage:[UIImage imageNamed:@"photo_attach.png"] forState:UIControlStateNormal];
+  [_photoUpload addTarget:self action:@selector(uploadPicture) forControlEvents:UIControlEventTouchUpInside];
   [_composeView addSubview:_photoUpload];
   
   _locationButton = [[UIButton alloc] initWithFrame:CGRectZero];
-  _locationButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
   _locationButton.width = 70;
   _locationButton.height = 30;
   _locationButton.top = _kupoComment.bottom + 10;
   _locationButton.left = _kupoComment.right - _locationButton.width;
   [_locationButton setBackgroundImage:[UIImage imageNamed:@"geo_on.png"] forState:UIControlStateNormal];
   [_composeView addSubview:_locationButton];
+  
+  _backgroundView = [[UIImageView alloc] initWithFrame:_kupoComment.frame];
+  _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _backgroundView.image = [[UIImage imageNamed:@"textview_bg.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15];
+  [_composeView insertSubview:_backgroundView atIndex:0];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -95,6 +145,45 @@
 
 - (void)send {
   
+}
+
+- (void)uploadPicture {
+  UIActionSheet *actionSheet = [[UIActionSheet alloc] init];
+  
+  if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+    [actionSheet addButtonWithTitle:@"Take a Photo"];
+  }
+  [actionSheet addButtonWithTitle:@"Choose from Library"];
+  [actionSheet addButtonWithTitle:@"Cancel"];
+  actionSheet.delegate = self;
+  actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+  actionSheet.cancelButtonIndex = actionSheet.numberOfButtons - 1;
+  [actionSheet showInView:self.view];
+  [actionSheet autorelease];
+}
+
+#pragma mark UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+  if(buttonIndex == actionSheet.cancelButtonIndex) return;
+  
+  UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+  imagePicker.allowsEditing = YES;
+  imagePicker.delegate = self;
+  
+  switch (buttonIndex) {
+    case 0:
+      if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+      }
+      break;
+    case 1:
+      imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+      break;
+    default:
+      break;
+  }
+  
+  [self presentModalViewController:imagePicker animated:YES];
 }
 
 #pragma mark UITextViewDelegate
@@ -132,11 +221,11 @@
   CGRect keyboardFrame = [UIScreen convertRect:keyboardEndFrame toView:self.view];
   _composeView.top = _navigationBar.bottom;
   _composeView.height = self.view.bounds.size.height - _navigationBar.height - keyboardFrame.size.height;
-//  if (UIInterfaceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
-//    _kupoComment.height = self.view.height - keyboardFrame.size.height;
-//  } else {
-//    _kupoComment.height = LANDSCAPE_HEIGHT;
-//  }
+  _kupoComment.height = up ? 140 : 30;
+  _backgroundView.height = _kupoComment.height;
+  _photoUpload.top = _kupoComment.bottom + 10;
+  _locationButton.top = _kupoComment.bottom + 10;
+
   [UIView commitAnimations];
 }
 
@@ -148,6 +237,8 @@
   RELEASE_SAFELY(_photoUpload);
   RELEASE_SAFELY(_kupoComment);
   RELEASE_SAFELY(_locationButton);
+  RELEASE_SAFELY(_uploadedImage);
+  RELEASE_SAFELY(_backgroundView);
   [super dealloc];
 }
 

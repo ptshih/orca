@@ -124,6 +124,8 @@
 		25CEF932133A021A006F23A7 /* FBLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF917133A021A006F23A7 /* FBLoginDialog.m */; };
 		25CEF933133A021A006F23A7 /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF919133A021A006F23A7 /* FBRequest.m */; };
 		25CEF934133A021A006F23A7 /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF919133A021A006F23A7 /* FBRequest.m */; };
+		25EFD3861341E438000108B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EFD3851341E438000108B8 /* MobileCoreServices.framework */; };
+		25EFD3881341E449000108B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EFD3851341E438000108B8 /* MobileCoreServices.framework */; };
 		25FB8B40133A038D00C130A8 /* NSObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B2F133A038D00C130A8 /* NSObject+JSON.m */; };
 		25FB8B41133A038D00C130A8 /* NSObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B2F133A038D00C130A8 /* NSObject+JSON.m */; };
 		25FB8B42133A038D00C130A8 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B31133A038D00C130A8 /* SBJsonParser.m */; };
@@ -329,6 +331,7 @@
 		25CEF917133A021A006F23A7 /* FBLoginDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLoginDialog.m; sourceTree = "<group>"; };
 		25CEF918133A021A006F23A7 /* FBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBRequest.h; sourceTree = "<group>"; };
 		25CEF919133A021A006F23A7 /* FBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBRequest.m; sourceTree = "<group>"; };
+		25EFD3851341E438000108B8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		25FB8B2D133A038D00C130A8 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		25FB8B2E133A038D00C130A8 /* NSObject+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JSON.h"; sourceTree = "<group>"; };
 		25FB8B2F133A038D00C130A8 /* NSObject+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JSON.m"; sourceTree = "<group>"; };
@@ -411,6 +414,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25EFD3861341E438000108B8 /* MobileCoreServices.framework in Frameworks */,
 				25CEF8FC1339FF47006F23A7 /* SystemConfiguration.framework in Frameworks */,
 				25CEF8B91339FC3D006F23A7 /* MapKit.framework in Frameworks */,
 				25CEF8B71339FC28006F23A7 /* CoreLocation.framework in Frameworks */,
@@ -431,6 +435,7 @@
 				25CEF8271339F279006F23A7 /* Foundation.framework in Frameworks */,
 				25CEF8281339F279006F23A7 /* CoreGraphics.framework in Frameworks */,
 				25CEF8291339F279006F23A7 /* CoreData.framework in Frameworks */,
+				25EFD3881341E449000108B8 /* MobileCoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +492,7 @@
 			isa = PBXGroup;
 			children = (
 				25CEF8B21339FC03006F23A7 /* libz.1.2.3.dylib */,
+				25EFD3851341E438000108B8 /* MobileCoreServices.framework */,
 				25CEF8FB1339FF47006F23A7 /* SystemConfiguration.framework */,
 				25CEF8B81339FC3D006F23A7 /* MapKit.framework */,
 				25CEF8B61339FC28006F23A7 /* CoreLocation.framework */,
