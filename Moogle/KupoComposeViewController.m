@@ -13,6 +13,7 @@
 // Test
 #import "LINetworkQueue.h"
 #import "LINetworkOperation.h"
+#import "NetworkConstants.h"
 
 #define SPACING 4.0
 #define PORTRAIT_HEIGHT 180.0
@@ -163,7 +164,7 @@
 }
 
 - (void)send {
-  NSString *baseURLString = [NSString stringWithFormat:@"%@/%@/moogle/test", MOOGLE_BASE_URL, API_VERSION];
+  NSString *baseURLString = [NSString stringWithFormat:@"%@/moogle/test", MOOGLE_BASE_URL];
   
   LINetworkOperation *op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:baseURLString]];
   op.delegate = self;

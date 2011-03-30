@@ -7,6 +7,9 @@
 //
 
 #import "MoogleDataCenter.h"
+#import "HashValue.h"
+
+static NSString *_secretString = nil;
 
 @interface MoogleDataCenter (Private)
 
@@ -22,6 +25,14 @@
 @synthesize response = _response;
 @synthesize rawResponse = _rawResponse;
 @synthesize op = _op;
+
++ (void)load {
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  // Calculate SHA256 hash for secret
+  HashValue *secretHash = [HashValue sha256HashWithData:[@"omgwtfbbqflylikeag6" dataUsingEncoding:NSUTF8StringEncoding]];
+  _secretString = [[secretHash description] retain];
+  [pool drain];
+}
 
 - (id)init {
   self = [super init];
@@ -91,7 +102,7 @@
 }
 
 #pragma mark Send Operation
-- (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andParams:(NSDictionary *)params {
+- (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params {
   if (!_op) {
     _op = [[LINetworkOperation alloc] initWithURL:url];
     _op.delegate = self;
@@ -99,6 +110,29 @@
   
   // Set op method (defaults to GET)
   _op.requestMethod = method ? method : GET;
+  
+  // Add Moogle Headers
+  [_op addRequestHeader:@"X-UDID" value:[[UIDevice currentDevice] uniqueIdentifier]];
+  [_op addRequestHeader:@"X-Device-Model" value:[[UIDevice currentDevice] model]];
+  [_op addRequestHeader:@"X-App-Version" value:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+  [_op addRequestHeader:@"X-System-Name" value:[[UIDevice currentDevice] systemName]];
+  [_op addRequestHeader:@"X-System-Version" value:[[UIDevice currentDevice] systemVersion]];
+  [_op addRequestHeader:@"X-User-Language" value:USER_LANGUAGE];
+  [_op addRequestHeader:@"X-User-Locale" value:USER_LOCALE];
+  if (_secretString) [_op addRequestHeader:@"X-Moogle-Secret" value:_secretString];
+  if (_sessionKey) [_op addRequestHeader:@"X-Session-Key" value:_sessionKey];
+  
+  // Send session key if exist
+  
+  // Build Headers if exists
+  if (headers) {
+    NSArray *allKeys = [headers allKeys];
+    NSArray *allValues = [headers allValues];
+    for (int i = 0; i < [headers count]; i++) {
+      // NOTE: should probably type transform coerce in the future
+      [_op addRequestParam:[allKeys objectAtIndex:i] value:[allValues objectAtIndex:i]];
+    }
+  }
   
   // Build Params if exists
   if (params) {
@@ -111,6 +145,19 @@
   }
   
   [[LINetworkQueue sharedQueue] addOperation:_op];
+}
+
+- (void)resetSessionKey {
+  // Set Session Key
+  NSTimeInterval currentTimestamp = [[NSDate date] timeIntervalSince1970];
+  NSInteger currentTimestampInteger = floor(currentTimestamp);
+  if (_sessionKey) {
+    [_sessionKey release], _sessionKey = nil;
+  }
+  _sessionKey = [[NSString stringWithFormat:@"%d", currentTimestampInteger] retain];
+  
+  [[NSUserDefaults standardUserDefaults] setValue:_sessionKey forKey:@"sessionKey"];
+  [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 /**
@@ -180,6 +227,7 @@
 - (void)dealloc {
   if (_op) [_op clearDelegatesAndCancel];
   RELEASE_SAFELY(_op);
+  RELEASE_SAFELY(_sessionKey);
   RELEASE_SAFELY (_response);
   RELEASE_SAFELY(_rawResponse);
   [super dealloc];

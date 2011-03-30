@@ -13,8 +13,6 @@
 #import "UILabel+SizeToFitWidth.h"
 #import "NSDate+HumanInterval.h"
 
-#define USE_ROUNDED_CORNERS
-
 #ifdef __APPLE__
   #include "TargetConditionals.h"
 #endif
@@ -27,69 +25,26 @@
 // Notifications
 #define kLocationAcquired @"LocationAcquired"
 
-// API Version
-#define API_VERSION @"v1"
-
 // Cards
 #define NUM_CARDS 2
 #define CARD_WIDTH 320.0
 #define CARD_HEIGHT 460.0
 #define CARD_HEIGHT_WITH_NAV 416.0
 
-// If this is defined, we will hit the staging server instead of prod
-// #define STAGING
+#define RADIANS(degrees) ((degrees * M_PI) / 180.0)
 
-#if TARGET_IPHONE_SIMULATOR
-  #define STAGING
-  #define USE_LOCALHOST
-#endif
-
-#ifdef STAGING
-  #ifdef USE_LOCALHOST
-    #define MOOGLE_BASE_URL @"http://localhost:8000"
-  #else
-    #define MOOGLE_BASE_URL @"http://moogle-staging.heroku.com"
-  #endif
-#else
-  #define MOOGLE_BASE_URL @"http://moogle.heroku.com"
-#endif
-
-#define MOOGLE_PODS_URL [NSURL URLWithString:[NSString stringWithFormat:@"%@/pods", MOOGLE_BASE_URL]]
-
-#define GET @"GET"
-#define POST @"POST"
-
-#define MOOGLE_TERMS_URL @"http://www.sevenminuteapps.com/terms"
-#define MOOGLE_PRIVACY_URL @"http://www.sevenminuteapps.com/privacy"
-
-#define FB_GRAPH_FRIENDS @"https://graph.facebook.com/me/friends"
-#define FB_GRAPH_ME @"https://graph.facebook.com/me"
-
-// Moogle App
+// Facebook
 #define FB_APP_ID @"132514440148709"
 #define FB_APP_SECRET @"925b0a280e685631acf466dfea13b154"
 #define FB_PERMISSIONS [NSArray arrayWithObjects:@"offline_access", @"user_checkins", @"friends_checkins", @"publish_checkins", nil]
 #define FB_PARAMS @"id,first_name,last_name,name,gender,locale"
 #define FB_CHECKIN_PARAMS @"id,from,tags,place,message,application,created_time"
-#define FB_AUTHORIZE_URL @"https://m.facebook.com/dialog/oauth"
-//#define FB_AUTHORIZE_URL @"https://graph.facebook.com/oauth/authorize"
-
-// #define FB_PERMISSIONS [NSArray arrayWithObjects:@"offline_access",@"user_photos",@"friends_photos",@"user_education_history",@"friends_education_history",@"user_work_history",@"friends_work_history",nil]
-
-// #define FB_EXPIRE_TOKEN // if defined, will send a request to FB to expire a user's token
-
-// Unused, FB doesn't seem to return these
-// interested_in
-// meeting_for
-
-#define RADIANS(degrees) ((degrees * M_PI) / 180.0)
 
 // ERROR STRINGS
 #define MOOGLE_LOGOUT_ALERT @"Are you sure you want to logout?"
 #define FM_NETWORK_ERROR @"Moogle has encountered a network error. Please check your network connection and try again."
 
-//#define OAUTH_TOKEN @"151779758183785|2.mlbpS5_RD5Ao_hTpWQtBVg__.3600.1289080800-548430564|es6q1fc8hb7pSL2UpwFegiF1F8c"
-
+// Colors
 // FB DARK BLUE 51/78/141
 // FB LIGHT BLUE 161/176/206
 #define FB_COLOR_VERY_LIGHT_BLUE RGBCOLOR(220.0,225.0,235.0)

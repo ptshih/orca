@@ -34,15 +34,15 @@
   // Setup Login Buttons
   UIButton *login = [[UIButton alloc] initWithFrame:CGRectZero];
   login.width = 280.0;
-  login.height = 44.0;
+  login.height = 39.0;
   login.left = 20.0;
   login.top = self.view.height - login.height - 44.0;
-  [login setBackgroundImage:[[UIImage imageNamed:@"btn-white.png"] stretchableImageWithLeftCapWidth:20 topCapHeight:20] forState:UIControlStateNormal];
-//  [login setBackgroundImage:[[UIImage imageNamed:@"btn-green.png"] stretchableImageWithLeftCapWidth:20 topCapHeight:20] forState:UIControlStateHighlighted];
+  [login setBackgroundImage:[UIImage imageNamed:@"login_facebook.png"] forState:UIControlStateNormal];
+  [login setContentEdgeInsets:UIEdgeInsetsMake(-4, 28, 0, 0)];
   [login setTitle:@"Connect with Facebook" forState:UIControlStateNormal];
-  [login setTitleColor:FB_BLUE_COLOR forState:UIControlStateNormal];
+  [login setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [login setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-  login.titleLabel.font = [UIFont boldSystemFontOfSize:18.0];
+  login.titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
   [login addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:login];
   [login release];

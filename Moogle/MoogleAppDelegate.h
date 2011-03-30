@@ -8,27 +8,37 @@
 
 #import <UIKit/UIKit.h>
 #import "LoginDelegate.h"
+#import "MoogleDataCenterDelegate.h"
 
 @class Facebook;
 @class LoginViewController;
 @class LauncherViewController;
 @class PodViewController;
+@class LoginDataCenter;
 
-@interface MoogleAppDelegate : NSObject <UIApplicationDelegate, LoginDelegate> {
+@interface MoogleAppDelegate : NSObject <UIApplicationDelegate, LoginDelegate, MoogleDataCenterDelegate> {
   UIWindow *_window;
   Facebook *_facebook;
   LoginViewController *_loginViewController;
   LauncherViewController *_launcherViewcontroller;
   PodViewController *_podViewController;
   UINavigationController *_navigationController;
+  
+  LoginDataCenter *_loginDataCenter;
+  
+  // Session
+  NSString *_sessionKey;
 }
 
 @property (nonatomic, retain) UIWindow *window;
 @property (readonly) Facebook *facebook;
+@property (retain) NSString *sessionKey;
 
 // Private
 + (void)setupDefaults;
 - (void)saveContext;
 - (void)animateHideLogin;
+- (void)startSession;
+- (void)startRegister;
 
 @end

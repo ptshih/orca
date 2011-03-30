@@ -14,12 +14,14 @@
 #import "LINetworkQueue.h"
 #import "LICoreDataStack.h"
 #import "JSON.h"
+#import "NetworkConstants.h"
 
 @interface MoogleDataCenter : MoogleObject <MoogleDataCenterDelegate> {
   id <MoogleDataCenterDelegate> _delegate;
   id _response;
   id _rawResponse;
   LINetworkOperation *_op;
+  NSString *_sessionKey;
 }
 
 @property (nonatomic, retain) id <MoogleDataCenterDelegate> delegate;
@@ -29,11 +31,20 @@
 
 /**
  Send network operation to server (GET/POST)
+ 
+ By default this will set all required Moogle headers
+ 
  url - required defined in Constants.h
  method - optional (defaults to GET) defined in Constants.h (should be GET or POST)
+ headers - optional
  params - optional
  */
-- (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andParams:(NSDictionary *)params;
+- (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params;
+
+/**
+ Resets/Sets the sessionKey
+ */
+- (void)resetSessionKey;
 
 // Subclass should Implement AND call super's implementation
 - (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation;

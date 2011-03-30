@@ -75,7 +75,7 @@
   commentButton.titleLabel.font = [UIFont systemFontOfSize:14];
   [commentButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
   [commentButton setContentEdgeInsets:UIEdgeInsetsMake(0, 15, 0, 0)];
-  [commentButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
+  [commentButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
   [commentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
   [commentButton setTitle:@"Write a comment or share a picture..." forState:UIControlStateNormal];
   [commentButton setBackgroundImage:[[UIImage imageNamed:@"bubble.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15] forState:UIControlStateNormal];

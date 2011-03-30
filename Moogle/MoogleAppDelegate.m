@@ -13,11 +13,13 @@
 #import "LoginViewController.h"
 #import "LauncherViewController.h"
 #import "PodViewController.h"
+#import "LoginDataCenter.h"
 
 @implementation MoogleAppDelegate
 
 @synthesize window = _window;
 @synthesize facebook = _facebook;
+@synthesize sessionKey = _sessionKey;
 
 + (void)initialize {
   [self setupDefaults];
@@ -42,6 +44,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   self.window.backgroundColor = FB_COLOR_DARK_GRAY_BLUE;
+  
+  // Login/Session/Register data center
+  _loginDataCenter = [[LoginDataCenter alloc] init];
+  _loginDataCenter.delegate = self;
 
   // Setup Facebook
   _facebook = [[Facebook alloc] initWithAppId:FB_APP_ID];
@@ -55,13 +61,16 @@
   _loginViewController = [[LoginViewController alloc] init];
   _loginViewController.delegate = self;
   
-  // Login if necessary
-  if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
-    [_navigationController presentModalViewController:_loginViewController animated:YES];
-  }
-  
   [self.window addSubview:_navigationController.view];
   [self.window makeKeyAndVisible];
+  
+  // Login if necessary
+  if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
+    [_navigationController presentModalViewController:_loginViewController animated:NO];
+  } else {
+    [self startSession];
+  }
+  
   return YES;
 }
 
@@ -116,11 +125,36 @@
 #pragma mark LoginDelegate
 - (void)moogleDidLogin {
   DLog(@"Moogle Logged In");
-//  if (!_podViewController) {
-//    _podViewController = [[PodViewController alloc] init];
-//  }
-//  [self.window insertSubview:_podViewController.view atIndex:0];
-//  [self animateHideLogin];
+  
+  // Change login screen to edu walkthru / loading
+  
+  [self startRegister];
+}
+
+#pragma mark Session
+- (void)startSession {
+  // This gets called on subsequent app launches
+  [_loginDataCenter resetSessionKey];
+  [_loginDataCenter startSession];
+}
+
+- (void)startRegister {
+  // This gets called] if it is the first time logging in
+  [_loginDataCenter resetSessionKey];
+  [_loginDataCenter startRegister];
+}
+
+#pragma mark MoogleDataCenterDelegate
+- (void)dataCenterDidFinish:(LINetworkOperation *)operation {
+  // Session/Register request finished
+  if (_navigationController.modalViewController) {
+    [_navigationController dismissModalViewControllerAnimated:YES];
+  }
+}
+
+- (void)dataCenterDidFail:(LINetworkOperation *)operation {
+  // Session/Register request failed
+  // Show login again
 }
 
 #pragma mark -
@@ -142,6 +176,8 @@
 }
 
 - (void)dealloc {
+  RELEASE_SAFELY(_sessionKey);
+  RELEASE_SAFELY(_loginDataCenter);
   RELEASE_SAFELY(_loginViewController);
   RELEASE_SAFELY(_launcherViewcontroller);
   RELEASE_SAFELY(_podViewController);

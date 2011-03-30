@@ -130,6 +130,12 @@
 		25EFD38E13425B65000108B8 /* photo_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD38D13425B65000108B8 /* photo_add.png */; };
 		25EFD3FB1343D64C000108B8 /* CheckinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD3FA1343D64A000108B8 /* CheckinViewController.m */; };
 		25EFD3FC1343D64C000108B8 /* CheckinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD3FA1343D64A000108B8 /* CheckinViewController.m */; };
+		25EFD3FF1343E18E000108B8 /* LoginDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD3FE1343E18E000108B8 /* LoginDataCenter.m */; };
+		25EFD4001343E18E000108B8 /* LoginDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD3FE1343E18E000108B8 /* LoginDataCenter.m */; };
+		25EFD4051343E774000108B8 /* HashValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD4041343E774000108B8 /* HashValue.m */; };
+		25EFD4061343E774000108B8 /* HashValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD4041343E774000108B8 /* HashValue.m */; };
+		25EFD4091343EE7E000108B8 /* login_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD4071343EE7B000108B8 /* login_facebook.png */; };
+		25EFD40A1343EE7E000108B8 /* login_facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD4081343EE7C000108B8 /* login_facebook@2x.png */; };
 		25FB8B40133A038D00C130A8 /* NSObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B2F133A038D00C130A8 /* NSObject+JSON.m */; };
 		25FB8B41133A038D00C130A8 /* NSObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B2F133A038D00C130A8 /* NSObject+JSON.m */; };
 		25FB8B42133A038D00C130A8 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B31133A038D00C130A8 /* SBJsonParser.m */; };
@@ -340,6 +346,13 @@
 		25EFD38D13425B65000108B8 /* photo_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_add.png; sourceTree = "<group>"; };
 		25EFD3F91343D64A000108B8 /* CheckinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckinViewController.h; sourceTree = "<group>"; };
 		25EFD3FA1343D64A000108B8 /* CheckinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckinViewController.m; sourceTree = "<group>"; };
+		25EFD3FD1343E18D000108B8 /* LoginDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginDataCenter.h; sourceTree = "<group>"; };
+		25EFD3FE1343E18E000108B8 /* LoginDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginDataCenter.m; sourceTree = "<group>"; };
+		25EFD4011343E44C000108B8 /* NetworkConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkConstants.h; sourceTree = "<group>"; };
+		25EFD4031343E774000108B8 /* HashValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashValue.h; sourceTree = "<group>"; };
+		25EFD4041343E774000108B8 /* HashValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HashValue.m; sourceTree = "<group>"; };
+		25EFD4071343EE7B000108B8 /* login_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_facebook.png; sourceTree = "<group>"; };
+		25EFD4081343EE7C000108B8 /* login_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_facebook@2x.png"; sourceTree = "<group>"; };
 		25FB8B2D133A038D00C130A8 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		25FB8B2E133A038D00C130A8 /* NSObject+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JSON.h"; sourceTree = "<group>"; };
 		25FB8B2F133A038D00C130A8 /* NSObject+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JSON.m"; sourceTree = "<group>"; };
@@ -543,6 +556,7 @@
 			isa = PBXGroup;
 			children = (
 				25CEF8FD1339FFD3006F23A7 /* Constants.h */,
+				25EFD4011343E44C000108B8 /* NetworkConstants.h */,
 				25CEF8101339F278006F23A7 /* Moogle-Info.plist */,
 				25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */,
 				25CEF8141339F278006F23A7 /* Moogle-Prefix.pch */,
@@ -655,6 +669,8 @@
 		25CEF8FE133A000C006F23A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				25EFD4071343EE7B000108B8 /* login_facebook.png */,
+				25EFD4081343EE7C000108B8 /* login_facebook@2x.png */,
 				25EFD38D13425B65000108B8 /* photo_add.png */,
 				25EFD38A13425B2C000108B8 /* photo_add@2x.png */,
 				250B31F51341C4590011EEDD /* unread.png */,
@@ -718,9 +734,19 @@
 			path = Facebook;
 			sourceTree = "<group>";
 		};
+		25EFD4021343E75C000108B8 /* HashValue */ = {
+			isa = PBXGroup;
+			children = (
+				25EFD4031343E774000108B8 /* HashValue.h */,
+				25EFD4041343E774000108B8 /* HashValue.m */,
+			);
+			name = HashValue;
+			sourceTree = "<group>";
+		};
 		25FB8B2B133A036600C130A8 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				25EFD4021343E75C000108B8 /* HashValue */,
 				25CEF8E71339FD84006F23A7 /* NetworkStack */,
 				25FB8B56133A03A600C130A8 /* EGO */,
 				25FB8B52133A039300C130A8 /* Appirater */,
@@ -798,6 +824,8 @@
 				25FB8C0C133ABCCA00C130A8 /* PodDataCenter.m */,
 				25FB8C0F133ABCD900C130A8 /* FeedDataCenter.h */,
 				25FB8C10133ABCDA00C130A8 /* FeedDataCenter.m */,
+				25EFD3FD1343E18D000108B8 /* LoginDataCenter.h */,
+				25EFD3FE1343E18E000108B8 /* LoginDataCenter.m */,
 			);
 			name = DataCenters;
 			sourceTree = "<group>";
@@ -1000,6 +1028,8 @@
 				250B32A91341DE640011EEDD /* geo_on@2x.png in Resources */,
 				25EFD38C13425B2C000108B8 /* photo_add@2x.png in Resources */,
 				25EFD38E13425B65000108B8 /* photo_add.png in Resources */,
+				25EFD4091343EE7E000108B8 /* login_facebook.png in Resources */,
+				25EFD40A1343EE7E000108B8 /* login_facebook@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1102,6 +1132,8 @@
 				250B32031341CB9F0011EEDD /* UILabel+SizeToFitWidth.m in Sources */,
 				250B328E1341D49C0011EEDD /* Pod.m in Sources */,
 				25EFD3FB1343D64C000108B8 /* CheckinViewController.m in Sources */,
+				25EFD3FF1343E18E000108B8 /* LoginDataCenter.m in Sources */,
+				25EFD4051343E774000108B8 /* HashValue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1151,6 +1183,8 @@
 				250B31EC134162A90011EEDD /* MoogleTextView.m in Sources */,
 				250B328F1341D49C0011EEDD /* Pod.m in Sources */,
 				25EFD3FC1343D64C000108B8 /* CheckinViewController.m in Sources */,
+				25EFD4001343E18E000108B8 /* LoginDataCenter.m in Sources */,
+				25EFD4061343E774000108B8 /* HashValue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
