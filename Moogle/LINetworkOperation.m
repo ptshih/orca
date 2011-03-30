@@ -516,7 +516,7 @@ static NSThread *_opThread = nil;
       } else {
         NSAssert([dataParam isKindOfClass:[NSData class]], @"dataParam must be a UIImage or NSData");
         contentType = @"application/octet-stream";
-        [self.requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@.png\"\r\n", key, key] dataUsingEncoding:NSUTF8StringEncoding]];
+        [self.requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", key, key] dataUsingEncoding:NSUTF8StringEncoding]];
         [self.requestData appendData:[[NSString stringWithFormat:@"Content-Type: %@\r\n\r\n", contentType] dataUsingEncoding:NSUTF8StringEncoding]];
         [self.requestData appendData:(NSData *)dataParam];
       }
@@ -533,7 +533,7 @@ static NSThread *_opThread = nil;
   
   // Set content field and content type
   
-  NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; charset=%@; boundary=%@", charset, stringBoundary];
+  contentType = [NSString stringWithFormat:@"multipart/form-data; charset=%@; boundary=%@", charset, stringBoundary];
   self.requestContentType = contentType;
   self.requestContentLength = [self.requestData length];
 }
