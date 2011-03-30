@@ -90,6 +90,11 @@
   [super viewDidLoad];
   self.view.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
   
+  _navTitleLabel.text = @"Write a comment...";
+  
+  // Show the dismiss button
+  [self showDismissButton];
+  
   // Send Button
   UIButton *send = [UIButton buttonWithType:UIButtonTypeCustom];
   send.autoresizingMask = UIViewAutoresizingFlexibleHeight;
@@ -102,12 +107,10 @@
   [send addTarget:self action:@selector(send) forControlEvents:UIControlEventTouchUpInside];  
   UIBarButtonItem *sendButton = [[UIBarButtonItem alloc] initWithCustomView:send];
   
-  _navItem.rightBarButtonItem = sendButton;
+  self.navigationItem.rightBarButtonItem = sendButton;
   [sendButton release];
   
-  _navTitleLabel.text = @"Write a comment...";
-  
-  _composeView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, 320, self.view.bounds.size.height - 44 - 216)];
+  _composeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.bounds.size.height - 216)];
   _composeView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:_composeView];
   
@@ -150,7 +153,7 @@
   [_composeView addSubview:_kupoComment];
   
   _backgroundView = [[UIImageView alloc] initWithFrame:_kupoComment.frame];
-  _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   _backgroundView.image = [[UIImage imageNamed:@"textview_bg.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15];
   [_composeView insertSubview:_backgroundView atIndex:0];
 }
@@ -166,18 +169,20 @@
   op.delegate = self;
   op.requestMethod = POST;
   
-  [op addRequestParam:@"comment" value:@"hello world!"];
+  if ([_kupoComment.text length] > 0) {
+    [op addRequestParam:@"comment" value:_kupoComment.text];
+  }
   [op addRequestParam:@"timestamp" value:[NSString stringWithFormat:@"%0.0f", [[NSDate date] timeIntervalSince1970]]];
   if (_uploadedImage) {
     op.isFormData = YES;
-    [op addRequestParam:@"photo" value:_uploadedImage];
+    [op addRequestParam:@"image" value:_uploadedImage];
   }
   
   [[LINetworkQueue sharedQueue] addOperation:op];
 }
 
 - (void)networkOperationDidFinish:(LINetworkOperation *)operation {
-  [self dismissModalViewControllerAnimated:YES];
+//  [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)networkOperationDidFail:(LINetworkOperation *)operation {
@@ -256,8 +261,7 @@
   [UIView setAnimationCurve:animationCurve];
   
   CGRect keyboardFrame = [UIScreen convertRect:keyboardEndFrame toView:self.view];
-  _composeView.top = _navigationBar.bottom;
-  _composeView.height = self.view.bounds.size.height - _navigationBar.height - keyboardFrame.size.height;
+  _composeView.height = self.view.bounds.size.height - keyboardFrame.size.height;
   _kupoComment.height = up ? 180 : 30;
   _backgroundView.height = _kupoComment.height;
 //  _photoUpload.top = _kupoComment.bottom + 10;

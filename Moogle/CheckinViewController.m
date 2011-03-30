@@ -1,21 +1,21 @@
 //
-//  MeViewController.m
+//  CheckinViewController.m
 //  Moogle
 //
-//  Created by Peter Shih on 3/23/11.
+//  Created by Peter Shih on 3/30/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "MeViewController.h"
+#import "CheckinViewController.h"
 
 
-@implementation MeViewController
+@implementation CheckinViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.view.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
   
-  _navTitleLabel.text = @"Moogle Me";
+  _navTitleLabel.text = @"Check In Nearby";
   
   [self showDismissButton];
 }

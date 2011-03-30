@@ -46,7 +46,7 @@
 
 #ifdef STAGING
   #ifdef USE_LOCALHOST
-    #define MOOGLE_BASE_URL @"http://localhost:3000"
+    #define MOOGLE_BASE_URL @"http://localhost:8000"
   #else
     #define MOOGLE_BASE_URL @"http://moogle-staging.heroku.com"
   #endif

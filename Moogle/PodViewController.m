@@ -9,6 +9,8 @@
 #import "PodViewController.h"
 #import "PodDataCenter.h"
 #import "FeedViewController.h"
+#import "MeViewController.h"
+#import "CheckinViewController.h"
 #import "Pod.h"
 #import "PodCell.h"
 
@@ -75,11 +77,21 @@
 }
 
 - (void)profile {
-  
+  MeViewController *mvc = [[MeViewController alloc] init];
+  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:mvc];
+//  navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+  [self presentModalViewController:navController animated:YES];
+  [mvc release];
+  [navController release];  
 }
 
 - (void)checkin {
-  
+  CheckinViewController *mvc = [[CheckinViewController alloc] init];
+  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:mvc];
+  //  navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+  [self presentModalViewController:navController animated:YES];
+  [mvc release];
+  [navController release];  
 }
 
 

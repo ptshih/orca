@@ -80,7 +80,7 @@ static UIImage *_unreadImage = nil;
   
   _photoFrameView.left += _unreadImageView.right;
   _moogleImageView.left = _photoFrameView.left + SPACING_X;
-  _imageLoadingIndicator.left += _unreadImageView.width;
+  _imageLoadingIndicator.left += _unreadImageView.right;
   
   left = _photoFrameView.right;
   

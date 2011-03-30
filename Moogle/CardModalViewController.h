@@ -10,11 +10,10 @@
 #import "CardViewController.h"
 
 @interface CardModalViewController : CardViewController {
-  UINavigationBar *_navigationBar;
-  UINavigationItem *_navItem;
   NSString *_dismissButtonTitle;
 }
 
+- (void)showDismissButton;
 - (void)dismiss;
 
 @end

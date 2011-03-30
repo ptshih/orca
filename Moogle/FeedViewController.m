@@ -72,6 +72,12 @@
   // Setup the fake comment button
   UIButton *commentButton = [[UIButton alloc] initWithFrame:CGRectMake(45, 5, 265, 30)];
   commentButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  commentButton.titleLabel.font = [UIFont systemFontOfSize:14];
+  [commentButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+  [commentButton setContentEdgeInsets:UIEdgeInsetsMake(0, 15, 0, 0)];
+  [commentButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
+  [commentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+  [commentButton setTitle:@"Write a comment or share a picture..." forState:UIControlStateNormal];
   [commentButton setBackgroundImage:[[UIImage imageNamed:@"bubble.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15] forState:UIControlStateNormal];
   [commentButton addTarget:self action:@selector(composeKupo) forControlEvents:UIControlEventTouchUpInside];
   [_footerView addSubview:commentButton];
@@ -80,9 +86,11 @@
    
 - (void)composeKupo {
   KupoComposeViewController *kcvc = [[KupoComposeViewController alloc] init];
-  kcvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-  [self presentModalViewController:kcvc animated:YES];
+  UINavigationController *kupoNav = [[UINavigationController alloc] initWithRootViewController:kcvc];
+  kupoNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+  [self presentModalViewController:kupoNav animated:YES];
   [kcvc release];
+  [kupoNav release];
 }
 
 #pragma mark -

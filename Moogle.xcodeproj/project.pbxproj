@@ -128,6 +128,8 @@
 		25EFD3881341E449000108B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EFD3851341E438000108B8 /* MobileCoreServices.framework */; };
 		25EFD38C13425B2C000108B8 /* photo_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD38A13425B2C000108B8 /* photo_add@2x.png */; };
 		25EFD38E13425B65000108B8 /* photo_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD38D13425B65000108B8 /* photo_add.png */; };
+		25EFD3FB1343D64C000108B8 /* CheckinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD3FA1343D64A000108B8 /* CheckinViewController.m */; };
+		25EFD3FC1343D64C000108B8 /* CheckinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD3FA1343D64A000108B8 /* CheckinViewController.m */; };
 		25FB8B40133A038D00C130A8 /* NSObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B2F133A038D00C130A8 /* NSObject+JSON.m */; };
 		25FB8B41133A038D00C130A8 /* NSObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B2F133A038D00C130A8 /* NSObject+JSON.m */; };
 		25FB8B42133A038D00C130A8 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B31133A038D00C130A8 /* SBJsonParser.m */; };
@@ -336,6 +338,8 @@
 		25EFD3851341E438000108B8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		25EFD38A13425B2C000108B8 /* photo_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_add@2x.png"; sourceTree = "<group>"; };
 		25EFD38D13425B65000108B8 /* photo_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_add.png; sourceTree = "<group>"; };
+		25EFD3F91343D64A000108B8 /* CheckinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckinViewController.h; sourceTree = "<group>"; };
+		25EFD3FA1343D64A000108B8 /* CheckinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckinViewController.m; sourceTree = "<group>"; };
 		25FB8B2D133A038D00C130A8 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		25FB8B2E133A038D00C130A8 /* NSObject+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JSON.h"; sourceTree = "<group>"; };
 		25FB8B2F133A038D00C130A8 /* NSObject+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JSON.m"; sourceTree = "<group>"; };
@@ -451,6 +455,12 @@
 			children = (
 				250B3186133EBDE70011EEDD /* CardModalViewController.h */,
 				250B3187133EBDE70011EEDD /* CardModalViewController.m */,
+				250B3189133EBF0B0011EEDD /* KupoComposeViewController.h */,
+				250B318A133EBF0B0011EEDD /* KupoComposeViewController.m */,
+				25FB8BDA133A9B1000C130A8 /* MeViewController.h */,
+				25FB8BDB133A9B1200C130A8 /* MeViewController.m */,
+				25EFD3F91343D64A000108B8 /* CheckinViewController.h */,
+				25EFD3FA1343D64A000108B8 /* CheckinViewController.m */,
 			);
 			name = Modals;
 			sourceTree = "<group>";
@@ -811,12 +821,8 @@
 				25FB8BB4133A0D3D00C130A8 /* LoginViewController.m */,
 				25FB8C13133ABD1200C130A8 /* PodViewController.h */,
 				25FB8C14133ABD2300C130A8 /* PodViewController.m */,
-				25FB8BDA133A9B1000C130A8 /* MeViewController.h */,
-				25FB8BDB133A9B1200C130A8 /* MeViewController.m */,
 				25FB8BD7133A9B0000C130A8 /* FeedViewController.h */,
 				25FB8BD8133A9B0300C130A8 /* FeedViewController.m */,
-				250B3189133EBF0B0011EEDD /* KupoComposeViewController.h */,
-				250B318A133EBF0B0011EEDD /* KupoComposeViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1095,6 +1101,7 @@
 				250B31EB134162A90011EEDD /* MoogleTextView.m in Sources */,
 				250B32031341CB9F0011EEDD /* UILabel+SizeToFitWidth.m in Sources */,
 				250B328E1341D49C0011EEDD /* Pod.m in Sources */,
+				25EFD3FB1343D64C000108B8 /* CheckinViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1143,6 +1150,7 @@
 				250B31E4134132020011EEDD /* UIScreen+ConvertRect.m in Sources */,
 				250B31EC134162A90011EEDD /* MoogleTextView.m in Sources */,
 				250B328F1341D49C0011EEDD /* Pod.m in Sources */,
+				25EFD3FC1343D64C000108B8 /* CheckinViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
