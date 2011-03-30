@@ -13,8 +13,6 @@
 
 #pragma mark Static Veriables
 
-static NSString *_kStringBoundary = @"3i2ndDfv2rTHiSisAbouNdArYfORhtTPEefj3q2f";
-
 // The default number of seconds to use for a timeout
 static NSTimeInterval _defaultTimeOutSeconds = 30;
 
@@ -482,10 +480,15 @@ static NSThread *_opThread = nil;
 - (void)buildRequestParamsFormData {
   self.requestData = [NSMutableData data];
   
-  NSString *endLine = [NSString stringWithFormat:@"\r\n--%@\r\n", _kStringBoundary];
+  NSString *contentType = nil;
+  
+  NSString *charset = (NSString *)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding));
+	NSString *stringBoundary = @"0xKhTmLbOuNdArY";
+	NSString *endItemBoundary = [NSString stringWithFormat:@"\r\n--%@\r\n", stringBoundary];
+  
   NSMutableDictionary *dataDictionary = [NSMutableDictionary dictionary];
   
-  [self.requestData appendData:[[NSString stringWithFormat:@"--%@\r\n", _kStringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
+  [self.requestData appendData:[[NSString stringWithFormat:@"--%@\r\n", stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
   
   for (id key in [self.requestParams keyEnumerator]) {
     // If image or data
@@ -497,42 +500,47 @@ static NSThread *_opThread = nil;
     // If text parameter
     [self.requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
     [self.requestData appendData:[[self.requestParams valueForKey:key] dataUsingEncoding:NSUTF8StringEncoding]];
-    [self.requestData appendData:[endLine dataUsingEncoding:NSUTF8StringEncoding]];
+    [self.requestData appendData:[endItemBoundary dataUsingEncoding:NSUTF8StringEncoding]];
   }
   
+  int i = 0;
   if ([dataDictionary count] > 0) {
     for (id key in dataDictionary) {
       NSObject *dataParam = [dataDictionary valueForKey:key];
       if ([dataParam isKindOfClass:[UIImage class]]) {
+        contentType = @"image/png";
         NSData* imageData = UIImagePNGRepresentation((UIImage*)dataParam);
-        [self.requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"image\"; filename=\"%@.png\"\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        [self.requestData appendData:[[NSString stringWithString:@"Content-Type: image/png\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-        
+        [self.requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@.png\"\r\n", key, key] dataUsingEncoding:NSUTF8StringEncoding]];
+        [self.requestData appendData:[[NSString stringWithFormat:@"Content-Type: %@\r\n\r\n", contentType] dataUsingEncoding:NSUTF8StringEncoding]];
         [self.requestData appendData:imageData];
       } else {
-        NSAssert([dataParam isKindOfClass:[NSData class]],
-                 @"dataParam must be a UIImage or NSData");
-        
-        [self.requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; filename=\"%@\"\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        [self.requestData appendData:[[NSString stringWithString:@"Content-Type: content/unknown\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-
+        NSAssert([dataParam isKindOfClass:[NSData class]], @"dataParam must be a UIImage or NSData");
+        contentType = @"application/octet-stream";
+        [self.requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@.png\"\r\n", key, key] dataUsingEncoding:NSUTF8StringEncoding]];
+        [self.requestData appendData:[[NSString stringWithFormat:@"Content-Type: %@\r\n\r\n", contentType] dataUsingEncoding:NSUTF8StringEncoding]];
         [self.requestData appendData:(NSData *)dataParam];
-
       }
-      [self.requestData appendData:[endLine dataUsingEncoding:NSUTF8StringEncoding]];
+      i++;
+      // Only add the boundary if this is not the last item in the post body
+      if (i != [dataDictionary count]) { 
+        [self.requestData appendData:[endItemBoundary dataUsingEncoding:NSUTF8StringEncoding]];
+      }
     }
   }
   
+  // End boundary
+  [self.requestData appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
+  
   // Set content field and content type
-  NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", _kStringBoundary];
+  
+  NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; charset=%@; boundary=%@", charset, stringBoundary];
   self.requestContentType = contentType;
   self.requestContentLength = [self.requestData length];
 }
 
 - (void)addRequestHeader:(NSString *)header value:(NSString *)value {
   [self.request addValue:value forHTTPHeaderField:header];
+  [self.requestHeaders setValue:value forKey:header];
 }
 
 - (void)addRequestParam:(NSString *)param value:(id)value {
