@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CardModalViewController.h"
+#import "CardModalTableViewController.h"
+#import "MoogleImageView.h"
 
-@interface MeViewController : CardModalViewController {
+@class MeDataCenter;
 
+@interface MeViewController : CardModalTableViewController {
+  
+  MeDataCenter *_meDataCenter;
 }
 
 @end

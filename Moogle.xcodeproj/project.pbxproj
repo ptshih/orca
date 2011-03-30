@@ -136,6 +136,14 @@
 		25EFD4061343E774000108B8 /* HashValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD4041343E774000108B8 /* HashValue.m */; };
 		25EFD4091343EE7E000108B8 /* login_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD4071343EE7B000108B8 /* login_facebook.png */; };
 		25EFD40A1343EE7E000108B8 /* login_facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD4081343EE7C000108B8 /* login_facebook@2x.png */; };
+		25EFD4111343F19F000108B8 /* row_gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD40D1343F192000108B8 /* row_gradient.png */; };
+		25EFD4121343F19F000108B8 /* row_gradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD40E1343F194000108B8 /* row_gradient@2x.png */; };
+		25EFD4131343F19F000108B8 /* row_gradient_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD40F1343F196000108B8 /* row_gradient_selected.png */; };
+		25EFD4141343F19F000108B8 /* row_gradient_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD4101343F19A000108B8 /* row_gradient_selected@2x.png */; };
+		25EFD4171343F40E000108B8 /* MeDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD4161343F409000108B8 /* MeDataCenter.m */; };
+		25EFD4181343F40E000108B8 /* MeDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD4161343F409000108B8 /* MeDataCenter.m */; };
+		25EFD41B1343F5A9000108B8 /* CardModalTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD41A1343F59F000108B8 /* CardModalTableViewController.m */; };
+		25EFD41C1343F5A9000108B8 /* CardModalTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD41A1343F59F000108B8 /* CardModalTableViewController.m */; };
 		25FB8B40133A038D00C130A8 /* NSObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B2F133A038D00C130A8 /* NSObject+JSON.m */; };
 		25FB8B41133A038D00C130A8 /* NSObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B2F133A038D00C130A8 /* NSObject+JSON.m */; };
 		25FB8B42133A038D00C130A8 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B31133A038D00C130A8 /* SBJsonParser.m */; };
@@ -353,6 +361,14 @@
 		25EFD4041343E774000108B8 /* HashValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HashValue.m; sourceTree = "<group>"; };
 		25EFD4071343EE7B000108B8 /* login_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_facebook.png; sourceTree = "<group>"; };
 		25EFD4081343EE7C000108B8 /* login_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_facebook@2x.png"; sourceTree = "<group>"; };
+		25EFD40D1343F192000108B8 /* row_gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = row_gradient.png; sourceTree = "<group>"; };
+		25EFD40E1343F194000108B8 /* row_gradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "row_gradient@2x.png"; sourceTree = "<group>"; };
+		25EFD40F1343F196000108B8 /* row_gradient_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = row_gradient_selected.png; sourceTree = "<group>"; };
+		25EFD4101343F19A000108B8 /* row_gradient_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "row_gradient_selected@2x.png"; sourceTree = "<group>"; };
+		25EFD4151343F406000108B8 /* MeDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeDataCenter.h; sourceTree = "<group>"; };
+		25EFD4161343F409000108B8 /* MeDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeDataCenter.m; sourceTree = "<group>"; };
+		25EFD4191343F596000108B8 /* CardModalTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardModalTableViewController.h; sourceTree = "<group>"; };
+		25EFD41A1343F59F000108B8 /* CardModalTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardModalTableViewController.m; sourceTree = "<group>"; };
 		25FB8B2D133A038D00C130A8 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		25FB8B2E133A038D00C130A8 /* NSObject+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JSON.h"; sourceTree = "<group>"; };
 		25FB8B2F133A038D00C130A8 /* NSObject+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JSON.m"; sourceTree = "<group>"; };
@@ -468,6 +484,8 @@
 			children = (
 				250B3186133EBDE70011EEDD /* CardModalViewController.h */,
 				250B3187133EBDE70011EEDD /* CardModalViewController.m */,
+				25EFD4191343F596000108B8 /* CardModalTableViewController.h */,
+				25EFD41A1343F59F000108B8 /* CardModalTableViewController.m */,
 				250B3189133EBF0B0011EEDD /* KupoComposeViewController.h */,
 				250B318A133EBF0B0011EEDD /* KupoComposeViewController.m */,
 				25FB8BDA133A9B1000C130A8 /* MeViewController.h */,
@@ -669,6 +687,10 @@
 		25CEF8FE133A000C006F23A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				25EFD40D1343F192000108B8 /* row_gradient.png */,
+				25EFD40E1343F194000108B8 /* row_gradient@2x.png */,
+				25EFD40F1343F196000108B8 /* row_gradient_selected.png */,
+				25EFD4101343F19A000108B8 /* row_gradient_selected@2x.png */,
 				25EFD4071343EE7B000108B8 /* login_facebook.png */,
 				25EFD4081343EE7C000108B8 /* login_facebook@2x.png */,
 				25EFD38D13425B65000108B8 /* photo_add.png */,
@@ -741,6 +763,22 @@
 				25EFD4041343E774000108B8 /* HashValue.m */,
 			);
 			name = HashValue;
+			sourceTree = "<group>";
+		};
+		25EFD41D1343F69C000108B8 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				25FB8BDD133AA69800C130A8 /* CardStateMachine.h */,
+				25FB8BDE133AA6A900C130A8 /* CardViewController.h */,
+				25FB8BDF133AA6AB00C130A8 /* CardViewController.m */,
+				25FB8BE0133AA6B100C130A8 /* CardTableViewController.h */,
+				25FB8BE1133AA6BA00C130A8 /* CardTableViewController.m */,
+				2538FF3B133AD22700ACE127 /* CardCoreDataTableViewController.h */,
+				2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */,
+				25FB8BAF133A0D0800C130A8 /* MoogleViewController.h */,
+				25FB8BB0133A0D0800C130A8 /* MoogleViewController.m */,
+			);
+			name = Base;
 			sourceTree = "<group>";
 		};
 		25FB8B2B133A036600C130A8 /* Vendor */ = {
@@ -826,6 +864,8 @@
 				25FB8C10133ABCDA00C130A8 /* FeedDataCenter.m */,
 				25EFD3FD1343E18D000108B8 /* LoginDataCenter.h */,
 				25EFD3FE1343E18E000108B8 /* LoginDataCenter.m */,
+				25EFD4151343F406000108B8 /* MeDataCenter.h */,
+				25EFD4161343F409000108B8 /* MeDataCenter.m */,
 			);
 			name = DataCenters;
 			sourceTree = "<group>";
@@ -835,16 +875,8 @@
 			children = (
 				250B31DA133FFD300011EEDD /* LauncherViewController.h */,
 				250B31DB133FFD330011EEDD /* LauncherViewController.m */,
+				25EFD41D1343F69C000108B8 /* Base */,
 				250B3182133EBD840011EEDD /* Modals */,
-				25FB8BDD133AA69800C130A8 /* CardStateMachine.h */,
-				25FB8BDE133AA6A900C130A8 /* CardViewController.h */,
-				25FB8BDF133AA6AB00C130A8 /* CardViewController.m */,
-				25FB8BE0133AA6B100C130A8 /* CardTableViewController.h */,
-				25FB8BE1133AA6BA00C130A8 /* CardTableViewController.m */,
-				2538FF3B133AD22700ACE127 /* CardCoreDataTableViewController.h */,
-				2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */,
-				25FB8BAF133A0D0800C130A8 /* MoogleViewController.h */,
-				25FB8BB0133A0D0800C130A8 /* MoogleViewController.m */,
 				25FB8BB3133A0D3C00C130A8 /* LoginViewController.h */,
 				25FB8BB4133A0D3D00C130A8 /* LoginViewController.m */,
 				25FB8C13133ABD1200C130A8 /* PodViewController.h */,
@@ -1030,6 +1062,10 @@
 				25EFD38E13425B65000108B8 /* photo_add.png in Resources */,
 				25EFD4091343EE7E000108B8 /* login_facebook.png in Resources */,
 				25EFD40A1343EE7E000108B8 /* login_facebook@2x.png in Resources */,
+				25EFD4111343F19F000108B8 /* row_gradient.png in Resources */,
+				25EFD4121343F19F000108B8 /* row_gradient@2x.png in Resources */,
+				25EFD4131343F19F000108B8 /* row_gradient_selected.png in Resources */,
+				25EFD4141343F19F000108B8 /* row_gradient_selected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1134,6 +1170,8 @@
 				25EFD3FB1343D64C000108B8 /* CheckinViewController.m in Sources */,
 				25EFD3FF1343E18E000108B8 /* LoginDataCenter.m in Sources */,
 				25EFD4051343E774000108B8 /* HashValue.m in Sources */,
+				25EFD4171343F40E000108B8 /* MeDataCenter.m in Sources */,
+				25EFD41B1343F5A9000108B8 /* CardModalTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1185,6 +1223,8 @@
 				25EFD3FC1343D64C000108B8 /* CheckinViewController.m in Sources */,
 				25EFD4001343E18E000108B8 /* LoginDataCenter.m in Sources */,
 				25EFD4061343E774000108B8 /* HashValue.m in Sources */,
+				25EFD4181343F40E000108B8 /* MeDataCenter.m in Sources */,
+				25EFD41C1343F5A9000108B8 /* CardModalTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
