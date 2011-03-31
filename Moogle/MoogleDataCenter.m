@@ -134,6 +134,11 @@ static NSString *_secretString = nil;
     }
   }
   
+  // Add FB Access Token Param
+  // Send access_token as a parameter
+  NSString *accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
+  [_op addRequestParam:@"access_token" value:accessToken];
+  
   // Build Params if exists
   if (params) {
     NSArray *allKeys = [params allKeys];
