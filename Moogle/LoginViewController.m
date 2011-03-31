@@ -59,7 +59,6 @@
 - (void)fbDidLogin {
   // Store Access Token
   // ignore the expiration since we request non-expiring offline access
-  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
   [[NSUserDefaults standardUserDefaults] setObject:_facebook.accessToken forKey:@"facebookAccessToken"];
   [[NSUserDefaults standardUserDefaults] synchronize];
   

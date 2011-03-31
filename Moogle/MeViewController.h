@@ -9,12 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "CardModalTableViewController.h"
 #import "MoogleImageView.h"
+#import "Facebook.h"
 
 @class MeDataCenter;
 
-@interface MeViewController : CardModalTableViewController {
-  
+@interface MeViewController : CardModalTableViewController <FBDialogDelegate> {
   MeDataCenter *_meDataCenter;
 }
+
+// Private
+- (void)setupHeader;
 
 @end

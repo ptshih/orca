@@ -146,8 +146,19 @@
 
 #pragma mark MoogleDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
+  // Determine if this is register or session
+  NSString *requestUrlString = [[operation requestURL] absoluteString];
+  if ([requestUrlString rangeOfString:@"register"].location != NSNotFound) {  
+    // Moogle server will send user ID, name, and array of friend ids
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
+    [[NSUserDefaults standardUserDefaults] setObject:[_loginDataCenter.response valueForKey:@"facebook_id"] forKey:@"facebookId"];
+    [[NSUserDefaults standardUserDefaults] setObject:[_loginDataCenter.response valueForKey:@"name"] forKey:@"facebookName"];
+    [[NSUserDefaults standardUserDefaults] setObject:[_loginDataCenter.response valueForKey:@"friends"] forKey:@"friends"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+  }
+  
   // Session/Register request finished
-  if (_navigationController.modalViewController) {
+  if ([_navigationController.modalViewController isEqual:_loginViewController]) {
     [_navigationController dismissModalViewControllerAnimated:YES];
   }
 }

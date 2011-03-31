@@ -27,9 +27,7 @@
   [self sendOperationWithURL:registerUrl andMethod:POST andHeaders:nil andParams:params];
 }
 
-- (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {
-  
-  
+- (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {  
   [super dataCenterFinishedWithOperation:operation];
 }
 
