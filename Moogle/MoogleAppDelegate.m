@@ -65,11 +65,7 @@
   [self.window makeKeyAndVisible];
   
   // Login if necessary
-  if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
-    [_navigationController presentModalViewController:_loginViewController animated:NO];
-  } else {
-    [self startSession];
-  }
+  [self tryLogin];
   
   return YES;
 }
@@ -89,9 +85,8 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-  /*
-   Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-   */
+  // Login if necessary
+  [self tryLogin];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -118,6 +113,20 @@
       NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
       abort();
     } 
+  }
+}
+
+#pragma mark -
+#pragma mark Login
+- (void)tryLogin {
+  if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
+    if (![_navigationController.modalViewController isEqual:_loginViewController] && _loginViewController != nil) {
+      [_navigationController presentModalViewController:_loginViewController animated:NO];
+    }
+  } else {
+    _facebook.accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
+    _facebook.expirationDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookExpirationDate"];
+    [self startSession];
   }
 }
 

@@ -40,5 +40,6 @@
 - (void)animateHideLogin;
 - (void)startSession;
 - (void)startRegister;
+- (void)tryLogin;
 
 @end

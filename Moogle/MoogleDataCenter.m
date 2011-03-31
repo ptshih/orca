@@ -103,10 +103,13 @@ static NSString *_secretString = nil;
 
 #pragma mark Send Operation
 - (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params {
-  if (!_op) {
-    _op = [[LINetworkOperation alloc] initWithURL:url];
-    _op.delegate = self;
+  if (_op) {
+    if (_op) [_op clearDelegatesAndCancel];
+    RELEASE_SAFELY(_op);
   }
+  
+  _op = [[LINetworkOperation alloc] initWithURL:url];
+  _op.delegate = self;
   
   // Set op method (defaults to GET)
   _op.requestMethod = method ? method : GET;
@@ -136,8 +139,8 @@ static NSString *_secretString = nil;
   
   // Add FB Access Token Param
   // Send access_token as a parameter
-  NSString *accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
-  [_op addRequestParam:@"access_token" value:accessToken];
+//  NSString *accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
+//  [_op addRequestParam:@"access_token" value:accessToken];
   
   // Build Params if exists
   if (params) {

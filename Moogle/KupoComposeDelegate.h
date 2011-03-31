@@ -10,6 +10,5 @@
 
 
 @protocol KupoComposeDelegate <NSObject>
-- (void)keyboardWillShow;
-- (void)keyboardWillHide;
+
 @end

@@ -60,6 +60,7 @@
   // Store Access Token
   // ignore the expiration since we request non-expiring offline access
   [[NSUserDefaults standardUserDefaults] setObject:_facebook.accessToken forKey:@"facebookAccessToken"];
+  [[NSUserDefaults standardUserDefaults] setObject:_facebook.expirationDate forKey:@"facebookExpirationDate"];
   [[NSUserDefaults standardUserDefaults] synchronize];
   
   if (self.delegate && [self.delegate respondsToSelector:@selector(moogleDidLogin)]) {
