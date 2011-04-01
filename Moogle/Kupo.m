@@ -17,5 +17,6 @@
 @dynamic kupoType;
 @dynamic timestamp;
 @dynamic comment;
+@dynamic hasPhoto;
 
 @end

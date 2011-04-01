@@ -20,5 +20,6 @@
 @property (nonatomic, retain) NSString * kupoType;
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSString * comment;
+@property (nonatomic, retain) NSNumber * hasPhoto;
 
 @end

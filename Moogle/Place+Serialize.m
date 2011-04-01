@@ -17,6 +17,8 @@
     newPlace.id = [dictionary valueForKey:@"id"];
     newPlace.placeId = [dictionary valueForKey:@"place_id"];
     newPlace.name = [dictionary valueForKey:@"name"];
+    newPlace.hasPhoto = [dictionary valueForKey:@"has_photo"];
+    
     // These might be null
     newPlace.pictureUrl = [dictionary valueForKey:@"picture_url"] ? [dictionary valueForKey:@"picture_url"] : nil;
     newPlace.activityCount = [dictionary valueForKey:@"activity_count"] ? [dictionary valueForKey:@"activity_count"] : @"0";
@@ -49,6 +51,7 @@
 - (void)updatePlaceWithDictionary:(NSDictionary *)dictionary {
   self.name = [dictionary valueForKey:@"name"];
   self.placeId = [dictionary valueForKey:@"place_id"];
+  self.hasPhoto = [dictionary valueForKey:@"has_photo"];
   self.pictureUrl = [dictionary valueForKey:@"picture_url"];
   self.activityCount = [dictionary valueForKey:@"activity_count"];
   self.comment = [dictionary valueForKey:@"comment"];

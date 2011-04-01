@@ -103,19 +103,24 @@
   _commentLabel.left = left;
   _commentLabel.top = top;
   
-  // Row 4
-  top = _commentLabel.bottom;
-  
-  // Photo Image View
-  _photoImageView.left = left;
-  _photoImageView.top = top + PHOTO_SPACING;
-  _photoImageView.width = PHOTO_SIZE;
-  _photoImageView.height = PHOTO_SIZE;
-  _photoImageView.layer.masksToBounds = YES;
-  _photoImageView.layer.cornerRadius = 4.0;
-  
-  // Set desired height
-  _desiredHeight = _photoImageView.bottom + MARGIN_Y;
+  if (_photoImageView.urlPath) {  
+    // Row 4 (conditional)
+    top = _commentLabel.bottom;
+    
+    // Photo Image View
+    _photoImageView.left = left;
+    _photoImageView.top = top + PHOTO_SPACING;
+    _photoImageView.width = PHOTO_SIZE;
+    _photoImageView.height = PHOTO_SIZE;
+    _photoImageView.layer.masksToBounds = YES;
+    _photoImageView.layer.cornerRadius = 4.0;
+    
+    // Set desired height
+    _desiredHeight = _photoImageView.bottom + MARGIN_Y;
+  } else {
+    // Set desired height
+    _desiredHeight = _commentLabel.bottom + MARGIN_Y;
+  }
 }
 
 - (void)prepareForReuse {
@@ -138,8 +143,10 @@
   _moogleImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", kupo.authorId];
   [_moogleImageView loadImage];
   
-  _photoImageView.urlPath = [NSString stringWithFormat:@"%@/%@/thumb/image.png", S3_BASE_URL, kupo.id];
-  [_photoImageView loadImage];
+  if ([kupo.hasPhoto boolValue]) {
+    _photoImageView.urlPath = [NSString stringWithFormat:@"%@/%@/thumb/image.png", S3_BASE_URL, kupo.id];
+    [_photoImageView loadImage];
+  }
 }
 
 + (MoogleCellType)cellType {

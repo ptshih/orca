@@ -22,6 +22,8 @@
   
   UIImage *_uploadedImage;
   
+  LINetworkOperation *_op;
+  
   Place *_place;
   id <KupoComposeDelegate> _delegate;
 }

@@ -25,5 +25,6 @@
 @property (nonatomic, retain) NSString * comment;
 @property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSString * placeId;
+@property (nonatomic, retain) NSNumber * hasPhoto;
 
 @end

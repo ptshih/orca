@@ -168,25 +168,25 @@
 - (void)send {
   NSString *baseURLString = [NSString stringWithFormat:@"%@/kupos/new", MOOGLE_BASE_URL];
   
-  LINetworkOperation *op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:baseURLString]];
-  op.delegate = self;
-  op.requestMethod = POST;
+  _op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:baseURLString]];
+  _op.delegate = self;
+  _op.requestMethod = POST;
   
   if ([_kupoComment.text length] > 0) {
-    [op addRequestParam:@"comment" value:_kupoComment.text];
+    [_op addRequestParam:@"comment" value:_kupoComment.text];
   }
   if (_uploadedImage) {
-    op.isFormData = YES;
-    [op addRequestParam:@"image" value:_uploadedImage];
+    _op.isFormData = YES;
+    [_op addRequestParam:@"image" value:_uploadedImage];
   }
-  [op addRequestParam:@"place_id" value:self.place.placeId];
-  [op addRequestParam:@"timestamp" value:[NSString stringWithFormat:@"%0.0f", [[NSDate date] timeIntervalSince1970]]];
+  [_op addRequestParam:@"place_id" value:self.place.placeId];
+  [_op addRequestParam:@"timestamp" value:[NSString stringWithFormat:@"%0.0f", [[NSDate date] timeIntervalSince1970]]];
   
-  [[LINetworkQueue sharedQueue] addOperation:op];
+  [[LINetworkQueue sharedQueue] addOperation:_op];
 }
 
 - (void)networkOperationDidFinish:(LINetworkOperation *)operation {
-//  [self dismissModalViewControllerAnimated:YES];
+  [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)networkOperationDidFail:(LINetworkOperation *)operation {
@@ -277,6 +277,9 @@
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+  
+  if (_op) [_op clearDelegatesAndCancel];
+  RELEASE_SAFELY(_op);
   
   RELEASE_SAFELY(_composeView);
   RELEASE_SAFELY(_photoUpload);

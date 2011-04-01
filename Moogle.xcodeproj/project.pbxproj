@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		25033E691345E3C600633052 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033E681345E3C500633052 /* Place.m */; };
-		25033E6A1345E3C600633052 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033E681345E3C500633052 /* Place.m */; };
-		25033E7D1345EFA600633052 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033E7C1345EFA200633052 /* Kupo.m */; };
-		25033E7E1345EFA600633052 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033E7C1345EFA200633052 /* Kupo.m */; };
+		25033EA113467CCD00633052 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA013467CC800633052 /* Kupo.m */; };
+		25033EA213467CCD00633052 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA013467CC800633052 /* Kupo.m */; };
+		25033EA51346803200633052 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA41346802C00633052 /* Place.m */; };
+		25033EA61346803200633052 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA41346802C00633052 /* Place.m */; };
 		250B3188133EBDE70011EEDD /* CardModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B3187133EBDE70011EEDD /* CardModalViewController.m */; };
 		250B318B133EBF0C0011EEDD /* KupoComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B318A133EBF0B0011EEDD /* KupoComposeViewController.m */; };
 		250B31AE133EC4220011EEDD /* MoogleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31AD133EC4220011EEDD /* MoogleView.m */; };
@@ -224,10 +224,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		25033E671345E3C500633052 /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Place.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		25033E681345E3C500633052 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Place.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		25033E7B1345EFA000633052 /* Kupo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kupo.h; sourceTree = "<group>"; };
-		25033E7C1345EFA200633052 /* Kupo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Kupo.m; sourceTree = "<group>"; };
+		25033E9F13467CC500633052 /* Kupo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kupo.h; sourceTree = "<group>"; };
+		25033EA013467CC800633052 /* Kupo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Kupo.m; sourceTree = "<group>"; };
+		25033EA31346802800633052 /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Place.h; sourceTree = "<group>"; };
+		25033EA41346802C00633052 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Place.m; sourceTree = "<group>"; };
 		250B3186133EBDE70011EEDD /* CardModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardModalViewController.h; sourceTree = "<group>"; };
 		250B3187133EBDE70011EEDD /* CardModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardModalViewController.m; sourceTree = "<group>"; };
 		250B3189133EBF0B0011EEDD /* KupoComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeViewController.h; sourceTree = "<group>"; };
@@ -691,10 +691,10 @@
 				25FB8C17133ABE1C00C130A8 /* Place+Serialize.m */,
 				25FB8C1A133ABED100C130A8 /* Kupo+Serialize.h */,
 				25FB8C1B133ABED700C130A8 /* Kupo+Serialize.m */,
-				25033E671345E3C500633052 /* Place.h */,
-				25033E681345E3C500633052 /* Place.m */,
-				25033E7B1345EFA000633052 /* Kupo.h */,
-				25033E7C1345EFA200633052 /* Kupo.m */,
+				25033E9F13467CC500633052 /* Kupo.h */,
+				25033EA013467CC800633052 /* Kupo.m */,
+				25033EA31346802800633052 /* Place.h */,
+				25033EA41346802C00633052 /* Place.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1200,8 +1200,8 @@
 				25EFD4171343F40E000108B8 /* MeDataCenter.m in Sources */,
 				25EFD41B1343F5A9000108B8 /* CardModalTableViewController.m in Sources */,
 				25FF620413440D1C001EF441 /* ShareCell.m in Sources */,
-				25033E691345E3C600633052 /* Place.m in Sources */,
-				25033E7D1345EFA600633052 /* Kupo.m in Sources */,
+				25033EA113467CCD00633052 /* Kupo.m in Sources */,
+				25033EA51346803200633052 /* Place.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1253,8 +1253,8 @@
 				25EFD4061343E774000108B8 /* HashValue.m in Sources */,
 				25EFD4181343F40E000108B8 /* MeDataCenter.m in Sources */,
 				25EFD41C1343F5A9000108B8 /* CardModalTableViewController.m in Sources */,
-				25033E6A1345E3C600633052 /* Place.m in Sources */,
-				25033E7E1345EFA600633052 /* Kupo.m in Sources */,
+				25033EA213467CCD00633052 /* Kupo.m in Sources */,
+				25033EA61346803200633052 /* Place.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

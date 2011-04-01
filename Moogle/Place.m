@@ -22,5 +22,6 @@
 @dynamic comment;
 @dynamic type;
 @dynamic placeId;
+@dynamic hasPhoto;
 
 @end

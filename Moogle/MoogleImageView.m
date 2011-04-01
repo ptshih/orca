@@ -50,6 +50,7 @@
 
 - (void)unloadImage {
   self.image = self.placeholderImage;
+  self.urlPath = nil;
 }
 
 - (void)imageDidLoad {
