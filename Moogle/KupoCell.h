@@ -1,5 +1,5 @@
 //
-//  PodCell.h
+//  KupoCell.h
 //  Moogle
 //
 //  Created by Peter Shih on 3/24/11.
@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "MoogleImageCell.h"
-#import "Pod.h"
+#import "Kupo.h"
 
-@interface PodCell : MoogleImageCell {
-  UIImageView *_unreadImageView;
+@interface KupoCell : MoogleImageCell {
   UILabel *_nameLabel;
   UILabel *_timestampLabel;
-  UILabel *_summaryLabel;
-  UILabel *_activityLabel;
+  UILabel *_statusLabel;
+  UILabel *_commentLabel; // optional
+  MoogleImageView *_photoImageView; // optional
 }
 
 @end

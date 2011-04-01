@@ -1,23 +1,21 @@
 //
-//  Feed.m
+//  Kupo.m
 //  Moogle
 //
-//  Created by Peter Shih on 3/24/11.
+//  Created by Peter Shih on 4/1/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "Feed.h"
+#import "Kupo.h"
 
 
-@implementation Feed
-@dynamic authorPictureUrl;
+@implementation Kupo
+@dynamic placeId;
 @dynamic id;
 @dynamic authorId;
 @dynamic authorName;
-@dynamic photoUrl;
-@dynamic type;
+@dynamic kupoType;
 @dynamic timestamp;
 @dynamic comment;
-@dynamic podId;
 
 @end

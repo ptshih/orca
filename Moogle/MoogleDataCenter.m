@@ -63,7 +63,13 @@ static NSString *_secretString = nil;
    value = [dictionary valueForKey:key];
    
    if ([value notNil]) {
-     [sanitizedDictionary setValue:value forKey:key];
+     if ([value isKindOfClass:[NSArray class]]) {
+       [sanitizedDictionary setValue:[self sanitizeArray:(NSArray *)value] forKey:key];
+     } else if ([value isKindOfClass:[NSDictionary class]]) {
+       [sanitizedDictionary setValue:[self sanitizeDictionary:(NSDictionary *)value forKeys:[(NSDictionary *)value allKeys]] forKey:key];
+     } else {
+       [sanitizedDictionary setValue:value forKey:key];
+     }
    }
  }
  

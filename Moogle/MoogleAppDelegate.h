@@ -13,7 +13,7 @@
 @class Facebook;
 @class LoginViewController;
 @class LauncherViewController;
-@class PodViewController;
+@class PlaceViewController;
 @class LoginDataCenter;
 
 @interface MoogleAppDelegate : NSObject <UIApplicationDelegate, LoginDelegate, MoogleDataCenterDelegate> {
@@ -21,7 +21,7 @@
   Facebook *_facebook;
   LoginViewController *_loginViewController;
   LauncherViewController *_launcherViewcontroller;
-  PodViewController *_podViewController;
+  PlaceViewController *_placeViewController;
   UINavigationController *_navigationController;
   
   LoginDataCenter *_loginDataCenter;

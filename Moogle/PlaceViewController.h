@@ -1,5 +1,5 @@
 //
-//  PodViewController.h
+//  PlaceViewController.h
 //  Moogle
 //
 //  Created by Peter Shih on 3/23/11.
@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "CardCoreDataTableViewController.h"
 
-@class PodDataCenter;
+@class PlaceDataCenter;
 
-@interface PodViewController : CardCoreDataTableViewController {
-  PodDataCenter *_podDataCenter;
+@interface PlaceViewController : CardCoreDataTableViewController {
+  PlaceDataCenter *_placeDataCenter;
 }
 
 @end

@@ -1,12 +1,12 @@
 //
-//  PodCell.m
+//  PlaceCell.m
 //  Moogle
 //
 //  Created by Peter Shih on 3/24/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "PodCell.h"
+#import "PlaceCell.h"
 
 #define NAME_FONT_SIZE 14.0
 #define CELL_FONT_SIZE 13.0
@@ -15,7 +15,7 @@
 
 static UIImage *_unreadImage = nil;
 
-@implementation PodCell
+@implementation PlaceCell
 
 + (void)initialize {
   _unreadImage = [[UIImage imageNamed:@"unread.png"] retain];
@@ -130,16 +130,16 @@ static UIImage *_unreadImage = nil;
 }
 
 - (void)fillCellWithObject:(id)object {
-  Pod *pod = (Pod *)object;
-  _nameLabel.text = pod.name;
-  _timestampLabel.text = [pod.timestamp humanIntervalSinceNow];
-  _summaryLabel.text = pod.summary;
-  _activityLabel.text = [NSString stringWithFormat:@"%@ check-ins, %@ comments", pod.checkinCount, pod.commentCount];
+  Place *place = (Place *)object;
+  _nameLabel.text = place.name;
+  _timestampLabel.text = [place.timestamp humanIntervalSinceNow];
+  _summaryLabel.text = place.friendFirstNames;
+  _activityLabel.text = [NSString stringWithFormat:@"%@ pieces of a story", place.activityCount];
   
-  _moogleImageView.urlPath = pod.pictureUrl;
+  _moogleImageView.urlPath = place.pictureUrl;
   [_moogleImageView loadImage];
   
-  if ([pod.isRead boolValue]) {
+  if ([place.isRead boolValue]) {
     _unreadImageView.hidden = YES;
   } else {
     _unreadImageView.hidden = NO;

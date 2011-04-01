@@ -1,5 +1,5 @@
 //
-//  FeedCell.h
+//  PlaceCell.h
 //  Moogle
 //
 //  Created by Peter Shih on 3/24/11.
@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "MoogleImageCell.h"
-#import "Feed.h"
+#import "Place.h"
 
-@interface FeedCell : MoogleImageCell {
+@interface PlaceCell : MoogleImageCell {
+  UIImageView *_unreadImageView;
   UILabel *_nameLabel;
   UILabel *_timestampLabel;
-  UILabel *_statusLabel;
-  UILabel *_commentLabel; // optional
-  MoogleImageView *_photoImageView; // optional
+  UILabel *_summaryLabel;
+  UILabel *_activityLabel;
 }
 
 @end

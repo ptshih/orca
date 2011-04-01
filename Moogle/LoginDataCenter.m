@@ -12,7 +12,7 @@
 @implementation LoginDataCenter
 
 - (void)startSession {
-  NSURL *sessionUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/moogle/session", MOOGLE_BASE_URL]];
+  NSURL *sessionUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/session", MOOGLE_BASE_URL]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
@@ -20,7 +20,7 @@
 }
 
 - (void)startRegister {
-  NSURL *registerUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/moogle/register", MOOGLE_BASE_URL]];
+  NSURL *registerUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/register", MOOGLE_BASE_URL]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   

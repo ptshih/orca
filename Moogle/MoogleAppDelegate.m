@@ -12,7 +12,7 @@
 #import "LICoreDataStack.h"
 #import "LoginViewController.h"
 #import "LauncherViewController.h"
-#import "PodViewController.h"
+#import "PlaceViewController.h"
 #import "LoginDataCenter.h"
 
 @implementation MoogleAppDelegate
@@ -52,10 +52,10 @@
   // Setup Facebook
   _facebook = [[Facebook alloc] initWithAppId:FB_APP_ID];
   
-  _podViewController = [[PodViewController alloc] init];
+  _placeViewController = [[PlaceViewController alloc] init];
   
   // NavigationController
-  _navigationController = [[UINavigationController alloc] initWithRootViewController:_podViewController];
+  _navigationController = [[UINavigationController alloc] initWithRootViewController:_placeViewController];
   
   // LoginVC
   _loginViewController = [[LoginViewController alloc] init];
@@ -200,7 +200,7 @@
   RELEASE_SAFELY(_loginDataCenter);
   RELEASE_SAFELY(_loginViewController);
   RELEASE_SAFELY(_launcherViewcontroller);
-  RELEASE_SAFELY(_podViewController);
+  RELEASE_SAFELY(_placeViewController);
   RELEASE_SAFELY(_navigationController);
   RELEASE_SAFELY(_facebook);
   RELEASE_SAFELY(_window);

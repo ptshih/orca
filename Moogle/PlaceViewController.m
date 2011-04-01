@@ -1,26 +1,26 @@
 //
-//  PodViewController.m
+//  PlaceViewController.m
 //  Moogle
 //
 //  Created by Peter Shih on 3/23/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "PodViewController.h"
-#import "PodDataCenter.h"
-#import "FeedViewController.h"
+#import "PlaceViewController.h"
+#import "PlaceDataCenter.h"
+#import "KupoViewController.h"
 #import "MeViewController.h"
 #import "CheckinViewController.h"
-#import "Pod.h"
-#import "PodCell.h"
+#import "Place.h"
+#import "PlaceCell.h"
 
-@implementation PodViewController
+@implementation PlaceViewController
 
 - (id)init {
   self = [super init];
   if (self) {
-    _podDataCenter = [[PodDataCenter alloc] init];
-    _podDataCenter.delegate = self;
+    _placeDataCenter = [[PlaceDataCenter alloc] init];
+    _placeDataCenter.delegate = self;
   }
   return self;
 }
@@ -99,18 +99,18 @@
 #pragma mark -
 #pragma mark TableView
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  Pod *pod = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  return [PodCell rowHeightForObject:pod];
+  Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  return [PlaceCell rowHeightForObject:place];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   
-  Pod *pod = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   // Mark isRead state
   NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
-  pod.isRead = [NSNumber numberWithBool:YES];
+  place.isRead = [NSNumber numberWithBool:YES];
   
   NSError *error = nil;
   if ([context hasChanges]) {
@@ -119,24 +119,24 @@
     }
   }
   
-  FeedViewController *fvc = [[FeedViewController alloc] init];
-  fvc.pod = pod;
-  [self.navigationController pushViewController:fvc animated:YES];
-  [fvc release];
+  KupoViewController *kvc = [[KupoViewController alloc] init];
+  kvc.place = place;
+  [self.navigationController pushViewController:kvc animated:YES];
+  [kvc release];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  PodCell *cell = nil;
+  PlaceCell *cell = nil;
   NSString *reuseIdentifier = [NSString stringWithFormat:@"%@_TableViewCell_%d", [self class], indexPath.section];
   
-  cell = (PodCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+  cell = (PlaceCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
   if(cell == nil) { 
-    cell = [[[PodCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+    cell = [[[PlaceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
   }
   
-  Pod *pod = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
-  [cell fillCellWithObject:pod];
+  [cell fillCellWithObject:place];
   
   return cell;
 }
@@ -145,7 +145,8 @@
 #pragma mark CardViewController
 - (void)reloadCardController {
   [super reloadCardController];
-  [_podDataCenter loadPodsFromFixture];
+  [_placeDataCenter getPlaces];
+//  [_placeDataCenter loadPlacesFromFixture];
 }
 
 - (void)unloadCardController {
@@ -169,11 +170,11 @@
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [_podDataCenter getPodsFetchRequest];
+  return [_placeDataCenter getPlacesFetchRequest];
 }
 
 - (void)dealloc {
-  RELEASE_SAFELY(_podDataCenter);
+  RELEASE_SAFELY(_placeDataCenter);
   [super dealloc];
 }
 

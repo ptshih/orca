@@ -509,7 +509,7 @@ static NSString* kSDKVersion = @"2";
  *
  * @param action
  *            String representation of the desired method: e.g. "login",
- *            "feed", ...
+ *            "kupo", ...
  * @param delegate
  *            Callback interface to notify the calling application when the
  *            dialog has completed.
@@ -525,7 +525,7 @@ static NSString* kSDKVersion = @"2";
  *
  * @param action
  *            String representation of the desired method: e.g. "login",
- *            "feed", ...
+ *            "kupo", ...
  * @param parameters
  *            key-value string parameters
  * @param delegate

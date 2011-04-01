@@ -7,7 +7,7 @@
 //
 
 #import "LauncherViewController.h"
-#import "PodViewController.h"
+#import "PlaceViewController.h"
 #import "MeViewController.h"
 
 @implementation LauncherViewController
@@ -49,17 +49,17 @@
 
 - (void)setupControllers {
   // init the controllers
-  _podViewController = [[PodViewController alloc] init];
+  _placeViewController = [[PlaceViewController alloc] init];
   _meViewController = [[MeViewController alloc] init];
-  _feedNavController = [[UINavigationController alloc] initWithRootViewController:_podViewController];
+  _kupoNavController = [[UINavigationController alloc] initWithRootViewController:_placeViewController];
   _meNavController = [[UINavigationController alloc] initWithRootViewController:_meViewController];
   
   // Set nav delegates
-  _feedNavController.delegate = _podViewController;
+  _kupoNavController.delegate = _placeViewController;
   _meNavController.delegate = _meViewController;
   
   // Add controllers to array
-  _cards = [[NSArray alloc] initWithObjects:_feedNavController, _meNavController, nil];
+  _cards = [[NSArray alloc] initWithObjects:_kupoNavController, _meNavController, nil];
   
   // Set frames for cards and add to card scroll view
   int i = 0;
@@ -116,7 +116,7 @@
 #pragma mark -
 #pragma mark UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
-  // We don't want a "feedback loop" between the UIPageControl and the scroll delegate in
+  // We don't want a "kupoback loop" between the UIPageControl and the scroll delegate in
   // which a scroll event generated from the user hitting the page control triggers updates from
   // the delegate method. We use a boolean to disable the delegate logic when the page control is used.
   if (_cardScrollView.contentOffset.x < 0 || _cardScrollView.contentOffset.x > (CARD_WIDTH * (NUM_CARDS - 1))) return;
@@ -235,7 +235,7 @@
   RELEASE_SAFELY(_cardScrollView);
   
   // Controllers
-  RELEASE_SAFELY(_podViewController);
+  RELEASE_SAFELY(_placeViewController);
   RELEASE_SAFELY(_meViewController);
   
   // Card State

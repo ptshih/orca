@@ -1,12 +1,12 @@
 //
-//  FeedCell.m
+//  KupoCell.m
 //  Moogle
 //
 //  Created by Peter Shih on 3/24/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "FeedCell.h"
+#import "KupoCell.h"
 
 #define NAME_FONT_SIZE 14.0
 #define CELL_FONT_SIZE 13.0
@@ -14,7 +14,7 @@
 #define PHOTO_SIZE 100.0
 #define PHOTO_SPACING 5.0
 
-@implementation FeedCell
+@implementation KupoCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -127,16 +127,16 @@
 }
 
 - (void)fillCellWithObject:(id)object {
-  Feed *feed = (Feed *)object;
-  _nameLabel.text = feed.authorName;
-  _timestampLabel.text = [feed.timestamp humanIntervalSinceNow];
+  Kupo *kupo = (Kupo *)object;
+  _nameLabel.text = kupo.authorName;
+  _timestampLabel.text = [kupo.timestamp humanIntervalSinceNow];
   _statusLabel.text = [NSString stringWithFormat:@"Checked in here."];
-  _commentLabel.text = feed.comment;
+  _commentLabel.text = kupo.comment;
   
-  _moogleImageView.urlPath = feed.authorPictureUrl;
+  _moogleImageView.urlPath = nil;
   [_moogleImageView loadImage];
   
-  _photoImageView.urlPath = feed.photoUrl;
+  _photoImageView.urlPath = nil;
   [_photoImageView loadImage];
 }
 

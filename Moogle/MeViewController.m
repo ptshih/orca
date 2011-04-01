@@ -115,7 +115,7 @@
                                    @"I'm using Moogle to share stories of places with my friends. Get the FREE iPhone or Android app so you can join too!.", @"description",
                                    nil];
     
-    [APP_DELEGATE.facebook dialog:@"feed" andParams:params andDelegate:self];
+    [APP_DELEGATE.facebook dialog:@"kupo" andParams:params andDelegate:self];
   }
 }
 

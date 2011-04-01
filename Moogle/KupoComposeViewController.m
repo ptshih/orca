@@ -164,7 +164,7 @@
 }
 
 - (void)send {
-  NSString *baseURLString = [NSString stringWithFormat:@"%@/moogle/test", MOOGLE_BASE_URL];
+  NSString *baseURLString = [NSString stringWithFormat:@"%@/kupos/new", MOOGLE_BASE_URL];
   
   LINetworkOperation *op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:baseURLString]];
   op.delegate = self;

@@ -1,5 +1,5 @@
 //
-//  FeedViewController.h
+//  KupoViewController.h
 //  Moogle
 //
 //  Created by Peter Shih on 3/23/11.
@@ -9,15 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "CardCoreDataTableViewController.h"
 
-@class FeedDataCenter;
-@class Pod;
+@class KupoDataCenter;
+@class Place;
 
-@interface FeedViewController : CardCoreDataTableViewController {
-  FeedDataCenter *_feedDataCenter;
-  Pod *_pod;
+@interface KupoViewController : CardCoreDataTableViewController {
+  KupoDataCenter *_kupoDataCenter;
+  Place *_place;
 }
 
-@property (nonatomic, retain) Pod *pod;
+@property (nonatomic, retain) Place *place;
 
 // Private
 - (void)composeKupo;

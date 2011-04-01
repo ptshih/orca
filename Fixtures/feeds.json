@@ -1,36 +1,30 @@
 {
 	"values" : [
 		{
-			"id" : 1,
+			"id" : "1",
 			"type" : "comment",
-			"pod_id" : 1,
-			"author_id" : 548430564,
+			"place_id" : "1",
+			"author_id" : "548430564",
 			"author_name" : "Peter Shih",
-			"author_picture_url" : "http://profile.ak.fbcdn.net/hprofile-ak-snc4/174453_548430564_3413707_q.jpg",
 			"comment" : "LoL I am here for free sandwiches!",
-			"photo_url" : "http://img1.loadtr.com/b-476625-Vanessa_Hudgens.jpg",
 			"timestamp" : 1300930808
 		},
 		{
-			"id" : 2,
+			"id" : "2",
 			"type" : "checkin",
-			"pod_id" : 1,
-			"author_id" : 548430564,
+			"place_id" : "1",
+			"author_id" : "548430564",
 			"author_name" : "Peter Shih",
-			"author_picture_url" : "http://profile.ak.fbcdn.net/hprofile-ak-snc4/174453_548430564_3413707_q.jpg",
 			"comment" : "Go Giants!",
-			"photo_url" : "http://yeinjee.com/wp-content/uploads/2008/09/korea-wonder-girls-001.jpg",
 			"timestamp" : 1290130808
 		},
     {
-      "id" : 3,
+      "id" : "3",
       "type" : "checkin",
-      "pod_id" : 1,
-      "author_id" : 548430564,
+      "place_id" : "1",
+      "author_id" : "548430564",
       "author_name" : "Peter Shih",
-      "author_picture_url" : "http://profile.ak.fbcdn.net/hprofile-ak-snc4/174453_548430564_3413707_q.jpg",
       "comment" : "Go Giants!",
-      "photo_url" : "http://yeinjee.com/wp-content/uploads/2008/09/korea-wonder-girls-001.jpg",
       "timestamp" : 1290130808
     }
 	],

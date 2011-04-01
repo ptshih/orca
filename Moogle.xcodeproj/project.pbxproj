@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25033E691345E3C600633052 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033E681345E3C500633052 /* Place.m */; };
+		25033E6A1345E3C600633052 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033E681345E3C500633052 /* Place.m */; };
+		25033E7D1345EFA600633052 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033E7C1345EFA200633052 /* Kupo.m */; };
+		25033E7E1345EFA600633052 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033E7C1345EFA200633052 /* Kupo.m */; };
 		250B3188133EBDE70011EEDD /* CardModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B3187133EBDE70011EEDD /* CardModalViewController.m */; };
 		250B318B133EBF0C0011EEDD /* KupoComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B318A133EBF0B0011EEDD /* KupoComposeViewController.m */; };
 		250B31AE133EC4220011EEDD /* MoogleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31AD133EC4220011EEDD /* MoogleView.m */; };
@@ -26,8 +30,6 @@
 		250B31F71341C45B0011EEDD /* unread.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31F51341C4590011EEDD /* unread.png */; };
 		250B31F81341C45B0011EEDD /* unread@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31F61341C45A0011EEDD /* unread@2x.png */; };
 		250B32031341CB9F0011EEDD /* UILabel+SizeToFitWidth.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B32021341CB9F0011EEDD /* UILabel+SizeToFitWidth.m */; };
-		250B328E1341D49C0011EEDD /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B328D1341D49B0011EEDD /* Pod.m */; };
-		250B328F1341D49C0011EEDD /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B328D1341D49B0011EEDD /* Pod.m */; };
 		250B329C1341DE140011EEDD /* photo_attach.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B329A1341DE0F0011EEDD /* photo_attach.png */; };
 		250B329D1341DE140011EEDD /* photo_attach@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B329B1341DE110011EEDD /* photo_attach@2x.png */; };
 		250B32A41341DE640011EEDD /* geo_loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B329E1341DE4D0011EEDD /* geo_loading.png */; };
@@ -39,10 +41,8 @@
 		2538FF26133AD07100ACE127 /* feeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* feeds.json */; };
 		2538FF27133AD07100ACE127 /* feeds.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* feeds.json */; };
 		2538FF3D133AD22900ACE127 /* CardCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */; };
-		2538FF60133B438900ACE127 /* PodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF5F133B438800ACE127 /* PodCell.m */; };
-		2538FF63133B439600ACE127 /* FeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF62133B439500ACE127 /* FeedCell.m */; };
-		2538FF66133B44D500ACE127 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF65133B44D300ACE127 /* Feed.m */; };
-		2538FF67133B44D500ACE127 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF65133B44D300ACE127 /* Feed.m */; };
+		2538FF60133B438900ACE127 /* PlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF5F133B438800ACE127 /* PlaceCell.m */; };
+		2538FF63133B439600ACE127 /* KupoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF62133B439500ACE127 /* KupoCell.m */; };
 		2538FF76133B508500ACE127 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF6E133B508500ACE127 /* blackArrow.png */; };
 		2538FF77133B508500ACE127 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF6F133B508500ACE127 /* blackArrow@2x.png */; };
 		2538FF78133B508500ACE127 /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF70133B508500ACE127 /* blueArrow.png */; };
@@ -181,7 +181,7 @@
 		25FB8BC6133A137700C130A8 /* logo-white-280@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BC4133A137700C130A8 /* logo-white-280@2x.png */; };
 		25FB8BD0133A1B9500C130A8 /* InitialDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */; };
 		25FB8BD1133A1B9500C130A8 /* InitialDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */; };
-		25FB8BD9133A9B0600C130A8 /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BD8133A9B0300C130A8 /* FeedViewController.m */; };
+		25FB8BD9133A9B0600C130A8 /* KupoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BD8133A9B0300C130A8 /* KupoViewController.m */; };
 		25FB8BDC133A9B1600C130A8 /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BDB133A9B1200C130A8 /* MeViewController.m */; };
 		25FB8BE2133AA6C700C130A8 /* CardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BDF133AA6AB00C130A8 /* CardViewController.m */; };
 		25FB8BE3133AA6C700C130A8 /* CardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BE1133AA6BA00C130A8 /* CardTableViewController.m */; };
@@ -193,15 +193,15 @@
 		25FB8BFA133AACCF00C130A8 /* table-cell-bg-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BF8133AACCF00C130A8 /* table-cell-bg-selected.png */; };
 		25FB8C01133AAF2900C130A8 /* nav-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BFF133AAF2600C130A8 /* nav-logo.png */; };
 		25FB8C02133AAF2900C130A8 /* nav-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8C00133AAF2700C130A8 /* nav-logo@2x.png */; };
-		25FB8C0D133ABCCB00C130A8 /* PodDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C0C133ABCCA00C130A8 /* PodDataCenter.m */; };
-		25FB8C0E133ABCCB00C130A8 /* PodDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C0C133ABCCA00C130A8 /* PodDataCenter.m */; };
-		25FB8C11133ABCDD00C130A8 /* FeedDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C10133ABCDA00C130A8 /* FeedDataCenter.m */; };
-		25FB8C12133ABCDD00C130A8 /* FeedDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C10133ABCDA00C130A8 /* FeedDataCenter.m */; };
-		25FB8C15133ABD3200C130A8 /* PodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C14133ABD2300C130A8 /* PodViewController.m */; };
-		25FB8C18133ABE1F00C130A8 /* Pod+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C17133ABE1C00C130A8 /* Pod+Serialize.m */; };
-		25FB8C19133ABE1F00C130A8 /* Pod+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C17133ABE1C00C130A8 /* Pod+Serialize.m */; };
-		25FB8C1C133ABEDC00C130A8 /* Feed+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C1B133ABED700C130A8 /* Feed+Serialize.m */; };
-		25FB8C1D133ABEDC00C130A8 /* Feed+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C1B133ABED700C130A8 /* Feed+Serialize.m */; };
+		25FB8C0D133ABCCB00C130A8 /* PlaceDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C0C133ABCCA00C130A8 /* PlaceDataCenter.m */; };
+		25FB8C0E133ABCCB00C130A8 /* PlaceDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C0C133ABCCA00C130A8 /* PlaceDataCenter.m */; };
+		25FB8C11133ABCDD00C130A8 /* KupoDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C10133ABCDA00C130A8 /* KupoDataCenter.m */; };
+		25FB8C12133ABCDD00C130A8 /* KupoDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C10133ABCDA00C130A8 /* KupoDataCenter.m */; };
+		25FB8C15133ABD3200C130A8 /* PlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C14133ABD2300C130A8 /* PlaceViewController.m */; };
+		25FB8C18133ABE1F00C130A8 /* Place+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C17133ABE1C00C130A8 /* Place+Serialize.m */; };
+		25FB8C19133ABE1F00C130A8 /* Place+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C17133ABE1C00C130A8 /* Place+Serialize.m */; };
+		25FB8C1C133ABEDC00C130A8 /* Kupo+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C1B133ABED700C130A8 /* Kupo+Serialize.m */; };
+		25FB8C1D133ABEDC00C130A8 /* Kupo+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C1B133ABED700C130A8 /* Kupo+Serialize.m */; };
 		25FB8C20133ACB2400C130A8 /* pods.json in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8C1F133ACB2400C130A8 /* pods.json */; };
 		25FB8C21133ACB2400C130A8 /* pods.json in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8C1F133ACB2400C130A8 /* pods.json */; };
 		25FF620413440D1C001EF441 /* ShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FF620313440D1B001EF441 /* ShareCell.m */; };
@@ -224,6 +224,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		25033E671345E3C500633052 /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Place.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		25033E681345E3C500633052 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Place.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		25033E7B1345EFA000633052 /* Kupo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kupo.h; sourceTree = "<group>"; };
+		25033E7C1345EFA200633052 /* Kupo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Kupo.m; sourceTree = "<group>"; };
 		250B3186133EBDE70011EEDD /* CardModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardModalViewController.h; sourceTree = "<group>"; };
 		250B3187133EBDE70011EEDD /* CardModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardModalViewController.m; sourceTree = "<group>"; };
 		250B3189133EBF0B0011EEDD /* KupoComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeViewController.h; sourceTree = "<group>"; };
@@ -231,8 +235,8 @@
 		250B31AC133EC4220011EEDD /* MoogleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleView.h; sourceTree = "<group>"; };
 		250B31AD133EC4220011EEDD /* MoogleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoogleView.m; sourceTree = "<group>"; };
 		250B31AF133EC86A0011EEDD /* KupoComposeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeDelegate.h; sourceTree = "<group>"; };
-		250B31DA133FFD300011EEDD /* LauncherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LauncherViewController.h; sourceTree = "<group>"; };
-		250B31DB133FFD330011EEDD /* LauncherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LauncherViewController.m; sourceTree = "<group>"; };
+		250B31DA133FFD300011EEDD /* LauncherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LauncherViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		250B31DB133FFD330011EEDD /* LauncherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LauncherViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		250B31DD13411DBD0011EEDD /* textview_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = textview_bg.png; sourceTree = "<group>"; };
 		250B31DE13411DBD0011EEDD /* textview_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "textview_bg@2x.png"; sourceTree = "<group>"; };
 		250B31E1134131FA0011EEDD /* UIScreen+ConvertRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+ConvertRect.h"; sourceTree = "<group>"; };
@@ -249,8 +253,6 @@
 		250B31F61341C45A0011EEDD /* unread@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unread@2x.png"; sourceTree = "<group>"; };
 		250B32011341CB9E0011EEDD /* UILabel+SizeToFitWidth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+SizeToFitWidth.h"; sourceTree = "<group>"; };
 		250B32021341CB9F0011EEDD /* UILabel+SizeToFitWidth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+SizeToFitWidth.m"; sourceTree = "<group>"; };
-		250B328C1341D49B0011EEDD /* Pod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pod.h; sourceTree = "<group>"; };
-		250B328D1341D49B0011EEDD /* Pod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pod.m; sourceTree = "<group>"; };
 		250B329A1341DE0F0011EEDD /* photo_attach.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_attach.png; sourceTree = "<group>"; };
 		250B329B1341DE110011EEDD /* photo_attach@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_attach@2x.png"; sourceTree = "<group>"; };
 		250B329E1341DE4D0011EEDD /* geo_loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = geo_loading.png; sourceTree = "<group>"; };
@@ -262,12 +264,10 @@
 		2538FF25133AD07100ACE127 /* feeds.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = feeds.json; sourceTree = "<group>"; };
 		2538FF3B133AD22700ACE127 /* CardCoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCoreDataTableViewController.h; sourceTree = "<group>"; };
 		2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCoreDataTableViewController.m; sourceTree = "<group>"; };
-		2538FF5E133B438800ACE127 /* PodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PodCell.h; sourceTree = "<group>"; };
-		2538FF5F133B438800ACE127 /* PodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PodCell.m; sourceTree = "<group>"; };
-		2538FF61133B439400ACE127 /* FeedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedCell.h; sourceTree = "<group>"; };
-		2538FF62133B439500ACE127 /* FeedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedCell.m; sourceTree = "<group>"; };
-		2538FF64133B44D100ACE127 /* Feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feed.h; sourceTree = "<group>"; };
-		2538FF65133B44D300ACE127 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
+		2538FF5E133B438800ACE127 /* PlaceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PlaceCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		2538FF5F133B438800ACE127 /* PlaceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PlaceCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		2538FF61133B439400ACE127 /* KupoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoCell.h; sourceTree = "<group>"; };
+		2538FF62133B439500ACE127 /* KupoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KupoCell.m; sourceTree = "<group>"; };
 		2538FF6C133B49A100ACE127 /* MoogleImageViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleImageViewDelegate.h; sourceTree = "<group>"; };
 		2538FF6E133B508500ACE127 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
 		2538FF6F133B508500ACE127 /* blackArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackArrow@2x.png"; sourceTree = "<group>"; };
@@ -296,8 +296,8 @@
 		25CEF8101339F278006F23A7 /* Moogle-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Moogle-Info.plist"; sourceTree = "<group>"; };
 		25CEF8141339F278006F23A7 /* Moogle-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Moogle-Prefix.pch"; sourceTree = "<group>"; };
 		25CEF8151339F278006F23A7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		25CEF8171339F278006F23A7 /* MoogleAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoogleAppDelegate.h; sourceTree = "<group>"; };
-		25CEF8181339F278006F23A7 /* MoogleAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoogleAppDelegate.m; sourceTree = "<group>"; };
+		25CEF8171339F278006F23A7 /* MoogleAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MoogleAppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		25CEF8181339F278006F23A7 /* MoogleAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MoogleAppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		25CEF81E1339F279006F23A7 /* Moogle.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Moogle.xcdatamodel; sourceTree = "<group>"; };
 		25CEF8251339F279006F23A7 /* MoogleTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoogleTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		25CEF82E1339F279006F23A7 /* MoogleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MoogleTests-Info.plist"; sourceTree = "<group>"; };
@@ -418,8 +418,8 @@
 		25FB8BC4133A137700C130A8 /* logo-white-280@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-white-280@2x.png"; sourceTree = "<group>"; };
 		25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InitialDefaults.plist; sourceTree = "<group>"; };
 		25FB8BD3133A1DE400C130A8 /* LoginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginDelegate.h; sourceTree = "<group>"; };
-		25FB8BD7133A9B0000C130A8 /* FeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedViewController.h; sourceTree = "<group>"; };
-		25FB8BD8133A9B0300C130A8 /* FeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedViewController.m; sourceTree = "<group>"; };
+		25FB8BD7133A9B0000C130A8 /* KupoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KupoViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		25FB8BD8133A9B0300C130A8 /* KupoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KupoViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		25FB8BDA133A9B1000C130A8 /* MeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeViewController.h; sourceTree = "<group>"; };
 		25FB8BDB133A9B1200C130A8 /* MeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeViewController.m; sourceTree = "<group>"; };
 		25FB8BDD133AA69800C130A8 /* CardStateMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardStateMachine.h; sourceTree = "<group>"; };
@@ -440,16 +440,16 @@
 		25FB8BF8133AACCF00C130A8 /* table-cell-bg-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "table-cell-bg-selected.png"; sourceTree = "<group>"; };
 		25FB8BFF133AAF2600C130A8 /* nav-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-logo.png"; sourceTree = "<group>"; };
 		25FB8C00133AAF2700C130A8 /* nav-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-logo@2x.png"; sourceTree = "<group>"; };
-		25FB8C0B133ABCC900C130A8 /* PodDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PodDataCenter.h; sourceTree = "<group>"; };
-		25FB8C0C133ABCCA00C130A8 /* PodDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PodDataCenter.m; sourceTree = "<group>"; };
-		25FB8C0F133ABCD900C130A8 /* FeedDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedDataCenter.h; sourceTree = "<group>"; };
-		25FB8C10133ABCDA00C130A8 /* FeedDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedDataCenter.m; sourceTree = "<group>"; };
-		25FB8C13133ABD1200C130A8 /* PodViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PodViewController.h; sourceTree = "<group>"; };
-		25FB8C14133ABD2300C130A8 /* PodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PodViewController.m; sourceTree = "<group>"; };
-		25FB8C16133ABE1800C130A8 /* Pod+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Pod+Serialize.h"; sourceTree = "<group>"; };
-		25FB8C17133ABE1C00C130A8 /* Pod+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Pod+Serialize.m"; sourceTree = "<group>"; };
-		25FB8C1A133ABED100C130A8 /* Feed+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Feed+Serialize.h"; sourceTree = "<group>"; };
-		25FB8C1B133ABED700C130A8 /* Feed+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Feed+Serialize.m"; sourceTree = "<group>"; };
+		25FB8C0B133ABCC900C130A8 /* PlaceDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PlaceDataCenter.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		25FB8C0C133ABCCA00C130A8 /* PlaceDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PlaceDataCenter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		25FB8C0F133ABCD900C130A8 /* KupoDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KupoDataCenter.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		25FB8C10133ABCDA00C130A8 /* KupoDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KupoDataCenter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		25FB8C13133ABD1200C130A8 /* PlaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PlaceViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		25FB8C14133ABD2300C130A8 /* PlaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PlaceViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		25FB8C16133ABE1800C130A8 /* Place+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "Place+Serialize.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		25FB8C17133ABE1C00C130A8 /* Place+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "Place+Serialize.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		25FB8C1A133ABED100C130A8 /* Kupo+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Kupo+Serialize.h"; sourceTree = "<group>"; };
+		25FB8C1B133ABED700C130A8 /* Kupo+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Kupo+Serialize.m"; sourceTree = "<group>"; };
 		25FB8C1F133ACB2400C130A8 /* pods.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pods.json; sourceTree = "<group>"; };
 		25FF620213440D1A001EF441 /* ShareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareCell.h; sourceTree = "<group>"; };
 		25FF620313440D1B001EF441 /* ShareCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareCell.m; sourceTree = "<group>"; };
@@ -687,14 +687,14 @@
 			children = (
 				25CEF8F31339FE46006F23A7 /* MoogleObject.h */,
 				25CEF8F41339FE46006F23A7 /* MoogleObject.m */,
-				25FB8C16133ABE1800C130A8 /* Pod+Serialize.h */,
-				25FB8C17133ABE1C00C130A8 /* Pod+Serialize.m */,
-				25FB8C1A133ABED100C130A8 /* Feed+Serialize.h */,
-				25FB8C1B133ABED700C130A8 /* Feed+Serialize.m */,
-				2538FF64133B44D100ACE127 /* Feed.h */,
-				2538FF65133B44D300ACE127 /* Feed.m */,
-				250B328C1341D49B0011EEDD /* Pod.h */,
-				250B328D1341D49B0011EEDD /* Pod.m */,
+				25FB8C16133ABE1800C130A8 /* Place+Serialize.h */,
+				25FB8C17133ABE1C00C130A8 /* Place+Serialize.m */,
+				25FB8C1A133ABED100C130A8 /* Kupo+Serialize.h */,
+				25FB8C1B133ABED700C130A8 /* Kupo+Serialize.m */,
+				25033E671345E3C500633052 /* Place.h */,
+				25033E681345E3C500633052 /* Place.m */,
+				25033E7B1345EFA000633052 /* Kupo.h */,
+				25033E7C1345EFA200633052 /* Kupo.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -879,10 +879,10 @@
 			children = (
 				25FB8B97133A069E00C130A8 /* MoogleDataCenter.h */,
 				25FB8B98133A069E00C130A8 /* MoogleDataCenter.m */,
-				25FB8C0B133ABCC900C130A8 /* PodDataCenter.h */,
-				25FB8C0C133ABCCA00C130A8 /* PodDataCenter.m */,
-				25FB8C0F133ABCD900C130A8 /* FeedDataCenter.h */,
-				25FB8C10133ABCDA00C130A8 /* FeedDataCenter.m */,
+				25FB8C0B133ABCC900C130A8 /* PlaceDataCenter.h */,
+				25FB8C0C133ABCCA00C130A8 /* PlaceDataCenter.m */,
+				25FB8C0F133ABCD900C130A8 /* KupoDataCenter.h */,
+				25FB8C10133ABCDA00C130A8 /* KupoDataCenter.m */,
 				25EFD3FD1343E18D000108B8 /* LoginDataCenter.h */,
 				25EFD3FE1343E18E000108B8 /* LoginDataCenter.m */,
 				25EFD4151343F406000108B8 /* MeDataCenter.h */,
@@ -900,10 +900,10 @@
 				250B3182133EBD840011EEDD /* Modals */,
 				25FB8BB3133A0D3C00C130A8 /* LoginViewController.h */,
 				25FB8BB4133A0D3D00C130A8 /* LoginViewController.m */,
-				25FB8C13133ABD1200C130A8 /* PodViewController.h */,
-				25FB8C14133ABD2300C130A8 /* PodViewController.m */,
-				25FB8BD7133A9B0000C130A8 /* FeedViewController.h */,
-				25FB8BD8133A9B0300C130A8 /* FeedViewController.m */,
+				25FB8C13133ABD1200C130A8 /* PlaceViewController.h */,
+				25FB8C14133ABD2300C130A8 /* PlaceViewController.m */,
+				25FB8BD7133A9B0000C130A8 /* KupoViewController.h */,
+				25FB8BD8133A9B0300C130A8 /* KupoViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -940,10 +940,10 @@
 				25FB8BEC133AA7E600C130A8 /* MoogleCell.m */,
 				25FB8BED133AA7E600C130A8 /* MoogleImageCell.h */,
 				25FB8BEE133AA7E700C130A8 /* MoogleImageCell.m */,
-				2538FF5E133B438800ACE127 /* PodCell.h */,
-				2538FF5F133B438800ACE127 /* PodCell.m */,
-				2538FF61133B439400ACE127 /* FeedCell.h */,
-				2538FF62133B439500ACE127 /* FeedCell.m */,
+				2538FF5E133B438800ACE127 /* PlaceCell.h */,
+				2538FF5F133B438800ACE127 /* PlaceCell.m */,
+				2538FF61133B439400ACE127 /* KupoCell.h */,
+				2538FF62133B439500ACE127 /* KupoCell.m */,
 				25FF620213440D1A001EF441 /* ShareCell.h */,
 				25FF620313440D1B001EF441 /* ShareCell.m */,
 			);
@@ -1170,7 +1170,7 @@
 				25FB8B9A133A069E00C130A8 /* MoogleDataCenter.m in Sources */,
 				25FB8BB1133A0D0800C130A8 /* MoogleViewController.m in Sources */,
 				25FB8BB5133A0D3D00C130A8 /* LoginViewController.m in Sources */,
-				25FB8BD9133A9B0600C130A8 /* FeedViewController.m in Sources */,
+				25FB8BD9133A9B0600C130A8 /* KupoViewController.m in Sources */,
 				25FB8BDC133A9B1600C130A8 /* MeViewController.m in Sources */,
 				25FB8BE2133AA6C700C130A8 /* CardViewController.m in Sources */,
 				25FB8BE3133AA6C700C130A8 /* CardTableViewController.m in Sources */,
@@ -1178,15 +1178,14 @@
 				25FB8BEA133AA7C400C130A8 /* HeaderTabView.m in Sources */,
 				25FB8BEF133AA7E800C130A8 /* MoogleCell.m in Sources */,
 				25FB8BF0133AA7E800C130A8 /* MoogleImageCell.m in Sources */,
-				25FB8C0D133ABCCB00C130A8 /* PodDataCenter.m in Sources */,
-				25FB8C11133ABCDD00C130A8 /* FeedDataCenter.m in Sources */,
-				25FB8C15133ABD3200C130A8 /* PodViewController.m in Sources */,
-				25FB8C18133ABE1F00C130A8 /* Pod+Serialize.m in Sources */,
-				25FB8C1C133ABEDC00C130A8 /* Feed+Serialize.m in Sources */,
+				25FB8C0D133ABCCB00C130A8 /* PlaceDataCenter.m in Sources */,
+				25FB8C11133ABCDD00C130A8 /* KupoDataCenter.m in Sources */,
+				25FB8C15133ABD3200C130A8 /* PlaceViewController.m in Sources */,
+				25FB8C18133ABE1F00C130A8 /* Place+Serialize.m in Sources */,
+				25FB8C1C133ABEDC00C130A8 /* Kupo+Serialize.m in Sources */,
 				2538FF3D133AD22900ACE127 /* CardCoreDataTableViewController.m in Sources */,
-				2538FF60133B438900ACE127 /* PodCell.m in Sources */,
-				2538FF63133B439600ACE127 /* FeedCell.m in Sources */,
-				2538FF66133B44D500ACE127 /* Feed.m in Sources */,
+				2538FF60133B438900ACE127 /* PlaceCell.m in Sources */,
+				2538FF63133B439600ACE127 /* KupoCell.m in Sources */,
 				2538FF90133BDDBF00ACE127 /* LIImageCache.m in Sources */,
 				250B3188133EBDE70011EEDD /* CardModalViewController.m in Sources */,
 				250B318B133EBF0C0011EEDD /* KupoComposeViewController.m in Sources */,
@@ -1195,13 +1194,14 @@
 				250B31E3134131FA0011EEDD /* UIScreen+ConvertRect.m in Sources */,
 				250B31EB134162A90011EEDD /* MoogleTextView.m in Sources */,
 				250B32031341CB9F0011EEDD /* UILabel+SizeToFitWidth.m in Sources */,
-				250B328E1341D49C0011EEDD /* Pod.m in Sources */,
 				25EFD3FB1343D64C000108B8 /* CheckinViewController.m in Sources */,
 				25EFD3FF1343E18E000108B8 /* LoginDataCenter.m in Sources */,
 				25EFD4051343E774000108B8 /* HashValue.m in Sources */,
 				25EFD4171343F40E000108B8 /* MeDataCenter.m in Sources */,
 				25EFD41B1343F5A9000108B8 /* CardModalTableViewController.m in Sources */,
 				25FF620413440D1C001EF441 /* ShareCell.m in Sources */,
+				25033E691345E3C600633052 /* Place.m in Sources */,
+				25033E7D1345EFA600633052 /* Kupo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1241,20 +1241,20 @@
 				25FB8B91133A057900C130A8 /* MoogleImageView.m in Sources */,
 				25FB8B9B133A069E00C130A8 /* MoogleDataCenter.m in Sources */,
 				25FB8BB2133A0D0800C130A8 /* MoogleViewController.m in Sources */,
-				25FB8C0E133ABCCB00C130A8 /* PodDataCenter.m in Sources */,
-				25FB8C12133ABCDD00C130A8 /* FeedDataCenter.m in Sources */,
-				25FB8C19133ABE1F00C130A8 /* Pod+Serialize.m in Sources */,
-				25FB8C1D133ABEDC00C130A8 /* Feed+Serialize.m in Sources */,
-				2538FF67133B44D500ACE127 /* Feed.m in Sources */,
+				25FB8C0E133ABCCB00C130A8 /* PlaceDataCenter.m in Sources */,
+				25FB8C12133ABCDD00C130A8 /* KupoDataCenter.m in Sources */,
+				25FB8C19133ABE1F00C130A8 /* Place+Serialize.m in Sources */,
+				25FB8C1D133ABEDC00C130A8 /* Kupo+Serialize.m in Sources */,
 				2538FF91133BDDBF00ACE127 /* LIImageCache.m in Sources */,
 				250B31E4134132020011EEDD /* UIScreen+ConvertRect.m in Sources */,
 				250B31EC134162A90011EEDD /* MoogleTextView.m in Sources */,
-				250B328F1341D49C0011EEDD /* Pod.m in Sources */,
 				25EFD3FC1343D64C000108B8 /* CheckinViewController.m in Sources */,
 				25EFD4001343E18E000108B8 /* LoginDataCenter.m in Sources */,
 				25EFD4061343E774000108B8 /* HashValue.m in Sources */,
 				25EFD4181343F40E000108B8 /* MeDataCenter.m in Sources */,
 				25EFD41C1343F5A9000108B8 /* CardModalTableViewController.m in Sources */,
+				25033E6A1345E3C600633052 /* Place.m in Sources */,
+				25033E7E1345EFA600633052 /* Kupo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

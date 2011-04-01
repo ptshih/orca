@@ -1,26 +1,26 @@
 //
-//  FeedViewController.m
+//  KupoViewController.m
 //  Moogle
 //
 //  Created by Peter Shih on 3/23/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "FeedViewController.h"
-#import "FeedDataCenter.h"
-#import "FeedCell.h"
-#import "Pod.h"
+#import "KupoViewController.h"
+#import "KupoDataCenter.h"
+#import "KupoCell.h"
+#import "Place.h"
 #import "KupoComposeViewController.h"
 
-@implementation FeedViewController
+@implementation KupoViewController
 
-@synthesize pod = _pod;
+@synthesize place = _place;
 
 - (id)init {
   self = [super init];
   if (self) {
-    _feedDataCenter = [[FeedDataCenter alloc] init];
-    _feedDataCenter.delegate = self;
+    _kupoDataCenter = [[KupoDataCenter alloc] init];
+    _kupoDataCenter.delegate = self;
   }
   return self;
 }
@@ -42,7 +42,7 @@
   self.navigationItem.leftBarButtonItem = backButton;
   
   // Nav Title
-  _navTitleLabel.text = self.pod.name;
+  _navTitleLabel.text = self.place.name;
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -96,22 +96,22 @@
 #pragma mark -
 #pragma mark TableView
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  Feed *feed = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  return [FeedCell rowHeightForObject:feed];
+  Kupo *kupo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  return [KupoCell rowHeightForObject:kupo];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  FeedCell *cell = nil;
+  KupoCell *cell = nil;
   NSString *reuseIdentifier = [NSString stringWithFormat:@"%@_TableViewCell_%d", [self class], indexPath.section];
   
-  cell = (FeedCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+  cell = (KupoCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
   if(cell == nil) { 
-    cell = [[[FeedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+    cell = [[[KupoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
   }
   
-  Feed *feed = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  Kupo *kupo = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
-  [cell fillCellWithObject:feed];
+  [cell fillCellWithObject:kupo];
   
   return cell;
 }
@@ -120,7 +120,8 @@
 #pragma mark CardViewController
 - (void)reloadCardController {
   [super reloadCardController];
-  [_feedDataCenter loadFeedsFromFixture];
+  [_kupoDataCenter getKuposForPlaceWithPlaceId:self.place.placeId];
+//  [_kupoDataCenter loadKuposFromFixture];
 }
 
 - (void)unloadCardController {
@@ -144,12 +145,12 @@
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [_feedDataCenter getFeedsFetchRequestForPod:self.pod.id];
+  return [_kupoDataCenter getKuposFetchRequestForPlace:self.place.placeId];
 }
 
 - (void)dealloc {
-  RELEASE_SAFELY(_feedDataCenter);
-  RELEASE_SAFELY(_pod);
+  RELEASE_SAFELY(_kupoDataCenter);
+  RELEASE_SAFELY(_place);
   [super dealloc];
 }
 
