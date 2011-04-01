@@ -86,6 +86,7 @@
    
 - (void)composeKupo {
   KupoComposeViewController *kcvc = [[KupoComposeViewController alloc] init];
+  kcvc.place = self.place;
   UINavigationController *kupoNav = [[UINavigationController alloc] initWithRootViewController:kcvc];
   kupoNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
   [self presentModalViewController:kupoNav animated:YES];

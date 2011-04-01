@@ -61,8 +61,10 @@
 #pragma mark LINetworkOperationDelegate
 - (void)networkOperationDidFinish:(LINetworkOperation *)operation {
   UIImage *image = [UIImage imageWithData:[operation responseData]];
-  [[LIImageCache sharedCache] cacheImage:image forURLPath:[[operation requestURL] absoluteString]];
-  self.image = image;
+  if (image) {
+    [[LIImageCache sharedCache] cacheImage:image forURLPath:[[operation requestURL] absoluteString]];
+    self.image = image;
+  }
   [self imageDidLoad];
   
   //  NSLog(@"Image width: %f, height: %f", image.size.width, image.size.height);

@@ -9,6 +9,7 @@
 #import "KupoComposeViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "UIImage+ScalingAndCropping.h"
+#import "Place.h"
 
 // Test
 #import "LINetworkQueue.h"
@@ -76,6 +77,7 @@
 @implementation KupoComposeViewController
 
 @synthesize kupoComment = _kupoComment;
+@synthesize place = _place;
 @synthesize delegate = _delegate;
 
 - (id)init {
@@ -173,11 +175,12 @@
   if ([_kupoComment.text length] > 0) {
     [op addRequestParam:@"comment" value:_kupoComment.text];
   }
-  [op addRequestParam:@"timestamp" value:[NSString stringWithFormat:@"%0.0f", [[NSDate date] timeIntervalSince1970]]];
   if (_uploadedImage) {
     op.isFormData = YES;
     [op addRequestParam:@"image" value:_uploadedImage];
   }
+  [op addRequestParam:@"place_id" value:self.place.placeId];
+  [op addRequestParam:@"timestamp" value:[NSString stringWithFormat:@"%0.0f", [[NSDate date] timeIntervalSince1970]]];
   
   [[LINetworkQueue sharedQueue] addOperation:op];
 }

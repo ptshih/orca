@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "Constants.h"
+#import "NetworkConstants.h"
 
 #define SPACING_X 10.0
 #define SPACING_Y 10.0

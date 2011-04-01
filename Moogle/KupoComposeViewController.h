@@ -11,6 +11,8 @@
 #import "KupoComposeDelegate.h"
 #import "MoogleTextView.h"
 
+@class Place;
+
 @interface KupoComposeViewController : CardModalViewController <UITextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate> {
   UIView *_composeView;
   MoogleTextView *_kupoComment;
@@ -20,10 +22,12 @@
   
   UIImage *_uploadedImage;
   
+  Place *_place;
   id <KupoComposeDelegate> _delegate;
 }
 
 @property (nonatomic, retain) MoogleTextView *kupoComment;
+@property (nonatomic, assign) Place *place;
 @property (nonatomic, assign) id <KupoComposeDelegate> delegate;
 
 - (void)uploadPicture;

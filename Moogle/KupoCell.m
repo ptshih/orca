@@ -124,6 +124,8 @@
   _timestampLabel.text = nil;
   _statusLabel.text = nil;
   _commentLabel.text = nil;
+  [_moogleImageView unloadImage];
+  [_photoImageView unloadImage];
 }
 
 - (void)fillCellWithObject:(id)object {
@@ -133,10 +135,10 @@
   _statusLabel.text = [NSString stringWithFormat:@"Checked in here."];
   _commentLabel.text = kupo.comment;
   
-  _moogleImageView.urlPath = nil;
+  _moogleImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", kupo.authorId];
   [_moogleImageView loadImage];
   
-  _photoImageView.urlPath = nil;
+  _photoImageView.urlPath = [NSString stringWithFormat:@"%@/%@/thumb/image.png", S3_BASE_URL, kupo.id];
   [_photoImageView loadImage];
 }
 
