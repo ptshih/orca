@@ -69,7 +69,7 @@
   CGFloat left = MARGIN_X;
   CGFloat textWidth = 0.0;
   
-  left = _photoFrameView.right;
+  left = _moogleFrameView.right;
   
   // Row 1
   
@@ -120,6 +120,10 @@
   } else {
     // Set desired height
     _desiredHeight = _commentLabel.bottom + MARGIN_Y;
+  }
+  
+  if (_desiredHeight < _moogleFrameView.bottom) {
+    _desiredHeight = _moogleFrameView.bottom + MARGIN_Y;
   }
 }
 

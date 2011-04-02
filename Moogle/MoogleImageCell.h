@@ -18,7 +18,7 @@
 
 @interface MoogleImageCell : MoogleCell {
   MoogleImageView *_moogleImageView;
-  UIImageView *_photoFrameView;
+  UIImageView *_moogleFrameView;
   UIActivityIndicatorView *_imageLoadingIndicator;
 }
 

@@ -36,7 +36,17 @@
   [self setupHeader];
   
   // Get the Me data from the server
-  [_meDataCenter requestMe];
+//  [_meDataCenter requestMe];
+  
+  [self.sections removeAllObjects];
+  [self.items removeAllObjects];
+  
+  [self.sections addObject:@"Share Moogle with your Friends!"];
+  
+  [self.items addObject:[NSArray arrayWithObjects:@"facebook", @"email", @"text", nil]];
+  
+  [self.tableView reloadData];
+  [self dataSourceDidLoad];
 }
 
 - (void)setupHeader {
@@ -115,7 +125,7 @@
                                    @"I'm using Moogle to share stories of places with my friends. Get the FREE iPhone or Android app so you can join too!.", @"description",
                                    nil];
     
-    [APP_DELEGATE.facebook dialog:@"kupo" andParams:params andDelegate:self];
+    [APP_DELEGATE.facebook dialog:@"feed" andParams:params andDelegate:self];
   }
 }
 

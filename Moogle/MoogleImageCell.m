@@ -8,12 +8,12 @@
 
 #import "MoogleImageCell.h"
 
-static UIImage *_photoFrame = nil;
+static UIImage *_moogleFrame = nil;
 
 @implementation MoogleImageCell
 
 + (void)initialize {
-  _photoFrame = [[[UIImage imageNamed:@"photo_frame.png"] stretchableImageWithLeftCapWidth:16 topCapHeight:16] retain];  
+  _moogleFrame = [[[UIImage imageNamed:@"photo_frame.png"] stretchableImageWithLeftCapWidth:16 topCapHeight:16] retain];  
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -22,9 +22,9 @@ static UIImage *_photoFrame = nil;
     _moogleImageView = [[MoogleImageView alloc] init];
     _imageLoadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [_imageLoadingIndicator startAnimating];
-    _photoFrameView = [[UIImageView alloc] initWithImage:_photoFrame];
+    _moogleFrameView = [[UIImageView alloc] initWithImage:_moogleFrame];
     
-    [self.contentView addSubview:_photoFrameView];
+    [self.contentView addSubview:_moogleFrameView];
     [self.contentView addSubview:_imageLoadingIndicator];
     [self.contentView addSubview:_moogleImageView];
     
@@ -42,18 +42,18 @@ static UIImage *_photoFrame = nil;
   [super layoutSubviews];
   
   if ([[self class] cellType] == MoogleCellTypePlain) {
-    _photoFrameView.width = IMAGE_WIDTH_PLAIN + SPACING_X * 2;
-    _photoFrameView.height = IMAGE_HEIGHT_PLAIN + SPACING_Y * 2;
+    _moogleFrameView.width = IMAGE_WIDTH_PLAIN + SPACING_X * 2;
+    _moogleFrameView.height = IMAGE_HEIGHT_PLAIN + SPACING_Y * 2;
     _moogleImageView.width = IMAGE_WIDTH_PLAIN;
     _moogleImageView.height = IMAGE_HEIGHT_PLAIN;
   } else {
-    _photoFrameView.width = IMAGE_WIDTH_GROUPED + SPACING_X * 2;
-    _photoFrameView.height = IMAGE_HEIGHT_GROUPED + SPACING_Y * 2;
+    _moogleFrameView.width = IMAGE_WIDTH_GROUPED + SPACING_X * 2;
+    _moogleFrameView.height = IMAGE_HEIGHT_GROUPED + SPACING_Y * 2;
     _moogleImageView.width = IMAGE_WIDTH_GROUPED;
     _moogleImageView.height = IMAGE_HEIGHT_GROUPED;
   }
-  _photoFrameView.top = 0;
-  _photoFrameView.left = 0;
+  _moogleFrameView.top = 0;
+  _moogleFrameView.left = 0;
   _moogleImageView.top = SPACING_Y;
   _moogleImageView.left = SPACING_X;
   
@@ -78,7 +78,7 @@ static UIImage *_photoFrame = nil;
 - (void)dealloc {
   RELEASE_SAFELY(_moogleImageView);
   RELEASE_SAFELY(_imageLoadingIndicator);
-  RELEASE_SAFELY(_photoFrameView);
+  RELEASE_SAFELY(_moogleFrameView);
   [super dealloc];
 }
 

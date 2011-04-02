@@ -86,7 +86,7 @@ static NSMutableDictionary *_pkDict = nil;
 }
 
 #pragma mark FetchRequests
-- (NSFetchRequest *)getKuposFetchRequestForPlace:(NSString *)placeId {
+- (NSFetchRequest *)moogleFrame:(NSString *)placeId {
   NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO selector:@selector(compare:)];
   NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
   [sortDescriptor release];

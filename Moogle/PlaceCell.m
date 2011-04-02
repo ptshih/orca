@@ -78,11 +78,11 @@ static UIImage *_unreadImage = nil;
   _unreadImageView.left = left;
   _unreadImageView.top = floor(self.height / 2 - _unreadImageView.height / 2);
   
-  _photoFrameView.left += _unreadImageView.right;
-  _moogleImageView.left = _photoFrameView.left + SPACING_X;
+  _moogleFrameView.left += _unreadImageView.right;
+  _moogleImageView.left = _moogleFrameView.left + SPACING_X;
   _imageLoadingIndicator.left += _unreadImageView.right;
   
-  left = _photoFrameView.right;
+  left = _moogleFrameView.right;
   
   // Row 1
   
@@ -118,6 +118,10 @@ static UIImage *_unreadImage = nil;
   
   // Set desired height
   _desiredHeight = _activityLabel.bottom + MARGIN_Y;
+  
+  if (_desiredHeight < _moogleFrameView.bottom) {
+    _desiredHeight = _moogleFrameView.bottom + MARGIN_Y;
+  }
 }
 
 - (void)prepareForReuse {
