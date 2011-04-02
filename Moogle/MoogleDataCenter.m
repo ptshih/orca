@@ -109,6 +109,10 @@ static NSString *_secretString = nil;
 
 #pragma mark Send Operation
 - (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params {
+  [self sendOperationWithURL:url andMethod:method andHeaders:headers andParams:params isFormData:NO];
+}
+
+- (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params isFormData:(BOOL)isFormData {
   if (_op) {
     if (_op) [_op clearDelegatesAndCancel];
     RELEASE_SAFELY(_op);
@@ -119,6 +123,8 @@ static NSString *_secretString = nil;
   
   // Set op method (defaults to GET)
   _op.requestMethod = method ? method : GET;
+  
+  _op.isFormData = isFormData;
   
   // Add Moogle Headers
   [_op addRequestHeader:@"X-UDID" value:[[UIDevice currentDevice] uniqueIdentifier]];

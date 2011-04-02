@@ -11,6 +11,8 @@
 		25033EA213467CCD00633052 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA013467CC800633052 /* Kupo.m */; };
 		25033EA51346803200633052 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA41346802C00633052 /* Place.m */; };
 		25033EA61346803200633052 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA41346802C00633052 /* Place.m */; };
+		25033EA91347402800633052 /* KupoComposeDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA81347402300633052 /* KupoComposeDataCenter.m */; };
+		25033EAA1347402800633052 /* KupoComposeDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA81347402300633052 /* KupoComposeDataCenter.m */; };
 		250B3188133EBDE70011EEDD /* CardModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B3187133EBDE70011EEDD /* CardModalViewController.m */; };
 		250B318B133EBF0C0011EEDD /* KupoComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B318A133EBF0B0011EEDD /* KupoComposeViewController.m */; };
 		250B31AE133EC4220011EEDD /* MoogleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31AD133EC4220011EEDD /* MoogleView.m */; };
@@ -228,6 +230,8 @@
 		25033EA013467CC800633052 /* Kupo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Kupo.m; sourceTree = "<group>"; };
 		25033EA31346802800633052 /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Place.h; sourceTree = "<group>"; };
 		25033EA41346802C00633052 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Place.m; sourceTree = "<group>"; };
+		25033EA71347402100633052 /* KupoComposeDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeDataCenter.h; sourceTree = "<group>"; };
+		25033EA81347402300633052 /* KupoComposeDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KupoComposeDataCenter.m; sourceTree = "<group>"; };
 		250B3186133EBDE70011EEDD /* CardModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardModalViewController.h; sourceTree = "<group>"; };
 		250B3187133EBDE70011EEDD /* CardModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardModalViewController.m; sourceTree = "<group>"; };
 		250B3189133EBF0B0011EEDD /* KupoComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeViewController.h; sourceTree = "<group>"; };
@@ -887,6 +891,8 @@
 				25EFD3FE1343E18E000108B8 /* LoginDataCenter.m */,
 				25EFD4151343F406000108B8 /* MeDataCenter.h */,
 				25EFD4161343F409000108B8 /* MeDataCenter.m */,
+				25033EA71347402100633052 /* KupoComposeDataCenter.h */,
+				25033EA81347402300633052 /* KupoComposeDataCenter.m */,
 			);
 			name = DataCenters;
 			sourceTree = "<group>";
@@ -1202,6 +1208,7 @@
 				25FF620413440D1C001EF441 /* ShareCell.m in Sources */,
 				25033EA113467CCD00633052 /* Kupo.m in Sources */,
 				25033EA51346803200633052 /* Place.m in Sources */,
+				25033EA91347402800633052 /* KupoComposeDataCenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1255,6 +1262,7 @@
 				25EFD41C1343F5A9000108B8 /* CardModalTableViewController.m in Sources */,
 				25033EA213467CCD00633052 /* Kupo.m in Sources */,
 				25033EA61346803200633052 /* Place.m in Sources */,
+				25033EAA1347402800633052 /* KupoComposeDataCenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

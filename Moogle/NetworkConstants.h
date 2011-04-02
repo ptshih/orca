@@ -33,7 +33,11 @@
   #define MOOGLE_BASE_URL [NSString stringWithFormat:@"http://moogle.heroku.com/%@", MOOGLE_API_VERSION]
 #endif
 
-#define S3_BASE_URL @"http://s3.amazonaws.com/kupostaging/kupos/photos"
+#ifdef STAGING
+  #define S3_BASE_URL @"http://s3.amazonaws.com/kupostaging/kupos/photos"
+#else
+  #define S3_BASE_URL @"http://s3.amazonaws.com/kupo/kupos/photos"
+#endif
 
 // Seven Minute Apps
 #define MOOGLE_TERMS_URL @"http://www.sevenminuteapps.com/terms"

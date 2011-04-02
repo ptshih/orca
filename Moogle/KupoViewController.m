@@ -57,6 +57,11 @@
   [self reloadCardController];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [_tableView reloadData];
+}
+
 - (void)setupFooterView {
   [super setupFooterView];
   

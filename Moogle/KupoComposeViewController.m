@@ -10,11 +10,7 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "UIImage+ScalingAndCropping.h"
 #import "Place.h"
-
-// Test
-#import "LINetworkQueue.h"
-#import "LINetworkOperation.h"
-#import "NetworkConstants.h"
+#import "KupoComposeDataCenter.h"
 
 #define SPACING 4.0
 #define PORTRAIT_HEIGHT 180.0
@@ -83,6 +79,9 @@
 - (id)init {
   self = [super init];
   if (self) {
+    _dataCenter = [[KupoComposeDataCenter alloc] init];
+    _dataCenter.delegate = self;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
   }
@@ -166,31 +165,16 @@
 }
 
 - (void)send {
-  NSString *baseURLString = [NSString stringWithFormat:@"%@/kupos/new", MOOGLE_BASE_URL];
-  
-  _op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:baseURLString]];
-  _op.delegate = self;
-  _op.requestMethod = POST;
-  
-  if ([_kupoComment.text length] > 0) {
-    [_op addRequestParam:@"comment" value:_kupoComment.text];
-  }
-  if (_uploadedImage) {
-    _op.isFormData = YES;
-    [_op addRequestParam:@"image" value:_uploadedImage];
-  }
-  [_op addRequestParam:@"place_id" value:self.place.placeId];
-  [_op addRequestParam:@"timestamp" value:[NSString stringWithFormat:@"%0.0f", [[NSDate date] timeIntervalSince1970]]];
-  
-  [[LINetworkQueue sharedQueue] addOperation:_op];
+  [_dataCenter sendKupoComposeWithPlaceId:self.place.placeId andComment:_kupoComment.text andImage:_uploadedImage];
+  self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
-- (void)networkOperationDidFinish:(LINetworkOperation *)operation {
+- (void)dataCenterDidFinish:(LINetworkOperation *)operation {
   [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)networkOperationDidFail:(LINetworkOperation *)operation {
-  [self dismissModalViewControllerAnimated:YES];
+- (void)dataCenterDidFail:(LINetworkOperation *)operation {
+  self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 - (void)uploadPicture {
@@ -280,6 +264,8 @@
   
   if (_op) [_op clearDelegatesAndCancel];
   RELEASE_SAFELY(_op);
+  
+  RELEASE_SAFELY(_dataCenter);
   
   RELEASE_SAFELY(_composeView);
   RELEASE_SAFELY(_photoUpload);

@@ -12,6 +12,7 @@
 #import "MoogleTextView.h"
 
 @class Place;
+@class KupoComposeDataCenter;
 
 @interface KupoComposeViewController : CardModalViewController <UITextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate> {
   UIView *_composeView;
@@ -24,6 +25,7 @@
   
   LINetworkOperation *_op;
   
+  KupoComposeDataCenter *_dataCenter;
   Place *_place;
   id <KupoComposeDelegate> _delegate;
 }
