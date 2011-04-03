@@ -10,7 +10,7 @@
 #import "PlacesDataCenter.h"
 #import "MoogleLocation.h"
 #import "NearbyCell.h"
-#import "CheckinViewController.h"
+#import "KupoComposeViewController.h"
 
 @interface PlacesViewController (Private)
 
@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  _navTitleLabel.text = @"Moogle Me";
+  _navTitleLabel.text = @"Nearby Places";
   
   [self showDismissButton];
   
@@ -92,10 +92,11 @@
     place = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
   }
   
-  CheckinViewController *cvc = [[CheckinViewController alloc] init];
-//  kvc.place = place;
-  [self.navigationController pushViewController:cvc animated:YES];
-  [cvc release];
+  KupoComposeViewController *kcvc = [[KupoComposeViewController alloc] init];
+  kcvc.moogleComposeType = MoogleComposeTypeCheckin;
+  kcvc.placeId = [place valueForKey:@"place_id"];
+  [self.navigationController pushViewController:kcvc animated:YES];
+  [kcvc release];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

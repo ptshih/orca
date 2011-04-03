@@ -15,7 +15,7 @@
   [super viewDidLoad];
   self.view.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
   
-  _navTitleLabel.text = @"Check In Nearby";
+  _navTitleLabel.text = @"Check In";
   
 //  [self showDismissButton];
 }

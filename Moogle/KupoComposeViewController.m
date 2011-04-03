@@ -72,13 +72,16 @@
 
 @implementation KupoComposeViewController
 
+@synthesize moogleComposeType = _moogleComposeType;
 @synthesize kupoComment = _kupoComment;
-@synthesize place = _place;
+@synthesize placeId = _placeId;
 @synthesize delegate = _delegate;
 
 - (id)init {
   self = [super init];
   if (self) {
+    _moogleComposeType = MoogleComposeTypeKupo;
+    
     _dataCenter = [[KupoComposeDataCenter alloc] init];
     _dataCenter.delegate = self;
     
@@ -94,8 +97,10 @@
   
   _navTitleLabel.text = @"Write a comment...";
   
-  // Show the dismiss button
-  [self showDismissButton];
+  if (_moogleComposeType == MoogleComposeTypeKupo) {
+    // Show the dismiss button
+    [self showDismissButton];
+  }
   
   // Send Button
   UIButton *send = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -165,7 +170,11 @@
 }
 
 - (void)send {
-  [_dataCenter sendKupoComposeWithPlaceId:self.place.placeId andComment:_kupoComment.text andImage:_uploadedImage];
+  if (_moogleComposeType == MoogleComposeTypeKupo) {
+    [_dataCenter sendKupoComposeWithPlaceId:self.placeId andComment:_kupoComment.text andImage:_uploadedImage];
+  } else {
+    [_dataCenter sendKupoComposeWithPlaceId:self.placeId andComment:_kupoComment.text andImage:_uploadedImage];
+  }
   self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
@@ -266,6 +275,7 @@
   RELEASE_SAFELY(_op);
   
   RELEASE_SAFELY(_dataCenter);
+  RELEASE_SAFELY(_placeId);
   
   RELEASE_SAFELY(_composeView);
   RELEASE_SAFELY(_photoUpload);

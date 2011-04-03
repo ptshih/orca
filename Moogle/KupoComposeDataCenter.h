@@ -10,9 +10,11 @@
 #import "MoogleDataCenter.h"
 
 @interface KupoComposeDataCenter : MoogleDataCenter {
-    
+
 }
 
 - (void)sendKupoComposeWithPlaceId:(NSString *)placeId andComment:(NSString *)comment andImage:(UIImage *)image;
+
+- (void)sendCheckinComposeWithPlaceId:(NSString *)placeId andComment:(NSString *)comment andImage:(UIImage *)image;
 
 @end

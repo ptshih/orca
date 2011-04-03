@@ -7,7 +7,7 @@
 //
 
 #import "KupoComposeDataCenter.h"
-
+#import "MoogleLocation.h"
 
 @implementation KupoComposeDataCenter
 
@@ -26,9 +26,36 @@
     hasImage = YES;
   }
   [params setValue:placeId forKey:@"place_id"];
-  [params setValue:[NSString stringWithFormat:@"%0.0f", [[NSDate date] timeIntervalSince1970]] forKey:@"timestamp"];
   
   [self sendOperationWithURL:kupoComposeUrl andMethod:POST andHeaders:nil andParams:params isFormData:hasImage];
+}
+
+- (void)sendCheckinComposeWithPlaceId:(NSString *)placeId andComment:(NSString *)comment andImage:(UIImage *)image {
+  // params[:message], params[:place], params[:lat], params[:lng], params[:tags]
+  
+  NSURL *checkinComposeUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkins/new", MOOGLE_BASE_URL]];
+  
+  NSMutableDictionary *params = [NSMutableDictionary dictionary];
+  
+  BOOL hasImage = NO;
+  
+  if ([comment length] > 0) {
+    [params setValue:comment forKey:@"message"];
+  }
+  if (image) {
+    [params setValue:image forKey:@"image"];
+    hasImage = YES;
+  }
+  
+  // Location
+  CGFloat lat = [[MoogleLocation sharedInstance] latitude];
+  CGFloat lng = [[MoogleLocation sharedInstance] longitude];
+  [params setObject:[NSString stringWithFormat:@"%f", lat] forKey:@"lat"];
+  [params setObject:[NSString stringWithFormat:@"%f", lng] forKey:@"lng"];
+  
+  [params setValue:placeId forKey:@"place"];
+  
+  [self sendOperationWithURL:checkinComposeUrl andMethod:POST andHeaders:nil andParams:params isFormData:hasImage];
 }
 
 - (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {

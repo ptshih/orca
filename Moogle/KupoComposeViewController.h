@@ -11,10 +11,17 @@
 #import "KupoComposeDelegate.h"
 #import "MoogleTextView.h"
 
-@class Place;
+enum {
+  MoogleComposeTypeKupo = 0,
+  MoogleComposeTypeCheckin = 1
+};
+typedef uint32_t MoogleComposeType;
+
 @class KupoComposeDataCenter;
 
 @interface KupoComposeViewController : CardModalViewController <UITextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate> {
+  MoogleComposeType _moogleComposeType;
+  
   UIView *_composeView;
   MoogleTextView *_kupoComment;
   UIImageView *_backgroundView;
@@ -25,13 +32,16 @@
   
   LINetworkOperation *_op;
   
+  NSString *_placeId;
+  
   KupoComposeDataCenter *_dataCenter;
-  Place *_place;
   id <KupoComposeDelegate> _delegate;
 }
 
+@property (nonatomic, assign) MoogleComposeType moogleComposeType;
+
 @property (nonatomic, retain) MoogleTextView *kupoComment;
-@property (nonatomic, assign) Place *place;
+@property (nonatomic, retain) NSString *placeId;
 @property (nonatomic, assign) id <KupoComposeDelegate> delegate;
 
 - (void)uploadPicture;
