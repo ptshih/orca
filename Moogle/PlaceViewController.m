@@ -61,6 +61,8 @@
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
+  [self setupSearchDisplayControllerWithScopeButtonTitles:[NSArray arrayWithObjects:@"Place", @"Person", nil]];
+  
   // Pull Refresh
   [self setupPullRefresh];
   
@@ -99,14 +101,25 @@
 #pragma mark -
 #pragma mark TableView
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  Place *place = nil;
+  if (tableView == self.searchDisplayController.searchResultsTableView) {
+    place = [self.searchItems objectAtIndex:indexPath.row];
+  } else {
+    place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  }
+  
   return [PlaceCell rowHeightForObject:place];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   
-  Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  Place *place = nil;
+  if (tableView == self.searchDisplayController.searchResultsTableView) {
+    place = [self.searchItems objectAtIndex:indexPath.row];
+  } else {
+    place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  }
   
   // Mark isRead state
   NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
@@ -134,7 +147,12 @@
     cell = [[[PlaceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
   }
   
-  Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  Place *place = nil;
+  if (tableView == self.searchDisplayController.searchResultsTableView) {
+    place = [self.searchItems objectAtIndex:indexPath.row];
+  } else {
+    place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  }
   
   [cell fillCellWithObject:place];
   
@@ -171,6 +189,22 @@
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
   return [_placeDataCenter getPlacesFetchRequest];
+}
+
+#pragma mark UISearchDisplayDelegate
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
+  // SUBCLASS MUST IMPLEMENT
+  [self.searchItems removeAllObjects];
+  
+  NSPredicate * predicate = nil;
+
+  if ([scope isEqualToString:@"Place"]) {
+    predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
+  } else {
+    predicate = [NSPredicate predicateWithFormat:@"friendFullNames CONTAINS[cd] %@", searchText];
+  }
+
+  [self.searchItems addObjectsFromArray:[[self.fetchedResultsController fetchedObjects] filteredArrayUsingPredicate:predicate]];
 }
 
 - (void)dealloc {

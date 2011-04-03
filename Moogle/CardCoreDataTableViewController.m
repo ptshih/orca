@@ -69,11 +69,19 @@
 
 #pragma mark UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return [[self.fetchedResultsController sections] count];
+  if (tableView == self.searchDisplayController.searchResultsTableView) {
+    return 1;
+  } else {
+    return [[self.fetchedResultsController sections] count];
+  }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
+  if (tableView == self.searchDisplayController.searchResultsTableView) {
+    return [self.searchItems count];
+  } else {
+    return [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
+  }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

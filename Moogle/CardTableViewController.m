@@ -36,9 +36,12 @@
 }
 
 // SUBCLASS CAN OPTIONALLY IMPLEMENT IF THEY WANT A SEARCH BAR
-- (void)setupSearchDisplayController {
+- (void)setupSearchDisplayControllerWithScopeButtonTitles:(NSArray *)scopeButtonTitles {
   _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
   _searchBar.delegate = self;
+  if (scopeButtonTitles) {
+    _searchBar.scopeButtonTitles = scopeButtonTitles;
+  }
   self.tableView.tableHeaderView = _searchBar;
   
   UISearchDisplayController *searchController = [[UISearchDisplayController alloc] initWithSearchBar:_searchBar contentsController:self];
@@ -137,13 +140,17 @@
   return 44.0;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {  
-  return [self.sections count];
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+  if (tableView == self.searchDisplayController.searchResultsTableView) {
+    return 1;
+  } else {
+    return [self.sections count];
+  }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   if (tableView == self.searchDisplayController.searchResultsTableView) {
-    return [[self.searchItems objectAtIndex:section] count];
+    return [self.searchItems count];
   } else {
     return [[self.items objectAtIndex:section] count];
   }
@@ -168,7 +175,7 @@
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
-  [self filterContentForSearchText:searchString scope:nil];
+  [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
   
   // Return YES to cause the search result table view to be reloaded.
   return YES;

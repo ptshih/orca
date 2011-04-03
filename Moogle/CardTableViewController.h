@@ -36,6 +36,6 @@
 - (void)setupPullRefresh;
 - (void)setupHeaderTabView;
 - (void)setupFooterView;
-- (void)setupSearchDisplayController;
+- (void)setupSearchDisplayControllerWithScopeButtonTitles:(NSArray *)scopeButtonTitles;
 
 @end
