@@ -146,15 +146,13 @@
   _moogleImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", kupo.authorId];
   [_moogleImageView loadImage];
   
+  if ([kupo.kupoType isEqualToString:@"checkin"]) {
+    _statusLabel.text = [NSString stringWithFormat:@"Checked in here"];
+  }
+  
   if ([kupo.hasPhoto boolValue]) {
     _photoImageView.urlPath = [NSString stringWithFormat:@"%@/%@/thumb/image.png", S3_BASE_URL, kupo.id];
     [_photoImageView loadImage];
-  } else {
-    if ([kupo.kupoType isEqualToString:@"checkin"]) {
-      _statusLabel.text = [NSString stringWithFormat:@"Checked in via Moogle"];
-    } else {
-      _statusLabel.text = [NSString stringWithFormat:@"Joined the story"];
-    }
   }
 }
 

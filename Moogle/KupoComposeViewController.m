@@ -176,15 +176,13 @@
   } else {
     [_dataCenter sendCheckinComposeWithPlaceId:self.placeId andComment:_kupoComment.text andImage:_uploadedImage];
   }
-  self.navigationItem.rightBarButtonItem.enabled = NO;
-}
-
-- (void)dataCenterDidFinish:(LINetworkOperation *)operation {
   [self dismissModalViewControllerAnimated:YES];
 }
 
+- (void)dataCenterDidFinish:(LINetworkOperation *)operation {
+}
+
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
-  self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 - (void)uploadPicture {

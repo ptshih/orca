@@ -55,8 +55,6 @@ static NSInteger _distanceFilter = 100;
 
 - (void)stopStandardUpdates {
   [_sharedInstance.locationManager stopUpdatingLocation];
-  _sharedInstance.currentLocation = nil;
-  _sharedInstance.oldLocation = nil;
 }
 
 - (void)startSignificantChangeUpdates {

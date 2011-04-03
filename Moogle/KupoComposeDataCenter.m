@@ -44,7 +44,7 @@
   [params setValue:@"checkin" forKey:@"kupo_type"];
   
   if ([comment length] > 0) {
-    [params setValue:comment forKey:@"message"];
+    [params setValue:comment forKey:@"comment"];
   }
   if (image) {
     [params setValue:image forKey:@"image"];
@@ -57,7 +57,7 @@
   [params setObject:[NSString stringWithFormat:@"%f", lat] forKey:@"lat"];
   [params setObject:[NSString stringWithFormat:@"%f", lng] forKey:@"lng"];
   
-  [params setValue:placeId forKey:@"place"];
+  [params setValue:placeId forKey:@"place_id"];
   
   [self sendOperationWithURL:checkinComposeUrl andMethod:POST andHeaders:nil andParams:params isFormData:hasImage];
 }
