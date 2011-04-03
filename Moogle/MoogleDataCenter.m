@@ -135,9 +135,7 @@ static NSString *_secretString = nil;
   [_op addRequestHeader:@"X-User-Language" value:USER_LANGUAGE];
   [_op addRequestHeader:@"X-User-Locale" value:USER_LOCALE];
   if (_secretString) [_op addRequestHeader:@"X-Moogle-Secret" value:_secretString];
-  if (_sessionKey) [_op addRequestHeader:@"X-Session-Key" value:_sessionKey];
-  
-  // Send session key if exist
+  if (APP_DELEGATE.sessionKey) [_op addRequestHeader:@"X-Session-Key" value:APP_DELEGATE.sessionKey];
   
   // Build Headers if exists
   if (headers) {
@@ -167,18 +165,7 @@ static NSString *_secretString = nil;
   [[LINetworkQueue sharedQueue] addOperation:_op];
 }
 
-- (void)resetSessionKey {
-  // Set Session Key
-  NSTimeInterval currentTimestamp = [[NSDate date] timeIntervalSince1970];
-  NSInteger currentTimestampInteger = floor(currentTimestamp);
-  if (_sessionKey) {
-    [_sessionKey release], _sessionKey = nil;
-  }
-  _sessionKey = [[NSString stringWithFormat:@"%d", currentTimestampInteger] retain];
-  
-  [[NSUserDefaults standardUserDefaults] setValue:_sessionKey forKey:@"sessionKey"];
-  [[NSUserDefaults standardUserDefaults] synchronize];
-}
+
 
 /**
  Network Operation Delegate Callbacks
@@ -247,7 +234,6 @@ static NSString *_secretString = nil;
 - (void)dealloc {
   if (_op) [_op clearDelegatesAndCancel];
   RELEASE_SAFELY(_op);
-  RELEASE_SAFELY(_sessionKey);
   RELEASE_SAFELY (_response);
   RELEASE_SAFELY(_rawResponse);
   [super dealloc];

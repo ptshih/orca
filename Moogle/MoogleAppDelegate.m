@@ -143,14 +143,27 @@
 #pragma mark Session
 - (void)startSession {
   // This gets called on subsequent app launches
-  [_loginDataCenter resetSessionKey];
+  [self resetSessionKey];
   [_loginDataCenter startSession];
 }
 
 - (void)startRegister {
   // This gets called] if it is the first time logging in
-  [_loginDataCenter resetSessionKey];
+  [self resetSessionKey];
   [_loginDataCenter startRegister];
+}
+
+- (void)resetSessionKey {
+  // Set Session Key
+  NSTimeInterval currentTimestamp = [[NSDate date] timeIntervalSince1970];
+  NSInteger currentTimestampInteger = floor(currentTimestamp);
+  if (_sessionKey) {
+    [_sessionKey release], _sessionKey = nil;
+  }
+  _sessionKey = [[NSString stringWithFormat:@"%d", currentTimestampInteger] retain];
+  
+  [[NSUserDefaults standardUserDefaults] setValue:_sessionKey forKey:@"sessionKey"];
+  [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark MoogleDataCenterDelegate

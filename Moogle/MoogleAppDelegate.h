@@ -41,5 +41,6 @@
 - (void)startSession;
 - (void)startRegister;
 - (void)tryLogin;
+- (void)resetSessionKey;
 
 @end

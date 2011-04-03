@@ -21,7 +21,6 @@
   id _response;
   id _rawResponse;
   LINetworkOperation *_op;
-  NSString *_sessionKey;
 }
 
 @property (nonatomic, retain) id <MoogleDataCenterDelegate> delegate;
@@ -42,11 +41,6 @@
 - (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params;
 
 - (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params isFormData:(BOOL)isFormData;
-
-/**
- Resets/Sets the sessionKey
- */
-- (void)resetSessionKey;
 
 // Subclass should Implement AND call super's implementation
 - (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation;
