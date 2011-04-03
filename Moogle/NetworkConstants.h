@@ -27,10 +27,10 @@
   #ifdef USE_LOCALHOST
     #define MOOGLE_BASE_URL [NSString stringWithFormat:@"http://localhost:3000/%@", MOOGLE_API_VERSION]
   #else
-    #define MOOGLE_BASE_URL [NSString stringWithFormat:@"http://moogle-staging.heroku.com/%@", MOOGLE_API_VERSION]
+    #define MOOGLE_BASE_URL [NSString stringWithFormat:@"http://moogleme.com/%@", MOOGLE_API_VERSION]
   #endif
 #else
-  #define MOOGLE_BASE_URL [NSString stringWithFormat:@"http://moogle.heroku.com/%@", MOOGLE_API_VERSION]
+  #define MOOGLE_BASE_URL [NSString stringWithFormat:@"http://moogleme.com/%@", MOOGLE_API_VERSION]
 #endif
 
 #ifdef STAGING
