@@ -17,7 +17,7 @@
   
   _navTitleLabel.text = @"Check In Nearby";
   
-  [self showDismissButton];
+//  [self showDismissButton];
 }
 
 @end

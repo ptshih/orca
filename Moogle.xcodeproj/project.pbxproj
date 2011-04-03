@@ -13,6 +13,11 @@
 		25033EA61346803200633052 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA41346802C00633052 /* Place.m */; };
 		25033EA91347402800633052 /* KupoComposeDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA81347402300633052 /* KupoComposeDataCenter.m */; };
 		25033EAA1347402800633052 /* KupoComposeDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA81347402300633052 /* KupoComposeDataCenter.m */; };
+		25033EB5134866A200633052 /* PlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EB4134866A100633052 /* PlacesViewController.m */; };
+		25033EB6134866A200633052 /* PlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EB4134866A100633052 /* PlacesViewController.m */; };
+		25033EB91348670E00633052 /* PlacesDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EB81348670700633052 /* PlacesDataCenter.m */; };
+		25033EBA1348670E00633052 /* PlacesDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EB81348670700633052 /* PlacesDataCenter.m */; };
+		2507996D13487925003269F8 /* NearbyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2507996C13487925003269F8 /* NearbyCell.m */; };
 		250B3188133EBDE70011EEDD /* CardModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B3187133EBDE70011EEDD /* CardModalViewController.m */; };
 		250B318B133EBF0C0011EEDD /* KupoComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B318A133EBF0B0011EEDD /* KupoComposeViewController.m */; };
 		250B31AE133EC4220011EEDD /* MoogleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31AD133EC4220011EEDD /* MoogleView.m */; };
@@ -101,8 +106,8 @@
 		25CEF8B51339FC17006F23A7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8B41339FC17006F23A7 /* QuartzCore.framework */; };
 		25CEF8B71339FC28006F23A7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8B61339FC28006F23A7 /* CoreLocation.framework */; };
 		25CEF8B91339FC3D006F23A7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8B81339FC3D006F23A7 /* MapKit.framework */; };
-		25CEF8E51339FD49006F23A7 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8E41339FD49006F23A7 /* LocationManager.m */; };
-		25CEF8E61339FD49006F23A7 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8E41339FD49006F23A7 /* LocationManager.m */; };
+		25CEF8E51339FD49006F23A7 /* MoogleLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8E41339FD49006F23A7 /* MoogleLocation.m */; };
+		25CEF8E61339FD49006F23A7 /* MoogleLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8E41339FD49006F23A7 /* MoogleLocation.m */; };
 		25CEF8ED1339FDCF006F23A7 /* LINetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8E91339FDCF006F23A7 /* LINetworkOperation.m */; };
 		25CEF8EE1339FDCF006F23A7 /* LINetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8E91339FDCF006F23A7 /* LINetworkOperation.m */; };
 		25CEF8EF1339FDCF006F23A7 /* LINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8EC1339FDCF006F23A7 /* LINetworkQueue.m */; };
@@ -232,6 +237,12 @@
 		25033EA41346802C00633052 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Place.m; sourceTree = "<group>"; };
 		25033EA71347402100633052 /* KupoComposeDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeDataCenter.h; sourceTree = "<group>"; };
 		25033EA81347402300633052 /* KupoComposeDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KupoComposeDataCenter.m; sourceTree = "<group>"; };
+		25033EB3134866A000633052 /* PlacesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacesViewController.h; sourceTree = "<group>"; };
+		25033EB4134866A100633052 /* PlacesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacesViewController.m; sourceTree = "<group>"; };
+		25033EB71348670300633052 /* PlacesDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacesDataCenter.h; sourceTree = "<group>"; };
+		25033EB81348670700633052 /* PlacesDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacesDataCenter.m; sourceTree = "<group>"; };
+		2507996B13487925003269F8 /* NearbyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyCell.h; sourceTree = "<group>"; };
+		2507996C13487925003269F8 /* NearbyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyCell.m; sourceTree = "<group>"; };
 		250B3186133EBDE70011EEDD /* CardModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardModalViewController.h; sourceTree = "<group>"; };
 		250B3187133EBDE70011EEDD /* CardModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardModalViewController.m; sourceTree = "<group>"; };
 		250B3189133EBF0B0011EEDD /* KupoComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeViewController.h; sourceTree = "<group>"; };
@@ -332,8 +343,8 @@
 		25CEF8B41339FC17006F23A7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		25CEF8B61339FC28006F23A7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		25CEF8B81339FC3D006F23A7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		25CEF8E31339FD49006F23A7 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
-		25CEF8E41339FD49006F23A7 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
+		25CEF8E31339FD49006F23A7 /* MoogleLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleLocation.h; sourceTree = "<group>"; };
+		25CEF8E41339FD49006F23A7 /* MoogleLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoogleLocation.m; sourceTree = "<group>"; };
 		25CEF8E81339FDCF006F23A7 /* LINetworkOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LINetworkOperation.h; sourceTree = "<group>"; };
 		25CEF8E91339FDCF006F23A7 /* LINetworkOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LINetworkOperation.m; sourceTree = "<group>"; };
 		25CEF8EA1339FDCF006F23A7 /* LINetworkOperationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LINetworkOperationDelegate.h; sourceTree = "<group>"; };
@@ -511,6 +522,8 @@
 				25FB8BDB133A9B1200C130A8 /* MeViewController.m */,
 				25EFD3F91343D64A000108B8 /* CheckinViewController.h */,
 				25EFD3FA1343D64A000108B8 /* CheckinViewController.m */,
+				25033EB3134866A000633052 /* PlacesViewController.h */,
+				25033EB4134866A100633052 /* PlacesViewController.m */,
 			);
 			name = Modals;
 			sourceTree = "<group>";
@@ -664,8 +677,8 @@
 		25CEF8E21339FD3B006F23A7 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				25CEF8E31339FD49006F23A7 /* LocationManager.h */,
-				25CEF8E41339FD49006F23A7 /* LocationManager.m */,
+				25CEF8E31339FD49006F23A7 /* MoogleLocation.h */,
+				25CEF8E41339FD49006F23A7 /* MoogleLocation.m */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -893,6 +906,8 @@
 				25EFD4161343F409000108B8 /* MeDataCenter.m */,
 				25033EA71347402100633052 /* KupoComposeDataCenter.h */,
 				25033EA81347402300633052 /* KupoComposeDataCenter.m */,
+				25033EB71348670300633052 /* PlacesDataCenter.h */,
+				25033EB81348670700633052 /* PlacesDataCenter.m */,
 			);
 			name = DataCenters;
 			sourceTree = "<group>";
@@ -952,6 +967,8 @@
 				2538FF62133B439500ACE127 /* KupoCell.m */,
 				25FF620213440D1A001EF441 /* ShareCell.h */,
 				25FF620313440D1B001EF441 /* ShareCell.m */,
+				2507996B13487925003269F8 /* NearbyCell.h */,
+				2507996C13487925003269F8 /* NearbyCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1152,7 +1169,7 @@
 				25CEF8A61339FB8B006F23A7 /* UIView+Additions.m in Sources */,
 				25CEF8A81339FB8B006F23A7 /* UIImage+ScalingAndCropping.m in Sources */,
 				25CEF8AA1339FB8B006F23A7 /* UIImage+UIView.m in Sources */,
-				25CEF8E51339FD49006F23A7 /* LocationManager.m in Sources */,
+				25CEF8E51339FD49006F23A7 /* MoogleLocation.m in Sources */,
 				25CEF8ED1339FDCF006F23A7 /* LINetworkOperation.m in Sources */,
 				25CEF8EF1339FDCF006F23A7 /* LINetworkQueue.m in Sources */,
 				25CEF8F51339FE46006F23A7 /* MoogleObject.m in Sources */,
@@ -1209,6 +1226,9 @@
 				25033EA113467CCD00633052 /* Kupo.m in Sources */,
 				25033EA51346803200633052 /* Place.m in Sources */,
 				25033EA91347402800633052 /* KupoComposeDataCenter.m in Sources */,
+				25033EB5134866A200633052 /* PlacesViewController.m in Sources */,
+				25033EB91348670E00633052 /* PlacesDataCenter.m in Sources */,
+				2507996D13487925003269F8 /* NearbyCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1227,7 +1247,7 @@
 				25CEF8A71339FB8B006F23A7 /* UIView+Additions.m in Sources */,
 				25CEF8A91339FB8B006F23A7 /* UIImage+ScalingAndCropping.m in Sources */,
 				25CEF8AB1339FB8B006F23A7 /* UIImage+UIView.m in Sources */,
-				25CEF8E61339FD49006F23A7 /* LocationManager.m in Sources */,
+				25CEF8E61339FD49006F23A7 /* MoogleLocation.m in Sources */,
 				25CEF8EE1339FDCF006F23A7 /* LINetworkOperation.m in Sources */,
 				25CEF8F01339FDCF006F23A7 /* LINetworkQueue.m in Sources */,
 				25CEF8F61339FE46006F23A7 /* MoogleObject.m in Sources */,
@@ -1263,6 +1283,8 @@
 				25033EA213467CCD00633052 /* Kupo.m in Sources */,
 				25033EA61346803200633052 /* Place.m in Sources */,
 				25033EAA1347402800633052 /* KupoComposeDataCenter.m in Sources */,
+				25033EB6134866A200633052 /* PlacesViewController.m in Sources */,
+				25033EBA1348670E00633052 /* PlacesDataCenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

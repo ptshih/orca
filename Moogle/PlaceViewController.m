@@ -10,7 +10,7 @@
 #import "PlaceDataCenter.h"
 #import "KupoViewController.h"
 #import "MeViewController.h"
-#import "CheckinViewController.h"
+#import "PlacesViewController.h"
 #import "Place.h"
 #import "PlaceCell.h"
 
@@ -93,7 +93,7 @@
 }
 
 - (void)checkin {
-  CheckinViewController *mvc = [[CheckinViewController alloc] init];
+  PlacesViewController *mvc = [[PlacesViewController alloc] init];
   UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:mvc];
   //  navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
   [self presentModalViewController:navController animated:YES];

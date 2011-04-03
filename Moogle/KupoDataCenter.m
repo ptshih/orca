@@ -30,11 +30,11 @@ static NSMutableDictionary *_pkDict = nil;
 }
 
 - (void)getKuposForPlaceWithPlaceId:(NSString *)placeId {
-  NSURL *KuposUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/places/%@/kupos", MOOGLE_BASE_URL, placeId]];
+  NSURL *kuposUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/places/%@/kupos", MOOGLE_BASE_URL, placeId]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
-  [self sendOperationWithURL:KuposUrl andMethod:GET andHeaders:nil andParams:params];
+  [self sendOperationWithURL:kuposUrl andMethod:GET andHeaders:nil andParams:params];
 }
 
 #pragma mark Fixtures

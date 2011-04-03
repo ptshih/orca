@@ -69,6 +69,10 @@ static NSMutableDictionary *_pkDict = nil;
   [super dataCenterFinishedWithOperation:operation];
 }
 
+- (void)dataCenterFailedWithOperation:(LINetworkOperation *)operation {
+  [super dataCenterFailedWithOperation:operation];
+}
+
 #pragma mark Serialize Response
 - (void)serializePlacesWithDictionary:(NSDictionary *)dictionary {
   // Core Data Serialize

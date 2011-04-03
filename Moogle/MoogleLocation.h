@@ -1,5 +1,5 @@
 //
-//  LocationManager.h
+//  MoogleLocation.h
 //  Moogle
 //
 //  Created by Peter Shih on 2/8/11.
@@ -10,25 +10,30 @@
 #import <CoreLocation/CoreLocation.h>
 #import "MoogleObject.h"
 
-@interface LocationManager : MoogleObject <CLLocationManagerDelegate> {
+@interface MoogleLocation : MoogleObject <CLLocationManagerDelegate> {
   CLLocationManager *_locationManager;
-  CLLocation *_oldLocation;
   CLLocation *_currentLocation;
+  CLLocation *_oldLocation;
 }
 
 @property (nonatomic, retain) CLLocationManager *locationManager;
 @property (nonatomic, retain) CLLocation *oldLocation;
 @property (nonatomic, retain) CLLocation *currentLocation;
 
++ (MoogleLocation *)sharedInstance;
+
+// Distance Filter
+- (void)setDistanceFilter:(NSInteger)distanceFilter;
+- (NSInteger)distanceFilter;
+
+// Location Updates
 - (void)startStandardUpdates;
 - (void)stopStandardUpdates;
-
 - (void)startSignificantChangeUpdates;
 
+// Location Coordinates
 - (BOOL)hasAcquiredLocation;
-
 - (CGFloat)latitude;
 - (CGFloat)longitude;
-- (NSInteger)distance;
 
 @end
