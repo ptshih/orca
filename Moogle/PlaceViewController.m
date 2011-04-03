@@ -198,10 +198,12 @@
   
   NSPredicate * predicate = nil;
 
-  if ([scope isEqualToString:@"Place"]) {
-    predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
+  if ([scope isEqualToString:@"Person"]) {
+    // search friend's full name
+    predicate = [NSPredicate predicateWithFormat:@"friendFirstNames CONTAINS[cd] %@", searchText];
   } else {
-    predicate = [NSPredicate predicateWithFormat:@"friendFullNames CONTAINS[cd] %@", searchText];
+    // default to place name
+    predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
   }
 
   [self.searchItems addObjectsFromArray:[[self.fetchedResultsController fetchedObjects] filteredArrayUsingPredicate:predicate]];
