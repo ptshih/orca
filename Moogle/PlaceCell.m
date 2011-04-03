@@ -138,7 +138,7 @@ static UIImage *_unreadImage = nil;
   _nameLabel.text = place.name;
   _timestampLabel.text = [place.timestamp humanIntervalSinceNow];
   _summaryLabel.text = place.friendFirstNames;
-  _activityLabel.text = [NSString stringWithFormat:@"%@ pieces of a story", place.activityCount];
+  _activityLabel.text = ([place.activityCount integerValue] <= 1) ? [NSString stringWithFormat:@"%@ piece of the story", place.activityCount] : [NSString stringWithFormat:@"%@ pieces of the story", place.activityCount];
   
 //  _moogleImageView.urlPath = place.pictureUrl;
   _moogleImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", place.authorId];

@@ -18,6 +18,8 @@
   
   BOOL hasImage = NO;
   
+  [params setValue:@"kupo" forKey:@"kupo_type"];
+  
   if ([comment length] > 0) {
     [params setValue:comment forKey:@"comment"];
   }
@@ -38,6 +40,8 @@
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
   BOOL hasImage = NO;
+  
+  [params setValue:@"checkin" forKey:@"kupo_type"];
   
   if ([comment length] > 0) {
     [params setValue:comment forKey:@"message"];

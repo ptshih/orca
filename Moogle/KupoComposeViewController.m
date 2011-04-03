@@ -174,7 +174,7 @@
   if (_moogleComposeType == MoogleComposeTypeKupo) {
     [_dataCenter sendKupoComposeWithPlaceId:self.placeId andComment:_kupoComment.text andImage:_uploadedImage];
   } else {
-    [_dataCenter sendKupoComposeWithPlaceId:self.placeId andComment:_kupoComment.text andImage:_uploadedImage];
+    [_dataCenter sendCheckinComposeWithPlaceId:self.placeId andComment:_kupoComment.text andImage:_uploadedImage];
   }
   self.navigationItem.rightBarButtonItem.enabled = NO;
 }

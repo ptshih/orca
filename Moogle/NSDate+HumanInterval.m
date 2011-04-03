@@ -22,9 +22,9 @@
   int delta = [self timeIntervalSinceNow];
   delta *= -1;
   if (delta < 0) {
-    return [self description];
+    return NSLocalizedString(@"just now", nil);
   } else if (delta <= 30 * SECOND) {
-    return NSLocalizedString(@"just a moment ago", nil);
+    return NSLocalizedString(@"just now", nil);
   } else if (delta < 1 * MINUTE) {
     return [NSString stringWithFormat:@"%u seconds ago", delta];
   } else if (delta < 2 * MINUTE) {

@@ -141,7 +141,6 @@
   Kupo *kupo = (Kupo *)object;
   _nameLabel.text = kupo.authorName;
   _timestampLabel.text = [kupo.timestamp humanIntervalSinceNow];
-  _statusLabel.text = [NSString stringWithFormat:@"Checked in here."];
   _commentLabel.text = kupo.comment;
   
   _moogleImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", kupo.authorId];
@@ -150,6 +149,12 @@
   if ([kupo.hasPhoto boolValue]) {
     _photoImageView.urlPath = [NSString stringWithFormat:@"%@/%@/thumb/image.png", S3_BASE_URL, kupo.id];
     [_photoImageView loadImage];
+  } else {
+    if ([kupo.kupoType isEqualToString:@"checkin"]) {
+      _statusLabel.text = [NSString stringWithFormat:@"Checked in via Moogle"];
+    } else {
+      _statusLabel.text = [NSString stringWithFormat:@"Joined the story"];
+    }
   }
 }
 
