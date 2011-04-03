@@ -22,6 +22,7 @@
   HeaderTabView *_headerTabView;
   EGORefreshTableHeaderView *_refreshHeaderView;
   UIView *_footerView;
+  UIView *_loadMoreView;
   BOOL _reloading;
 }
 
@@ -36,6 +37,12 @@
 - (void)setupPullRefresh;
 - (void)setupHeaderTabView;
 - (void)setupFooterView;
+- (void)setupLoadMoreView;
 - (void)setupSearchDisplayControllerWithScopeButtonTitles:(NSArray *)scopeButtonTitles;
+
+- (void)showLoadMoreView;
+- (void)hideLoadMoreView;
+
+- (void)loadMore;
 
 @end

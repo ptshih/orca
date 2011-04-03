@@ -140,7 +140,8 @@ static UIImage *_unreadImage = nil;
   _summaryLabel.text = place.friendFirstNames;
   _activityLabel.text = [NSString stringWithFormat:@"%@ pieces of a story", place.activityCount];
   
-  _moogleImageView.urlPath = place.pictureUrl;
+//  _moogleImageView.urlPath = place.pictureUrl;
+  _moogleImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", place.authorId];
   [_moogleImageView loadImage];
   
   if ([place.isRead boolValue]) {

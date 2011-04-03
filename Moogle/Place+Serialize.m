@@ -18,6 +18,7 @@
     newPlace.placeId = [dictionary valueForKey:@"place_id"];
     newPlace.name = [dictionary valueForKey:@"name"];
     newPlace.hasPhoto = [dictionary valueForKey:@"has_photo"];
+    newPlace.authorId = [dictionary valueForKey:@"facebook_id"];
     
     // These might be null
     newPlace.pictureUrl = [dictionary valueForKey:@"picture_url"] ? [dictionary valueForKey:@"picture_url"] : nil;
@@ -48,7 +49,12 @@
   }
 }
 
-- (void)updatePlaceWithDictionary:(NSDictionary *)dictionary {
+- (Place *)updatePlaceWithDictionary:(NSDictionary *)dictionary {
+  // Check if this was place has actually changed
+  if ([self.timestamp isEqualToDate:[NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]]]) {
+    return self;
+  }
+  
   self.name = [dictionary valueForKey:@"name"];
   self.placeId = [dictionary valueForKey:@"place_id"];
   self.hasPhoto = [dictionary valueForKey:@"has_photo"];
@@ -56,6 +62,7 @@
   self.activityCount = [dictionary valueForKey:@"activity_count"];
   self.comment = [dictionary valueForKey:@"comment"];
   self.type = [dictionary valueForKey:@"type"];
+  self.authorId = [dictionary valueForKey:@"facebook_id"];
 
   // Friends Summary
   NSMutableArray *friendIds = [NSMutableArray array];
@@ -74,6 +81,8 @@
   
   self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
   self.isRead = [NSNumber numberWithBool:NO];
+  
+  return self;
 }
 
 @end

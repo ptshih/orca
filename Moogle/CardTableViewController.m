@@ -99,6 +99,30 @@
   [self.view addSubview:_footerView];
 }
 
+- (void)setupLoadMoreView {
+  _loadMoreView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+  _loadMoreView.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
+  UIButton *loadMoreButton = [[UIButton alloc] initWithFrame:_loadMoreView.frame];
+  [loadMoreButton setBackgroundImage:[UIImage imageNamed:@"navigationbar_bg.png"] forState:UIControlStateNormal];
+  [loadMoreButton addTarget:self action:@selector(loadMore) forControlEvents:UIControlEventTouchUpInside];
+  [loadMoreButton setTitle:@"Load More..." forState:UIControlStateNormal];
+  [_loadMoreView addSubview:loadMoreButton];
+  [loadMoreButton release];
+}
+
+- (void)showLoadMoreView {
+  _tableView.tableFooterView = _loadMoreView;
+}
+
+- (void)hideLoadMoreView {
+  _tableView.tableFooterView = nil;
+}
+
+// Subclasses should override
+- (void)loadMore {
+  
+}
+
 // Called when the user logs out and we need to clear all cached data
 // Subclasses should override this method
 - (void)clearCachedData {
@@ -233,6 +257,7 @@
   RELEASE_SAFELY(_refreshHeaderView);
   RELEASE_SAFELY(_headerTabView);
   RELEASE_SAFELY(_footerView);
+  RELEASE_SAFELY(_loadMoreView);
   [self.searchDisplayController release];
   [super dealloc];
 }

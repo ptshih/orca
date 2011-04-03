@@ -21,6 +21,6 @@
 /**
  Fetch Requests
  */
-- (NSFetchRequest *)moogleFrame:(NSString *)placeId;
+- (NSFetchRequest *)getKuposFetchRequestWithPlaceId:(NSString *)placeId;
 
 @end

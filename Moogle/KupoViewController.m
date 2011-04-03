@@ -151,7 +151,7 @@
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [_kupoDataCenter moogleFrame:self.place.placeId];
+  return [_kupoDataCenter getKuposFetchRequestWithPlaceId:self.place.placeId];
 }
 
 - (void)dealloc {

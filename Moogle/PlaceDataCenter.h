@@ -13,6 +13,7 @@
 }
 
 - (void)getPlaces;
+- (void)loadMorePlaces;
 
 - (void)loadPlacesFromFixture;
 
@@ -24,6 +25,6 @@
 /**
  Fetch Requests
  */
-- (NSFetchRequest *)getPlacesFetchRequest;
+- (NSFetchRequest *)getPlacesFetchRequestWithLimit:(NSInteger)limit;
 
 @end

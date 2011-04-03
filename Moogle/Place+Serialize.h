@@ -13,6 +13,6 @@
 
 + (Place *)addPlaceWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
 
-- (void)updatePlaceWithDictionary:(NSDictionary *)dictionary;
+- (Place *)updatePlaceWithDictionary:(NSDictionary *)dictionary;
 
 @end

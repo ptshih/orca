@@ -23,5 +23,6 @@
 @dynamic type;
 @dynamic placeId;
 @dynamic hasPhoto;
+@dynamic authorId;
 
 @end

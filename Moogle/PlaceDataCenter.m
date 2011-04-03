@@ -34,6 +34,22 @@ static NSMutableDictionary *_pkDict = nil;
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
+  // Since
+  NSDate *lastFetched = [[NSUserDefaults standardUserDefaults] valueForKey:@"placesSince"];
+  [params setValue:[NSString stringWithFormat:@"%0.0f", [lastFetched timeIntervalSince1970]] forKey:@"since"];
+  
+  [self sendOperationWithURL:placesUrl andMethod:GET andHeaders:nil andParams:params];
+}
+
+- (void)loadMorePlaces {
+  NSURL *placesUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/me/places", MOOGLE_BASE_URL]];
+  
+  NSMutableDictionary *params = [NSMutableDictionary dictionary];
+  
+  // Since
+  NSDate *lastFetched = [[NSUserDefaults standardUserDefaults] valueForKey:@"placesUntil"];
+  [params setValue:[NSString stringWithFormat:@"%0.0f", [lastFetched timeIntervalSince1970]] forKey:@"until"];
+  
   [self sendOperationWithURL:placesUrl andMethod:GET andHeaders:nil andParams:params];
 }
 
@@ -58,17 +74,33 @@ static NSMutableDictionary *_pkDict = nil;
   // Core Data Serialize
   NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
   
+  // Read placesSince and placesUntil
+  NSDate *placesSince = [[NSUserDefaults standardUserDefaults] valueForKey:@"placesSince"];
+  NSDate *placesUntil = [[NSUserDefaults standardUserDefaults] valueForKey:@"placesUntil"];
+  
+  Place *currentPlace = nil;
+  
   // Insert into Core Data
   for (NSDictionary *placeDict in [dictionary valueForKey:@"values"]) {
+    
     // Check for dupes
     NSManagedObjectID *existingId = [_pkDict objectForKey:[placeDict objectForKey:@"id"]];
     if (existingId) {
       // Existing Found
       Place *existingPlace = (Place *)[context objectWithID:existingId];
       DLog(@"existing place found with id: %@", [placeDict valueForKey:@"id"]);
-      [existingPlace updatePlaceWithDictionary:placeDict];
+      currentPlace = [existingPlace updatePlaceWithDictionary:placeDict];
     } else {
-      [Place addPlaceWithDictionary:placeDict inContext:context];
+      currentPlace = [Place addPlaceWithDictionary:placeDict inContext:context];
+    }
+    
+    // Update since/until
+    if ([currentPlace.timestamp isEqualToDate:[currentPlace.timestamp laterDate:placesSince]]) {
+      placesSince = currentPlace.timestamp;
+    }
+    
+    if ([currentPlace.timestamp isEqualToDate:[currentPlace.timestamp earlierDate:placesUntil]]) {
+      placesUntil = currentPlace.timestamp;
     }
   }
   
@@ -76,6 +108,10 @@ static NSMutableDictionary *_pkDict = nil;
   for (Place *newPlace in [context insertedObjects]) {
     [_pkDict setValue:[newPlace objectID] forKey:newPlace.id];
   }
+  
+  [[NSUserDefaults standardUserDefaults] setValue:placesSince forKey:@"placesSince"];
+  [[NSUserDefaults standardUserDefaults] setValue:placesUntil forKey:@"placesUntil"];
+  [[NSUserDefaults standardUserDefaults] synchronize];
   
   // Save to Core Data
   NSError *error = nil;
@@ -88,12 +124,13 @@ static NSMutableDictionary *_pkDict = nil;
 }
 
 #pragma mark Fetch Requests
-- (NSFetchRequest *)getPlacesFetchRequest {
+- (NSFetchRequest *)getPlacesFetchRequestWithLimit:(NSInteger)limit {
   NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO selector:@selector(compare:)];
   NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
   [sortDescriptor release];
   NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPlaces" substitutionVariables:[NSDictionary dictionary]];
   [fetchRequest setSortDescriptors:sortDescriptors];
+  [fetchRequest setFetchLimit:limit];
   return fetchRequest;
 }
 

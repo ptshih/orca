@@ -13,6 +13,7 @@
 
 @interface PlaceViewController : CardCoreDataTableViewController {
   PlaceDataCenter *_placeDataCenter;
+  NSInteger _limit;
 }
 
 @end

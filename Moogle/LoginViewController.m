@@ -73,8 +73,11 @@
 }
 
 - (void)fbDidLogout {
+  [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"placesSince"];
+  [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"placesUntil"];
   [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"isLoggedIn"];
   [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"facebookAccessToken"];
+  [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"facebookExpirationDate"];
   [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

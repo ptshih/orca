@@ -21,6 +21,8 @@
   if (self) {
     _placeDataCenter = [[PlaceDataCenter alloc] init];
     _placeDataCenter.delegate = self;
+    
+    _limit = 50;
   }
   return self;
 }
@@ -65,6 +67,9 @@
   
   // Pull Refresh
   [self setupPullRefresh];
+  
+  // Load More
+  [self setupLoadMoreView];
   
 //  UIBarButtonItem *post = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(post)];
 //  self.navigationItem.rightBarButtonItem = post;
@@ -177,6 +182,7 @@
   [self resetFetchedResultsController];
   [self.tableView reloadData];
   [self dataSourceDidLoad];
+  [self showLoadMoreView];
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
@@ -186,9 +192,16 @@
 }
 
 #pragma mark -
+#pragma mark LoadMore
+- (void)loadMore {
+  _limit += 50;
+  [_placeDataCenter loadMorePlaces];
+}
+
+#pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [_placeDataCenter getPlacesFetchRequest];
+  return [_placeDataCenter getPlacesFetchRequestWithLimit:_limit];
 }
 
 #pragma mark UISearchDisplayDelegate
@@ -200,7 +213,7 @@
 
   if ([scope isEqualToString:@"Person"]) {
     // search friend's full name
-    predicate = [NSPredicate predicateWithFormat:@"friendFirstNames CONTAINS[cd] %@", searchText];
+    predicate = [NSPredicate predicateWithFormat:@"friendFullNames CONTAINS[cd] %@", searchText];
   } else {
     // default to place name
     predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
