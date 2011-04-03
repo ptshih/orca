@@ -95,11 +95,12 @@
   [super viewDidLoad];
   self.view.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
   
-  _navTitleLabel.text = @"Write a comment...";
-  
   if (_moogleComposeType == MoogleComposeTypeKupo) {
+    _navTitleLabel.text = @"Write a Comment...";
     // Show the dismiss button
     [self showDismissButton];
+  } else {
+    _navTitleLabel.text = @"Check In Here...";
   }
   
   // Send Button
@@ -117,7 +118,7 @@
   self.navigationItem.rightBarButtonItem = sendButton;
   [sendButton release];
   
-  _composeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.bounds.size.height - 216)];
+  _composeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 244)];
   _composeView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:_composeView];
   

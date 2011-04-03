@@ -40,7 +40,7 @@
   NSDictionary *item = object;
   
   self.textLabel.text = [item valueForKey:@"place_name"];
-  self.detailTextLabel.text = [item valueForKey:@"place_street"];
+//  self.detailTextLabel.text = [item valueForKey:@"place_street"];
   
   _moogleImageView.urlPath = [item valueForKey:@"place_picture"];
   [_moogleImageView loadImage];
