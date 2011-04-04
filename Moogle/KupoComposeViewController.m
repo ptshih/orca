@@ -171,6 +171,11 @@
 }
 
 - (void)send {
+  // Write the photo to the user's album
+  if (_uploadedImage) {
+    UIImageWriteToSavedPhotosAlbum(_uploadedImage, nil, nil, nil);
+  }
+  
   if (_moogleComposeType == MoogleComposeTypeKupo) {
     [_dataCenter sendKupoComposeWithPlaceId:self.placeId andComment:_kupoComment.text andImage:_uploadedImage];
   } else {

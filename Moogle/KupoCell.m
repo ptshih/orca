@@ -146,13 +146,13 @@
   _nameLabel.text = kupo.authorName;
   _timestampLabel.text = [kupo.timestamp humanIntervalSinceNow];
   
-  if ([_commentLabel.text length] > 0) {
+  if ([kupo.comment length] > 0) {
     _commentLabel.text = [NSString stringWithFormat:@"\"%@\"", kupo.comment];
   }
   
   _moogleImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", kupo.authorId];
   
-  if ([kupo.kupoType isEqualToString:@"checkin"]) {
+  if ([kupo.kupoType integerValue] == 0) {
     if (kupo.tagged) {
       _statusLabel.text = [NSString stringWithFormat:@"Checked in via Facebook with %@", kupo.tagged];
     } else {
@@ -163,6 +163,10 @@
   if ([kupo.hasPhoto boolValue]) {
     _hasPhoto = YES;
     _photoImageView.urlPath = [NSString stringWithFormat:@"%@/%@/thumb/image.png", S3_BASE_URL, kupo.id];
+    
+    self.selectionStyle = UITableViewCellSelectionStyleBlue;
+  } else {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
   }
 }
 

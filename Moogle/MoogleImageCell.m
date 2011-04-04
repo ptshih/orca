@@ -13,7 +13,7 @@ static UIImage *_moogleFrame = nil;
 @implementation MoogleImageCell
 
 + (void)initialize {
-  _moogleFrame = [[[UIImage imageNamed:@"photo_frame.png"] stretchableImageWithLeftCapWidth:16 topCapHeight:16] retain];  
+  _moogleFrame = [[[UIImage imageNamed:@"photo_frame.png"] stretchableImageWithLeftCapWidth:16 topCapHeight:16] retain];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {

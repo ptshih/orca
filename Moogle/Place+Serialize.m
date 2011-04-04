@@ -24,7 +24,7 @@
     newPlace.pictureUrl = [dictionary valueForKey:@"picture_url"] ? [dictionary valueForKey:@"picture_url"] : nil;
     newPlace.activityCount = [dictionary valueForKey:@"activity_count"] ? [dictionary valueForKey:@"activity_count"] : @"0";
     newPlace.comment = [dictionary valueForKey:@"comment"] ? [dictionary valueForKey:@"comment"] : nil;
-    newPlace.type = [dictionary valueForKey:@"kupo_type"] ? [dictionary valueForKey:@"kupo_type"] : nil;
+    newPlace.kupoType = [dictionary valueForKey:@"kupo_type"] ? [dictionary valueForKey:@"kupo_type"] : nil;
     
     // Friends Summary
     NSMutableArray *friendIds = [NSMutableArray array];
@@ -61,7 +61,7 @@
   self.pictureUrl = [dictionary valueForKey:@"picture_url"];
   self.activityCount = [dictionary valueForKey:@"activity_count"];
   self.comment = [dictionary valueForKey:@"comment"];
-  self.type = [dictionary valueForKey:@"kupo_type"];
+  self.kupoType = [dictionary valueForKey:@"kupo_type"];
   self.authorId = [dictionary valueForKey:@"facebook_id"];
 
   // Friends Summary

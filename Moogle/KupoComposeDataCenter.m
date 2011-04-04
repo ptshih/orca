@@ -18,7 +18,7 @@
   
   BOOL hasImage = NO;
   
-  [params setValue:@"kupo" forKey:@"kupo_type"];
+  [params setValue:@"1" forKey:@"kupo_type"];
   
   if ([comment length] > 0) {
     [params setValue:comment forKey:@"comment"];
@@ -41,7 +41,7 @@
   
   BOOL hasImage = NO;
   
-  [params setValue:@"checkin" forKey:@"kupo_type"];
+  [params setValue:@"0" forKey:@"kupo_type"];
   
   if ([comment length] > 0) {
     [params setValue:comment forKey:@"comment"];

@@ -104,11 +104,11 @@ static UIImage *_emptyImage = nil;
 //- (void)updateState;
 
 - (BOOL)dataSourceIsReady {
-  return NO;
+  return YES;
 }
 
 - (BOOL)dataIsAvailable {
-  return NO;
+  return YES;
 }
 
 - (BOOL)dataIsLoading {

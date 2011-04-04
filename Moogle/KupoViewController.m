@@ -11,6 +11,7 @@
 #import "KupoCell.h"
 #import "Place.h"
 #import "KupoComposeViewController.h"
+#import "DetailViewController.h"
 
 @implementation KupoViewController
 
@@ -105,6 +106,19 @@
   return [KupoCell rowHeightForObject:kupo];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  Kupo *kupo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
+  if ([kupo.hasPhoto boolValue]) {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    DetailViewController *dvc = [[DetailViewController alloc] init];
+    dvc.kupo = kupo;
+    [self.navigationController pushViewController:dvc animated:YES];
+    [dvc release];
+  }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   KupoCell *cell = nil;
   NSString *reuseIdentifier = [NSString stringWithFormat:@"%@_TableViewCell_%d", [self class], indexPath.section];
@@ -118,7 +132,7 @@
   
   [cell fillCellWithObject:kupo];
   [cell loadImage];
-  
+  [cell loadPhoto];
   return cell;
 }
 

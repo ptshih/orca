@@ -18,7 +18,7 @@
 @property (nonatomic, retain) NSString * authorId;
 @property (nonatomic, retain) NSString * placeId;
 @property (nonatomic, retain) NSString * authorName;
-@property (nonatomic, retain) NSString * kupoType;
+@property (nonatomic, retain) NSNumber * kupoType;
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSString * comment;
 @property (nonatomic, retain) NSString * tagged;
