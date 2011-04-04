@@ -152,7 +152,7 @@
 #pragma mark -
 #pragma mark MoogleDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
-  [self resetFetchedResultsController];
+  [self executeFetchWithPredicate:nil];
   [self dataSourceDidLoad];
   
   NSInteger responseCount = [[_kupoDataCenter.response valueForKey:@"count"] integerValue];
@@ -164,7 +164,7 @@
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
-  [self resetFetchedResultsController];
+  [self executeFetchWithPredicate:nil];
   [self dataSourceDidLoad];
 }
 

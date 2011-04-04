@@ -30,6 +30,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  [self resetFetchedResultsController];
 }
 
 #pragma mark State Machine
@@ -49,8 +50,7 @@
 #pragma mark Data Source
 - (void)reloadCardController {
   [super reloadCardController];
-  [self resetFetchedResultsController];
-  [self updateState];
+  [self executeFetchWithPredicate:nil];
 }
 
 #pragma mark Core Data
@@ -69,20 +69,68 @@
       _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[LICoreDataStack managedObjectContext] sectionNameKeyPath:self.sectionNameKeyPathForFetchedResultsController cacheName:nil];
       _fetchedResultsController.delegate = self;
     }
+  }
+}
+
+- (void)executeFetchWithPredicate:(NSPredicate *)predicate {
+  NSFetchRequest *fetchRequest = [self.fetchedResultsController fetchRequest];
   
-    // Should we automatically perform a fetch here?
-    NSError *error;
-    if ([self.fetchedResultsController performFetch:&error]) {
-      DLog(@"Fetch request succeeded: %@", fetchRequest);
-    }
+  // Set predicate if exists
+  if (predicate) {
+    [fetchRequest setPredicate:predicate];
+  } else {
+    [fetchRequest setPredicate:nil];
   }
   
-  [self updateState];
+  NSError *error;
+  if ([self.fetchedResultsController performFetch:&error]) {
+    DLog(@"Fetch request succeeded: %@", fetchRequest);
+  }
+  
+  [self updateState];  
 }
-    
+
 - (NSFetchRequest *)getFetchRequest {
   // Subclass MUST implement
   return nil;
+}
+
+#pragma mark NSFetchedresultsControllerDelegate
+//- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+//  if (self.searchDisplayController.active) {
+//    [self.searchDisplayController.searchResultsTableView beginUpdates];
+//  } else {
+//    [self.tableView beginUpdates];
+//  }
+//}
+//
+//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+//  if (self.searchDisplayController.active) {
+//    [self.searchDisplayController.searchResultsTableView endUpdates];
+//  } else {
+//    [self.tableView endUpdates];
+//  }  
+//}
+
+#pragma mark UISearchDisplayDelegate
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
+  // SUBCLASS MUST IMPLEMENT
+  
+  NSPredicate *predicate = nil;
+  
+  if ([scope isEqualToString:@"Person"]) {
+    // search friend's full name
+    predicate = [NSPredicate predicateWithFormat:@"friendFullNames CONTAINS[cd] %@", searchText];
+  } else {
+    // default to place name
+    predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
+  }
+  
+  [self executeFetchWithPredicate:predicate];
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView {
+  [self executeFetchWithPredicate:nil];
 }
 
 #pragma mark UITableViewDelegate
@@ -92,19 +140,11 @@
 
 #pragma mark UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  if (tableView == self.searchDisplayController.searchResultsTableView) {
-    return 1;
-  } else {
-    return [[self.fetchedResultsController sections] count];
-  }
+  return [[self.fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  if (tableView == self.searchDisplayController.searchResultsTableView) {
-    return [self.searchItems count];
-  } else {
-    return [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
-  }
+  return [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

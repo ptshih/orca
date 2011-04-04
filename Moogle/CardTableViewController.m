@@ -51,6 +51,8 @@
   
   // SUBCLASSES MUST IMPLEMENT THE DELEGATE METHODS
   _searchItems = [[NSMutableArray alloc] initWithCapacity:1];
+  
+  // UITableViewCellSeparatorStyleNone
 }
 
 // SUBCLASS SHOULD CALL THIS
@@ -207,9 +209,23 @@
   return YES;
 }
 
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
+  [self filterContentForSearchText:self.searchDisplayController.searchBar.text scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
+  
+  // Return YES to cause the search result table view to be reloaded.
+  return YES;
+}
+
 - (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView {
   tableView.backgroundColor = VERY_LIGHT_GRAY;
   tableView.separatorColor = SEPARATOR_COLOR;
+  tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView {
+}
+
+- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller {
 }
 
 #pragma mark HeaderTabViewDelegate

@@ -105,12 +105,7 @@
 #pragma mark -
 #pragma mark TableView
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  Place *place = nil;
-  if (tableView == self.searchDisplayController.searchResultsTableView) {
-    place = [self.searchItems objectAtIndex:indexPath.row];
-  } else {
-    place = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  }
+  Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   return [PlaceCell rowHeightForObject:place];
 }
@@ -118,12 +113,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   
-  Place *place = nil;
-  if (tableView == self.searchDisplayController.searchResultsTableView) {
-    place = [self.searchItems objectAtIndex:indexPath.row];
-  } else {
-    place = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  }
+  Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   // Mark isRead state
   NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
@@ -151,12 +141,7 @@
     cell = [[[PlaceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
   }
   
-  Place *place = nil;
-  if (tableView == self.searchDisplayController.searchResultsTableView) {
-    place = [self.searchItems objectAtIndex:indexPath.row];
-  } else {
-    place = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  }
+  Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   [cell fillCellWithObject:place];
   [cell loadImage];
@@ -180,23 +165,23 @@
 #pragma mark -
 #pragma mark MoogleDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
-  [self resetFetchedResultsController];
+  [self executeFetchWithPredicate:nil];
   [self dataSourceDidLoad];
   
   // Is this a load more call?
-  BOOL isLoadMore = [[operation requestParams] objectForKey:@"until"] ? YES : NO;
-  if (isLoadMore) {
-    NSInteger responseCount = [[_placeDataCenter.response valueForKey:@"count"] integerValue];
-    if (responseCount > 0) {
-      [self showLoadMoreView];
-    } else {
-      [self hideLoadMoreView];
-    }
-  }
+//  BOOL isLoadMore = [[operation requestParams] objectForKey:@"until"] ? YES : NO;
+//  if (isLoadMore) {
+//    NSInteger responseCount = [[_placeDataCenter.response valueForKey:@"count"] integerValue];
+//    if (responseCount > 0) {
+//      [self showLoadMoreView];
+//    } else {
+//      [self hideLoadMoreView];
+//    }
+//  }
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
-  [self resetFetchedResultsController];
+  [self executeFetchWithPredicate:nil];
   [self dataSourceDidLoad];
 }
 
@@ -210,24 +195,6 @@
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
   return [_placeDataCenter getPlacesFetchRequest];
-}
-
-#pragma mark UISearchDisplayDelegate
-- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
-  // SUBCLASS MUST IMPLEMENT
-  [self.searchItems removeAllObjects];
-  
-  NSPredicate * predicate = nil;
-
-  if ([scope isEqualToString:@"Person"]) {
-    // search friend's full name
-    predicate = [NSPredicate predicateWithFormat:@"friendFullNames CONTAINS[cd] %@", searchText];
-  } else {
-    // default to place name
-    predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
-  }
-
-  [self.searchItems addObjectsFromArray:[[self.fetchedResultsController fetchedObjects] filteredArrayUsingPredicate:predicate]];
 }
 
 - (void)dealloc {

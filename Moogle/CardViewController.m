@@ -116,13 +116,13 @@ static UIImage *_emptyImage = nil;
 }
 
 - (void)updateState {
-  if ([self dataIsAvailable]) {
-    // We have real data to display
-    [self hideLoadingView];
-  } else {
-    // We have no data to display, show the empty screen
-    [self showLoadingView];
-  }
+//  if ([self dataIsAvailable]) {
+//    // We have real data to display
+//    [self hideLoadingView];
+//  } else {
+//    // We have no data to display, show the empty screen
+//    [self showLoadingView];
+//  }
 }
 
 - (void)updateScrollsToTop:(BOOL)isEnabled {

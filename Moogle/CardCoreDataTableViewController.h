@@ -21,6 +21,7 @@
 
 
 - (void)resetFetchedResultsController;
+- (void)executeFetchWithPredicate:(NSPredicate *)predicate;
 - (NSFetchRequest *)getFetchRequest;
 
 @end

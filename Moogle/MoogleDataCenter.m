@@ -25,6 +25,7 @@ static NSString *_secretString = nil;
 @synthesize response = _response;
 @synthesize rawResponse = _rawResponse;
 @synthesize op = _op;
+@synthesize total = _total;
 
 + (void)load {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -37,6 +38,7 @@ static NSString *_secretString = nil;
 - (id)init {
   self = [super init];
   if (self) {
+    _total = 0;
   }
   return self;
 }
@@ -98,6 +100,10 @@ static NSString *_secretString = nil;
   } else {
     // Throw an assertion, why is it not a dictionary or an array???
     DLog(@"### ERROR IN DATA CENTER, RESPONSE IS NEITHER AN ARRAY NOR A DICTIONARY");
+  }
+  
+  if (self.response && [self.response valueForKey:@"total"]) {
+    _total = [[self.response valueForKey:@"total"] integerValue];
   }
   
   if (self.response) {
