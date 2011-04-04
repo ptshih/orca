@@ -153,7 +153,11 @@
   _moogleImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", kupo.authorId];
   
   if ([kupo.kupoType isEqualToString:@"checkin"]) {
-    _statusLabel.text = [NSString stringWithFormat:@"Checked in here via Facebook"];
+    if (kupo.tagged) {
+      _statusLabel.text = [NSString stringWithFormat:@"Checked in via Facebook with %@", kupo.tagged];
+    } else {
+      _statusLabel.text = [NSString stringWithFormat:@"Checked in via Facebook"];
+    }
   }
   
   if ([kupo.hasPhoto boolValue]) {

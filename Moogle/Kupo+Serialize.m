@@ -26,6 +26,15 @@
     // Conditional
     newKupo.comment = [dictionary valueForKey:@"comment"] ? [dictionary valueForKey:@"comment"] : nil;
     
+    NSArray *friendList = [dictionary valueForKey:@"friend_list"];
+    if (friendList) {
+      NSMutableArray *friends = [NSMutableArray arrayWithCapacity:1];
+      for (NSDictionary *friend in friendList) {
+        [friends addObject:[friend valueForKey:@"full_name"]];
+      }
+      newKupo.tagged = [friends componentsJoinedByString:@", "];
+    }
+    
     return newKupo;
   } else {
     return nil;

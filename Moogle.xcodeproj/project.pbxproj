@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		25033EA113467CCD00633052 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA013467CC800633052 /* Kupo.m */; };
-		25033EA213467CCD00633052 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA013467CC800633052 /* Kupo.m */; };
 		25033EA51346803200633052 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA41346802C00633052 /* Place.m */; };
 		25033EA61346803200633052 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA41346802C00633052 /* Place.m */; };
 		25033EA91347402800633052 /* KupoComposeDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA81347402300633052 /* KupoComposeDataCenter.m */; };
@@ -73,6 +71,8 @@
 		259C7B4C1349733000C37AE1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B4A1349733000C37AE1 /* Reachability.m */; };
 		259C7B4E1349735D00C37AE1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 259C7B4D1349735D00C37AE1 /* CFNetwork.framework */; };
 		259C7B4F1349736F00C37AE1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 259C7B4D1349735D00C37AE1 /* CFNetwork.framework */; };
+		259C7B581349B36200C37AE1 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B571349B36200C37AE1 /* Kupo.m */; };
+		259C7B591349B36200C37AE1 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B571349B36200C37AE1 /* Kupo.m */; };
 		25CEF8071339F278006F23A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8061339F278006F23A7 /* UIKit.framework */; };
 		25CEF8091339F278006F23A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8081339F278006F23A7 /* Foundation.framework */; };
 		25CEF80B1339F278006F23A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80A1339F278006F23A7 /* CoreGraphics.framework */; };
@@ -235,8 +235,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		25033E9F13467CC500633052 /* Kupo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kupo.h; sourceTree = "<group>"; };
-		25033EA013467CC800633052 /* Kupo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Kupo.m; sourceTree = "<group>"; };
 		25033EA31346802800633052 /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Place.h; sourceTree = "<group>"; };
 		25033EA41346802C00633052 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Place.m; sourceTree = "<group>"; };
 		25033EA71347402100633052 /* KupoComposeDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeDataCenter.h; sourceTree = "<group>"; };
@@ -310,6 +308,8 @@
 		259C7B491349733000C37AE1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		259C7B4A1349733000C37AE1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		259C7B4D1349735D00C37AE1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		259C7B561349B36200C37AE1 /* Kupo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kupo.h; sourceTree = "<group>"; };
+		259C7B571349B36200C37AE1 /* Kupo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Kupo.m; sourceTree = "<group>"; };
 		25CEF8021339F278006F23A7 /* Moogle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moogle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25CEF8061339F278006F23A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		25CEF8081339F278006F23A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -718,10 +718,10 @@
 				25FB8C17133ABE1C00C130A8 /* Place+Serialize.m */,
 				25FB8C1A133ABED100C130A8 /* Kupo+Serialize.h */,
 				25FB8C1B133ABED700C130A8 /* Kupo+Serialize.m */,
-				25033E9F13467CC500633052 /* Kupo.h */,
-				25033EA013467CC800633052 /* Kupo.m */,
 				25033EA31346802800633052 /* Place.h */,
 				25033EA41346802C00633052 /* Place.m */,
+				259C7B561349B36200C37AE1 /* Kupo.h */,
+				259C7B571349B36200C37AE1 /* Kupo.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1235,13 +1235,13 @@
 				25EFD4171343F40E000108B8 /* MeDataCenter.m in Sources */,
 				25EFD41B1343F5A9000108B8 /* CardModalTableViewController.m in Sources */,
 				25FF620413440D1C001EF441 /* ShareCell.m in Sources */,
-				25033EA113467CCD00633052 /* Kupo.m in Sources */,
 				25033EA51346803200633052 /* Place.m in Sources */,
 				25033EA91347402800633052 /* KupoComposeDataCenter.m in Sources */,
 				25033EB5134866A200633052 /* PlacesViewController.m in Sources */,
 				25033EB91348670E00633052 /* PlacesDataCenter.m in Sources */,
 				2507996D13487925003269F8 /* NearbyCell.m in Sources */,
 				259C7B4B1349733000C37AE1 /* Reachability.m in Sources */,
+				259C7B581349B36200C37AE1 /* Kupo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1293,12 +1293,12 @@
 				25EFD4061343E774000108B8 /* HashValue.m in Sources */,
 				25EFD4181343F40E000108B8 /* MeDataCenter.m in Sources */,
 				25EFD41C1343F5A9000108B8 /* CardModalTableViewController.m in Sources */,
-				25033EA213467CCD00633052 /* Kupo.m in Sources */,
 				25033EA61346803200633052 /* Place.m in Sources */,
 				25033EAA1347402800633052 /* KupoComposeDataCenter.m in Sources */,
 				25033EB6134866A200633052 /* PlacesViewController.m in Sources */,
 				25033EBA1348670E00633052 /* PlacesDataCenter.m in Sources */,
 				259C7B4C1349733000C37AE1 /* Reachability.m in Sources */,
+				259C7B591349B36200C37AE1 /* Kupo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

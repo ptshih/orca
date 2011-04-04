@@ -43,8 +43,6 @@
 //  self.detailTextLabel.text = [item valueForKey:@"place_street"];
   
   _moogleImageView.urlPath = [item valueForKey:@"place_picture"];
-  [_moogleImageView loadImage];
-
 }
 
 + (MoogleCellType)cellType {
