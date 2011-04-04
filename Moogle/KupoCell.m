@@ -20,6 +20,8 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
+    _hasPhoto = NO;
+    
     _nameLabel = [[UILabel alloc] init];
     _timestampLabel = [[UILabel alloc] init];
     _statusLabel = [[UILabel alloc] init];
@@ -130,6 +132,7 @@
 
 - (void)prepareForReuse {
   [super prepareForReuse];
+  _hasPhoto = NO;
   _nameLabel.text = nil;
   _timestampLabel.text = nil;
   _statusLabel.text = nil;
@@ -148,14 +151,19 @@
   }
   
   _moogleImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", kupo.authorId];
-  [_moogleImageView loadImage];
   
   if ([kupo.kupoType isEqualToString:@"checkin"]) {
     _statusLabel.text = [NSString stringWithFormat:@"Checked in here via Facebook"];
   }
   
   if ([kupo.hasPhoto boolValue]) {
+    _hasPhoto = YES;
     _photoImageView.urlPath = [NSString stringWithFormat:@"%@/%@/thumb/image.png", S3_BASE_URL, kupo.id];
+  }
+}
+
+- (void)loadPhoto {
+  if (_hasPhoto) {
     [_photoImageView loadImage];
   }
 }

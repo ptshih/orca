@@ -22,4 +22,6 @@
   UIActivityIndicatorView *_imageLoadingIndicator;
 }
 
+- (void)loadImage;
+
 @end

@@ -16,6 +16,8 @@
   UILabel *_statusLabel;
   UILabel *_commentLabel; // optional
   MoogleImageView *_photoImageView; // optional
+  BOOL _hasPhoto;
 }
 
+- (void)loadPhoto;
 @end

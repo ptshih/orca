@@ -61,7 +61,7 @@
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
-  [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+  [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleNone];
   
   [self setupSearchDisplayControllerWithScopeButtonTitles:[NSArray arrayWithObjects:@"Place", @"Person", nil]];
   
@@ -75,12 +75,11 @@
 //  self.navigationItem.rightBarButtonItem = post;
 //  [post release];
   
-  [self reloadCardController];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [_tableView reloadData];
+  [self reloadCardController];
 }
 
 - (void)profile {
@@ -160,6 +159,7 @@
   }
   
   [cell fillCellWithObject:place];
+  [cell loadImage];
   
   return cell;
 }
@@ -168,6 +168,7 @@
 #pragma mark CardViewController
 - (void)reloadCardController {
   [super reloadCardController];
+  
   [_placeDataCenter getPlaces];
 //  [_placeDataCenter loadPlacesFromFixture];
 }
@@ -180,28 +181,31 @@
 #pragma mark MoogleDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
   [self resetFetchedResultsController];
-  [self.tableView reloadData];
   [self dataSourceDidLoad];
-  [self showLoadMoreView];
+  
+  NSInteger responseCount = [[_placeDataCenter.response valueForKey:@"count"] integerValue];
+  if (responseCount > 0) {
+    [self showLoadMoreView];
+  } else {
+    [self hideLoadMoreView];
+  }
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
   [self resetFetchedResultsController];
-  [self.tableView reloadData];
   [self dataSourceDidLoad];
 }
 
 #pragma mark -
 #pragma mark LoadMore
 - (void)loadMore {
-  _limit += 50;
   [_placeDataCenter loadMorePlaces];
 }
 
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [_placeDataCenter getPlacesFetchRequestWithLimit:_limit];
+  return [_placeDataCenter getPlacesFetchRequest];
 }
 
 #pragma mark UISearchDisplayDelegate

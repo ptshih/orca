@@ -106,20 +106,12 @@
 }
 
 - (void)updateState {
-  if ([self dataSourceIsReady]) {
-    // Data Source finished loading from remote and is ready to display
-    // We should never be in a loading state here
-    if ([self dataIsAvailable]) {
-      // We have real data to display
-      [self hideLoadingView];
-    } else {
-      // We have no data to display, show the empty screen
-      [self hideLoadingView];
-    }
+  if ([self dataIsAvailable]) {
+    // We have real data to display
+//      [self hideLoadingView];
   } else {
-    // Data source isn't done loading from remote
-    // For now we will just always show a loading screen in this case
-    [self showLoadingView];
+    // We have no data to display, show the empty screen
+//      [self showEmptyView;
   }
 }
 

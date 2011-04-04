@@ -46,20 +46,18 @@
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
-  [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+  [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleNone];
   
   // Pull Refresh
   [self setupPullRefresh];
   
   // Footer
   [self setupFooterView];
-  
-  [self reloadCardController];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [_tableView reloadData];
+  [self reloadCardController];
 }
 
 - (void)setupFooterView {
@@ -119,6 +117,7 @@
   Kupo *kupo = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   [cell fillCellWithObject:kupo];
+  [cell loadImage];
   
   return cell;
 }
@@ -127,6 +126,7 @@
 #pragma mark CardViewController
 - (void)reloadCardController {
   [super reloadCardController];
+  
   [_kupoDataCenter getKuposForPlaceWithPlaceId:self.place.placeId];
 //  [_kupoDataCenter loadKuposFromFixture];
 }
@@ -139,13 +139,18 @@
 #pragma mark MoogleDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
   [self resetFetchedResultsController];
-  [self.tableView reloadData];
   [self dataSourceDidLoad];
+  
+  NSInteger responseCount = [[_kupoDataCenter.response valueForKey:@"count"] integerValue];
+  if (responseCount > 0) {
+    [self showLoadMoreView];
+  } else {
+    [self hideLoadMoreView];
+  }
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
   [self resetFetchedResultsController];
-  [self.tableView reloadData];
   [self dataSourceDidLoad];
 }
 

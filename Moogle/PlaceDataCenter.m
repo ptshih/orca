@@ -128,13 +128,13 @@ static NSMutableDictionary *_pkDict = nil;
 }
 
 #pragma mark Fetch Requests
-- (NSFetchRequest *)getPlacesFetchRequestWithLimit:(NSInteger)limit {
+- (NSFetchRequest *)getPlacesFetchRequest {
   NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO selector:@selector(compare:)];
   NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
   [sortDescriptor release];
   NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPlaces" substitutionVariables:[NSDictionary dictionary]];
   [fetchRequest setSortDescriptors:sortDescriptors];
-  [fetchRequest setFetchLimit:limit];
+//  [fetchRequest setFetchLimit:limit];
   return fetchRequest;
 }
 

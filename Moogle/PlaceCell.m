@@ -131,6 +131,7 @@ static UIImage *_unreadImage = nil;
   _summaryLabel.text = nil;
   _activityLabel.text = nil;
   _unreadImageView.hidden = NO;
+  [_moogleImageView unloadImage];
 }
 
 - (void)fillCellWithObject:(id)object {
@@ -142,7 +143,6 @@ static UIImage *_unreadImage = nil;
   
 //  _moogleImageView.urlPath = place.pictureUrl;
   _moogleImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", place.authorId];
-  [_moogleImageView loadImage];
   
   if ([place.isRead boolValue]) {
     _unreadImageView.hidden = YES;

@@ -66,6 +66,10 @@ static UIImage *_moogleFrame = nil;
   
 }
 
+- (void)loadImage {
+  [_moogleImageView loadImage];
+}
+
 + (CGFloat)rowHeight {
   // Subclasses should override
   return 60.0;

@@ -25,6 +25,6 @@
 /**
  Fetch Requests
  */
-- (NSFetchRequest *)getPlacesFetchRequestWithLimit:(NSInteger)limit;
+- (NSFetchRequest *)getPlacesFetchRequest;
 
 @end

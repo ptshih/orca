@@ -69,6 +69,10 @@
 		2538FFB2133BFEF700ACE127 /* navigationbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FFAA133BFEF700ACE127 /* navigationbar_bg@2x.png */; };
 		2538FFB3133BFEF700ACE127 /* navigationbar_button_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FFAB133BFEF700ACE127 /* navigationbar_button_back.png */; };
 		2538FFBD133C90A100ACE127 /* photo_frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FFBC133C90A100ACE127 /* photo_frame.png */; };
+		259C7B4B1349733000C37AE1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B4A1349733000C37AE1 /* Reachability.m */; };
+		259C7B4C1349733000C37AE1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B4A1349733000C37AE1 /* Reachability.m */; };
+		259C7B4E1349735D00C37AE1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 259C7B4D1349735D00C37AE1 /* CFNetwork.framework */; };
+		259C7B4F1349736F00C37AE1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 259C7B4D1349735D00C37AE1 /* CFNetwork.framework */; };
 		25CEF8071339F278006F23A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8061339F278006F23A7 /* UIKit.framework */; };
 		25CEF8091339F278006F23A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8081339F278006F23A7 /* Foundation.framework */; };
 		25CEF80B1339F278006F23A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80A1339F278006F23A7 /* CoreGraphics.framework */; };
@@ -303,6 +307,9 @@
 		2538FFAA133BFEF700ACE127 /* navigationbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationbar_bg@2x.png"; sourceTree = "<group>"; };
 		2538FFAB133BFEF700ACE127 /* navigationbar_button_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigationbar_button_back.png; sourceTree = "<group>"; };
 		2538FFBC133C90A100ACE127 /* photo_frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_frame.png; sourceTree = "<group>"; };
+		259C7B491349733000C37AE1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		259C7B4A1349733000C37AE1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		259C7B4D1349735D00C37AE1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		25CEF8021339F278006F23A7 /* Moogle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moogle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25CEF8061339F278006F23A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		25CEF8081339F278006F23A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -481,6 +488,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				259C7B4E1349735D00C37AE1 /* CFNetwork.framework in Frameworks */,
 				25EFD3861341E438000108B8 /* MobileCoreServices.framework in Frameworks */,
 				25CEF8FC1339FF47006F23A7 /* SystemConfiguration.framework in Frameworks */,
 				25CEF8B91339FC3D006F23A7 /* MapKit.framework in Frameworks */,
@@ -503,6 +511,7 @@
 				25CEF8281339F279006F23A7 /* CoreGraphics.framework in Frameworks */,
 				25CEF8291339F279006F23A7 /* CoreData.framework in Frameworks */,
 				25EFD3881341E449000108B8 /* MobileCoreServices.framework in Frameworks */,
+				259C7B4F1349736F00C37AE1 /* CFNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,6 +578,7 @@
 			isa = PBXGroup;
 			children = (
 				25CEF8B21339FC03006F23A7 /* libz.1.2.3.dylib */,
+				259C7B4D1349735D00C37AE1 /* CFNetwork.framework */,
 				25EFD3851341E438000108B8 /* MobileCoreServices.framework */,
 				25CEF8FB1339FF47006F23A7 /* SystemConfiguration.framework */,
 				25CEF8B81339FC3D006F23A7 /* MapKit.framework */,
@@ -822,6 +832,8 @@
 		25FB8B2B133A036600C130A8 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				259C7B491349733000C37AE1 /* Reachability.h */,
+				259C7B4A1349733000C37AE1 /* Reachability.m */,
 				25EFD4021343E75C000108B8 /* HashValue */,
 				25CEF8E71339FD84006F23A7 /* NetworkStack */,
 				25FB8B56133A03A600C130A8 /* EGO */,
@@ -1229,6 +1241,7 @@
 				25033EB5134866A200633052 /* PlacesViewController.m in Sources */,
 				25033EB91348670E00633052 /* PlacesDataCenter.m in Sources */,
 				2507996D13487925003269F8 /* NearbyCell.m in Sources */,
+				259C7B4B1349733000C37AE1 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1285,6 +1298,7 @@
 				25033EAA1347402800633052 /* KupoComposeDataCenter.m in Sources */,
 				25033EB6134866A200633052 /* PlacesViewController.m in Sources */,
 				25033EBA1348670E00633052 /* PlacesDataCenter.m in Sources */,
+				259C7B4C1349733000C37AE1 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

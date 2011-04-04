@@ -32,6 +32,27 @@
   [super viewDidLoad];
 }
 
+#pragma mark State Machine
+- (BOOL)dataIsAvailable {
+  return (_fetchedResultsController && _fetchedResultsController.fetchedObjects.count > 0);
+}
+
+- (BOOL)dataIsLoading {
+  return NO;
+}
+
+- (void)updateState {
+  [super updateState];
+  [_tableView reloadData];
+}
+
+#pragma mark Data Source
+- (void)reloadCardController {
+  [super reloadCardController];
+  [self resetFetchedResultsController];
+  [self updateState];
+}
+
 #pragma mark Core Data
 - (void)resetFetchedResultsController {
   if ([LICoreDataStack managedObjectContext]) {
@@ -55,6 +76,8 @@
       DLog(@"Fetch request succeeded: %@", fetchRequest);
     }
   }
+  
+  [self updateState];
 }
     
 - (NSFetchRequest *)getFetchRequest {
