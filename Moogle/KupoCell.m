@@ -10,6 +10,7 @@
 
 #define NAME_FONT_SIZE 14.0
 #define CELL_FONT_SIZE 13.0
+#define COMMENT_FONT_SIZE 18.0
 #define TIMESTAMP_FONT_SIZE 12.0
 #define PHOTO_SIZE 100.0
 #define PHOTO_SPACING 5.0
@@ -32,7 +33,7 @@
     _nameLabel.font = [UIFont boldSystemFontOfSize:NAME_FONT_SIZE];
     _timestampLabel.font = [UIFont systemFontOfSize:TIMESTAMP_FONT_SIZE];
     _statusLabel.font = [UIFont systemFontOfSize:CELL_FONT_SIZE];
-    _commentLabel.font = [UIFont systemFontOfSize:CELL_FONT_SIZE];
+    _commentLabel.font = [UIFont systemFontOfSize:COMMENT_FONT_SIZE];
     
     _timestampLabel.textColor = GRAY_COLOR;
     
@@ -97,7 +98,7 @@
   // Row 3
   top = _statusLabel.bottom;
   
-  // Activity Label
+  // Comment Label
   textWidth = self.contentView.width - left - SPACING_X;
   [_commentLabel sizeToFitFixedWidth:textWidth];
   _commentLabel.left = left;
@@ -141,13 +142,16 @@
   Kupo *kupo = (Kupo *)object;
   _nameLabel.text = kupo.authorName;
   _timestampLabel.text = [kupo.timestamp humanIntervalSinceNow];
-  _commentLabel.text = kupo.comment;
+  
+  if ([_commentLabel.text length] > 0) {
+    _commentLabel.text = [NSString stringWithFormat:@"\"%@\"", kupo.comment];
+  }
   
   _moogleImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", kupo.authorId];
   [_moogleImageView loadImage];
   
   if ([kupo.kupoType isEqualToString:@"checkin"]) {
-    _statusLabel.text = [NSString stringWithFormat:@"Checked in here"];
+    _statusLabel.text = [NSString stringWithFormat:@"Checked in here via Facebook"];
   }
   
   if ([kupo.hasPhoto boolValue]) {
