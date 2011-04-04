@@ -155,12 +155,12 @@
   [self executeFetchWithPredicate:nil];
   [self dataSourceDidLoad];
   
-  NSInteger responseCount = [[_kupoDataCenter.response valueForKey:@"count"] integerValue];
-  if (responseCount > 0) {
-    [self showLoadMoreView];
-  } else {
-    [self hideLoadMoreView];
-  }
+//  NSInteger responseCount = [[_kupoDataCenter.response valueForKey:@"count"] integerValue];
+//  if (responseCount > 0) {
+//    [self showLoadMoreView];
+//  } else {
+//    [self hideLoadMoreView];
+//  }
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {

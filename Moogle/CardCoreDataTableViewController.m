@@ -24,6 +24,7 @@
   if (self) {
     _fetchedResultsController = nil;
     _sectionNameKeyPathForFetchedResultsController = nil;
+    _cachedPredicate = nil;
   }
   return self;
 }
@@ -68,6 +69,11 @@
     if (fetchRequest) {
       _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[LICoreDataStack managedObjectContext] sectionNameKeyPath:self.sectionNameKeyPathForFetchedResultsController cacheName:nil];
       _fetchedResultsController.delegate = self;
+      
+      // Cache the original predicate
+      if ([fetchRequest predicate]) {
+        _cachedPredicate = [[fetchRequest predicate] retain];
+      }
     }
   }
 }
@@ -79,7 +85,7 @@
   if (predicate) {
     [fetchRequest setPredicate:predicate];
   } else {
-    [fetchRequest setPredicate:nil];
+    [fetchRequest setPredicate:_cachedPredicate];
   }
   
   NSError *error;
@@ -163,6 +169,7 @@
 - (void)dealloc {
   RELEASE_SAFELY (_fetchedResultsController);
   RELEASE_SAFELY (_sectionNameKeyPathForFetchedResultsController);
+  RELEASE_SAFELY(_cachedPredicate);
   [super dealloc];
 }
 
