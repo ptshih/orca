@@ -108,6 +108,8 @@
   [loadMoreButton setTitle:@"Load More..." forState:UIControlStateNormal];
   [_loadMoreView addSubview:loadMoreButton];
   [loadMoreButton release];
+  
+  [self showLoadMoreView];
 }
 
 - (void)showLoadMoreView {

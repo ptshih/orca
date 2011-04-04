@@ -8,6 +8,8 @@
 
 #import "CardViewController.h"
 
+static UIImage *_emptyImage = nil;
+
 @interface CardViewController (Private)
 
 - (void)showLoadingView;
@@ -17,16 +19,24 @@
 
 @implementation CardViewController
 
++ (void)initialize {
+  _emptyImage = [[UIImage imageNamed:@"empty.png"] retain];
+}
+
 - (id)init {
   self = [super init];
   if (self) {
     _activeScrollView = nil;
+    _emptyView = [[UIImageView alloc] initWithImage:_emptyImage];
   }
   return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  _emptyView.alpha = 0.0;
+  [self.view addSubview:_emptyView];
   
 //  self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
 
@@ -108,10 +118,10 @@
 - (void)updateState {
   if ([self dataIsAvailable]) {
     // We have real data to display
-//      [self hideLoadingView];
+    [self hideLoadingView];
   } else {
     // We have no data to display, show the empty screen
-//      [self showEmptyView;
+    [self showLoadingView];
   }
 }
 
@@ -124,17 +134,16 @@
 
 #pragma mark Loading
 - (void)showLoadingView {
-//  [self.view bringSubviewToFront:self.loadingView];
   [UIView beginAnimations:nil context:NULL];
   [UIView setAnimationDuration:0.3];
-//  self.loadingView.frame = CGRectMake(0, 0, self.loadingView.width, self.loadingView.height);
+  _emptyView.alpha = 1.0;
   [UIView commitAnimations];
 }
 
 - (void)hideLoadingView {
   [UIView beginAnimations:nil context:NULL];
   [UIView setAnimationDuration:0.3];
-//  self.loadingView.frame = CGRectMake(0, self.view.height, self.loadingView.width, self.loadingView.height);
+  _emptyView.alpha = 0.0;
   [UIView commitAnimations];
 }
 
@@ -169,6 +178,7 @@
 }
 
 - (void)dealloc {
+  RELEASE_SAFELY(_emptyView);
   RELEASE_SAFELY(_navTitleLabel);
   [super dealloc];
 }

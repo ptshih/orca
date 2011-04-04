@@ -183,11 +183,15 @@
   [self resetFetchedResultsController];
   [self dataSourceDidLoad];
   
-  NSInteger responseCount = [[_placeDataCenter.response valueForKey:@"count"] integerValue];
-  if (responseCount > 0) {
-    [self showLoadMoreView];
-  } else {
-    [self hideLoadMoreView];
+  // Is this a load more call?
+  BOOL isLoadMore = [[operation requestParams] objectForKey:@"until"] ? YES : NO;
+  if (isLoadMore) {
+    NSInteger responseCount = [[_placeDataCenter.response valueForKey:@"count"] integerValue];
+    if (responseCount > 0) {
+      [self showLoadMoreView];
+    } else {
+      [self hideLoadMoreView];
+    }
   }
 }
 
