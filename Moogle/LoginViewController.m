@@ -24,12 +24,13 @@
   [super viewDidLoad];
   
   self.view.backgroundColor = FB_BLUE_COLOR;
+  self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Default.png"]];
   
   // Setup Logo
-  UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo-white-280.png"]];
-  logo.frame = CGRectMake(20, 44, logo.width, logo.height);
-  [self.view addSubview:logo];
-  [logo release];
+//  UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo-white-280.png"]];
+//  logo.frame = CGRectMake(20, 44, logo.width, logo.height);
+//  [self.view addSubview:logo];
+//  [logo release];
   
   // Setup Login Buttons
   UIButton *login = [[UIButton alloc] initWithFrame:CGRectZero];

@@ -34,7 +34,7 @@
 #endif
 
 #ifdef STAGING
-  #define S3_BASE_URL @"http://s3.amazonaws.com/kupostaging/kupos/photos"
+  #define S3_BASE_URL @"http://s3.amazonaws.com/kupo/kupos/photos"
 #else
   #define S3_BASE_URL @"http://s3.amazonaws.com/kupo/kupos/photos"
 #endif
