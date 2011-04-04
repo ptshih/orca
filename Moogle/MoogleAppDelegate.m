@@ -42,6 +42,8 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  NSLog(@"fonts: %@",[UIFont familyNames]);
+  
   _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   self.window.backgroundColor = FB_COLOR_DARK_GRAY_BLUE;
   

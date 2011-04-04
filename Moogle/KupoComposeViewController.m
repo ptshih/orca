@@ -27,41 +27,41 @@
 // For responding to the user accepting a newly-captured picture or movie
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
   NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
-  UIImage *originalImage, *editedImage, *imageToSave, *resizedImage;
+  UIImage *originalImage;
+  
+  if (_uploadedImage) {
+    [_uploadedImage release], _uploadedImage = nil;
+  }
+  
+  if (_uploadedVideo) {
+    [_uploadedVideo release], _uploadedVideo = nil;
+  }
   
   // Handle a still image capture
   if (CFStringCompare((CFStringRef)mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
-    editedImage = (UIImage *) [info objectForKey:UIImagePickerControllerEditedImage];
     originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
     
-    if (editedImage) {
-      imageToSave = editedImage;
-    } else {
-      imageToSave = originalImage;
-    }
-    
-    resizedImage = [imageToSave cropProportionalToSize:CGSizeMake(320, 320)];
-    
-    
-    
     // Save the new image (original or edited) to the Camera Roll
-    //    UIImageWriteToSavedPhotosAlbum (imageToSave, nil, nil , nil);
+    // This is only done when the Send button is tapped
+    //    UIImageWriteToSavedPhotosAlbum (originalImage, nil, nil , nil);
     
-    if (_uploadedImage) {
-      [_uploadedImage release], _uploadedImage = nil;
-    }
-    _uploadedImage = [imageToSave retain];
+    _uploadedImage = [originalImage retain];
     [_photoUpload setImage:_uploadedImage forState:UIControlStateNormal];
   }
   
   // Handle a movie capture
   if (CFStringCompare((CFStringRef)mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo) {
+    _uploadedVideoPath = [[info objectForKey:UIImagePickerControllerMediaURL] path];
+    _uploadedVideo = [[NSData dataWithContentsOfURL:[info objectForKey:UIImagePickerControllerMediaURL]] retain];
     
-    NSString *moviePath = [[info objectForKey:UIImagePickerControllerMediaURL] path];
-    
-    if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum (moviePath)) {
-      UISaveVideoAtPathToSavedPhotosAlbum(moviePath, nil, nil, nil);
-    }
+    // Take a screenshot of the video for a thumbnail
+    CGSize sixzevid=CGSizeMake(picker.view.bounds.size.width,picker.view.bounds.size.height);
+    UIGraphicsBeginImageContext(sixzevid);
+    [picker.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *videoThumbImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    _uploadedImage = [[videoThumbImage cropProportionalToSize:CGSizeMake(320, 320)] retain];
+    [_photoUpload setImage:_uploadedImage forState:UIControlStateNormal];
   }
   
   [[picker parentViewController] dismissModalViewControllerAnimated:YES];
@@ -174,12 +174,16 @@
   // Write the photo to the user's album
   if (_uploadedImage) {
     UIImageWriteToSavedPhotosAlbum(_uploadedImage, nil, nil, nil);
+  } else if (_uploadedVideo) {
+    if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(_uploadedVideoPath)) {
+      UISaveVideoAtPathToSavedPhotosAlbum(_uploadedVideoPath, nil, nil, nil);
+    }
   }
   
   if (_moogleComposeType == MoogleComposeTypeKupo) {
-    [_dataCenter sendKupoComposeWithPlaceId:self.placeId andComment:_kupoComment.text andImage:_uploadedImage];
+    [_dataCenter sendKupoComposeWithPlaceId:self.placeId andComment:_kupoComment.text andImage:_uploadedImage andVideo:_uploadedVideo];
   } else {
-    [_dataCenter sendCheckinComposeWithPlaceId:self.placeId andComment:_kupoComment.text andImage:_uploadedImage];
+    [_dataCenter sendCheckinComposeWithPlaceId:self.placeId andComment:_kupoComment.text andImage:_uploadedImage andVideo:_uploadedVideo];
   }
   [self dismissModalViewControllerAnimated:YES];
 }
@@ -194,7 +198,7 @@
   UIActionSheet *actionSheet = [[UIActionSheet alloc] init];
   
   if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-    [actionSheet addButtonWithTitle:@"Take a Photo"];
+    [actionSheet addButtonWithTitle:@"Take a Photo or Video"];
   }
   [actionSheet addButtonWithTitle:@"Choose from Library"];
   [actionSheet addButtonWithTitle:@"Cancel"];
@@ -210,8 +214,12 @@
   if(buttonIndex == actionSheet.cancelButtonIndex) return;
   
   UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-  imagePicker.allowsEditing = YES;
+  imagePicker.allowsEditing = NO;
   imagePicker.delegate = self;
+  imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:imagePicker.sourceType];
+  
+//  imagePicker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
+//  imagePicker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeMovie];
   
   switch (buttonIndex) {
     case 0:
@@ -286,6 +294,8 @@
   RELEASE_SAFELY(_kupoComment);
   RELEASE_SAFELY(_locationButton);
   RELEASE_SAFELY(_uploadedImage);
+  RELEASE_SAFELY(_uploadedVideo);
+  RELEASE_SAFELY(_uploadedVideoPath);
   RELEASE_SAFELY(_backgroundView);
   [super dealloc];
 }

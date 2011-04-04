@@ -172,7 +172,7 @@ static NSString *_secretString = nil;
  */
 #pragma mark LINetworkOperationDelegate
 - (void)networkOperationDidFinish:(LINetworkOperation *)operation {
-  DLog(@"Callback: Operation finished: %@", operation);
+//  DLog(@"Callback: Operation finished: %@", operation);
   // This is on the main thread
   NSInteger statusCode = [operation responseStatusCode];
   if(statusCode >= 200 && statusCode < 400) {
@@ -190,18 +190,18 @@ static NSString *_secretString = nil;
 }
 
 - (void)networkOperationDidFail:(LINetworkOperation *)operation {
-  DLog(@"Callback: Operation failed: %@", operation);
+//  DLog(@"Callback: Operation failed: %@", operation);
   // Just fail it for now
   [self dataCenterFailedWithOperation:operation];
 }
 
 // UNUSED
 - (void)networkOperationDidStart:(LINetworkOperation *)operation {
-  DLog(@"Callback: Operation started: %@", operation);  
+//  DLog(@"Callback: Operation started: %@", operation);  
 }
 
 - (void)networkOperationDidTimeout:(LINetworkOperation *)operation {
-  DLog(@"Callback: Operation timed out: %@", operation);
+//  DLog(@"Callback: Operation timed out: %@", operation);
 }
 
 #pragma mark Delegate Callbacks

@@ -26,35 +26,35 @@
   } else if (delta <= 30 * SECOND) {
     return NSLocalizedString(@"just now", nil);
   } else if (delta < 1 * MINUTE) {
-    return [NSString stringWithFormat:@"%u seconds ago", delta];
+    return [NSString stringWithFormat:@"%u sec", delta];
   } else if (delta < 2 * MINUTE) {
-    return @"1 minute ago";
+    return @"1 min";
   } else if (delta <= 45 * MINUTE) {
-    return [NSString stringWithFormat:@"%u minutes ago", delta / MINUTE];
+    return [NSString stringWithFormat:@"%u min", delta / MINUTE];
   } else if (delta <= 90 * MINUTE) {
-    return @"1 hour ago";
+    return @"1 hr";
   } else if (delta < 3 * HOUR) {
-    return @"2 hours ago";
+    return @"2 hr";
   } else if (delta < 23 * HOUR) {
-    return [NSString stringWithFormat:@"%u hours ago", delta / HOUR];
+    return [NSString stringWithFormat:@"%u hr", delta / HOUR];
   } else if (delta < 36 * HOUR) {
-    return @"1 day ago";
+    return @"1 day";
   } else if (delta < 72 * HOUR) {
-    return @"2 days ago";
+    return @"2 day";
   } else if (delta < 7 * DAY) {
-    return [NSString stringWithFormat:@"%u days ago", delta / DAY];
+    return [NSString stringWithFormat:@"%u day", delta / DAY];
   } else if (delta < 11 * DAY) {
-    return @"1 week ago";
+    return @"1 wk";
   } else if (delta < 14 * DAY) {
-    return @"2 weeks ago";
+    return @"2 wk";
   } else if (delta < 9 * WEEK) {
-    return [NSString stringWithFormat:@"%u weeks ago", delta / WEEK];
+    return [NSString stringWithFormat:@"%u wk", delta / WEEK];
   } else if (delta < 19 * MONTH) {
-    return [NSString stringWithFormat:@"%u months ago", delta / MONTH];        
+    return [NSString stringWithFormat:@"%u mo", delta / MONTH];        
   } else if (delta < 2 * YEAR) {
-    return @"1 year ago";
+    return @"1 yr";
   } else {
-    return [NSString stringWithFormat:@"%u years ago", delta / YEAR];        
+    return [NSString stringWithFormat:@"%u yr", delta / YEAR];        
   }
 }
 

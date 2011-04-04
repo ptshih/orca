@@ -37,7 +37,7 @@
   login.width = 280.0;
   login.height = 39.0;
   login.left = 20.0;
-  login.top = self.view.height - login.height - 44.0;
+  login.top = self.view.height - login.height - 20.0;
   [login setBackgroundImage:[UIImage imageNamed:@"login_facebook.png"] forState:UIControlStateNormal];
   [login setContentEdgeInsets:UIEdgeInsetsMake(-4, 28, 0, 0)];
   [login setTitle:@"Connect with Facebook" forState:UIControlStateNormal];

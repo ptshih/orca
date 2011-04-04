@@ -10,7 +10,10 @@
 #import "NetworkConstants.h"
 #import "Kupo.h"
 
+#define COMMENT_FONT_SIZE 16.0
+
 static UIImage *_photoFrame = nil;
+static UIImage *_quoteImage = nil;
 
 @implementation DetailViewController
 
@@ -18,6 +21,7 @@ static UIImage *_photoFrame = nil;
 
 + (void)initialize {
   _photoFrame = [[[UIImage imageNamed:@"photo_frame.png"] stretchableImageWithLeftCapWidth:16 topCapHeight:16] retain];
+  _quoteImage = [[UIImage imageNamed:@"quote_mark.png"] retain];
 }
 
 - (void)viewDidLoad {
@@ -26,6 +30,9 @@ static UIImage *_photoFrame = nil;
   self.view.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
   
   _navTitleLabel.text = self.kupo.authorName;
+  
+  _quoteImageView = [[UIImageView alloc] initWithImage:_quoteImage];
+  _quoteImageView.hidden = YES;
   
   // Photo Frame
   _photoFrameView = [[UIImageView alloc] initWithImage:_photoFrame];
@@ -36,19 +43,33 @@ static UIImage *_photoFrame = nil;
   _photoView.urlPath = [NSString stringWithFormat:@"%@/%@/original/image.png", S3_BASE_URL, _kupo.id];
   [_photoView loadImage];
   
+  CGFloat left = _photoView.left;
+  CGFloat top = _photoView.bottom + 10;
+  
   _commentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  _commentLabel.top = _photoView.bottom + 10;
-  _commentLabel.left = _photoView.left;
   _commentLabel.text = self.kupo.comment;
-  _commentLabel.font = [UIFont systemFontOfSize:18.0];
+  _commentLabel.font = [UIFont fontWithName:@"Futura-Medium" size:COMMENT_FONT_SIZE];
   _commentLabel.numberOfLines = 8;
   _commentLabel.lineBreakMode = UILineBreakModeWordWrap;
   _commentLabel.backgroundColor = [UIColor clearColor];
   
+  // Comment Label
+  if ([_commentLabel.text length] > 0) {
+    _quoteImageView.hidden = NO;
+    _quoteImageView.left = left;
+    _quoteImageView.top = top + 5;
+  } else {
+    _quoteImageView.hidden = YES;
+  }
+
   CGFloat textWidth = 0.0;
-  textWidth = _photoView.width;
+  textWidth = _photoView.width - _quoteImageView.width - 5;
   [_commentLabel sizeToFitFixedWidth:textWidth];
+  _commentLabel.left = left + _quoteImageView.width + 5;
+  _commentLabel.top = top + 4;
+
   
+  [self.view addSubview:_quoteImageView];
   [self.view addSubview:_photoFrameView];
   [self.view addSubview:_photoView];
   [self.view addSubview:_commentLabel];
@@ -71,6 +92,7 @@ static UIImage *_photoFrame = nil;
 }
 
 - (void)dealloc {
+  RELEASE_SAFELY(_quoteImageView);
   RELEASE_SAFELY(_commentLabel);
   RELEASE_SAFELY(_photoFrameView);
   RELEASE_SAFELY(_photoView);

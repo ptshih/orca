@@ -515,8 +515,9 @@ static NSThread *_opThread = nil;
         [self.requestData appendData:imageData];
       } else {
         NSAssert([dataParam isKindOfClass:[NSData class]], @"dataParam must be a UIImage or NSData");
+        // This is most likely a mp4 video, so forcing .mp4 extension
         contentType = @"application/octet-stream";
-        [self.requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", key, key] dataUsingEncoding:NSUTF8StringEncoding]];
+        [self.requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@.mp4\"\r\n", key, key] dataUsingEncoding:NSUTF8StringEncoding]];
         [self.requestData appendData:[[NSString stringWithFormat:@"Content-Type: %@\r\n\r\n", contentType] dataUsingEncoding:NSUTF8StringEncoding]];
         [self.requestData appendData:(NSData *)dataParam];
       }

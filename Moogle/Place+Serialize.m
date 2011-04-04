@@ -18,13 +18,20 @@
     newPlace.placeId = [dictionary valueForKey:@"place_id"];
     newPlace.name = [dictionary valueForKey:@"name"];
     newPlace.hasPhoto = [dictionary valueForKey:@"has_photo"];
-    newPlace.authorId = [dictionary valueForKey:@"facebook_id"];
+    newPlace.authorId = [dictionary valueForKey:@"author_id"];
+    newPlace.authorName = [dictionary valueForKey:@"author_name"];
     
     // These might be null
     newPlace.pictureUrl = [dictionary valueForKey:@"picture_url"] ? [dictionary valueForKey:@"picture_url"] : nil;
     newPlace.activityCount = [dictionary valueForKey:@"activity_count"] ? [dictionary valueForKey:@"activity_count"] : @"0";
     newPlace.comment = [dictionary valueForKey:@"comment"] ? [dictionary valueForKey:@"comment"] : nil;
     newPlace.kupoType = [dictionary valueForKey:@"kupo_type"] ? [dictionary valueForKey:@"kupo_type"] : nil;
+    
+    NSString *city = [dictionary valueForKey:@"place_city"] ? [dictionary valueForKey:@"place_city"] : nil;
+    NSString *state = [dictionary valueForKey:@"place_state"] ? [dictionary valueForKey:@"place_state"] : nil;
+    if (city && state) {
+      newPlace.address = [NSString stringWithFormat:@"%@, %@", city, state];
+    }
     
     // Friends Summary
     NSMutableArray *friendIds = [NSMutableArray array];
@@ -55,14 +62,22 @@
     return self;
   }
   
-  self.name = [dictionary valueForKey:@"name"];
   self.placeId = [dictionary valueForKey:@"place_id"];
+  self.name = [dictionary valueForKey:@"name"];
   self.hasPhoto = [dictionary valueForKey:@"has_photo"];
+  self.authorId = [dictionary valueForKey:@"author_id"];
+  self.authorName = [dictionary valueForKey:@"author_name"];
+  
   self.pictureUrl = [dictionary valueForKey:@"picture_url"];
   self.activityCount = [dictionary valueForKey:@"activity_count"];
   self.comment = [dictionary valueForKey:@"comment"];
-  self.kupoType = [dictionary valueForKey:@"kupo_type"];
-  self.authorId = [dictionary valueForKey:@"facebook_id"];
+  self.kupoType = [dictionary valueForKey:@"kupo_type"] ? [dictionary valueForKey:@"kupo_type"] : nil;
+  
+  NSString *city = [dictionary valueForKey:@"place_city"] ? [dictionary valueForKey:@"place_city"] : nil;
+  NSString *state = [dictionary valueForKey:@"place_state"] ? [dictionary valueForKey:@"place_state"] : nil;
+  if (city && state) {
+    self.address = [NSString stringWithFormat:@"%@, %@", city, state];
+  }
 
   // Friends Summary
   NSMutableArray *friendIds = [NSMutableArray array];

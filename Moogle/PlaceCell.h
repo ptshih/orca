@@ -16,6 +16,8 @@
   UILabel *_timestampLabel;
   UILabel *_summaryLabel;
   UILabel *_activityLabel;
+  UILabel *_lastActivityLabel;
+  UILabel *_addressLabel;
 }
 
 @end

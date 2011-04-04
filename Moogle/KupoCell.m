@@ -9,13 +9,19 @@
 #import "KupoCell.h"
 
 #define NAME_FONT_SIZE 14.0
-#define CELL_FONT_SIZE 13.0
-#define COMMENT_FONT_SIZE 18.0
+#define CELL_FONT_SIZE 12.0
+#define COMMENT_FONT_SIZE 16.0
 #define TIMESTAMP_FONT_SIZE 12.0
 #define PHOTO_SIZE 100.0
 #define PHOTO_SPACING 5.0
 
+static UIImage *_quoteImage = nil;
+
 @implementation KupoCell
+
++ (void)initialize {
+  _quoteImage = [[UIImage imageNamed:@"quote_mark.png"] retain];
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -32,10 +38,10 @@
     _statusLabel.backgroundColor = [UIColor clearColor];
     _commentLabel.backgroundColor = [UIColor clearColor];
     
-    _nameLabel.font = [UIFont boldSystemFontOfSize:NAME_FONT_SIZE];
-    _timestampLabel.font = [UIFont systemFontOfSize:TIMESTAMP_FONT_SIZE];
-    _statusLabel.font = [UIFont systemFontOfSize:CELL_FONT_SIZE];
-    _commentLabel.font = [UIFont systemFontOfSize:COMMENT_FONT_SIZE];
+    _nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE];
+    _timestampLabel.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE];
+    _statusLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE];
+    _commentLabel.font = [UIFont fontWithName:@"Futura-Medium" size:COMMENT_FONT_SIZE];
     
     _timestampLabel.textColor = GRAY_COLOR;
     
@@ -53,6 +59,10 @@
     _timestampLabel.numberOfLines = 1;
     _statusLabel.numberOfLines = 4;
     _commentLabel.numberOfLines = 8;
+    
+    _quoteImageView = [[UIImageView alloc] initWithImage:_quoteImage];
+    _quoteImageView.hidden = YES;
+    [self.contentView addSubview:_quoteImageView];
     
     _photoImageView = [[MoogleImageView alloc] init];
     [self.contentView addSubview:_photoImageView];
@@ -100,16 +110,7 @@
   // Row 3
   top = _statusLabel.bottom;
   
-  // Comment Label
-  textWidth = self.contentView.width - left - SPACING_X;
-  [_commentLabel sizeToFitFixedWidth:textWidth];
-  _commentLabel.left = left;
-  _commentLabel.top = top;
-  
   if (_photoImageView.urlPath) {  
-    // Row 4 (conditional)
-    top = _commentLabel.bottom;
-    
     // Photo Image View
     _photoImageView.left = left;
     _photoImageView.top = top + PHOTO_SPACING;
@@ -118,12 +119,27 @@
     _photoImageView.layer.masksToBounds = YES;
     _photoImageView.layer.cornerRadius = 4.0;
     
-    // Set desired height
-    _desiredHeight = _photoImageView.bottom + MARGIN_Y;
+    top = _photoImageView.bottom;
   } else {
-    // Set desired height
-    _desiredHeight = _commentLabel.bottom + MARGIN_Y;
+    top = _statusLabel.bottom;
   }
+  
+  // Comment Label
+  if ([_commentLabel.text length] > 0) {
+    _quoteImageView.hidden = NO;
+    _quoteImageView.left = left;
+    _quoteImageView.top = top + MARGIN_Y;
+  } else {
+    _quoteImageView.hidden = YES;
+  }
+  
+  textWidth = self.contentView.width - _quoteImageView.width - MARGIN_X - left - SPACING_X;
+  [_commentLabel sizeToFitFixedWidth:textWidth];
+  _commentLabel.left = left + _quoteImageView.width + MARGIN_X;
+  _commentLabel.top = top + 4;
+
+  // Set desired height
+  _desiredHeight = _commentLabel.bottom + MARGIN_Y;
   
   if (_desiredHeight < _moogleFrameView.bottom) {
     _desiredHeight = _moogleFrameView.bottom + MARGIN_Y;
@@ -139,6 +155,7 @@
   _commentLabel.text = nil;
   [_moogleImageView unloadImage];
   [_photoImageView unloadImage];
+  _quoteImageView.hidden = YES;
 }
 
 - (void)fillCellWithObject:(id)object {
@@ -147,7 +164,7 @@
   _timestampLabel.text = [kupo.timestamp humanIntervalSinceNow];
   
   if ([kupo.comment length] > 0) {
-    _commentLabel.text = [NSString stringWithFormat:@"\"%@\"", kupo.comment];
+    _commentLabel.text = [NSString stringWithFormat:@"%@", kupo.comment];
   }
   
   _moogleImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", kupo.authorId];
@@ -186,6 +203,7 @@
   RELEASE_SAFELY(_statusLabel);
   RELEASE_SAFELY(_commentLabel);
   RELEASE_SAFELY(_photoImageView);
+  RELEASE_SAFELY(_quoteImageView);
   [super dealloc];
 }
 

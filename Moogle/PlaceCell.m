@@ -9,8 +9,9 @@
 #import "PlaceCell.h"
 
 #define NAME_FONT_SIZE 14.0
-#define CELL_FONT_SIZE 13.0
+#define CELL_FONT_SIZE 12.0
 #define TIMESTAMP_FONT_SIZE 12.0
+#define ADDRESS_FONT_SIZE 12.0
 #define UNREAD_WIDTH 13.0
 
 static UIImage *_unreadImage = nil;
@@ -28,16 +29,23 @@ static UIImage *_unreadImage = nil;
     _timestampLabel = [[UILabel alloc] init];
     _summaryLabel = [[UILabel alloc] init];
     _activityLabel = [[UILabel alloc] init];
+    _lastActivityLabel = [[UILabel alloc] init];
+    _addressLabel = [[UILabel alloc] init];
     
     _nameLabel.backgroundColor = [UIColor clearColor];
     _timestampLabel.backgroundColor = [UIColor clearColor];
     _summaryLabel.backgroundColor = [UIColor clearColor];
     _activityLabel.backgroundColor = [UIColor clearColor];
+    _lastActivityLabel.backgroundColor = [UIColor clearColor];
+    _addressLabel.backgroundColor = [UIColor clearColor];
     
-    _nameLabel.font = [UIFont boldSystemFontOfSize:NAME_FONT_SIZE];
-    _timestampLabel.font = [UIFont systemFontOfSize:TIMESTAMP_FONT_SIZE];
-    _summaryLabel.font = [UIFont systemFontOfSize:CELL_FONT_SIZE];
-    _activityLabel.font = [UIFont systemFontOfSize:CELL_FONT_SIZE];
+    _nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE];
+    _timestampLabel.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE];
+    _summaryLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE];
+    _activityLabel.font = [UIFont fontWithName:@"Futura-Medium" size:CELL_FONT_SIZE];
+    _lastActivityLabel.font = [UIFont fontWithName:@"Futura-Medium" size:CELL_FONT_SIZE];
+    _addressLabel.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:ADDRESS_FONT_SIZE];
+    
     
     _timestampLabel.textColor = GRAY_COLOR;
 
@@ -45,16 +53,22 @@ static UIImage *_unreadImage = nil;
     _timestampLabel.textAlignment = UITextAlignmentRight;
     _summaryLabel.textAlignment = UITextAlignmentLeft;
     _activityLabel.textAlignment = UITextAlignmentLeft;
+    _lastActivityLabel.textAlignment = UITextAlignmentLeft;
+    _addressLabel.textAlignment = UITextAlignmentLeft;
     
     _nameLabel.lineBreakMode = UILineBreakModeWordWrap;
     _timestampLabel.lineBreakMode = UILineBreakModeTailTruncation;
     _summaryLabel.lineBreakMode = UILineBreakModeWordWrap;
     _activityLabel.lineBreakMode = UILineBreakModeTailTruncation;
+    _lastActivityLabel.lineBreakMode = UILineBreakModeTailTruncation;
+    _addressLabel.lineBreakMode = UILineBreakModeTailTruncation;
     
     _nameLabel.numberOfLines = 2;
     _timestampLabel.numberOfLines = 1;
     _summaryLabel.numberOfLines = 8;
     _activityLabel.numberOfLines = 1;
+    _lastActivityLabel.numberOfLines = 1;
+    _addressLabel.numberOfLines = 1;
     
     _unreadImageView = [[UIImageView alloc] initWithImage:_unreadImage];
     
@@ -63,6 +77,8 @@ static UIImage *_unreadImage = nil;
     [self.contentView addSubview:_timestampLabel];
     [self.contentView addSubview:_summaryLabel];
     [self.contentView addSubview:_activityLabel];
+    [self.contentView addSubview:_lastActivityLabel];
+    [self.contentView addSubview:_addressLabel];
   }
   return self;
 }
@@ -101,13 +117,33 @@ static UIImage *_unreadImage = nil;
   // Row 2
   top = _nameLabel.bottom;
   
+  // Row 3
+  if ([_addressLabel.text length] > 0) {
+    // Address
+    textWidth = self.contentView.width - left - SPACING_X;
+    [_addressLabel sizeToFitFixedWidth:textWidth];
+    _addressLabel.left = left;
+    _addressLabel.top = top;  
+    
+    top = _addressLabel.bottom;
+  }
+  
+  // Last Activity
+  textWidth = self.contentView.width - left - SPACING_X;
+  [_lastActivityLabel sizeToFitFixedWidth:textWidth];
+  _lastActivityLabel.left = left;
+  _lastActivityLabel.top = top;  
+  
+  // Row 4
+  top = _lastActivityLabel.bottom;
+  
   // Summary Label
   textWidth = self.contentView.width - left - SPACING_X;
   [_summaryLabel sizeToFitFixedWidth:textWidth];
   _summaryLabel.left = left;
   _summaryLabel.top = top;
   
-  // Row 3
+  // Row 5
   top = _summaryLabel.bottom;
   
   // Activity Label
@@ -130,6 +166,8 @@ static UIImage *_unreadImage = nil;
   _timestampLabel.text = nil;
   _summaryLabel.text = nil;
   _activityLabel.text = nil;
+  _lastActivityLabel.text = nil;
+  _addressLabel.text = nil;
   _unreadImageView.hidden = NO;
   [_moogleImageView unloadImage];
 }
@@ -138,8 +176,22 @@ static UIImage *_unreadImage = nil;
   Place *place = (Place *)object;
   _nameLabel.text = place.name;
   _timestampLabel.text = [place.timestamp humanIntervalSinceNow];
-  _summaryLabel.text = place.friendFirstNames;
+  _summaryLabel.text = [NSString stringWithFormat:@"Friends: %@", place.friendFirstNames];
   _activityLabel.text = ([place.activityCount integerValue] <= 1) ? [NSString stringWithFormat:@"%@ piece of the story", place.activityCount] : [NSString stringWithFormat:@"%@ pieces of the story", place.activityCount];
+  
+  if ([place.kupoType integerValue] == 0) {
+    _lastActivityLabel.text = [NSString stringWithFormat:@"%@ checked in here", place.authorName];
+  } else if ([place.kupoType integerValue] == 1) {
+    if ([place.hasPhoto boolValue]) {
+      _lastActivityLabel.text = [NSString stringWithFormat:@"%@ shared a photo", place.authorName];
+    } else {
+      _lastActivityLabel.text = [NSString stringWithFormat:@"%@ posted a comment", place.authorName];
+    }
+  }
+  
+  if (place.address) {
+    _addressLabel.text = place.address;
+  }
   
 //  _moogleImageView.urlPath = place.pictureUrl;
   _moogleImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", place.authorId];
@@ -161,6 +213,8 @@ static UIImage *_unreadImage = nil;
   RELEASE_SAFELY(_timestampLabel);
   RELEASE_SAFELY(_summaryLabel);
   RELEASE_SAFELY(_activityLabel);
+  RELEASE_SAFELY(_lastActivityLabel);
+  RELEASE_SAFELY(_addressLabel);
   [super dealloc];
 }
 

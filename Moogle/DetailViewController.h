@@ -18,6 +18,7 @@
   MoogleImageView *_photoView;
   UIImageView *_photoFrameView;
   UILabel *_commentLabel;
+  UIImageView *_quoteImageView;
 }
 
 @property (nonatomic, retain) Kupo *kupo;

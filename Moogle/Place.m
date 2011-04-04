@@ -24,5 +24,7 @@
 @dynamic pictureUrl;
 @dynamic friendFullNames;
 @dynamic name;
+@dynamic authorName;
+@dynamic address;
 
 @end

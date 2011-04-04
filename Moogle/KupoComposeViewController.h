@@ -29,6 +29,8 @@ typedef uint32_t MoogleComposeType;
   UIButton *_locationButton;
   
   UIImage *_uploadedImage;
+  NSData *_uploadedVideo;
+  NSString *_uploadedVideoPath;
   
   LINetworkOperation *_op;
   
