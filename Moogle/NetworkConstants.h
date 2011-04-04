@@ -30,7 +30,7 @@
     #define MOOGLE_BASE_URL [NSString stringWithFormat:@"http://moogleme.com/%@", MOOGLE_API_VERSION]
   #endif
 #else
-  #define MOOGLE_BASE_URL [NSString stringWithFormat:@"http://192.168.1.143:3000/%@", MOOGLE_API_VERSION]
+  #define MOOGLE_BASE_URL [NSString stringWithFormat:@"http://moogleme.com/%@", MOOGLE_API_VERSION]
 #endif
 
 #ifdef STAGING
