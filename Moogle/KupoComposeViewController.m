@@ -37,6 +37,16 @@
     [_uploadedVideo release], _uploadedVideo = nil;
   }
   
+  if (_uploadedVideoPath) {
+    [_uploadedVideoPath release], _uploadedVideoPath = nil;
+  }
+  
+  if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+    _shouldSaveToAlbum = YES;
+  } else {
+    _shouldSaveToAlbum = NO;
+  }
+    
   // Handle a still image capture
   if (CFStringCompare((CFStringRef)mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
     originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
@@ -51,7 +61,7 @@
   
   // Handle a movie capture
   if (CFStringCompare((CFStringRef)mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo) {
-    _uploadedVideoPath = [[info objectForKey:UIImagePickerControllerMediaURL] path];
+    _uploadedVideoPath = [[[info objectForKey:UIImagePickerControllerMediaURL] path] retain];
     _uploadedVideo = [[NSData dataWithContentsOfURL:[info objectForKey:UIImagePickerControllerMediaURL]] retain];
     
     // Take a screenshot of the video for a thumbnail
@@ -81,6 +91,7 @@
   self = [super init];
   if (self) {
     _moogleComposeType = MoogleComposeTypeKupo;
+    _shouldSaveToAlbum = NO;
     
     _dataCenter = [[KupoComposeDataCenter alloc] init];
     _dataCenter.delegate = self;
@@ -172,9 +183,9 @@
 
 - (void)send {
   // Write the photo to the user's album
-  if (_uploadedImage) {
+  if (_uploadedImage && !_uploadedVideo && _shouldSaveToAlbum) {
     UIImageWriteToSavedPhotosAlbum(_uploadedImage, nil, nil, nil);
-  } else if (_uploadedVideo) {
+  } else if (_uploadedVideo && _shouldSaveToAlbum) {
     if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(_uploadedVideoPath)) {
       UISaveVideoAtPathToSavedPhotosAlbum(_uploadedVideoPath, nil, nil, nil);
     }
