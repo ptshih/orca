@@ -25,17 +25,7 @@
 
 - (void)showDismissButton {
   // Dismiss Button
-  UIButton *dismiss = [UIButton buttonWithType:UIButtonTypeCustom];
-  dismiss.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-  dismiss.frame = CGRectMake(0, 0, 60, 32);
-  [dismiss setTitle:@"Cancel" forState:UIControlStateNormal];
-  [dismiss setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
-  dismiss.titleLabel.font = [UIFont boldSystemFontOfSize:11.0];
-  UIImage *dismissImage = [[UIImage imageNamed:@"navigationbar_button_standard.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];  
-  [dismiss setBackgroundImage:dismissImage forState:UIControlStateNormal];  
-  [dismiss addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];  
-  UIBarButtonItem *dismissButton = [[UIBarButtonItem alloc] initWithCustomView:dismiss];
-  
+  UIBarButtonItem *dismissButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss)];
   self.navigationItem.leftBarButtonItem = dismissButton;
   [dismissButton release];
 }

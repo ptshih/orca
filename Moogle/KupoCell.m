@@ -110,20 +110,6 @@ static UIImage *_quoteImage = nil;
   // Row 3
   top = _statusLabel.bottom;
   
-  if (_photoImageView.urlPath) {  
-    // Photo Image View
-    _photoImageView.left = left;
-    _photoImageView.top = top + PHOTO_SPACING;
-    _photoImageView.width = PHOTO_SIZE;
-    _photoImageView.height = PHOTO_SIZE;
-    _photoImageView.layer.masksToBounds = YES;
-    _photoImageView.layer.cornerRadius = 4.0;
-    
-    top = _photoImageView.bottom;
-  } else {
-    top = _statusLabel.bottom;
-  }
-  
   // Comment Label
   if ([_commentLabel.text length] > 0) {
     _quoteImageView.hidden = NO;
@@ -136,10 +122,26 @@ static UIImage *_quoteImage = nil;
   textWidth = self.contentView.width - _quoteImageView.width - MARGIN_X - left - SPACING_X;
   [_commentLabel sizeToFitFixedWidth:textWidth];
   _commentLabel.left = left + _quoteImageView.width + MARGIN_X;
-  _commentLabel.top = top + 4;
-
+  _commentLabel.top = top + 2;
+  
+  top = _commentLabel.bottom;
+  
+  if (_photoImageView.urlPath) {  
+    // Photo Image View
+    _photoImageView.left = left;
+    _photoImageView.top = top + PHOTO_SPACING;
+    _photoImageView.width = PHOTO_SIZE;
+    _photoImageView.height = PHOTO_SIZE;
+    _photoImageView.layer.masksToBounds = YES;
+    _photoImageView.layer.cornerRadius = 4.0;
+    
+    top = _photoImageView.bottom;
+  } else {
+    top = _commentLabel.bottom;
+  }
+  
   // Set desired height
-  _desiredHeight = _commentLabel.bottom + MARGIN_Y;
+  _desiredHeight = top + MARGIN_Y;
   
   if (_desiredHeight < _moogleFrameView.bottom) {
     _desiredHeight = _moogleFrameView.bottom + MARGIN_Y;

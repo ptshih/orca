@@ -63,7 +63,7 @@ static UIImage *_unreadImage = nil;
     _lastActivityLabel.lineBreakMode = UILineBreakModeTailTruncation;
     _addressLabel.lineBreakMode = UILineBreakModeTailTruncation;
     
-    _nameLabel.numberOfLines = 2;
+    _nameLabel.numberOfLines = 4;
     _timestampLabel.numberOfLines = 1;
     _summaryLabel.numberOfLines = 8;
     _activityLabel.numberOfLines = 1;
@@ -154,6 +154,9 @@ static UIImage *_unreadImage = nil;
   
   // Set desired height
   _desiredHeight = _activityLabel.bottom + MARGIN_Y;
+  
+//  NSLog(@"desired height: %f", _desiredHeight);
+//  NSLog(@"contentView: %@", self.contentView);
   
   if (_desiredHeight < _moogleFrameView.bottom) {
     _desiredHeight = _moogleFrameView.bottom + MARGIN_Y;

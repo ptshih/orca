@@ -66,7 +66,7 @@ static UIImage *_quoteImage = nil;
   textWidth = _photoView.width - _quoteImageView.width - 5;
   [_commentLabel sizeToFitFixedWidth:textWidth];
   _commentLabel.left = left + _quoteImageView.width + 5;
-  _commentLabel.top = top + 4;
+  _commentLabel.top = top + 2;
 
   
   [self.view addSubview:_quoteImageView];

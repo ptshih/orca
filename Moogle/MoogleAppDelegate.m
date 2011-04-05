@@ -11,7 +11,6 @@
 #import "FBConnect.h"
 #import "LICoreDataStack.h"
 #import "LoginViewController.h"
-#import "LauncherViewController.h"
 #import "PlaceViewController.h"
 #import "LoginDataCenter.h"
 

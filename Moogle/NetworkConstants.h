@@ -30,7 +30,7 @@
     #define MOOGLE_BASE_URL [NSString stringWithFormat:@"http://moogleme.com/%@", MOOGLE_API_VERSION]
   #endif
 #else
-  #define MOOGLE_BASE_URL [NSString stringWithFormat:@"http://172.16.37.225:8000/%@", MOOGLE_API_VERSION]
+  #define MOOGLE_BASE_URL [NSString stringWithFormat:@"http://moogleme.com/%@", MOOGLE_API_VERSION]
 #endif
 
 #define S3_PHOTOS_URL @"http://s3.amazonaws.com/kupo/kupos/photos"

@@ -30,31 +30,13 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  // Add Profile Button
-  UIButton *profile = [UIButton buttonWithType:UIButtonTypeCustom];
-  profile.frame = CGRectMake(0, 0, 60, 32);
-  [profile setTitle:@"Profile" forState:UIControlStateNormal];
-//  [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
-  [profile setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
-  profile.titleLabel.font = [UIFont boldSystemFontOfSize:11.0];
-  UIImage *profileImage = [[UIImage imageNamed:@"navigationbar_button_standard.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];  
-  [profile setBackgroundImage:profileImage forState:UIControlStateNormal];  
-  [profile addTarget:self action:@selector(profile) forControlEvents:UIControlEventTouchUpInside];  
-  UIBarButtonItem *profileButton = [[[UIBarButtonItem alloc] initWithCustomView:profile] autorelease];
-  self.navigationItem.leftBarButtonItem = profileButton;
+  UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"profile_nav_icon.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(profile)];
+  self.navigationItem.leftBarButtonItem = leftButton;
+  [leftButton release];
   
-  // Add Check-In Button
-  UIButton *checkin = [UIButton buttonWithType:UIButtonTypeCustom];
-  checkin.frame = CGRectMake(0, 0, 60, 32);
-  [checkin setTitle:@"Check-In" forState:UIControlStateNormal];
-  //  [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
-  [checkin setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
-  checkin.titleLabel.font = [UIFont boldSystemFontOfSize:11.0];
-  UIImage *checkinImage = [[UIImage imageNamed:@"navigationbar_button_standard.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];  
-  [checkin setBackgroundImage:checkinImage forState:UIControlStateNormal];  
-  [checkin addTarget:self action:@selector(checkin) forControlEvents:UIControlEventTouchUpInside];  
-  UIBarButtonItem *checkinButton = [[[UIBarButtonItem alloc] initWithCustomView:checkin] autorelease];
-  self.navigationItem.rightBarButtonItem = checkinButton;
+  UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"place_nav_icon.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(checkin)];
+  self.navigationItem.rightBarButtonItem = rightButton;
+  [rightButton release];
   
   // Nav Title
   _navTitleLabel.text = @"Moogle";

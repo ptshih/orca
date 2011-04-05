@@ -67,7 +67,7 @@
   [self.sections addObject:@"Places"];
   
   [self.items removeAllObjects];
-  [self.items addObject:_placesDataCenter.response];
+  [self.items addObject:[_placesDataCenter.response valueForKey:@"values"]];
   [self.tableView reloadData];
   [self dataSourceDidLoad];
 }
@@ -122,6 +122,10 @@
 #pragma mark UISearchDisplayDelegate
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
   [self.searchItems removeAllObjects];
+  
+  if ([self.items count] == 0) {
+    return;
+  }
   
   for (NSDictionary *place in [self.items objectAtIndex:0]) {
     NSComparisonResult result = [[place valueForKey:@"place_name"] compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];

@@ -102,8 +102,8 @@ static NSString *_secretString = nil;
     DLog(@"### ERROR IN DATA CENTER, RESPONSE IS NEITHER AN ARRAY NOR A DICTIONARY");
   }
   
-  if (self.response && [self.response valueForKey:@"total"]) {
-    _total = [[self.response valueForKey:@"total"] integerValue];
+  if (self.response && [self.response isKindOfClass:[NSDictionary class]] && [self.response objectForKey:@"total"]) {
+    _total = [[self.response objectForKey:@"total"] integerValue];
   }
   
   if (self.response) {

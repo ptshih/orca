@@ -18,6 +18,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  _navTitleLabel.text = self.kupo.comment;
+  
   NSURL *videoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/original/video.mp4", S3_VIDEOS_URL, self.kupo.id]];
   
   _player = [[MPMoviePlayerController alloc] initWithContentURL:videoUrl];
@@ -37,12 +39,11 @@
 
 - (void)loadStateDidChange:(NSNotification*)notification {
   MPMoviePlayerController *moviePlayer = [notification object];
-  if (moviePlayer.loadState == (MPMovieLoadStatePlayable | MPMovieLoadStatePlaythroughOK)) {
-    if ([_player respondsToSelector:@selector(setFullscreen:animated:)]) {
-      [_player setFullscreen:YES animated:YES];
-    }
+  if ([_player respondsToSelector:@selector(setFullscreen:animated:)]) {
+    [_player setFullscreen:YES animated:YES];
   }
-
+  if (moviePlayer.loadState == (MPMovieLoadStatePlayable | MPMovieLoadStatePlaythroughOK)) {
+  }
 }
 
 - (void)playbackDidFinish:(NSNotification*)notification {

@@ -45,7 +45,7 @@ static UIImage *_emptyImage = nil;
   _navTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 44)];
   _navTitleLabel.textAlignment = UITextAlignmentCenter;
   _navTitleLabel.textColor = FB_COLOR_VERY_LIGHT_BLUE;
-  _navTitleLabel.font = [UIFont boldSystemFontOfSize:14.0];
+  _navTitleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
   _navTitleLabel.numberOfLines = 3;
   _navTitleLabel.shadowColor = [UIColor blackColor];
   _navTitleLabel.shadowOffset = CGSizeMake(0, 1);
@@ -55,12 +55,28 @@ static UIImage *_emptyImage = nil;
   self.navigationItem.titleView = navTitleView;
   [navTitleView release];
   
-//  self.navigationController.navigationBar.tintColor = MOOGLE_BLUE_COLOR;
+  self.navigationController.navigationBar.tintColor = FB_COLOR_DARK_GRAY_BLUE;
+  
 //  self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-logo.png"]] autorelease];
 }
 
 - (void)back {
   [self.navigationController popViewControllerAnimated:YES];
+}
+
+// Optional Implementation
+- (void)addBackButton {
+//  UIButton *back = [UIButton buttonWithType:UIButtonTypeCustom];
+//  back.frame = CGRectMake(0, 0, 60, 32);
+//  [back setTitle:@"Back" forState:UIControlStateNormal];
+//  [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+//  [back setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
+//  back.titleLabel.font = [UIFont boldSystemFontOfSize:11.0];
+//  UIImage *backImage = [[UIImage imageNamed:@"navigationbar_button_back.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];  
+//  [back setBackgroundImage:backImage forState:UIControlStateNormal];  
+//  [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];  
+//  UIBarButtonItem *backButton = [[[UIBarButtonItem alloc] initWithCustomView:back] autorelease];
+//  self.navigationItem.leftBarButtonItem = backButton;
 }
 
 // Subclasses may implement
@@ -149,32 +165,24 @@ static UIImage *_emptyImage = nil;
 
 #pragma mark UINavigationControllerDelegate
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-  DLog(@"nav will show controller: %@", [viewController class]);
-  if ([viewController respondsToSelector:@selector(reloadCardController)]) {
-    [viewController performSelector:@selector(reloadCardController)];
-  }
+//  DLog(@"nav will show controller: %@", [viewController class]);
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-  DLog(@"nav did show controller: %@", [viewController class]);
-
+//  DLog(@"nav did show controller: %@", [viewController class]);
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-  return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+  return YES;
+//  return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 
 - (void)didReceiveMemoryWarning {
-  // Releases the view if it doesn't have a superview.
   [super didReceiveMemoryWarning];
-  
-  // Release any cached data, images, etc. that aren't in use.
 }
 
 - (void)viewDidUnload {
   [super viewDidUnload];
-  // Release any retained subviews of the main view.
-  // e.g. self.myOutlet = nil;
 }
 
 - (void)dealloc {

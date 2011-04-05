@@ -24,5 +24,6 @@
 - (void)reloadCardController;
 - (void)dataSourceDidLoad;
 - (void)setupLoadingAndEmptyViews;
+- (void)addBackButton;
 
 @end

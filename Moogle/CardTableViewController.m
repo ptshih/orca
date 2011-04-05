@@ -103,11 +103,16 @@
 
 - (void)setupLoadMoreView {
   _loadMoreView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+  _loadMoreView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   _loadMoreView.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
   UIButton *loadMoreButton = [[UIButton alloc] initWithFrame:_loadMoreView.frame];
+  loadMoreButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [loadMoreButton setBackgroundImage:[UIImage imageNamed:@"navigationbar_bg.png"] forState:UIControlStateNormal];
   [loadMoreButton addTarget:self action:@selector(loadMore) forControlEvents:UIControlEventTouchUpInside];
   [loadMoreButton setTitle:@"Load More..." forState:UIControlStateNormal];
+  [loadMoreButton.titleLabel setShadowColor:[UIColor blackColor]];
+  [loadMoreButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+  [loadMoreButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0]];
   [_loadMoreView addSubview:loadMoreButton];
   [loadMoreButton release];
   

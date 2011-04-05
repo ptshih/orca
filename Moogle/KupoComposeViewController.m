@@ -108,6 +108,7 @@
   
   if (_moogleComposeType == MoogleComposeTypeKupo) {
     _navTitleLabel.text = @"Write a Comment...";
+    
     // Show the dismiss button
     [self showDismissButton];
   } else {
@@ -115,33 +116,13 @@
   }
   
   // Send Button
-  UIButton *send = [UIButton buttonWithType:UIButtonTypeCustom];
-  send.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-  send.frame = CGRectMake(0, 0, 60, 32);
-  [send setTitle:@"Send" forState:UIControlStateNormal];
-  [send setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
-  send.titleLabel.font = [UIFont boldSystemFontOfSize:11.0];
-  UIImage *sendImage = [[UIImage imageNamed:@"navigationbar_button_standard.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];  
-  [send setBackgroundImage:sendImage forState:UIControlStateNormal];  
-  [send addTarget:self action:@selector(send) forControlEvents:UIControlEventTouchUpInside];  
-  UIBarButtonItem *sendButton = [[UIBarButtonItem alloc] initWithCustomView:send];
-  
+  UIBarButtonItem *sendButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Send", @"Send") style:UIBarButtonItemStyleBordered target:self action:@selector(send)];
   self.navigationItem.rightBarButtonItem = sendButton;
   [sendButton release];
   
   _composeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 244)];
   _composeView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:_composeView];
-  
-//  _photoUpload = [[UIButton alloc] initWithFrame:CGRectMake(5, 7, 30, 30)];
-//  _photoUpload.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
-//  [_photoUpload setBackgroundImage:[UIImage imageNamed:@"photo_upload.png"] forState:UIControlStateNormal];
-//  [self.view addSubview:_photoUpload];
-  
-//  _sendComment = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width - 35, 7, 30, 30)];
-//  _sendComment.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-//  [_sendComment setBackgroundImage:[UIImage imageNamed:@"photo_upload.png"] forState:UIControlStateNormal];
-//  [self.view addSubview:_sendComment];
   
   CGFloat top = 10;
   CGFloat left = 10;
@@ -166,6 +147,7 @@
   left = _photoUpload.right + 10;
 
   _kupoComment = [[MoogleTextView alloc] initWithFrame:CGRectMake(left, top, 220, 30)];
+  _kupoComment.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	_kupoComment.returnKeyType = UIReturnKeyDefault;
 	_kupoComment.font = [UIFont boldSystemFontOfSize:14.0];
 	_kupoComment.delegate = self;
@@ -282,7 +264,7 @@
   
   CGRect keyboardFrame = [UIScreen convertRect:keyboardEndFrame toView:self.view];
   _composeView.height = self.view.bounds.size.height - keyboardFrame.size.height;
-  _kupoComment.height = up ? 180 : 30;
+  _kupoComment.height = up ? self.view.bounds.size.height - keyboardFrame.size.height - 20 : 30;
   _backgroundView.height = _kupoComment.height;
 //  _photoUpload.top = _kupoComment.bottom + 10;
 //  _locationButton.top = _kupoComment.bottom + 10;

@@ -17,7 +17,6 @@
 		250B3188133EBDE70011EEDD /* CardModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B3187133EBDE70011EEDD /* CardModalViewController.m */; };
 		250B318B133EBF0C0011EEDD /* KupoComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B318A133EBF0B0011EEDD /* KupoComposeViewController.m */; };
 		250B31AE133EC4220011EEDD /* MoogleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31AD133EC4220011EEDD /* MoogleView.m */; };
-		250B31DC133FFD3C0011EEDD /* LauncherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31DB133FFD330011EEDD /* LauncherViewController.m */; };
 		250B31DF13411DBD0011EEDD /* textview_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31DD13411DBD0011EEDD /* textview_bg.png */; };
 		250B31E013411DBD0011EEDD /* textview_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31DE13411DBD0011EEDD /* textview_bg@2x.png */; };
 		250B31E3134131FA0011EEDD /* UIScreen+ConvertRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31E2134131FA0011EEDD /* UIScreen+ConvertRect.m */; };
@@ -144,6 +143,10 @@
 		25D00BD3134A9C8D009D4C70 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D00BD1134A9C8D009D4C70 /* Kupo.m */; };
 		25D00BD7134A9DE2009D4C70 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D00BD6134A9DE2009D4C70 /* Place.m */; };
 		25D00BD8134A9DE2009D4C70 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D00BD6134A9DE2009D4C70 /* Place.m */; };
+		25D00BDB134B6C03009D4C70 /* place_nav_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D00BD9134B6C02009D4C70 /* place_nav_icon.png */; };
+		25D00BDC134B6C03009D4C70 /* place_nav_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D00BDA134B6C02009D4C70 /* place_nav_icon@2x.png */; };
+		25D00BDF134B6DE8009D4C70 /* profile_nav_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D00BDD134B6DE6009D4C70 /* profile_nav_icon.png */; };
+		25D00BE0134B6DE8009D4C70 /* profile_nav_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D00BDE134B6DE7009D4C70 /* profile_nav_icon@2x.png */; };
 		25EFD3861341E438000108B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EFD3851341E438000108B8 /* MobileCoreServices.framework */; };
 		25EFD3881341E449000108B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EFD3851341E438000108B8 /* MobileCoreServices.framework */; };
 		25EFD38C13425B2C000108B8 /* photo_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD38A13425B2C000108B8 /* photo_add@2x.png */; };
@@ -259,8 +262,6 @@
 		250B31AC133EC4220011EEDD /* MoogleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleView.h; sourceTree = "<group>"; };
 		250B31AD133EC4220011EEDD /* MoogleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoogleView.m; sourceTree = "<group>"; };
 		250B31AF133EC86A0011EEDD /* KupoComposeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeDelegate.h; sourceTree = "<group>"; };
-		250B31DA133FFD300011EEDD /* LauncherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LauncherViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		250B31DB133FFD330011EEDD /* LauncherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LauncherViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		250B31DD13411DBD0011EEDD /* textview_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = textview_bg.png; sourceTree = "<group>"; };
 		250B31DE13411DBD0011EEDD /* textview_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "textview_bg@2x.png"; sourceTree = "<group>"; };
 		250B31E1134131FA0011EEDD /* UIScreen+ConvertRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+ConvertRect.h"; sourceTree = "<group>"; };
@@ -395,6 +396,10 @@
 		25D00BD1134A9C8D009D4C70 /* Kupo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Kupo.m; sourceTree = "<group>"; };
 		25D00BD5134A9DE2009D4C70 /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Place.h; sourceTree = "<group>"; };
 		25D00BD6134A9DE2009D4C70 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Place.m; sourceTree = "<group>"; };
+		25D00BD9134B6C02009D4C70 /* place_nav_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = place_nav_icon.png; sourceTree = "<group>"; };
+		25D00BDA134B6C02009D4C70 /* place_nav_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "place_nav_icon@2x.png"; sourceTree = "<group>"; };
+		25D00BDD134B6DE6009D4C70 /* profile_nav_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile_nav_icon.png; sourceTree = "<group>"; };
+		25D00BDE134B6DE7009D4C70 /* profile_nav_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile_nav_icon@2x.png"; sourceTree = "<group>"; };
 		25EFD3851341E438000108B8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		25EFD38A13425B2C000108B8 /* photo_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_add@2x.png"; sourceTree = "<group>"; };
 		25EFD38D13425B65000108B8 /* photo_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_add.png; sourceTree = "<group>"; };
@@ -749,6 +754,10 @@
 		25CEF8FE133A000C006F23A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				25D00BDD134B6DE6009D4C70 /* profile_nav_icon.png */,
+				25D00BDE134B6DE7009D4C70 /* profile_nav_icon@2x.png */,
+				25D00BD9134B6C02009D4C70 /* place_nav_icon.png */,
+				25D00BDA134B6C02009D4C70 /* place_nav_icon@2x.png */,
 				259C7B661349EBE500C37AE1 /* quote_mark.png */,
 				259C7B5A1349B80B00C37AE1 /* empty.png */,
 				259C7B5B1349B80B00C37AE1 /* empty@2x.png */,
@@ -950,8 +959,6 @@
 		25FB8BA4133A09A000C130A8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				250B31DA133FFD300011EEDD /* LauncherViewController.h */,
-				250B31DB133FFD330011EEDD /* LauncherViewController.m */,
 				25EFD41D1343F69C000108B8 /* Base */,
 				250B3182133EBD840011EEDD /* Modals */,
 				25FB8BB3133A0D3C00C130A8 /* LoginViewController.h */,
@@ -1160,6 +1167,10 @@
 				259C7B5C1349B80B00C37AE1 /* empty.png in Resources */,
 				259C7B5D1349B80B00C37AE1 /* empty@2x.png in Resources */,
 				259C7B671349EBE600C37AE1 /* quote_mark.png in Resources */,
+				25D00BDB134B6C03009D4C70 /* place_nav_icon.png in Resources */,
+				25D00BDC134B6C03009D4C70 /* place_nav_icon@2x.png in Resources */,
+				25D00BDF134B6DE8009D4C70 /* profile_nav_icon.png in Resources */,
+				25D00BE0134B6DE8009D4C70 /* profile_nav_icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1255,7 +1266,6 @@
 				250B3188133EBDE70011EEDD /* CardModalViewController.m in Sources */,
 				250B318B133EBF0C0011EEDD /* KupoComposeViewController.m in Sources */,
 				250B31AE133EC4220011EEDD /* MoogleView.m in Sources */,
-				250B31DC133FFD3C0011EEDD /* LauncherViewController.m in Sources */,
 				250B31E3134131FA0011EEDD /* UIScreen+ConvertRect.m in Sources */,
 				250B31EB134162A90011EEDD /* MoogleTextView.m in Sources */,
 				250B32031341CB9F0011EEDD /* UILabel+SizeToFitWidth.m in Sources */,

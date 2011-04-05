@@ -30,19 +30,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  // Add Back Bar Button  
-  UIButton *back = [UIButton buttonWithType:UIButtonTypeCustom];
-  back.frame = CGRectMake(0, 0, 60, 32);
-  [back setTitle:@"Back" forState:UIControlStateNormal];
-  [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
-  [back setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
-  back.titleLabel.font = [UIFont boldSystemFontOfSize:11.0];
-  UIImage *backImage = [[UIImage imageNamed:@"navigationbar_button_back.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];  
-  [back setBackgroundImage:backImage forState:UIControlStateNormal];  
-  [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];  
-  UIBarButtonItem *backButton = [[[UIBarButtonItem alloc] initWithCustomView:back] autorelease];
-  self.navigationItem.leftBarButtonItem = backButton;
-  
   // Nav Title
   _navTitleLabel.text = self.place.name;
   
@@ -67,7 +54,7 @@
   
   // Setup the fake image view
   MoogleImageView *profileImage = [[MoogleImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
-  profileImage.urlPath = @"http://profile.ak.fbcdn.net/hprofile-ak-snc4/174453_548430564_3413707_q.jpg";
+  profileImage.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", [[NSUserDefaults standardUserDefaults] objectForKey:@"facebookId"]];
   [profileImage loadImage];
   profileImage.layer.cornerRadius = 5.0;
   profileImage.layer.masksToBounds = YES;

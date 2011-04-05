@@ -70,8 +70,16 @@
     }
   }
   
+  if (UIInterfaceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
+    [heightCell setWidth:320];
+  } else {
+    [heightCell setWidth:480];
+  }
+  
+
+//  NSLog(@"height cell");
   [heightCell fillCellWithObject:object];
-  [heightCell layoutIfNeeded];
+  [heightCell layoutSubviews];
   
   return [(MoogleCell *)heightCell desiredHeight];
 }

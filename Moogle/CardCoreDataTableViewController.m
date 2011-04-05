@@ -90,7 +90,7 @@
   
   NSError *error;
   if ([self.fetchedResultsController performFetch:&error]) {
-    DLog(@"Fetch request succeeded: %@", fetchRequest);
+//    DLog(@"Fetch request succeeded: %@", fetchRequest);
   }
   
   [self updateState];  

@@ -14,6 +14,7 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
+    self.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
   }
   return self;
 }
@@ -21,12 +22,12 @@
 - (void)layoutSubviews {
   [super layoutSubviews];
   
-  CGFloat top = MARGIN_Y;
-  CGFloat left = MARGIN_X;
-  CGFloat textWidth = 0.0;
-  
-  left = _moogleFrameView.right;
-  
+//  CGFloat top = MARGIN_Y;
+//  CGFloat left = MARGIN_X;
+//  CGFloat textWidth = 0.0;
+//  
+//  left = _moogleFrameView.right;
+//  
   if (_desiredHeight < _moogleFrameView.bottom) {
     _desiredHeight = _moogleFrameView.bottom + MARGIN_Y;
   }
