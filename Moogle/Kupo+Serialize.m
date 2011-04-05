@@ -21,7 +21,7 @@
     newKupo.authorId = [dictionary valueForKey:@"author_id"];
     newKupo.authorName = [dictionary valueForKey:@"author_name"];
     newKupo.hasPhoto = [dictionary valueForKey:@"has_photo"];
-    newKupo.hasVideo = [dictionary valueForKey:@"hasVideo"];
+    newKupo.hasVideo = [dictionary valueForKey:@"has_video"];
     newKupo.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     
     // Conditional
