@@ -10,7 +10,9 @@
 
 
 @implementation Kupo
+@dynamic tagged;
 @dynamic hasPhoto;
+@dynamic hasVideo;
 @dynamic id;
 @dynamic authorId;
 @dynamic placeId;
@@ -18,6 +20,5 @@
 @dynamic kupoType;
 @dynamic timestamp;
 @dynamic comment;
-@dynamic tagged;
 
 @end

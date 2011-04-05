@@ -13,7 +13,9 @@
 @interface Kupo : NSManagedObject {
 @private
 }
+@property (nonatomic, retain) NSString * tagged;
 @property (nonatomic, retain) NSNumber * hasPhoto;
+@property (nonatomic, retain) NSNumber * hasVideo;
 @property (nonatomic, retain) NSString * id;
 @property (nonatomic, retain) NSString * authorId;
 @property (nonatomic, retain) NSString * placeId;
@@ -21,6 +23,5 @@
 @property (nonatomic, retain) NSNumber * kupoType;
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSString * comment;
-@property (nonatomic, retain) NSString * tagged;
 
 @end

@@ -11,20 +11,21 @@
 
 @implementation Place
 @dynamic id;
-@dynamic placeId;
-@dynamic hasPhoto;
 @dynamic authorId;
+@dynamic hasPhoto;
+@dynamic placeId;
 @dynamic timestamp;
+@dynamic authorName;
 @dynamic friendFirstNames;
 @dynamic activityCount;
-@dynamic comment;
-@dynamic kupoType;
-@dynamic isRead;
 @dynamic friendIds;
+@dynamic comment;
+@dynamic isRead;
 @dynamic pictureUrl;
+@dynamic address;
+@dynamic kupoType;
 @dynamic friendFullNames;
 @dynamic name;
-@dynamic authorName;
-@dynamic address;
+@dynamic hasVideo;
 
 @end

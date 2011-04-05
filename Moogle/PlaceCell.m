@@ -183,7 +183,11 @@ static UIImage *_unreadImage = nil;
     _lastActivityLabel.text = [NSString stringWithFormat:@"%@ checked in here", place.authorName];
   } else if ([place.kupoType integerValue] == 1) {
     if ([place.hasPhoto boolValue]) {
-      _lastActivityLabel.text = [NSString stringWithFormat:@"%@ shared a photo", place.authorName];
+      if ([place.hasVideo boolValue]) {
+        _lastActivityLabel.text = [NSString stringWithFormat:@"%@ shared a video", place.authorName];
+      } else {
+        _lastActivityLabel.text = [NSString stringWithFormat:@"%@ shared a photo", place.authorName];
+      }
     } else {
       _lastActivityLabel.text = [NSString stringWithFormat:@"%@ posted a comment", place.authorName];
     }

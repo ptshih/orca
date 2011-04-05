@@ -18,6 +18,7 @@
     newPlace.placeId = [dictionary valueForKey:@"place_id"];
     newPlace.name = [dictionary valueForKey:@"name"];
     newPlace.hasPhoto = [dictionary valueForKey:@"has_photo"];
+    newPlace.hasVideo = [dictionary valueForKey:@"has_video"];
     newPlace.authorId = [dictionary valueForKey:@"author_id"];
     newPlace.authorName = [dictionary valueForKey:@"author_name"];
     
@@ -65,6 +66,7 @@
   self.placeId = [dictionary valueForKey:@"place_id"];
   self.name = [dictionary valueForKey:@"name"];
   self.hasPhoto = [dictionary valueForKey:@"has_photo"];
+  self.hasVideo = [dictionary valueForKey:@"has_video"];
   self.authorId = [dictionary valueForKey:@"author_id"];
   self.authorName = [dictionary valueForKey:@"author_name"];
   

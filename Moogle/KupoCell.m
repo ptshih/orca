@@ -179,7 +179,7 @@ static UIImage *_quoteImage = nil;
   
   if ([kupo.hasPhoto boolValue]) {
     _hasPhoto = YES;
-    _photoImageView.urlPath = [NSString stringWithFormat:@"%@/%@/thumb/image.png", S3_BASE_URL, kupo.id];
+    _photoImageView.urlPath = [NSString stringWithFormat:@"%@/%@/thumb/image.png", S3_PHOTOS_URL, kupo.id];
     
     self.selectionStyle = UITableViewCellSelectionStyleBlue;
   } else {

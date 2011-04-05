@@ -14,20 +14,21 @@
 @private
 }
 @property (nonatomic, retain) NSString * id;
-@property (nonatomic, retain) NSString * placeId;
-@property (nonatomic, retain) NSNumber * hasPhoto;
 @property (nonatomic, retain) NSString * authorId;
+@property (nonatomic, retain) NSNumber * hasPhoto;
+@property (nonatomic, retain) NSString * placeId;
 @property (nonatomic, retain) NSDate * timestamp;
+@property (nonatomic, retain) NSString * authorName;
 @property (nonatomic, retain) NSString * friendFirstNames;
 @property (nonatomic, retain) NSNumber * activityCount;
-@property (nonatomic, retain) NSString * comment;
-@property (nonatomic, retain) NSNumber * kupoType;
-@property (nonatomic, retain) NSNumber * isRead;
 @property (nonatomic, retain) NSString * friendIds;
+@property (nonatomic, retain) NSString * comment;
+@property (nonatomic, retain) NSNumber * isRead;
 @property (nonatomic, retain) NSString * pictureUrl;
+@property (nonatomic, retain) NSString * address;
+@property (nonatomic, retain) NSNumber * kupoType;
 @property (nonatomic, retain) NSString * friendFullNames;
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * authorName;
-@property (nonatomic, retain) NSString * address;
+@property (nonatomic, retain) NSNumber * hasVideo;
 
 @end

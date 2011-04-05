@@ -12,6 +12,7 @@
 #import "Place.h"
 #import "KupoComposeViewController.h"
 #import "DetailViewController.h"
+#import "VideoViewController.h"
 
 @implementation KupoViewController
 
@@ -112,10 +113,17 @@
   if ([kupo.hasPhoto boolValue]) {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    DetailViewController *dvc = [[DetailViewController alloc] init];
-    dvc.kupo = kupo;
-    [self.navigationController pushViewController:dvc animated:YES];
-    [dvc release];
+    if ([kupo.hasVideo boolValue]) {
+      VideoViewController *vvc = [[VideoViewController alloc] init];
+      vvc.kupo = kupo;
+      [self.navigationController pushViewController:vvc animated:YES];
+      [vvc release];
+    } else {    
+      DetailViewController *dvc = [[DetailViewController alloc] init];
+      dvc.kupo = kupo;
+      [self.navigationController pushViewController:dvc animated:YES];
+      [dvc release];
+    }
   }
 }
 

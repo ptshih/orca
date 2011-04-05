@@ -30,14 +30,11 @@
     #define MOOGLE_BASE_URL [NSString stringWithFormat:@"http://moogleme.com/%@", MOOGLE_API_VERSION]
   #endif
 #else
-  #define MOOGLE_BASE_URL [NSString stringWithFormat:@"http://moogleme.com/%@", MOOGLE_API_VERSION]
+  #define MOOGLE_BASE_URL [NSString stringWithFormat:@"http://172.16.37.225:8000/%@", MOOGLE_API_VERSION]
 #endif
 
-#ifdef STAGING
-  #define S3_BASE_URL @"http://s3.amazonaws.com/kupo/kupos/photos"
-#else
-  #define S3_BASE_URL @"http://s3.amazonaws.com/kupo/kupos/photos"
-#endif
+#define S3_PHOTOS_URL @"http://s3.amazonaws.com/kupo/kupos/photos"
+#define S3_VIDEOS_URL @"http://s3.amazonaws.com/kupo/kupos/videos"
 
 // Seven Minute Apps
 #define MOOGLE_TERMS_URL @"http://www.sevenminuteapps.com/terms"

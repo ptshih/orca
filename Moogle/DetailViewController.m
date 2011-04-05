@@ -40,7 +40,7 @@ static UIImage *_quoteImage = nil;
   
   // Photo
   _photoView = [[MoogleImageView alloc] initWithFrame:CGRectMake(20, 20, 280, 280)];
-  _photoView.urlPath = [NSString stringWithFormat:@"%@/%@/original/image.png", S3_BASE_URL, _kupo.id];
+  _photoView.urlPath = [NSString stringWithFormat:@"%@/%@/original/image.png", S3_PHOTOS_URL, self.kupo.id];
   [_photoView loadImage];
   
   CGFloat left = _photoView.left;
