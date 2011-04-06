@@ -155,7 +155,6 @@ static UIImage *_quoteImage = nil;
   _timestampLabel.text = nil;
   _statusLabel.text = nil;
   _commentLabel.text = nil;
-  [_moogleImageView unloadImage];
   [_photoImageView unloadImage];
   _quoteImageView.hidden = YES;
 }

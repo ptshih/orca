@@ -33,15 +33,10 @@ static UIImage *_frameImage = nil;
   return self;
 }
 
-//- (void)drawRect:(CGRect)rect {
-//  [super drawRect:rect];
-//  
-//  [self drawContentView:rect];
-//}
-//
-//- (void)drawContentView:(CGRect)r {
-//  [super drawContentView:r];
-//}
+- (void)prepareForReuse {
+  [super prepareForReuse];
+  [_moogleImageView unloadImage];
+}
 
 - (void)loadImage {
   [_moogleImageView loadImage];

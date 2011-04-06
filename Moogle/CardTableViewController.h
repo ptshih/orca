@@ -1,6 +1,6 @@
 //
 //  CardTableViewController.h
-//  Prototype
+//  Moogle
 //
 //  Created by Peter Shih on 2/14/11.
 //  Copyright 2011 LinkedIn. All rights reserved.

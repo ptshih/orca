@@ -13,14 +13,12 @@
 
 @interface MoogleImageView : UIImageView <LINetworkOperationDelegate, MoogleImageViewDelegate> {
   NSString *_urlPath;
-  UIImage *_placeholderImage;
   
   LINetworkOperation *_op;
   id <MoogleImageViewDelegate> _delegate;
 }
 
 @property (nonatomic, copy) NSString *urlPath;
-@property (nonatomic, retain) UIImage *placeholderImage;
 @property (nonatomic, assign) id <MoogleImageViewDelegate> delegate;
 
 - (void)loadImage;

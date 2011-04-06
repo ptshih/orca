@@ -19,6 +19,6 @@
 
 + (void)resetPersistentStore;
 + (void)resetManagedObjectContext;
-
++ (void)initManagedObjectContextInMocThread;
 
 @end
