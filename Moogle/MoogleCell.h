@@ -24,10 +24,13 @@ typedef uint32_t MoogleCellType;
 
 
 @interface MoogleCell : UITableViewCell {
+  UIView *_moogleContentView;
   CGFloat _desiredHeight;
 }
 
 @property (nonatomic, assign) CGFloat desiredHeight;
+
+- (void)drawContentView:(CGRect)r;
 
 + (MoogleCellType)cellType;
 + (CGFloat)rowWidth;

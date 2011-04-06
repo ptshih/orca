@@ -25,189 +25,110 @@ static UIImage *_unreadImage = nil;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
-    _nameLabel = [[UILabel alloc] init];
-    _timestampLabel = [[UILabel alloc] init];
-    _summaryLabel = [[UILabel alloc] init];
-    _activityLabel = [[UILabel alloc] init];
-    _lastActivityLabel = [[UILabel alloc] init];
-    _addressLabel = [[UILabel alloc] init];
-    
-    _nameLabel.backgroundColor = [UIColor clearColor];
-    _timestampLabel.backgroundColor = [UIColor clearColor];
-    _summaryLabel.backgroundColor = [UIColor clearColor];
-    _activityLabel.backgroundColor = [UIColor clearColor];
-    _lastActivityLabel.backgroundColor = [UIColor clearColor];
-    _addressLabel.backgroundColor = [UIColor clearColor];
-    
-    _nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE];
-    _timestampLabel.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE];
-    _summaryLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE];
-    _activityLabel.font = [UIFont fontWithName:@"Futura-Medium" size:CELL_FONT_SIZE];
-    _lastActivityLabel.font = [UIFont fontWithName:@"Futura-Medium" size:CELL_FONT_SIZE];
-    _addressLabel.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:ADDRESS_FONT_SIZE];
-    
-    
-    _timestampLabel.textColor = GRAY_COLOR;
-
-    _nameLabel.textAlignment = UITextAlignmentLeft;
-    _timestampLabel.textAlignment = UITextAlignmentRight;
-    _summaryLabel.textAlignment = UITextAlignmentLeft;
-    _activityLabel.textAlignment = UITextAlignmentLeft;
-    _lastActivityLabel.textAlignment = UITextAlignmentLeft;
-    _addressLabel.textAlignment = UITextAlignmentLeft;
-    
-    _nameLabel.lineBreakMode = UILineBreakModeWordWrap;
-    _timestampLabel.lineBreakMode = UILineBreakModeTailTruncation;
-    _summaryLabel.lineBreakMode = UILineBreakModeWordWrap;
-    _activityLabel.lineBreakMode = UILineBreakModeTailTruncation;
-    _lastActivityLabel.lineBreakMode = UILineBreakModeTailTruncation;
-    _addressLabel.lineBreakMode = UILineBreakModeTailTruncation;
-    
-    _nameLabel.numberOfLines = 4;
-    _timestampLabel.numberOfLines = 1;
-    _summaryLabel.numberOfLines = 8;
-    _activityLabel.numberOfLines = 1;
-    _lastActivityLabel.numberOfLines = 1;
-    _addressLabel.numberOfLines = 1;
-    
-    _unreadImageView = [[UIImageView alloc] initWithImage:_unreadImage];
-    
-    [self.contentView addSubview:_unreadImageView];
-    [self.contentView addSubview:_nameLabel];
-    [self.contentView addSubview:_timestampLabel];
-    [self.contentView addSubview:_summaryLabel];
-    [self.contentView addSubview:_activityLabel];
-    [self.contentView addSubview:_lastActivityLabel];
-    [self.contentView addSubview:_addressLabel];
   }
   return self;
 }
-    
-- (void)layoutSubviews {
-  [super layoutSubviews];
+
+// Optimized cell rendering
+- (void)drawRect:(CGRect)rect {
+  [super drawRect:rect];
+
+  [self drawContentView:rect];
+}
+
+- (void)drawContentView:(CGRect)r {
+  [super drawContentView:r];
   
   CGFloat top = MARGIN_Y;
-  CGFloat left = MARGIN_X;
-  CGFloat textWidth = 0.0;
-
-  // Unread Indicator
-  _unreadImageView.left = left;
-  _unreadImageView.top = floor(self.height / 2 - _unreadImageView.height / 2);
+  CGFloat left =  MARGIN_X;
+  CGFloat width = self.bounds.size.width - left - MARGIN_X;  
+  CGRect contentRect = CGRectMake(left, top, width, INT_MAX);
+  CGSize drawnSize = CGSizeZero;
   
-  _moogleFrameView.left += _unreadImageView.right;
-  _moogleImageView.left = _moogleFrameView.left + SPACING_X;
-  _imageLoadingIndicator.left += _unreadImageView.right;
+  // Image View
   
-  left = _moogleFrameView.right;
-  
-  // Row 1
-  
-  // Timestamp Label
-  textWidth = self.contentView.width - left - SPACING_X;
-  [_timestampLabel sizeToFitFixedWidth:textWidth];
-  _timestampLabel.left = self.contentView.width - _timestampLabel.width - SPACING_X;
-  _timestampLabel.top = top + 1;
-  
-  // Name Label
-  textWidth = self.contentView.width - left - _timestampLabel.width - SPACING_X * 2;
-  [_nameLabel sizeToFitFixedWidth:textWidth];
-  _nameLabel.left = left;
-  _nameLabel.top = top;
-
-  // Row 2
-  top = _nameLabel.bottom;
-  
-  // Row 3
-  if ([_addressLabel.text length] > 0) {
-    // Address
-    textWidth = self.contentView.width - left - SPACING_X;
-    [_addressLabel sizeToFitFixedWidth:textWidth];
-    _addressLabel.left = left;
-    _addressLabel.top = top;  
-    
-    top = _addressLabel.bottom;
+  // Unread indicator
+  if (![_place.isRead boolValue]) {
+    [_unreadImage drawAtPoint:CGPointMake(left, floor(self.bounds.size.height / 2) - floor(_unreadImage.size.height / 2))];
   }
   
+  _moogleFrameView.left = left + _unreadImage.size.width;
+  _moogleImageView.left = left + _unreadImage.size.width + 10;
+  
+  left = _moogleFrameView.right;
+  contentRect.origin.x = left;
+  
+  [[UIColor blackColor] set];
+  
+  drawnSize = [_place.name drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
+  
+  top += drawnSize.height;
+  contentRect.origin.y = top;
+  
+  drawnSize = [_place.address drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:ADDRESS_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
+  
+  top += drawnSize.height;
+  contentRect.origin.y = top;
+  
   // Last Activity
-  textWidth = self.contentView.width - left - SPACING_X;
-  [_lastActivityLabel sizeToFitFixedWidth:textWidth];
-  _lastActivityLabel.left = left;
-  _lastActivityLabel.top = top;  
+  NSString *lastActivity = nil;
+  if ([_place.kupoType integerValue] == 0) {
+    lastActivity = [NSString stringWithFormat:@"%@ checked in here", _place.authorName];
+  } else if ([_place.kupoType integerValue] == 1) {
+    if ([_place.hasPhoto boolValue]) {
+      if ([_place.hasVideo boolValue]) {
+        lastActivity = [NSString stringWithFormat:@"%@ shared a video", _place.authorName];
+      } else {
+        lastActivity = [NSString stringWithFormat:@"%@ shared a photo", _place.authorName];
+      }
+    } else {
+      lastActivity = [NSString stringWithFormat:@"%@ posted a comment", _place.authorName];
+    }
+  }
   
-  // Row 4
-  top = _lastActivityLabel.bottom;
+  drawnSize = [lastActivity drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
   
-  // Summary Label
-  textWidth = self.contentView.width - left - SPACING_X;
-  [_summaryLabel sizeToFitFixedWidth:textWidth];
-  _summaryLabel.left = left;
-  _summaryLabel.top = top;
+  top += drawnSize.height;
+  contentRect.origin.y = top;
   
-  // Row 5
-  top = _summaryLabel.bottom;
+  // Summary
+  drawnSize = [[NSString stringWithFormat:@"Friends: %@", _place.friendFirstNames] drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
   
-  // Activity Label
-  textWidth = self.contentView.width - left - SPACING_X;
-  [_activityLabel sizeToFitFixedWidth:textWidth];
-  _activityLabel.left = left;
-  _activityLabel.top = top;
+  top += drawnSize.height;
+  contentRect.origin.y = top;
   
-  // Set desired height
-  _desiredHeight = _activityLabel.bottom + MARGIN_Y;
+  // Activity Count
+  drawnSize = [[NSString stringWithFormat:@"%@ Kupos", _place.friendFirstNames] drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
   
-//  NSLog(@"desired height: %f", _desiredHeight);
-//  NSLog(@"contentView: %@", self.contentView);
+  top += drawnSize.height;
+  contentRect.origin.y = top;
+  
+  _desiredHeight = top + MARGIN_Y;
   
   if (_desiredHeight < _moogleFrameView.bottom) {
     _desiredHeight = _moogleFrameView.bottom + MARGIN_Y;
   }
+  
+  NSLog(@"desired height: %f", _desiredHeight);
+}
+    
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
 }
 
 - (void)prepareForReuse {
   [super prepareForReuse];
-  _nameLabel.text = nil;
-  _timestampLabel.text = nil;
-  _summaryLabel.text = nil;
-  _activityLabel.text = nil;
-  _lastActivityLabel.text = nil;
-  _addressLabel.text = nil;
-  _unreadImageView.hidden = NO;
   [_moogleImageView unloadImage];
 }
 
 - (void)fillCellWithObject:(id)object {
   Place *place = (Place *)object;
-  _nameLabel.text = place.name;
-  _timestampLabel.text = [place.timestamp humanIntervalSinceNow];
-  _summaryLabel.text = [NSString stringWithFormat:@"Friends: %@", place.friendFirstNames];
-  _activityLabel.text = ([place.activityCount integerValue] <= 1) ? [NSString stringWithFormat:@"%@ piece of the story", place.activityCount] : [NSString stringWithFormat:@"%@ pieces of the story", place.activityCount];
-  
-  if ([place.kupoType integerValue] == 0) {
-    _lastActivityLabel.text = [NSString stringWithFormat:@"%@ checked in here", place.authorName];
-  } else if ([place.kupoType integerValue] == 1) {
-    if ([place.hasPhoto boolValue]) {
-      if ([place.hasVideo boolValue]) {
-        _lastActivityLabel.text = [NSString stringWithFormat:@"%@ shared a video", place.authorName];
-      } else {
-        _lastActivityLabel.text = [NSString stringWithFormat:@"%@ shared a photo", place.authorName];
-      }
-    } else {
-      _lastActivityLabel.text = [NSString stringWithFormat:@"%@ posted a comment", place.authorName];
-    }
-  }
-  
-  if (place.address) {
-    _addressLabel.text = place.address;
-  }
+  _place = [place retain];
   
 //  _moogleImageView.urlPath = place.pictureUrl;
   _moogleImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", place.authorId];
   
-  if ([place.isRead boolValue]) {
-    _unreadImageView.hidden = YES;
-  } else {
-    _unreadImageView.hidden = NO;
-  }
 }
 
 + (MoogleCellType)cellType {
@@ -215,13 +136,7 @@ static UIImage *_unreadImage = nil;
 }
 
 - (void)dealloc {
-  RELEASE_SAFELY(_unreadImageView);
-  RELEASE_SAFELY(_nameLabel);
-  RELEASE_SAFELY(_timestampLabel);
-  RELEASE_SAFELY(_summaryLabel);
-  RELEASE_SAFELY(_activityLabel);
-  RELEASE_SAFELY(_lastActivityLabel);
-  RELEASE_SAFELY(_addressLabel);
+  RELEASE_SAFELY(_place);
   [super dealloc];
 }
 

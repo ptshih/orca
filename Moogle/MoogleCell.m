@@ -8,6 +8,17 @@
 
 #import "MoogleCell.h"
 
+@interface MoogleCellView : UIView
+@end
+
+@implementation MoogleCellView
+
+- (void)drawRect:(CGRect)r {
+	[(MoogleCell *)[self superview] drawContentView:r];
+}
+
+@end
+
 
 @implementation MoogleCell
 
@@ -19,19 +30,37 @@
     if ([[self class] cellType] == MoogleCellTypePlain) {
       self.backgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"table-cell-bg.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:30]] autorelease];
       self.selectedBackgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"table-cell-bg-selected.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:30]] autorelease];
+      
+      _moogleContentView = [[MoogleCellView alloc] initWithFrame:CGRectZero];
+      _moogleContentView.opaque = NO;
+      [self addSubview:_moogleContentView];
+      [_moogleContentView release];
     }
     _desiredHeight = 0.0;
   }
   return self;
 }
 
-- (void)prepareForReuse {
-  [super prepareForReuse];
-  _desiredHeight = 0.0;
+- (void)drawRect:(CGRect)rect {
+  [super drawRect:rect];
+  [self drawContentView:rect];
 }
 
-- (void)layoutSubviews {
-  [super layoutSubviews];
+
+- (void)drawContentView:(CGRect)r {
+  // subclass should implement
+}
+
+- (void)setFrame:(CGRect)f {
+	[super setFrame:f];
+	CGRect b = [self bounds];
+	b.size.height -= 1; // leave room for the seperator line
+	[_moogleContentView setFrame:b];
+}
+
+- (void)setNeedsDisplay {
+	[super setNeedsDisplay];
+	[_moogleContentView setNeedsDisplay];
 }
 
 + (MoogleCellType)cellType {
@@ -77,10 +106,8 @@
   }
   
 
-//  NSLog(@"height cell");
   [heightCell fillCellWithObject:object];
-  [heightCell layoutSubviews];
-  
+  NSLog(@"height cell: %f", [(MoogleCell *)heightCell desiredHeight]);  
   return [(MoogleCell *)heightCell desiredHeight];
 }
 
@@ -90,6 +117,11 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
   [super setSelected:selected animated:animated];
+}
+
+- (void)setHighlighted:(BOOL)lit {
+	// If highlighted state changes, need to redisplay.
+  [self setNeedsDisplay];
 }
 
 - (void)dealloc {

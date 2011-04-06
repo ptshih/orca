@@ -11,13 +11,7 @@
 #import "Place.h"
 
 @interface PlaceCell : MoogleImageCell {
-  UIImageView *_unreadImageView;
-  UILabel *_nameLabel;
-  UILabel *_timestampLabel;
-  UILabel *_summaryLabel;
-  UILabel *_activityLabel;
-  UILabel *_lastActivityLabel;
-  UILabel *_addressLabel;
+  Place *_place;
 }
 
 @end
