@@ -45,7 +45,6 @@
 
 - (void)updateState {
   [super updateState];
-  [_tableView reloadData];
 }
 
 #pragma mark Data Source
@@ -102,21 +101,51 @@
 }
 
 #pragma mark NSFetchedresultsControllerDelegate
-//- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-//  if (self.searchDisplayController.active) {
-//    [self.searchDisplayController.searchResultsTableView beginUpdates];
-//  } else {
-//    [self.tableView beginUpdates];
-//  }
-//}
-//
-//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-//  if (self.searchDisplayController.active) {
-//    [self.searchDisplayController.searchResultsTableView endUpdates];
-//  } else {
-//    [self.tableView endUpdates];
-//  }  
-//}
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+  if (self.searchDisplayController.active) {
+    [self.searchDisplayController.searchResultsTableView beginUpdates];
+  } else {
+    [self.tableView beginUpdates];
+  }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+  UITableView *tableView = nil;
+  if (self.searchDisplayController.active) {
+    tableView = self.searchDisplayController.searchResultsTableView;
+  } else {
+    tableView = self.tableView;
+  }
+  
+  switch(type) {
+    case NSFetchedResultsChangeInsert:
+      [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+      break;
+      
+    case NSFetchedResultsChangeDelete:
+      [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+      break;
+      
+    case NSFetchedResultsChangeUpdate: {
+      [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }      
+      break;
+    case NSFetchedResultsChangeMove:
+      [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                       withRowAnimation:UITableViewRowAnimationFade];
+      [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                       withRowAnimation:UITableViewRowAnimationFade];
+      break;
+  }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+  if (self.searchDisplayController.active) {
+    [self.searchDisplayController.searchResultsTableView endUpdates];
+  } else {
+    [self.tableView endUpdates];
+  }  
+}
 
 #pragma mark UISearchDisplayDelegate
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
