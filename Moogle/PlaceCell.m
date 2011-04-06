@@ -172,7 +172,6 @@ static UIImage *_unreadImage = nil;
   _lastActivityLabel.text = nil;
   _addressLabel.text = nil;
   _unreadImageView.hidden = NO;
-  [_moogleImageView unloadImage];
 }
 
 - (void)fillCellWithObject:(id)object {

@@ -11,11 +11,16 @@
 #import "LINetworkOperation.h"
 #import "LIImageCache.h"
 
+static UIImage *_placeholderImage = nil;
+
 @implementation MoogleImageView
 
 @synthesize urlPath = _urlPath;
-@synthesize placeholderImage = _placeholderImage;
 @synthesize delegate = _delegate;
+
++ (void)initialize {
+  _placeholderImage = nil;
+}
 
 // Override Setter
 //- (void)setUrlPath:(NSString *)urlPath {
@@ -49,7 +54,7 @@
 }
 
 - (void)unloadImage {
-  self.image = self.placeholderImage;
+  self.image = _placeholderImage;
   self.urlPath = nil;
 }
 
@@ -72,14 +77,13 @@
 }
 
 - (void)networkOperationDidFail:(LINetworkOperation *)operation {
-  self.image = self.placeholderImage;
+  self.image = _placeholderImage;
 }
 
 - (void)dealloc {
   if (_op) [_op clearDelegatesAndCancel];
   RELEASE_SAFELY(_op);
   RELEASE_SAFELY(_urlPath);
-  RELEASE_SAFELY(_placeholderImage);
   
   [super dealloc];
 }

@@ -36,6 +36,7 @@ static UIImage *_moogleFrame = nil;
 
 - (void)prepareForReuse {
   [super prepareForReuse];
+  [_moogleImageView unloadImage];
 }
 
 - (void)layoutSubviews {
