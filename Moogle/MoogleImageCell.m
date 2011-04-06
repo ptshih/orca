@@ -53,6 +53,7 @@ static UIImage *_frameImage = nil;
 
 - (void)dealloc {
   RELEASE_SAFELY(_moogleImageView);
+  RELEASE_SAFELY(_moogleFrameView);
   [super dealloc];
 }
 

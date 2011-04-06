@@ -54,6 +54,7 @@ static UIImage *_placeholderImage = nil;
 }
 
 - (void)unloadImage {
+  if (_op) [_op clearDelegatesAndCancel];
   self.image = _placeholderImage;
   self.urlPath = nil;
 }

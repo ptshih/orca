@@ -89,7 +89,7 @@
   
   NSError *error;
   if ([self.fetchedResultsController performFetch:&error]) {
-//    DLog(@"Fetch request succeeded: %@", fetchRequest);
+    DLog(@"Fetch request succeeded: %@", fetchRequest);
   }
   
   [self updateState];  
@@ -164,7 +164,7 @@
   [self executeFetchWithPredicate:predicate];
 }
 
-- (void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView {
+- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView {
   [self executeFetchWithPredicate:nil];
 }
 
