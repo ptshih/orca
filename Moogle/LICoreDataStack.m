@@ -12,6 +12,8 @@ static NSPersistentStoreCoordinator *_persistentStoreCoordinator = nil;
 static NSManagedObjectModel *_managedObjectModel = nil;
 static NSManagedObjectContext *_managedObjectContext = nil;
 
+static NSThread *_mocThread = nil;
+
 @interface LICoreDataStack (Private)
 
 + (void)resetStoreState;
@@ -20,6 +22,24 @@ static NSManagedObjectContext *_managedObjectContext = nil;
 @end
 
 @implementation LICoreDataStack
+
++ (void)initialize {
+  if (self == [LICoreDataStack class]) {
+    // Allocs for class (statics)
+    _mocThread = [[NSThread alloc] initWithTarget:[self class] selector:@selector(cdThreadMain) object:nil];
+    [_mocThread start];
+  }
+}
+
+#pragma mark -
+#pragma mark Thread
++ (void)cdThreadMain {
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  //  NSLog(@"op thread main started on thread: %@", [NSThread currentThread]);
+  [[NSRunLoop currentRunLoop] addPort:[NSMachPort port] forMode:NSDefaultRunLoopMode];
+  [[NSRunLoop currentRunLoop] run];
+  [pool release];
+}
 
 #pragma mark Initialization Methods
 + (void)resetPersistentStore {
@@ -64,12 +84,17 @@ static NSManagedObjectContext *_managedObjectContext = nil;
     return _managedObjectContext;
   }
   
+  [[self class] performSelector:@selector(initManagedObjectContextInMocThread) onThread:_mocThread withObject:nil waitUntilDone:YES];
+
+  return _managedObjectContext;
+}
+
++ (void)initManagedObjectContextInMocThread {
   NSPersistentStoreCoordinator *coordinator = [[self class] persistentStoreCoordinator];
   if (coordinator != nil) {
     _managedObjectContext = [[NSManagedObjectContext alloc] init];
     [_managedObjectContext setPersistentStoreCoordinator:coordinator];
   }
-  return _managedObjectContext;
 }
 
 + (NSManagedObjectModel *)managedObjectModel {
