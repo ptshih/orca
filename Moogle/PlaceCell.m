@@ -41,7 +41,7 @@ static UIImage *_unreadImage = nil;
   
   CGFloat top = MARGIN_Y;
   CGFloat left =  MARGIN_X;
-  CGFloat width = self.bounds.size.width - left - MARGIN_X;  
+  CGFloat width = self.bounds.size.width - left - MARGIN_X;
   CGRect contentRect = CGRectMake(left, top, width, INT_MAX);
   CGSize drawnSize = CGSizeZero;
   
@@ -120,6 +120,25 @@ static UIImage *_unreadImage = nil;
 - (void)prepareForReuse {
   [super prepareForReuse];
   [_moogleImageView unloadImage];
+}
+
+#pragma mark -
+#pragma mark Fill and Height
++ (CGFloat)rowHeightForObject:(id)object {
+  static UILabel *dummy = nil;
+  if (!dummy) dummy = [[UILabel alloc] init];
+  
+  Place *place = (Place *)object;
+  
+  CGFloat top = MARGIN_Y;
+  CGFloat left = MARGIN_X + _unreadImage.size.width + 60; // image + unread dot
+  CGFloat width = [UIScreen mainScreen].bounds.size.width - left - MARGIN_X;
+  
+  // Row 1
+  dummy.text = place.name;
+  [dummy sizeThatFits:<#(CGSize)#>
+  
+  return 0.0;
 }
 
 - (void)fillCellWithObject:(id)object {

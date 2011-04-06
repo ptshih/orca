@@ -87,7 +87,6 @@
 #pragma mark -
 #pragma mark TableView
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  return 60;
   Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   return [PlaceCell rowHeightForObject:place];

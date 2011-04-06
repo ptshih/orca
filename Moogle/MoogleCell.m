@@ -87,28 +87,8 @@
 
 // This is a class method because it is called before the cell has finished its layout
 + (CGFloat)rowHeightForObject:(id)object {
-  static id heightCell = nil;
-  if (!heightCell) {
-    heightCell = [[[self class] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithFormat:@"%@_HeightCell", [self class]]];
-  } else {
-    if ([heightCell isMemberOfClass:[self class]]) {
-      [heightCell prepareForReuse];
-    } else {
-      [heightCell release], heightCell = nil;
-      heightCell = [[[self class] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithFormat:@"%@_HeightCell", [self class]]];
-    }
-  }
-  
-  if (UIInterfaceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
-    [heightCell setWidth:320];
-  } else {
-    [heightCell setWidth:480];
-  }
-  
-
-  [heightCell fillCellWithObject:object];
-  NSLog(@"height cell: %f", [(MoogleCell *)heightCell desiredHeight]);  
-  return [(MoogleCell *)heightCell desiredHeight];
+  // subclass must override
+  return 0.0;
 }
 
 - (void)fillCellWithObject:(id)object {
