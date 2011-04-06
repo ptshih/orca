@@ -11,13 +11,9 @@
 #import "Kupo.h"
 
 @interface KupoCell : MoogleImageCell {
-  UILabel *_nameLabel;
-  UILabel *_timestampLabel;
-  UILabel *_statusLabel;
-  UILabel *_commentLabel; // optional
+  Kupo *_kupo;
   MoogleImageView *_photoImageView; // optional
   BOOL _hasPhoto;
-  UIImageView *_quoteImageView;
 }
 
 - (void)loadPhoto;

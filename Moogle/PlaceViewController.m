@@ -127,7 +127,6 @@
   
   [cell fillCellWithObject:place];
   [cell loadImage];
-  [cell setNeedsDisplay];
   
   return cell;
 }

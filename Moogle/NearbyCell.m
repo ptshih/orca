@@ -21,20 +21,15 @@
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  
-//  CGFloat top = MARGIN_Y;
-//  CGFloat left = MARGIN_X;
-//  CGFloat textWidth = 0.0;
-//  
-//  left = _moogleFrameView.right;
-//  
-  if (_desiredHeight < _moogleFrameView.bottom) {
-    _desiredHeight = _moogleFrameView.bottom + MARGIN_Y;
-  }
+  self.textLabel.left = _moogleFrameView.right;
 }
 
 - (void)prepareForReuse {
   [super prepareForReuse];
+}
+
++ (CGFloat)rowHeightForObject:(id)object {
+  return 60.0;
 }
 
 - (void)fillCellWithObject:(id)object {
