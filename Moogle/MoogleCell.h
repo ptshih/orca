@@ -11,8 +11,6 @@
 #import "Constants.h"
 #import "NetworkConstants.h"
 
-#define SPACING_X 10.0
-#define SPACING_Y 10.0
 #define MARGIN_X 5.0
 #define MARGIN_Y 5.0
 

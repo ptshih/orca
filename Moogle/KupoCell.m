@@ -29,7 +29,7 @@ static UIImage *_quoteImage = nil;
     _hasPhoto = NO;
     
     _photoImageView = [[MoogleImageView alloc] init];
-    [self.contentView addSubview:_photoImageView];
+    [self addSubview:_photoImageView];
   }
   return self;
 }
@@ -47,19 +47,19 @@ static UIImage *_quoteImage = nil;
   CGFloat top = MARGIN_Y;
   CGFloat left =  MARGIN_X;
   CGFloat width = self.bounds.size.width - left - MARGIN_X;
-  CGRect contentRect = CGRectMake(left, top, width, r.size.height);
+  CGRect contentRect = CGRectMake(left, top, width, INT_MAX);
   CGSize drawnSize = CGSizeZero;
   
   left = _moogleFrameView.right;
   width = self.bounds.size.width - left - MARGIN_X;
-  contentRect = CGRectMake(left, top, width, r.size.height);
+  contentRect = CGRectMake(left, top, width, INT_MAX);
   
   [[UIColor blackColor] set];
   
   if ([[_kupo.timestamp humanIntervalSinceNow] length] > 0) {
     drawnSize = [[_kupo.timestamp humanIntervalSinceNow] drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentRight];
     
-    contentRect = CGRectMake(left, top, width - drawnSize.width - MARGIN_X, r.size.height);
+    contentRect = CGRectMake(left, top, width - drawnSize.width - MARGIN_X, INT_MAX);
   }
   
   if ([_kupo.authorName length] > 0) {
@@ -69,7 +69,7 @@ static UIImage *_quoteImage = nil;
     contentRect.origin.y = top;
   }
   
-  contentRect = CGRectMake(left, top, width, r.size.height);
+  contentRect = CGRectMake(left, top, width, INT_MAX);
   
   NSString *status = nil;
   if ([_kupo.kupoType integerValue] == 0) {
@@ -94,14 +94,17 @@ static UIImage *_quoteImage = nil;
     contentRect.origin.y = top;
   }
   
-//  if (_hasPhoto) {
-//    _photoImageView.left = left;
-//    _photoImageView.top = top + PHOTO_SPACING;
-//    _photoImageView.width = PHOTO_SIZE;
-//    _photoImageView.height = PHOTO_SIZE;
-//    _photoImageView.layer.masksToBounds = YES;
-//    _photoImageView.layer.cornerRadius = 4.0;
-//  }
+  if (_hasPhoto) {
+    [self addSubview:_photoImageView];
+    _photoImageView.left = left;
+    _photoImageView.top = top + PHOTO_SPACING;
+    _photoImageView.width = PHOTO_SIZE;
+    _photoImageView.height = PHOTO_SIZE;
+    _photoImageView.layer.masksToBounds = YES;
+    _photoImageView.layer.cornerRadius = 10.0;
+  } else {
+    [_photoImageView removeFromSuperview];
+  }
 }
 
 - (void)layoutSubviews {
@@ -121,24 +124,24 @@ static UIImage *_quoteImage = nil;
   Kupo *kupo = (Kupo *)object;
   
   CGFloat top = MARGIN_Y;
-  CGFloat left = MARGIN_X + 60; // image + unread dot
+  CGFloat left = MARGIN_X + 60; // image
   CGFloat width = [[self class] rowWidth] - left - MARGIN_X;
   CGSize constrainedSize = CGSizeZero;
   CGSize size = CGSizeZero;
   
   CGFloat desiredHeight = top;
   
-  constrainedSize = CGSizeMake(width, 300);
+  constrainedSize = CGSizeMake(width, INT_MAX);
   
   size = [[kupo.timestamp humanIntervalSinceNow] sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
   
-  constrainedSize = CGSizeMake(width - size.width - MARGIN_X, 300);
+  constrainedSize = CGSizeMake(width - size.width - MARGIN_X, INT_MAX);
   
   size = [kupo.authorName sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
   
   desiredHeight += size.height;
   
-  constrainedSize = CGSizeMake(width, 300);
+  constrainedSize = CGSizeMake(width, INT_MAX);
   
   NSString *status = nil;
   if ([kupo.kupoType integerValue] == 0) {
@@ -149,13 +152,17 @@ static UIImage *_quoteImage = nil;
     }
   }
   
-  size = [status sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
+  if (status && [status length] > 0) {
+    size = [status sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
+    
+    desiredHeight += size.height;
+  }
   
-  desiredHeight += size.height;
-  
-  size = [kupo.comment sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
-  
-  desiredHeight += size.height;
+  if ([kupo.comment length] > 0) {
+    size = [kupo.comment sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:COMMENT_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
+    
+    desiredHeight += size.height;
+  }
   
   if ([kupo.hasPhoto boolValue]) {
     desiredHeight += 110.0;
@@ -163,7 +170,7 @@ static UIImage *_quoteImage = nil;
   
   desiredHeight += MARGIN_Y;
   
-  if (desiredHeight < MARGIN_Y) {
+  if (desiredHeight < 60 + MARGIN_Y) {
     desiredHeight = 60 + MARGIN_Y;
   }
   
@@ -181,6 +188,7 @@ static UIImage *_quoteImage = nil;
     _photoImageView.urlPath = [NSString stringWithFormat:@"%@/%@/thumb/image.png", S3_PHOTOS_URL, kupo.id];
     self.selectionStyle = UITableViewCellSelectionStyleBlue;
   } else {
+    _hasPhoto = NO;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
   }
 }

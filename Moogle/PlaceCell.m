@@ -40,9 +40,9 @@ static UIImage *_unreadImage = nil;
   [super drawContentView:r];
   
   CGFloat top = MARGIN_Y;
-  CGFloat left =  MARGIN_X;
-  CGFloat width = self.bounds.size.width - left - MARGIN_X;
-  CGRect contentRect = CGRectMake(left, top, width, r.size.height);
+  CGFloat left = MARGIN_X;
+  CGFloat width = 0;
+  CGRect contentRect = CGRectMake(left, top, width, INT_MAX);
   CGSize drawnSize = CGSizeZero;
   
   // Image View
@@ -57,14 +57,14 @@ static UIImage *_unreadImage = nil;
   
   left = _moogleFrameView.right;
   width = self.bounds.size.width - left - MARGIN_X;
-  contentRect = CGRectMake(left, top, width, r.size.height);
+  contentRect = CGRectMake(left, top, width, INT_MAX);
   
   [[UIColor blackColor] set];
   
   if ([[_place.timestamp humanIntervalSinceNow] length] > 0) {
     drawnSize = [[_place.timestamp humanIntervalSinceNow] drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentRight];
     
-    contentRect = CGRectMake(left, top, width - drawnSize.width - MARGIN_X, r.size.height);
+    contentRect = CGRectMake(left, top, width - drawnSize.width - MARGIN_X, INT_MAX);
   }
   
   if ([_place.name length] > 0) {
@@ -74,7 +74,7 @@ static UIImage *_unreadImage = nil;
     contentRect.origin.y = top;
   }
   
-  contentRect = CGRectMake(left, top, width, r.size.height);
+  contentRect = CGRectMake(left, top, width, INT_MAX);
   
   if ([_place.address length] > 0) {
     drawnSize = [_place.address drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:ADDRESS_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
@@ -99,7 +99,7 @@ static UIImage *_unreadImage = nil;
     }
   }
   
-  if ([lastActivity length] > 0) {
+  if (lastActivity && [lastActivity length] > 0) {
     drawnSize = [lastActivity drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
     
     top += drawnSize.height;
@@ -148,21 +148,23 @@ static UIImage *_unreadImage = nil;
   
   CGFloat desiredHeight = top;
 
-  constrainedSize = CGSizeMake(width, 300);
+  constrainedSize = CGSizeMake(width, INT_MAX);
   
   size = [[place.timestamp humanIntervalSinceNow] sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
   
-  constrainedSize = CGSizeMake(width - size.width - MARGIN_X, 300);
+  constrainedSize = CGSizeMake(width - size.width - MARGIN_X, INT_MAX);
   
   size = [place.name sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
   
   desiredHeight += size.height;
   
-  constrainedSize = CGSizeMake(width, 300);
+  constrainedSize = CGSizeMake(width, INT_MAX);
   
-  size = [place.address sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:ADDRESS_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
-  
-  desiredHeight += size.height;
+  if ([place.address length] > 0) {
+    size = [place.address sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:ADDRESS_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
+    
+    desiredHeight += size.height;
+  }
   
   // Last Activity
   NSString *lastActivity = nil;
@@ -180,9 +182,11 @@ static UIImage *_unreadImage = nil;
     }
   }
   
-  size = [lastActivity sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
-  
-  desiredHeight += size.height;
+  if (lastActivity && [lastActivity length] > 0) {
+    size = [lastActivity sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
+    
+    desiredHeight += size.height;
+  }
   
   size = [[NSString stringWithFormat:@"Friends: %@", place.friendFirstNames] sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
   
