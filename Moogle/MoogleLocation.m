@@ -9,7 +9,7 @@
 #import "MoogleLocation.h"
 
 static MoogleLocation *_sharedInstance = nil;
-static NSInteger _distanceFilter = 100;
+static NSInteger _distanceFilter = 1000;
 
 @implementation MoogleLocation
 
@@ -59,6 +59,10 @@ static NSInteger _distanceFilter = 100;
 
 - (void)startSignificantChangeUpdates {
   [_sharedInstance.locationManager startMonitoringSignificantLocationChanges];
+}
+
+- (void)stopSignificantChangeUpdates {
+  [_sharedInstance.locationManager stopMonitoringSignificantLocationChanges];
 }
 
 #pragma mark -

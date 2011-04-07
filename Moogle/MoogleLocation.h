@@ -30,6 +30,7 @@
 - (void)startStandardUpdates;
 - (void)stopStandardUpdates;
 - (void)startSignificantChangeUpdates;
+- (void)stopSignificantChangeUpdates;
 
 // Location Coordinates
 - (BOOL)hasAcquiredLocation;
