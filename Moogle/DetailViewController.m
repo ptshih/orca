@@ -42,7 +42,7 @@ static UIImage *_quoteImage = nil;
   // Photo
   _photoView = [[MoogleImageView alloc] initWithFrame:CGRectMake(20, 20, 280, 80)];
   _photoView.delegate = self;
-  _photoView.urlPath = [NSString stringWithFormat:@"%@/%@/original/image.png", S3_PHOTOS_URL, self.kupo.id];
+  _photoView.urlPath = [NSString stringWithFormat:@"%@/%@/original/%@", S3_PHOTOS_URL, self.kupo.id, self.kupo.photoFileName];
   [_photoView loadImage];
   
 

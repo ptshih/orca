@@ -91,6 +91,15 @@
 
 #pragma mark -
 #pragma mark TableView
+- (void)configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
+  Kupo *kupo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
+  [cell fillCellWithObject:kupo];
+  [cell loadImage];
+  [cell setNeedsLayout];
+  [cell setNeedsDisplay];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   Kupo *kupo = [self.fetchedResultsController objectAtIndexPath:indexPath];
   return [KupoCell rowHeightForObject:kupo];
@@ -130,6 +139,7 @@
   [cell fillCellWithObject:kupo];
   [cell loadImage];
   [cell loadPhoto];
+  [cell setNeedsLayout];
   [cell setNeedsDisplay];
   return cell;
 }
@@ -152,17 +162,6 @@
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
   [self resetFetchedResultsController];
   [self dataSourceDidLoad];
-  
-  // Mark isRead state
-  NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
-  self.place.isRead = [NSNumber numberWithBool:YES];
-  
-  NSError *error = nil;
-  if ([context hasChanges]) {
-    if (![context save:&error]) {
-      abort(); // NOTE: DO NOT SHIP
-    }
-  }
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {

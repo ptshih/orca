@@ -115,10 +115,10 @@ static NSString *_secretString = nil;
 
 #pragma mark Send Operation
 - (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params {
-  [self sendOperationWithURL:url andMethod:method andHeaders:headers andParams:params isFormData:NO];
+  [self sendOperationWithURL:url andMethod:method andHeaders:headers andParams:params andAttachmentType:NetworkOperationAttachmentTypeNone];
 }
 
-- (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params isFormData:(BOOL)isFormData {
+- (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params andAttachmentType:(NetworkOperationAttachmentType)attachmentType {
   if (_op) {
     if (_op) [_op clearDelegatesAndCancel];
     RELEASE_SAFELY(_op);
@@ -130,7 +130,13 @@ static NSString *_secretString = nil;
   // Set op method (defaults to GET)
   _op.requestMethod = method ? method : GET;
   
-  _op.isFormData = isFormData;
+  if (attachmentType != NetworkOperationAttachmentTypeNone) {
+    _op.hasAttachment = YES;
+    _op.attachmentType = attachmentType;
+  } else {
+    _op.hasAttachment = NO;
+    _op.attachmentType = NetworkOperationAttachmentTypeNone;
+  }
   
   // Add Moogle Headers
   [_op addRequestHeader:@"X-UDID" value:[[UIDevice currentDevice] uniqueIdentifier]];

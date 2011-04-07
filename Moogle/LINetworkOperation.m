@@ -88,7 +88,9 @@ static NSThread *_opThread = nil;
 @synthesize shouldCompressRequestBody = _shouldCompressRequestBody;
 @synthesize allowCompressedResponse = _allowCompressedResponse;
 @synthesize shouldTimeout = _shouldTimeout;
-@synthesize isFormData = _isFormData;
+@synthesize hasAttachment = _hasAttachment;
+@synthesize jpegCompression = _jpegCompression;
+@synthesize attachmentType = _attachmentType;
 
 // Delegate
 @synthesize delegate = _delegate;
@@ -119,7 +121,9 @@ static NSThread *_opThread = nil;
     self.shouldCompressRequestBody = NO;
     self.allowCompressedResponse = NO;
     self.shouldTimeout = YES; // NOT IMPLEMENTED
-    self.isFormData = NO;
+    self.hasAttachment = NO;
+    self.jpegCompression = 0.8;
+    self.attachmentType = NetworkOperationAttachmentTypeNone;
     _operationState = NetworkOperationStateIdle;
     
     self.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
@@ -374,7 +378,7 @@ static NSThread *_opThread = nil;
   // Request method
   [self.request setHTTPMethod:self.requestMethod];
   
-  if (self.isFormData) {
+  if (self.hasAttachment) {
     // Post form data
     [self buildRequestParamsFormData];
   } else {
@@ -508,16 +512,32 @@ static NSThread *_opThread = nil;
     for (id key in dataDictionary) {
       NSObject *dataParam = [dataDictionary valueForKey:key];
       if ([dataParam isKindOfClass:[UIImage class]]) {
-        contentType = @"image/png";
-        NSData* imageData = UIImagePNGRepresentation((UIImage*)dataParam);
-        [self.requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@.png\"\r\n", key, key] dataUsingEncoding:NSUTF8StringEncoding]];
+        NSData *imageData = nil;
+        NSString *extension = nil;
+        if (self.attachmentType == NetworkOperationAttachmentTypeJPEG) {
+          contentType = @"image/jpeg";
+          extension = @"jpg";
+          imageData = UIImageJPEGRepresentation((UIImage*)dataParam, self.jpegCompression);
+        } else {
+          contentType = @"image/png";
+          extension = @"png";
+          imageData = UIImagePNGRepresentation((UIImage*)dataParam);
+        }
+        [self.requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@.%@\"\r\n", key, key, extension] dataUsingEncoding:NSUTF8StringEncoding]];
         [self.requestData appendData:[[NSString stringWithFormat:@"Content-Type: %@\r\n\r\n", contentType] dataUsingEncoding:NSUTF8StringEncoding]];
         [self.requestData appendData:imageData];
       } else {
-        NSAssert([dataParam isKindOfClass:[NSData class]], @"dataParam must be a UIImage or NSData");
-        // This is most likely a mp4 video, so forcing .mp4 extension
-        contentType = @"application/octet-stream";
-        [self.requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@.mp4\"\r\n", key, key] dataUsingEncoding:NSUTF8StringEncoding]];
+//        NSAssert([dataParam isKindOfClass:[NSData class]], @"dataParam must be a UIImage or NSData");
+        NSString *extension = nil;
+        if (self.attachmentType == NetworkOperationAttachmentTypeMP4) {
+          extension = @"mp4";
+          contentType = @"video/mp4";
+        } else {
+          // This is most likely a mp4 video, so forcing .mp4 extension
+          extension = @"mp4";
+          contentType = @"application/octet-stream";
+        }
+        [self.requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@.%@\"\r\n", key, key, extension] dataUsingEncoding:NSUTF8StringEncoding]];
         [self.requestData appendData:[[NSString stringWithFormat:@"Content-Type: %@\r\n\r\n", contentType] dataUsingEncoding:NSUTF8StringEncoding]];
         [self.requestData appendData:(NSData *)dataParam];
       }

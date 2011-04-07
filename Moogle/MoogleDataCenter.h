@@ -42,7 +42,7 @@
  */
 - (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params;
 
-- (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params isFormData:(BOOL)isFormData;
+- (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params andAttachmentType:(NetworkOperationAttachmentType)attachmentType;
 
 // Subclass should Implement AND call super's implementation
 - (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation;

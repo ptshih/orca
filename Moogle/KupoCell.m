@@ -186,7 +186,7 @@ static UIImage *_quoteImage = nil;
   
   if ([kupo.hasPhoto boolValue]) {
     _hasPhoto = YES;
-    _photoImageView.urlPath = [NSString stringWithFormat:@"%@/%@/thumb/image.png", S3_PHOTOS_URL, kupo.id];
+    _photoImageView.urlPath = [NSString stringWithFormat:@"%@/%@/thumb/%@", S3_PHOTOS_URL, kupo.id, kupo.photoFileName];
     self.selectionStyle = UITableViewCellSelectionStyleBlue;
   } else {
     _hasPhoto = NO;

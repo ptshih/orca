@@ -23,6 +23,13 @@ typedef enum {
   NetworkOperationStateCancelled = 4
 } NetworkOperationState;
 
+typedef enum {
+  NetworkOperationAttachmentTypeNone = -1,
+  NetworkOperationAttachmentTypePNG = 0,
+  NetworkOperationAttachmentTypeJPEG = 1,
+  NetworkOperationAttachmentTypeMP4 = 2
+} NetworkOperationAttachmentType;
+
 @interface LINetworkOperation : NSOperation {
   // Connection
   NSURLConnection *_connection;
@@ -62,7 +69,9 @@ typedef enum {
   BOOL _shouldCompressRequestBody;
   BOOL _allowCompressedResponse;
   BOOL _shouldTimeout; // defaults to YES
-  BOOL _isFormData; // defaults to NO
+  BOOL _hasAttachment; // defaults to NO
+  CGFloat _jpegCompression;
+  NetworkOperationAttachmentType _attachmentType;
   
   // Request State
   NetworkOperationState _operationState;
@@ -83,16 +92,16 @@ typedef enum {
 @property (readonly) BOOL isConcurrent;
 
 // Request
-@property (retain) NSMutableURLRequest *request;
-@property (copy) NSURL *requestURL;
-@property (retain) NSString *requestMethod;
-@property (retain) NSString *requestContentType;
-@property (assign) unsigned long long requestContentLength;
-@property (retain) NSString *requestAccept;
-@property (retain) NSMutableDictionary *requestHeaders;
-@property (retain) NSMutableDictionary *requestParams;
-@property (retain) NSMutableData *requestData;
-@property (retain) NSMutableString *encodedParameterPairs;
+@property (nonatomic, retain) NSMutableURLRequest *request;
+@property (nonatomic, copy) NSURL *requestURL;
+@property (nonatomic, retain) NSString *requestMethod;
+@property (nonatomic, retain) NSString *requestContentType;
+@property (nonatomic, assign) unsigned long long requestContentLength;
+@property (nonatomic, retain) NSString *requestAccept;
+@property (nonatomic, retain) NSMutableDictionary *requestHeaders;
+@property (nonatomic, retain) NSMutableDictionary *requestParams;
+@property (nonatomic, retain) NSMutableData *requestData;
+@property (nonatomic, retain) NSMutableString *encodedParameterPairs;
 
 // Response
 @property (retain) NSDictionary *responseHeaders;
@@ -106,17 +115,19 @@ typedef enum {
 @property (assign) NSStringEncoding responseEncoding;
 
 // Config
-@property (assign) NSStringEncoding defaultResponseEncoding;
-@property (assign) NSTimeInterval timeoutInterval;
-@property (assign) NSInteger numberOfTimesToRetryOnTimeout;
-@property (assign) NSURLRequestCachePolicy cachePolicy;
-@property (assign) BOOL shouldCompressRequestBody;
-@property (assign) BOOL allowCompressedResponse;
-@property (assign) BOOL shouldTimeout;
-@property (assign) BOOL isFormData;
+@property (nonatomic, assign) NSStringEncoding defaultResponseEncoding;
+@property (nonatomic, assign) NSTimeInterval timeoutInterval;
+@property (nonatomic, assign) NSInteger numberOfTimesToRetryOnTimeout;
+@property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
+@property (nonatomic, assign) BOOL shouldCompressRequestBody;
+@property (nonatomic, assign) BOOL allowCompressedResponse;
+@property (nonatomic, assign) BOOL shouldTimeout;
+@property (nonatomic, assign) BOOL hasAttachment;
+@property (nonatomic, assign) CGFloat jpegCompression;
+@property (nonatomic, assign) NetworkOperationAttachmentType attachmentType;
 
 // Delegate
-@property (assign) id delegate;
+@property (nonatomic, assign) id delegate;
 
 #pragma mark Init
 - (id)initWithURL:(NSURL *)URL;

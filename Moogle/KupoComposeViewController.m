@@ -55,7 +55,8 @@
     // This is only done when the Send button is tapped
     //    UIImageWriteToSavedPhotosAlbum (originalImage, nil, nil , nil);
     
-    _uploadedImage = [originalImage retain];
+    _uploadedImage = [[originalImage scaleProportionalToSize:CGSizeMake(280, 280)] retain];
+//    _uploadedImage = [originalImage retain];
     [_photoUpload setImage:_uploadedImage forState:UIControlStateNormal];
   }
   
@@ -72,6 +73,15 @@
     UIGraphicsEndImageContext();
     _uploadedImage = [[videoThumbImage cropProportionalToSize:CGSizeMake(320, 320)] retain];
     [_photoUpload setImage:_uploadedImage forState:UIControlStateNormal];
+  }
+  
+  // Write the photo to the user's album
+  if (_uploadedImage && !_uploadedVideo && _shouldSaveToAlbum) {
+    UIImageWriteToSavedPhotosAlbum(_uploadedImage, nil, nil, nil);
+  } else if (_uploadedVideo && _shouldSaveToAlbum) {
+    if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(_uploadedVideoPath)) {
+      UISaveVideoAtPathToSavedPhotosAlbum(_uploadedVideoPath, nil, nil, nil);
+    }
   }
   
   [[picker parentViewController] dismissModalViewControllerAnimated:YES];
@@ -164,15 +174,6 @@
 }
 
 - (void)send {
-  // Write the photo to the user's album
-  if (_uploadedImage && !_uploadedVideo && _shouldSaveToAlbum) {
-    UIImageWriteToSavedPhotosAlbum(_uploadedImage, nil, nil, nil);
-  } else if (_uploadedVideo && _shouldSaveToAlbum) {
-    if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(_uploadedVideoPath)) {
-      UISaveVideoAtPathToSavedPhotosAlbum(_uploadedVideoPath, nil, nil, nil);
-    }
-  }
-  
   if (_moogleComposeType == MoogleComposeTypeKupo) {
     [_dataCenter sendKupoComposeWithPlaceId:self.placeId andComment:_kupoComment.text andImage:_uploadedImage andVideo:_uploadedVideo];
   } else {

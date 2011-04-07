@@ -20,7 +20,7 @@
   
   _navTitleLabel.text = self.kupo.comment;
   
-  NSURL *videoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/original/video.mp4", S3_VIDEOS_URL, self.kupo.id]];
+  NSURL *videoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/original/%@", S3_VIDEOS_URL, self.kupo.id, self.kupo.videoFileName]];
   
   _player = [[MPMoviePlayerController alloc] initWithContentURL:videoUrl];
   _player.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

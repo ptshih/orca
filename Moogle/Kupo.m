@@ -2,7 +2,7 @@
 //  Kupo.m
 //  Moogle
 //
-//  Created by Peter Shih on 4/4/11.
+//  Created by Peter Shih on 4/6/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,8 +11,8 @@
 
 @implementation Kupo
 @dynamic tagged;
-@dynamic hasPhoto;
 @dynamic hasVideo;
+@dynamic hasPhoto;
 @dynamic id;
 @dynamic authorId;
 @dynamic placeId;
@@ -20,5 +20,7 @@
 @dynamic kupoType;
 @dynamic timestamp;
 @dynamic comment;
+@dynamic photoFileName;
+@dynamic videoFileName;
 
 @end

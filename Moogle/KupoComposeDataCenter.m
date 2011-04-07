@@ -16,25 +16,22 @@
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
-  BOOL hasImage = NO;
-  
   [params setValue:@"1" forKey:@"kupo_type"];
+  [params setValue:placeId forKey:@"place_id"];
   
   if ([comment length] > 0) {
     [params setValue:comment forKey:@"comment"];
   }
   
   if (image) {
-    hasImage = YES;
     [params setValue:image forKey:@"image"];
     if (video) {
       [params setValue:video forKey:@"video"];
+      [self sendOperationWithURL:kupoComposeUrl andMethod:POST andHeaders:nil andParams:params andAttachmentType:NetworkOperationAttachmentTypeMP4];
+    } else {
+      [self sendOperationWithURL:kupoComposeUrl andMethod:POST andHeaders:nil andParams:params andAttachmentType:NetworkOperationAttachmentTypeJPEG];
     }
   }
-  
-  [params setValue:placeId forKey:@"place_id"];
-  
-  [self sendOperationWithURL:kupoComposeUrl andMethod:POST andHeaders:nil andParams:params isFormData:hasImage];
 }
 
 - (void)sendCheckinComposeWithPlaceId:(NSString *)placeId andComment:(NSString *)comment andImage:(UIImage *)image andVideo:(NSData *)video {
@@ -44,21 +41,7 @@
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
-  BOOL hasImage = NO;
-  
   [params setValue:@"0" forKey:@"kupo_type"];
-  
-  if ([comment length] > 0) {
-    [params setValue:comment forKey:@"comment"];
-  }
-
-  if (image) {
-    hasImage = YES;
-    [params setValue:image forKey:@"image"];
-    if (video) {
-      [params setValue:video forKey:@"video"];
-    }
-  }
   
   [params setValue:placeId forKey:@"place_id"];
   
@@ -68,7 +51,19 @@
   [params setObject:[NSString stringWithFormat:@"%f", lat] forKey:@"lat"];
   [params setObject:[NSString stringWithFormat:@"%f", lng] forKey:@"lng"];
   
-  [self sendOperationWithURL:checkinComposeUrl andMethod:POST andHeaders:nil andParams:params isFormData:hasImage];
+  if ([comment length] > 0) {
+    [params setValue:comment forKey:@"comment"];
+  }
+
+  if (image) {
+    [params setValue:image forKey:@"image"];
+    if (video) {
+      [params setValue:video forKey:@"video"];
+      [self sendOperationWithURL:checkinComposeUrl andMethod:POST andHeaders:nil andParams:params andAttachmentType:NetworkOperationAttachmentTypeMP4];
+    } else {
+      [self sendOperationWithURL:checkinComposeUrl andMethod:POST andHeaders:nil andParams:params andAttachmentType:NetworkOperationAttachmentTypeJPEG];
+    }
+  }
 }
 
 - (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {

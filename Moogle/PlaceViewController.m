@@ -98,6 +98,20 @@
 
 #pragma mark -
 #pragma mark TableView
+- (void)configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
+  Place *place = nil;
+  if (_tableView == self.searchDisplayController.searchResultsTableView) {
+    place = [_searchItems objectAtIndex:indexPath.row];
+  } else {
+    place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  }
+  
+  [cell fillCellWithObject:place];
+  [cell loadImage];
+  [cell setNeedsLayout];
+  [cell setNeedsDisplay];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   Place *place = nil;
   if (tableView == self.searchDisplayController.searchResultsTableView) {
@@ -117,6 +131,17 @@
     place = [_searchItems objectAtIndex:indexPath.row];
   } else {
     place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  }
+  
+  // Mark isRead state
+  NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
+  place.isRead = [NSNumber numberWithBool:YES];
+  
+  NSError *error = nil;
+  if ([context hasChanges]) {
+    if (![context save:&error]) {
+      abort(); // NOTE: DO NOT SHIP
+    }
   }
   
   KupoViewController *kvc = [[KupoViewController alloc] init];
@@ -143,6 +168,7 @@
   
   [cell fillCellWithObject:place];
   [cell loadImage];
+  [cell setNeedsLayout];
   [cell setNeedsDisplay];
   
   return cell;

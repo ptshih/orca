@@ -141,14 +141,14 @@
 		25CEF932133A021A006F23A7 /* FBLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF917133A021A006F23A7 /* FBLoginDialog.m */; };
 		25CEF933133A021A006F23A7 /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF919133A021A006F23A7 /* FBRequest.m */; };
 		25CEF934133A021A006F23A7 /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF919133A021A006F23A7 /* FBRequest.m */; };
-		25D00BD2134A9C8D009D4C70 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D00BD1134A9C8D009D4C70 /* Kupo.m */; };
-		25D00BD3134A9C8D009D4C70 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D00BD1134A9C8D009D4C70 /* Kupo.m */; };
 		25D00BD7134A9DE2009D4C70 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D00BD6134A9DE2009D4C70 /* Place.m */; };
 		25D00BD8134A9DE2009D4C70 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D00BD6134A9DE2009D4C70 /* Place.m */; };
 		25D00BDB134B6C03009D4C70 /* place_nav_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D00BD9134B6C02009D4C70 /* place_nav_icon.png */; };
 		25D00BDC134B6C03009D4C70 /* place_nav_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D00BDA134B6C02009D4C70 /* place_nav_icon@2x.png */; };
 		25D00BDF134B6DE8009D4C70 /* profile_nav_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D00BDD134B6DE6009D4C70 /* profile_nav_icon.png */; };
 		25D00BE0134B6DE8009D4C70 /* profile_nav_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D00BDE134B6DE7009D4C70 /* profile_nav_icon@2x.png */; };
+		25D21C71134D879800D46651 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D21C70134D879800D46651 /* Kupo.m */; };
+		25D21C72134D879800D46651 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D21C70134D879800D46651 /* Kupo.m */; };
 		25EFD3861341E438000108B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EFD3851341E438000108B8 /* MobileCoreServices.framework */; };
 		25EFD3881341E449000108B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EFD3851341E438000108B8 /* MobileCoreServices.framework */; };
 		25EFD38C13425B2C000108B8 /* photo_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD38A13425B2C000108B8 /* photo_add@2x.png */; };
@@ -397,14 +397,14 @@
 		25CEF917133A021A006F23A7 /* FBLoginDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLoginDialog.m; sourceTree = "<group>"; };
 		25CEF918133A021A006F23A7 /* FBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBRequest.h; sourceTree = "<group>"; };
 		25CEF919133A021A006F23A7 /* FBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBRequest.m; sourceTree = "<group>"; };
-		25D00BD0134A9C8D009D4C70 /* Kupo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kupo.h; sourceTree = "<group>"; };
-		25D00BD1134A9C8D009D4C70 /* Kupo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Kupo.m; sourceTree = "<group>"; };
 		25D00BD5134A9DE2009D4C70 /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Place.h; sourceTree = "<group>"; };
 		25D00BD6134A9DE2009D4C70 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Place.m; sourceTree = "<group>"; };
 		25D00BD9134B6C02009D4C70 /* place_nav_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = place_nav_icon.png; sourceTree = "<group>"; };
 		25D00BDA134B6C02009D4C70 /* place_nav_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "place_nav_icon@2x.png"; sourceTree = "<group>"; };
 		25D00BDD134B6DE6009D4C70 /* profile_nav_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile_nav_icon.png; sourceTree = "<group>"; };
 		25D00BDE134B6DE7009D4C70 /* profile_nav_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile_nav_icon@2x.png"; sourceTree = "<group>"; };
+		25D21C6F134D879800D46651 /* Kupo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kupo.h; sourceTree = "<group>"; };
+		25D21C70134D879800D46651 /* Kupo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Kupo.m; sourceTree = "<group>"; };
 		25EFD3851341E438000108B8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		25EFD38A13425B2C000108B8 /* photo_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_add@2x.png"; sourceTree = "<group>"; };
 		25EFD38D13425B65000108B8 /* photo_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_add.png; sourceTree = "<group>"; };
@@ -748,10 +748,10 @@
 				25FB8C17133ABE1C00C130A8 /* Place+Serialize.m */,
 				25FB8C1A133ABED100C130A8 /* Kupo+Serialize.h */,
 				25FB8C1B133ABED700C130A8 /* Kupo+Serialize.m */,
-				25D00BD0134A9C8D009D4C70 /* Kupo.h */,
-				25D00BD1134A9C8D009D4C70 /* Kupo.m */,
 				25D00BD5134A9DE2009D4C70 /* Place.h */,
 				25D00BD6134A9DE2009D4C70 /* Place.m */,
+				25D21C6F134D879800D46651 /* Kupo.h */,
+				25D21C70134D879800D46651 /* Kupo.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1292,8 +1292,8 @@
 				259C7B4B1349733000C37AE1 /* Reachability.m in Sources */,
 				259C7B601349BCEA00C37AE1 /* DetailViewController.m in Sources */,
 				259C7B75134A92FB00C37AE1 /* VideoViewController.m in Sources */,
-				25D00BD2134A9C8D009D4C70 /* Kupo.m in Sources */,
 				25D00BD7134A9DE2009D4C70 /* Place.m in Sources */,
+				25D21C71134D879800D46651 /* Kupo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1351,8 +1351,8 @@
 				259C7B4C1349733000C37AE1 /* Reachability.m in Sources */,
 				259C7B611349BCEA00C37AE1 /* DetailViewController.m in Sources */,
 				259C7B76134A92FB00C37AE1 /* VideoViewController.m in Sources */,
-				25D00BD3134A9C8D009D4C70 /* Kupo.m in Sources */,
 				25D00BD8134A9DE2009D4C70 /* Place.m in Sources */,
+				25D21C72134D879800D46651 /* Kupo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

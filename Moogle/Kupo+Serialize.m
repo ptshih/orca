@@ -26,6 +26,8 @@
     
     // Conditional
     newKupo.comment = [dictionary valueForKey:@"comment"] ? [dictionary valueForKey:@"comment"] : nil;
+    newKupo.photoFileName = [dictionary valueForKey:@"photo_file_name"] ? [dictionary valueForKey:@"photo_file_name"] : nil;
+    newKupo.videoFileName = [dictionary valueForKey:@"video_file_name"] ? [dictionary valueForKey:@"video_file_name"] : nil;
     
     NSArray *friendList = [dictionary valueForKey:@"friend_list"];
     if (friendList) {
