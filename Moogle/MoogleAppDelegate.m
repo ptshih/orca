@@ -141,6 +141,12 @@
   [self startRegister];
 }
 
+- (void)moogleDidLogout {
+  // Delete all existing data
+  [LICoreDataStack resetPersistentStore];
+  [self tryLogin];
+}
+
 #pragma mark Session
 - (void)startSession {
   // This gets called on subsequent app launches

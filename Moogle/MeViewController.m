@@ -12,6 +12,8 @@
 
 @implementation MeViewController
 
+@synthesize delegate = _delegate;
+
 - (id)init {
   self = [super init];
   if (self) {
@@ -28,6 +30,11 @@
   _navTitleLabel.text = @"Moogle Me";
   
   [self showDismissButton];
+  
+  // Logout Button
+  UIBarButtonItem *logoutButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Logout", @"Logout") style:UIBarButtonItemStyleBordered target:self action:@selector(logout)];
+  self.navigationItem.rightBarButtonItem = logoutButton;
+  [logoutButton release];
   
   // Setup Table
   [self setupTableViewWithFrame:self.view.bounds andStyle:UITableViewStyleGrouped andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
@@ -102,6 +109,13 @@
   [nameLabel release];
   [profilePicture release];
   [headerView release];
+}
+
+- (void)logout {
+  if (self.delegate && [self.delegate respondsToSelector:@selector(logoutRequested)]) {
+    [self.delegate logoutRequested];
+  }
+  [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark TableView Stuff

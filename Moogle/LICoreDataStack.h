@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "Constants.h"
 
 @interface LICoreDataStack : NSObject {
 
@@ -20,5 +21,6 @@
 + (void)resetPersistentStore;
 + (void)resetManagedObjectContext;
 + (void)initManagedObjectContextInMocThread;
++ (void)deleteAllObjects:(NSString *)entityDescription;
 
 @end

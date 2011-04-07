@@ -59,6 +59,11 @@
   [self resetFetchedResultsController];
 }
 
+- (void)unloadCardController {
+  [super unloadCardController];
+  [self resetFetchedResultsController];
+}
+
 #pragma mark Core Data
 - (void)resetFetchedResultsController {
   if ([LICoreDataStack managedObjectContext]) {

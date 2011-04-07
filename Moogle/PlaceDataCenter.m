@@ -29,6 +29,19 @@ static NSMutableDictionary *_pkDict = nil;
   }
 }
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDeletedAllObjects object:nil];
+  }
+  return self;
+}
+
+- (void)coreDataDidReset {
+  RELEASE_SAFELY(_pkDict);
+  _pkDict = [[NSMutableDictionary dictionary] retain];
+}
+
 - (void)getPlaces {
   NSURL *placesUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/me/places", MOOGLE_BASE_URL]];
   

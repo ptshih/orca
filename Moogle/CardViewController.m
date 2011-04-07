@@ -103,6 +103,11 @@ static UIImage *_emptyImage = nil;
   [self updateState];
 }
 
+- (void)resetCardController {
+  DLog(@"Called by class: %@", [self class]);
+  [self updateState];  
+}
+
 // Subclass
 - (void)dataSourceDidLoad {
   [self updateState];

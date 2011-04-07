@@ -16,6 +16,8 @@
   self = [super init];
   if (self) {
     _facebook = APP_DELEGATE.facebook;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logout) name:kLogoutRequested object:nil];
   }
   return self;
 }
@@ -54,6 +56,10 @@
 - (void)login {
   [_facebook authorize:FB_PERMISSIONS delegate:self];
 }
+     
+- (void)logout {
+  [_facebook logout:self];
+}
 
 #pragma mark -
 #pragma mark FBSessionDelegate
@@ -80,6 +86,10 @@
   [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"facebookAccessToken"];
   [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"facebookExpirationDate"];
   [[NSUserDefaults standardUserDefaults] synchronize];
+  
+  if (self.delegate && [self.delegate respondsToSelector:@selector(moogleDidLogout)]) {
+    [self.delegate performSelector:@selector(moogleDidLogout)];
+  }
 }
 
 - (void)dealloc {

@@ -11,4 +11,5 @@
 
 @protocol LoginDelegate <NSObject>
 - (void)moogleDidLogin;
+- (void)moogleDidLogout;
 @end

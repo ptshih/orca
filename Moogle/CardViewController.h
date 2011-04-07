@@ -22,6 +22,7 @@
 - (void)clearCachedData;
 - (void)unloadCardController;
 - (void)reloadCardController;
+- (void)resetCardController;
 - (void)dataSourceDidLoad;
 - (void)setupLoadingAndEmptyViews;
 - (void)addBackButton;

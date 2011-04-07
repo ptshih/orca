@@ -10,14 +10,19 @@
 #import "CardModalTableViewController.h"
 #import "MoogleImageView.h"
 #import "Facebook.h"
+#import "MeDelegate.h"
 
 @class MeDataCenter;
 
 @interface MeViewController : CardModalTableViewController <FBDialogDelegate> {
   MeDataCenter *_meDataCenter;
+  id <MeDelegate> _delegate;
 }
+
+@property (nonatomic, assign) id <MeDelegate> delegate;
 
 // Private
 - (void)setupHeader;
+- (void)logout;
 
 @end

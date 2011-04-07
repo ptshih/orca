@@ -24,6 +24,8 @@
 
 // Notifications
 #define kLocationAcquired @"LocationAcquired"
+#define kLogoutRequested @"LogoutRequested"
+#define kCoreDataDeletedAllObjects @"CoreDataDeletedAllObjects"
 
 // Cards
 #define NUM_CARDS 2

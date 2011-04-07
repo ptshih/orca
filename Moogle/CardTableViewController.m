@@ -163,6 +163,11 @@
   [_refreshHeaderView setState:EGOOPullRefreshLoading];
 }
 
+- (void)unloadCardController {
+  [super unloadCardController];
+  [_tableView reloadData];
+}
+
 - (void)dataSourceDidLoad {
   [super dataSourceDidLoad];
   _reloading = NO;

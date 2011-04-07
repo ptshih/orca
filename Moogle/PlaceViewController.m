@@ -23,8 +23,15 @@
     _placeDataCenter.delegate = self;
     
     _limit = 50;
+    
+    _shouldReloadOnAppear = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDeletedAllObjects object:nil];
   }
   return self;
+}
+
+- (void)coreDataDidReset {
+  _shouldReloadOnAppear = YES;
 }
 
 - (void)viewDidLoad {
@@ -62,10 +69,15 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  if (_shouldReloadOnAppear) {
+    _shouldReloadOnAppear = NO;
+    [self reloadCardController];
+  }
 }
 
 - (void)profile {
   MeViewController *mvc = [[MeViewController alloc] init];
+  mvc.delegate = self;
   UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:mvc];
 //  navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
   [self presentModalViewController:navController animated:YES];
@@ -201,6 +213,22 @@
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
   return [_placeDataCenter getPlacesFetchRequest];
+}
+
+#pragma mark -
+#pragma mark MeDelegate
+- (void)logoutRequested {
+  UIAlertView *logoutAlert = [[UIAlertView alloc] initWithTitle:@"Logout of Moogle?" message:MOOGLE_LOGOUT_ALERT delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+  [logoutAlert show];
+  [logoutAlert autorelease];
+}
+
+#pragma mark -
+#pragma mark AlertView
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+  if (buttonIndex != alertView.cancelButtonIndex) {
+  [[NSNotificationCenter defaultCenter] postNotificationName:kLogoutRequested object:nil];
+  }
 }
 
 - (void)dealloc {

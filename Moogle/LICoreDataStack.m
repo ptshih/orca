@@ -43,9 +43,31 @@ static NSThread *_mocThread = nil;
 
 #pragma mark Initialization Methods
 + (void)resetPersistentStore {
-  NSLog(@"reset persistent store and context");
-  [self resetStoreState];
-  [self resetManagedObjectContext];
+  [[self class] deleteAllObjects:@"Place"];
+  [[self class] deleteAllObjects:@"Kupo"];
+  
+  [[NSNotificationCenter defaultCenter] postNotificationName:kCoreDataDeletedAllObjects object:nil];
+  
+//  NSLog(@"reset persistent store and context");
+//  [self resetStoreState];
+//  [self resetManagedObjectContext];
+}
+
++ (void)deleteAllObjects:(NSString *)entityDescription {
+  NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+  NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:[[self class] managedObjectContext]];
+  [fetchRequest setEntity:entity];
+  
+  NSError *error;
+  NSArray *items = [[[self class] managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+  [fetchRequest release];
+  
+  
+  for (NSManagedObject *managedObject in items) {
+    [[[self class] managedObjectContext] deleteObject:managedObject];
+  }
+  if (![[[self class] managedObjectContext] save:&error]) {
+  }
 }
 
 + (void)resetStoreState {
@@ -68,7 +90,7 @@ static NSThread *_mocThread = nil;
     _managedObjectContext = nil;
   }
   
-  NSPersistentStoreCoordinator *coordinator = _persistentStoreCoordinator;
+  NSPersistentStoreCoordinator *coordinator = [[self class] persistentStoreCoordinator];
   NSManagedObjectContext *managedObjectContext = nil;
   if (coordinator != nil) {
     managedObjectContext = [[NSManagedObjectContext alloc] init];
