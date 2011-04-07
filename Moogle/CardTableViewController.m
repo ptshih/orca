@@ -42,7 +42,8 @@
   if (scopeButtonTitles) {
     _searchBar.scopeButtonTitles = scopeButtonTitles;
   }
-  self.tableView.tableHeaderView = _searchBar;
+
+  _tableView.tableHeaderView = _searchBar;
   
   UISearchDisplayController *searchController = [[UISearchDisplayController alloc] initWithSearchBar:_searchBar contentsController:self];
   [searchController setDelegate:self];
@@ -66,7 +67,7 @@
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorColor = SEPARATOR_COLOR;
   }
-//  [self.view insertSubview:self.tableView atIndex:0];
+//  [self.view insertSubview:_tableView atIndex:0];
   [self.view addSubview:_tableView];
   
   // Set the active scrollView
@@ -76,9 +77,9 @@
 // SUBCLASS CAN OPTIONALLY CALL
 - (void)setupPullRefresh {
   if (_refreshHeaderView == nil) {
-    _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
+    _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - _tableView.bounds.size.height, self.view.frame.size.width, _tableView.bounds.size.height)];
     _refreshHeaderView.delegate = self;
-		[self.tableView addSubview:_refreshHeaderView];		
+		[_tableView addSubview:_refreshHeaderView];		
 	}
 	
   //  update the last update date
@@ -89,7 +90,7 @@
   _headerTabView = [[HeaderTabView alloc] initWithFrame:CGRectMake(0, 0, 320.0, 44.0) andButtonTitles:[NSArray arrayWithObjects:@"Nearby", @"Popular", @"Followed", nil]];
   self.headerTabView.delegate = self;
   
-  self.tableView.tableHeaderView = self.headerTabView;
+  _tableView.tableHeaderView = self.headerTabView;
 }
 
 // Optional footer view
@@ -153,7 +154,7 @@
 - (void)clearCachedData {
   [self.sections removeAllObjects];
   [self.items removeAllObjects];
-  [self.tableView reloadData];
+  [_tableView reloadData];
   [self dataSourceDidLoad];
 }
 
@@ -174,7 +175,7 @@
   [super dataSourceDidLoad];
   if (_refreshHeaderView) {
     _reloading = NO;
-    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:_tableView];
   }
   
   // Is this a load more call?

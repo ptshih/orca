@@ -67,7 +67,7 @@
   
   [self.items removeAllObjects];
   [self.items addObject:[[[NearbyDataCenter defaultCenter] response] valueForKey:@"values"]];
-  [self.tableView reloadData];
+  [_tableView reloadData];
   [self dataSourceDidLoad];
 }
 

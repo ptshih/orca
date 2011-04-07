@@ -76,25 +76,27 @@
 }
 
 - (void)profile {
-  MeViewController *mvc = [[MeViewController alloc] init];
-  mvc.delegate = self;
-  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:mvc];
-//  navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-  [self presentModalViewController:navController animated:YES];
-  [mvc release];
-  [navController release];  
+  if (!_meViewController) {
+    _meViewController = [[MeViewController alloc] init];
+    _meViewController.delegate = self;
+  }
+  if (!_meNavController) {
+    _meNavController = [[UINavigationController alloc] initWithRootViewController:_meViewController];
+  }
+  [self presentModalViewController:_meNavController animated:YES];
 }
 
 - (void)checkin {
-  NearbyViewController *mvc = [[NearbyViewController alloc] init];
-  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:mvc];
-  //  navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-  [self presentModalViewController:navController animated:YES];
-  [mvc release];
-  [navController release];  
+  if (!_nearbyViewController) {
+    _nearbyViewController = [[NearbyViewController alloc] init];
+  }
+  
+  if (!_nearbyNavController) {
+    _nearbyNavController = [[UINavigationController alloc] initWithRootViewController:_nearbyViewController];
+  }
+  
+  [self presentModalViewController:_nearbyNavController animated:YES];
 }
-
-
 
 #pragma mark -
 #pragma mark TableView
@@ -239,6 +241,10 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kCoreDataDidReset object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kComposeDidFinish object:nil];
   [[PlaceDataCenter defaultCenter] setDelegate:nil];
+  RELEASE_SAFELY(_nearbyViewController);
+  RELEASE_SAFELY(_meViewController);
+  RELEASE_SAFELY(_nearbyNavController);
+  RELEASE_SAFELY(_meNavController);
   [super dealloc];
 }
 

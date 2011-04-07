@@ -27,13 +27,14 @@ static UIImage *_emptyImage = nil;
   self = [super init];
   if (self) {
     _activeScrollView = nil;
-    _emptyView = [[UIImageView alloc] initWithImage:_emptyImage];
   }
   return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  _emptyView = [[UIImageView alloc] initWithImage:_emptyImage];
   
   self.view.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
   _emptyView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -57,7 +58,7 @@ static UIImage *_emptyImage = nil;
   self.navigationItem.titleView = navTitleView;
   [navTitleView release];
   
-  self.navigationController.navigationBar.tintColor = NAV_COLOR_DARK_GREEN;
+  self.navigationController.navigationBar.tintColor = NAV_COLOR_DARK_BLUE;
   
 //  self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-logo.png"]] autorelease];
 }

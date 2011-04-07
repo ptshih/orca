@@ -10,7 +10,6 @@
 #import "CardTableViewController.h"
 
 @interface CardModalTableViewController : CardTableViewController {
-  NSString *_dismissButtonTitle;
 }
 
 - (void)showDismissButton;

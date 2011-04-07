@@ -51,7 +51,7 @@
   
   [self.items addObject:[NSArray arrayWithObjects:@"facebook", @"email", @"text", nil]];
   
-  [self.tableView reloadData];
+  [_tableView reloadData];
   [self dataSourceDidLoad];
 }
 
@@ -163,7 +163,7 @@
   
   [self.items addObject:[NSArray arrayWithObjects:@"facebook", @"email", @"text", nil]];
   
-  [self.tableView reloadData];
+  [_tableView reloadData];
   [self dataSourceDidLoad];
 }
 

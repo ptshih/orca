@@ -13,7 +13,6 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _dismissButtonTitle = [NSLocalizedString(@"Cancel", @"Cancel") retain];
   }
   return self;
 }
@@ -35,7 +34,6 @@
 }
 
 - (void)dealloc {
-  RELEASE_SAFELY(_dismissButtonTitle);
   [super dealloc];
 }
 

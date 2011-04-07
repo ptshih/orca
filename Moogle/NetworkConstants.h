@@ -6,7 +6,7 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-// HTTP Tegrms
+// HTTP Terms
 #define GET @"GET"
 #define POST @"POST"
 #define PUT @"PUT"

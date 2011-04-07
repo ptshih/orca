@@ -28,6 +28,7 @@
 }
 
 - (void)dealloc {
+  DLog(@"Called by class: %@", [self class]);
   [super dealloc];
 }
 

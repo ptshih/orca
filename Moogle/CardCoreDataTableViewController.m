@@ -101,18 +101,18 @@
 
 #pragma mark NSFetchedresultsControllerDelegate
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-  [self.tableView beginUpdates];
+  [_tableView beginUpdates];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
 
   switch(type) {
     case NSFetchedResultsChangeInsert:
-      [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+      [_tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
       break;
       
     case NSFetchedResultsChangeDelete:
-      [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+      [_tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
       break;
   }
 }
@@ -121,7 +121,7 @@
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath {
   
-  UITableView *tableView = self.tableView;
+  UITableView *tableView = _tableView;
   
   switch(type) {
       
