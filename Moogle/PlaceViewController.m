@@ -119,17 +119,6 @@
     place = [self.fetchedResultsController objectAtIndexPath:indexPath];
   }
   
-  // Mark isRead state
-  NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
-  place.isRead = [NSNumber numberWithBool:YES];
-  
-  NSError *error = nil;
-  if ([context hasChanges]) {
-    if (![context save:&error]) {
-      abort(); // NOTE: DO NOT SHIP
-    }
-  }
-  
   KupoViewController *kvc = [[KupoViewController alloc] init];
   kvc.place = place;
   [self.navigationController pushViewController:kvc animated:YES];

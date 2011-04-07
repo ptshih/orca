@@ -43,6 +43,18 @@
   // Footer
   [self setupFooterView];
   
+  // Mark isRead state
+  NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
+  self.place.isRead = [NSNumber numberWithBool:YES];
+  
+  NSError *error = nil;
+  if ([context hasChanges]) {
+    if (![context save:&error]) {
+      abort(); // NOTE: DO NOT SHIP
+    }
+  }
+  
+  [NSFetchedResultsController deleteCacheWithName:[NSString stringWithFormat:@"frc_cache_%@", [self class]]];
   [self reloadCardController];
 }
 
