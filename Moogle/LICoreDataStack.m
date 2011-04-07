@@ -106,11 +106,13 @@ static NSThread *_mocThread = nil;
     return _managedObjectContext;
   }
   
-  NSPersistentStoreCoordinator *coordinator = [[self class] persistentStoreCoordinator];
-  if (coordinator != nil) {
-    _managedObjectContext = [[NSManagedObjectContext alloc] init];
-    [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-  }
+  [[self class] performSelector:@selector(initManagedObjectContextInMocThread) onThread:_mocThread withObject:nil waitUntilDone:YES];
+  
+//  NSPersistentStoreCoordinator *coordinator = [[self class] persistentStoreCoordinator];
+//  if (coordinator != nil) {
+//    _managedObjectContext = [[NSManagedObjectContext alloc] init];
+//    [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+//  }
   
   return _managedObjectContext;
 }

@@ -86,11 +86,9 @@
 }
 
 - (void)executeFetch {
-  NSFetchRequest *fetchRequest = [self.fetchedResultsController fetchRequest];
-  
   NSError *error;
   if ([self.fetchedResultsController performFetch:&error]) {
-    DLog(@"Fetch request succeeded: %@", fetchRequest);
+//    DLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);
   }
   
   [self updateState];  
@@ -107,7 +105,7 @@
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {  
-  NSLog(@"controller changed with type: %d", type);
+  DLog(@"controller changed with type: %d", type);
   
   switch(type) {
     case NSFetchedResultsChangeInsert:

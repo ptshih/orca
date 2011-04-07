@@ -47,7 +47,7 @@
 }
 
 - (void)playbackDidFinish:(NSNotification*)notification {
-  MPMoviePlayerController *moviePlayer = [notification object];
+//  MPMoviePlayerController *moviePlayer = [notification object];
 }
 
 - (void)didExitFullscreen:(NSNotification*)notification {
