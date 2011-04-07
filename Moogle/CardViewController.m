@@ -35,6 +35,7 @@ static UIImage *_emptyImage = nil;
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  _emptyView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   _emptyView.alpha = 0.4;
   [self.view addSubview:_emptyView];
   
