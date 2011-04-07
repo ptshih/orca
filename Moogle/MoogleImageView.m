@@ -43,6 +43,7 @@ static UIImage *_placeholderImage = nil;
     UIImage *image = [[LIImageCache sharedCache] imageForURLPath:_urlPath];
     if (image) {
       self.image = image;
+      [self imageDidLoad];
     } else {
       _op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:_urlPath]];
       _op.delegate = self;
@@ -54,7 +55,6 @@ static UIImage *_placeholderImage = nil;
 }
 
 - (void)unloadImage {
-  if (_op) [_op clearDelegatesAndCancel];
   self.image = _placeholderImage;
   self.urlPath = nil;
 }

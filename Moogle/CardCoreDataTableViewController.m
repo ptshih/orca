@@ -24,19 +24,25 @@
   if (self) {
     _fetchedResultsController = nil;
     _sectionNameKeyPathForFetchedResultsController = nil;
-    _cachedPredicate = nil;
   }
   return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self resetFetchedResultsController];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
 }
 
 #pragma mark State Machine
 - (BOOL)dataIsAvailable {
-  return (_fetchedResultsController && _fetchedResultsController.fetchedObjects.count > 0);
+  if (_tableView == self.searchDisplayController.searchResultsTableView) {
+    return ([_searchItems count] > 0);
+  } else {
+    return (_fetchedResultsController && _fetchedResultsController.fetchedObjects.count > 0);
+  }
 }
 
 - (BOOL)dataIsLoading {
@@ -50,7 +56,7 @@
 #pragma mark Data Source
 - (void)reloadCardController {
   [super reloadCardController];
-  [self executeFetchWithPredicate:nil];
+  [self resetFetchedResultsController];
 }
 
 #pragma mark Core Data
@@ -66,26 +72,16 @@
 
     NSFetchRequest *fetchRequest = [self getFetchRequest];
     if (fetchRequest) {
-      _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[LICoreDataStack managedObjectContext] sectionNameKeyPath:self.sectionNameKeyPathForFetchedResultsController cacheName:nil];
+      _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[LICoreDataStack managedObjectContext] sectionNameKeyPath:self.sectionNameKeyPathForFetchedResultsController cacheName:[NSString stringWithFormat:@"frc_cache_%@", [self class]]];
       _fetchedResultsController.delegate = self;
-      
-      // Cache the original predicate
-      if ([fetchRequest predicate]) {
-        _cachedPredicate = [[fetchRequest predicate] retain];
-      }
     }
+    
+    [self executeFetch];
   }
 }
 
-- (void)executeFetchWithPredicate:(NSPredicate *)predicate {
+- (void)executeFetch {
   NSFetchRequest *fetchRequest = [self.fetchedResultsController fetchRequest];
-  
-  // Set predicate if exists
-  if (predicate) {
-    [fetchRequest setPredicate:predicate];
-  } else {
-    [fetchRequest setPredicate:_cachedPredicate];
-  }
   
   NSError *error;
   if ([self.fetchedResultsController performFetch:&error]) {
@@ -102,70 +98,41 @@
 
 #pragma mark NSFetchedresultsControllerDelegate
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-  if (self.searchDisplayController.active) {
-    [self.searchDisplayController.searchResultsTableView beginUpdates];
-  } else {
-    [self.tableView beginUpdates];
-  }
+  [_tableView beginUpdates];
 }
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-  UITableView *tableView = nil;
-  if (self.searchDisplayController.active) {
-    tableView = self.searchDisplayController.searchResultsTableView;
-  } else {
-    tableView = self.tableView;
-  }
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {  
+  NSLog(@"controller changed with type: %d", type);
   
   switch(type) {
     case NSFetchedResultsChangeInsert:
-      [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+      [_tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
       break;
       
     case NSFetchedResultsChangeDelete:
-      [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+      [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
       break;
       
     case NSFetchedResultsChangeUpdate: {
-      [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+      [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }      
       break;
     case NSFetchedResultsChangeMove:
-      [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+      [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
                        withRowAnimation:UITableViewRowAnimationFade];
-      [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+      [_tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
                        withRowAnimation:UITableViewRowAnimationFade];
       break;
   }
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-  if (self.searchDisplayController.active) {
-    [self.searchDisplayController.searchResultsTableView endUpdates];
-  } else {
-    [self.tableView endUpdates];
-  }  
+  [_tableView endUpdates];
 }
 
 #pragma mark UISearchDisplayDelegate
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
   // SUBCLASS MUST IMPLEMENT
-  
-  NSPredicate *predicate = nil;
-  
-  if ([scope isEqualToString:@"Person"]) {
-    // search friend's full name
-    predicate = [NSPredicate predicateWithFormat:@"friendFullNames CONTAINS[cd] %@", searchText];
-  } else {
-    // default to place name
-    predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
-  }
-  
-  [self executeFetchWithPredicate:predicate];
-}
-
-- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView {
-  [self executeFetchWithPredicate:nil];
 }
 
 #pragma mark UITableViewDelegate
@@ -175,11 +142,19 @@
 
 #pragma mark UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return [[self.fetchedResultsController sections] count];
+  if (tableView == self.searchDisplayController.searchResultsTableView) {
+    return 1;
+  } else {
+    return [[self.fetchedResultsController sections] count];
+  }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
+  if (tableView == self.searchDisplayController.searchResultsTableView) {
+    return [_searchItems count];
+  } else {
+    return [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
+  }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -198,7 +173,6 @@
 - (void)dealloc {
   RELEASE_SAFELY (_fetchedResultsController);
   RELEASE_SAFELY (_sectionNameKeyPathForFetchedResultsController);
-  RELEASE_SAFELY(_cachedPredicate);
   [super dealloc];
 }
 

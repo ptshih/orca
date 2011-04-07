@@ -45,6 +45,12 @@
 #define FM_NETWORK_ERROR @"Moogle has encountered a network error. Please check your network connection and try again."
 
 // Colors
+// CELLS
+#define CELL_BLACK_COLOR [UIColor blackColor]
+#define CELL_GRAY_BLUE_COLOR RGBCOLOR(79.0,92.0,117.0)
+#define CELL_BLUE_COLOR RGBCOLOR(59.0,89.0,152.0)
+#define CELL_DARK_BLUE_COLOR RGBCOLOR(51.0,78.0,141.0)
+
 // FB DARK BLUE 51/78/141
 // FB LIGHT BLUE 161/176/206
 #define FB_COLOR_VERY_LIGHT_BLUE RGBCOLOR(220.0,225.0,235.0)

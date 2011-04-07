@@ -45,31 +45,29 @@ static UIImage *_quoteImage = nil;
   [super drawContentView:r];
   
   CGFloat top = MARGIN_Y;
-  CGFloat left =  MARGIN_X;
+  CGFloat left =  MARGIN_X + 60;
   CGFloat width = self.bounds.size.width - left - MARGIN_X;
   CGRect contentRect = CGRectMake(left, top, width, INT_MAX);
   CGSize drawnSize = CGSizeZero;
   
-  left = _moogleFrameView.right;
-  width = self.bounds.size.width - left - MARGIN_X;
-  contentRect = CGRectMake(left, top, width, INT_MAX);
+  [CELL_BLUE_COLOR set];
   
-  [[UIColor blackColor] set];
-  
-  if ([[_kupo.timestamp humanIntervalSinceNow] length] > 0) {
+  if (_kupo.timestamp && [[_kupo.timestamp humanIntervalSinceNow] length] > 0) {
     drawnSize = [[_kupo.timestamp humanIntervalSinceNow] drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentRight];
     
     contentRect = CGRectMake(left, top, width - drawnSize.width - MARGIN_X, INT_MAX);
   }
   
-  if ([_kupo.authorName length] > 0) {
+  [CELL_BLACK_COLOR set];
+  
+  if (_kupo.authorName && [_kupo.authorName length] > 0) {
     drawnSize = [_kupo.authorName drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
     
-    top += drawnSize.height;
-    contentRect.origin.y = top;
+    top += drawnSize.height;    
+    contentRect = CGRectMake(left, top, width, INT_MAX); // reset to single line
   }
   
-  contentRect = CGRectMake(left, top, width, INT_MAX);
+  [CELL_DARK_BLUE_COLOR set];
   
   NSString *status = nil;
   if ([_kupo.kupoType integerValue] == 0) {
@@ -84,14 +82,16 @@ static UIImage *_quoteImage = nil;
     drawnSize = [status drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
     
     top += drawnSize.height;
-    contentRect.origin.y = top;
+    contentRect = CGRectMake(left, top, width, INT_MAX);
   }
   
-  if ([_kupo.comment length] > 0) {
-    drawnSize = [_kupo.comment drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue" size:COMMENT_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
+  [CELL_GRAY_BLUE_COLOR set];
+  
+  if (_kupo.comment && [_kupo.comment length] > 0) {
+    drawnSize = [_kupo.comment drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:COMMENT_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
     
     top += drawnSize.height;
-    contentRect.origin.y = top;
+    contentRect = CGRectMake(left, top, width, INT_MAX);
   }
   
   if (_hasPhoto) {
@@ -126,22 +126,21 @@ static UIImage *_quoteImage = nil;
   CGFloat top = MARGIN_Y;
   CGFloat left = MARGIN_X + 60; // image
   CGFloat width = [[self class] rowWidth] - left - MARGIN_X;
-  CGSize constrainedSize = CGSizeZero;
+  CGSize constrainedSize = CGSizeMake(width, INT_MAX);
   CGSize size = CGSizeZero;
   
   CGFloat desiredHeight = top;
-  
-  constrainedSize = CGSizeMake(width, INT_MAX);
   
   size = [[kupo.timestamp humanIntervalSinceNow] sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
   
   constrainedSize = CGSizeMake(width - size.width - MARGIN_X, INT_MAX);
   
-  size = [kupo.authorName sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
-  
-  desiredHeight += size.height;
-  
-  constrainedSize = CGSizeMake(width, INT_MAX);
+  if ([kupo.authorName length] > 0) {
+    size = [kupo.authorName sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
+    
+    desiredHeight += size.height;
+    constrainedSize = CGSizeMake(width, INT_MAX); // reset to single line
+  }
   
   NSString *status = nil;
   if ([kupo.kupoType integerValue] == 0) {
@@ -159,7 +158,7 @@ static UIImage *_quoteImage = nil;
   }
   
   if ([kupo.comment length] > 0) {
-    size = [kupo.comment sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:COMMENT_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
+    size = [kupo.comment sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:COMMENT_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
     
     desiredHeight += size.height;
   }
@@ -170,8 +169,9 @@ static UIImage *_quoteImage = nil;
   
   desiredHeight += MARGIN_Y;
   
-  if (desiredHeight < 60 + MARGIN_Y) {
-    desiredHeight = 60 + MARGIN_Y;
+  // If cell is shorter than image, set min height
+  if (desiredHeight < 60) {
+    desiredHeight = 60;
   }
   
   return desiredHeight;
@@ -179,7 +179,8 @@ static UIImage *_quoteImage = nil;
 
 - (void)fillCellWithObject:(id)object {
   Kupo *kupo = (Kupo *)object;
-  _kupo = kupo;
+  if (_kupo) RELEASE_SAFELY(_kupo);
+  _kupo = [kupo retain];
   
   _moogleImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", kupo.authorId];
   
@@ -204,6 +205,7 @@ static UIImage *_quoteImage = nil;
 }
 
 - (void)dealloc {
+  RELEASE_SAFELY(_kupo);
   RELEASE_SAFELY(_photoImageView);
   [super dealloc];
 }

@@ -59,13 +59,15 @@ static UIImage *_unreadImage = nil;
   width = self.bounds.size.width - left - MARGIN_X;
   contentRect = CGRectMake(left, top, width, INT_MAX);
   
-  [[UIColor blackColor] set];
+  [CELL_BLUE_COLOR set];
   
-  if ([[_place.timestamp humanIntervalSinceNow] length] > 0) {
+  if ( _place.timestamp && [[_place.timestamp humanIntervalSinceNow] length] > 0) {
     drawnSize = [[_place.timestamp humanIntervalSinceNow] drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentRight];
     
     contentRect = CGRectMake(left, top, width - drawnSize.width - MARGIN_X, INT_MAX);
   }
+  
+  [CELL_BLACK_COLOR set];
   
   if ([_place.name length] > 0) {
     drawnSize = [_place.name drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
@@ -76,12 +78,16 @@ static UIImage *_unreadImage = nil;
   
   contentRect = CGRectMake(left, top, width, INT_MAX);
   
+  [CELL_DARK_BLUE_COLOR set];
+  
   if ([_place.address length] > 0) {
     drawnSize = [_place.address drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:ADDRESS_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
     
     top += drawnSize.height;
     contentRect.origin.y = top;
   }
+  
+  [CELL_BLACK_COLOR set];
   
   // Last Activity
   NSString *lastActivity = nil;
@@ -106,23 +112,18 @@ static UIImage *_unreadImage = nil;
     contentRect.origin.y = top;
   }
   
-  // Summary
-  NSString *summary = [NSString stringWithFormat:@"Friends: %@", _place.friendFirstNames];
-  if ([summary length] > 0) {
-    drawnSize = [summary drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
+  [CELL_GRAY_BLUE_COLOR set];
+  
+  // Activity Count
+  NSString *activity = ([_place.activityCount integerValue] > 1) ? [NSString stringWithFormat:@"%@ kupos from %@", _place.activityCount, _place.friendFirstNames] : [NSString stringWithFormat:@"%@ kupo from %@", _place.activityCount, _place.friendFirstNames];
+  if ([activity length] > 0) {
+    drawnSize = [activity drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:CELL_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
     
     top += drawnSize.height;
     contentRect.origin.y = top;
   }
   
-  // Activity Count
-  NSString *activity = [NSString stringWithFormat:@"%@ Kupos", _place.activityCount];
-  if ([activity length] > 0) {
-    drawnSize = [activity drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
-    
-    top += drawnSize.height;
-    contentRect.origin.y = top;
-  }
+//  NSLog(@"place for cell height: %@", _place);
 }
     
 - (void)layoutSubviews {
@@ -143,12 +144,10 @@ static UIImage *_unreadImage = nil;
   CGFloat top = MARGIN_Y;
   CGFloat left = MARGIN_X + _unreadImage.size.width + 60; // image + unread dot
   CGFloat width = [[self class] rowWidth] - left - MARGIN_X;
-  CGSize constrainedSize = CGSizeZero;
+  CGSize constrainedSize = CGSizeMake(width, INT_MAX);
   CGSize size = CGSizeZero;
   
   CGFloat desiredHeight = top;
-
-  constrainedSize = CGSizeMake(width, INT_MAX);
   
   size = [[place.timestamp humanIntervalSinceNow] sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
   
@@ -188,23 +187,25 @@ static UIImage *_unreadImage = nil;
     desiredHeight += size.height;
   }
   
-  size = [[NSString stringWithFormat:@"Friends: %@", place.friendFirstNames] sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
+  NSString *activity = ([place.activityCount integerValue] > 1) ? [NSString stringWithFormat:@"%@ kupos from %@", place.activityCount, place.friendFirstNames] : [NSString stringWithFormat:@"%@ kupo from %@", place.activityCount, place.friendFirstNames];
   
-  desiredHeight += size.height;
-  
-  size = [[NSString stringWithFormat:@"%@ Kupos", place.activityCount] sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
+  size = [activity sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
   
   desiredHeight += size.height;
   
   desiredHeight += MARGIN_Y;
   
-//  NSLog(@"desired height calc: %f", desiredHeight);
-  
+  // If cell is shorter than image, set min height
+  if (desiredHeight < 60) {
+    desiredHeight = 60;
+  }
+
   return desiredHeight;
 }
 
 - (void)fillCellWithObject:(id)object {
   Place *place = (Place *)object;
+  if (_place) RELEASE_SAFELY(_place);
   _place = [place retain];
   
 //  _moogleImageView.urlPath = place.pictureUrl;

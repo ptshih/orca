@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "CardViewController.h"
 #import "MoogleImageView.h"
+#import "MoogleImageViewDelegate.h"
 
 @class Kupo;
 
-@interface DetailViewController : CardViewController {
+@interface DetailViewController : CardViewController <MoogleImageViewDelegate> {
   Kupo *_kupo;
   
   MoogleImageView *_photoView;

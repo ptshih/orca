@@ -64,6 +64,8 @@
 		2538FFB2133BFEF700ACE127 /* navigationbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FFAA133BFEF700ACE127 /* navigationbar_bg@2x.png */; };
 		2538FFB3133BFEF700ACE127 /* navigationbar_button_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FFAB133BFEF700ACE127 /* navigationbar_button_back.png */; };
 		2538FFBD133C90A100ACE127 /* photo_frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FFBC133C90A100ACE127 /* photo_frame.png */; };
+		25961C7B134D3DD800A3D4CD /* bamboo_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 25961C79134D3DD800A3D4CD /* bamboo_bg.png */; };
+		25961C7C134D3DD800A3D4CD /* bamboo_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25961C7A134D3DD800A3D4CD /* bamboo_bg@2x.png */; };
 		259C7B4B1349733000C37AE1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B4A1349733000C37AE1 /* Reachability.m */; };
 		259C7B4C1349733000C37AE1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B4A1349733000C37AE1 /* Reachability.m */; };
 		259C7B4E1349735D00C37AE1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 259C7B4D1349735D00C37AE1 /* CFNetwork.framework */; };
@@ -313,6 +315,8 @@
 		2538FFAA133BFEF700ACE127 /* navigationbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationbar_bg@2x.png"; sourceTree = "<group>"; };
 		2538FFAB133BFEF700ACE127 /* navigationbar_button_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigationbar_button_back.png; sourceTree = "<group>"; };
 		2538FFBC133C90A100ACE127 /* photo_frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_frame.png; sourceTree = "<group>"; };
+		25961C79134D3DD800A3D4CD /* bamboo_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bamboo_bg.png; sourceTree = "<group>"; };
+		25961C7A134D3DD800A3D4CD /* bamboo_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bamboo_bg@2x.png"; sourceTree = "<group>"; };
 		259C7B491349733000C37AE1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		259C7B4A1349733000C37AE1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		259C7B4D1349735D00C37AE1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -754,6 +758,8 @@
 		25CEF8FE133A000C006F23A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				25961C79134D3DD800A3D4CD /* bamboo_bg.png */,
+				25961C7A134D3DD800A3D4CD /* bamboo_bg@2x.png */,
 				25D00BDD134B6DE6009D4C70 /* profile_nav_icon.png */,
 				25D00BDE134B6DE7009D4C70 /* profile_nav_icon@2x.png */,
 				25D00BD9134B6C02009D4C70 /* place_nav_icon.png */,
@@ -1171,6 +1177,8 @@
 				25D00BDC134B6C03009D4C70 /* place_nav_icon@2x.png in Resources */,
 				25D00BDF134B6DE8009D4C70 /* profile_nav_icon.png in Resources */,
 				25D00BE0134B6DE8009D4C70 /* profile_nav_icon@2x.png in Resources */,
+				25961C7B134D3DD800A3D4CD /* bamboo_bg.png in Resources */,
+				25961C7C134D3DD800A3D4CD /* bamboo_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1361,7 +1369,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Peter Shih (QGWRZB9J8P)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1371,7 +1379,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PROVISIONING_PROFILE = "AB5D3C6E-C97A-40B6-A700-FB991B6CC3FF";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1380,7 +1388,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Peter Shih (QGWRZB9J8P)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
@@ -1388,7 +1396,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "AB5D3C6E-C97A-40B6-A700-FB991B6CC3FF";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Release;

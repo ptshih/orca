@@ -23,6 +23,8 @@
   EGORefreshTableHeaderView *_refreshHeaderView;
   UIView *_footerView;
   UIView *_loadMoreView;
+  UIButton *_loadMoreButton;
+  UIActivityIndicatorView *_loadMoreActivity;
   BOOL _reloading;
 }
 

@@ -14,7 +14,6 @@
 @interface CardCoreDataTableViewController : CardTableViewController <NSFetchedResultsControllerDelegate> {  
   NSFetchedResultsController * _fetchedResultsController;
   NSString * _sectionNameKeyPathForFetchedResultsController;
-  NSPredicate *_cachedPredicate;
 }
 
 @property (nonatomic, retain) NSFetchedResultsController * fetchedResultsController;
@@ -22,7 +21,7 @@
 
 
 - (void)resetFetchedResultsController;
-- (void)executeFetchWithPredicate:(NSPredicate *)predicate;
+- (void)executeFetch;
 - (NSFetchRequest *)getFetchRequest;
 
 @end

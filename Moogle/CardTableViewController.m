@@ -63,10 +63,11 @@
   _tableView.delegate = self;
   _tableView.dataSource = self;
   if (style == UITableViewStylePlain) {
-    _tableView.backgroundColor = VERY_LIGHT_GRAY;
+    _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorColor = SEPARATOR_COLOR;
   }
-  [self.view insertSubview:self.tableView atIndex:0];
+//  [self.view insertSubview:self.tableView atIndex:0];
+  [self.view addSubview:_tableView];
   
   // Set the active scrollView
   _activeScrollView = _tableView;
@@ -105,31 +106,46 @@
   _loadMoreView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
   _loadMoreView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   _loadMoreView.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
-  UIButton *loadMoreButton = [[UIButton alloc] initWithFrame:_loadMoreView.frame];
-  loadMoreButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-  [loadMoreButton setBackgroundImage:[UIImage imageNamed:@"navigationbar_bg.png"] forState:UIControlStateNormal];
-  [loadMoreButton addTarget:self action:@selector(loadMore) forControlEvents:UIControlEventTouchUpInside];
-  [loadMoreButton setTitle:@"Load More..." forState:UIControlStateNormal];
-  [loadMoreButton.titleLabel setShadowColor:[UIColor blackColor]];
-  [loadMoreButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
-  [loadMoreButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0]];
-  [_loadMoreView addSubview:loadMoreButton];
-  [loadMoreButton release];
   
-  [self showLoadMoreView];
+  // Button
+  _loadMoreButton = [[UIButton alloc] initWithFrame:_loadMoreView.frame];
+  _loadMoreButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  [_loadMoreButton setBackgroundImage:[UIImage imageNamed:@"navigationbar_bg.png"] forState:UIControlStateNormal];
+  [_loadMoreButton addTarget:self action:@selector(loadMore) forControlEvents:UIControlEventTouchUpInside];
+  [_loadMoreButton setTitle:@"Load More..." forState:UIControlStateNormal];
+  [_loadMoreButton.titleLabel setShadowColor:[UIColor blackColor]];
+  [_loadMoreButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+  [_loadMoreButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0]];
+  
+  // Activity
+  _loadMoreActivity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+  _loadMoreActivity.frame = CGRectMake(12, 12, 20, 20);
+  _loadMoreActivity.hidesWhenStopped = YES;
+  
+  // Add to subview
+  [_loadMoreView addSubview:_loadMoreButton];
+  [_loadMoreView addSubview:_loadMoreActivity];
 }
 
 - (void)showLoadMoreView {
-  _tableView.tableFooterView = _loadMoreView;
+  if (_loadMoreView) {
+    [_loadMoreActivity stopAnimating];
+    _loadMoreButton.enabled = YES;
+    _tableView.tableFooterView = _loadMoreView;
+  }
 }
 
 - (void)hideLoadMoreView {
-  _tableView.tableFooterView = nil;
+  if (_loadMoreView) {
+    _loadMoreButton = NO;
+    _tableView.tableFooterView = nil;
+  }
 }
 
 // Subclasses should override
 - (void)loadMore {
-  
+  [_loadMoreActivity startAnimating];
+  _loadMoreButton.enabled = NO;
 }
 
 // Called when the user logs out and we need to clear all cached data
@@ -151,11 +167,18 @@
   [super dataSourceDidLoad];
   _reloading = NO;
 	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+  
+  // Is this a load more call?
+  [self showLoadMoreView];
 }
 
 #pragma mark CardStateMachine
 - (BOOL)dataIsAvailable {
-  return ([[self.items objectAtIndex:0] count] > 0); // check section 0
+  if (_tableView == self.searchDisplayController.searchResultsTableView) {
+    return ([_searchItems count] > 0);
+  } else {
+    return ([[self.items objectAtIndex:0] count] > 0); // check section 0
+  }
 }
 
 - (BOOL)dataSourceIsReady {
@@ -281,6 +304,8 @@
   RELEASE_SAFELY(_headerTabView);
   RELEASE_SAFELY(_footerView);
   RELEASE_SAFELY(_loadMoreView);
+  RELEASE_SAFELY(_loadMoreButton);
+  RELEASE_SAFELY(_loadMoreActivity);
   [self.searchDisplayController release];
   [super dealloc];
 }

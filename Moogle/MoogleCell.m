@@ -63,10 +63,10 @@
 	[_moogleContentView setNeedsDisplay];
 }
 
-//- (void)setNeedsLayout {
-//  [super setNeedsLayout];
-//  [_moogleContentView setNeedsLayout];
-//}
+- (void)setNeedsLayout {
+  [super setNeedsLayout];
+  [_moogleContentView setNeedsLayout];
+}
 
 + (MoogleCellType)cellType {
   return MoogleCellTypePlain;
@@ -116,10 +116,10 @@
   [super setSelected:selected animated:animated];
 }
 
-- (void)setHighlighted:(BOOL)lit {
-	// If highlighted state changes, need to redisplay.
-  [self setNeedsDisplay];
-}
+//- (void)setHighlighted:(BOOL)lit {
+//	// If highlighted state changes, need to redisplay.
+//  [self setNeedsDisplay];
+//}
 
 - (void)dealloc {
   RELEASE_SAFELY(_moogleContentView);

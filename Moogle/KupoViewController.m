@@ -42,11 +42,12 @@
   
   // Footer
   [self setupFooterView];
+  
+  [self reloadCardController];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [self reloadCardController];
 }
 
 - (void)setupFooterView {
@@ -128,6 +129,7 @@
   [cell fillCellWithObject:kupo];
   [cell loadImage];
   [cell loadPhoto];
+  [cell setNeedsDisplay];
   return cell;
 }
 
@@ -147,19 +149,12 @@
 #pragma mark -
 #pragma mark MoogleDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
-  [self executeFetchWithPredicate:nil];
+  [self resetFetchedResultsController];
   [self dataSourceDidLoad];
-  
-//  NSInteger responseCount = [[_kupoDataCenter.response valueForKey:@"count"] integerValue];
-//  if (responseCount > 0) {
-//    [self showLoadMoreView];
-//  } else {
-//    [self hideLoadMoreView];
-//  }
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
-  [self executeFetchWithPredicate:nil];
+  [self resetFetchedResultsController];
   [self dataSourceDidLoad];
 }
 

@@ -20,7 +20,7 @@ static UIImage *_emptyImage = nil;
 @implementation CardViewController
 
 + (void)initialize {
-  _emptyImage = [[UIImage imageNamed:@"empty.png"] retain];
+  _emptyImage = [[UIImage imageNamed:@"bamboo_bg.png"] retain];
 }
 
 - (id)init {
@@ -35,7 +35,7 @@ static UIImage *_emptyImage = nil;
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  _emptyView.alpha = 0.0;
+  _emptyView.alpha = 0.4;
   [self.view addSubview:_emptyView];
   
 //  self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];

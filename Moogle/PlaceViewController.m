@@ -57,11 +57,11 @@
 //  self.navigationItem.rightBarButtonItem = post;
 //  [post release];
   
+  [self reloadCardController];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [self reloadCardController];
 }
 
 - (void)profile {
@@ -87,7 +87,12 @@
 #pragma mark -
 #pragma mark TableView
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  Place *place = nil;
+  if (tableView == self.searchDisplayController.searchResultsTableView) {
+    place = [_searchItems objectAtIndex:indexPath.row];
+  } else {
+    place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  }
   
   return [PlaceCell rowHeightForObject:place];
 }
@@ -95,7 +100,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   
-  Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  Place *place = nil;
+  if (tableView == self.searchDisplayController.searchResultsTableView) {
+    place = [_searchItems objectAtIndex:indexPath.row];
+  } else {
+    place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  }
   
   // Mark isRead state
   NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
@@ -123,13 +133,37 @@
     cell = [[[PlaceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
   }
   
-  Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  Place *place = nil;
+  if (tableView == self.searchDisplayController.searchResultsTableView) {
+    place = [_searchItems objectAtIndex:indexPath.row];
+  } else {
+    place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  }
   
   [cell fillCellWithObject:place];
   [cell loadImage];
+  [cell setNeedsDisplay];
   
   return cell;
 }
+
+#pragma mark -
+#pragma mark UISearchDisplayDelegate
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
+  NSPredicate *predicate = nil;
+  
+  if ([scope isEqualToString:@"Person"]) {
+    // search friend's full name
+    predicate = [NSPredicate predicateWithFormat:@"friendFullNames CONTAINS[cd] %@", searchText];
+  } else {
+    // default to place name
+    predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
+  }
+  
+  [_searchItems removeAllObjects];
+  [_searchItems addObjectsFromArray:[[self.fetchedResultsController fetchedObjects] filteredArrayUsingPredicate:predicate]];
+}
+
 
 #pragma mark -
 #pragma mark CardViewController
@@ -147,29 +181,19 @@
 #pragma mark -
 #pragma mark MoogleDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
-  [self executeFetchWithPredicate:nil];
+  [self resetFetchedResultsController];
   [self dataSourceDidLoad];
-  
-  // Is this a load more call?
-//  BOOL isLoadMore = [[operation requestParams] objectForKey:@"until"] ? YES : NO;
-//  if (isLoadMore) {
-//    NSInteger responseCount = [[_placeDataCenter.response valueForKey:@"count"] integerValue];
-//    if (responseCount > 0) {
-//      [self showLoadMoreView];
-//    } else {
-//      [self hideLoadMoreView];
-//    }
-//  }
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
-  [self executeFetchWithPredicate:nil];
+  [self resetFetchedResultsController];
   [self dataSourceDidLoad];
 }
 
 #pragma mark -
 #pragma mark LoadMore
 - (void)loadMore {
+  [super loadMore];
   [_placeDataCenter loadMorePlaces];
 }
 
