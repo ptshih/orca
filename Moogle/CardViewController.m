@@ -35,8 +35,9 @@ static UIImage *_emptyImage = nil;
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  self.view.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
   _emptyView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _emptyView.alpha = 0.4;
+  _emptyView.alpha = 0.3;
   [self.view addSubview:_emptyView];
   
 //  self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];

@@ -21,6 +21,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  self.view.opaque = YES;
   self.view.frame = CGRectMake(0, 20, 320, 460);
   self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
   self.view.autoresizesSubviews = YES;
