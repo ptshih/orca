@@ -1,5 +1,5 @@
 //
-//  KupoComposeDataCenter.h
+//  ComposeDataCenter.h
 //  Moogle
 //
 //  Created by Peter Shih on 4/2/11.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MoogleDataCenter.h"
 
-@interface KupoComposeDataCenter : MoogleDataCenter {
+@interface ComposeDataCenter : MoogleDataCenter {
 
 }
 

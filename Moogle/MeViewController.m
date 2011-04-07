@@ -17,8 +17,7 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _meDataCenter = [[MeDataCenter alloc ]init];
-    _meDataCenter.delegate = self;
+    [[MeDataCenter defaultCenter] setDelegate:self];
   }
   return self;
 }
@@ -174,7 +173,7 @@
 
 
 - (void)dealloc {
-  RELEASE_SAFELY(_meDataCenter);
+  [[MeDataCenter defaultCenter] setDelegate:nil];
   [super dealloc];
 }
 

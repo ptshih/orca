@@ -159,8 +159,10 @@
 
 - (void)reloadCardController {
   [super reloadCardController];
-  _reloading = YES;
-  [_refreshHeaderView setState:EGOOPullRefreshLoading];
+  if (_refreshHeaderView) {
+    _reloading = YES;
+    [_refreshHeaderView setState:EGOOPullRefreshLoading];
+  }
 }
 
 - (void)unloadCardController {
@@ -170,8 +172,10 @@
 
 - (void)dataSourceDidLoad {
   [super dataSourceDidLoad];
-  _reloading = NO;
-	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+  if (_refreshHeaderView) {
+    _reloading = NO;
+    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+  }
   
   // Is this a load more call?
   [self showLoadMoreView];
@@ -269,7 +273,9 @@
 #pragma mark UIScrollViewDelegate
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
   if (!self.searchDisplayController.active) {
-    [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    if (_refreshHeaderView) {
+      [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    }
   }
 }
 
@@ -277,7 +283,9 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
-	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+  if (_refreshHeaderView) {
+    [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+  }
 }
 
 #pragma mark -
@@ -311,7 +319,6 @@
   RELEASE_SAFELY(_loadMoreView);
   RELEASE_SAFELY(_loadMoreButton);
   RELEASE_SAFELY(_loadMoreActivity);
-  [self.searchDisplayController release];
   [super dealloc];
 }
 

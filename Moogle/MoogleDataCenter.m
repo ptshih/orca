@@ -7,9 +7,8 @@
 //
 
 #import "MoogleDataCenter.h"
-#import "HashValue.h"
 
-static NSString *_secretString = nil;
+static MoogleDataCenter *_defaultCenter = nil;
 
 @interface MoogleDataCenter (Private)
 
@@ -25,59 +24,49 @@ static NSString *_secretString = nil;
 @synthesize response = _response;
 @synthesize rawResponse = _rawResponse;
 @synthesize op = _op;
-@synthesize total = _total;
 
-+ (void)load {
-  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-  // Calculate SHA256 hash for secret
-  HashValue *secretHash = [HashValue sha256HashWithData:[@"omgwtfbbqflylikeag6" dataUsingEncoding:NSUTF8StringEncoding]];
-  _secretString = [[secretHash description] retain];
-  [pool drain];
+#pragma mark -
+#pragma mark Shared Instance
+// Subclasses MUST implement
++ (id)defaultCenter {
+  @synchronized(self) {
+    if (_defaultCenter == nil) {
+      _defaultCenter = [[self alloc] init];
+    }
+    return _defaultCenter;
+  }
 }
 
+#pragma mark -
+#pragma mark Singleton Initialization
 - (id)init {
   self = [super init];
   if (self) {
-    _total = 0;
   }
   return self;
 }
 
-- (NSArray *)sanitizeArray:(NSArray *)array {
-  NSMutableArray *sanitizedArray = [NSMutableArray array];
-  
-  // Loop thru all dictionaries in the array
-  NSDictionary *sanitizedDictionary = nil;
-  for (NSDictionary *dictionary in array) {
-    sanitizedDictionary = [self sanitizeDictionary:dictionary forKeys:[dictionary allKeys]];
-    [sanitizedArray addObject:sanitizedDictionary];
-  }
-
-  return sanitizedArray;
-}
-     
-- (NSDictionary *)sanitizeDictionary:(NSDictionary *)dictionary forKeys:(NSArray *)keys {
- NSMutableDictionary *sanitizedDictionary = [NSMutableDictionary dictionary];
- 
- // Loop thru all keys we expect to get and remove any keys with nil values
- NSString *value = nil;
- for (NSString *key in keys) {
-   value = [dictionary valueForKey:key];
-   
-   if ([value notNil]) {
-     if ([value isKindOfClass:[NSArray class]]) {
-       [sanitizedDictionary setValue:[self sanitizeArray:(NSArray *)value] forKey:key];
-     } else if ([value isKindOfClass:[NSDictionary class]]) {
-       [sanitizedDictionary setValue:[self sanitizeDictionary:(NSDictionary *)value forKeys:[(NSDictionary *)value allKeys]] forKey:key];
-     } else {
-       [sanitizedDictionary setValue:value forKey:key];
-     }
-   }
- }
- 
- return sanitizedDictionary;
+- (id)copyWithZone:(NSZone *)zone {
+  return self;
 }
 
+- (id)retain {
+  return self;
+}
+
+- (NSUInteger)retainCount {
+  return NSUIntegerMax;
+}
+
+- (void)release {
+}
+
+- (id)autorelease {
+  return self;
+}
+
+#pragma mark -
+#pragma mark Serialize
 - (BOOL)serializeResponse:(NSData *)responseData {
   // Serialize the response
   if (_response) {
@@ -102,10 +91,6 @@ static NSString *_secretString = nil;
     DLog(@"### ERROR IN DATA CENTER, RESPONSE IS NEITHER AN ARRAY NOR A DICTIONARY");
   }
   
-  if (self.response && [self.response isKindOfClass:[NSDictionary class]] && [self.response objectForKey:@"total"]) {
-    _total = [[self.response objectForKey:@"total"] integerValue];
-  }
-  
   if (self.response) {
     return YES;
   } else {
@@ -113,6 +98,7 @@ static NSString *_secretString = nil;
   }
 }
 
+#pragma mark -
 #pragma mark Send Operation
 - (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params {
   [self sendOperationWithURL:url andMethod:method andHeaders:headers andParams:params andAttachmentType:NetworkOperationAttachmentTypeNone];
@@ -146,7 +132,6 @@ static NSString *_secretString = nil;
   [_op addRequestHeader:@"X-System-Version" value:[[UIDevice currentDevice] systemVersion]];
   [_op addRequestHeader:@"X-User-Language" value:USER_LANGUAGE];
   [_op addRequestHeader:@"X-User-Locale" value:USER_LOCALE];
-  if (_secretString) [_op addRequestHeader:@"X-Moogle-Secret" value:_secretString];
   if (APP_DELEGATE.sessionKey) [_op addRequestHeader:@"X-Session-Key" value:APP_DELEGATE.sessionKey];
   
   // Build Headers if exists
@@ -179,9 +164,7 @@ static NSString *_secretString = nil;
 
 
 
-/**
- Network Operation Delegate Callbacks
- */
+#pragma mark -
 #pragma mark LINetworkOperationDelegate
 - (void)networkOperationDidFinish:(LINetworkOperation *)operation {
 //  DLog(@"Callback: Operation finished: %@", operation);
@@ -216,6 +199,7 @@ static NSString *_secretString = nil;
 //  DLog(@"Callback: Operation timed out: %@", operation);
 }
 
+#pragma mark -
 #pragma mark Delegate Callbacks
 // Subclass should Implement
 - (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {
@@ -243,12 +227,50 @@ static NSString *_secretString = nil;
   }
 }
 
-- (void)dealloc {
-  if (_op) [_op clearDelegatesAndCancel];
-  RELEASE_SAFELY(_op);
-  RELEASE_SAFELY (_response);
-  RELEASE_SAFELY(_rawResponse);
-  [super dealloc];
+
+#pragma mark -
+#pragma mark Private Convenience Methods
+- (NSArray *)sanitizeArray:(NSArray *)array {
+  NSMutableArray *sanitizedArray = [NSMutableArray array];
+  
+  // Loop thru all dictionaries in the array
+  NSDictionary *sanitizedDictionary = nil;
+  for (NSDictionary *dictionary in array) {
+    sanitizedDictionary = [self sanitizeDictionary:dictionary forKeys:[dictionary allKeys]];
+    [sanitizedArray addObject:sanitizedDictionary];
+  }
+  
+  return sanitizedArray;
 }
+
+- (NSDictionary *)sanitizeDictionary:(NSDictionary *)dictionary forKeys:(NSArray *)keys {
+  NSMutableDictionary *sanitizedDictionary = [NSMutableDictionary dictionary];
+  
+  // Loop thru all keys we expect to get and remove any keys with nil values
+  NSString *value = nil;
+  for (NSString *key in keys) {
+    value = [dictionary valueForKey:key];
+    
+    if ([value notNil]) {
+      if ([value isKindOfClass:[NSArray class]]) {
+        [sanitizedDictionary setValue:[self sanitizeArray:(NSArray *)value] forKey:key];
+      } else if ([value isKindOfClass:[NSDictionary class]]) {
+        [sanitizedDictionary setValue:[self sanitizeDictionary:(NSDictionary *)value forKeys:[(NSDictionary *)value allKeys]] forKey:key];
+      } else {
+        [sanitizedDictionary setValue:value forKey:key];
+      }
+    }
+  }
+  
+  return sanitizedDictionary;
+}
+
+//- (void)dealloc {
+//  if (_op) [_op clearDelegatesAndCancel];
+//  RELEASE_SAFELY(_op);
+//  RELEASE_SAFELY (_response);
+//  RELEASE_SAFELY(_rawResponse);
+//  [super dealloc];
+//}
 
 @end

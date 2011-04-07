@@ -10,7 +10,7 @@
 #import "PlaceDataCenter.h"
 #import "KupoViewController.h"
 #import "MeViewController.h"
-#import "PlacesViewController.h"
+#import "NearbyViewController.h"
 #import "Place.h"
 #import "PlaceCell.h"
 
@@ -19,8 +19,7 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _placeDataCenter = [[PlaceDataCenter alloc] init];
-    _placeDataCenter.delegate = self;
+    [[PlaceDataCenter defaultCenter] setDelegate:self];
     
     _limit = 50;
     
@@ -86,7 +85,7 @@
 }
 
 - (void)checkin {
-  PlacesViewController *mvc = [[PlacesViewController alloc] init];
+  NearbyViewController *mvc = [[NearbyViewController alloc] init];
   UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:mvc];
   //  navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
   [self presentModalViewController:navController animated:YES];
@@ -197,8 +196,8 @@
 - (void)reloadCardController {
   [super reloadCardController];
   
-  [_placeDataCenter getPlaces];
-//  [_placeDataCenter loadPlacesFromFixture];
+  [[PlaceDataCenter defaultCenter] getPlaces];
+//  [[PlaceDataCenter defaultCenter] loadPlacesFromFixture];
 }
 
 - (void)unloadCardController {
@@ -221,13 +220,13 @@
 #pragma mark LoadMore
 - (void)loadMore {
   [super loadMore];
-  [_placeDataCenter loadMorePlaces];
+  [[PlaceDataCenter defaultCenter] loadMorePlaces];
 }
 
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [_placeDataCenter getPlacesFetchRequest];
+  return [[PlaceDataCenter defaultCenter] getPlacesFetchRequest];
 }
 
 #pragma mark -
@@ -247,7 +246,7 @@
 }
 
 - (void)dealloc {
-  RELEASE_SAFELY(_placeDataCenter);
+  [[PlaceDataCenter defaultCenter] setDelegate:nil];
   [super dealloc];
 }
 

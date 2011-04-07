@@ -15,7 +15,6 @@
 @class MeDataCenter;
 
 @interface MeViewController : CardModalTableViewController <FBDialogDelegate> {
-  MeDataCenter *_meDataCenter;
   id <MeDelegate> _delegate;
 }
 

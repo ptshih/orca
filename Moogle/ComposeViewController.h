@@ -1,5 +1,5 @@
 //
-//  KupoComposeViewController.h
+//  ComposeViewController.h
 //  Moogle
 //
 //  Created by Peter Shih on 3/26/11.
@@ -17,13 +17,13 @@ enum {
 };
 typedef uint32_t MoogleComposeType;
 
-@class KupoComposeDataCenter;
+@class ComposeDataCenter;
 
-@interface KupoComposeViewController : CardModalViewController <UITextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate> {
+@interface ComposeViewController : CardModalViewController <UITextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate> {
   MoogleComposeType _moogleComposeType;
   
   UIView *_composeView;
-  MoogleTextView *_kupoComment;
+  MoogleTextView *_comment;
   UIImageView *_backgroundView;
   UIButton *_photoUpload;
   UIButton *_locationButton;
@@ -32,20 +32,17 @@ typedef uint32_t MoogleComposeType;
   NSData *_uploadedVideo;
   NSString *_uploadedVideoPath;
   
-  LINetworkOperation *_op;
-  
   NSString *_placeId;
   BOOL _shouldSaveToAlbum;
   
-  KupoComposeDataCenter *_dataCenter;
+  ComposeDataCenter *_dataCenter;
   id <KupoComposeDelegate> _delegate;
 }
 
-@property (nonatomic, assign) MoogleComposeType moogleComposeType;
-
-@property (nonatomic, retain) MoogleTextView *kupoComment;
-@property (nonatomic, retain) NSString *placeId;
 @property (nonatomic, assign) id <KupoComposeDelegate> delegate;
+@property (nonatomic, assign) MoogleComposeType moogleComposeType;
+@property (nonatomic, retain) MoogleTextView *comment;
+@property (nonatomic, retain) NSString *placeId;
 
 - (void)uploadPicture;
 

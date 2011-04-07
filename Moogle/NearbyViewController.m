@@ -1,30 +1,29 @@
 //
-//  PlacesViewController.h.m
+//  NearbyViewController.h.m
 //  Moogle
 //
 //  Created by Peter Shih on 2/8/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "PlacesViewController.h"
-#import "PlacesDataCenter.h"
+#import "NearbyViewController.h"
+#import "NearbyDataCenter.h"
 #import "MoogleLocation.h"
 #import "NearbyCell.h"
-#import "KupoComposeViewController.h"
+#import "ComposeViewController.h"
 
-@interface PlacesViewController (Private)
+@interface NearbyViewController (Private)
 
 - (void)locationAcquired;
 
 @end
 
-@implementation PlacesViewController
+@implementation NearbyViewController
 
 - (id)init {
   self = [super init];
   if (self) {
-    _placesDataCenter = [[PlacesDataCenter alloc] init];
-    _placesDataCenter.delegate = self;
+    [[NearbyDataCenter defaultCenter] setDelegate:self];
   }
   return self;
 }
@@ -58,7 +57,7 @@
 }
 
 - (void)locationAcquired {
-  [_placesDataCenter getNearbyPlaces];
+  [[NearbyDataCenter defaultCenter] getNearbyPlaces];
 }
 
 #pragma mark MoogleDataCenterDelegate
@@ -67,7 +66,7 @@
   [self.sections addObject:@"Places"];
   
   [self.items removeAllObjects];
-  [self.items addObject:[_placesDataCenter.response valueForKey:@"values"]];
+  [self.items addObject:[[[NearbyDataCenter defaultCenter] response] valueForKey:@"values"]];
   [self.tableView reloadData];
   [self dataSourceDidLoad];
 }
@@ -92,7 +91,7 @@
     place = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
   }
   
-  KupoComposeViewController *kcvc = [[KupoComposeViewController alloc] init];
+  ComposeViewController *kcvc = [[ComposeViewController alloc] init];
   kcvc.moogleComposeType = MoogleComposeTypeCheckin;
   kcvc.placeId = [place valueForKey:@"place_id"];
   [self.navigationController pushViewController:kcvc animated:YES];
@@ -148,7 +147,7 @@
 }
 
 - (void)dealloc {
-  RELEASE_SAFELY(_placesDataCenter);
+  [[NearbyDataCenter defaultCenter] setDelegate:nil];
   [super dealloc];
 }
 

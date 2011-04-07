@@ -1,5 +1,5 @@
 //
-//  PlacesViewController.h
+//  NearbyViewController.h
 //  Moogle
 //
 //  Created by Peter Shih on 2/8/11.
@@ -9,10 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CardModalTableViewController.h"
 
-@class PlacesDataCenter;
-
-@interface PlacesViewController : CardModalTableViewController {
-  PlacesDataCenter *_placesDataCenter;
+@interface NearbyViewController : CardModalTableViewController {
 }
 
 @end

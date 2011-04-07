@@ -1,15 +1,28 @@
 //
-//  PlacesDataCenter.m
+//  NearbyDataCenter.m
 //  Moogle
 //
 //  Created by Peter Shih on 4/3/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "PlacesDataCenter.h"
+#import "NearbyDataCenter.h"
 #import "MoogleLocation.h"
 
-@implementation PlacesDataCenter
+static NearbyDataCenter *_defaultCenter = nil;
+
+@implementation NearbyDataCenter
+
+#pragma mark -
+#pragma mark Shared Instance
++ (id)defaultCenter {
+  @synchronized(self) {
+    if (_defaultCenter == nil) {
+      _defaultCenter = [[self alloc] init];
+    }
+    return _defaultCenter;
+  }
+}
 
 - (void)getNearbyPlaces {
   CGFloat lat = [[MoogleLocation sharedInstance] latitude];

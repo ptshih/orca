@@ -10,10 +10,7 @@
 #import "CardCoreDataTableViewController.h"
 #import "MeDelegate.h"
 
-@class PlaceDataCenter;
-
 @interface PlaceViewController : CardCoreDataTableViewController <MeDelegate, UIAlertViewDelegate> {
-  PlaceDataCenter *_placeDataCenter;
   NSInteger _limit;
   
   BOOL _shouldReloadOnAppear;

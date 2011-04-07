@@ -10,9 +10,21 @@
 #import "Kupo.h"
 #import "Kupo+Serialize.h"
 
+static KupoDataCenter *_defaultCenter = nil;
 static NSMutableDictionary *_pkDict = nil;
 
 @implementation KupoDataCenter
+
+#pragma mark -
+#pragma mark Shared Instance
++ (id)defaultCenter {
+  @synchronized(self) {
+    if (_defaultCenter == nil) {
+      _defaultCenter = [[self alloc] init];
+    }
+    return _defaultCenter;
+  }
+}
 
 + (void)initialize {
   NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];

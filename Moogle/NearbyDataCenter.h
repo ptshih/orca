@@ -1,5 +1,5 @@
 //
-//  PlacesDataCenter.h
+//  NearbyDataCenter.h
 //  Moogle
 //
 //  Created by Peter Shih on 4/3/11.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MoogleDataCenter.h"
 
-@interface PlacesDataCenter : MoogleDataCenter {
+@interface NearbyDataCenter : MoogleDataCenter {
 
 }
 

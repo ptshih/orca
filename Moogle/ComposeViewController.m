@@ -1,22 +1,22 @@
 //
-//  KupoComposeViewController.m
+//  ComposeViewController.m
 //  Moogle
 //
 //  Created by Peter Shih on 3/26/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "KupoComposeViewController.h"
+#import "ComposeViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "UIImage+ScalingAndCropping.h"
 #import "Place.h"
-#import "KupoComposeDataCenter.h"
+#import "ComposeDataCenter.h"
 
 #define SPACING 4.0
 #define PORTRAIT_HEIGHT 180.0
 #define LANDSCAPE_HEIGHT 74.0
 
-@implementation KupoComposeViewController (CameraDelegateMethods)
+@implementation ComposeViewController (CameraDelegateMethods)
 
 // For responding to the user tapping Cancel.
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -90,10 +90,10 @@
 
 @end
 
-@implementation KupoComposeViewController
+@implementation ComposeViewController
 
 @synthesize moogleComposeType = _moogleComposeType;
-@synthesize kupoComment = _kupoComment;
+@synthesize comment = _comment;
 @synthesize placeId = _placeId;
 @synthesize delegate = _delegate;
 
@@ -103,8 +103,7 @@
     _moogleComposeType = MoogleComposeTypeKupo;
     _shouldSaveToAlbum = NO;
     
-    _dataCenter = [[KupoComposeDataCenter alloc] init];
-    _dataCenter.delegate = self;
+    [[ComposeDataCenter defaultCenter] setDelegate:self];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -156,28 +155,28 @@
   
   left = _photoUpload.right + 10;
 
-  _kupoComment = [[MoogleTextView alloc] initWithFrame:CGRectMake(left, top, 220, 30)];
-  _kupoComment.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	_kupoComment.returnKeyType = UIReturnKeyDefault;
-	_kupoComment.font = [UIFont boldSystemFontOfSize:14.0];
-	_kupoComment.delegate = self;
-  [_composeView addSubview:_kupoComment];
+  _comment = [[MoogleTextView alloc] initWithFrame:CGRectMake(left, top, 220, 30)];
+  _comment.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	_comment.returnKeyType = UIReturnKeyDefault;
+	_comment.font = [UIFont boldSystemFontOfSize:14.0];
+	_comment.delegate = self;
+  [_composeView addSubview:_comment];
   
-  _backgroundView = [[UIImageView alloc] initWithFrame:_kupoComment.frame];
+  _backgroundView = [[UIImageView alloc] initWithFrame:_comment.frame];
   _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   _backgroundView.image = [[UIImage imageNamed:@"textview_bg.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15];
   [_composeView insertSubview:_backgroundView atIndex:0];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  [_kupoComment becomeFirstResponder];
+  [_comment becomeFirstResponder];
 }
 
 - (void)send {
   if (_moogleComposeType == MoogleComposeTypeKupo) {
-    [_dataCenter sendKupoComposeWithPlaceId:self.placeId andComment:_kupoComment.text andImage:_uploadedImage andVideo:_uploadedVideo];
+    [_dataCenter sendKupoComposeWithPlaceId:self.placeId andComment:_comment.text andImage:_uploadedImage andVideo:_uploadedVideo];
   } else {
-    [_dataCenter sendCheckinComposeWithPlaceId:self.placeId andComment:_kupoComment.text andImage:_uploadedImage andVideo:_uploadedVideo];
+    [_dataCenter sendCheckinComposeWithPlaceId:self.placeId andComment:_comment.text andImage:_uploadedImage andVideo:_uploadedVideo];
   }
   [self dismissModalViewControllerAnimated:YES];
 }
@@ -265,10 +264,10 @@
   
   CGRect keyboardFrame = [UIScreen convertRect:keyboardEndFrame toView:self.view];
   _composeView.height = self.view.bounds.size.height - keyboardFrame.size.height;
-  _kupoComment.height = up ? self.view.bounds.size.height - keyboardFrame.size.height - 20 : 30;
-  _backgroundView.height = _kupoComment.height;
-//  _photoUpload.top = _kupoComment.bottom + 10;
-//  _locationButton.top = _kupoComment.bottom + 10;
+  _comment.height = up ? self.view.bounds.size.height - keyboardFrame.size.height - 20 : 30;
+  _backgroundView.height = _comment.height;
+//  _photoUpload.top = _comment.bottom + 10;
+//  _locationButton.top = _comment.bottom + 10;
 
   [UIView commitAnimations];
 }
@@ -277,15 +276,12 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
   
-  if (_op) [_op clearDelegatesAndCancel];
-  RELEASE_SAFELY(_op);
+  [[ComposeDataCenter defaultCenter] setDelegate:nil];
   
-  RELEASE_SAFELY(_dataCenter);
   RELEASE_SAFELY(_placeId);
-  
   RELEASE_SAFELY(_composeView);
   RELEASE_SAFELY(_photoUpload);
-  RELEASE_SAFELY(_kupoComment);
+  RELEASE_SAFELY(_comment);
   RELEASE_SAFELY(_locationButton);
   RELEASE_SAFELY(_uploadedImage);
   RELEASE_SAFELY(_uploadedVideo);

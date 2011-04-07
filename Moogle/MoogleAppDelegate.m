@@ -47,8 +47,7 @@
   self.window.backgroundColor = FB_COLOR_DARK_GRAY_BLUE;
   
   // Login/Session/Register data center
-  _loginDataCenter = [[LoginDataCenter alloc] init];
-  _loginDataCenter.delegate = self;
+  [[LoginDataCenter defaultCenter] setDelegate:self];
 
   // Setup Facebook
   _facebook = [[Facebook alloc] initWithAppId:FB_APP_ID];
@@ -151,13 +150,13 @@
 - (void)startSession {
   // This gets called on subsequent app launches
   [self resetSessionKey];
-  [_loginDataCenter startSession];
+  [[LoginDataCenter defaultCenter] startSession];
 }
 
 - (void)startRegister {
   // This gets called] if it is the first time logging in
   [self resetSessionKey];
-  [_loginDataCenter startRegister];
+  [[LoginDataCenter defaultCenter] startRegister];
 }
 
 - (void)resetSessionKey {
@@ -180,9 +179,9 @@
   if ([requestUrlString rangeOfString:@"register"].location != NSNotFound) {  
     // Moogle server will send user ID, name, and array of friend ids
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
-    [[NSUserDefaults standardUserDefaults] setObject:[_loginDataCenter.response valueForKey:@"facebook_id"] forKey:@"facebookId"];
-    [[NSUserDefaults standardUserDefaults] setObject:[_loginDataCenter.response valueForKey:@"name"] forKey:@"facebookName"];
-    [[NSUserDefaults standardUserDefaults] setObject:[_loginDataCenter.response valueForKey:@"friends"] forKey:@"friends"];
+    [[NSUserDefaults standardUserDefaults] setObject:[[[LoginDataCenter defaultCenter] response] valueForKey:@"facebook_id"] forKey:@"facebookId"];
+    [[NSUserDefaults standardUserDefaults] setObject:[[[LoginDataCenter defaultCenter] response] valueForKey:@"name"] forKey:@"facebookName"];
+    [[NSUserDefaults standardUserDefaults] setObject:[[[LoginDataCenter defaultCenter] response] valueForKey:@"friends"] forKey:@"friends"];
     [[NSUserDefaults standardUserDefaults] synchronize];
   }
   
@@ -216,8 +215,8 @@
 }
 
 - (void)dealloc {
+  [[LoginDataCenter defaultCenter] setDelegate:nil];
   RELEASE_SAFELY(_sessionKey);
-  RELEASE_SAFELY(_loginDataCenter);
   RELEASE_SAFELY(_loginViewController);
   RELEASE_SAFELY(_launcherViewcontroller);
   RELEASE_SAFELY(_placeViewController);

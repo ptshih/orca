@@ -14,7 +14,6 @@
 @class LoginViewController;
 @class LauncherViewController;
 @class PlaceViewController;
-@class LoginDataCenter;
 
 @interface MoogleAppDelegate : NSObject <UIApplicationDelegate, LoginDelegate, MoogleDataCenterDelegate> {
   UIWindow *_window;
@@ -23,8 +22,6 @@
   LauncherViewController *_launcherViewcontroller;
   PlaceViewController *_placeViewController;
   UINavigationController *_navigationController;
-  
-  LoginDataCenter *_loginDataCenter;
   
   // Session
   NSString *_sessionKey;

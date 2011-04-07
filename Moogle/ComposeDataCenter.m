@@ -1,15 +1,28 @@
 //
-//  KupoComposeDataCenter.m
+//  ComposeDataCenter.m
 //  Moogle
 //
 //  Created by Peter Shih on 4/2/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "KupoComposeDataCenter.h"
+#import "ComposeDataCenter.h"
 #import "MoogleLocation.h"
 
-@implementation KupoComposeDataCenter
+static ComposeDataCenter *_defaultCenter = nil;
+
+@implementation ComposeDataCenter
+
+#pragma mark -
+#pragma mark Shared Instance
++ (id)defaultCenter {
+  @synchronized(self) {
+    if (_defaultCenter == nil) {
+      _defaultCenter = [[self alloc] init];
+    }
+    return _defaultCenter;
+  }
+}
 
 - (void)sendKupoComposeWithPlaceId:(NSString *)placeId andComment:(NSString *)comment andImage:(UIImage *)image andVideo:(NSData *)video {
   NSURL *kupoComposeUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/kupos/new", MOOGLE_BASE_URL]];

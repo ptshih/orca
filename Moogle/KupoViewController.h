@@ -9,11 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "CardCoreDataTableViewController.h"
 
-@class KupoDataCenter;
 @class Place;
 
 @interface KupoViewController : CardCoreDataTableViewController {
-  KupoDataCenter *_kupoDataCenter;
   Place *_place;
 }
 

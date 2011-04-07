@@ -13,7 +13,7 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _dismissButtonTitle = @"Cancel";
+    _dismissButtonTitle = [NSLocalizedString(@"Cancel", @"Cancel") retain];
   }
   return self;
 }

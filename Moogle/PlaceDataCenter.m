@@ -10,9 +10,21 @@
 #import "Place.h"
 #import "Place+Serialize.h"
 
+static PlaceDataCenter *_defaultCenter = nil;
 static NSMutableDictionary *_pkDict = nil;
 
 @implementation PlaceDataCenter
+
+#pragma mark -
+#pragma mark Shared Instance
++ (id)defaultCenter {
+  @synchronized(self) {
+    if (_defaultCenter == nil) {
+      _defaultCenter = [[self alloc] init];
+    }
+    return _defaultCenter;
+  }
+}
 
 + (void)initialize {
   NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];

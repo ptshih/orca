@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		25033EA91347402800633052 /* KupoComposeDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA81347402300633052 /* KupoComposeDataCenter.m */; };
-		25033EAA1347402800633052 /* KupoComposeDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA81347402300633052 /* KupoComposeDataCenter.m */; };
-		25033EB5134866A200633052 /* PlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EB4134866A100633052 /* PlacesViewController.m */; };
-		25033EB6134866A200633052 /* PlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EB4134866A100633052 /* PlacesViewController.m */; };
-		25033EB91348670E00633052 /* PlacesDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EB81348670700633052 /* PlacesDataCenter.m */; };
-		25033EBA1348670E00633052 /* PlacesDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EB81348670700633052 /* PlacesDataCenter.m */; };
+		25033EA91347402800633052 /* ComposeDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA81347402300633052 /* ComposeDataCenter.m */; };
+		25033EAA1347402800633052 /* ComposeDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EA81347402300633052 /* ComposeDataCenter.m */; };
+		25033EB5134866A200633052 /* NearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EB4134866A100633052 /* NearbyViewController.m */; };
+		25033EB6134866A200633052 /* NearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EB4134866A100633052 /* NearbyViewController.m */; };
+		25033EB91348670E00633052 /* NearbyDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EB81348670700633052 /* NearbyDataCenter.m */; };
+		25033EBA1348670E00633052 /* NearbyDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25033EB81348670700633052 /* NearbyDataCenter.m */; };
 		2507996D13487925003269F8 /* NearbyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2507996C13487925003269F8 /* NearbyCell.m */; };
 		250B3188133EBDE70011EEDD /* CardModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B3187133EBDE70011EEDD /* CardModalViewController.m */; };
-		250B318B133EBF0C0011EEDD /* KupoComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B318A133EBF0B0011EEDD /* KupoComposeViewController.m */; };
+		250B318B133EBF0C0011EEDD /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B318A133EBF0B0011EEDD /* ComposeViewController.m */; };
 		250B31AE133EC4220011EEDD /* MoogleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31AD133EC4220011EEDD /* MoogleView.m */; };
 		250B31DF13411DBD0011EEDD /* textview_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31DD13411DBD0011EEDD /* textview_bg.png */; };
 		250B31E013411DBD0011EEDD /* textview_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31DE13411DBD0011EEDD /* textview_bg@2x.png */; };
@@ -249,18 +249,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		25033EA71347402100633052 /* KupoComposeDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeDataCenter.h; sourceTree = "<group>"; };
-		25033EA81347402300633052 /* KupoComposeDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KupoComposeDataCenter.m; sourceTree = "<group>"; };
-		25033EB3134866A000633052 /* PlacesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacesViewController.h; sourceTree = "<group>"; };
-		25033EB4134866A100633052 /* PlacesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacesViewController.m; sourceTree = "<group>"; };
-		25033EB71348670300633052 /* PlacesDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacesDataCenter.h; sourceTree = "<group>"; };
-		25033EB81348670700633052 /* PlacesDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacesDataCenter.m; sourceTree = "<group>"; };
+		25033EA71347402100633052 /* ComposeDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeDataCenter.h; sourceTree = "<group>"; };
+		25033EA81347402300633052 /* ComposeDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeDataCenter.m; sourceTree = "<group>"; };
+		25033EB3134866A000633052 /* NearbyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyViewController.h; sourceTree = "<group>"; };
+		25033EB4134866A100633052 /* NearbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyViewController.m; sourceTree = "<group>"; };
+		25033EB71348670300633052 /* NearbyDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyDataCenter.h; sourceTree = "<group>"; };
+		25033EB81348670700633052 /* NearbyDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyDataCenter.m; sourceTree = "<group>"; };
 		2507996B13487925003269F8 /* NearbyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyCell.h; sourceTree = "<group>"; };
 		2507996C13487925003269F8 /* NearbyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyCell.m; sourceTree = "<group>"; };
 		250B3186133EBDE70011EEDD /* CardModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardModalViewController.h; sourceTree = "<group>"; };
 		250B3187133EBDE70011EEDD /* CardModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardModalViewController.m; sourceTree = "<group>"; };
-		250B3189133EBF0B0011EEDD /* KupoComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeViewController.h; sourceTree = "<group>"; };
-		250B318A133EBF0B0011EEDD /* KupoComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KupoComposeViewController.m; sourceTree = "<group>"; };
+		250B3189133EBF0B0011EEDD /* ComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
+		250B318A133EBF0B0011EEDD /* ComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
 		250B31AC133EC4220011EEDD /* MoogleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleView.h; sourceTree = "<group>"; };
 		250B31AD133EC4220011EEDD /* MoogleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoogleView.m; sourceTree = "<group>"; };
 		250B31AF133EC86A0011EEDD /* KupoComposeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeDelegate.h; sourceTree = "<group>"; };
@@ -554,14 +554,14 @@
 				250B3187133EBDE70011EEDD /* CardModalViewController.m */,
 				25EFD4191343F596000108B8 /* CardModalTableViewController.h */,
 				25EFD41A1343F59F000108B8 /* CardModalTableViewController.m */,
-				250B3189133EBF0B0011EEDD /* KupoComposeViewController.h */,
-				250B318A133EBF0B0011EEDD /* KupoComposeViewController.m */,
+				250B3189133EBF0B0011EEDD /* ComposeViewController.h */,
+				250B318A133EBF0B0011EEDD /* ComposeViewController.m */,
 				25FB8BDA133A9B1000C130A8 /* MeViewController.h */,
 				25FB8BDB133A9B1200C130A8 /* MeViewController.m */,
 				25EFD3F91343D64A000108B8 /* CheckinViewController.h */,
 				25EFD3FA1343D64A000108B8 /* CheckinViewController.m */,
-				25033EB3134866A000633052 /* PlacesViewController.h */,
-				25033EB4134866A100633052 /* PlacesViewController.m */,
+				25033EB3134866A000633052 /* NearbyViewController.h */,
+				25033EB4134866A100633052 /* NearbyViewController.m */,
 			);
 			name = Modals;
 			sourceTree = "<group>";
@@ -955,10 +955,10 @@
 				25EFD3FE1343E18E000108B8 /* LoginDataCenter.m */,
 				25EFD4151343F406000108B8 /* MeDataCenter.h */,
 				25EFD4161343F409000108B8 /* MeDataCenter.m */,
-				25033EA71347402100633052 /* KupoComposeDataCenter.h */,
-				25033EA81347402300633052 /* KupoComposeDataCenter.m */,
-				25033EB71348670300633052 /* PlacesDataCenter.h */,
-				25033EB81348670700633052 /* PlacesDataCenter.m */,
+				25033EA71347402100633052 /* ComposeDataCenter.h */,
+				25033EA81347402300633052 /* ComposeDataCenter.m */,
+				25033EB71348670300633052 /* NearbyDataCenter.h */,
+				25033EB81348670700633052 /* NearbyDataCenter.m */,
 			);
 			name = DataCenters;
 			sourceTree = "<group>";
@@ -1274,7 +1274,7 @@
 				2538FF63133B439600ACE127 /* KupoCell.m in Sources */,
 				2538FF90133BDDBF00ACE127 /* LIImageCache.m in Sources */,
 				250B3188133EBDE70011EEDD /* CardModalViewController.m in Sources */,
-				250B318B133EBF0C0011EEDD /* KupoComposeViewController.m in Sources */,
+				250B318B133EBF0C0011EEDD /* ComposeViewController.m in Sources */,
 				250B31AE133EC4220011EEDD /* MoogleView.m in Sources */,
 				250B31E3134131FA0011EEDD /* UIScreen+ConvertRect.m in Sources */,
 				250B31EB134162A90011EEDD /* MoogleTextView.m in Sources */,
@@ -1285,9 +1285,9 @@
 				25EFD4171343F40E000108B8 /* MeDataCenter.m in Sources */,
 				25EFD41B1343F5A9000108B8 /* CardModalTableViewController.m in Sources */,
 				25FF620413440D1C001EF441 /* ShareCell.m in Sources */,
-				25033EA91347402800633052 /* KupoComposeDataCenter.m in Sources */,
-				25033EB5134866A200633052 /* PlacesViewController.m in Sources */,
-				25033EB91348670E00633052 /* PlacesDataCenter.m in Sources */,
+				25033EA91347402800633052 /* ComposeDataCenter.m in Sources */,
+				25033EB5134866A200633052 /* NearbyViewController.m in Sources */,
+				25033EB91348670E00633052 /* NearbyDataCenter.m in Sources */,
 				2507996D13487925003269F8 /* NearbyCell.m in Sources */,
 				259C7B4B1349733000C37AE1 /* Reachability.m in Sources */,
 				259C7B601349BCEA00C37AE1 /* DetailViewController.m in Sources */,
@@ -1345,9 +1345,9 @@
 				25EFD4061343E774000108B8 /* HashValue.m in Sources */,
 				25EFD4181343F40E000108B8 /* MeDataCenter.m in Sources */,
 				25EFD41C1343F5A9000108B8 /* CardModalTableViewController.m in Sources */,
-				25033EAA1347402800633052 /* KupoComposeDataCenter.m in Sources */,
-				25033EB6134866A200633052 /* PlacesViewController.m in Sources */,
-				25033EBA1348670E00633052 /* PlacesDataCenter.m in Sources */,
+				25033EAA1347402800633052 /* ComposeDataCenter.m in Sources */,
+				25033EB6134866A200633052 /* NearbyViewController.m in Sources */,
+				25033EBA1348670E00633052 /* NearbyDataCenter.m in Sources */,
 				259C7B4C1349733000C37AE1 /* Reachability.m in Sources */,
 				259C7B611349BCEA00C37AE1 /* DetailViewController.m in Sources */,
 				259C7B76134A92FB00C37AE1 /* VideoViewController.m in Sources */,

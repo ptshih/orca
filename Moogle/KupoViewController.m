@@ -10,7 +10,7 @@
 #import "KupoDataCenter.h"
 #import "KupoCell.h"
 #import "Place.h"
-#import "KupoComposeViewController.h"
+#import "ComposeViewController.h"
 #import "DetailViewController.h"
 #import "VideoViewController.h"
 
@@ -21,8 +21,7 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _kupoDataCenter = [[KupoDataCenter alloc] init];
-    _kupoDataCenter.delegate = self;
+    [[KupoDataCenter defaultCenter] setDelegate:self];
   }
   return self;
 }
@@ -79,7 +78,7 @@
 }
    
 - (void)composeKupo {
-  KupoComposeViewController *kcvc = [[KupoComposeViewController alloc] init];
+  ComposeViewController *kcvc = [[ComposeViewController alloc] init];
   kcvc.moogleComposeType = MoogleComposeTypeKupo;
   kcvc.placeId = self.place.placeId;
   UINavigationController *kupoNav = [[UINavigationController alloc] initWithRootViewController:kcvc];
@@ -149,8 +148,8 @@
 - (void)reloadCardController {
   [super reloadCardController];
   
-  [_kupoDataCenter getKuposForPlaceWithPlaceId:self.place.placeId];
-//  [_kupoDataCenter loadKuposFromFixture];
+  [[KupoDataCenter defaultCenter] getKuposForPlaceWithPlaceId:self.place.placeId];
+//  [[KupoDataCenter defaultCenter] loadKuposFromFixture];
 }
 
 - (void)unloadCardController {
@@ -172,11 +171,11 @@
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [_kupoDataCenter getKuposFetchRequestWithPlaceId:self.place.placeId];
+  return [[KupoDataCenter defaultCenter] getKuposFetchRequestWithPlaceId:self.place.placeId];
 }
 
 - (void)dealloc {
-  RELEASE_SAFELY(_kupoDataCenter);
+  [[KupoDataCenter defaultCenter] setDelegate:nil];
   RELEASE_SAFELY(_place);
   [super dealloc];
 }
