@@ -35,25 +35,25 @@
 //  [logo release];
   
   // Setup Login Buttons
-  UIButton *login = [[UIButton alloc] initWithFrame:CGRectZero];
-  login.width = 280.0;
-  login.height = 39.0;
-  login.left = 20.0;
-  login.top = self.view.height - login.height - 20.0;
-  [login setBackgroundImage:[UIImage imageNamed:@"login_facebook.png"] forState:UIControlStateNormal];
-  [login setContentEdgeInsets:UIEdgeInsetsMake(-4, 28, 0, 0)];
-  [login setTitle:@"Connect with Facebook" forState:UIControlStateNormal];
-  [login setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-  [login setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-  login.titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
-  [login addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:login];
-  [login release];
+  _loginButton = [[UIButton alloc] initWithFrame:CGRectZero];
+  _loginButton.width = 280.0;
+  _loginButton.height = 39.0;
+  _loginButton.left = 20.0;
+  _loginButton.top = self.view.height - _loginButton.height - 20.0;
+  [_loginButton setBackgroundImage:[UIImage imageNamed:@"login_facebook.png"] forState:UIControlStateNormal];
+  [_loginButton setContentEdgeInsets:UIEdgeInsetsMake(-4, 28, 0, 0)];
+  [_loginButton setTitle:@"Connect with Facebook" forState:UIControlStateNormal];
+  [_loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  [_loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+  _loginButton.titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
+  [_loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:_loginButton];
 }
 
 #pragma mark -
 #pragma mark Button Actions
 - (void)login {
+  _loginButton.hidden = YES;
   [_facebook authorize:FB_PERMISSIONS delegate:self];
 }
      
@@ -76,7 +76,7 @@
 }
 
 - (void)fbDidNotLogin:(BOOL)cancelled {
-
+  _loginButton.hidden = NO;
 }
 
 - (void)fbDidLogout {
@@ -90,10 +90,12 @@
   if (self.delegate && [self.delegate respondsToSelector:@selector(moogleDidLogout)]) {
     [self.delegate performSelector:@selector(moogleDidLogout)];
   }
+  _loginButton.hidden = NO;
 }
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kLogoutRequested object:nil];
+  RELEASE_SAFELY(_loginButton);
   [super dealloc];
 }
 

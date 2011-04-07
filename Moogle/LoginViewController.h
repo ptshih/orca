@@ -13,7 +13,7 @@
 
 @interface LoginViewController : MoogleViewController <FBSessionDelegate> {
   Facebook *_facebook;
-  
+  UIButton *_loginButton;
   id <LoginDelegate> _delegate;
 }
 

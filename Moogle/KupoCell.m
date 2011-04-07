@@ -91,7 +91,7 @@ static UIImage *_quoteImage = nil;
     drawnSize = [_kupo.comment drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:COMMENT_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
     
     top += drawnSize.height;
-    contentRect = CGRectMake(left, top, width, INT_MAX);
+//    contentRect = CGRectMake(left, top, width, INT_MAX);
   }
   
   if (_hasPhoto) {
