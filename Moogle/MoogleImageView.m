@@ -70,9 +70,11 @@ static UIImage *_placeholderImage = nil;
   UIImage *image = [UIImage imageWithData:[operation responseData]];
   if (image) {
     [[LIImageCache sharedCache] cacheImage:image forURLPath:[[operation requestURL] absoluteString]];
-    self.image = image;
+    if (self.urlPath == [[operation requestURL] absoluteString]) {
+      self.image = image;
+      [self imageDidLoad];
+    }
   }
-  [self imageDidLoad];
   
   //  NSLog(@"Image width: %f, height: %f", image.size.width, image.size.height);
 }
