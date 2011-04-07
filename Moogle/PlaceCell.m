@@ -19,7 +19,7 @@ static UIImage *_unreadImage = nil;
 @implementation PlaceCell
 
 + (void)initialize {
-  _unreadImage = [[[UIImage imageNamed:@"unread.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:0] retain];
+  _unreadImage = [[[UIImage imageNamed:@"unread.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0] retain];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {

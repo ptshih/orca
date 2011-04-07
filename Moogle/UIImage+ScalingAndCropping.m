@@ -10,6 +10,31 @@
 
 @implementation UIImage (ScalingAndCropping)
 
+- (CGSize)scaledSizeProportionalToSize:(CGSize)desiredSize {
+  if(self.size.width > self.size.height) {
+    // Landscape
+    desiredSize = CGSizeMake((self.size.width / self.size.height) * desiredSize.height, desiredSize.height);
+  } else {
+    // Portrait
+    desiredSize = CGSizeMake(desiredSize.width, (self.size.height / self.size.width) * desiredSize.width);
+  }
+  
+  return desiredSize;
+}
+
+- (CGSize)scaledSizeBoundedByWidth:(CGFloat)desiredWidth {
+  CGSize desiredSize;
+  if(self.size.width > self.size.height) {
+    // Landscape
+    desiredSize = CGSizeMake(desiredWidth, (self.size.width / (self.size.width / desiredWidth)));
+  } else {
+    // Portrait
+    desiredSize = CGSizeMake(desiredWidth, (self.size.height / self.size.width) * desiredWidth);
+  }
+  
+  return desiredSize;
+}
+
 - (UIImage *)scaleToSize:(CGSize)desiredSize {
   CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
   CGContextRef ctx = CGBitmapContextCreate(NULL, desiredSize.width, desiredSize.height, 8, 0, colorSpaceRef, kCGImageAlphaPremultipliedLast);

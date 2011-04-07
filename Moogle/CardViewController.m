@@ -57,7 +57,7 @@ static UIImage *_emptyImage = nil;
   self.navigationItem.titleView = navTitleView;
   [navTitleView release];
   
-  self.navigationController.navigationBar.tintColor = FB_COLOR_DARK_GRAY_BLUE;
+  self.navigationController.navigationBar.tintColor = NAV_COLOR_DARK_GREEN;
   
 //  self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-logo.png"]] autorelease];
 }

@@ -59,6 +59,7 @@
 }
 
 - (void)dealloc {
+  RELEASE_SAFELY(_kupo);
   RELEASE_SAFELY(_player);
   [super dealloc];
 }

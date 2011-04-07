@@ -30,34 +30,36 @@ static UIImage *_quoteImage = nil;
   
   self.view.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
   
-  _navTitleLabel.text = self.kupo.authorName;
-  
-  _quoteImageView = [[UIImageView alloc] initWithImage:_quoteImage];
-  _quoteImageView.hidden = YES;
+  _navTitleLabel.text = self.kupo.comment;
   
   // Photo Frame
   _photoFrameView = [[UIImageView alloc] initWithImage:_photoFrame];
   _photoFrameView.frame = CGRectMake(10, 10, 300, 100);
   
   // Photo
-  _photoView = [[MoogleImageView alloc] initWithFrame:CGRectMake(20, 20, 280, 80)];
+  _photoView = [[MoogleImageView alloc] initWithFrame:CGRectMake(20, 20, self.view.bounds.size.width - 40, self.view.bounds.size.height - 40)];
+  _photoView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+  _photoView.contentMode = UIViewContentModeScaleAspectFit;
+  _photoView.layer.cornerRadius = 10.0;
+  _photoView.layer.masksToBounds = YES;
   _photoView.delegate = self;
   _photoView.urlPath = [NSString stringWithFormat:@"%@/%@/original/%@", S3_PHOTOS_URL, self.kupo.id, self.kupo.photoFileName];
   [_photoView loadImage];
   
-
+  //  _quoteImageView = [[UIImageView alloc] initWithImage:_quoteImage];
+  //  _quoteImageView.hidden = YES;
   
-  _commentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  _commentLabel.text = self.kupo.comment;
-  _commentLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:COMMENT_FONT_SIZE];
-  _commentLabel.numberOfLines = 0;
-  _commentLabel.lineBreakMode = UILineBreakModeWordWrap;
-  _commentLabel.backgroundColor = [UIColor clearColor];
+//  _commentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+//  _commentLabel.text = self.kupo.comment;
+//  _commentLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:COMMENT_FONT_SIZE];
+//  _commentLabel.numberOfLines = 0;
+//  _commentLabel.lineBreakMode = UILineBreakModeWordWrap;
+//  _commentLabel.backgroundColor = [UIColor clearColor];
   
-  [self.view addSubview:_quoteImageView];
-  [self.view addSubview:_photoFrameView];
+//  [self.view addSubview:_photoFrameView];
   [self.view addSubview:_photoView];
-  [self.view addSubview:_commentLabel];
+//  [self.view addSubview:_quoteImageView];
+//  [self.view addSubview:_commentLabel];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -68,34 +70,28 @@ static UIImage *_quoteImage = nil;
 #pragma mark -
 #pragma mark ImageViewDelegate
 - (void)imageDidLoad:(UIImage *)image {
-  CGSize imageSize = _photoView.image.size;
+//  [UIView beginAnimations:nil context:nil];
+//  [UIView setAnimationDuration:0.4];
+//  [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+//  [UIView commitAnimations];
   
-  CGFloat prop = imageSize.width / 280;
-  
-  [UIView beginAnimations:nil context:nil];
-  [UIView setAnimationDuration:0.4];
-  [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-  _photoView.height = floor(imageSize.height / prop);
-  _photoFrameView.height = _photoView.height + 20;
-  [UIView commitAnimations];
-  
-  CGFloat left = _photoView.left;
-  CGFloat top = _photoView.bottom + 10;
-  
-  // Comment Label
-  if ([_commentLabel.text length] > 0) {
-    _quoteImageView.hidden = NO;
-    _quoteImageView.left = left;
-    _quoteImageView.top = top;
-  } else {
-    _quoteImageView.hidden = YES;
-  }
-  
-  CGFloat textWidth = 0.0;
-  textWidth = _photoView.width - _quoteImageView.width - 5;
-  [_commentLabel sizeToFitFixedWidth:textWidth];
-  _commentLabel.left = left + _quoteImageView.width + 5;
-  _commentLabel.top = top;
+//  CGFloat left = _photoView.left;
+//  CGFloat top = _photoView.bottom + 10;
+//  
+//  // Comment Label
+//  if ([_commentLabel.text length] > 0) {
+//    _quoteImageView.hidden = NO;
+//    _quoteImageView.left = left;
+//    _quoteImageView.top = top;
+//  } else {
+//    _quoteImageView.hidden = YES;
+//  }
+//  
+//  CGFloat textWidth = 0.0;
+//  textWidth = _photoView.width - _quoteImageView.width - 5;
+//  [_commentLabel sizeToFitFixedWidth:textWidth];
+//  _commentLabel.left = left + _quoteImageView.width + 5;
+//  _commentLabel.top = top;
 }
 
 #pragma mark -

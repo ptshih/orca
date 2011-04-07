@@ -10,6 +10,8 @@
 
 
 @interface UIImage (ScalingAndCropping)
+- (CGSize)scaledSizeProportionalToSize:(CGSize)desiredSize;
+- (CGSize)scaledSizeBoundedByWidth:(CGFloat)desiredWidth;
 - (UIImage *)scaleToSize:(CGSize)size;
 - (UIImage *)scaleProportionalToSize:(CGSize)desiredSize;
 - (UIImage *)cropProportionalToSize:(CGSize)desiredSize;
