@@ -35,7 +35,6 @@ typedef uint32_t MoogleComposeType;
   NSString *_placeId;
   BOOL _shouldSaveToAlbum;
   
-  ComposeDataCenter *_dataCenter;
   id <KupoComposeDelegate> _delegate;
 }
 

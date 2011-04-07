@@ -11,7 +11,7 @@
 #import "Constants.h"
 #import "NetworkConstants.h"
 
-#define MARGIN_X 5.0
+#define MARGIN_X 10.0
 #define MARGIN_Y 5.0
 
 enum {
@@ -23,6 +23,7 @@ typedef uint32_t MoogleCellType;
 
 @interface MoogleCell : UITableViewCell {
   UIView *_moogleContentView;
+  UITableViewCellSeparatorStyle _separatorStyle;
 }
 
 - (void)drawContentView:(CGRect)r;

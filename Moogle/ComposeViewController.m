@@ -174,9 +174,9 @@
 
 - (void)send {
   if (_moogleComposeType == MoogleComposeTypeKupo) {
-    [_dataCenter sendKupoComposeWithPlaceId:self.placeId andComment:_comment.text andImage:_uploadedImage andVideo:_uploadedVideo];
+    [[ComposeDataCenter defaultCenter] sendKupoComposeWithPlaceId:self.placeId andComment:_comment.text andImage:_uploadedImage andVideo:_uploadedVideo];
   } else {
-    [_dataCenter sendCheckinComposeWithPlaceId:self.placeId andComment:_comment.text andImage:_uploadedImage andVideo:_uploadedVideo];
+    [[ComposeDataCenter defaultCenter] sendCheckinComposeWithPlaceId:self.placeId andComment:_comment.text andImage:_uploadedImage andVideo:_uploadedVideo];
   }
   [self dismissModalViewControllerAnimated:YES];
 }

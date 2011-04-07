@@ -32,8 +32,6 @@ static MeDataCenter *_defaultCenter = nil;
 }
 
 - (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {
-  
-  
   [super dataCenterFinishedWithOperation:operation];
 }
 

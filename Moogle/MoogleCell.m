@@ -25,6 +25,7 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
+    _separatorStyle = style;
     self.opaque = YES;
     self.contentMode = UIViewContentModeRedraw;
     if ([[self class] cellType] == MoogleCellTypePlain) {
@@ -54,7 +55,9 @@
 - (void)setFrame:(CGRect)f {
 	[super setFrame:f];
 	CGRect b = [self bounds];
-	b.size.height -= 1; // leave room for the seperator line
+  if (_separatorStyle != UITableViewCellSeparatorStyleNone) {
+    b.size.height -= 1; // leave room for the seperator line
+  }
 	[_moogleContentView setFrame:b];
 }
 

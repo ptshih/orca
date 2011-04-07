@@ -24,7 +24,8 @@
     _limit = 50;
     
     _shouldReloadOnAppear = NO;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDeletedAllObjects object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kComposeDidFinish object:nil];
   }
   return self;
 }
@@ -132,17 +133,6 @@
     place = [self.fetchedResultsController objectAtIndexPath:indexPath];
   }
   
-  // Mark isRead state
-  NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
-  place.isRead = [NSNumber numberWithBool:YES];
-  
-  NSError *error = nil;
-  if ([context hasChanges]) {
-    if (![context save:&error]) {
-      abort(); // NOTE: DO NOT SHIP
-    }
-  }
-  
   KupoViewController *kvc = [[KupoViewController alloc] init];
   kvc.place = place;
   [self.navigationController pushViewController:kvc animated:YES];
@@ -246,6 +236,8 @@
 }
 
 - (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kCoreDataDidReset object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kComposeDidFinish object:nil];
   [[PlaceDataCenter defaultCenter] setDelegate:nil];
   [super dealloc];
 }

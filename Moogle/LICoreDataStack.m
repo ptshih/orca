@@ -46,7 +46,7 @@ static NSThread *_mocThread = nil;
   [[self class] deleteAllObjects:@"Place"];
   [[self class] deleteAllObjects:@"Kupo"];
   
-  [[NSNotificationCenter defaultCenter] postNotificationName:kCoreDataDeletedAllObjects object:nil];
+  [[NSNotificationCenter defaultCenter] postNotificationName:kCoreDataDidReset object:nil];
   
 //  NSLog(@"reset persistent store and context");
 //  [self resetStoreState];

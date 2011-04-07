@@ -162,8 +162,6 @@ static MoogleDataCenter *_defaultCenter = nil;
   [[LINetworkQueue sharedQueue] addOperation:_op];
 }
 
-
-
 #pragma mark -
 #pragma mark LINetworkOperationDelegate
 - (void)networkOperationDidFinish:(LINetworkOperation *)operation {

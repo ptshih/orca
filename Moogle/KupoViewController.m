@@ -22,6 +22,7 @@
   self = [super init];
   if (self) {
     [[KupoDataCenter defaultCenter] setDelegate:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kComposeDidFinish object:nil];
   }
   return self;
 }
@@ -161,6 +162,17 @@
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
   [self resetFetchedResultsController];
   [self dataSourceDidLoad];
+  
+  // Mark isRead state
+  NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
+  self.place.isRead = [NSNumber numberWithBool:YES];
+  
+  NSError *error = nil;
+  if ([context hasChanges]) {
+    if (![context save:&error]) {
+      abort(); // NOTE: DO NOT SHIP
+    }
+  }
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
@@ -175,6 +187,7 @@
 }
 
 - (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kComposeDidFinish object:nil];
   [[KupoDataCenter defaultCenter] setDelegate:nil];
   RELEASE_SAFELY(_place);
   [super dealloc];

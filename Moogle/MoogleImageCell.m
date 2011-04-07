@@ -20,9 +20,9 @@ static UIImage *_frameImage = nil;
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
     _moogleImageView = [[MoogleImageView alloc] init];
-    _moogleImageView.frame = CGRectMake(10, 10, 40, 40);
+    _moogleImageView.frame = CGRectMake(15, 10, 40, 40);
     _moogleFrameView = [[UIImageView alloc] initWithImage:_frameImage];
-    _moogleFrameView.frame = CGRectMake(0, 0, 60, 60);
+    _moogleFrameView.frame = CGRectMake(5, 0, 60, 60);
     
     [self addSubview:_moogleFrameView];
     [self addSubview:_moogleImageView];

@@ -12,14 +12,14 @@
 #define CELL_FONT_SIZE 12.0
 #define TIMESTAMP_FONT_SIZE 12.0
 #define ADDRESS_FONT_SIZE 12.0
-#define UNREAD_WIDTH 13.0
+#define UNREAD_WIDTH 5.0
 
 static UIImage *_unreadImage = nil;
 
 @implementation PlaceCell
 
 + (void)initialize {
-  _unreadImage = [[UIImage imageNamed:@"unread.png"] retain];
+  _unreadImage = [[[UIImage imageNamed:@"unread.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:0] retain];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -40,24 +40,10 @@ static UIImage *_unreadImage = nil;
   [super drawContentView:r];
   
   CGFloat top = MARGIN_Y;
-  CGFloat left = MARGIN_X;
-  CGFloat width = 0;
+  CGFloat left = MARGIN_X + 60;
+  CGFloat width = self.bounds.size.width - left - MARGIN_X;
   CGRect contentRect = CGRectMake(left, top, width, INT_MAX);
   CGSize drawnSize = CGSizeZero;
-  
-  // Image View
-  
-  // Unread indicator
-  if (![_place.isRead boolValue]) {
-    [_unreadImage drawAtPoint:CGPointMake(left, floor(self.bounds.size.height / 2) - floor(_unreadImage.size.height / 2))];
-  }
-  
-  _moogleFrameView.left = left + _unreadImage.size.width;
-  _moogleImageView.left = left + _unreadImage.size.width + 10;
-  
-  left = _moogleFrameView.right;
-  width = self.bounds.size.width - left - MARGIN_X;
-  contentRect = CGRectMake(left, top, width, INT_MAX);
   
   [CELL_BLUE_COLOR set];
   
@@ -123,6 +109,17 @@ static UIImage *_unreadImage = nil;
     contentRect.origin.y = top;
   }
   
+  top += MARGIN_Y;
+  
+  if (top < 60) {
+    top = 60;
+  }
+  
+  // Unread indicator
+  if (![_place.isRead boolValue]) {
+    [_unreadImage drawInRect:CGRectMake(0, 1, 4, top - 2)];
+  }
+  
 //  NSLog(@"place for cell height: %@", _place);
 }
     
@@ -142,7 +139,7 @@ static UIImage *_unreadImage = nil;
   Place *place = (Place *)object;
   
   CGFloat top = MARGIN_Y;
-  CGFloat left = MARGIN_X + _unreadImage.size.width + 60; // image + unread dot
+  CGFloat left = MARGIN_X + 60; // image
   CGFloat width = [[self class] rowWidth] - left - MARGIN_X;
   CGSize constrainedSize = CGSizeMake(width, INT_MAX);
   CGSize size = CGSizeZero;

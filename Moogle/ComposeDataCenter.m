@@ -36,15 +36,19 @@ static ComposeDataCenter *_defaultCenter = nil;
     [params setValue:comment forKey:@"comment"];
   }
   
+  NetworkOperationAttachmentType attachmentType = NetworkOperationAttachmentTypeNone;
+  
   if (image) {
     [params setValue:image forKey:@"image"];
     if (video) {
       [params setValue:video forKey:@"video"];
-      [self sendOperationWithURL:kupoComposeUrl andMethod:POST andHeaders:nil andParams:params andAttachmentType:NetworkOperationAttachmentTypeMP4];
+      attachmentType = NetworkOperationAttachmentTypeMP4;
     } else {
-      [self sendOperationWithURL:kupoComposeUrl andMethod:POST andHeaders:nil andParams:params andAttachmentType:NetworkOperationAttachmentTypeJPEG];
+      attachmentType = NetworkOperationAttachmentTypeJPEG;
     }
   }
+  
+  [self sendOperationWithURL:kupoComposeUrl andMethod:POST andHeaders:nil andParams:params andAttachmentType:attachmentType];
 }
 
 - (void)sendCheckinComposeWithPlaceId:(NSString *)placeId andComment:(NSString *)comment andImage:(UIImage *)image andVideo:(NSData *)video {
@@ -80,10 +84,12 @@ static ComposeDataCenter *_defaultCenter = nil;
 }
 
 - (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {
+  [[NSNotificationCenter defaultCenter] postNotificationName:kComposeDidFinish object:operation];
   [super dataCenterFinishedWithOperation:operation];
 }
 
 - (void)dataCenterFailedWithOperation:(LINetworkOperation *)operation {
+  [[NSNotificationCenter defaultCenter] postNotificationName:kComposeDidFail object:operation];
   [super dataCenterFailedWithOperation:operation];
 }
 

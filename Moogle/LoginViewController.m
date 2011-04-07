@@ -93,6 +93,7 @@
 }
 
 - (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kLogoutRequested object:nil];
   [super dealloc];
 }
 
