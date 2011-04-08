@@ -175,10 +175,11 @@
 - (void)send {
   if (_moogleComposeType == MoogleComposeTypeKupo) {
     [[ComposeDataCenter defaultCenter] sendKupoComposeWithPlaceId:self.placeId andComment:_comment.text andImage:_uploadedImage andVideo:_uploadedVideo];
+    [self dismissModalViewControllerAnimated:YES];
   } else {
     [[ComposeDataCenter defaultCenter] sendCheckinComposeWithPlaceId:self.placeId andComment:_comment.text andImage:_uploadedImage andVideo:_uploadedVideo];
+    [self.navigationController popToRootViewControllerAnimated:YES];
   }
-  [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
@@ -254,15 +255,22 @@
   [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
   
   
+  CGRect keyboardFrame = CGRectZero;
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < 30200
+  // code for iOS below 3.2
+  [[userInfo objectForKey:UIKeyboardBoundsUserInfoKey] getValue:&keyboardEndFrame];
+  keyboardFrame = keyboardEndFrame;
+#else
+  // code for iOS 3.2 ++
   [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
-  
+  keyboardFrame = [UIScreen convertRect:keyboardEndFrame toView:self.view];
+#endif  
   
   // Animate up or down
   [UIView beginAnimations:nil context:nil];
   [UIView setAnimationDuration:animationDuration];
   [UIView setAnimationCurve:animationCurve];
   
-  CGRect keyboardFrame = [UIScreen convertRect:keyboardEndFrame toView:self.view];
   _composeView.height = self.view.bounds.size.height - keyboardFrame.size.height;
   _comment.height = up ? self.view.bounds.size.height - keyboardFrame.size.height - 20 : 30;
   _backgroundView.height = _comment.height;

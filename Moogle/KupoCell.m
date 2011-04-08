@@ -28,8 +28,8 @@ static UIImage *_quoteImage = nil;
   if (self) {
     _hasPhoto = NO;
     
-    _photoImageView = [[MoogleImageView alloc] init];
-    [self addSubview:_photoImageView];
+    _photoImageView = [[MoogleImageView alloc] initWithFrame:CGRectMake(0, 0, PHOTO_SIZE, PHOTO_SIZE)];
+    _photoImageView.placeholderImage = [[UIImage imageNamed:@"photo_frame.png"] stretchableImageWithLeftCapWidth:16 topCapHeight:16];
   }
   return self;
 }

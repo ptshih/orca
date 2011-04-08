@@ -222,6 +222,14 @@
   }
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+  if ([[cell class] cellType] == MoogleCellTypePlain) {
+    cell.backgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"table-cell-bg.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:30]] autorelease];
+    cell.selectedBackgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"table-cell-bg-selected.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:30]] autorelease];
+  } else {
+  }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   NSString *reuseIdentifier = [NSString stringWithFormat:@"%@_TableViewCell", [self class]];
   UITableViewCell *cell = nil;

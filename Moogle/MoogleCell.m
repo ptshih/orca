@@ -28,16 +28,14 @@
     _separatorStyle = style;
     self.opaque = YES;
     self.contentMode = UIViewContentModeRedraw;
-    if ([[self class] cellType] == MoogleCellTypePlain) {
-      self.backgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"table-cell-bg.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:30]] autorelease];
-      self.selectedBackgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"table-cell-bg-selected.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:30]] autorelease];
-      
-      _moogleContentView = [[MoogleCellView alloc] initWithFrame:CGRectZero];
-      _moogleContentView.contentMode = UIViewContentModeRedraw;
-      _moogleContentView.opaque = NO;
-      [self addSubview:_moogleContentView];
-      
-    }
+    _moogleContentView = [[MoogleCellView alloc] initWithFrame:CGRectZero];
+    _moogleContentView.contentMode = UIViewContentModeRedraw;
+    _moogleContentView.opaque = NO;
+    [self addSubview:_moogleContentView];
+    
+//    if ([[self class] cellType] == MoogleCellTypePlain) {
+//      self.backgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"table-cell-bg.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:30]] autorelease];
+//      self.selectedBackgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"table-cell-bg-selected.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:30]] autorelease];
   }
   return self;
 }

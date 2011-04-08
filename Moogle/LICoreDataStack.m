@@ -17,7 +17,7 @@ static NSThread *_mocThread = nil;
 @interface LICoreDataStack (Private)
 
 + (void)resetStoreState;
-+ (NSURL *)applicationDocumentsDirectory;
++ (NSString *)applicationDocumentsDirectory;
 
 @end
 
@@ -148,7 +148,7 @@ static NSThread *_mocThread = nil;
   
   NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
   
-  NSURL *storeURL = [[[self class] applicationDocumentsDirectory] URLByAppendingPathComponent:@"Moogle.sqlite"];
+  NSURL *storeURL = [NSURL fileURLWithPath:[[[self class] applicationDocumentsDirectory] stringByAppendingPathComponent:@"Moogle.sqlite"]];
   
   NSError *error = nil;
   
@@ -164,8 +164,8 @@ static NSThread *_mocThread = nil;
 }
 
 #pragma mark Convenience Methods
-+ (NSURL *)applicationDocumentsDirectory {
-  return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
++ (NSString *)applicationDocumentsDirectory {
+  return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 }
 
 @end

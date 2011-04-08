@@ -19,8 +19,8 @@ static UIImage *_frameImage = nil;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
-    _moogleImageView = [[MoogleImageView alloc] init];
-    _moogleImageView.frame = CGRectMake(15, 10, 40, 40);
+    
+    _moogleImageView = [[MoogleImageView alloc] initWithFrame:CGRectMake(15, 10, 40, 40)];
     _moogleFrameView = [[UIImageView alloc] initWithImage:_frameImage];
     _moogleFrameView.frame = CGRectMake(5, 0, 60, 60);
     

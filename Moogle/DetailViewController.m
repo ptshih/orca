@@ -43,6 +43,7 @@ static UIImage *_quoteImage = nil;
   _photoView.layer.cornerRadius = 10.0;
   _photoView.layer.masksToBounds = YES;
   _photoView.delegate = self;
+  _photoView.placeholderImage = [[UIImage imageNamed:@"photo_frame.png"] stretchableImageWithLeftCapWidth:16 topCapHeight:16];
   _photoView.urlPath = [NSString stringWithFormat:@"%@/%@/original/%@", S3_PHOTOS_URL, self.kupo.id, self.kupo.photoFileName];
   [_photoView loadImage];
   

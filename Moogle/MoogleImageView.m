@@ -11,15 +11,22 @@
 #import "LINetworkOperation.h"
 #import "LIImageCache.h"
 
-static UIImage *_placeholderImage = nil;
-
 @implementation MoogleImageView
 
 @synthesize urlPath = _urlPath;
+@synthesize placeholderImage = _placeholderImage;
 @synthesize delegate = _delegate;
 
-+ (void)initialize {
-  _placeholderImage = nil;
+- (id)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _loadingIndicator.hidesWhenStopped = YES;
+    _loadingIndicator.frame = self.bounds;
+    _loadingIndicator.contentMode = UIViewContentModeCenter;
+    [self addSubview:_loadingIndicator];
+  }
+  return self;
 }
 
 // Override Setter
@@ -45,6 +52,8 @@ static UIImage *_placeholderImage = nil;
       self.image = image;
       [self imageDidLoad];
     } else {
+      self.image = _placeholderImage;
+      [_loadingIndicator startAnimating];
       _op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:_urlPath]];
       _op.delegate = self;
       _op.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
@@ -55,11 +64,13 @@ static UIImage *_placeholderImage = nil;
 }
 
 - (void)unloadImage {
+  [_loadingIndicator stopAnimating];
   self.image = _placeholderImage;
   self.urlPath = nil;
 }
 
 - (void)imageDidLoad {
+  [_loadingIndicator stopAnimating];
   if (self.delegate && [self.delegate respondsToSelector:@selector(imageDidLoad:)]) {
     [self.delegate imageDidLoad:self.image];
   }
@@ -87,6 +98,8 @@ static UIImage *_placeholderImage = nil;
   if (_op) [_op clearDelegatesAndCancel];
   RELEASE_SAFELY(_op);
   RELEASE_SAFELY(_urlPath);
+  RELEASE_SAFELY(_loadingIndicator);
+  RELEASE_SAFELY(_placeholderImage);
   
   [super dealloc];
 }

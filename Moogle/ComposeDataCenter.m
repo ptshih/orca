@@ -72,15 +72,19 @@ static ComposeDataCenter *_defaultCenter = nil;
     [params setValue:comment forKey:@"comment"];
   }
 
+  NetworkOperationAttachmentType attachmentType = NetworkOperationAttachmentTypeNone;
+  
   if (image) {
     [params setValue:image forKey:@"image"];
     if (video) {
       [params setValue:video forKey:@"video"];
-      [self sendOperationWithURL:checkinComposeUrl andMethod:POST andHeaders:nil andParams:params andAttachmentType:NetworkOperationAttachmentTypeMP4];
+      attachmentType = NetworkOperationAttachmentTypeMP4;
     } else {
-      [self sendOperationWithURL:checkinComposeUrl andMethod:POST andHeaders:nil andParams:params andAttachmentType:NetworkOperationAttachmentTypeJPEG];
+      attachmentType = NetworkOperationAttachmentTypeJPEG;
     }
   }
+  
+  [self sendOperationWithURL:checkinComposeUrl andMethod:POST andHeaders:nil andParams:params andAttachmentType:attachmentType];
 }
 
 - (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {
