@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CardModalViewController.h"
-#import "KupoComposeDelegate.h"
+#import "ComposeDelegate.h"
 #import "MoogleTextView.h"
 
 enum {
@@ -35,10 +35,10 @@ typedef uint32_t MoogleComposeType;
   NSString *_placeId;
   BOOL _shouldSaveToAlbum;
   
-  id <KupoComposeDelegate> _delegate;
+  id <ComposeDelegate> _delegate;
 }
 
-@property (nonatomic, assign) id <KupoComposeDelegate> delegate;
+@property (nonatomic, assign) id <ComposeDelegate> delegate;
 @property (nonatomic, assign) MoogleComposeType moogleComposeType;
 @property (nonatomic, retain) MoogleTextView *comment;
 @property (nonatomic, retain) NSString *placeId;

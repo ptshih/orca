@@ -153,8 +153,6 @@
 		25EFD3881341E449000108B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EFD3851341E438000108B8 /* MobileCoreServices.framework */; };
 		25EFD38C13425B2C000108B8 /* photo_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD38A13425B2C000108B8 /* photo_add@2x.png */; };
 		25EFD38E13425B65000108B8 /* photo_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD38D13425B65000108B8 /* photo_add.png */; };
-		25EFD3FB1343D64C000108B8 /* CheckinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD3FA1343D64A000108B8 /* CheckinViewController.m */; };
-		25EFD3FC1343D64C000108B8 /* CheckinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD3FA1343D64A000108B8 /* CheckinViewController.m */; };
 		25EFD3FF1343E18E000108B8 /* LoginDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD3FE1343E18E000108B8 /* LoginDataCenter.m */; };
 		25EFD4001343E18E000108B8 /* LoginDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD3FE1343E18E000108B8 /* LoginDataCenter.m */; };
 		25EFD4051343E774000108B8 /* HashValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD4041343E774000108B8 /* HashValue.m */; };
@@ -263,7 +261,7 @@
 		250B318A133EBF0B0011EEDD /* ComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
 		250B31AC133EC4220011EEDD /* MoogleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleView.h; sourceTree = "<group>"; };
 		250B31AD133EC4220011EEDD /* MoogleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoogleView.m; sourceTree = "<group>"; };
-		250B31AF133EC86A0011EEDD /* KupoComposeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeDelegate.h; sourceTree = "<group>"; };
+		250B31AF133EC86A0011EEDD /* ComposeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; path = ComposeDelegate.h; sourceTree = "<group>"; };
 		250B31DD13411DBD0011EEDD /* textview_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = textview_bg.png; sourceTree = "<group>"; };
 		250B31DE13411DBD0011EEDD /* textview_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "textview_bg@2x.png"; sourceTree = "<group>"; };
 		250B31E1134131FA0011EEDD /* UIScreen+ConvertRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+ConvertRect.h"; sourceTree = "<group>"; };
@@ -408,8 +406,6 @@
 		25EFD3851341E438000108B8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		25EFD38A13425B2C000108B8 /* photo_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_add@2x.png"; sourceTree = "<group>"; };
 		25EFD38D13425B65000108B8 /* photo_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_add.png; sourceTree = "<group>"; };
-		25EFD3F91343D64A000108B8 /* CheckinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckinViewController.h; sourceTree = "<group>"; };
-		25EFD3FA1343D64A000108B8 /* CheckinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckinViewController.m; sourceTree = "<group>"; };
 		25EFD3FD1343E18D000108B8 /* LoginDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginDataCenter.h; sourceTree = "<group>"; };
 		25EFD3FE1343E18E000108B8 /* LoginDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginDataCenter.m; sourceTree = "<group>"; };
 		25EFD4011343E44C000108B8 /* NetworkConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkConstants.h; sourceTree = "<group>"; };
@@ -558,8 +554,6 @@
 				250B318A133EBF0B0011EEDD /* ComposeViewController.m */,
 				25FB8BDA133A9B1000C130A8 /* MeViewController.h */,
 				25FB8BDB133A9B1200C130A8 /* MeViewController.m */,
-				25EFD3F91343D64A000108B8 /* CheckinViewController.h */,
-				25EFD3FA1343D64A000108B8 /* CheckinViewController.m */,
 				25033EB3134866A000633052 /* NearbyViewController.h */,
 				25033EB4134866A100633052 /* NearbyViewController.m */,
 			);
@@ -1002,7 +996,7 @@
 				25FB8B99133A069E00C130A8 /* MoogleDataCenterDelegate.h */,
 				25FB8BE9133AA7C400C130A8 /* HeaderTabViewDelegate.h */,
 				2538FF6C133B49A100ACE127 /* MoogleImageViewDelegate.h */,
-				250B31AF133EC86A0011EEDD /* KupoComposeDelegate.h */,
+				250B31AF133EC86A0011EEDD /* ComposeDelegate.h */,
 				25961C9E134D46CD00A3D4CD /* MeDelegate.h */,
 			);
 			name = Delegates;
@@ -1279,7 +1273,6 @@
 				250B31E3134131FA0011EEDD /* UIScreen+ConvertRect.m in Sources */,
 				250B31EB134162A90011EEDD /* MoogleTextView.m in Sources */,
 				250B32031341CB9F0011EEDD /* UILabel+SizeToFitWidth.m in Sources */,
-				25EFD3FB1343D64C000108B8 /* CheckinViewController.m in Sources */,
 				25EFD3FF1343E18E000108B8 /* LoginDataCenter.m in Sources */,
 				25EFD4051343E774000108B8 /* HashValue.m in Sources */,
 				25EFD4171343F40E000108B8 /* MeDataCenter.m in Sources */,
@@ -1340,7 +1333,6 @@
 				2538FF91133BDDBF00ACE127 /* LIImageCache.m in Sources */,
 				250B31E4134132020011EEDD /* UIScreen+ConvertRect.m in Sources */,
 				250B31EC134162A90011EEDD /* MoogleTextView.m in Sources */,
-				25EFD3FC1343D64C000108B8 /* CheckinViewController.m in Sources */,
 				25EFD4001343E18E000108B8 /* LoginDataCenter.m in Sources */,
 				25EFD4061343E774000108B8 /* HashValue.m in Sources */,
 				25EFD4181343F40E000108B8 /* MeDataCenter.m in Sources */,

@@ -1,5 +1,5 @@
 //
-//  KupoComposeDelegate.h
+//  ComposeDelegate.h
 //  Moogle
 //
 //  Created by Peter Shih on 3/26/11.
@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 
 
-@protocol KupoComposeDelegate <NSObject>
-
+@protocol ComposeDelegate <NSObject>
+- (void)composeDidSend;
 @end

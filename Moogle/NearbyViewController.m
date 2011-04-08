@@ -83,6 +83,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
+  [_searchBar resignFirstResponder];
   
   NSDictionary *place = nil;
   if (tableView == self.searchDisplayController.searchResultsTableView) {
@@ -126,12 +127,9 @@
     return;
   }
   
-  for (NSDictionary *place in [self.items objectAtIndex:0]) {
-    NSComparisonResult result = [[place valueForKey:@"place_name"] compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
-    if (result == NSOrderedSame) {
-      [self.searchItems addObject:place];
-    }
-  }
+  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"place_name CONTAINS[cd] %@", searchText];
+  
+  [_searchItems addObjectsFromArray:[[self.items objectAtIndex:0] filteredArrayUsingPredicate:predicate]];
 }
 
 #pragma mark CardViewController
