@@ -224,13 +224,12 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
   UIView *backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
-  backgroundView.backgroundColor = [UIColor whiteColor];
+  backgroundView.backgroundColor = CELL_COLOR;
   backgroundView.alpha = 0.8;
   cell.backgroundView = backgroundView;
   
   UIView *selectedBackgroundView = [[UIView alloc] initWithFrame:cell.bounds];
-  selectedBackgroundView.backgroundColor = MOOGLE_BLUE_COLOR;
-  selectedBackgroundView.alpha = 0.8;
+  selectedBackgroundView.backgroundColor = CELL_SELECTED_COLOR;
   cell.selectedBackgroundView = selectedBackgroundView;
   
   [backgroundView release];
