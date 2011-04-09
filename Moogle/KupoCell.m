@@ -78,7 +78,7 @@ static UIImage *_quoteImage = nil;
   if (self.highlighted) {
     [CELL_LIGHT_GRAY_COLOR set];
   } else {
-    [CELL_DARK_BLUE_COLOR set];
+    [CELL_GRAY_COLOR set];
   }
   
   NSString *status = nil;

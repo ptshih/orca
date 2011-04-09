@@ -134,11 +134,11 @@
   if (self.highlighted) {
     [CELL_LIGHT_GRAY_COLOR set];
   } else {
-    [CELL_DARK_BLUE_COLOR set];
+    [CELL_BLUE_COLOR set];
   }
   
   // Activity Count
-  NSString *activity = ([_place.activityCount integerValue] > 1) ? [NSString stringWithFormat:@"%@ kupos from %@", _place.activityCount, _place.friendFirstNames] : [NSString stringWithFormat:@"%@ kupo from %@", _place.activityCount, _place.friendFirstNames];
+  NSString *activity = ([_place.activityCount integerValue] > 1) ? [NSString stringWithFormat:@"%@ Kupos from %@", _place.activityCount, _place.friendFirstNames] : [NSString stringWithFormat:@"%@ Kupo from %@", _place.activityCount, _place.friendFirstNames];
   if ([activity length] > 0) {
     drawnSize = [activity drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
     
@@ -230,7 +230,7 @@
     desiredHeight += 30;
   }
   
-  NSString *activity = ([place.activityCount integerValue] > 1) ? [NSString stringWithFormat:@"%@ kupos from %@", place.activityCount, place.friendFirstNames] : [NSString stringWithFormat:@"%@ kupo from %@", place.activityCount, place.friendFirstNames];
+  NSString *activity = ([place.activityCount integerValue] > 1) ? [NSString stringWithFormat:@"%@ Kupos from %@", place.activityCount, place.friendFirstNames] : [NSString stringWithFormat:@"%@ Kupo from %@", place.activityCount, place.friendFirstNames];
   
   size = [activity sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
   
