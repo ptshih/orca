@@ -97,6 +97,7 @@
   [cell fillCellWithObject:kupo];
   [cell setNeedsDisplay];
   [cell loadImage];
+  [cell loadPhoto];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -134,12 +135,8 @@
     cell = [[[KupoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
   }
   
-  Kupo *kupo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  [self configureCell:cell atIndexPath:indexPath];
   
-  [cell fillCellWithObject:kupo];
-  [cell setNeedsDisplay];
-  [cell loadImage];
-  [cell loadPhoto];
   return cell;
 }
 
@@ -147,6 +144,7 @@
 #pragma mark CardViewController
 - (void)reloadCardController {
   [super reloadCardController];
+  [self executeFetch];
   
   [[KupoDataCenter defaultCenter] getKuposForPlaceWithPlaceId:self.place.placeId];
 //  [[KupoDataCenter defaultCenter] loadKuposFromFixture];
@@ -159,7 +157,6 @@
 #pragma mark -
 #pragma mark MoogleDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
-  [self resetFetchedResultsController];
   [self dataSourceDidLoad];
   
   // Mark isRead state
@@ -178,7 +175,6 @@
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
-  [self resetFetchedResultsController];
   [self dataSourceDidLoad];
 }
 

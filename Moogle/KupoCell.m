@@ -94,7 +94,7 @@ static UIImage *_quoteImage = nil;
     drawnSize = [status drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
     
     top += drawnSize.height;
-    contentRect = CGRectMake(left, top, width, INT_MAX);
+//    contentRect = CGRectMake(left, top, width, INT_MAX);
   }
   
   if (self.highlighted) {

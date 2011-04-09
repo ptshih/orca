@@ -16,4 +16,6 @@
   NSMutableArray *_friendIds;
 }
 
+- (void)loadFriendPictures;
+
 @end

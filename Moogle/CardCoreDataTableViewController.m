@@ -56,39 +56,31 @@
 #pragma mark Data Source
 - (void)reloadCardController {
   [super reloadCardController];
-  [self resetFetchedResultsController];
 }
 
 - (void)unloadCardController {
   [super unloadCardController];
-  [self resetFetchedResultsController];
-}
+}   
 
 #pragma mark Core Data
-- (void)resetFetchedResultsController {
-  if ([LICoreDataStack managedObjectContext]) {
-//    // NOTE: Should we be resetting this?
-//    [[LICoreDataStack managedObjectContext] reset];
-    
-    if (_fetchedResultsController) {
-      _fetchedResultsController.delegate = nil;
-      _fetchedResultsController = nil;
-    }
-
-    NSFetchRequest *fetchRequest = [self getFetchRequest];
-    if (fetchRequest) {
-      _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[LICoreDataStack managedObjectContext] sectionNameKeyPath:self.sectionNameKeyPathForFetchedResultsController cacheName:[NSString stringWithFormat:@"frc_cache_%@", [self class]]];
-      _fetchedResultsController.delegate = self;
-    }
-    
-    [self executeFetch];
+- (NSFetchedResultsController*)fetchedResultsController  {
+  if (_fetchedResultsController) return _fetchedResultsController;
+  
+  NSFetchRequest *fetchRequest = [self getFetchRequest];
+  if (fetchRequest) {
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[LICoreDataStack managedObjectContext] sectionNameKeyPath:self.sectionNameKeyPathForFetchedResultsController cacheName:[NSString stringWithFormat:@"frc_cache_%@", [self class]]];
+    _fetchedResultsController.delegate = self;
   }
-}
+  
+  return _fetchedResultsController;
+} 
 
 - (void)executeFetch {
-  NSError *error;
+  NSError *error = nil;
   if ([self.fetchedResultsController performFetch:&error]) {
 //    DLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);
+  } else {
+    DLog(@"Fetch failed with error: %@", [error localizedDescription]);
   }
   
   [self updateState];  

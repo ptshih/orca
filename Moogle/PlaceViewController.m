@@ -111,6 +111,7 @@
   [cell fillCellWithObject:place];
   [cell setNeedsDisplay];
   [cell loadImage];
+  [cell loadFriendPictures];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -149,16 +150,7 @@
     cell = [[[PlaceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
   }
   
-  Place *place = nil;
-  if (tableView == self.searchDisplayController.searchResultsTableView) {
-    place = [_searchItems objectAtIndex:indexPath.row];
-  } else {
-    place = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  }
-  
-  [cell fillCellWithObject:place];
-  [cell setNeedsDisplay];
-  [cell loadImage];
+  [self configureCell:cell atIndexPath:indexPath];
   
   return cell;
 }
@@ -185,7 +177,7 @@
 #pragma mark CardViewController
 - (void)reloadCardController {
   [super reloadCardController];
-  
+  [self executeFetch];
   [[PlaceDataCenter defaultCenter] getPlaces];
 //  [[PlaceDataCenter defaultCenter] loadPlacesFromFixture];
 }
@@ -197,12 +189,10 @@
 #pragma mark -
 #pragma mark MoogleDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
-  [self resetFetchedResultsController];
   [self dataSourceDidLoad];
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
-  [self resetFetchedResultsController];
   [self dataSourceDidLoad];
 }
 

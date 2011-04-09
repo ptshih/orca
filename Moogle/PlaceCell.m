@@ -14,6 +14,7 @@
 #define ADDRESS_FONT_SIZE 12.0
 #define LAST_ACTIVITY_FONT_SIZE 13.0
 #define UNREAD_WIDTH 5.0
+#define FRIEND_PICTURE_MARGIN 2.0
 
 @implementation PlaceCell
 
@@ -117,17 +118,16 @@
   }
   
   // Friend activity pictures
-  if ([_friendIds count] > 0) {
+  if (_place.friendIds && [[_place.friendIds componentsSeparatedByString:@","] count] > 1) {
     int i = 0;
     for (MoogleImageView *picture in _friendPictureArray) {
-      [picture loadImage];
-      picture.top = top;
+      picture.top = top + FRIEND_PICTURE_MARGIN;
       picture.left = left + i * picture.width + i * MARGIN_X;
       [self.contentView addSubview:picture];
       i++;
     }
     
-    top += 30;
+    top += 30 + FRIEND_PICTURE_MARGIN * 2;
     contentRect.origin.y = top;
   }
   
@@ -156,10 +156,10 @@
   if (![_place.isRead boolValue]) {
     [CELL_UNREAD_COLOR set];
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextFillRect(context, CGRectMake(0, 0, 4, top));
+    CGContextFillRect(context, CGRectMake(0, 0, UNREAD_WIDTH, top));
   } else {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextClearRect(context, CGRectMake(0, 0, 4, top));
+    CGContextClearRect(context, CGRectMake(0, 0, UNREAD_WIDTH, top));
   }
   
 //  NSLog(@"place for cell height: %@", _place);
@@ -227,7 +227,7 @@
   }
   
   if (place.friendIds && [[place.friendIds componentsSeparatedByString:@","] count] > 1) {
-    desiredHeight += 30;
+    desiredHeight += 30 + FRIEND_PICTURE_MARGIN * 2;
   }
   
   NSString *activity = ([place.activityCount integerValue] > 1) ? [NSString stringWithFormat:@"%@ Kupos from %@", place.activityCount, place.friendFirstNames] : [NSString stringWithFormat:@"%@ Kupo from %@", place.activityCount, place.friendFirstNames];
@@ -268,6 +268,14 @@
       [picture unloadImage];
     }
     i++;
+  }
+}
+
+- (void)loadFriendPictures {
+  if ([_friendIds count] > 0) {
+    for (MoogleImageView *picture in _friendPictureArray) {
+      [picture loadImage];
+    }
   }
 }
 

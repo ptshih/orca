@@ -21,7 +21,6 @@
 
 
 - (void)configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath;
-- (void)resetFetchedResultsController;
 - (void)executeFetch;
 - (NSFetchRequest *)getFetchRequest;
 
