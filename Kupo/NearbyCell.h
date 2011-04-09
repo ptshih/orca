@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PSImageCell.h"
+#import <MapKit/MapKit.h>
+#import "PSCell.h"
 
-@interface NearbyCell : PSImageCell {
-    
+@interface NearbyCell : PSCell <MKMapViewDelegate> {
+  MKMapView *_mapView;
+  MKCoordinateRegion _mapRegion;
 }
+
+- (void)loadMap;
 
 @end
