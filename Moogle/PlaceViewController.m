@@ -109,9 +109,8 @@
   }
   
   [cell fillCellWithObject:place];
-  [cell loadImage];
-  [cell setNeedsLayout];
   [cell setNeedsDisplay];
+  [cell loadImage];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -134,7 +133,7 @@
   } else {
     place = [self.fetchedResultsController objectAtIndexPath:indexPath];
   }
-  
+    
   KupoViewController *kvc = [[KupoViewController alloc] init];
   kvc.place = place;
   [self.navigationController pushViewController:kvc animated:YES];
@@ -158,9 +157,8 @@
   }
   
   [cell fillCellWithObject:place];
-  [cell loadImage];
-  [cell setNeedsLayout];
   [cell setNeedsDisplay];
+  [cell loadImage];
   
   return cell;
 }

@@ -95,9 +95,8 @@
   Kupo *kupo = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   [cell fillCellWithObject:kupo];
-  [cell loadImage];
-  [cell setNeedsLayout];
   [cell setNeedsDisplay];
+  [cell loadImage];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -106,10 +105,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+  
   Kupo *kupo = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   if ([kupo.hasPhoto boolValue]) {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if ([kupo.hasVideo boolValue]) {
       VideoViewController *vvc = [[VideoViewController alloc] init];
@@ -137,10 +137,9 @@
   Kupo *kupo = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   [cell fillCellWithObject:kupo];
+  [cell setNeedsDisplay];
   [cell loadImage];
   [cell loadPhoto];
-  [cell setNeedsLayout];
-  [cell setNeedsDisplay];
   return cell;
 }
 
@@ -164,15 +163,18 @@
   [self dataSourceDidLoad];
   
   // Mark isRead state
-  NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
-  self.place.isRead = [NSNumber numberWithBool:YES];
-  
-  NSError *error = nil;
-  if ([context hasChanges]) {
-    if (![context save:&error]) {
-      abort(); // NOTE: DO NOT SHIP
+  if (![self.place.isRead boolValue]) {
+    NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
+    self.place.isRead = [NSNumber numberWithBool:YES];
+    
+    NSError *error = nil;
+    if ([context hasChanges]) {
+      if (![context save:&error]) {
+        abort(); // NOTE: DO NOT SHIP
+      }
     }
   }
+
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {

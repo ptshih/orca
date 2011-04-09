@@ -60,10 +60,10 @@
 	[_moogleContentView setNeedsDisplay];
 }
 
-- (void)setNeedsLayout {
-  [super setNeedsLayout];
-  [_moogleContentView setNeedsLayout];
-}
+//- (void)setNeedsLayout {
+//  [super setNeedsLayout];
+//  [_moogleContentView setNeedsLayout];
+//}
 
 + (MoogleCellType)cellType {
   return MoogleCellTypePlain;

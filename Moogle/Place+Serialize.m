@@ -45,7 +45,7 @@
       [friendFullNames addObject:[friend valueForKey:@"full_name"]];
     }
     
-    newPlace.friendIds = [friendIds componentsJoinedByString:@", "];
+    newPlace.friendIds = [friendIds componentsJoinedByString:@","];
     newPlace.friendFirstNames = [friendFirstNames componentsJoinedByString:@", "];
     newPlace.friendFullNames = [friendFullNames componentsJoinedByString:@", "];
     
@@ -92,7 +92,7 @@
     [friendFullNames addObject:[friend valueForKey:@"full_name"]];
   }
   
-  self.friendIds = [friendIds componentsJoinedByString:@", "];
+  self.friendIds = [friendIds componentsJoinedByString:@","];
   self.friendFirstNames = [friendFirstNames componentsJoinedByString:@", "];
   self.friendFullNames = [friendFullNames componentsJoinedByString:@", "];
   

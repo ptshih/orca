@@ -50,7 +50,11 @@ static UIImage *_quoteImage = nil;
   CGRect contentRect = CGRectMake(left, top, width, INT_MAX);
   CGSize drawnSize = CGSizeZero;
   
-  [CELL_BLUE_COLOR set];
+  if (self.highlighted) {
+    [CELL_VERY_LIGHT_BLUE_COLOR set];
+  } else {
+    [CELL_GRAY_BLUE_COLOR set];
+  }
   
   if (_kupo.timestamp && [[_kupo.timestamp humanIntervalSinceNow] length] > 0) {
     drawnSize = [[_kupo.timestamp humanIntervalSinceNow] drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentRight];
@@ -58,7 +62,11 @@ static UIImage *_quoteImage = nil;
     contentRect = CGRectMake(left, top, width - drawnSize.width - MARGIN_X, INT_MAX);
   }
   
-  [CELL_BLACK_COLOR set];
+  if (self.highlighted) {
+    [CELL_WHITE_COLOR set];
+  } else {
+    [CELL_BLACK_COLOR set];
+  }
   
   if (_kupo.authorName && [_kupo.authorName length] > 0) {
     drawnSize = [_kupo.authorName drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
@@ -67,7 +75,11 @@ static UIImage *_quoteImage = nil;
     contentRect = CGRectMake(left, top, width, INT_MAX); // reset to single line
   }
   
-  [CELL_DARK_BLUE_COLOR set];
+  if (self.highlighted) {
+    [CELL_LIGHT_GRAY_COLOR set];
+  } else {
+    [CELL_DARK_BLUE_COLOR set];
+  }
   
   NSString *status = nil;
   if ([_kupo.kupoType integerValue] == 0) {
@@ -85,9 +97,15 @@ static UIImage *_quoteImage = nil;
     contentRect = CGRectMake(left, top, width, INT_MAX);
   }
   
-  [CELL_GRAY_BLUE_COLOR set];
+  if (self.highlighted) {
+    [CELL_VERY_LIGHT_BLUE_COLOR set];
+  } else {
+    [CELL_GRAY_BLUE_COLOR set];
+  }
   
   if (_kupo.comment && [_kupo.comment length] > 0) {
+    [_quoteImage drawAtPoint:CGPointMake(left, top)];
+    contentRect = CGRectMake(left + 20, top, width - 20, INT_MAX); // quote mark
     drawnSize = [_kupo.comment drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:COMMENT_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
     
     top += drawnSize.height;
@@ -158,6 +176,7 @@ static UIImage *_quoteImage = nil;
   }
   
   if ([kupo.comment length] > 0) {
+    constrainedSize = CGSizeMake(width - 20, INT_MAX); // quote mark
     size = [kupo.comment sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:COMMENT_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
     
     desiredHeight += size.height;

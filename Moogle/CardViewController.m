@@ -20,7 +20,7 @@ static UIImage *_emptyImage = nil;
 @implementation CardViewController
 
 + (void)initialize {
-  _emptyImage = [[UIImage imageNamed:@"bamboo_bg.png"] retain];
+  _emptyImage = [[UIImage imageNamed:@"empty.png"] retain];
 }
 
 - (id)init {
@@ -36,9 +36,9 @@ static UIImage *_emptyImage = nil;
   
   _emptyView = [[UIImageView alloc] initWithImage:_emptyImage];
   
-  self.view.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
   _emptyView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _emptyView.alpha = 0.3;
+  _emptyView.alpha = 1.0;
+  _emptyView.hidden = YES;
   [self.view addSubview:_emptyView];
   
 //  self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];

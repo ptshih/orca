@@ -223,17 +223,20 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-  UIView *backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
-  backgroundView.backgroundColor = CELL_COLOR;
-  backgroundView.alpha = 0.8;
-  cell.backgroundView = backgroundView;
-  
-  UIView *selectedBackgroundView = [[UIView alloc] initWithFrame:cell.bounds];
-  selectedBackgroundView.backgroundColor = CELL_SELECTED_COLOR;
-  cell.selectedBackgroundView = selectedBackgroundView;
-  
-  [backgroundView release];
-  [selectedBackgroundView release];
+  if ([[cell class] cellType] == MoogleCellTypePlain) {
+    UIView *backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
+    backgroundView.backgroundColor = CELL_COLOR;
+//    backgroundView.alpha = 0.8;
+    cell.backgroundView = backgroundView;
+    
+    UIView *selectedBackgroundView = [[UIView alloc] initWithFrame:cell.bounds];
+    selectedBackgroundView.backgroundColor = CELL_SELECTED_COLOR;
+    cell.selectedBackgroundView = selectedBackgroundView;
+    
+    [backgroundView release];
+    [selectedBackgroundView release];
+  } else {
+  }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -269,9 +272,9 @@
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView {
-  tableView.backgroundColor = VERY_LIGHT_GRAY;
+  tableView.backgroundColor = CELL_COLOR;
   tableView.separatorColor = SEPARATOR_COLOR;
-  tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView {

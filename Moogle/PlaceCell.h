@@ -12,6 +12,8 @@
 
 @interface PlaceCell : MoogleImageCell {
   Place *_place;
+  NSMutableArray *_friendPictureArray;
+  NSMutableArray *_friendIds;
 }
 
 @end

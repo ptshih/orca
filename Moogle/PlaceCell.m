@@ -12,19 +12,21 @@
 #define CELL_FONT_SIZE 12.0
 #define TIMESTAMP_FONT_SIZE 12.0
 #define ADDRESS_FONT_SIZE 12.0
+#define LAST_ACTIVITY_FONT_SIZE 13.0
 #define UNREAD_WIDTH 5.0
 
-static UIImage *_unreadImage = nil;
-
 @implementation PlaceCell
-
-+ (void)initialize {
-  _unreadImage = [[[UIImage imageNamed:@"unread.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0] retain];
-}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
+    _friendIds = [[NSMutableArray alloc] initWithCapacity:6];
+    _friendPictureArray = [[NSMutableArray alloc] initWithCapacity:6];
+    MoogleImageView *profileImage = nil;
+    for (int i=0;i<6;i++) {
+      profileImage = [[[MoogleImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)] autorelease];
+      [_friendPictureArray addObject:profileImage];
+    }
   }
   return self;
 }
@@ -45,7 +47,11 @@ static UIImage *_unreadImage = nil;
   CGRect contentRect = CGRectMake(left, top, width, INT_MAX);
   CGSize drawnSize = CGSizeZero;
   
-  [CELL_BLUE_COLOR set];
+  if (self.highlighted) {
+    [CELL_VERY_LIGHT_BLUE_COLOR set];
+  } else {
+    [CELL_GRAY_BLUE_COLOR set];
+  }
   
   if ( _place.timestamp && [[_place.timestamp humanIntervalSinceNow] length] > 0) {
     drawnSize = [[_place.timestamp humanIntervalSinceNow] drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentRight];
@@ -53,7 +59,11 @@ static UIImage *_unreadImage = nil;
     contentRect = CGRectMake(left, top, width - drawnSize.width - MARGIN_X, INT_MAX);
   }
   
-  [CELL_BLACK_COLOR set];
+  if (self.highlighted) {
+    [CELL_WHITE_COLOR set];
+  } else {
+    [CELL_BLACK_COLOR set];
+  }
   
   if ([_place.name length] > 0) {
     drawnSize = [_place.name drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
@@ -64,7 +74,11 @@ static UIImage *_unreadImage = nil;
   
   contentRect = CGRectMake(left, top, width, INT_MAX);
   
-  [CELL_DARK_BLUE_COLOR set];
+  if (self.highlighted) {
+    [CELL_LIGHT_GRAY_COLOR set];
+  } else {
+    [CELL_GRAY_COLOR set];
+  }
   
   if ([_place.address length] > 0) {
     drawnSize = [_place.address drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:ADDRESS_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
@@ -72,8 +86,12 @@ static UIImage *_unreadImage = nil;
     top += drawnSize.height;
     contentRect.origin.y = top;
   }
-  
-  [CELL_BLACK_COLOR set];
+
+  if (self.highlighted) {
+    [CELL_VERY_LIGHT_BLUE_COLOR set];
+  } else {
+    [CELL_GRAY_BLUE_COLOR set];
+  }
   
   // Last Activity
   NSString *lastActivity = nil;
@@ -92,18 +110,37 @@ static UIImage *_unreadImage = nil;
   }
   
   if (lastActivity && [lastActivity length] > 0) {
-    drawnSize = [lastActivity drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
+    drawnSize = [lastActivity drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:LAST_ACTIVITY_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
     
     top += drawnSize.height;
     contentRect.origin.y = top;
   }
   
-  [CELL_GRAY_BLUE_COLOR set];
+  // Friend activity pictures
+  if ([_friendIds count] > 0) {
+    int i = 0;
+    for (MoogleImageView *picture in _friendPictureArray) {
+      [picture loadImage];
+      picture.top = top;
+      picture.left = left + i * picture.width + i * MARGIN_X;
+      [self.contentView addSubview:picture];
+      i++;
+    }
+    
+    top += 30;
+    contentRect.origin.y = top;
+  }
+  
+  if (self.highlighted) {
+    [CELL_LIGHT_GRAY_COLOR set];
+  } else {
+    [CELL_DARK_BLUE_COLOR set];
+  }
   
   // Activity Count
   NSString *activity = ([_place.activityCount integerValue] > 1) ? [NSString stringWithFormat:@"%@ kupos from %@", _place.activityCount, _place.friendFirstNames] : [NSString stringWithFormat:@"%@ kupo from %@", _place.activityCount, _place.friendFirstNames];
   if ([activity length] > 0) {
-    drawnSize = [activity drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:CELL_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
+    drawnSize = [activity drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
     
     top += drawnSize.height;
     contentRect.origin.y = top;
@@ -117,7 +154,12 @@ static UIImage *_unreadImage = nil;
   
   // Unread indicator
   if (![_place.isRead boolValue]) {
-    [_unreadImage drawInRect:CGRectMake(0, 0, 4, top)];
+    [CELL_UNREAD_COLOR set];
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextFillRect(context, CGRectMake(0, 0, 4, top));
+  } else {
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextClearRect(context, CGRectMake(0, 0, 4, top));
   }
   
 //  NSLog(@"place for cell height: %@", _place);
@@ -179,14 +221,18 @@ static UIImage *_unreadImage = nil;
   }
   
   if (lastActivity && [lastActivity length] > 0) {
-    size = [lastActivity sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
+    size = [lastActivity sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:LAST_ACTIVITY_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
     
     desiredHeight += size.height;
   }
   
+  if (place.friendIds && [[place.friendIds componentsSeparatedByString:@","] count] > 1) {
+    desiredHeight += 30;
+  }
+  
   NSString *activity = ([place.activityCount integerValue] > 1) ? [NSString stringWithFormat:@"%@ kupos from %@", place.activityCount, place.friendFirstNames] : [NSString stringWithFormat:@"%@ kupo from %@", place.activityCount, place.friendFirstNames];
   
-  size = [activity sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
+  size = [activity sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
   
   desiredHeight += size.height;
   
@@ -208,6 +254,21 @@ static UIImage *_unreadImage = nil;
 //  _moogleImageView.urlPath = place.pictureUrl;
   _moogleImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", place.authorId];
   
+  // Activity Friends Photos
+  [_friendIds removeAllObjects];
+  [_friendIds addObjectsFromArray:[place.friendIds componentsSeparatedByString:@","]];
+  [_friendIds removeObject:place.authorId];
+  
+  
+  int i = 0;
+  for (MoogleImageView *picture in _friendPictureArray) {
+    if (i < [_friendIds count]) {
+      [picture setUrlPath:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", [_friendIds objectAtIndex:i]]];
+    } else {
+      [picture unloadImage];
+    }
+    i++;
+  }
 }
 
 + (MoogleCellType)cellType {
@@ -215,6 +276,8 @@ static UIImage *_unreadImage = nil;
 }
 
 - (void)dealloc {
+  RELEASE_SAFELY(_friendIds);
+  RELEASE_SAFELY(_friendPictureArray);
   RELEASE_SAFELY(_place);
   [super dealloc];
 }

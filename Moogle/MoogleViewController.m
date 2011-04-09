@@ -8,8 +8,13 @@
 
 #import "MoogleViewController.h"
 
+static UIImage *_backgroundImage = nil;
 
 @implementation MoogleViewController
+
++ (void)initialize {
+  _backgroundImage = [[UIImage imageNamed:@"bamboo_bg_alpha.png"] retain];
+}
 
 - (id)init {
   self = [super init];
@@ -22,6 +27,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.view.opaque = YES;
+  self.view.backgroundColor = [UIColor colorWithPatternImage:_backgroundImage];
   self.view.frame = CGRectMake(0, 20, 320, 460);
   self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
   self.view.autoresizesSubviews = YES;

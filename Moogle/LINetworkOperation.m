@@ -173,7 +173,7 @@ static NSThread *_opThread = nil;
   
   // Inform delegate that operation started
   if (self.delegate && [self.delegate respondsToSelector:@selector(networkOperationDidStart:)]) {
-    [self.delegate performSelector:@selector(networkOperationDidStart:) withObject:self];
+    [self.delegate performSelectorOnMainThread:@selector(networkOperationDidStart:) withObject:self waitUntilDone:NO];
   }
   
   // Prepare Request
