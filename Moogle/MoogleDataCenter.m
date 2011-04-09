@@ -140,7 +140,7 @@ static MoogleDataCenter *_defaultCenter = nil;
     NSArray *allValues = [headers allValues];
     for (int i = 0; i < [headers count]; i++) {
       // NOTE: should probably type transform coerce in the future
-      [_op addRequestParam:[allKeys objectAtIndex:i] value:[allValues objectAtIndex:i]];
+      [_op addRequestHeader:[allKeys objectAtIndex:i] value:[allValues objectAtIndex:i]];
     }
   }
   
