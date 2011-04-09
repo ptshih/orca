@@ -117,7 +117,7 @@ static UIImage *_unreadImage = nil;
   
   // Unread indicator
   if (![_place.isRead boolValue]) {
-    [_unreadImage drawInRect:CGRectMake(0, 1, 4, top - 2)];
+    [_unreadImage drawInRect:CGRectMake(0, 0, 4, top)];
   }
   
 //  NSLog(@"place for cell height: %@", _place);

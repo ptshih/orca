@@ -212,8 +212,6 @@
 		25FB8BEA133AA7C400C130A8 /* HeaderTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BE8133AA7C300C130A8 /* HeaderTabView.m */; };
 		25FB8BEF133AA7E800C130A8 /* MoogleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BEC133AA7E600C130A8 /* MoogleCell.m */; };
 		25FB8BF0133AA7E800C130A8 /* MoogleImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BEE133AA7E700C130A8 /* MoogleImageCell.m */; };
-		25FB8BF9133AACCF00C130A8 /* table-cell-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BF7133AACCE00C130A8 /* table-cell-bg.png */; };
-		25FB8BFA133AACCF00C130A8 /* table-cell-bg-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BF8133AACCF00C130A8 /* table-cell-bg-selected.png */; };
 		25FB8C01133AAF2900C130A8 /* nav-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BFF133AAF2600C130A8 /* nav-logo.png */; };
 		25FB8C02133AAF2900C130A8 /* nav-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8C00133AAF2700C130A8 /* nav-logo@2x.png */; };
 		25FB8C0D133ABCCB00C130A8 /* PlaceDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C0C133ABCCA00C130A8 /* PlaceDataCenter.m */; };
@@ -261,7 +259,7 @@
 		250B318A133EBF0B0011EEDD /* ComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
 		250B31AC133EC4220011EEDD /* MoogleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleView.h; sourceTree = "<group>"; };
 		250B31AD133EC4220011EEDD /* MoogleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoogleView.m; sourceTree = "<group>"; };
-		250B31AF133EC86A0011EEDD /* ComposeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; path = ComposeDelegate.h; sourceTree = "<group>"; };
+		250B31AF133EC86A0011EEDD /* ComposeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeDelegate.h; sourceTree = "<group>"; };
 		250B31DD13411DBD0011EEDD /* textview_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = textview_bg.png; sourceTree = "<group>"; };
 		250B31DE13411DBD0011EEDD /* textview_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "textview_bg@2x.png"; sourceTree = "<group>"; };
 		250B31E1134131FA0011EEDD /* UIScreen+ConvertRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+ConvertRect.h"; sourceTree = "<group>"; };
@@ -481,8 +479,6 @@
 		25FB8BEC133AA7E600C130A8 /* MoogleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoogleCell.m; sourceTree = "<group>"; };
 		25FB8BED133AA7E600C130A8 /* MoogleImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoogleImageCell.h; sourceTree = "<group>"; };
 		25FB8BEE133AA7E700C130A8 /* MoogleImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoogleImageCell.m; sourceTree = "<group>"; };
-		25FB8BF7133AACCE00C130A8 /* table-cell-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "table-cell-bg.png"; sourceTree = "<group>"; };
-		25FB8BF8133AACCF00C130A8 /* table-cell-bg-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "table-cell-bg-selected.png"; sourceTree = "<group>"; };
 		25FB8BFF133AAF2600C130A8 /* nav-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-logo.png"; sourceTree = "<group>"; };
 		25FB8C00133AAF2700C130A8 /* nav-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-logo@2x.png"; sourceTree = "<group>"; };
 		25FB8C0B133ABCC900C130A8 /* PlaceDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PlaceDataCenter.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -806,8 +802,6 @@
 				2538FF6D133B507700ACE127 /* EGO */,
 				25FB8BFF133AAF2600C130A8 /* nav-logo.png */,
 				25FB8C00133AAF2700C130A8 /* nav-logo@2x.png */,
-				25FB8BF7133AACCE00C130A8 /* table-cell-bg.png */,
-				25FB8BF8133AACCF00C130A8 /* table-cell-bg-selected.png */,
 				25FB8BC3133A137700C130A8 /* logo-white-280.png */,
 				25FB8BC4133A137700C130A8 /* logo-white-280@2x.png */,
 				25FB8BB6133A0DFB00C130A8 /* Buttons */,
@@ -1111,8 +1105,6 @@
 				25FB8BC5133A137700C130A8 /* logo-white-280.png in Resources */,
 				25FB8BC6133A137700C130A8 /* logo-white-280@2x.png in Resources */,
 				25FB8BD0133A1B9500C130A8 /* InitialDefaults.plist in Resources */,
-				25FB8BF9133AACCF00C130A8 /* table-cell-bg.png in Resources */,
-				25FB8BFA133AACCF00C130A8 /* table-cell-bg-selected.png in Resources */,
 				25FB8C01133AAF2900C130A8 /* nav-logo.png in Resources */,
 				25FB8C02133AAF2900C130A8 /* nav-logo@2x.png in Resources */,
 				25FB8C20133ACB2400C130A8 /* pods.json in Resources */,
@@ -1363,7 +1355,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Peter Shih (5XB5K7Q4U4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1373,7 +1365,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "17DA6211-8FEE-41F9-9B45-6065C108FE55";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1382,7 +1374,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Peter Shih (5XB5K7Q4U4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
@@ -1390,7 +1382,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "17DA6211-8FEE-41F9-9B45-6065C108FE55";
 				SDKROOT = iphoneos;
 			};
 			name = Release;

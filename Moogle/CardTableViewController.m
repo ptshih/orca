@@ -223,11 +223,18 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-  if ([[cell class] cellType] == MoogleCellTypePlain) {
-    cell.backgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"table-cell-bg.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:30]] autorelease];
-    cell.selectedBackgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"table-cell-bg-selected.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:30]] autorelease];
-  } else {
-  }
+  UIView *backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
+  backgroundView.backgroundColor = [UIColor whiteColor];
+  backgroundView.alpha = 0.8;
+  cell.backgroundView = backgroundView;
+  
+  UIView *selectedBackgroundView = [[UIView alloc] initWithFrame:cell.bounds];
+  selectedBackgroundView.backgroundColor = MOOGLE_BLUE_COLOR;
+  selectedBackgroundView.alpha = 0.8;
+  cell.selectedBackgroundView = selectedBackgroundView;
+  
+  [backgroundView release];
+  [selectedBackgroundView release];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
