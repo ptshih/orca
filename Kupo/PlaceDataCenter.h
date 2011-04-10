@@ -12,8 +12,8 @@
 @interface PlaceDataCenter : PSDataCenter {
 }
 
-- (void)getPlaces;
-- (void)loadMorePlaces;
+- (void)getPlacesWithSince:(NSDate *)sinceDate;
+- (void)loadMorePlacesWithUntil:(NSDate *)untilDate;
 
 - (void)loadPlacesFromFixture;
 

@@ -43,6 +43,9 @@
   // Footer
   [self setupFooterView];
   
+  // Load More
+  [self setupLoadMoreView];
+  
   [NSFetchedResultsController deleteCacheWithName:[NSString stringWithFormat:@"frc_cache_%@", [self class]]];
   [self reloadCardController];
 }
@@ -146,7 +149,10 @@
   [super reloadCardController];
   [self executeFetch];
   
-  [[KupoDataCenter defaultCenter] getKuposForPlaceWithPlaceId:self.place.placeId];
+  // Get since date
+  NSDate *sinceDate = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"since.kupos.%@", self.place.placeId]];
+  [[KupoDataCenter defaultCenter] getKuposForPlaceWithPlaceId:self.place.placeId andSince:sinceDate];
+  
 //  [[KupoDataCenter defaultCenter] loadKuposFromFixture];
 }
 
@@ -158,10 +164,29 @@
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
   [self dataSourceDidLoad];
+  
+  // Set since and until date
+  Kupo *firstKupo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
+  Kupo *lastKupo = [[self.fetchedResultsController fetchedObjects] lastObject];
+  NSDate *sinceDate = firstKupo.timestamp;
+  NSDate *untilDate = lastKupo.timestamp;
+  [[NSUserDefaults standardUserDefaults] setValue:sinceDate forKey:[NSString stringWithFormat:@"since.kupos.%@", self.place.placeId]];
+  [[NSUserDefaults standardUserDefaults] setValue:untilDate forKey:[NSString stringWithFormat:@"until.kupos.%@", self.place.placeId]];
+  [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
   [self dataSourceDidLoad];
+}
+
+#pragma mark -
+#pragma mark LoadMore
+- (void)loadMore {
+  [super loadMore];
+  
+  // get until date
+  NSDate *untilDate = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"until.kupos.%@", self.place.placeId]];
+  [[KupoDataCenter defaultCenter] loadMoreKuposForPlaceWithPlaceId:self.place.placeId andUntil:untilDate];
 }
 
 #pragma mark -

@@ -54,26 +54,25 @@ static NSMutableDictionary *_pkDict = nil;
   _pkDict = [[NSMutableDictionary dictionary] retain];
 }
 
-- (void)getPlaces {
+- (void)getPlacesWithSince:(NSDate *)sinceDate {
   NSURL *placesUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/me/places", KUPO_BASE_URL]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
   // Since
-  NSDate *lastFetched = [[NSUserDefaults standardUserDefaults] valueForKey:@"placesSince"];
-  [params setValue:[NSString stringWithFormat:@"%0.0f", [lastFetched timeIntervalSince1970]] forKey:@"since"];
+  NSTimeInterval since = [sinceDate timeIntervalSince1970] - SINCE_SAFETY_NET;
+  [params setValue:[NSString stringWithFormat:@"%0.0f", since] forKey:@"since"];
   
   [self sendOperationWithURL:placesUrl andMethod:GET andHeaders:nil andParams:params];
 }
 
-- (void)loadMorePlaces {
+- (void)loadMorePlacesWithUntil:(NSDate *)untilDate {
   NSURL *placesUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/me/places", KUPO_BASE_URL]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
-  // Since
-  NSDate *lastFetched = [[NSUserDefaults standardUserDefaults] valueForKey:@"placesUntil"];
-  [params setValue:[NSString stringWithFormat:@"%0.0f", [lastFetched timeIntervalSince1970]] forKey:@"until"];
+  // Until
+  [params setValue:[NSString stringWithFormat:@"%0.0f", [untilDate timeIntervalSince1970]] forKey:@"until"];
   
   [self sendOperationWithURL:placesUrl andMethod:GET andHeaders:nil andParams:params];
 }
@@ -102,11 +101,7 @@ static NSMutableDictionary *_pkDict = nil;
 - (void)serializePlacesWithDictionary:(NSDictionary *)dictionary {
   // Core Data Serialize
   NSManagedObjectContext *context = [LICoreDataStack sharedManagedObjectContext];
-  
-  // Read placesSince and placesUntil
-  NSDate *placesSince = [[NSUserDefaults standardUserDefaults] valueForKey:@"placesSince"];
-  NSDate *placesUntil = [[NSUserDefaults standardUserDefaults] valueForKey:@"placesUntil"];
-  
+
   Place *currentPlace = nil;
   
   // Insert into Core Data
@@ -122,25 +117,12 @@ static NSMutableDictionary *_pkDict = nil;
     } else {
       currentPlace = [Place addPlaceWithDictionary:placeDict inContext:context];
     }
-    
-    // Update since/until
-    if ([currentPlace.timestamp isEqualToDate:[currentPlace.timestamp laterDate:placesSince]]) {
-      placesSince = currentPlace.timestamp;
-    }
-    
-    if ([currentPlace.timestamp isEqualToDate:[currentPlace.timestamp earlierDate:placesUntil]]) {
-      placesUntil = currentPlace.timestamp;
-    }
   }
   
   [context obtainPermanentIDsForObjects:[[context insertedObjects] allObjects] error:nil];
   for (Place *newPlace in [context insertedObjects]) {
     [_pkDict setValue:[newPlace objectID] forKey:newPlace.id];
   }
-  
-  [[NSUserDefaults standardUserDefaults] setValue:placesSince forKey:@"placesSince"];
-  [[NSUserDefaults standardUserDefaults] setValue:placesUntil forKey:@"placesUntil"];
-  [[NSUserDefaults standardUserDefaults] synchronize];
   
   // Save to Core Data
   NSError *error = nil;

@@ -54,10 +54,25 @@ static NSMutableDictionary *_pkDict = nil;
   _pkDict = [[NSMutableDictionary dictionary] retain];
 }
 
-- (void)getKuposForPlaceWithPlaceId:(NSString *)placeId {
+- (void)getKuposForPlaceWithPlaceId:(NSString *)placeId andSince:(NSDate *)sinceDate {
   NSURL *kuposUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/places/%@/kupos", KUPO_BASE_URL, placeId]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
+  
+  // Since
+  NSTimeInterval since = [sinceDate timeIntervalSince1970] - SINCE_SAFETY_NET;
+  [params setValue:[NSString stringWithFormat:@"%0.0f", since] forKey:@"since"];
+  
+  [self sendOperationWithURL:kuposUrl andMethod:GET andHeaders:nil andParams:params];
+}
+
+- (void)loadMoreKuposForPlaceWithPlaceId:(NSString *)placeId andUntil:(NSDate *)untilDate {
+  NSURL *kuposUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/places/%@/kupos", KUPO_BASE_URL, placeId]];
+  
+  NSMutableDictionary *params = [NSMutableDictionary dictionary];
+  
+  // Until
+  [params setValue:[NSString stringWithFormat:@"%0.0f", [untilDate timeIntervalSince1970]] forKey:@"until"];
   
   [self sendOperationWithURL:kuposUrl andMethod:GET andHeaders:nil andParams:params];
 }

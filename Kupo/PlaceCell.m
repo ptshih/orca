@@ -48,6 +48,9 @@
   CGRect contentRect = CGRectMake(left, top, width, INT_MAX);
   CGSize drawnSize = CGSizeZero;
   
+  CGContextRef context = UIGraphicsGetCurrentContext();
+  CGContextClearRect(context, contentRect);
+  
   if (self.highlighted) {
     [CELL_VERY_LIGHT_BLUE_COLOR set];
   } else {

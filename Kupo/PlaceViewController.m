@@ -190,7 +190,10 @@
 - (void)reloadCardController {
   [super reloadCardController];
   [self executeFetch];
-  [[PlaceDataCenter defaultCenter] getPlaces];
+  
+  // Get since date
+  NSDate *sinceDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"since.places"];
+  [[PlaceDataCenter defaultCenter] getPlacesWithSince:sinceDate];
 //  [[PlaceDataCenter defaultCenter] loadPlacesFromFixture];
 }
 
@@ -202,6 +205,15 @@
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
   [self dataSourceDidLoad];
+  
+  // Set since and until date
+  Place *firstPlace = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
+  Place *lastPlace = [[self.fetchedResultsController fetchedObjects] lastObject];
+  NSDate *sinceDate = firstPlace.timestamp;
+  NSDate *untilDate = lastPlace.timestamp;
+  [[NSUserDefaults standardUserDefaults] setValue:sinceDate forKey:@"since.places"];
+  [[NSUserDefaults standardUserDefaults] setValue:untilDate forKey:@"until.places"];
+  [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
@@ -212,7 +224,10 @@
 #pragma mark LoadMore
 - (void)loadMore {
   [super loadMore];
-  [[PlaceDataCenter defaultCenter] loadMorePlaces];
+  
+  // get until date
+  NSDate *untilDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"until.places"];
+  [[PlaceDataCenter defaultCenter] loadMorePlacesWithUntil:untilDate];
 }
 
 #pragma mark -

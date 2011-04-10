@@ -12,7 +12,8 @@
 @interface KupoDataCenter : PSDataCenter {
 }
 
-- (void)getKuposForPlaceWithPlaceId:(NSString *)placeId;
+- (void)getKuposForPlaceWithPlaceId:(NSString *)placeId andSince:(NSDate *)sinceDate;
+- (void)loadMoreKuposForPlaceWithPlaceId:(NSString *)placeId andUntil:(NSDate *)untilDate;
 
 - (void)loadKuposFromFixture;
 
