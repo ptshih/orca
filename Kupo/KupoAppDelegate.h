@@ -12,14 +12,12 @@
 
 @class Facebook;
 @class LoginViewController;
-@class LauncherViewController;
 @class PlaceViewController;
 
 @interface KupoAppDelegate : NSObject <UIApplicationDelegate, LoginDelegate, PSDataCenterDelegate> {
   UIWindow *_window;
   Facebook *_facebook;
   LoginViewController *_loginViewController;
-  LauncherViewController *_launcherViewcontroller;
   PlaceViewController *_placeViewController;
   UINavigationController *_navigationController;
   
@@ -30,6 +28,7 @@
 @property (nonatomic, retain) UIWindow *window;
 @property (readonly) Facebook *facebook;
 @property (retain) NSString *sessionKey;
+@property (nonatomic, retain) UINavigationController *navigationController;
 
 // Private
 + (void)setupDefaults;

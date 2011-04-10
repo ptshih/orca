@@ -68,6 +68,8 @@
 		258B144713512A3800091A85 /* Nearby.m in Sources */ = {isa = PBXBuildFile; fileRef = 258B144513512A3800091A85 /* Nearby.m */; };
 		258B146A1351472200091A85 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 258B14691351472200091A85 /* Kupo.m */; };
 		258B146B1351472200091A85 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 258B14691351472200091A85 /* Kupo.m */; };
+		258B147413515B5300091A85 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 258B147313515B5300091A85 /* MapViewController.m */; };
+		258B147513515B5300091A85 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 258B147313515B5300091A85 /* MapViewController.m */; };
 		25961C7B134D3DD800A3D4CD /* bamboo_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 25961C79134D3DD800A3D4CD /* bamboo_bg.png */; };
 		25961C7C134D3DD800A3D4CD /* bamboo_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25961C7A134D3DD800A3D4CD /* bamboo_bg@2x.png */; };
 		259C7B4B1349733000C37AE1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B4A1349733000C37AE1 /* Reachability.m */; };
@@ -318,6 +320,8 @@
 		258B144513512A3800091A85 /* Nearby.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Nearby.m; sourceTree = "<group>"; };
 		258B14681351472200091A85 /* Kupo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kupo.h; sourceTree = "<group>"; };
 		258B14691351472200091A85 /* Kupo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Kupo.m; sourceTree = "<group>"; };
+		258B147213515B5300091A85 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		258B147313515B5300091A85 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		25961C79134D3DD800A3D4CD /* bamboo_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bamboo_bg.png; sourceTree = "<group>"; };
 		25961C7A134D3DD800A3D4CD /* bamboo_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bamboo_bg@2x.png"; sourceTree = "<group>"; };
 		25961C9E134D46CD00A3D4CD /* MeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeDelegate.h; sourceTree = "<group>"; };
@@ -559,6 +563,8 @@
 				25FB8BDB133A9B1200C130A8 /* MeViewController.m */,
 				25033EB3134866A000633052 /* NearbyViewController.h */,
 				25033EB4134866A100633052 /* NearbyViewController.m */,
+				258B147213515B5300091A85 /* MapViewController.h */,
+				258B147313515B5300091A85 /* MapViewController.m */,
 			);
 			name = Modals;
 			sourceTree = "<group>";
@@ -1299,6 +1305,7 @@
 				254DAEB013511BCF009D99E0 /* Kupo.xcdatamodeld in Sources */,
 				258B144613512A3800091A85 /* Nearby.m in Sources */,
 				258B146A1351472200091A85 /* Kupo.m in Sources */,
+				258B147413515B5300091A85 /* MapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1359,6 +1366,7 @@
 				254DAEB113511BCF009D99E0 /* Kupo.xcdatamodeld in Sources */,
 				258B144713512A3800091A85 /* Nearby.m in Sources */,
 				258B146B1351472200091A85 /* Kupo.m in Sources */,
+				258B147513515B5300091A85 /* MapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

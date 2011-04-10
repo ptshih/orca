@@ -19,6 +19,7 @@
 @synthesize window = _window;
 @synthesize facebook = _facebook;
 @synthesize sessionKey = _sessionKey;
+@synthesize navigationController = _navigationController;
 
 + (void)initialize {
   [self setupDefaults];
@@ -219,7 +220,6 @@
   [[LoginDataCenter defaultCenter] setDelegate:nil];
   RELEASE_SAFELY(_sessionKey);
   RELEASE_SAFELY(_loginViewController);
-  RELEASE_SAFELY(_launcherViewcontroller);
   RELEASE_SAFELY(_placeViewController);
   RELEASE_SAFELY(_navigationController);
   RELEASE_SAFELY(_facebook);

@@ -19,6 +19,7 @@
   MKCoordinateRegion _mapRegion;
 }
 
+- (void)showMap;
 - (void)loadMap;
 
 @end

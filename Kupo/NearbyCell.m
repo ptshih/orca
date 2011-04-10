@@ -8,6 +8,7 @@
 
 #import "NearbyCell.h"
 #import "Nearby.h"
+#import "MapViewController.h"
 
 @implementation NearbyCell
 
@@ -19,7 +20,7 @@
     
     self.textLabel.numberOfLines = 0;
     
-    _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(MARGIN_X, MARGIN_Y, 100, 100)];
+    _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(MARGIN_X, MARGIN_Y, 120, 100)];
     _mapView.layer.cornerRadius = 5.0;
     _mapView.layer.masksToBounds = YES;
     _mapView.layer.borderColor = [SEPARATOR_COLOR CGColor];
@@ -28,6 +29,25 @@
     [self.contentView addSubview:_mapView];
   }
   return self;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+  UITouch *touch = touches.anyObject;
+  CGPoint location = [touch locationInView:self];
+  
+  if (CGRectContainsPoint(_mapView.frame, location)) {
+    [self showMap];
+  } else {
+    [super touchesBegan:touches withEvent:event];
+  }
+}
+
+- (void)showMap {
+  MapViewController *mvc = [[MapViewController alloc] init];
+  mvc.nearbyPlace = _nearbyPlace;
+  mvc.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+  [APP_DELEGATE.navigationController.modalViewController presentModalViewController:mvc animated:YES];
+  [mvc release];
 }
 
 - (void)layoutSubviews {
@@ -60,7 +80,7 @@
   self.textLabel.text = nearby.name;
   self.detailTextLabel.text = [NSString stringWithFormat:@"%.2f miles away", [nearby.distance floatValue]];
   
-  // go to North America
+  // zoom to place
   _mapRegion.center.latitude = [nearby.lat floatValue];
   _mapRegion.center.longitude = [nearby.lng floatValue];
   _mapRegion.span.latitudeDelta = 0.0025;
