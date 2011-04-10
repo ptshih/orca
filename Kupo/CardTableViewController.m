@@ -233,7 +233,7 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
   if ([[cell class] cellType] == PSCellTypePlain) {
     UIView *backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
-    backgroundView.backgroundColor = CELL_COLOR;
+    backgroundView.backgroundColor = CELL_COLOR_ALPHA;
 //    backgroundView.alpha = 0.8;
     cell.backgroundView = backgroundView;
     
@@ -280,7 +280,7 @@
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView {
-  tableView.backgroundColor = TABLE_BG_COLOR;
+  tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bamboo_bg_alpha.png"]];
   tableView.separatorColor = SEPARATOR_COLOR;
   tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 }

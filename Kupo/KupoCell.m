@@ -50,9 +50,6 @@ static UIImage *_quoteImage = nil;
   CGRect contentRect = CGRectMake(left, top, width, INT_MAX);
   CGSize drawnSize = CGSizeZero;
   
-  CGContextRef context = UIGraphicsGetCurrentContext();
-  CGContextClearRect(context, contentRect);
-  
   if (self.highlighted) {
     [CELL_VERY_LIGHT_BLUE_COLOR set];
   } else {
@@ -167,9 +164,9 @@ static UIImage *_quoteImage = nil;
   NSString *status = nil;
   if ([kupo.kupoType integerValue] == 0) {
     if (kupo.tagged) {
-      status = [NSString stringWithFormat:@"Checked in via Facebook with %@", kupo.tagged];
+      status = [NSString stringWithFormat:@"Checked in via %@ with %@", kupo.appName, kupo.tagged];
     } else {
-      status = [NSString stringWithFormat:@"Checked in via Facebook"];
+      status = [NSString stringWithFormat:@"Checked in via %@", kupo.appName];
     }
   }
   

@@ -48,9 +48,6 @@
   CGRect contentRect = CGRectMake(left, top, width, INT_MAX);
   CGSize drawnSize = CGSizeZero;
   
-  CGContextRef context = UIGraphicsGetCurrentContext();
-  CGContextClearRect(context, contentRect);
-  
   if (self.highlighted) {
     [CELL_VERY_LIGHT_BLUE_COLOR set];
   } else {
@@ -161,8 +158,8 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextFillRect(context, CGRectMake(0, 0, UNREAD_WIDTH, top));
   } else {
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextClearRect(context, CGRectMake(0, 0, UNREAD_WIDTH, top));
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+//    CGContextClearRect(context, CGRectMake(0, 0, UNREAD_WIDTH, top));
   }
   
 //  NSLog(@"place for cell height: %@", _place);

@@ -16,8 +16,8 @@ static UIImage *_loadingImage = nil;
 @synthesize state = _state;
 
 + (void)initialize {
-  _emptyImage = [[UIImage imageNamed:@"empty.png"] retain];
-  _loadingImage = [[UIImage imageNamed:@"loading.png"] retain];
+  _emptyImage = [[UIImage imageNamed:@"bamboo_bg.png"] retain];
+  _loadingImage = [[UIImage imageNamed:@"bamboo_bg_alpha.png"] retain];
 }
 
 - (id)initWithFrame:(CGRect)frame {
