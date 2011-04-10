@@ -57,7 +57,7 @@
     
     _uploadedImage = [[originalImage scaleProportionalToSize:CGSizeMake(640, 640)] retain];
 //    _uploadedImage = [originalImage retain];
-    [_photoUpload setImage:_uploadedImage forState:UIControlStateNormal];
+    [_photoUpload setBackgroundImage:_uploadedImage forState:UIControlStateNormal];
   }
   
   // Handle a movie capture
@@ -72,7 +72,7 @@
     UIImage *videoThumbImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     _uploadedImage = [[videoThumbImage cropProportionalToSize:CGSizeMake(320, 320)] retain];
-    [_photoUpload setImage:_uploadedImage forState:UIControlStateNormal];
+    [_photoUpload setBackgroundImage:_uploadedImage forState:UIControlStateNormal];
   }
   
   // Write the photo to the user's album
@@ -113,6 +113,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
   self.view.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
   
   if (_kupoComposeType == KupoComposeTypeKupo) {

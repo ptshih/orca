@@ -22,7 +22,7 @@
   self = [super init];
   if (self) {
     [[KupoDataCenter defaultCenter] setDelegate:self];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kComposeDidFinish object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
   }
   return self;
 }
@@ -196,7 +196,7 @@
 }
 
 - (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:kComposeDidFinish object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
   [[KupoDataCenter defaultCenter] setDelegate:nil];
   RELEASE_SAFELY(_place);
   [super dealloc];

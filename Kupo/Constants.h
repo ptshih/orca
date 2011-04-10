@@ -23,11 +23,12 @@
 #define USER_LOCALE [[NSLocale autoupdatingCurrentLocale] localeIdentifier]
 
 // Notifications
+#define kReloadController @"ReloadController"
 #define kLocationAcquired @"LocationAcquired"
 #define kLogoutRequested @"LogoutRequested"
 #define kCoreDataDidReset @"CoreDataDidReset"
-#define kComposeDidFinish @"ComposeDidFinish"
-#define kComposeDidFail @"ComposeDidFail"
+//#define kComposeDidFinish @"ComposeDidFinish"
+//#define kComposeDidFail @"ComposeDidFail"
 
 // Cards
 #define NUM_CARDS 2

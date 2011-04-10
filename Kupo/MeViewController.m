@@ -63,6 +63,7 @@
   CGFloat left = 10;
   
   UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
+#warning NOT iOS3 COMPATIBLE
   headerView.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
 //  headerView.backgroundColor = [UIColor colorWithPatternImage:[[UIImage imageNamed:@"row_gradient.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0]];
 

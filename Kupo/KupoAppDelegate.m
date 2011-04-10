@@ -128,6 +128,7 @@
     _facebook.accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
     _facebook.expirationDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookExpirationDate"];
     [self startSession];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
   }
 }
 

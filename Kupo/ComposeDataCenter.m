@@ -88,12 +88,12 @@ static ComposeDataCenter *_defaultCenter = nil;
 }
 
 - (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {
-  [[NSNotificationCenter defaultCenter] postNotificationName:kComposeDidFinish object:operation];
+  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
   [super dataCenterFinishedWithOperation:operation];
 }
 
 - (void)dataCenterFailedWithOperation:(LINetworkOperation *)operation {
-  [[NSNotificationCenter defaultCenter] postNotificationName:kComposeDidFail object:operation];
+  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
   [super dataCenterFailedWithOperation:operation];
 }
 
