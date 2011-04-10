@@ -47,6 +47,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  [self updateState];
   [[KupoLocation sharedInstance] startStandardUpdates];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationAcquired) name:kLocationAcquired object:nil];
 }

@@ -12,11 +12,13 @@
 #import "UINavigationBar+Custom.h"
 #import "PSDataCenterDelegate.h"
 
+@class PSNullView;
+
 @interface CardViewController : PSViewController <CardStateMachine, PSDataCenterDelegate, UINavigationControllerDelegate> {
   UIScrollView *_activeScrollView; // subclasses should set this if they have a scrollView
   UILabel *_navTitleLabel;
   
-  UIImageView *_emptyView;
+  PSNullView *_nullView;
 }
 
 - (void)clearCachedData;
@@ -24,7 +26,7 @@
 - (void)reloadCardController;
 - (void)resetCardController;
 - (void)dataSourceDidLoad;
-- (void)setupLoadingAndEmptyViews;
+- (void)setupNullView;
 - (void)addBackButton;
 
 @end

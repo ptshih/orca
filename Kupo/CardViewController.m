@@ -7,21 +7,13 @@
 //
 
 #import "CardViewController.h"
-
-static UIImage *_emptyImage = nil;
+#import "PSNullView.h"
 
 @interface CardViewController (Private)
-
-- (void)showLoadingView;
-- (void)hideLoadingView;
 
 @end
 
 @implementation CardViewController
-
-+ (void)initialize {
-  _emptyImage = [[UIImage imageNamed:@"empty.png"] retain];
-}
 
 - (id)init {
   self = [super init];
@@ -34,12 +26,8 @@ static UIImage *_emptyImage = nil;
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  _emptyView = [[UIImageView alloc] initWithImage:_emptyImage];
-  
-  _emptyView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _emptyView.alpha = 1.0;
-  _emptyView.hidden = YES;
-  [self.view addSubview:_emptyView];
+  _nullView = [[PSNullView alloc] initWithFrame:self.view.bounds];
+  [self.view addSubview:_nullView];
   
 //  self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
 
@@ -83,7 +71,7 @@ static UIImage *_emptyImage = nil;
 }
 
 // Subclasses may implement
-- (void)setupLoadingAndEmptyViews {
+- (void)setupNullView {
 
 }
 
@@ -140,35 +128,24 @@ static UIImage *_emptyImage = nil;
 }
 
 - (void)updateState {
-//  if ([self dataIsAvailable]) {
-//    // We have real data to display
-//    [self hideLoadingView];
-//  } else {
-//    // We have no data to display, show the empty screen
-//    [self showLoadingView];
-//  }
+  if ([self dataIsAvailable]) {
+    // We have real data to display
+    _nullView.state = PSNullViewStateDisabled;
+  } else {
+    if ([self dataIsLoading]) {
+      // We are loading for the first time
+      _nullView.state = PSNullViewStateLoading;
+    } else {
+      // We have no data to display, show the empty screen
+      _nullView.state = PSNullViewStateEmpty;
+    }
+  }
 }
 
 - (void)updateScrollsToTop:(BOOL)isEnabled {
   if (_activeScrollView) {
     _activeScrollView.scrollsToTop = isEnabled;
   }
-}
-
-
-#pragma mark Loading
-- (void)showLoadingView {
-  [UIView beginAnimations:nil context:NULL];
-  [UIView setAnimationDuration:0.3];
-  _emptyView.alpha = 1.0;
-  [UIView commitAnimations];
-}
-
-- (void)hideLoadingView {
-  [UIView beginAnimations:nil context:NULL];
-  [UIView setAnimationDuration:0.3];
-  _emptyView.alpha = 0.0;
-  [UIView commitAnimations];
 }
 
 #pragma mark UINavigationControllerDelegate
@@ -194,7 +171,7 @@ static UIImage *_emptyImage = nil;
 }
 
 - (void)dealloc {
-  RELEASE_SAFELY(_emptyView);
+  RELEASE_SAFELY(_nullView);
   RELEASE_SAFELY(_navTitleLabel);
   [super dealloc];
 }

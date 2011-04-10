@@ -85,6 +85,10 @@
 		259C7B72134A916500C37AE1 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 259C7B70134A914800C37AE1 /* MediaPlayer.framework */; };
 		259C7B75134A92FB00C37AE1 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B74134A92EE00C37AE1 /* VideoViewController.m */; };
 		259C7B76134A92FB00C37AE1 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B74134A92EE00C37AE1 /* VideoViewController.m */; };
+		25B2F4A9135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
+		25B2F4AA135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
+		25B2F4AD13518D4200DDF1BC /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B2F4AB13518D4200DDF1BC /* loading.png */; };
+		25B2F4AE13518D4200DDF1BC /* loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B2F4AC13518D4200DDF1BC /* loading@2x.png */; };
 		25CEF8071339F278006F23A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8061339F278006F23A7 /* UIKit.framework */; };
 		25CEF8091339F278006F23A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8081339F278006F23A7 /* Foundation.framework */; };
 		25CEF80B1339F278006F23A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80A1339F278006F23A7 /* CoreGraphics.framework */; };
@@ -336,6 +340,10 @@
 		259C7B70134A914800C37AE1 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		259C7B73134A92E300C37AE1 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		259C7B74134A92EE00C37AE1 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
+		25B2F4A7135180EB00DDF1BC /* PSNullView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNullView.h; sourceTree = "<group>"; };
+		25B2F4A8135180EB00DDF1BC /* PSNullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSNullView.m; sourceTree = "<group>"; };
+		25B2F4AB13518D4200DDF1BC /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
+		25B2F4AC13518D4200DDF1BC /* loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading@2x.png"; sourceTree = "<group>"; };
 		25CEF8021339F278006F23A7 /* Kupo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kupo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25CEF8061339F278006F23A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		25CEF8081339F278006F23A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -772,6 +780,8 @@
 		25CEF8FE133A000C006F23A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				25B2F4AB13518D4200DDF1BC /* loading.png */,
+				25B2F4AC13518D4200DDF1BC /* loading@2x.png */,
 				25F397D0135008CD000D007F /* bamboo_bg_alpha.png */,
 				25F397D1135008CD000D007F /* bamboo_bg_alpha@2x.png */,
 				25961C79134D3DD800A3D4CD /* bamboo_bg.png */,
@@ -950,6 +960,8 @@
 				250B31AD133EC4220011EEDD /* PSView.m */,
 				250B31E9134162A20011EEDD /* PSTextView.h */,
 				250B31EA134162A30011EEDD /* PSTextView.m */,
+				25B2F4A7135180EB00DDF1BC /* PSNullView.h */,
+				25B2F4A8135180EB00DDF1BC /* PSNullView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1192,6 +1204,8 @@
 				25F397D2135008CE000D007F /* bamboo_bg_alpha.png in Resources */,
 				25F397D3135008CE000D007F /* bamboo_bg_alpha@2x.png in Resources */,
 				25F397E9135090D0000D007F /* quote_mark@2x.png in Resources */,
+				25B2F4AD13518D4200DDF1BC /* loading.png in Resources */,
+				25B2F4AE13518D4200DDF1BC /* loading@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1306,6 +1320,7 @@
 				258B144613512A3800091A85 /* Nearby.m in Sources */,
 				258B146A1351472200091A85 /* Kupo.m in Sources */,
 				258B147413515B5300091A85 /* MapViewController.m in Sources */,
+				25B2F4A9135180EB00DDF1BC /* PSNullView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1367,6 +1382,7 @@
 				258B144713512A3800091A85 /* Nearby.m in Sources */,
 				258B146B1351472200091A85 /* Kupo.m in Sources */,
 				258B147513515B5300091A85 /* MapViewController.m in Sources */,
+				25B2F4AA135180EB00DDF1BC /* PSNullView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -49,10 +49,6 @@
   }
 }
 
-- (BOOL)dataIsLoading {
-  return NO;
-}
-
 - (void)updateState {
   [super updateState];
 }

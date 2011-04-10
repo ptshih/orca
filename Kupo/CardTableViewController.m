@@ -67,8 +67,8 @@
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorColor = SEPARATOR_COLOR;
   }
-//  [self.view insertSubview:_tableView atIndex:0];
-  [self.view addSubview:_tableView];
+  [self.view insertSubview:_tableView atIndex:0];
+//  [self.view addSubview:_tableView];
   
   // Set the active scrollView
   _activeScrollView = _tableView;
@@ -160,8 +160,8 @@
 
 - (void)reloadCardController {
   [super reloadCardController];
+  _reloading = YES;
   if (_refreshHeaderView) {
-    _reloading = YES;
     [_refreshHeaderView setState:EGOOPullRefreshLoading];
   }
 }
@@ -173,8 +173,8 @@
 
 - (void)dataSourceDidLoad {
   [super dataSourceDidLoad];
+  _reloading = NO;
   if (_refreshHeaderView) {
-    _reloading = NO;
     [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:_tableView];
   }
   
@@ -187,12 +187,20 @@
   if (_tableView == self.searchDisplayController.searchResultsTableView) {
     return ([_searchItems count] > 0);
   } else {
-    return ([[self.items objectAtIndex:0] count] > 0); // check section 0
+    if ([self.sections count] > 0) {
+      return ([[self.items objectAtIndex:0] count] > 0); // check section 0
+    } else {
+      return NO;
+    }
   }
 }
 
 - (BOOL)dataSourceIsReady {
   return ([self.sections count] > 0);
+}
+
+- (BOOL)dataIsLoading {
+  return _reloading;
 }
 
 
