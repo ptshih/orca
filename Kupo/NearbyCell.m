@@ -19,7 +19,7 @@
     
     self.textLabel.numberOfLines = 0;
     
-    _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(MARGIN_X, MARGIN_Y, 50, 50)];
+    _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(MARGIN_X, MARGIN_Y, 100, 100)];
     _mapView.layer.cornerRadius = 5.0;
     _mapView.layer.masksToBounds = YES;
     _mapView.layer.borderColor = [SEPARATOR_COLOR CGColor];
@@ -32,10 +32,16 @@
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  self.textLabel.left = _mapView.right + MARGIN_X;
-  self.textLabel.width = self.contentView.width - self.textLabel.left - MARGIN_X;
-  self.detailTextLabel.left = _mapView.right + MARGIN_X;
-  self.detailTextLabel.width = self.contentView.width - self.detailTextLabel.left - MARGIN_X;
+  CGFloat top = MARGIN_Y;
+  CGFloat left = _mapView.right + MARGIN_X;
+  CGFloat width = self.contentView.width - left - MARGIN_X;
+  
+  self.textLabel.left = left;
+  self.textLabel.top = top;
+  [self.textLabel sizeToFitFixedWidth:width];
+  self.detailTextLabel.top = self.textLabel.bottom;
+  self.detailTextLabel.left = left;
+  self.detailTextLabel.width = width;
 }
 
 - (void)prepareForReuse {
@@ -43,7 +49,7 @@
 }
 
 + (CGFloat)rowHeightForObject:(id)object {
-  return 60.0;
+  return 110.0;
 }
 
 - (void)fillCellWithObject:(id)object {
@@ -57,8 +63,8 @@
   // go to North America
   _mapRegion.center.latitude = [nearby.lat floatValue];
   _mapRegion.center.longitude = [nearby.lng floatValue];
-  _mapRegion.span.latitudeDelta = 0.005;
-  _mapRegion.span.longitudeDelta = 0.005;
+  _mapRegion.span.latitudeDelta = 0.0025;
+  _mapRegion.span.longitudeDelta = 0.0025;
 }
 
 - (void)loadMap {
