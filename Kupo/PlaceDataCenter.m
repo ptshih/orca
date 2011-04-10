@@ -101,8 +101,6 @@ static NSMutableDictionary *_pkDict = nil;
 - (void)serializePlacesWithDictionary:(NSDictionary *)dictionary {
   // Core Data Serialize
   NSManagedObjectContext *context = [LICoreDataStack sharedManagedObjectContext];
-
-  Place *currentPlace = nil;
   
   // Insert into Core Data
   for (NSDictionary *placeDict in [dictionary valueForKey:@"values"]) {
@@ -113,9 +111,9 @@ static NSMutableDictionary *_pkDict = nil;
       // Existing Found
       Place *existingPlace = (Place *)[context objectWithID:existingId];
       DLog(@"existing place found with id: %@", [placeDict valueForKey:@"id"]);
-      currentPlace = [existingPlace updatePlaceWithDictionary:placeDict];
+      [existingPlace updatePlaceWithDictionary:placeDict];
     } else {
-      currentPlace = [Place addPlaceWithDictionary:placeDict inContext:context];
+      [Place addPlaceWithDictionary:placeDict inContext:context];
     }
   }
   
