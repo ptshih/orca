@@ -66,6 +66,7 @@
 //  self.navigationItem.rightBarButtonItem = post;
 //  [post release];
   
+  [self executeFetch];
   if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
     [self reloadCardController];
   }
@@ -192,8 +193,8 @@
 #pragma mark -
 #pragma mark CardViewController
 - (void)reloadCardController {
+  DLog(@"reload on thread: %@", [NSThread currentThread]);
   [super reloadCardController];
-  [self executeFetch];
   
   // Get since date
   NSDate *sinceDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"since.places"];
@@ -209,6 +210,8 @@
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
   [self dataSourceDidLoad];
+  
+  [self executeFetch];
   
   if ([self.fetchedResultsController.fetchedObjects count] > 0) {
     // Set since and until date

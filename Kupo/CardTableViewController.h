@@ -19,7 +19,6 @@
   NSMutableArray *_searchItems;
 
   UISearchBar *_searchBar;
-  HeaderTabView *_headerTabView;
   EGORefreshTableHeaderView *_refreshHeaderView;
   UIView *_footerView;
   UIView *_loadMoreView;
@@ -33,11 +32,8 @@
 @property (nonatomic, retain) NSMutableArray *items;
 @property (nonatomic, retain) NSMutableArray *searchItems;
 
-@property (nonatomic, retain) HeaderTabView *headerTabView;
-
 - (void)setupTableViewWithFrame:(CGRect)frame andStyle:(UITableViewStyle)style andSeparatorStyle:(UITableViewCellSeparatorStyle)separatorStyle;
 - (void)setupPullRefresh;
-- (void)setupHeaderTabView;
 - (void)setupFooterView;
 - (void)setupLoadMoreView;
 - (void)setupSearchDisplayControllerWithScopeButtonTitles:(NSArray *)scopeButtonTitles;

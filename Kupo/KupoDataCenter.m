@@ -11,9 +11,10 @@
 #import "Kupo+Serialize.h"
 
 static KupoDataCenter *_defaultCenter = nil;
-static NSMutableDictionary *_pkDict = nil;
 
 @implementation KupoDataCenter
+
+@synthesize context = _context;
 
 #pragma mark -
 #pragma mark Shared Instance
@@ -21,23 +22,9 @@ static NSMutableDictionary *_pkDict = nil;
   @synchronized(self) {
     if (_defaultCenter == nil) {
       _defaultCenter = [[self alloc] init];
+      _defaultCenter.context = [LICoreDataStack newManagedObjectContext];
     }
     return _defaultCenter;
-  }
-}
-
-+ (void)initialize {
-  NSManagedObjectContext *context = [LICoreDataStack sharedManagedObjectContext];
-  _pkDict = [[NSMutableDictionary dictionary] retain];
-  
-  NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getKupos" substitutionVariables:[NSDictionary dictionary]];
-  
-  // Execute the fetch
-  NSError *error = nil;
-  NSArray *foundKupos = [context executeFetchRequest:fetchRequest error:&error];
-  
-  for (Kupo *kupo in foundKupos) {
-    [_pkDict setValue:[kupo objectID] forKey:kupo.id];
   }
 }
 
@@ -50,8 +37,6 @@ static NSMutableDictionary *_pkDict = nil;
 }
 
 - (void)coreDataDidReset {
-  RELEASE_SAFELY(_pkDict);
-  _pkDict = [[NSMutableDictionary dictionary] retain];
 }
 
 - (void)getKuposForPlaceWithPlaceId:(NSString *)placeId andSince:(NSDate *)sinceDate {
@@ -99,30 +84,37 @@ static NSMutableDictionary *_pkDict = nil;
 
 #pragma mark Serialize Response
 - (void)serializeKuposWithDictionary:(NSDictionary *)dictionary {
-  // Core Data Serialize
-  NSManagedObjectContext *context = [LICoreDataStack sharedManagedObjectContext];
+  NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES];
   
-  // Fetch and Unique the IDs
-  // MUST IMPLEMENT
+  NSArray *sortedKupos = [[dictionary valueForKey:@"values"] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
   
-  // Insert into Core Data
-  for (NSDictionary *kupoDict in [dictionary objectForKey:@"values"]) {
-    // Check for dupes
-    NSManagedObjectID *existingId = [_pkDict objectForKey:[kupoDict objectForKey:@"id"]];
-    if (!existingId) {
-      [Kupo addKupoWithDictionary:kupoDict inContext:context];
-    }
+  NSMutableArray *sortedKupoIds = [NSMutableArray array];
+  for (NSDictionary *kupoDict in sortedKupos) {
+    [sortedKupoIds addObject:[kupoDict valueForKey:@"id"]];
   }
   
-  [context obtainPermanentIDsForObjects:[[context insertedObjects] allObjects] error:nil];
-  for (Kupo *newKupo in [context insertedObjects]) {
-    [_pkDict setValue:[newKupo objectID] forKey:newKupo.id];
+  NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
+  [fetchRequest setEntity:[NSEntityDescription entityForName:@"Kupo" inManagedObjectContext:self.context]];
+  [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(id IN %@)", sortedKupoIds]];
+  [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"id" ascending:YES] autorelease]]];
+  
+  NSError *error = nil;
+  NSArray *foundKupos = [self.context executeFetchRequest:fetchRequest error:&error];
+  
+  int i = 0;
+  for (NSDictionary *kupoDict in sortedKupos) {
+    if ([foundKupos count] > 0 && [[kupoDict valueForKey:@"id"] isEqualToString:[[foundKupos objectAtIndex:i] id]]) {
+      DLog(@"found duplicated kupo with id: %@", [[foundKupos objectAtIndex:i] id]);
+    } else {
+      // Insert
+      [Kupo addKupoWithDictionary:kupoDict inContext:self.context];
+    }
+    i++;
   }
   
   // Save to Core Data
-  NSError *error = nil;
-  if ([context hasChanges]) {
-    if (![context save:&error]) {
+  if ([self.context hasChanges]) {
+    if (![self.context save:&error]) {
       // CoreData ERROR!
       abort(); // NOTE: DO NOT SHIP
     }
@@ -137,6 +129,11 @@ static NSMutableDictionary *_pkDict = nil;
   NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getKuposForPlace" substitutionVariables:[NSDictionary dictionaryWithObject:placeId forKey:@"desiredPlaceId"]];
   [fetchRequest setSortDescriptors:sortDescriptors];
   return fetchRequest;
+}
+
+- (void)dealloc {
+  RELEASE_SAFELY(_context);
+  [super dealloc];
 }
 
 @end

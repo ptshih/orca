@@ -20,7 +20,6 @@
 @synthesize sections = _sections;
 @synthesize items = _items;
 @synthesize searchItems = _searchItems;
-@synthesize headerTabView = _headerTabView;
 
 - (id)init {
   self = [super init];
@@ -84,13 +83,6 @@
 	
   //  update the last update date
   [_refreshHeaderView refreshLastUpdatedDate];
-}
-
-- (void)setupHeaderTabView {
-  _headerTabView = [[HeaderTabView alloc] initWithFrame:CGRectMake(0, 0, 320.0, 44.0) andButtonTitles:[NSArray arrayWithObjects:@"Nearby", @"Popular", @"Followed", nil]];
-  self.headerTabView.delegate = self;
-  
-  _tableView.tableHeaderView = self.headerTabView;
 }
 
 // Optional footer view
@@ -291,11 +283,6 @@
 - (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller {
 }
 
-#pragma mark HeaderTabViewDelegate
-- (void)tabSelectedAtIndex:(NSNumber *)index {
-  // MUST SUBCLASS
-}
-
 #pragma mark UIScrollViewDelegate
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
   if (!self.searchDisplayController.active) {
@@ -340,7 +327,6 @@
   RELEASE_SAFELY(_searchItems);
   RELEASE_SAFELY(_searchBar);
   RELEASE_SAFELY(_refreshHeaderView);
-  RELEASE_SAFELY(_headerTabView);
   RELEASE_SAFELY(_footerView);
   RELEASE_SAFELY(_loadMoreView);
   RELEASE_SAFELY(_loadMoreButton);

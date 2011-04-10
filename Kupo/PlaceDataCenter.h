@@ -10,7 +10,10 @@
 #import "PSDataCenter.h"
 
 @interface PlaceDataCenter : PSDataCenter {
+  NSManagedObjectContext *_context;
 }
+
+@property (nonatomic, retain) NSManagedObjectContext *context;
 
 - (void)getPlacesWithSince:(NSDate *)sinceDate;
 - (void)loadMorePlacesWithUntil:(NSDate *)untilDate;

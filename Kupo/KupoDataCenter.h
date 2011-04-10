@@ -10,7 +10,10 @@
 #import "PSDataCenter.h"
 
 @interface KupoDataCenter : PSDataCenter {
+  NSManagedObjectContext *_context;
 }
+
+@property (nonatomic, retain) NSManagedObjectContext *context;
 
 - (void)getKuposForPlaceWithPlaceId:(NSString *)placeId andSince:(NSDate *)sinceDate;
 - (void)loadMoreKuposForPlaceWithPlaceId:(NSString *)placeId andUntil:(NSDate *)untilDate;

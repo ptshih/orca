@@ -11,9 +11,10 @@
 #import "Place+Serialize.h"
 
 static PlaceDataCenter *_defaultCenter = nil;
-static NSMutableDictionary *_pkDict = nil;
 
 @implementation PlaceDataCenter
+
+@synthesize context = _context;
 
 #pragma mark -
 #pragma mark Shared Instance
@@ -21,23 +22,9 @@ static NSMutableDictionary *_pkDict = nil;
   @synchronized(self) {
     if (_defaultCenter == nil) {
       _defaultCenter = [[self alloc] init];
+      _defaultCenter.context = [LICoreDataStack newManagedObjectContext];
     }
     return _defaultCenter;
-  }
-}
-
-+ (void)initialize {
-  NSManagedObjectContext *context = [LICoreDataStack sharedManagedObjectContext];
-  _pkDict = [[NSMutableDictionary dictionary] retain];
-  
-  NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPlaces" substitutionVariables:[NSDictionary dictionary]];
-  
-  // Execute the fetch
-  NSError *error = nil;
-  NSArray *foundPlaces = [context executeFetchRequest:fetchRequest error:&error];
-  
-  for (Place *place in foundPlaces) {
-    [_pkDict setValue:[place objectID] forKey:place.id];
   }
 }
 
@@ -50,8 +37,6 @@ static NSMutableDictionary *_pkDict = nil;
 }
 
 - (void)coreDataDidReset {
-  RELEASE_SAFELY(_pkDict);
-  _pkDict = [[NSMutableDictionary dictionary] retain];
 }
 
 - (void)getPlacesWithSince:(NSDate *)sinceDate {
@@ -99,33 +84,39 @@ static NSMutableDictionary *_pkDict = nil;
 
 #pragma mark Serialize Response
 - (void)serializePlacesWithDictionary:(NSDictionary *)dictionary {
-  // Core Data Serialize
-  NSManagedObjectContext *context = [LICoreDataStack sharedManagedObjectContext];
+  NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES];
   
-  // Insert into Core Data
-  for (NSDictionary *placeDict in [dictionary valueForKey:@"values"]) {
-    
-    // Check for dupes
-    NSManagedObjectID *existingId = [_pkDict objectForKey:[placeDict objectForKey:@"id"]];
-    if (existingId) {
-      // Existing Found
-      Place *existingPlace = (Place *)[context objectWithID:existingId];
-      DLog(@"existing place found with id: %@", [placeDict valueForKey:@"id"]);
-      [existingPlace updatePlaceWithDictionary:placeDict];
-    } else {
-      [Place addPlaceWithDictionary:placeDict inContext:context];
-    }
+  NSArray *sortedPlaces = [[dictionary valueForKey:@"values"] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+  
+  NSMutableArray *sortedPlaceIds = [NSMutableArray array];
+  for (NSDictionary *placeDict in sortedPlaces) {
+    [sortedPlaceIds addObject:[placeDict valueForKey:@"id"]];
   }
+    
+  NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
+  [fetchRequest setEntity:[NSEntityDescription entityForName:@"Place" inManagedObjectContext:self.context]];
+  [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(id IN %@)", sortedPlaceIds]];
+  [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"id" ascending:YES] autorelease]]];
   
-  [context obtainPermanentIDsForObjects:[[context insertedObjects] allObjects] error:nil];
-  for (Place *newPlace in [context insertedObjects]) {
-    [_pkDict setValue:[newPlace objectID] forKey:newPlace.id];
+  
+  NSError *error = nil;
+  NSArray *foundPlaces = [self.context executeFetchRequest:fetchRequest error:&error];
+  
+  int i = 0;
+  for (NSDictionary *placeDict in sortedPlaces) {
+    if ([foundPlaces count] > 0 && [[placeDict valueForKey:@"id"] isEqualToString:[[foundPlaces objectAtIndex:i] id]]) {
+      DLog(@"found duplicated place with id: %@", [[foundPlaces objectAtIndex:i] id]);
+      [[foundPlaces objectAtIndex:i] updatePlaceWithDictionary:placeDict];
+    } else {
+      // Insert
+      [Place addPlaceWithDictionary:placeDict inContext:self.context];
+    }
+    i++;
   }
   
   // Save to Core Data
-  NSError *error = nil;
-  if ([context hasChanges]) {
-    if (![context save:&error]) {
+  if ([self.context hasChanges]) {
+    if (![self.context save:&error]) {
       // CoreData ERROR!
       abort(); // NOTE: DO NOT SHIP
     }
@@ -141,6 +132,11 @@ static NSMutableDictionary *_pkDict = nil;
   [fetchRequest setSortDescriptors:sortDescriptors];
 //  [fetchRequest setFetchLimit:limit];
   return fetchRequest;
+}
+
+- (void)dealloc {
+  RELEASE_SAFELY(_context);
+  [super dealloc];
 }
 
 @end

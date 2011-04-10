@@ -47,6 +47,8 @@
   [self setupLoadMoreView];
   
   [NSFetchedResultsController deleteCacheWithName:[NSString stringWithFormat:@"frc_cache_%@", [self class]]];
+  
+  [self executeFetch];
   [self reloadCardController];
 }
 
@@ -147,7 +149,6 @@
 #pragma mark CardViewController
 - (void)reloadCardController {
   [super reloadCardController];
-  [self executeFetch];
   
   // Get since date
   NSDate *sinceDate = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"since.kupos.%@", self.place.placeId]];
@@ -164,6 +165,8 @@
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
   [self dataSourceDidLoad];
+  
+  [self executeFetch];
   
   if ([self.fetchedResultsController.fetchedObjects count] > 0) {
     // Set since and until date
