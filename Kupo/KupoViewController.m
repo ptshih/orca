@@ -91,7 +91,7 @@
 
 #pragma mark -
 #pragma mark TableView
-- (void)configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
   Kupo *kupo = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   [cell fillCellWithObject:kupo];
@@ -135,7 +135,7 @@
     cell = [[[KupoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
   }
   
-  [self configureCell:cell atIndexPath:indexPath];
+  [self tableView:tableView configureCell:cell atIndexPath:indexPath];
   
   return cell;
 }

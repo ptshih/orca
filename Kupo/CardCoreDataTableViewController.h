@@ -20,7 +20,7 @@
 @property (nonatomic, retain) NSString * sectionNameKeyPathForFetchedResultsController;
 
 
-- (void)configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath;
+- (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath;
 - (void)executeFetch;
 - (NSFetchRequest *)getFetchRequest;
 

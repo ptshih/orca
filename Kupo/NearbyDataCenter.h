@@ -10,8 +10,10 @@
 #import "PSDataCenter.h"
 
 @interface NearbyDataCenter : PSDataCenter {
-
+  NSMutableArray *_nearbyPlaces;
 }
+
+@property (nonatomic, retain) NSMutableArray *nearbyPlaces;
 
 - (void)getNearbyPlaces;
 

@@ -10,6 +10,7 @@
 #import "NearbyDataCenter.h"
 #import "KupoLocation.h"
 #import "NearbyCell.h"
+#import "Nearby.h"
 #import "ComposeViewController.h"
 
 @interface NearbyViewController (Private)
@@ -66,7 +67,7 @@
   [self.sections addObject:@"Places"];
   
   [self.items removeAllObjects];
-  [self.items addObject:[[[NearbyDataCenter defaultCenter] response] valueForKey:@"values"]];
+  [self.items addObject:[[NearbyDataCenter defaultCenter] nearbyPlaces]];
   [_tableView reloadData];
   [self dataSourceDidLoad];
 }
@@ -85,16 +86,16 @@
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   [_searchBar resignFirstResponder];
   
-  NSDictionary *place = nil;
+  Nearby *nearbyPlace = nil;
   if (tableView == self.searchDisplayController.searchResultsTableView) {
-    place = [self.searchItems objectAtIndex:indexPath.row];
+    nearbyPlace = [self.searchItems objectAtIndex:indexPath.row];
   } else {
-    place = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    nearbyPlace = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
   }
   
   ComposeViewController *kcvc = [[ComposeViewController alloc] init];
   kcvc.kupoComposeType = KupoComposeTypeCheckin;
-  kcvc.placeId = [place valueForKey:@"place_id"];
+  kcvc.placeId = nearbyPlace.id;
   [self.navigationController pushViewController:kcvc animated:YES];
   [kcvc release];
 }
@@ -107,14 +108,14 @@
     cell = [[[NearbyCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier] autorelease];
   }
   
-  NSDictionary *place = nil;
+  Nearby *nearbyPlace = nil;
   if (tableView == self.searchDisplayController.searchResultsTableView) {
-    place = [self.searchItems objectAtIndex:indexPath.row];
+    nearbyPlace = [self.searchItems objectAtIndex:indexPath.row];
   } else {
-    place = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    nearbyPlace = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
   }
   
-  [cell fillCellWithObject:place];
+  [cell fillCellWithObject:nearbyPlace];
   [cell loadMap];
   return cell;
 }
@@ -127,7 +128,7 @@
     return;
   }
   
-  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"place_name CONTAINS[cd] %@", searchText];
+  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
   
   [_searchItems addObjectsFromArray:[[self.items objectAtIndex:0] filteredArrayUsingPredicate:predicate]];
 }

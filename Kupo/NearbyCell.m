@@ -7,7 +7,7 @@
 //
 
 #import "NearbyCell.h"
-
+#import "Nearby.h"
 
 @implementation NearbyCell
 
@@ -47,20 +47,27 @@
 }
 
 - (void)fillCellWithObject:(id)object {
-  NSDictionary *item = object;
+  Nearby *nearby = (Nearby *)object;
+  RELEASE_SAFELY(_nearbyPlace);
+  _nearbyPlace = [nearby retain];
   
-  self.textLabel.text = [item valueForKey:@"place_name"];
-  self.detailTextLabel.text = [NSString stringWithFormat:@"%.2f miles away", [[item valueForKey:@"place_distance"] floatValue]];
+  self.textLabel.text = nearby.name;
+  self.detailTextLabel.text = [NSString stringWithFormat:@"%.2f miles away", [nearby.distance floatValue]];
   
   // go to North America
-  _mapRegion.center.latitude = [[item valueForKey:@"place_lat"] floatValue];
-  _mapRegion.center.longitude = [[item valueForKey:@"place_lng"] floatValue];
+  _mapRegion.center.latitude = [nearby.lat floatValue];
+  _mapRegion.center.longitude = [nearby.lng floatValue];
   _mapRegion.span.latitudeDelta = 0.005;
   _mapRegion.span.longitudeDelta = 0.005;
 }
 
 - (void)loadMap {
   [_mapView setRegion:_mapRegion animated:NO];
+  
+  NSArray *oldAnnotations = [_mapView annotations];
+  [_mapView removeAnnotations:oldAnnotations];
+  
+  [_mapView addAnnotation:_nearbyPlace];
 }
 
 + (PSCellType)cellType {
@@ -92,6 +99,7 @@
 //}
 
 - (void)dealloc {
+  RELEASE_SAFELY(_nearbyPlace);
   RELEASE_SAFELY(_mapView);
   [super dealloc];
 }

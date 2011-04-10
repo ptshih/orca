@@ -126,7 +126,7 @@
       break;
       
     case NSFetchedResultsChangeUpdate:
-      [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+      [self tableView:tableView configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];;
       break;
       
     case NSFetchedResultsChangeMove:
@@ -145,7 +145,7 @@
   // SUBCLASS MUST IMPLEMENT
 }
 
-- (void)configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
   // subclass must implement
 }
 

@@ -8,10 +8,13 @@
 
 #import "NearbyDataCenter.h"
 #import "KupoLocation.h"
+#import "Nearby.h"
 
 static NearbyDataCenter *_defaultCenter = nil;
 
 @implementation NearbyDataCenter
+
+@synthesize nearbyPlaces = _nearbyPlaces;
 
 #pragma mark -
 #pragma mark Shared Instance
@@ -19,6 +22,7 @@ static NearbyDataCenter *_defaultCenter = nil;
   @synchronized(self) {
     if (_defaultCenter == nil) {
       _defaultCenter = [[self alloc] init];
+      _defaultCenter.nearbyPlaces = [[[NSMutableArray alloc] initWithCapacity:1] autorelease];
     }
     return _defaultCenter;
   }
@@ -41,12 +45,24 @@ static NearbyDataCenter *_defaultCenter = nil;
 }
 
 #pragma mark PSDataCenterDelegate
-- (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {  
+- (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {
+  // Serialize nearby places
+  [_nearbyPlaces removeAllObjects];
+  NSArray *nearbyArray = [_response valueForKey:@"values"];
+  for (NSDictionary *nearbyDict in nearbyArray) {
+    Nearby *nearbyPlace = [[[Nearby alloc] initWithDictionary:nearbyDict] autorelease];
+    [_nearbyPlaces addObject:nearbyPlace];
+  }
   [super dataCenterFinishedWithOperation:operation];
 }
 
 - (void)dataCenterFailedWithOperation:(LINetworkOperation *)operation {
   [super dataCenterFailedWithOperation:operation];
+}
+
+- (void)dealloc {
+  RELEASE_SAFELY(_nearbyPlaces);
+  [super dealloc];
 }
 
 @end

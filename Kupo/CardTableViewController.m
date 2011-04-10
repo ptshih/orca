@@ -272,7 +272,7 @@
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView {
-  tableView.backgroundColor = CELL_COLOR;
+  tableView.backgroundColor = TABLE_BG_COLOR;
   tableView.separatorColor = SEPARATOR_COLOR;
   tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 }

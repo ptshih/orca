@@ -10,7 +10,11 @@
 #import <MapKit/MapKit.h>
 #import "PSCell.h"
 
+@class Nearby;
+
 @interface NearbyCell : PSCell <MKMapViewDelegate> {
+  Nearby *_nearbyPlace;
+  
   MKMapView *_mapView;
   MKCoordinateRegion _mapRegion;
 }

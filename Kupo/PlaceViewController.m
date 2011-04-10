@@ -100,9 +100,9 @@
 
 #pragma mark -
 #pragma mark TableView
-- (void)configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
   Place *place = nil;
-  if (_tableView == self.searchDisplayController.searchResultsTableView) {
+  if (tableView == self.searchDisplayController.searchResultsTableView) {
     place = [_searchItems objectAtIndex:indexPath.row];
   } else {
     place = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -150,7 +150,7 @@
     cell = [[[PlaceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
   }
   
-  [self configureCell:cell atIndexPath:indexPath];
+  [self tableView:tableView configureCell:cell atIndexPath:indexPath];
   
   return cell;
 }
