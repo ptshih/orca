@@ -165,14 +165,16 @@
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
   [self dataSourceDidLoad];
   
-  // Set since and until date
-  Kupo *firstKupo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
-  Kupo *lastKupo = [[self.fetchedResultsController fetchedObjects] lastObject];
-  NSDate *sinceDate = firstKupo.timestamp;
-  NSDate *untilDate = lastKupo.timestamp;
-  [[NSUserDefaults standardUserDefaults] setValue:sinceDate forKey:[NSString stringWithFormat:@"since.kupos.%@", self.place.placeId]];
-  [[NSUserDefaults standardUserDefaults] setValue:untilDate forKey:[NSString stringWithFormat:@"until.kupos.%@", self.place.placeId]];
-  [[NSUserDefaults standardUserDefaults] synchronize];
+  if ([self.fetchedResultsController.fetchedObjects count] > 0) {
+    // Set since and until date
+    Kupo *firstKupo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
+    Kupo *lastKupo = [[self.fetchedResultsController fetchedObjects] lastObject];
+    NSDate *sinceDate = firstKupo.timestamp;
+    NSDate *untilDate = lastKupo.timestamp;
+    [[NSUserDefaults standardUserDefaults] setValue:sinceDate forKey:[NSString stringWithFormat:@"since.kupos.%@", self.place.placeId]];
+    [[NSUserDefaults standardUserDefaults] setValue:untilDate forKey:[NSString stringWithFormat:@"until.kupos.%@", self.place.placeId]];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+  }
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {

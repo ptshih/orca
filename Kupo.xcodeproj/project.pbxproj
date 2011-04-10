@@ -1421,7 +1421,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Peter Shih (QGWRZB9J8P)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1429,7 +1429,7 @@
 				INFOPLIST_FILE = "Kupo/Kupo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				PRODUCT_NAME = Kupo;
-				PROVISIONING_PROFILE = "AFC90193-50A3-4ADF-BA1E-3A4D875729B6";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1438,14 +1438,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Peter Shih (QGWRZB9J8P)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Kupo/Kupo-Prefix.pch";
 				INFOPLIST_FILE = "Kupo/Kupo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				PRODUCT_NAME = Kupo;
-				PROVISIONING_PROFILE = "AFC90193-50A3-4ADF-BA1E-3A4D875729B6";
+				PROVISIONING_PROFILE = "";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

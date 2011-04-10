@@ -23,4 +23,6 @@
   BOOL _shouldReloadOnAppear;
 }
 
+@property (nonatomic, assign) BOOL shouldReloadOnAppear;
+
 @end

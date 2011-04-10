@@ -77,16 +77,13 @@
 }
 
 - (void)fbDidNotLogin:(BOOL)cancelled {
-  _loginButton.hidden = NO;
+  [self logout];
+//  _loginButton.hidden = NO;
 }
 
 - (void)fbDidLogout {
-  [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"placesSince"];
-  [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"placesUntil"];
-  [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"isLoggedIn"];
-  [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"facebookAccessToken"];
-  [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"facebookExpirationDate"];
-  [[NSUserDefaults standardUserDefaults] synchronize];
+  // Clear all user defaults
+  [[NSUserDefaults standardUserDefaults] setPersistentDomain:[NSDictionary dictionary] forName:[[NSBundle mainBundle] bundleIdentifier]];
   
   if (self.delegate && [self.delegate respondsToSelector:@selector(kupoDidLogout)]) {
     [self.delegate performSelector:@selector(kupoDidLogout)];

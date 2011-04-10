@@ -176,6 +176,7 @@
 
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
+  
   // Determine if this is register or session
   NSString *requestUrlString = [[operation requestURL] absoluteString];
   if ([requestUrlString rangeOfString:@"register"].location != NSNotFound) {  
@@ -185,6 +186,9 @@
     [[NSUserDefaults standardUserDefaults] setObject:[[[LoginDataCenter defaultCenter] response] valueForKey:@"name"] forKey:@"facebookName"];
     [[NSUserDefaults standardUserDefaults] setObject:[[[LoginDataCenter defaultCenter] response] valueForKey:@"friends"] forKey:@"friends"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    // Flag place controller to reload after logging in
+    _placeViewController.shouldReloadOnAppear = YES;
   }
   
   // Session/Register request finished

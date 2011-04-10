@@ -16,6 +16,8 @@
 
 @implementation PlaceViewController
 
+@synthesize shouldReloadOnAppear = _shouldReloadOnAppear;
+
 - (id)init {
   self = [super init];
   if (self) {
@@ -64,7 +66,9 @@
 //  self.navigationItem.rightBarButtonItem = post;
 //  [post release];
   
-  [self reloadCardController];
+  if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
+    [self reloadCardController];
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -206,14 +210,16 @@
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
   [self dataSourceDidLoad];
   
-  // Set since and until date
-  Place *firstPlace = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
-  Place *lastPlace = [[self.fetchedResultsController fetchedObjects] lastObject];
-  NSDate *sinceDate = firstPlace.timestamp;
-  NSDate *untilDate = lastPlace.timestamp;
-  [[NSUserDefaults standardUserDefaults] setValue:sinceDate forKey:@"since.places"];
-  [[NSUserDefaults standardUserDefaults] setValue:untilDate forKey:@"until.places"];
-  [[NSUserDefaults standardUserDefaults] synchronize];
+  if ([self.fetchedResultsController.fetchedObjects count] > 0) {
+    // Set since and until date
+    Place *firstPlace = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
+    Place *lastPlace = [[self.fetchedResultsController fetchedObjects] lastObject];
+    NSDate *sinceDate = firstPlace.timestamp;
+    NSDate *untilDate = lastPlace.timestamp;
+    [[NSUserDefaults standardUserDefaults] setValue:sinceDate forKey:@"since.places"];
+    [[NSUserDefaults standardUserDefaults] setValue:untilDate forKey:@"until.places"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+  }
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
