@@ -11,6 +11,7 @@
 @implementation LoginViewController
 
 @synthesize delegate = _delegate;
+@synthesize loginButton = _loginButton;
 
 - (id)init {
   self = [super init];

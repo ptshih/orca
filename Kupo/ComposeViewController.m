@@ -55,7 +55,7 @@
     // This is only done when the Send button is tapped
     //    UIImageWriteToSavedPhotosAlbum (originalImage, nil, nil , nil);
     
-    _uploadedImage = [[originalImage scaleProportionalToSize:CGSizeMake(280, 280)] retain];
+    _uploadedImage = [[originalImage scaleProportionalToSize:CGSizeMake(640, 640)] retain];
 //    _uploadedImage = [originalImage retain];
     [_photoUpload setImage:_uploadedImage forState:UIControlStateNormal];
   }

@@ -55,18 +55,18 @@ static NSThread *_mocThread = nil;
 
 + (void)deleteAllObjects:(NSString *)entityDescription {
   NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-  NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:[[self class] managedObjectContext]];
+  NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:[[self class] sharedManagedObjectContext]];
   [fetchRequest setEntity:entity];
   
   NSError *error;
-  NSArray *items = [[[self class] managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+  NSArray *items = [[[self class] sharedManagedObjectContext] executeFetchRequest:fetchRequest error:&error];
   [fetchRequest release];
   
   
   for (NSManagedObject *managedObject in items) {
-    [[[self class] managedObjectContext] deleteObject:managedObject];
+    [[[self class] sharedManagedObjectContext] deleteObject:managedObject];
   }
-  if (![[[self class] managedObjectContext] save:&error]) {
+  if (![[[self class] sharedManagedObjectContext] save:&error]) {
   }
 }
 
@@ -101,29 +101,57 @@ static NSThread *_mocThread = nil;
 }
 
 #pragma mark Core Data Accessors
-+ (NSManagedObjectContext *)managedObjectContext {
+// shared static context
++ (NSManagedObjectContext *)sharedManagedObjectContext {
   if (_managedObjectContext != nil) {
     return _managedObjectContext;
   }
   
-  [[self class] performSelector:@selector(initManagedObjectContextInMocThread) onThread:_mocThread withObject:nil waitUntilDone:YES];
+  // Use moc thread
+//  [[self class] performSelector:@selector(initSharedManagedObjectContextInMocThread) onThread:_mocThread withObject:nil waitUntilDone:YES];
   
-//  NSPersistentStoreCoordinator *coordinator = [[self class] persistentStoreCoordinator];
-//  if (coordinator != nil) {
-//    _managedObjectContext = [[NSManagedObjectContext alloc] init];
-//    [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-//  }
+  // Use main thread
+  NSPersistentStoreCoordinator *coordinator = [[self class] persistentStoreCoordinator];
+  if (coordinator != nil) {
+    _managedObjectContext = [[NSManagedObjectContext alloc] init];
+    [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+  }
   
   return _managedObjectContext;
 }
 
-+ (void)initManagedObjectContextInMocThread {
++ (void)initSharedManagedObjectContextInMocThread {
   NSPersistentStoreCoordinator *coordinator = [[self class] persistentStoreCoordinator];
   if (coordinator != nil) {
     _managedObjectContext = [[NSManagedObjectContext alloc] init];
     [_managedObjectContext setPersistentStoreCoordinator:coordinator];
   }
 }
+
+// returns a new retained context
++ (NSManagedObjectContext *)newManagedObjectContext {
+  // Use moc thread
+//  NSManagedObjectContext *context = nil;  
+//  [[self class] performSelector:@selector(initManagedObjectContextInMocThread:) onThread:_mocThread withObject:context waitUntilDone:YES];
+  
+  // Use main thread
+  NSPersistentStoreCoordinator *coordinator = [[self class] persistentStoreCoordinator];
+  NSManagedObjectContext *context = nil;
+  if (coordinator != nil) {
+    context = [[NSManagedObjectContext alloc] init];
+    [context setPersistentStoreCoordinator:coordinator];
+  }
+  
+  return context;
+}
+
+//+ (void)initManagedObjectContextInMocThread:(NSManagedObjectContext *)context {
+//  NSPersistentStoreCoordinator *coordinator = [[self class] persistentStoreCoordinator];
+//  if (coordinator != nil) {
+//    context = [[NSManagedObjectContext alloc] init];
+//    [context setPersistentStoreCoordinator:coordinator];
+//  }
+//}
 
 + (NSManagedObjectModel *)managedObjectModel {
   

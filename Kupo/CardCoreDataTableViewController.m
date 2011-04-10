@@ -16,14 +16,18 @@
 
 @implementation CardCoreDataTableViewController
 
+@synthesize context = _context;
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize sectionNameKeyPathForFetchedResultsController = _sectionNameKeyPathForFetchedResultsController;
 
 - (id)init {
   self = [super init];
   if (self) {
+    _context = [LICoreDataStack newManagedObjectContext];
     _fetchedResultsController = nil;
     _sectionNameKeyPathForFetchedResultsController = nil;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextSaveDidNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
   }
   return self;
 }
@@ -60,15 +64,20 @@
 
 - (void)unloadCardController {
   [super unloadCardController];
-}   
+}
+
 
 #pragma mark Core Data
+- (void)managedObjectContextSaveDidNotification:(NSNotification *)notification {
+  [self.context mergeChangesFromContextDidSaveNotification:notification];
+}
+
 - (NSFetchedResultsController*)fetchedResultsController  {
   if (_fetchedResultsController) return _fetchedResultsController;
   
   NSFetchRequest *fetchRequest = [self getFetchRequest];
   if (fetchRequest) {
-    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[LICoreDataStack managedObjectContext] sectionNameKeyPath:self.sectionNameKeyPathForFetchedResultsController cacheName:[NSString stringWithFormat:@"frc_cache_%@", [self class]]];
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:self.sectionNameKeyPathForFetchedResultsController cacheName:[NSString stringWithFormat:@"frc_cache_%@", [self class]]];
     _fetchedResultsController.delegate = self;
   }
   
@@ -185,6 +194,8 @@
 }
 
 - (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:nil];
+  RELEASE_SAFELY (_context);
   RELEASE_SAFELY (_fetchedResultsController);
   RELEASE_SAFELY (_sectionNameKeyPathForFetchedResultsController);
   [super dealloc];

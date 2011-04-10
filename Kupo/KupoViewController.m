@@ -158,20 +158,6 @@
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
   [self dataSourceDidLoad];
-  
-  // Mark isRead state
-  if (![self.place.isRead boolValue]) {
-    NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
-    self.place.isRead = [NSNumber numberWithBool:YES];
-    
-    NSError *error = nil;
-    if ([context hasChanges]) {
-      if (![context save:&error]) {
-        abort(); // NOTE: DO NOT SHIP
-      }
-    }
-  }
-
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {

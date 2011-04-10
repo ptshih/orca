@@ -18,5 +18,6 @@
 }
 
 @property (nonatomic, assign) id <LoginDelegate> delegate;
+@property (nonatomic, retain) UIButton *loginButton;
 
 @end

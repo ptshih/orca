@@ -102,7 +102,7 @@
 
 - (void)saveContext {
   NSError *error = nil;
-  NSManagedObjectContext *managedObjectContext = [LICoreDataStack managedObjectContext];
+  NSManagedObjectContext *managedObjectContext = [LICoreDataStack sharedManagedObjectContext];
   if (managedObjectContext != nil) {
     if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
       /*
@@ -194,6 +194,7 @@
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
   // Session/Register request failed
   // Show login again
+  _loginViewController.loginButton.hidden = NO;
 }
 
 #pragma mark -

@@ -27,7 +27,7 @@ static NSMutableDictionary *_pkDict = nil;
 }
 
 + (void)initialize {
-  NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
+  NSManagedObjectContext *context = [LICoreDataStack sharedManagedObjectContext];
   _pkDict = [[NSMutableDictionary dictionary] retain];
   
   NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPlaces" substitutionVariables:[NSDictionary dictionary]];
@@ -101,7 +101,7 @@ static NSMutableDictionary *_pkDict = nil;
 #pragma mark Serialize Response
 - (void)serializePlacesWithDictionary:(NSDictionary *)dictionary {
   // Core Data Serialize
-  NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
+  NSManagedObjectContext *context = [LICoreDataStack sharedManagedObjectContext];
   
   // Read placesSince and placesUntil
   NSDate *placesSince = [[NSUserDefaults standardUserDefaults] valueForKey:@"placesSince"];

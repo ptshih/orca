@@ -27,7 +27,7 @@ static NSMutableDictionary *_pkDict = nil;
 }
 
 + (void)initialize {
-  NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
+  NSManagedObjectContext *context = [LICoreDataStack sharedManagedObjectContext];
   _pkDict = [[NSMutableDictionary dictionary] retain];
   
   NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getKupos" substitutionVariables:[NSDictionary dictionary]];
@@ -85,7 +85,7 @@ static NSMutableDictionary *_pkDict = nil;
 #pragma mark Serialize Response
 - (void)serializeKuposWithDictionary:(NSDictionary *)dictionary {
   // Core Data Serialize
-  NSManagedObjectContext *context = [LICoreDataStack managedObjectContext];
+  NSManagedObjectContext *context = [LICoreDataStack sharedManagedObjectContext];
   
   // Fetch and Unique the IDs
   // MUST IMPLEMENT

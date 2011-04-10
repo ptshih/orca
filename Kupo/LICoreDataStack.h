@@ -14,13 +14,15 @@
 
 }
 
++ (NSManagedObjectContext *)newManagedObjectContext; // returns retained context
++ (NSManagedObjectContext *)sharedManagedObjectContext; // shared static context
 + (NSManagedObjectModel *)managedObjectModel;
-+ (NSManagedObjectContext *)managedObjectContext;
 + (NSPersistentStoreCoordinator *)persistentStoreCoordinator;
 
 + (void)resetPersistentStore;
 + (void)resetManagedObjectContext;
-+ (void)initManagedObjectContextInMocThread;
+//+ (void)initManagedObjectContextInMocThread:(NSManagedObjectContext *)context;
++ (void)initSharedManagedObjectContextInMocThread;
 + (void)deleteAllObjects:(NSString *)entityDescription;
 
 @end

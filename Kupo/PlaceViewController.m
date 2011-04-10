@@ -135,6 +135,18 @@
     place = [self.fetchedResultsController objectAtIndexPath:indexPath];
   }
     
+  // Mark isRead state
+  if (![place.isRead boolValue]) {
+    place.isRead = [NSNumber numberWithBool:YES];
+    
+    NSError *error = nil;
+    if ([self.context hasChanges]) {
+      if (![self.context save:&error]) {
+        abort(); // NOTE: DO NOT SHIP
+      }
+    }
+  }
+  
   KupoViewController *kvc = [[KupoViewController alloc] init];
   kvc.place = place;
   [self.navigationController pushViewController:kvc animated:YES];

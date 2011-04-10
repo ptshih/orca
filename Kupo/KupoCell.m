@@ -82,11 +82,12 @@ static UIImage *_quoteImage = nil;
   }
   
   NSString *status = nil;
+  NSString *appName = _kupo.appName ? _kupo.appName : @"FB";
   if ([_kupo.kupoType integerValue] == 0) {
     if (_kupo.tagged) {
-      status = [NSString stringWithFormat:@"Checked in via Facebook with %@", _kupo.tagged];
+      status = [NSString stringWithFormat:@"Checked in via %@ with %@", appName, _kupo.tagged];
     } else {
-      status = [NSString stringWithFormat:@"Checked in via Facebook"];
+      status = [NSString stringWithFormat:@"Checked in via %@", appName];
     }
   }
   

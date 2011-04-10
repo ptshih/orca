@@ -25,6 +25,7 @@
     newKupo.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     
     // Conditional
+    newKupo.appName = [dictionary valueForKey:@"app_name"] ? [dictionary valueForKey:@"app_name"] : nil;
     newKupo.comment = [dictionary valueForKey:@"comment"] ? [dictionary valueForKey:@"comment"] : nil;
     newKupo.photoFileName = [dictionary valueForKey:@"photo_file_name"] ? [dictionary valueForKey:@"photo_file_name"] : nil;
     newKupo.videoFileName = [dictionary valueForKey:@"video_file_name"] ? [dictionary valueForKey:@"video_file_name"] : nil;
