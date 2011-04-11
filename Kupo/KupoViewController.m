@@ -96,13 +96,17 @@
 
 #pragma mark -
 #pragma mark TableView
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+  [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
+  [cell setNeedsDisplay];
+  [(KupoCell *)cell loadImage];
+  [(KupoCell *)cell loadPhoto];
+}
+
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
   Kupo *kupo = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   [cell fillCellWithObject:kupo];
-  [cell setNeedsDisplay];
-  [cell loadImage];
-  [cell loadPhoto];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

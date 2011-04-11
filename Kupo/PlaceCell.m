@@ -47,7 +47,7 @@
   CGFloat width = self.bounds.size.width - left - MARGIN_X;
   CGRect contentRect = CGRectMake(left, top, width, INT_MAX);
   CGSize drawnSize = CGSizeZero;
-  
+
   if (self.highlighted) {
     [CELL_VERY_LIGHT_BLUE_COLOR set];
   } else {

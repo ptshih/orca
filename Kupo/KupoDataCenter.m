@@ -103,7 +103,7 @@ static KupoDataCenter *_defaultCenter = nil;
   
   int i = 0;
   for (NSDictionary *kupoDict in sortedKupos) {
-    if ([foundKupos count] > 0 && [[kupoDict valueForKey:@"id"] isEqualToString:[[foundKupos objectAtIndex:i] id]]) {
+    if ([foundKupos count] > 0 && i < [foundKupos count] && [[kupoDict valueForKey:@"id"] isEqualToString:[[foundKupos objectAtIndex:i] id]]) {
       DLog(@"found duplicated kupo with id: %@", [[foundKupos objectAtIndex:i] id]);
     } else {
       // Insert

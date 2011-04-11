@@ -104,7 +104,7 @@ static PlaceDataCenter *_defaultCenter = nil;
   
   int i = 0;
   for (NSDictionary *placeDict in sortedPlaces) {
-    if ([foundPlaces count] > 0 && [[placeDict valueForKey:@"id"] isEqualToString:[[foundPlaces objectAtIndex:i] id]]) {
+    if ([foundPlaces count] > 0 && i < [foundPlaces count] && [[placeDict valueForKey:@"id"] isEqualToString:[[foundPlaces objectAtIndex:i] id]]) {
       DLog(@"found duplicated place with id: %@", [[foundPlaces objectAtIndex:i] id]);
       [[foundPlaces objectAtIndex:i] updatePlaceWithDictionary:placeDict];
     } else {

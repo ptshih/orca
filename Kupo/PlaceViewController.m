@@ -105,6 +105,13 @@
 
 #pragma mark -
 #pragma mark TableView
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+  [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
+  [cell setNeedsDisplay];
+  [(PlaceCell *)cell loadImage];
+  [(PlaceCell *)cell loadFriendPictures];
+}
+
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
   Place *place = nil;
   if (tableView == self.searchDisplayController.searchResultsTableView) {
@@ -114,9 +121,6 @@
   }
   
   [cell fillCellWithObject:place];
-  [cell setNeedsDisplay];
-  [cell loadImage];
-  [cell loadFriendPictures];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
