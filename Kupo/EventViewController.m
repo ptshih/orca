@@ -48,7 +48,7 @@
   [rightButton release];
   
   // Nav Title
-  _navTitleLabel.text = @"Kupo!";
+  _navTitleLabel.text = @"Scrapboard";
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);

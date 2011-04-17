@@ -40,12 +40,14 @@ static UIImage *_loadingImage = nil;
   _loadingView.backgroundColor = [UIColor colorWithPatternImage:_loadingImage];
   
   UIActivityIndicatorView *loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+  loadingIndicator.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
   [loadingIndicator startAnimating];
   loadingIndicator.center = _loadingView.center;
   loadingIndicator.top = 180.0;
   [_loadingView addSubview:loadingIndicator];
   
   UILabel *loadingLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  loadingLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
   loadingLabel.backgroundColor = [UIColor clearColor];
   loadingLabel.text = @"Loading...";
   loadingLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0];

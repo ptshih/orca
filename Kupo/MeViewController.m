@@ -133,9 +133,9 @@
   if (section == 0 && row == 0) {
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    FB_APP_ID, @"app_id",
-                                   @"http://www.kupoapp.com", @"link",
+                                   @"http://www.scrapboard.co", @"link",
                                    @"http://fbrell.com/f8.jpg", @"picture",
-                                   @"I'm using Kupo!", @"name",
+                                   @"I'm using Scrapboard!", @"name",
                                    @"I'm using Kupo to share stories of places with my friends. Get the FREE iPhone or Android app so you can join too!.", @"description",
                                    nil];
     

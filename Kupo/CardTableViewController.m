@@ -272,7 +272,8 @@
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView {
-  tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bamboo_bg_alpha.png"]];
+//  tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bamboo_bg_alpha.png"]];
+  tableView.backgroundColor = CELL_COLOR;
   tableView.separatorColor = SEPARATOR_COLOR;
   tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 }

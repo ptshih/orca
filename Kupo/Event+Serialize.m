@@ -33,7 +33,7 @@
     for (NSDictionary *friend in friendList) {
       [friendIds addObject:[friend valueForKey:@"facebook_id"]];
       [friendFirstNames addObject:[friend valueForKey:@"first_name"]];
-      [friendFullNames addObject:[friend valueForKey:@"full_name"]];
+      [friendFullNames addObject:[friend valueForKey:@"name"]];
     }
     
     newEvent.friendIds = [friendIds componentsJoinedByString:@","];
@@ -72,7 +72,7 @@
   for (NSDictionary *friend in friendList) {
     [friendIds addObject:[friend valueForKey:@"facebook_id"]];
     [friendFirstNames addObject:[friend valueForKey:@"first_name"]];
-    [friendFullNames addObject:[friend valueForKey:@"full_name"]];
+    [friendFullNames addObject:[friend valueForKey:@"name"]];
   }
   
   self.friendIds = [friendIds componentsJoinedByString:@","];
