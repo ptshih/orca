@@ -1,5 +1,5 @@
 //
-//  PlaceViewController.h
+//  EventViewController.h
 //  Kupo
 //
 //  Created by Peter Shih on 3/23/11.
@@ -13,7 +13,7 @@
 @class NearbyViewController;
 @class MeViewController;
 
-@interface PlaceViewController : CardCoreDataTableViewController <MeDelegate, UIAlertViewDelegate> {
+@interface EventViewController : CardCoreDataTableViewController <MeDelegate, UIAlertViewDelegate> {
   NearbyViewController *_nearbyViewController;
   UINavigationController *_nearbyNavController;
   MeViewController *_meViewController;

@@ -1,5 +1,5 @@
 //
-//  PlaceCell.h
+//  EventCell.h
 //  Kupo
 //
 //  Created by Peter Shih on 3/24/11.
@@ -8,10 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "PSImageCell.h"
-#import "Place.h"
+#import "Event.h"
 
-@interface PlaceCell : PSImageCell {
-  Place *_place;
+@interface EventCell : PSImageCell {
+  UILabel *_tagLabel;
+  UILabel *_nameLabel;
+  UILabel *_lastActivityLabel;
+  UILabel *_friendsLabel;
+  UILabel *_timestampLabel;
+  
+  Event *_event;
   NSMutableArray *_friendPictureArray;
   NSMutableArray *_friendIds;
 }

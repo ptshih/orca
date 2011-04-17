@@ -35,96 +35,96 @@ static UIImage *_quoteImage = nil;
 }
 
 // Optimized cell rendering
-- (void)drawRect:(CGRect)rect {
-  [super drawRect:rect];
-  
-  [self drawContentView:rect];
-}
-
-- (void)drawContentView:(CGRect)r {
-  [super drawContentView:r];
-  
-  CGFloat top = MARGIN_Y;
-  CGFloat left =  MARGIN_X + 60;
-  CGFloat width = self.bounds.size.width - left - MARGIN_X;
-  CGRect contentRect = CGRectMake(left, top, width, INT_MAX);
-  CGSize drawnSize = CGSizeZero;
-  
-  if (self.highlighted) {
-    [CELL_VERY_LIGHT_BLUE_COLOR set];
-  } else {
-    [CELL_GRAY_BLUE_COLOR set];
-  }
-  
-  if (_kupo.timestamp && [[_kupo.timestamp humanIntervalSinceNow] length] > 0) {
-    drawnSize = [[_kupo.timestamp humanIntervalSinceNow] drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentRight];
-    
-    contentRect = CGRectMake(left, top, width - drawnSize.width - MARGIN_X, INT_MAX);
-  }
-  
-  if (self.highlighted) {
-    [CELL_WHITE_COLOR set];
-  } else {
-    [CELL_BLACK_COLOR set];
-  }
-  
-  if (_kupo.authorName && [_kupo.authorName length] > 0) {
-    drawnSize = [_kupo.authorName drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
-    
-    top += drawnSize.height;    
-    contentRect = CGRectMake(left, top, width, INT_MAX); // reset to single line
-  }
-  
-  if (self.highlighted) {
-    [CELL_LIGHT_GRAY_COLOR set];
-  } else {
-    [CELL_GRAY_COLOR set];
-  }
-  
-  NSString *status = nil;
-  NSString *appName = _kupo.appName ? _kupo.appName : @"FB";
-  if ([_kupo.kupoType integerValue] == 0) {
-    if (_kupo.tagged) {
-      status = [NSString stringWithFormat:@"Checked in via %@ with %@", appName, _kupo.tagged];
-    } else {
-      status = [NSString stringWithFormat:@"Checked in via %@", appName];
-    }
-  }
-  
-  if ([status length] > 0) {
-    drawnSize = [status drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
-    
-    top += drawnSize.height;
-//    contentRect = CGRectMake(left, top, width, INT_MAX);
-  }
-  
-  if (self.highlighted) {
-    [CELL_VERY_LIGHT_BLUE_COLOR set];
-  } else {
-    [CELL_GRAY_BLUE_COLOR set];
-  }
-  
-  if (_kupo.comment && [_kupo.comment length] > 0) {
-    [_quoteImage drawAtPoint:CGPointMake(left, top)];
-    contentRect = CGRectMake(left + 20, top, width - 20, INT_MAX); // quote mark
-    drawnSize = [_kupo.comment drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:COMMENT_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
-    
-    top += drawnSize.height;
-//    contentRect = CGRectMake(left, top, width, INT_MAX);
-  }
-  
-  if (_hasPhoto) {
-    [self addSubview:_photoImageView];
-    _photoImageView.left = left;
-    _photoImageView.top = top + PHOTO_SPACING;
-    _photoImageView.width = PHOTO_SIZE;
-    _photoImageView.height = PHOTO_SIZE;
-    _photoImageView.layer.masksToBounds = YES;
-    _photoImageView.layer.cornerRadius = 10.0;
-  } else {
-    [_photoImageView removeFromSuperview];
-  }
-}
+//- (void)drawRect:(CGRect)rect {
+//  [super drawRect:rect];
+//  
+//  [self drawContentView:rect];
+//}
+//
+//- (void)drawContentView:(CGRect)r {
+//  [super drawContentView:r];
+//  
+//  CGFloat top = MARGIN_Y;
+//  CGFloat left =  MARGIN_X + 60;
+//  CGFloat width = self.bounds.size.width - left - MARGIN_X;
+//  CGRect contentRect = CGRectMake(left, top, width, INT_MAX);
+//  CGSize drawnSize = CGSizeZero;
+//  
+//  if (self.highlighted) {
+//    [CELL_VERY_LIGHT_BLUE_COLOR set];
+//  } else {
+//    [CELL_GRAY_BLUE_COLOR set];
+//  }
+//  
+//  if (_kupo.timestamp && [[_kupo.timestamp humanIntervalSinceNow] length] > 0) {
+//    drawnSize = [[_kupo.timestamp humanIntervalSinceNow] drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentRight];
+//    
+//    contentRect = CGRectMake(left, top, width - drawnSize.width - MARGIN_X, INT_MAX);
+//  }
+//  
+//  if (self.highlighted) {
+//    [CELL_WHITE_COLOR set];
+//  } else {
+//    [CELL_BLACK_COLOR set];
+//  }
+//  
+//  if (_kupo.authorName && [_kupo.authorName length] > 0) {
+//    drawnSize = [_kupo.authorName drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
+//    
+//    top += drawnSize.height;    
+//    contentRect = CGRectMake(left, top, width, INT_MAX); // reset to single line
+//  }
+//  
+//  if (self.highlighted) {
+//    [CELL_LIGHT_GRAY_COLOR set];
+//  } else {
+//    [CELL_GRAY_COLOR set];
+//  }
+//  
+//  NSString *status = nil;
+//  NSString *appName = _kupo.appName ? _kupo.appName : @"FB";
+//  if ([_kupo.kupoType integerValue] == 0) {
+//    if (_kupo.tagged) {
+//      status = [NSString stringWithFormat:@"Checked in via %@ with %@", appName, _kupo.tagged];
+//    } else {
+//      status = [NSString stringWithFormat:@"Checked in via %@", appName];
+//    }
+//  }
+//  
+//  if ([status length] > 0) {
+//    drawnSize = [status drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
+//    
+//    top += drawnSize.height;
+////    contentRect = CGRectMake(left, top, width, INT_MAX);
+//  }
+//  
+//  if (self.highlighted) {
+//    [CELL_VERY_LIGHT_BLUE_COLOR set];
+//  } else {
+//    [CELL_GRAY_BLUE_COLOR set];
+//  }
+//  
+//  if (_kupo.comment && [_kupo.comment length] > 0) {
+//    [_quoteImage drawAtPoint:CGPointMake(left, top)];
+//    contentRect = CGRectMake(left + 20, top, width - 20, INT_MAX); // quote mark
+//    drawnSize = [_kupo.comment drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:COMMENT_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
+//    
+//    top += drawnSize.height;
+////    contentRect = CGRectMake(left, top, width, INT_MAX);
+//  }
+//  
+//  if (_hasPhoto) {
+//    [self addSubview:_photoImageView];
+//    _photoImageView.left = left;
+//    _photoImageView.top = top + PHOTO_SPACING;
+//    _photoImageView.width = PHOTO_SIZE;
+//    _photoImageView.height = PHOTO_SIZE;
+//    _photoImageView.layer.masksToBounds = YES;
+//    _photoImageView.layer.cornerRadius = 10.0;
+//  } else {
+//    [_photoImageView removeFromSuperview];
+//  }
+//}
 
 - (void)layoutSubviews {
   [super layoutSubviews];

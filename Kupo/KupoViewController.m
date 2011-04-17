@@ -9,14 +9,14 @@
 #import "KupoViewController.h"
 #import "KupoDataCenter.h"
 #import "KupoCell.h"
-#import "Place.h"
+#import "Event.h"
 #import "ComposeViewController.h"
 #import "DetailViewController.h"
 #import "VideoViewController.h"
 
 @implementation KupoViewController
 
-@synthesize place = _place;
+@synthesize event = _event;
 
 - (id)init {
   self = [super init];
@@ -31,7 +31,7 @@
   [super viewDidLoad];
   
   // Nav Title
-  _navTitleLabel.text = self.place.name;
+  _navTitleLabel.text = self.event.name;
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -86,7 +86,7 @@
 - (void)composeKupo {
   ComposeViewController *kcvc = [[ComposeViewController alloc] init];
   kcvc.kupoComposeType = KupoComposeTypeKupo;
-  kcvc.placeId = self.place.placeId;
+  kcvc.eventId = self.event.id;
   UINavigationController *kupoNav = [[UINavigationController alloc] initWithRootViewController:kcvc];
   kupoNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
   [self presentModalViewController:kupoNav animated:YES];
@@ -155,8 +155,8 @@
   [super reloadCardController];
   
   // Get since date
-  NSDate *sinceDate = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"since.kupos.%@", self.place.placeId]];
-  [[KupoDataCenter defaultCenter] getKuposForPlaceWithPlaceId:self.place.placeId andSince:sinceDate];
+  NSDate *sinceDate = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"since.kupos.%@", self.event.id]];
+  [[KupoDataCenter defaultCenter] getKuposForEventWithEventId:self.event.id andSince:sinceDate];
   
 //  [[KupoDataCenter defaultCenter] loadKuposFromFixture];
 }
@@ -178,8 +178,8 @@
     Kupo *lastKupo = [[self.fetchedResultsController fetchedObjects] lastObject];
     NSDate *sinceDate = firstKupo.timestamp;
     NSDate *untilDate = lastKupo.timestamp;
-    [[NSUserDefaults standardUserDefaults] setValue:sinceDate forKey:[NSString stringWithFormat:@"since.kupos.%@", self.place.placeId]];
-    [[NSUserDefaults standardUserDefaults] setValue:untilDate forKey:[NSString stringWithFormat:@"until.kupos.%@", self.place.placeId]];
+    [[NSUserDefaults standardUserDefaults] setValue:sinceDate forKey:[NSString stringWithFormat:@"since.kupos.%@", self.event.id]];
+    [[NSUserDefaults standardUserDefaults] setValue:untilDate forKey:[NSString stringWithFormat:@"until.kupos.%@", self.event.id]];
     [[NSUserDefaults standardUserDefaults] synchronize];
   }
 }
@@ -194,20 +194,20 @@
   [super loadMore];
   
   // get until date
-  NSDate *untilDate = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"until.kupos.%@", self.place.placeId]];
-  [[KupoDataCenter defaultCenter] loadMoreKuposForPlaceWithPlaceId:self.place.placeId andUntil:untilDate];
+  NSDate *untilDate = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"until.kupos.%@", self.event.id]];
+  [[KupoDataCenter defaultCenter] loadMoreKuposForEventWithEventId:self.event.id andUntil:untilDate];
 }
 
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [[KupoDataCenter defaultCenter] getKuposFetchRequestWithPlaceId:self.place.placeId];
+  return [[KupoDataCenter defaultCenter] getKuposFetchRequestWithEventId:self.event.id];
 }
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
   [[KupoDataCenter defaultCenter] setDelegate:nil];
-  RELEASE_SAFELY(_place);
+  RELEASE_SAFELY(_event);
   [super dealloc];
 }
 

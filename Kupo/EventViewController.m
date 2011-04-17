@@ -1,27 +1,27 @@
 //
-//  PlaceViewController.m
+//  EventViewController.m
 //  Kupo
 //
 //  Created by Peter Shih on 3/23/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "PlaceViewController.h"
-#import "PlaceDataCenter.h"
+#import "EventViewController.h"
+#import "EventDataCenter.h"
 #import "KupoViewController.h"
 #import "MeViewController.h"
 #import "NearbyViewController.h"
-#import "Place.h"
-#import "PlaceCell.h"
+#import "Event.h"
+#import "EventCell.h"
 
-@implementation PlaceViewController
+@implementation EventViewController
 
 @synthesize shouldReloadOnAppear = _shouldReloadOnAppear;
 
 - (id)init {
   self = [super init];
   if (self) {
-    [[PlaceDataCenter defaultCenter] setDelegate:self];
+    [[EventDataCenter defaultCenter] setDelegate:self];
     
     _limit = 50;
     
@@ -43,7 +43,7 @@
   self.navigationItem.leftBarButtonItem = leftButton;
   [leftButton release];
   
-  UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"place_nav_icon.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(checkin)];
+  UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"event_nav_icon.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(checkin)];
   self.navigationItem.rightBarButtonItem = rightButton;
   [rightButton release];
   
@@ -54,7 +54,7 @@
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
-  [self setupSearchDisplayControllerWithScopeButtonTitles:[NSArray arrayWithObjects:@"Place", @"Person", nil]];
+  [self setupSearchDisplayControllerWithScopeButtonTitles:[NSArray arrayWithObjects:@"Event", @"Person", nil]];
   
   // Pull Refresh
   [self setupPullRefresh];
@@ -108,45 +108,45 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
   [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
   [cell setNeedsDisplay];
-  [(PlaceCell *)cell loadImage];
-  [(PlaceCell *)cell loadFriendPictures];
+  [(EventCell *)cell loadImage];
+  [(EventCell *)cell loadFriendPictures];
 }
 
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
-  Place *place = nil;
+  Event *event = nil;
   if (tableView == self.searchDisplayController.searchResultsTableView) {
-    place = [_searchItems objectAtIndex:indexPath.row];
+    event = [_searchItems objectAtIndex:indexPath.row];
   } else {
-    place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    event = [self.fetchedResultsController objectAtIndexPath:indexPath];
   }
   
-  [cell fillCellWithObject:place];
+  [cell fillCellWithObject:event];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  Place *place = nil;
+  Event *event = nil;
   if (tableView == self.searchDisplayController.searchResultsTableView) {
-    place = [_searchItems objectAtIndex:indexPath.row];
+    event = [_searchItems objectAtIndex:indexPath.row];
   } else {
-    place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    event = [self.fetchedResultsController objectAtIndexPath:indexPath];
   }
   
-  return [PlaceCell rowHeightForObject:place];
+  return [EventCell rowHeightForObject:event];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   
-  Place *place = nil;
+  Event *event = nil;
   if (tableView == self.searchDisplayController.searchResultsTableView) {
-    place = [_searchItems objectAtIndex:indexPath.row];
+    event = [_searchItems objectAtIndex:indexPath.row];
   } else {
-    place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    event = [self.fetchedResultsController objectAtIndexPath:indexPath];
   }
     
   // Mark isRead state
-  if (![place.isRead boolValue]) {
-    place.isRead = [NSNumber numberWithBool:YES];
+  if (![event.isRead boolValue]) {
+    event.isRead = [NSNumber numberWithBool:YES];
     
     NSError *error = nil;
     if ([self.context hasChanges]) {
@@ -157,18 +157,18 @@
   }
   
   KupoViewController *kvc = [[KupoViewController alloc] init];
-  kvc.place = place;
+  kvc.event = event;
   [self.navigationController pushViewController:kvc animated:YES];
   [kvc release];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  PlaceCell *cell = nil;
+  EventCell *cell = nil;
   NSString *reuseIdentifier = [NSString stringWithFormat:@"%@_TableViewCell_%d", [self class], indexPath.section];
   
-  cell = (PlaceCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+  cell = (EventCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
   if(cell == nil) { 
-    cell = [[[PlaceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+    cell = [[[EventCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
   }
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
@@ -185,7 +185,7 @@
     // search friend's full name
     predicate = [NSPredicate predicateWithFormat:@"friendFullNames CONTAINS[cd] %@", searchText];
   } else {
-    // default to place name
+    // default to event name
     predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
   }
   
@@ -201,9 +201,9 @@
   [super reloadCardController];
   
   // Get since date
-  NSDate *sinceDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"since.places"];
-  [[PlaceDataCenter defaultCenter] getPlacesWithSince:sinceDate];
-//  [[PlaceDataCenter defaultCenter] loadPlacesFromFixture];
+  NSDate *sinceDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"since.events"];
+  [[EventDataCenter defaultCenter] getEventsWithSince:sinceDate];
+//  [[EventDataCenter defaultCenter] loadEventsFromFixture];
 }
 
 - (void)unloadCardController {
@@ -219,12 +219,12 @@
   
   if ([self.fetchedResultsController.fetchedObjects count] > 0) {
     // Set since and until date
-    Place *firstPlace = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
-    Place *lastPlace = [[self.fetchedResultsController fetchedObjects] lastObject];
-    NSDate *sinceDate = firstPlace.timestamp;
-    NSDate *untilDate = lastPlace.timestamp;
-    [[NSUserDefaults standardUserDefaults] setValue:sinceDate forKey:@"since.places"];
-    [[NSUserDefaults standardUserDefaults] setValue:untilDate forKey:@"until.places"];
+    Event *firstEvent = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
+    Event *lastEvent = [[self.fetchedResultsController fetchedObjects] lastObject];
+    NSDate *sinceDate = firstEvent.timestamp;
+    NSDate *untilDate = lastEvent.timestamp;
+    [[NSUserDefaults standardUserDefaults] setValue:sinceDate forKey:@"since.events"];
+    [[NSUserDefaults standardUserDefaults] setValue:untilDate forKey:@"until.events"];
     [[NSUserDefaults standardUserDefaults] synchronize];
   }
 }
@@ -239,14 +239,14 @@
   [super loadMore];
   
   // get until date
-  NSDate *untilDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"until.places"];
-  [[PlaceDataCenter defaultCenter] loadMorePlacesWithUntil:untilDate];
+  NSDate *untilDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"until.events"];
+  [[EventDataCenter defaultCenter] loadMoreEventsWithUntil:untilDate];
 }
 
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [[PlaceDataCenter defaultCenter] getPlacesFetchRequest];
+  return [[EventDataCenter defaultCenter] getEventsFetchRequest];
 }
 
 #pragma mark -
@@ -268,7 +268,7 @@
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kCoreDataDidReset object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
-  [[PlaceDataCenter defaultCenter] setDelegate:nil];
+  [[EventDataCenter defaultCenter] setDelegate:nil];
   RELEASE_SAFELY(_nearbyViewController);
   RELEASE_SAFELY(_meViewController);
   RELEASE_SAFELY(_nearbyNavController);

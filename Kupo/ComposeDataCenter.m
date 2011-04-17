@@ -24,13 +24,13 @@ static ComposeDataCenter *_defaultCenter = nil;
   }
 }
 
-- (void)sendKupoComposeWithPlaceId:(NSString *)placeId andComment:(NSString *)comment andImage:(UIImage *)image andVideo:(NSData *)video {
+- (void)sendKupoComposeWithEventId:(NSString *)eventId andComment:(NSString *)comment andImage:(UIImage *)image andVideo:(NSData *)video {
   NSURL *kupoComposeUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/kupos/new", KUPO_BASE_URL]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
   [params setValue:@"1" forKey:@"kupo_type"];
-  [params setValue:placeId forKey:@"place_id"];
+  [params setValue:eventId forKey:@"event_id"];
   
   if ([comment length] > 0) {
     [params setValue:comment forKey:@"comment"];
@@ -51,8 +51,8 @@ static ComposeDataCenter *_defaultCenter = nil;
   [self sendOperationWithURL:kupoComposeUrl andMethod:POST andHeaders:nil andParams:params andAttachmentType:attachmentType];
 }
 
-- (void)sendCheckinComposeWithPlaceId:(NSString *)placeId andComment:(NSString *)comment andImage:(UIImage *)image andVideo:(NSData *)video {
-  // params[:message], params[:place], params[:lat], params[:lng], params[:tags]
+- (void)sendCheckinComposeWithEventId:(NSString *)eventId andComment:(NSString *)comment andImage:(UIImage *)image andVideo:(NSData *)video {
+  // params[:message], params[:event], params[:lat], params[:lng], params[:tags]
   
   NSURL *checkinComposeUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkins/new", KUPO_BASE_URL]];
   
@@ -60,7 +60,7 @@ static ComposeDataCenter *_defaultCenter = nil;
   
   [params setValue:@"0" forKey:@"kupo_type"];
   
-  [params setValue:placeId forKey:@"place_id"];
+  [params setValue:eventId forKey:@"event_id"];
   
   // Location
   CGFloat lat = [[KupoLocation sharedInstance] latitude];

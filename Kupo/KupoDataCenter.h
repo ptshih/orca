@@ -15,8 +15,8 @@
 
 @property (nonatomic, retain) NSManagedObjectContext *context;
 
-- (void)getKuposForPlaceWithPlaceId:(NSString *)placeId andSince:(NSDate *)sinceDate;
-- (void)loadMoreKuposForPlaceWithPlaceId:(NSString *)placeId andUntil:(NSDate *)untilDate;
+- (void)getKuposForEventWithEventId:(NSString *)placeId andSince:(NSDate *)sinceDate;
+- (void)loadMoreKuposForEventWithEventId:(NSString *)placeId andUntil:(NSDate *)untilDate;
 
 - (void)loadKuposFromFixture;
 
@@ -25,6 +25,6 @@
 /**
  Fetch Requests
  */
-- (NSFetchRequest *)getKuposFetchRequestWithPlaceId:(NSString *)placeId;
+- (NSFetchRequest *)getKuposFetchRequestWithEventId:(NSString *)placeId;
 
 @end

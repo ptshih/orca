@@ -39,8 +39,8 @@ static KupoDataCenter *_defaultCenter = nil;
 - (void)coreDataDidReset {
 }
 
-- (void)getKuposForPlaceWithPlaceId:(NSString *)placeId andSince:(NSDate *)sinceDate {
-  NSURL *kuposUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/places/%@/kupos", KUPO_BASE_URL, placeId]];
+- (void)getKuposForEventWithEventId:(NSString *)eventId andSince:(NSDate *)sinceDate {
+  NSURL *kuposUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/events/%@/kupos", KUPO_BASE_URL, eventId]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
@@ -51,8 +51,8 @@ static KupoDataCenter *_defaultCenter = nil;
   [self sendOperationWithURL:kuposUrl andMethod:GET andHeaders:nil andParams:params];
 }
 
-- (void)loadMoreKuposForPlaceWithPlaceId:(NSString *)placeId andUntil:(NSDate *)untilDate {
-  NSURL *kuposUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/places/%@/kupos", KUPO_BASE_URL, placeId]];
+- (void)loadMoreKuposForEventWithEventId:(NSString *)eventId andUntil:(NSDate *)untilDate {
+  NSURL *kuposUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/events/%@/kupos", KUPO_BASE_URL, eventId]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
@@ -86,7 +86,7 @@ static KupoDataCenter *_defaultCenter = nil;
 - (void)serializeKuposWithDictionary:(NSDictionary *)dictionary {
   NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES];
   
-  NSArray *sortedKupos = [[dictionary valueForKey:@"values"] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+  NSArray *sortedKupos = [[dictionary valueForKey:@"data"] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
   
   NSMutableArray *sortedKupoIds = [NSMutableArray array];
   for (NSDictionary *kupoDict in sortedKupos) {
@@ -122,11 +122,11 @@ static KupoDataCenter *_defaultCenter = nil;
 }
 
 #pragma mark FetchRequests
-- (NSFetchRequest *)getKuposFetchRequestWithPlaceId:(NSString *)placeId {
+- (NSFetchRequest *)getKuposFetchRequestWithEventId:(NSString *)eventId {
   NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO selector:@selector(compare:)];
   NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
   [sortDescriptor release];
-  NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getKuposForPlace" substitutionVariables:[NSDictionary dictionaryWithObject:placeId forKey:@"desiredPlaceId"]];
+  NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getKuposForEvent" substitutionVariables:[NSDictionary dictionaryWithObject:eventId forKey:@"desiredEventId"]];
   [fetchRequest setSortDescriptors:sortDescriptors];
   return fetchRequest;
 }

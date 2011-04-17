@@ -8,18 +8,6 @@
 
 #import "PSCell.h"
 
-@interface PSCellView : UIView
-@end
-
-@implementation PSCellView
-
-- (void)drawRect:(CGRect)r {
-	[(PSCell *)[self superview] drawContentView:r];
-}
-
-@end
-
-
 @implementation PSCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -28,42 +16,9 @@
     _separatorStyle = style;
     self.opaque = YES;
     self.contentMode = UIViewContentModeRedraw;
-    _psContentView = [[PSCellView alloc] initWithFrame:CGRectZero];
-    _psContentView.contentMode = UIViewContentModeRedraw;
-    _psContentView.opaque = NO;
-    [self addSubview:_psContentView];
   }
   return self;
 }
-
-- (void)drawRect:(CGRect)rect {
-  [super drawRect:rect];
-  [self drawContentView:rect];
-}
-
-
-- (void)drawContentView:(CGRect)r {
-  // subclass should implement
-}
-
-- (void)setFrame:(CGRect)f {
-	[super setFrame:f];
-	CGRect b = [self bounds];
-  if (_separatorStyle != UITableViewCellSeparatorStyleNone) {
-    b.size.height -= 1; // leave room for the seperator line
-  }
-	[_psContentView setFrame:b];
-}
-
-- (void)setNeedsDisplay {
-	[super setNeedsDisplay];
-	[_psContentView setNeedsDisplay];
-}
-
-//- (void)setNeedsLayout {
-//  [super setNeedsLayout];
-//  [_psContentView setNeedsLayout];
-//}
 
 + (PSCellType)cellType {
   return PSCellTypePlain;
@@ -113,13 +68,7 @@
   [super setSelected:selected animated:animated];
 }
 
-//- (void)setHighlighted:(BOOL)lit {
-//	// If highlighted state changes, need to redisplay.
-//  [self setNeedsDisplay];
-//}
-
 - (void)dealloc {
-  RELEASE_SAFELY(_psContentView);
   [super dealloc];
 }
 

@@ -16,7 +16,7 @@
 #import "JSON.h"
 #import "NetworkConstants.h"
 
-#define SINCE_SAFETY_NET 0
+#define SINCE_SAFETY_NET 180
 
 @interface PSDataCenter : PSObject <PSDataCenterDelegate> {
   id <PSDataCenterDelegate> _delegate;

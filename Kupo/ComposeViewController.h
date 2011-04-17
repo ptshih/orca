@@ -32,7 +32,7 @@ typedef uint32_t KupoComposeType;
   NSData *_uploadedVideo;
   NSString *_uploadedVideoPath;
   
-  NSString *_placeId;
+  NSString *_eventId;
   BOOL _shouldSaveToAlbum;
   
   id <ComposeDelegate> _delegate;
@@ -41,7 +41,7 @@ typedef uint32_t KupoComposeType;
 @property (nonatomic, assign) id <ComposeDelegate> delegate;
 @property (nonatomic, assign) KupoComposeType kupoComposeType;
 @property (nonatomic, retain) PSTextView *comment;
-@property (nonatomic, retain) NSString *placeId;
+@property (nonatomic, retain) NSString *eventId;
 
 - (void)uploadPicture;
 

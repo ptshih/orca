@@ -1,31 +1,27 @@
 //
-//  Place.m
+//  Event.m
 //  Kupo
 //
-//  Created by Peter Shih on 4/4/11.
+//  Created by Peter Shih on 4/17/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "Place.h"
+#import "Event.h"
 
 
-@implementation Place
+@implementation Event
 @dynamic id;
 @dynamic authorId;
 @dynamic hasPhoto;
-@dynamic placeId;
 @dynamic timestamp;
 @dynamic authorName;
 @dynamic friendFirstNames;
-@dynamic activityCount;
 @dynamic friendIds;
-@dynamic comment;
+@dynamic message;
 @dynamic isRead;
-@dynamic pictureUrl;
-@dynamic address;
-@dynamic kupoType;
+@dynamic hasVideo;
 @dynamic friendFullNames;
 @dynamic name;
-@dynamic hasVideo;
+@dynamic tag;
 
 @end

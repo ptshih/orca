@@ -48,7 +48,7 @@ static NearbyDataCenter *_defaultCenter = nil;
 - (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {
   // Serialize nearby places
   [_nearbyPlaces removeAllObjects];
-  NSArray *nearbyArray = [_response valueForKey:@"values"];
+  NSArray *nearbyArray = [_response valueForKey:@"data"];
   for (NSDictionary *nearbyDict in nearbyArray) {
     Nearby *nearbyPlace = [[[Nearby alloc] initWithDictionary:nearbyDict] autorelease];
     [_nearbyPlaces addObject:nearbyPlace];

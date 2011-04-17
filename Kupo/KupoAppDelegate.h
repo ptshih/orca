@@ -12,13 +12,13 @@
 
 @class Facebook;
 @class LoginViewController;
-@class PlaceViewController;
+@class EventViewController;
 
 @interface KupoAppDelegate : NSObject <UIApplicationDelegate, LoginDelegate, PSDataCenterDelegate> {
   UIWindow *_window;
   Facebook *_facebook;
   LoginViewController *_loginViewController;
-  PlaceViewController *_placeViewController;
+  EventViewController *_eventViewController;
   UINavigationController *_navigationController;
   
   // Session

@@ -1,18 +1,18 @@
 //
-//  PlaceDataCenter.m
+//  EventDataCenter.m
 //  Kupo
 //
 //  Created by Peter Shih on 3/23/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "PlaceDataCenter.h"
-#import "Place.h"
-#import "Place+Serialize.h"
+#import "EventDataCenter.h"
+#import "Event.h"
+#import "Event+Serialize.h"
 
-static PlaceDataCenter *_defaultCenter = nil;
+static EventDataCenter *_defaultCenter = nil;
 
-@implementation PlaceDataCenter
+@implementation EventDataCenter
 
 @synthesize context = _context;
 
@@ -39,8 +39,8 @@ static PlaceDataCenter *_defaultCenter = nil;
 - (void)coreDataDidReset {
 }
 
-- (void)getPlacesWithSince:(NSDate *)sinceDate {
-  NSURL *placesUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/me/places", KUPO_BASE_URL]];
+- (void)getEventsWithSince:(NSDate *)sinceDate {
+  NSURL *eventsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/me/events", KUPO_BASE_URL]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
@@ -48,33 +48,33 @@ static PlaceDataCenter *_defaultCenter = nil;
   NSTimeInterval since = [sinceDate timeIntervalSince1970] - SINCE_SAFETY_NET;
   [params setValue:[NSString stringWithFormat:@"%0.0f", since] forKey:@"since"];
   
-  [self sendOperationWithURL:placesUrl andMethod:GET andHeaders:nil andParams:params];
+  [self sendOperationWithURL:eventsUrl andMethod:GET andHeaders:nil andParams:params];
 }
 
-- (void)loadMorePlacesWithUntil:(NSDate *)untilDate {
-  NSURL *placesUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/me/places", KUPO_BASE_URL]];
+- (void)loadMoreEventsWithUntil:(NSDate *)untilDate {
+  NSURL *eventsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/me/events", KUPO_BASE_URL]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
   // Until
   [params setValue:[NSString stringWithFormat:@"%0.0f", [untilDate timeIntervalSince1970]] forKey:@"until"];
   
-  [self sendOperationWithURL:placesUrl andMethod:GET andHeaders:nil andParams:params];
+  [self sendOperationWithURL:eventsUrl andMethod:GET andHeaders:nil andParams:params];
 }
 
 #pragma mark Fixtures
-- (void)loadPlacesFromFixture {
-  NSString *filePath = [[NSBundle mainBundle] pathForResource:@"places" ofType:@"json"];
+- (void)loadEventsFromFixture {
+  NSString *filePath = [[NSBundle mainBundle] pathForResource:@"events" ofType:@"json"];
   NSData *fixtureData = [NSData dataWithContentsOfFile:filePath];
   NSDictionary *fixtureDict = [fixtureData JSONValue];
-  [self serializePlacesWithDictionary:fixtureDict];
+  [self serializeEventsWithDictionary:fixtureDict];
   
   [super dataCenterFinishedWithOperation:nil];
 }
 
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {  
-  [self serializePlacesWithDictionary:_response];
+  [self serializeEventsWithDictionary:_response];
   [super dataCenterFinishedWithOperation:operation];
 }
 
@@ -83,33 +83,33 @@ static PlaceDataCenter *_defaultCenter = nil;
 }
 
 #pragma mark Serialize Response
-- (void)serializePlacesWithDictionary:(NSDictionary *)dictionary {
+- (void)serializeEventsWithDictionary:(NSDictionary *)dictionary {
   NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES];
   
-  NSArray *sortedPlaces = [[dictionary valueForKey:@"values"] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+  NSArray *sortedEvents = [[dictionary valueForKey:@"data"] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
   
-  NSMutableArray *sortedPlaceIds = [NSMutableArray array];
-  for (NSDictionary *placeDict in sortedPlaces) {
-    [sortedPlaceIds addObject:[placeDict valueForKey:@"id"]];
+  NSMutableArray *sortedEventIds = [NSMutableArray array];
+  for (NSDictionary *eventDict in sortedEvents) {
+    [sortedEventIds addObject:[eventDict valueForKey:@"id"]];
   }
     
   NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
-  [fetchRequest setEntity:[NSEntityDescription entityForName:@"Place" inManagedObjectContext:self.context]];
-  [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(id IN %@)", sortedPlaceIds]];
+  [fetchRequest setEntity:[NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.context]];
+  [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(id IN %@)", sortedEventIds]];
   [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"id" ascending:YES] autorelease]]];
   
   
   NSError *error = nil;
-  NSArray *foundPlaces = [self.context executeFetchRequest:fetchRequest error:&error];
+  NSArray *foundEvents = [self.context executeFetchRequest:fetchRequest error:&error];
   
   int i = 0;
-  for (NSDictionary *placeDict in sortedPlaces) {
-    if ([foundPlaces count] > 0 && i < [foundPlaces count] && [[placeDict valueForKey:@"id"] isEqualToString:[[foundPlaces objectAtIndex:i] id]]) {
-      DLog(@"found duplicated place with id: %@", [[foundPlaces objectAtIndex:i] id]);
-      [[foundPlaces objectAtIndex:i] updatePlaceWithDictionary:placeDict];
+  for (NSDictionary *eventDict in sortedEvents) {
+    if ([foundEvents count] > 0 && i < [foundEvents count] && [[eventDict valueForKey:@"id"] isEqualToString:[[foundEvents objectAtIndex:i] id]]) {
+      DLog(@"found duplicated event with id: %@", [[foundEvents objectAtIndex:i] id]);
+      [[foundEvents objectAtIndex:i] updateEventWithDictionary:eventDict];
     } else {
       // Insert
-      [Place addPlaceWithDictionary:placeDict inContext:self.context];
+      [Event addEventWithDictionary:eventDict inContext:self.context];
     }
     i++;
   }
@@ -124,11 +124,11 @@ static PlaceDataCenter *_defaultCenter = nil;
 }
 
 #pragma mark Fetch Requests
-- (NSFetchRequest *)getPlacesFetchRequest {
+- (NSFetchRequest *)getEventsFetchRequest {
   NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO selector:@selector(compare:)];
   NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
   [sortDescriptor release];
-  NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPlaces" substitutionVariables:[NSDictionary dictionary]];
+  NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getEvents" substitutionVariables:[NSDictionary dictionary]];
   [fetchRequest setSortDescriptors:sortDescriptors];
 //  [fetchRequest setFetchLimit:limit];
   return fetchRequest;

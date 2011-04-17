@@ -24,7 +24,7 @@ static LoginDataCenter *_defaultCenter = nil;
 }
 
 - (void)startSession {
-  NSURL *sessionUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/session", KUPO_BASE_URL]];
+  NSURL *sessionUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/login/session", KUPO_BASE_URL]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
@@ -32,9 +32,11 @@ static LoginDataCenter *_defaultCenter = nil;
 }
 
 - (void)startRegister {
-  NSURL *registerUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/register", KUPO_BASE_URL]];
+  NSURL *registerUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/login/register", KUPO_BASE_URL]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
+  
+  [params setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"] forKey:@"facebook_access_token"];
   
   [self sendOperationWithURL:registerUrl andMethod:POST andHeaders:nil andParams:params];
 }

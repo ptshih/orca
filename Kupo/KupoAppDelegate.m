@@ -11,7 +11,7 @@
 #import "FBConnect.h"
 #import "LICoreDataStack.h"
 #import "LoginViewController.h"
-#import "PlaceViewController.h"
+#import "EventViewController.h"
 #import "LoginDataCenter.h"
 
 @implementation KupoAppDelegate
@@ -53,10 +53,10 @@
   // Setup Facebook
   _facebook = [[Facebook alloc] initWithAppId:FB_APP_ID];
   
-  _placeViewController = [[PlaceViewController alloc] init];
+  _eventViewController = [[EventViewController alloc] init];
   
   // NavigationController
-  _navigationController = [[UINavigationController alloc] initWithRootViewController:_placeViewController];
+  _navigationController = [[UINavigationController alloc] initWithRootViewController:_eventViewController];
   
   // LoginVC
   _loginViewController = [[LoginViewController alloc] init];
@@ -182,13 +182,14 @@
   if ([requestUrlString rangeOfString:@"register"].location != NSNotFound) {  
     // Kupo server will send user ID, name, and array of friend ids
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
+    [[NSUserDefaults standardUserDefaults] setObject:[[[LoginDataCenter defaultCenter] response] valueForKey:@"access_token"] forKey:@"accessToken"];
     [[NSUserDefaults standardUserDefaults] setObject:[[[LoginDataCenter defaultCenter] response] valueForKey:@"facebook_id"] forKey:@"facebookId"];
     [[NSUserDefaults standardUserDefaults] setObject:[[[LoginDataCenter defaultCenter] response] valueForKey:@"name"] forKey:@"facebookName"];
     [[NSUserDefaults standardUserDefaults] setObject:[[[LoginDataCenter defaultCenter] response] valueForKey:@"friends"] forKey:@"friends"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    // Flag place controller to reload after logging in
-    _placeViewController.shouldReloadOnAppear = YES;
+    // Flag event controller to reload after logging in
+    _eventViewController.shouldReloadOnAppear = YES;
   }
   
   // Session/Register request finished
@@ -225,7 +226,7 @@
   [[LoginDataCenter defaultCenter] setDelegate:nil];
   RELEASE_SAFELY(_sessionKey);
   RELEASE_SAFELY(_loginViewController);
-  RELEASE_SAFELY(_placeViewController);
+  RELEASE_SAFELY(_eventViewController);
   RELEASE_SAFELY(_navigationController);
   RELEASE_SAFELY(_facebook);
   RELEASE_SAFELY(_window);

@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "CardCoreDataTableViewController.h"
 
-@class Place;
+@class Event;
 
 @interface KupoViewController : CardCoreDataTableViewController {
-  Place *_place;
+  Event *_event;
 }
 
-@property (nonatomic, retain) Place *place;
+@property (nonatomic, retain) Event *event;
 
 // Private
 - (void)composeKupo;

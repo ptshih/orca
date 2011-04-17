@@ -22,11 +22,8 @@ typedef uint32_t PSCellType;
 
 
 @interface PSCell : UITableViewCell {
-  UIView *_psContentView;
   UITableViewCellSeparatorStyle _separatorStyle;
 }
-
-- (void)drawContentView:(CGRect)r;
 
 + (PSCellType)cellType;
 + (CGFloat)rowWidth;

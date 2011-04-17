@@ -9,7 +9,7 @@
 #import "ComposeViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "UIImage+ScalingAndCropping.h"
-#import "Place.h"
+#import "Event.h"
 #import "ComposeDataCenter.h"
 
 #define SPACING 4.0
@@ -94,7 +94,7 @@
 
 @synthesize kupoComposeType = _kupoComposeType;
 @synthesize comment = _comment;
-@synthesize placeId = _placeId;
+@synthesize eventId = _eventId;
 @synthesize delegate = _delegate;
 
 - (id)init {
@@ -175,10 +175,10 @@
 
 - (void)send {
   if (_kupoComposeType == KupoComposeTypeKupo) {
-    [[ComposeDataCenter defaultCenter] sendKupoComposeWithPlaceId:self.placeId andComment:_comment.text andImage:_uploadedImage andVideo:_uploadedVideo];
+    [[ComposeDataCenter defaultCenter] sendKupoComposeWithEventId:self.eventId andComment:_comment.text andImage:_uploadedImage andVideo:_uploadedVideo];
     [self dismissModalViewControllerAnimated:YES];
   } else {
-    [[ComposeDataCenter defaultCenter] sendCheckinComposeWithPlaceId:self.placeId andComment:_comment.text andImage:_uploadedImage andVideo:_uploadedVideo];
+    [[ComposeDataCenter defaultCenter] sendCheckinComposeWithEventId:self.eventId andComment:_comment.text andImage:_uploadedImage andVideo:_uploadedVideo];
     [self.navigationController popToRootViewControllerAnimated:YES];
   }
 }
@@ -287,7 +287,7 @@
   
   [[ComposeDataCenter defaultCenter] setDelegate:nil];
   
-  RELEASE_SAFELY(_placeId);
+  RELEASE_SAFELY(_eventId);
   RELEASE_SAFELY(_composeView);
   RELEASE_SAFELY(_photoUpload);
   RELEASE_SAFELY(_comment);

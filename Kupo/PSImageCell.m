@@ -24,8 +24,8 @@ static UIImage *_frameImage = nil;
     _psFrameView = [[UIImageView alloc] initWithImage:_frameImage];
     _psFrameView.frame = CGRectMake(5, 0, 60, 60);
     
-    [self addSubview:_psFrameView];
-    [self addSubview:_psImageView];
+    [self.contentView addSubview:_psFrameView];
+    [self.contentView addSubview:_psImageView];
     
     // Override default text labels
     self.textLabel.backgroundColor = [UIColor clearColor];
