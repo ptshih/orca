@@ -183,7 +183,7 @@
   
   if ([scope isEqualToString:@"Person"]) {
     // search friend's full name
-    predicate = [NSPredicate predicateWithFormat:@"friendFullNames CONTAINS[cd] %@", searchText];
+    predicate = [NSPredicate predicateWithFormat:@"friendFullNames CONTAINS[cd] %@ OR authorName CONTAINS[cd] %@", searchText, searchText];
   } else {
     // default to event name
     predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];

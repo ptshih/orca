@@ -34,7 +34,7 @@
     _friendsLabel.backgroundColor = [UIColor clearColor];
     _timestampLabel.backgroundColor = [UIColor clearColor];
     
-    _tagLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE];
+    _tagLabel.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:CELL_FONT_SIZE];
     _nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE];
     _lastActivityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:CELL_FONT_SIZE];
     _friendsLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE];
@@ -77,17 +77,19 @@
   [super layoutSubviews];
   
   CGFloat top = MARGIN_Y;
-  CGFloat left = MARGIN_X;
-  CGFloat textWidth = self.contentView.width - MARGIN_X * 2;
+  CGFloat left = MARGIN_X + 60;
+  CGFloat textWidth = self.contentView.width - 60 - MARGIN_X * 2;
   
   // Row 1
   
   // Timestamp Label
+  _timestampLabel.text = [_event.timestamp humanIntervalSinceNow];
   [_timestampLabel sizeToFitFixedWidth:textWidth];
   _timestampLabel.left = self.contentView.width - _timestampLabel.width - MARGIN_X;
   _timestampLabel.top = top;
   
   // Name Label
+  _nameLabel.text = _event.name;
   [_nameLabel sizeToFitFixedWidth:(textWidth - _timestampLabel.width - MARGIN_X)];
   _nameLabel.left = left;
   _nameLabel.top = top;
@@ -96,6 +98,7 @@
   top = _nameLabel.bottom;
   
   // Tag Label
+  _tagLabel.text = _event.tag;
   [_tagLabel sizeToFitFixedWidth:textWidth];
   _tagLabel.left = left;
   _tagLabel.top = top;
@@ -104,6 +107,7 @@
   top = _tagLabel.bottom;
   
   // Last Activity
+  _lastActivityLabel.text = _event.lastActivity;
   [_lastActivityLabel sizeToFitFixedWidth:textWidth];
   _lastActivityLabel.left = left;
   _lastActivityLabel.top = top;  
@@ -124,6 +128,7 @@
     top += 30 + FRIEND_PICTURE_MARGIN * 2;
     
     // Friends Participants
+    _friendsLabel.text = _event.friendFirstNames;
     [_friendsLabel sizeToFitFixedWidth:textWidth];
     _friendsLabel.left = left;
     _friendsLabel.top = top;
@@ -164,7 +169,7 @@
   constrainedSize = CGSizeMake(width, INT_MAX);
   
   // Tag
-  size = [event.tag sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
+  size = [event.tag sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
   desiredHeight += size.height;
   
   // Last Activity
