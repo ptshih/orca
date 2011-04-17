@@ -11,6 +11,10 @@
 #import "Kupo.h"
 
 @interface KupoCell : PSImageCell {
+  UILabel *_nameLabel;
+  UILabel *_messageLabel;
+  UILabel *_timestampLabel;
+  
   Kupo *_kupo;
   PSImageView *_photoImageView; // optional
   BOOL _hasPhoto;

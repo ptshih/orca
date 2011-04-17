@@ -20,12 +20,10 @@
     newEvent.name = [dictionary valueForKey:@"name"];
     newEvent.authorId = [dictionary valueForKey:@"author_id"];
     newEvent.authorName = [dictionary valueForKey:@"author_name"];
-    newEvent.hasPhoto = [dictionary valueForKey:@"has_photo"];
-    newEvent.hasVideo = [dictionary valueForKey:@"has_video"];
     newEvent.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     
     // These might be null
-    newEvent.message = [dictionary valueForKey:@"message"] ? [dictionary valueForKey:@"message"] : nil;
+    newEvent.lastActivity = [dictionary valueForKey:@"last_activity"] ? [dictionary valueForKey:@"last_activity"] : nil;
     
     // Friends Summary
     NSMutableArray *friendIds = [NSMutableArray array];
@@ -41,8 +39,6 @@
     newEvent.friendIds = [friendIds componentsJoinedByString:@","];
     newEvent.friendFirstNames = [friendFirstNames componentsJoinedByString:@", "];
     newEvent.friendFullNames = [friendFullNames componentsJoinedByString:@", "];
-    
-
     
     return newEvent;
   } else {
@@ -62,12 +58,10 @@
   self.name = [dictionary valueForKey:@"name"];
   self.authorId = [dictionary valueForKey:@"author_id"];
   self.authorName = [dictionary valueForKey:@"author_name"];
-  self.hasPhoto = [dictionary valueForKey:@"has_photo"];
-  self.hasVideo = [dictionary valueForKey:@"has_video"];
   self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
   
   // These might be null
-  self.message = [dictionary valueForKey:@"message"] ? [dictionary valueForKey:@"message"] : nil;
+  self.lastActivity = [dictionary valueForKey:@"last_activity"] ? [dictionary valueForKey:@"last_activity"] : nil;
   
 
   // Friends Summary

@@ -34,13 +34,14 @@
     _friendsLabel.backgroundColor = [UIColor clearColor];
     _timestampLabel.backgroundColor = [UIColor clearColor];
     
-    _tagLabel.font = [UIFont systemFontOfSize:CELL_FONT_SIZE];
-    _nameLabel.font = [UIFont boldSystemFontOfSize:CELL_FONT_SIZE];
-    _lastActivityLabel.font = [UIFont systemFontOfSize:CELL_FONT_SIZE];
-    _friendsLabel.font = [UIFont systemFontOfSize:CELL_FONT_SIZE];
-    _timestampLabel.font = [UIFont systemFontOfSize:CELL_FONT_SIZE];
+    _tagLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE];
+    _nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE];
+    _lastActivityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:CELL_FONT_SIZE];
+    _friendsLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE];
+    _timestampLabel.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE];
     
     _timestampLabel.textAlignment = UITextAlignmentRight;
+    _timestampLabel.textColor = GRAY_COLOR;
     
     _tagLabel.lineBreakMode = UILineBreakModeTailTruncation;
     _nameLabel.lineBreakMode = UILineBreakModeWordWrap;
@@ -94,7 +95,7 @@
   // Row 2
   top = _nameLabel.bottom;
   
-  // Name Label
+  // Tag Label
   [_tagLabel sizeToFitFixedWidth:textWidth];
   _tagLabel.left = left;
   _tagLabel.top = top;
@@ -153,36 +154,34 @@
   
   CGFloat desiredHeight = top;
   
+  // Name and Timestamp
   size = [[event.timestamp humanIntervalSinceNow] sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
-  
   constrainedSize = CGSizeMake(width - size.width - MARGIN_X, INT_MAX);
   
   size = [event.name sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
-  
   desiredHeight += size.height;
   
   constrainedSize = CGSizeMake(width, INT_MAX);
   
-  // Last Activity
-  NSString *lastActivity = nil;
-  if ([event.hasPhoto boolValue]) {
-    if ([event.hasVideo boolValue]) {
-      lastActivity = [NSString stringWithFormat:@"%@ shared a video", event.authorName];
-    } else {
-      lastActivity = [NSString stringWithFormat:@"%@ shared a photo", event.authorName];
-    }
-  } else {
-    lastActivity = [NSString stringWithFormat:@"%@ posted a comment", event.authorName];
-  }
+  // Tag
+  size = [event.tag sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
+  desiredHeight += size.height;
   
-  if (lastActivity && [lastActivity length] > 0) {
-    size = [lastActivity sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:LAST_ACTIVITY_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
-    
+  // Last Activity
+  if (event.lastActivity && [event.lastActivity length] > 0) {
+    size = [event.lastActivity sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
     desiredHeight += size.height;
   }
   
+  // Friend Pictures
   if (event.friendIds && [[event.friendIds componentsSeparatedByString:@","] count] > 1) {
     desiredHeight += 30 + FRIEND_PICTURE_MARGIN * 2;
+  }
+  
+  // Friend Names
+  if (event.friendFirstNames && [event.friendFirstNames length] > 0) {
+    size = [event.friendFirstNames sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
+    desiredHeight += size.height;
   }
   
   desiredHeight += MARGIN_Y;

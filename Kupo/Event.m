@@ -12,14 +12,12 @@
 @implementation Event
 @dynamic id;
 @dynamic authorId;
-@dynamic hasPhoto;
 @dynamic timestamp;
 @dynamic authorName;
 @dynamic friendFirstNames;
 @dynamic friendIds;
-@dynamic message;
+@dynamic lastActivity;
 @dynamic isRead;
-@dynamic hasVideo;
 @dynamic friendFullNames;
 @dynamic name;
 @dynamic tag;

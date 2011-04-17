@@ -2,7 +2,7 @@
 //  Kupo.m
 //  Kupo
 //
-//  Created by Peter Shih on 4/9/11.
+//  Created by Peter Shih on 4/17/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -13,15 +13,12 @@
 @dynamic id;
 @dynamic authorId;
 @dynamic hasPhoto;
-@dynamic placeId;
+@dynamic eventId;
 @dynamic timestamp;
 @dynamic authorName;
 @dynamic videoFileName;
-@dynamic comment;
-@dynamic kupoType;
+@dynamic message;
 @dynamic hasVideo;
-@dynamic tagged;
 @dynamic photoFileName;
-@dynamic appName;
 
 @end

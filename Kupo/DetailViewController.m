@@ -30,7 +30,7 @@ static UIImage *_quoteImage = nil;
   
   self.view.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
   
-  _navTitleLabel.text = self.kupo.comment;
+  _navTitleLabel.text = self.kupo.message;
   
   // Photo Frame
   _photoFrameView = [[UIImageView alloc] initWithImage:_photoFrame];

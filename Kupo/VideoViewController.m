@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  _navTitleLabel.text = self.kupo.comment;
+  _navTitleLabel.text = self.kupo.message;
   
   NSURL *videoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/original/%@", S3_VIDEOS_URL, self.kupo.id, self.kupo.videoFileName]];
   

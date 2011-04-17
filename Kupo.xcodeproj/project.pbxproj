@@ -66,8 +66,6 @@
 		254DAEB113511BCF009D99E0 /* Kupo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 254DAEAE13511BCF009D99E0 /* Kupo.xcdatamodeld */; };
 		258B144613512A3800091A85 /* Nearby.m in Sources */ = {isa = PBXBuildFile; fileRef = 258B144513512A3800091A85 /* Nearby.m */; };
 		258B144713512A3800091A85 /* Nearby.m in Sources */ = {isa = PBXBuildFile; fileRef = 258B144513512A3800091A85 /* Nearby.m */; };
-		258B146A1351472200091A85 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 258B14691351472200091A85 /* Kupo.m */; };
-		258B146B1351472200091A85 /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 258B14691351472200091A85 /* Kupo.m */; };
 		258B147413515B5300091A85 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 258B147313515B5300091A85 /* MapViewController.m */; };
 		258B147513515B5300091A85 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 258B147313515B5300091A85 /* MapViewController.m */; };
 		25961C7B134D3DD800A3D4CD /* bamboo_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 25961C79134D3DD800A3D4CD /* bamboo_bg.png */; };
@@ -85,8 +83,10 @@
 		259C7B76134A92FB00C37AE1 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B74134A92EE00C37AE1 /* VideoViewController.m */; };
 		25B2F4A9135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
 		25B2F4AA135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
-		25B4C968135AED82005949DD /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B4C967135AED82005949DD /* Event.m */; };
-		25B4C969135AED82005949DD /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B4C967135AED82005949DD /* Event.m */; };
+		25B4C994135AFAF8005949DD /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B4C993135AFAF7005949DD /* Kupo.m */; };
+		25B4C995135AFAF8005949DD /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B4C993135AFAF7005949DD /* Kupo.m */; };
+		25B4C998135AFAF9005949DD /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B4C997135AFAF9005949DD /* Event.m */; };
+		25B4C999135AFAF9005949DD /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B4C997135AFAF9005949DD /* Event.m */; };
 		25CEF8071339F278006F23A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8061339F278006F23A7 /* UIKit.framework */; };
 		25CEF8091339F278006F23A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8081339F278006F23A7 /* Foundation.framework */; };
 		25CEF80B1339F278006F23A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80A1339F278006F23A7 /* CoreGraphics.framework */; };
@@ -318,8 +318,6 @@
 		254DAEAF13511BCF009D99E0 /* Kupo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kupo.xcdatamodel; sourceTree = "<group>"; };
 		258B144413512A3800091A85 /* Nearby.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nearby.h; sourceTree = "<group>"; };
 		258B144513512A3800091A85 /* Nearby.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Nearby.m; sourceTree = "<group>"; };
-		258B14681351472200091A85 /* Kupo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kupo.h; sourceTree = "<group>"; };
-		258B14691351472200091A85 /* Kupo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Kupo.m; sourceTree = "<group>"; };
 		258B147213515B5300091A85 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		258B147313515B5300091A85 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		25961C79134D3DD800A3D4CD /* bamboo_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bamboo_bg.png; sourceTree = "<group>"; };
@@ -336,8 +334,10 @@
 		259C7B74134A92EE00C37AE1 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
 		25B2F4A7135180EB00DDF1BC /* PSNullView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNullView.h; sourceTree = "<group>"; };
 		25B2F4A8135180EB00DDF1BC /* PSNullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSNullView.m; sourceTree = "<group>"; };
-		25B4C966135AED82005949DD /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
-		25B4C967135AED82005949DD /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		25B4C992135AFAF7005949DD /* Kupo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kupo.h; sourceTree = "<group>"; };
+		25B4C993135AFAF7005949DD /* Kupo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Kupo.m; sourceTree = "<group>"; };
+		25B4C996135AFAF9005949DD /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		25B4C997135AFAF9005949DD /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		25CEF8021339F278006F23A7 /* Kupo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kupo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25CEF8061339F278006F23A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		25CEF8081339F278006F23A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -769,10 +769,10 @@
 				25FB8C1B133ABED700C130A8 /* Kupo+Serialize.m */,
 				258B144413512A3800091A85 /* Nearby.h */,
 				258B144513512A3800091A85 /* Nearby.m */,
-				258B14681351472200091A85 /* Kupo.h */,
-				258B14691351472200091A85 /* Kupo.m */,
-				25B4C966135AED82005949DD /* Event.h */,
-				25B4C967135AED82005949DD /* Event.m */,
+				25B4C992135AFAF7005949DD /* Kupo.h */,
+				25B4C993135AFAF7005949DD /* Kupo.m */,
+				25B4C996135AFAF9005949DD /* Event.h */,
+				25B4C997135AFAF9005949DD /* Event.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1309,10 +1309,10 @@
 				259C7B75134A92FB00C37AE1 /* VideoViewController.m in Sources */,
 				254DAEB013511BCF009D99E0 /* Kupo.xcdatamodeld in Sources */,
 				258B144613512A3800091A85 /* Nearby.m in Sources */,
-				258B146A1351472200091A85 /* Kupo.m in Sources */,
 				258B147413515B5300091A85 /* MapViewController.m in Sources */,
 				25B2F4A9135180EB00DDF1BC /* PSNullView.m in Sources */,
-				25B4C968135AED82005949DD /* Event.m in Sources */,
+				25B4C994135AFAF8005949DD /* Kupo.m in Sources */,
+				25B4C998135AFAF9005949DD /* Event.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1371,10 +1371,10 @@
 				259C7B76134A92FB00C37AE1 /* VideoViewController.m in Sources */,
 				254DAEB113511BCF009D99E0 /* Kupo.xcdatamodeld in Sources */,
 				258B144713512A3800091A85 /* Nearby.m in Sources */,
-				258B146B1351472200091A85 /* Kupo.m in Sources */,
 				258B147513515B5300091A85 /* MapViewController.m in Sources */,
 				25B2F4AA135180EB00DDF1BC /* PSNullView.m in Sources */,
-				25B4C969135AED82005949DD /* Event.m in Sources */,
+				25B4C995135AFAF8005949DD /* Kupo.m in Sources */,
+				25B4C999135AFAF9005949DD /* Event.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

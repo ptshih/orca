@@ -15,14 +15,12 @@
 }
 @property (nonatomic, retain) NSString * id;
 @property (nonatomic, retain) NSString * authorId;
-@property (nonatomic, retain) NSNumber * hasPhoto;
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSString * authorName;
 @property (nonatomic, retain) NSString * friendFirstNames;
 @property (nonatomic, retain) NSString * friendIds;
-@property (nonatomic, retain) NSString * message;
+@property (nonatomic, retain) NSString * lastActivity;
 @property (nonatomic, retain) NSNumber * isRead;
-@property (nonatomic, retain) NSNumber * hasVideo;
 @property (nonatomic, retain) NSString * friendFullNames;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * tag;

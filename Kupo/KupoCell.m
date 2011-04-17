@@ -10,7 +10,7 @@
 
 #define NAME_FONT_SIZE 14.0
 #define CELL_FONT_SIZE 12.0
-#define COMMENT_FONT_SIZE 16.0
+#define MESSAGE_FONT_SIZE 16.0
 #define TIMESTAMP_FONT_SIZE 12.0
 #define PHOTO_SIZE 100.0
 #define PHOTO_SPACING 5.0
@@ -28,112 +28,89 @@ static UIImage *_quoteImage = nil;
   if (self) {
     _hasPhoto = NO;
     
+    _nameLabel = [[UILabel alloc] init];
+    _messageLabel = [[UILabel alloc] init];
+    _timestampLabel = [[UILabel alloc] init];
+    
+    _nameLabel.backgroundColor = [UIColor clearColor];
+    _messageLabel.backgroundColor = [UIColor clearColor];
+    _timestampLabel.backgroundColor = [UIColor clearColor];
+    
+    _nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE];
+    _messageLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:MESSAGE_FONT_SIZE];
+    _timestampLabel.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE];
+    
+    _timestampLabel.textAlignment = UITextAlignmentRight;
+    _timestampLabel.textColor = GRAY_COLOR;
+    
+    _nameLabel.lineBreakMode = UILineBreakModeTailTruncation;
+    _messageLabel.lineBreakMode = UILineBreakModeWordWrap;
+    _timestampLabel.lineBreakMode = UILineBreakModeTailTruncation;
+    
+    _nameLabel.numberOfLines = 1;
+    _messageLabel.numberOfLines = 0;
+    _timestampLabel.numberOfLines = 1;
+    
+    [self.contentView addSubview:_nameLabel];
+    [self.contentView addSubview:_messageLabel];
+    [self.contentView addSubview:_timestampLabel];
+    
     _photoImageView = [[PSImageView alloc] initWithFrame:CGRectMake(0, 0, PHOTO_SIZE, PHOTO_SIZE)];
     _photoImageView.placeholderImage = [[UIImage imageNamed:@"photo_frame.png"] stretchableImageWithLeftCapWidth:16 topCapHeight:16];
   }
   return self;
 }
 
-// Optimized cell rendering
-//- (void)drawRect:(CGRect)rect {
-//  [super drawRect:rect];
-//  
-//  [self drawContentView:rect];
-//}
-//
-//- (void)drawContentView:(CGRect)r {
-//  [super drawContentView:r];
-//  
-//  CGFloat top = MARGIN_Y;
-//  CGFloat left =  MARGIN_X + 60;
-//  CGFloat width = self.bounds.size.width - left - MARGIN_X;
-//  CGRect contentRect = CGRectMake(left, top, width, INT_MAX);
-//  CGSize drawnSize = CGSizeZero;
-//  
-//  if (self.highlighted) {
-//    [CELL_VERY_LIGHT_BLUE_COLOR set];
-//  } else {
-//    [CELL_GRAY_BLUE_COLOR set];
-//  }
-//  
-//  if (_kupo.timestamp && [[_kupo.timestamp humanIntervalSinceNow] length] > 0) {
-//    drawnSize = [[_kupo.timestamp humanIntervalSinceNow] drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentRight];
-//    
-//    contentRect = CGRectMake(left, top, width - drawnSize.width - MARGIN_X, INT_MAX);
-//  }
-//  
-//  if (self.highlighted) {
-//    [CELL_WHITE_COLOR set];
-//  } else {
-//    [CELL_BLACK_COLOR set];
-//  }
-//  
-//  if (_kupo.authorName && [_kupo.authorName length] > 0) {
-//    drawnSize = [_kupo.authorName drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
-//    
-//    top += drawnSize.height;    
-//    contentRect = CGRectMake(left, top, width, INT_MAX); // reset to single line
-//  }
-//  
-//  if (self.highlighted) {
-//    [CELL_LIGHT_GRAY_COLOR set];
-//  } else {
-//    [CELL_GRAY_COLOR set];
-//  }
-//  
-//  NSString *status = nil;
-//  NSString *appName = _kupo.appName ? _kupo.appName : @"FB";
-//  if ([_kupo.kupoType integerValue] == 0) {
-//    if (_kupo.tagged) {
-//      status = [NSString stringWithFormat:@"Checked in via %@ with %@", appName, _kupo.tagged];
-//    } else {
-//      status = [NSString stringWithFormat:@"Checked in via %@", appName];
-//    }
-//  }
-//  
-//  if ([status length] > 0) {
-//    drawnSize = [status drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
-//    
-//    top += drawnSize.height;
-////    contentRect = CGRectMake(left, top, width, INT_MAX);
-//  }
-//  
-//  if (self.highlighted) {
-//    [CELL_VERY_LIGHT_BLUE_COLOR set];
-//  } else {
-//    [CELL_GRAY_BLUE_COLOR set];
-//  }
-//  
-//  if (_kupo.comment && [_kupo.comment length] > 0) {
-//    [_quoteImage drawAtPoint:CGPointMake(left, top)];
-//    contentRect = CGRectMake(left + 20, top, width - 20, INT_MAX); // quote mark
-//    drawnSize = [_kupo.comment drawInRect:contentRect withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:COMMENT_FONT_SIZE] lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentLeft];
-//    
-//    top += drawnSize.height;
-////    contentRect = CGRectMake(left, top, width, INT_MAX);
-//  }
-//  
-//  if (_hasPhoto) {
-//    [self addSubview:_photoImageView];
-//    _photoImageView.left = left;
-//    _photoImageView.top = top + PHOTO_SPACING;
-//    _photoImageView.width = PHOTO_SIZE;
-//    _photoImageView.height = PHOTO_SIZE;
-//    _photoImageView.layer.masksToBounds = YES;
-//    _photoImageView.layer.cornerRadius = 10.0;
-//  } else {
-//    [_photoImageView removeFromSuperview];
-//  }
-//}
-
 - (void)layoutSubviews {
   [super layoutSubviews];
   
+  CGFloat top = MARGIN_Y;
+  CGFloat left = MARGIN_X;
+  CGFloat textWidth = self.contentView.width - MARGIN_X * 2;
+  
+  // Row 1
+  
+  // Timestamp Label
+  [_timestampLabel sizeToFitFixedWidth:textWidth];
+  _timestampLabel.left = self.contentView.width - _timestampLabel.width - MARGIN_X;
+  _timestampLabel.top = top;
+  
+  // Name Label
+  [_nameLabel sizeToFitFixedWidth:(textWidth - _timestampLabel.width - MARGIN_X)];
+  _nameLabel.left = left;
+  _nameLabel.top = top;
+  
+  // Row 2
+  top = _nameLabel.bottom;
+  
+  // Message Label
+  [_messageLabel sizeToFitFixedWidth:textWidth];
+  _messageLabel.left = left;
+  _messageLabel.top = top;
+  
+  // Row 3
+  top = _messageLabel.bottom;
+  
+  // Optional Photo Thumbnail
+  if (_hasPhoto) {
+    [self addSubview:_photoImageView];
+    _photoImageView.left = left;
+    _photoImageView.top = top + PHOTO_SPACING;
+    _photoImageView.width = PHOTO_SIZE;
+    _photoImageView.height = PHOTO_SIZE;
+    _photoImageView.layer.masksToBounds = YES;
+    _photoImageView.layer.cornerRadius = 10.0;
+  } else {
+    [_photoImageView removeFromSuperview];
+  }
 }
 
 - (void)prepareForReuse {
   [super prepareForReuse];
   _hasPhoto = NO;
+  _nameLabel.text = nil;
+  _messageLabel.text = nil;
+  _timestampLabel.text = nil;
   [_photoImageView unloadImage];
 }
 
@@ -150,38 +127,19 @@ static UIImage *_quoteImage = nil;
   
   CGFloat desiredHeight = top;
   
+  // Name and Timestamp
   size = [[kupo.timestamp humanIntervalSinceNow] sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
-  
   constrainedSize = CGSizeMake(width - size.width - MARGIN_X, INT_MAX);
   
-  if ([kupo.authorName length] > 0) {
-    size = [kupo.authorName sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
-    
-    desiredHeight += size.height;
-    constrainedSize = CGSizeMake(width, INT_MAX); // reset to single line
-  }
+  size = [kupo.authorName sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
+  desiredHeight += size.height;
   
-  NSString *status = nil;
-  if ([kupo.kupoType integerValue] == 0) {
-    if (kupo.tagged) {
-      status = [NSString stringWithFormat:@"Checked in via %@ with %@", kupo.appName, kupo.tagged];
-    } else {
-      status = [NSString stringWithFormat:@"Checked in via %@", kupo.appName];
-    }
-  }
+  constrainedSize = CGSizeMake(width, INT_MAX);
   
-  if (status && [status length] > 0) {
-    size = [status sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
-    
-    desiredHeight += size.height;
-  }
-  
-  if ([kupo.comment length] > 0) {
-    constrainedSize = CGSizeMake(width - 20, INT_MAX); // quote mark
-    size = [kupo.comment sizeWithFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:COMMENT_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
-    
-    desiredHeight += size.height;
-  }
+  // Message
+  size = [kupo.message sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
+  desiredHeight += size.height;
+
   
   if ([kupo.hasPhoto boolValue]) {
     desiredHeight += 110.0;
@@ -225,6 +183,9 @@ static UIImage *_quoteImage = nil;
 }
 
 - (void)dealloc {
+  RELEASE_SAFELY(_nameLabel);
+  RELEASE_SAFELY(_messageLabel);
+  RELEASE_SAFELY(_timestampLabel);
   RELEASE_SAFELY(_kupo);
   RELEASE_SAFELY(_photoImageView);
   [super dealloc];
