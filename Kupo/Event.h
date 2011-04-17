@@ -24,5 +24,6 @@
 @property (nonatomic, retain) NSString * friendFullNames;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * tag;
+@property (nonatomic, retain) NSString * authorFacebookId;
 
 @end

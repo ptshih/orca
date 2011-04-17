@@ -139,6 +139,9 @@
 - (void)prepareForReuse {
   [super prepareForReuse];
   [_psImageView unloadImage];
+  for (PSImageView *picture in _friendPictureArray) {
+    [picture unloadImage];
+  }
   _tagLabel.text = nil;
   _nameLabel.text = nil;
   _lastActivityLabel.text = nil;
@@ -181,12 +184,12 @@
   // Friend Pictures
   if (event.friendIds && [[event.friendIds componentsSeparatedByString:@","] count] > 1) {
     desiredHeight += 30 + FRIEND_PICTURE_MARGIN * 2;
-  }
-  
-  // Friend Names
-  if (event.friendFirstNames && [event.friendFirstNames length] > 0) {
-    size = [event.friendFirstNames sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
-    desiredHeight += size.height;
+    
+    // Friend Names
+    if (event.friendFirstNames && [event.friendFirstNames length] > 0) {
+      size = [event.friendFirstNames sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
+      desiredHeight += size.height;
+    }
   }
   
   desiredHeight += MARGIN_Y;
@@ -205,7 +208,7 @@
   _event = [event retain];
   
 //  _psImageView.urlPath = event.pictureUrl;
-  _psImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", event.authorId];
+  _psImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", event.authorFacebookId];
   
   // Activity Friends Photos
   [_friendIds removeAllObjects];
@@ -225,7 +228,7 @@
 }
 
 - (void)loadFriendPictures {
-  if ([_friendIds count] > 0) {
+  if ([_friendIds count] > 1) {
     for (PSImageView *picture in _friendPictureArray) {
       [picture loadImage];
     }

@@ -19,6 +19,7 @@
     newEvent.tag = [dictionary valueForKey:@"tag"];
     newEvent.name = [dictionary valueForKey:@"name"];
     newEvent.authorId = [dictionary valueForKey:@"author_id"];
+    newEvent.authorFacebookId = [dictionary valueForKey:@"author_facebook_id"];
     newEvent.authorName = [dictionary valueForKey:@"author_name"];
     newEvent.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     
@@ -57,6 +58,7 @@
   self.tag = [dictionary valueForKey:@"tag"];
   self.name = [dictionary valueForKey:@"name"];
   self.authorId = [dictionary valueForKey:@"author_id"];
+  self.authorFacebookId = [dictionary valueForKey:@"author_facebook_id"];
   self.authorName = [dictionary valueForKey:@"author_name"];
   self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
   

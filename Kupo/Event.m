@@ -21,5 +21,6 @@
 @dynamic friendFullNames;
 @dynamic name;
 @dynamic tag;
+@dynamic authorFacebookId;
 
 @end

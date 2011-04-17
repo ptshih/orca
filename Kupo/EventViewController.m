@@ -9,6 +9,7 @@
 #import "EventViewController.h"
 #import "EventDataCenter.h"
 #import "KupoViewController.h"
+#import "ComposeViewController.h"
 #import "MeViewController.h"
 #import "NearbyViewController.h"
 #import "Event.h"
@@ -43,7 +44,11 @@
   self.navigationItem.leftBarButtonItem = leftButton;
   [leftButton release];
   
-  UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"event_nav_icon.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(checkin)];
+//  UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"event_nav_icon.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(checkin)];
+//  self.navigationItem.rightBarButtonItem = rightButton;
+//  [rightButton release];
+  
+  UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(newEvent)];
   self.navigationItem.rightBarButtonItem = rightButton;
   [rightButton release];
   
@@ -101,6 +106,18 @@
   }
   
   [self presentModalViewController:_nearbyNavController animated:YES];
+}
+
+- (void)newEvent {
+  if (!_composeViewController) {
+    _composeViewController = [[ComposeViewController alloc] init];
+  }
+  
+  if (!_composeNavController) {
+    _composeNavController = [[UINavigationController alloc] initWithRootViewController:_composeViewController];
+  }
+  
+  [self presentModalViewController:_composeNavController animated:YES];
 }
 
 #pragma mark -
@@ -273,6 +290,8 @@
   RELEASE_SAFELY(_meViewController);
   RELEASE_SAFELY(_nearbyNavController);
   RELEASE_SAFELY(_meNavController);
+  RELEASE_SAFELY(_composeNavController);
+  RELEASE_SAFELY(_composeViewController);
   [super dealloc];
 }
 

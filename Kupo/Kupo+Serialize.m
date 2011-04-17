@@ -18,6 +18,7 @@
     newKupo.id = [dictionary valueForKey:@"id"];
     newKupo.eventId = [dictionary valueForKey:@"event_id"];
     newKupo.authorId = [dictionary valueForKey:@"author_id"];
+    newKupo.authorFacebookId = [dictionary valueForKey:@"author_facebook_id"];
     newKupo.authorName = [dictionary valueForKey:@"author_name"];
     newKupo.hasPhoto = [dictionary valueForKey:@"has_photo"];
     newKupo.hasVideo = [dictionary valueForKey:@"has_video"];

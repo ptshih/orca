@@ -23,5 +23,6 @@
 @property (nonatomic, retain) NSString * message;
 @property (nonatomic, retain) NSNumber * hasVideo;
 @property (nonatomic, retain) NSString * photoFileName;
+@property (nonatomic, retain) NSString * authorFacebookId;
 
 @end

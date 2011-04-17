@@ -160,7 +160,7 @@ static UIImage *_quoteImage = nil;
   if (_kupo) RELEASE_SAFELY(_kupo);
   _kupo = [kupo retain];
   
-  _psImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", kupo.authorId];
+  _psImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", kupo.authorFacebookId];
   
   if ([kupo.hasPhoto boolValue]) {
     _hasPhoto = YES;

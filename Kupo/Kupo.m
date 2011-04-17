@@ -20,5 +20,6 @@
 @dynamic message;
 @dynamic hasVideo;
 @dynamic photoFileName;
+@dynamic authorFacebookId;
 
 @end
