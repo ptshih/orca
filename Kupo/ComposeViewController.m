@@ -92,15 +92,13 @@
 
 @implementation ComposeViewController
 
-@synthesize kupoComposeType = _kupoComposeType;
-@synthesize comment = _comment;
+@synthesize message = _message;
 @synthesize eventId = _eventId;
 @synthesize delegate = _delegate;
 
 - (id)init {
   self = [super init];
   if (self) {
-    _kupoComposeType = KupoComposeTypeKupo;
     _shouldSaveToAlbum = NO;
     
     [[ComposeDataCenter defaultCenter] setDelegate:self];
@@ -116,14 +114,10 @@
   
   self.view.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
   
-  if (_kupoComposeType == KupoComposeTypeKupo) {
-    _navTitleLabel.text = @"Write a Comment...";
-    
-    // Show the dismiss button
-    [self showDismissButton];
-  } else {
-    _navTitleLabel.text = @"Check In Here...";
-  }
+  _navTitleLabel.text = @"Write a Message...";
+  
+  // Show the dismiss button
+  [self showDismissButton];
   
   // Send Button
   UIBarButtonItem *sendButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Send", @"Send") style:UIBarButtonItemStyleBordered target:self action:@selector(send)];
@@ -156,31 +150,26 @@
   
   left = _photoUpload.right + 10;
 
-  _comment = [[PSTextView alloc] initWithFrame:CGRectMake(left, top, 220, 30)];
-  _comment.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	_comment.returnKeyType = UIReturnKeyDefault;
-	_comment.font = [UIFont boldSystemFontOfSize:14.0];
-	_comment.delegate = self;
-  [_composeView addSubview:_comment];
+  _message = [[PSTextView alloc] initWithFrame:CGRectMake(left, top, 220, 30)];
+  _message.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	_message.returnKeyType = UIReturnKeyDefault;
+	_message.font = [UIFont boldSystemFontOfSize:14.0];
+	_message.delegate = self;
+  [_composeView addSubview:_message];
   
-  _backgroundView = [[UIImageView alloc] initWithFrame:_comment.frame];
+  _backgroundView = [[UIImageView alloc] initWithFrame:_message.frame];
   _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   _backgroundView.image = [[UIImage imageNamed:@"textview_bg.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15];
   [_composeView insertSubview:_backgroundView atIndex:0];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  [_comment becomeFirstResponder];
+  [_message becomeFirstResponder];
 }
 
 - (void)send {
-  if (_kupoComposeType == KupoComposeTypeKupo) {
-    [[ComposeDataCenter defaultCenter] sendKupoComposeWithEventId:self.eventId andComment:_comment.text andImage:_uploadedImage andVideo:_uploadedVideo];
-    [self dismissModalViewControllerAnimated:YES];
-  } else {
-    [[ComposeDataCenter defaultCenter] sendCheckinComposeWithEventId:self.eventId andComment:_comment.text andImage:_uploadedImage andVideo:_uploadedVideo];
-    [self.navigationController popToRootViewControllerAnimated:YES];
-  }
+  [[ComposeDataCenter defaultCenter] sendKupoComposeWithEventId:self.eventId andMessage:_message.text andImage:_uploadedImage andVideo:_uploadedVideo];
+  [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
@@ -273,10 +262,10 @@
   [UIView setAnimationCurve:animationCurve];
   
   _composeView.height = self.view.bounds.size.height - keyboardFrame.size.height;
-  _comment.height = up ? self.view.bounds.size.height - keyboardFrame.size.height - 20 : 30;
-  _backgroundView.height = _comment.height;
-//  _photoUpload.top = _comment.bottom + 10;
-//  _locationButton.top = _comment.bottom + 10;
+  _message.height = up ? self.view.bounds.size.height - keyboardFrame.size.height - 20 : 30;
+  _backgroundView.height = _message.height;
+//  _photoUpload.top = _message.bottom + 10;
+//  _locationButton.top = _message.bottom + 10;
 
   [UIView commitAnimations];
 }
@@ -290,7 +279,7 @@
   RELEASE_SAFELY(_eventId);
   RELEASE_SAFELY(_composeView);
   RELEASE_SAFELY(_photoUpload);
-  RELEASE_SAFELY(_comment);
+  RELEASE_SAFELY(_message);
   RELEASE_SAFELY(_locationButton);
   RELEASE_SAFELY(_uploadedImage);
   RELEASE_SAFELY(_uploadedVideo);

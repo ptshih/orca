@@ -2,7 +2,7 @@
 //  Event.h
 //  Kupo
 //
-//  Created by Peter Shih on 4/17/11.
+//  Created by Peter Shih on 4/18/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -17,13 +17,14 @@
 @property (nonatomic, retain) NSString * authorId;
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSString * authorName;
-@property (nonatomic, retain) NSString * friendFirstNames;
-@property (nonatomic, retain) NSString * friendIds;
 @property (nonatomic, retain) NSString * lastActivity;
+@property (nonatomic, retain) NSString * participantFirstNames;
+@property (nonatomic, retain) NSString * participantIds;
 @property (nonatomic, retain) NSNumber * isRead;
-@property (nonatomic, retain) NSString * friendFullNames;
-@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * tag;
+@property (nonatomic, retain) NSString * participantFullNames;
 @property (nonatomic, retain) NSString * authorFacebookId;
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * participantFacebookIds;
 
 @end

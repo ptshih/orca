@@ -126,7 +126,7 @@
   [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
   [cell setNeedsDisplay];
   [(EventCell *)cell loadImage];
-  [(EventCell *)cell loadFriendPictures];
+  [(EventCell *)cell loadParticipantPictures];
 }
 
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {

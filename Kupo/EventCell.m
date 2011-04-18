@@ -25,19 +25,19 @@
     _tagLabel = [[UILabel alloc] init];
     _nameLabel = [[UILabel alloc] init];
     _lastActivityLabel = [[UILabel alloc] init];
-    _friendsLabel = [[UILabel alloc] init];
+    _participantsLabel = [[UILabel alloc] init];
     _timestampLabel = [[UILabel alloc] init];
     
     _tagLabel.backgroundColor = [UIColor clearColor];
     _nameLabel.backgroundColor = [UIColor clearColor];
     _lastActivityLabel.backgroundColor = [UIColor clearColor];
-    _friendsLabel.backgroundColor = [UIColor clearColor];
+    _participantsLabel.backgroundColor = [UIColor clearColor];
     _timestampLabel.backgroundColor = [UIColor clearColor];
     
     _tagLabel.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:CELL_FONT_SIZE];
     _nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE];
     _lastActivityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:CELL_FONT_SIZE];
-    _friendsLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE];
+    _participantsLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE];
     _timestampLabel.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE];
     
     _timestampLabel.textAlignment = UITextAlignmentRight;
@@ -46,28 +46,28 @@
     _tagLabel.lineBreakMode = UILineBreakModeTailTruncation;
     _nameLabel.lineBreakMode = UILineBreakModeWordWrap;
     _lastActivityLabel.lineBreakMode = UILineBreakModeTailTruncation;
-    _friendsLabel.lineBreakMode = UILineBreakModeWordWrap;
+    _participantsLabel.lineBreakMode = UILineBreakModeWordWrap;
     _timestampLabel.lineBreakMode = UILineBreakModeTailTruncation;
     
     _tagLabel.numberOfLines = 1;
     _nameLabel.numberOfLines = 0;
     _lastActivityLabel.numberOfLines = 1;
-    _friendsLabel.numberOfLines = 0;
+    _participantsLabel.numberOfLines = 0;
     _timestampLabel.numberOfLines = 1;
     
     [self.contentView addSubview:_tagLabel];
     [self.contentView addSubview:_nameLabel];
     [self.contentView addSubview:_lastActivityLabel];
-    [self.contentView addSubview:_friendsLabel];
+    [self.contentView addSubview:_participantsLabel];
     [self.contentView addSubview:_timestampLabel];
     
     // Friends Pictures
-    _friendIds = [[NSMutableArray alloc] initWithCapacity:6];
-    _friendPictureArray = [[NSMutableArray alloc] initWithCapacity:6];
+    _participantIds = [[NSMutableArray alloc] initWithCapacity:6];
+    _participantPictureArray = [[NSMutableArray alloc] initWithCapacity:6];
     PSImageView *profileImage = nil;
     for (int i=0;i<6;i++) {
       profileImage = [[[PSImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)] autorelease];
-      [_friendPictureArray addObject:profileImage];
+      [_participantPictureArray addObject:profileImage];
     }
   }
   return self;
@@ -116,9 +116,9 @@
   top = _lastActivityLabel.bottom;
   
   // Friend activity pictures
-  if (_event.friendIds && [[_event.friendIds componentsSeparatedByString:@","] count] > 1) {
+  if (_event.participantIds && [[_event.participantIds componentsSeparatedByString:@","] count] > 1) {
     int i = 0;
-    for (PSImageView *picture in _friendPictureArray) {
+    for (PSImageView *picture in _participantPictureArray) {
       picture.top = top + FRIEND_PICTURE_MARGIN;
       picture.left = left + i * picture.width + i * MARGIN_X;
       [self.contentView addSubview:picture];
@@ -128,10 +128,10 @@
     top += 30 + FRIEND_PICTURE_MARGIN * 2;
     
     // Friends Participants
-    _friendsLabel.text = _event.friendFirstNames;
-    [_friendsLabel sizeToFitFixedWidth:textWidth];
-    _friendsLabel.left = left;
-    _friendsLabel.top = top;
+    _participantsLabel.text = _event.participantFirstNames;
+    [_participantsLabel sizeToFitFixedWidth:textWidth];
+    _participantsLabel.left = left;
+    _participantsLabel.top = top;
   }
   
 }
@@ -139,13 +139,13 @@
 - (void)prepareForReuse {
   [super prepareForReuse];
   [_psImageView unloadImage];
-  for (PSImageView *picture in _friendPictureArray) {
+  for (PSImageView *picture in _participantPictureArray) {
     [picture unloadImage];
   }
   _tagLabel.text = nil;
   _nameLabel.text = nil;
   _lastActivityLabel.text = nil;
-  _friendsLabel.text = nil;
+  _participantsLabel.text = nil;
   _timestampLabel.text = nil;
 }
 
@@ -182,12 +182,12 @@
   }
   
   // Friend Pictures
-  if (event.friendIds && [[event.friendIds componentsSeparatedByString:@","] count] > 1) {
+  if (event.participantIds && [[event.participantIds componentsSeparatedByString:@","] count] > 1) {
     desiredHeight += 30 + FRIEND_PICTURE_MARGIN * 2;
     
     // Friend Names
-    if (event.friendFirstNames && [event.friendFirstNames length] > 0) {
-      size = [event.friendFirstNames sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
+    if (event.participantFirstNames && [event.participantFirstNames length] > 0) {
+      size = [event.participantFirstNames sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
       desiredHeight += size.height;
     }
   }
@@ -211,15 +211,15 @@
   _psImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", event.authorFacebookId];
   
   // Activity Friends Photos
-  [_friendIds removeAllObjects];
-  [_friendIds addObjectsFromArray:[event.friendIds componentsSeparatedByString:@","]];
-  [_friendIds removeObject:event.authorId];
+  [_participantIds removeAllObjects];
+  [_participantIds addObjectsFromArray:[event.participantFacebookIds componentsSeparatedByString:@","]];
+  [_participantIds removeObject:event.authorId];
   
   
   int i = 0;
-  for (PSImageView *picture in _friendPictureArray) {
-    if (i < [_friendIds count]) {
-      [picture setUrlPath:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", [_friendIds objectAtIndex:i]]];
+  for (PSImageView *picture in _participantPictureArray) {
+    if (i < [_participantIds count]) {
+      [picture setUrlPath:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", [_participantIds objectAtIndex:i]]];
     } else {
       [picture unloadImage];
     }
@@ -227,9 +227,9 @@
   }
 }
 
-- (void)loadFriendPictures {
-  if ([_friendIds count] > 1) {
-    for (PSImageView *picture in _friendPictureArray) {
+- (void)loadParticipantPictures {
+  if ([_participantIds count] > 1) {
+    for (PSImageView *picture in _participantPictureArray) {
       [picture loadImage];
     }
   }
@@ -243,11 +243,11 @@
   RELEASE_SAFELY(_tagLabel);
   RELEASE_SAFELY(_nameLabel);
   RELEASE_SAFELY(_lastActivityLabel);
-  RELEASE_SAFELY(_friendsLabel);
+  RELEASE_SAFELY(_participantsLabel);
   RELEASE_SAFELY(_timestampLabel);
   
-  RELEASE_SAFELY(_friendIds);
-  RELEASE_SAFELY(_friendPictureArray);
+  RELEASE_SAFELY(_participantIds);
+  RELEASE_SAFELY(_participantPictureArray);
   RELEASE_SAFELY(_event);
   [super dealloc];
 }

@@ -11,19 +11,12 @@
 #import "ComposeDelegate.h"
 #import "PSTextView.h"
 
-enum {
-  KupoComposeTypeKupo = 0,
-  KupoComposeTypeCheckin = 1
-};
-typedef uint32_t KupoComposeType;
-
 @class ComposeDataCenter;
 
 @interface ComposeViewController : CardModalViewController <UITextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate> {
-  KupoComposeType _kupoComposeType;
   
   UIView *_composeView;
-  PSTextView *_comment;
+  PSTextView *_message;
   UIImageView *_backgroundView;
   UIButton *_photoUpload;
   UIButton *_locationButton;
@@ -39,8 +32,7 @@ typedef uint32_t KupoComposeType;
 }
 
 @property (nonatomic, assign) id <ComposeDelegate> delegate;
-@property (nonatomic, assign) KupoComposeType kupoComposeType;
-@property (nonatomic, retain) PSTextView *comment;
+@property (nonatomic, retain) PSTextView *message;
 @property (nonatomic, retain) NSString *eventId;
 
 - (void)uploadPicture;

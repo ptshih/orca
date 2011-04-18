@@ -65,17 +65,19 @@ static UIImage *_quoteImage = nil;
   [super layoutSubviews];
   
   CGFloat top = MARGIN_Y;
-  CGFloat left = MARGIN_X;
-  CGFloat textWidth = self.contentView.width - MARGIN_X * 2;
+  CGFloat left = MARGIN_X + 60;
+  CGFloat textWidth = self.contentView.width - 60 - MARGIN_X * 2;
   
   // Row 1
   
   // Timestamp Label
+  _timestampLabel.text = [_kupo.timestamp humanIntervalSinceNow];
   [_timestampLabel sizeToFitFixedWidth:textWidth];
   _timestampLabel.left = self.contentView.width - _timestampLabel.width - MARGIN_X;
   _timestampLabel.top = top;
   
   // Name Label
+  _nameLabel.text = _kupo.authorName;
   [_nameLabel sizeToFitFixedWidth:(textWidth - _timestampLabel.width - MARGIN_X)];
   _nameLabel.left = left;
   _nameLabel.top = top;
@@ -84,6 +86,7 @@ static UIImage *_quoteImage = nil;
   top = _nameLabel.bottom;
   
   // Message Label
+  _messageLabel.text = _kupo.message;
   [_messageLabel sizeToFitFixedWidth:textWidth];
   _messageLabel.left = left;
   _messageLabel.top = top;
@@ -137,7 +140,7 @@ static UIImage *_quoteImage = nil;
   constrainedSize = CGSizeMake(width, INT_MAX);
   
   // Message
-  size = [kupo.message sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:CELL_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
+  size = [kupo.message sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:MESSAGE_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
   desiredHeight += size.height;
 
   

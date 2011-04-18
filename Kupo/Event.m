@@ -2,7 +2,7 @@
 //  Event.m
 //  Kupo
 //
-//  Created by Peter Shih on 4/17/11.
+//  Created by Peter Shih on 4/18/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -14,13 +14,14 @@
 @dynamic authorId;
 @dynamic timestamp;
 @dynamic authorName;
-@dynamic friendFirstNames;
-@dynamic friendIds;
 @dynamic lastActivity;
+@dynamic participantFirstNames;
+@dynamic participantIds;
 @dynamic isRead;
-@dynamic friendFullNames;
-@dynamic name;
 @dynamic tag;
+@dynamic participantFullNames;
 @dynamic authorFacebookId;
+@dynamic name;
+@dynamic participantFacebookIds;
 
 @end

@@ -95,7 +95,6 @@
   }
   
   ComposeViewController *kcvc = [[ComposeViewController alloc] init];
-  kcvc.kupoComposeType = KupoComposeTypeCheckin;
   kcvc.eventId = nearbyPlace.id;
   [self.navigationController pushViewController:kcvc animated:YES];
   [kcvc release];

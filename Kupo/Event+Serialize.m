@@ -26,20 +26,23 @@
     // These might be null
     newEvent.lastActivity = [dictionary valueForKey:@"last_activity"] ? [dictionary valueForKey:@"last_activity"] : nil;
     
-    // Friends Summary
-    NSMutableArray *friendIds = [NSMutableArray array];
-    NSMutableArray *friendFirstNames = [NSMutableArray array];
-    NSMutableArray *friendFullNames = [NSMutableArray array];
-    NSArray *friendList = [dictionary valueForKey:@"friend_list"];
-    for (NSDictionary *friend in friendList) {
-      [friendIds addObject:[friend valueForKey:@"facebook_id"]];
-      [friendFirstNames addObject:[friend valueForKey:@"first_name"]];
-      [friendFullNames addObject:[friend valueForKey:@"name"]];
+    // Participants Summary
+    NSMutableArray *participantIds = [NSMutableArray array];
+    NSMutableArray *participantFacebookIds = [NSMutableArray array];
+    NSMutableArray *participantFirstNames = [NSMutableArray array];
+    NSMutableArray *participantFullNames = [NSMutableArray array];
+    NSArray *participants = [dictionary valueForKey:@"participants"];
+    for (NSDictionary *participant in participants) {
+      [participantIds addObject:[participant valueForKey:@"id"]];
+      [participantFacebookIds addObject:[participant valueForKey:@"facebook_id"]];
+      [participantFirstNames addObject:[participant valueForKey:@"first_name"]];
+      [participantFullNames addObject:[participant valueForKey:@"name"]];
     }
     
-    newEvent.friendIds = [friendIds componentsJoinedByString:@","];
-    newEvent.friendFirstNames = [friendFirstNames componentsJoinedByString:@", "];
-    newEvent.friendFullNames = [friendFullNames componentsJoinedByString:@", "];
+    newEvent.participantIds = [participantIds componentsJoinedByString:@","];
+    newEvent.participantFacebookIds = [participantFacebookIds componentsJoinedByString:@","];
+    newEvent.participantFirstNames = [participantFirstNames componentsJoinedByString:@", "];
+    newEvent.participantFullNames = [participantFullNames componentsJoinedByString:@", "];
     
     return newEvent;
   } else {
@@ -65,21 +68,23 @@
   // These might be null
   self.lastActivity = [dictionary valueForKey:@"last_activity"] ? [dictionary valueForKey:@"last_activity"] : nil;
   
-
-  // Friends Summary
-  NSMutableArray *friendIds = [NSMutableArray array];
-  NSMutableArray *friendFirstNames = [NSMutableArray array];
-  NSMutableArray *friendFullNames = [NSMutableArray array];
-  NSArray *friendList = [dictionary valueForKey:@"friend_list"];
-  for (NSDictionary *friend in friendList) {
-    [friendIds addObject:[friend valueForKey:@"facebook_id"]];
-    [friendFirstNames addObject:[friend valueForKey:@"first_name"]];
-    [friendFullNames addObject:[friend valueForKey:@"name"]];
+  // Participants Summary
+  NSMutableArray *participantIds = [NSMutableArray array];
+  NSMutableArray *participantFacebookIds = [NSMutableArray array];
+  NSMutableArray *participantFirstNames = [NSMutableArray array];
+  NSMutableArray *participantFullNames = [NSMutableArray array];
+  NSArray *participants = [dictionary valueForKey:@"participants"];
+  for (NSDictionary *participant in participants) {
+    [participantIds addObject:[participant valueForKey:@"id"]];
+    [participantFacebookIds addObject:[participant valueForKey:@"facebook_id"]];
+    [participantFirstNames addObject:[participant valueForKey:@"first_name"]];
+    [participantFullNames addObject:[participant valueForKey:@"name"]];
   }
   
-  self.friendIds = [friendIds componentsJoinedByString:@","];
-  self.friendFirstNames = [friendFirstNames componentsJoinedByString:@", "];
-  self.friendFullNames = [friendFullNames componentsJoinedByString:@", "];
+  self.participantIds = [participantIds componentsJoinedByString:@","];
+  self.participantFacebookIds = [participantFacebookIds componentsJoinedByString:@","];
+  self.participantFirstNames = [participantFirstNames componentsJoinedByString:@", "];
+  self.participantFullNames = [participantFullNames componentsJoinedByString:@", "];
   
   // Is Read
   self.isRead = [NSNumber numberWithBool:NO];

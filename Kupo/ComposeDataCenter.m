@@ -24,16 +24,29 @@ static ComposeDataCenter *_defaultCenter = nil;
   }
 }
 
-- (void)sendKupoComposeWithEventId:(NSString *)eventId andComment:(NSString *)comment andImage:(UIImage *)image andVideo:(NSData *)video {
+- (void)sendKupoComposeWithEventId:(NSString *)eventId andMessage:(NSString *)message andImage:(UIImage *)image andVideo:(NSData *)video {
   NSURL *kupoComposeUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/kupos/new", KUPO_BASE_URL]];
+  
+//  :source => params[:source],
+//  :event_id => params[:event_id],
+//  :user_id => @current_user.id,
+//  :facebook_place_id => params[:facebook_place_id],
+//  :facebook_checkin_id => params[:facebook_checkin_id],
+//  :message => params[:message],
+//  :photo => params[:image],
+//  :video => params[:video],
+//  :has_photo => params[:image].nil? ? false : true,
+//  :has_video => params[:video].nil? ? false : true,
+//  :lat => params[:lat].nil? ? params[:lat] : nil,
+//  :lng => params[:lng].nil? ? params[:lng] : nil
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
-  [params setValue:@"1" forKey:@"kupo_type"];
   [params setValue:eventId forKey:@"event_id"];
+  [params setValue:@"#scrapboard for iPhone" forKey:@"source"];
   
-  if ([comment length] > 0) {
-    [params setValue:comment forKey:@"comment"];
+  if ([message length] > 0) {
+    [params setValue:message forKey:@"message"];
   }
   
   NetworkOperationAttachmentType attachmentType = NetworkOperationAttachmentTypeNone;

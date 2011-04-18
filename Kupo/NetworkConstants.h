@@ -27,14 +27,14 @@
   #ifdef USE_LOCALHOST
     #define KUPO_BASE_URL [NSString stringWithFormat:@"http://localhost:3000/%@", KUPO_API_VERSION]
   #else
-    #define KUPO_BASE_URL [NSString stringWithFormat:@"http://kupoapp.com/%@", KUPO_API_VERSION]
+    #define KUPO_BASE_URL [NSString stringWithFormat:@"http://scrapboard.co/%@", KUPO_API_VERSION]
   #endif
 #else
-  #define KUPO_BASE_URL [NSString stringWithFormat:@"http://kupoapp.com/%@", KUPO_API_VERSION]
+  #define KUPO_BASE_URL [NSString stringWithFormat:@"http://scrapboard.co/%@", KUPO_API_VERSION]
 #endif
 
-#define S3_PHOTOS_URL @"http://s3.amazonaws.com/kupo/kupos/photos"
-#define S3_VIDEOS_URL @"http://s3.amazonaws.com/kupo/kupos/videos"
+#define S3_PHOTOS_URL @"http://s3.amazonaws.com/scrapboard/kupos/photos"
+#define S3_VIDEOS_URL @"http://s3.amazonaws.com/scrapboard/kupos/videos"
 
 // Seven Minute Apps
 #define KUPO_TERMS_URL @"http://www.sevenminuteapps.com/terms"

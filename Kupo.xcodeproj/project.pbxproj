@@ -83,8 +83,6 @@
 		259C7B76134A92FB00C37AE1 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B74134A92EE00C37AE1 /* VideoViewController.m */; };
 		25B2F4A9135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
 		25B2F4AA135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
-		25B4C99C135B1C96005949DD /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B4C99B135B1C95005949DD /* Event.m */; };
-		25B4C99D135B1C96005949DD /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B4C99B135B1C95005949DD /* Event.m */; };
 		25B4C9A0135B1C97005949DD /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B4C99F135B1C97005949DD /* Kupo.m */; };
 		25B4C9A1135B1C97005949DD /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B4C99F135B1C97005949DD /* Kupo.m */; };
 		25CEF8071339F278006F23A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8061339F278006F23A7 /* UIKit.framework */; };
@@ -170,6 +168,8 @@
 		25EFD4181343F40E000108B8 /* MeDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD4161343F409000108B8 /* MeDataCenter.m */; };
 		25EFD41B1343F5A9000108B8 /* CardModalTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD41A1343F59F000108B8 /* CardModalTableViewController.m */; };
 		25EFD41C1343F5A9000108B8 /* CardModalTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD41A1343F59F000108B8 /* CardModalTableViewController.m */; };
+		25F27DBC135C3F1500776F5E /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F27DBB135C3F1500776F5E /* Event.m */; };
+		25F27DBD135C3F1500776F5E /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F27DBB135C3F1500776F5E /* Event.m */; };
 		25F397D2135008CE000D007F /* bamboo_bg_alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = 25F397D0135008CD000D007F /* bamboo_bg_alpha.png */; };
 		25F397D3135008CE000D007F /* bamboo_bg_alpha@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25F397D1135008CD000D007F /* bamboo_bg_alpha@2x.png */; };
 		25F397E9135090D0000D007F /* quote_mark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25F397E8135090D0000D007F /* quote_mark@2x.png */; };
@@ -334,8 +334,6 @@
 		259C7B74134A92EE00C37AE1 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
 		25B2F4A7135180EB00DDF1BC /* PSNullView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNullView.h; sourceTree = "<group>"; };
 		25B2F4A8135180EB00DDF1BC /* PSNullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSNullView.m; sourceTree = "<group>"; };
-		25B4C99A135B1C95005949DD /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
-		25B4C99B135B1C95005949DD /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		25B4C99E135B1C96005949DD /* Kupo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kupo.h; sourceTree = "<group>"; };
 		25B4C99F135B1C97005949DD /* Kupo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Kupo.m; sourceTree = "<group>"; };
 		25CEF8021339F278006F23A7 /* Kupo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kupo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -427,6 +425,8 @@
 		25EFD4161343F409000108B8 /* MeDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeDataCenter.m; sourceTree = "<group>"; };
 		25EFD4191343F596000108B8 /* CardModalTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardModalTableViewController.h; sourceTree = "<group>"; };
 		25EFD41A1343F59F000108B8 /* CardModalTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardModalTableViewController.m; sourceTree = "<group>"; };
+		25F27DBA135C3F1500776F5E /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		25F27DBB135C3F1500776F5E /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		25F397D0135008CD000D007F /* bamboo_bg_alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bamboo_bg_alpha.png; sourceTree = "<group>"; };
 		25F397D1135008CD000D007F /* bamboo_bg_alpha@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bamboo_bg_alpha@2x.png"; sourceTree = "<group>"; };
 		25F397E8135090D0000D007F /* quote_mark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quote_mark@2x.png"; sourceTree = "<group>"; };
@@ -769,10 +769,10 @@
 				25FB8C1B133ABED700C130A8 /* Kupo+Serialize.m */,
 				258B144413512A3800091A85 /* Nearby.h */,
 				258B144513512A3800091A85 /* Nearby.m */,
-				25B4C99A135B1C95005949DD /* Event.h */,
-				25B4C99B135B1C95005949DD /* Event.m */,
 				25B4C99E135B1C96005949DD /* Kupo.h */,
 				25B4C99F135B1C97005949DD /* Kupo.m */,
+				25F27DBA135C3F1500776F5E /* Event.h */,
+				25F27DBB135C3F1500776F5E /* Event.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1311,8 +1311,8 @@
 				258B144613512A3800091A85 /* Nearby.m in Sources */,
 				258B147413515B5300091A85 /* MapViewController.m in Sources */,
 				25B2F4A9135180EB00DDF1BC /* PSNullView.m in Sources */,
-				25B4C99C135B1C96005949DD /* Event.m in Sources */,
 				25B4C9A0135B1C97005949DD /* Kupo.m in Sources */,
+				25F27DBC135C3F1500776F5E /* Event.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1373,8 +1373,8 @@
 				258B144713512A3800091A85 /* Nearby.m in Sources */,
 				258B147513515B5300091A85 /* MapViewController.m in Sources */,
 				25B2F4AA135180EB00DDF1BC /* PSNullView.m in Sources */,
-				25B4C99D135B1C96005949DD /* Event.m in Sources */,
 				25B4C9A1135B1C97005949DD /* Kupo.m in Sources */,
+				25F27DBD135C3F1500776F5E /* Event.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

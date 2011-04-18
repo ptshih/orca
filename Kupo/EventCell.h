@@ -14,14 +14,14 @@
   UILabel *_tagLabel;
   UILabel *_nameLabel;
   UILabel *_lastActivityLabel;
-  UILabel *_friendsLabel;
+  UILabel *_participantsLabel;
   UILabel *_timestampLabel;
   
   Event *_event;
-  NSMutableArray *_friendPictureArray;
-  NSMutableArray *_friendIds;
+  NSMutableArray *_participantPictureArray;
+  NSMutableArray *_participantIds;
 }
 
-- (void)loadFriendPictures;
+- (void)loadParticipantPictures;
 
 @end
