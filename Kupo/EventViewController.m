@@ -124,7 +124,7 @@
 #pragma mark TableView
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
   [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
-  [cell setNeedsDisplay];
+  [cell setNeedsLayout];
   [(EventCell *)cell loadImage];
   [(EventCell *)cell loadParticipantPictures];
 }

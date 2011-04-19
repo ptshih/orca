@@ -14,13 +14,12 @@
 @class ComposeDataCenter;
 
 @interface ComposeViewController : CardModalViewController <UITextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate> {
-  
+  UIToolbar *_composeToolbar;
   UIView *_composeView;
   PSTextView *_message;
   UIImageView *_backgroundView;
-  UIButton *_photoUpload;
-  UIButton *_locationButton;
   
+  // Uploaded Image/Video
   UIImage *_uploadedImage;
   NSData *_uploadedVideo;
   NSString *_uploadedVideoPath;

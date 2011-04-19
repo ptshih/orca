@@ -57,7 +57,7 @@
     
     _uploadedImage = [[originalImage scaleProportionalToSize:CGSizeMake(640, 640)] retain];
 //    _uploadedImage = [originalImage retain];
-    [_photoUpload setBackgroundImage:_uploadedImage forState:UIControlStateNormal];
+//    [_photoUpload setBackgroundImage:_uploadedImage forState:UIControlStateNormal];
   }
   
   // Handle a movie capture
@@ -72,7 +72,7 @@
     UIImage *videoThumbImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     _uploadedImage = [[videoThumbImage cropProportionalToSize:CGSizeMake(320, 320)] retain];
-    [_photoUpload setBackgroundImage:_uploadedImage forState:UIControlStateNormal];
+//    [_photoUpload setBackgroundImage:_uploadedImage forState:UIControlStateNormal];
   }
   
   // Write the photo to the user's album
@@ -124,50 +124,51 @@
   self.navigationItem.rightBarButtonItem = sendButton;
   [sendButton release];
   
-  _composeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 244)];
-  _composeView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  _composeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+  _composeView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin;
   [self.view addSubview:_composeView];
   
   CGFloat top = 10;
   CGFloat left = 10;
-  
-  _photoUpload = [[UIButton alloc] initWithFrame:CGRectZero];
-  _photoUpload.width = 70;
-  _photoUpload.height = 70;
-  _photoUpload.top = top;
-  _photoUpload.left = left;
-  [_photoUpload setBackgroundImage:[UIImage imageNamed:@"photo_add.png"] forState:UIControlStateNormal];
-  [_photoUpload addTarget:self action:@selector(uploadPicture) forControlEvents:UIControlEventTouchUpInside];
-  [_composeView addSubview:_photoUpload];
-  
-  _locationButton = [[UIButton alloc] initWithFrame:CGRectZero];
-  _locationButton.width = 70;
-  _locationButton.height = 30;
-  _locationButton.top = _photoUpload.bottom + 10;
-  _locationButton.left = left;
-  [_locationButton setBackgroundImage:[UIImage imageNamed:@"geo_on.png"] forState:UIControlStateNormal];
-  [_composeView addSubview:_locationButton];
-  
-  left = _photoUpload.right + 10;
 
-  _message = [[PSTextView alloc] initWithFrame:CGRectMake(left, top, 220, 30)];
-  _message.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  _message = [[PSTextView alloc] initWithFrame:CGRectMake(left, top, 300, 396)];
+  _message.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_message.returnKeyType = UIReturnKeyDefault;
 	_message.font = [UIFont boldSystemFontOfSize:14.0];
 	_message.delegate = self;
   [_composeView addSubview:_message];
   
   _backgroundView = [[UIImageView alloc] initWithFrame:_message.frame];
-  _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   _backgroundView.image = [[UIImage imageNamed:@"textview_bg.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15];
   [_composeView insertSubview:_backgroundView atIndex:0];
+  
+  // Toolbar
+  _composeToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 416, 320, 44)];
+  _composeToolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+  _composeToolbar.tintColor = NAV_COLOR_DARK_BLUE;
+//  _composeToolbar.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"button-bar-background.png"]];
+  
+  UIBarButtonItem *photoButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"button-bar-camera.png"] style:UIBarButtonItemStylePlain target:self action:@selector(uploadPicture)] autorelease];
+  
+  UIBarButtonItem *peopleButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"button-bar-at.png"] style:UIBarButtonItemStylePlain target:self action:@selector(uploadPicture)] autorelease];
+  
+  NSArray *barItems = [NSArray arrayWithObjects:photoButton, peopleButton, nil];
+
+  [_composeToolbar setItems:barItems];
+  
+  [_composeView addSubview:_composeToolbar];
+  
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  [_message becomeFirstResponder];
+//  [_message becomeFirstResponder];
 }
 
 - (void)send {
+  [_message resignFirstResponder];
+  return;
+  
   [[ComposeDataCenter defaultCenter] sendKupoComposeWithEventId:self.eventId andMessage:_message.text andImage:_uploadedImage andVideo:_uploadedVideo];
   [self dismissModalViewControllerAnimated:YES];
 }
@@ -261,9 +262,15 @@
   [UIView setAnimationDuration:animationDuration];
   [UIView setAnimationCurve:animationCurve];
   
-  _composeView.height = self.view.bounds.size.height - keyboardFrame.size.height;
-  _message.height = up ? self.view.bounds.size.height - keyboardFrame.size.height - 20 : 30;
-  _backgroundView.height = _message.height;
+  if (up) {
+    self.view.height = self.view.height - keyboardFrame.size.height;
+  } else {
+    self.view.height = self.view.height + keyboardFrame.size.height;
+  }
+  
+//  _composeView.height = self.view.bounds.size.height - 44 - keyboardFrame.size.height;
+//  _message.height = up ? self.view.bounds.size.height - 44 - keyboardFrame.size.height - 20 : 30;
+//  _backgroundView.height = _message.height;
 //  _photoUpload.top = _message.bottom + 10;
 //  _locationButton.top = _message.bottom + 10;
 
@@ -275,12 +282,11 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
   
   [[ComposeDataCenter defaultCenter] setDelegate:nil];
-  
+
+  RELEASE_SAFELY(_composeToolbar);
   RELEASE_SAFELY(_eventId);
   RELEASE_SAFELY(_composeView);
-  RELEASE_SAFELY(_photoUpload);
   RELEASE_SAFELY(_message);
-  RELEASE_SAFELY(_locationButton);
   RELEASE_SAFELY(_uploadedImage);
   RELEASE_SAFELY(_uploadedVideo);
   RELEASE_SAFELY(_uploadedVideoPath);
