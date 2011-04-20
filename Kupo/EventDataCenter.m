@@ -134,7 +134,6 @@ static EventDataCenter *_defaultCenter = nil;
 }
 
 - (void)dealloc {
-  RELEASE_SAFELY(_context);
   [super dealloc];
 }
 

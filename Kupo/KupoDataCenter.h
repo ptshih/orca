@@ -13,7 +13,7 @@
   NSManagedObjectContext *_context;
 }
 
-@property (nonatomic, retain) NSManagedObjectContext *context;
+@property (nonatomic, assign) NSManagedObjectContext *context;
 
 - (void)getKuposForEventWithEventId:(NSString *)eventId andSince:(NSDate *)sinceDate;
 - (void)loadMoreKuposForEventWithEventId:(NSString *)eventId andUntil:(NSDate *)untilDate;

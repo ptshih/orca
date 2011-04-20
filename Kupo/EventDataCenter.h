@@ -13,7 +13,7 @@
   NSManagedObjectContext *_context;
 }
 
-@property (nonatomic, retain) NSManagedObjectContext *context;
+@property (nonatomic, assign) NSManagedObjectContext *context;
 
 - (void)getEventsWithSince:(NSDate *)sinceDate;
 - (void)loadMoreEventsWithUntil:(NSDate *)untilDate;
