@@ -34,6 +34,10 @@
   [self dismissModalViewControllerAnimated:YES];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+  return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+}
+
 - (void)dealloc {
   RELEASE_SAFELY(_dismissButtonTitle);
   [super dealloc];

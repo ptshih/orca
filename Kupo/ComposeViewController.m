@@ -112,9 +112,10 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  self.view.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
+  [_nullView removeFromSuperview];
+  self.view.backgroundColor = [UIColor whiteColor];
   
-  _navTitleLabel.text = @"Write a Message...";
+  _navTitleLabel.text = @"New Event";
   
   // Show the dismiss button
   [self showDismissButton];
@@ -124,27 +125,39 @@
   self.navigationItem.rightBarButtonItem = sendButton;
   [sendButton release];
   
-  _composeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
-  _composeView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin;
+  _composeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
+  _composeView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:_composeView];
   
-  CGFloat top = 10;
-  CGFloat left = 10;
+  _tag = [[UITextField alloc] initWithFrame:CGRectMake(10, 5, 300, 24)];
+  _tag.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  _tag.borderStyle = UITextBorderStyleNone;
+  _tag.placeholder = @"Name Your New Event";
+//  _tag.backgroundColor = [UIColor grayColor];
+  
+  [_composeView addSubview:_tag];
+  
+  UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 34, 320, 1)];
+  separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  separator.backgroundColor = SEPARATOR_COLOR;
+  [_composeView addSubview:separator];
+  [separator release];
 
-  _message = [[PSTextView alloc] initWithFrame:CGRectMake(left, top, 300, 396)];
+  _message = [[PSTextView alloc] initWithFrame:CGRectMake(0, 35, 320, 121)];
   _message.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_message.returnKeyType = UIReturnKeyDefault;
 	_message.font = [UIFont boldSystemFontOfSize:14.0];
 	_message.delegate = self;
+//  _message.backgroundColor = [UIColor blueColor];
   [_composeView addSubview:_message];
   
-  _backgroundView = [[UIImageView alloc] initWithFrame:_message.frame];
-  _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _backgroundView.image = [[UIImage imageNamed:@"textview_bg.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15];
-  [_composeView insertSubview:_backgroundView atIndex:0];
+//  _backgroundView = [[UIImageView alloc] initWithFrame:_message.frame];
+//  _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//  _backgroundView.image = [[UIImage imageNamed:@"textview_bg.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15];
+//  [_composeView insertSubview:_backgroundView atIndex:0];
   
   // Toolbar
-  _composeToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 416, 320, 44)];
+  _composeToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 156, 320, 44)];
   _composeToolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
   _composeToolbar.tintColor = NAV_COLOR_DARK_BLUE;
 //  _composeToolbar.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"button-bar-background.png"]];
@@ -153,22 +166,21 @@
   
   UIBarButtonItem *peopleButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"button-bar-at.png"] style:UIBarButtonItemStylePlain target:self action:@selector(uploadPicture)] autorelease];
   
-  NSArray *barItems = [NSArray arrayWithObjects:photoButton, peopleButton, nil];
+  UIBarButtonItem *placeButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"button-bar-place.png"] style:UIBarButtonItemStylePlain target:self action:@selector(uploadPicture)] autorelease];
+  
+  NSArray *barItems = [NSArray arrayWithObjects:photoButton, [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease], peopleButton, [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease], placeButton, nil];
 
   [_composeToolbar setItems:barItems];
   
   [_composeView addSubview:_composeToolbar];
-  
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-//  [_message becomeFirstResponder];
+  [_tag becomeFirstResponder];
 }
 
-- (void)send {
-  [_message resignFirstResponder];
-  return;
-  
+- (void)send {  
   [[ComposeDataCenter defaultCenter] sendKupoComposeWithEventId:self.eventId andMessage:_message.text andImage:_uploadedImage andVideo:_uploadedVideo];
   [self dismissModalViewControllerAnimated:YES];
 }
@@ -262,13 +274,18 @@
   [UIView setAnimationDuration:animationDuration];
   [UIView setAnimationCurve:animationCurve];
   
+//  if (up) {
+//    self.view.height = self.view.height - keyboardFrame.size.height;
+//  } else {
+//    self.view.height = self.view.height + keyboardFrame.size.height;
+//  }
+  
   if (up) {
-    self.view.height = self.view.height - keyboardFrame.size.height;
+    _composeView.height = self.view.bounds.size.height - keyboardFrame.size.height;
   } else {
-    self.view.height = self.view.height + keyboardFrame.size.height;
+    _composeView.height = self.view.bounds.size.height + keyboardFrame.size.height;
   }
   
-//  _composeView.height = self.view.bounds.size.height - 44 - keyboardFrame.size.height;
 //  _message.height = up ? self.view.bounds.size.height - 44 - keyboardFrame.size.height - 20 : 30;
 //  _backgroundView.height = _message.height;
 //  _photoUpload.top = _message.bottom + 10;
@@ -286,6 +303,7 @@
   RELEASE_SAFELY(_composeToolbar);
   RELEASE_SAFELY(_eventId);
   RELEASE_SAFELY(_composeView);
+  RELEASE_SAFELY(_tag);
   RELEASE_SAFELY(_message);
   RELEASE_SAFELY(_uploadedImage);
   RELEASE_SAFELY(_uploadedVideo);

@@ -141,7 +141,6 @@ typedef enum {
 - (void)addRequestParam:(NSString *)param value:(id)value;
 
 #pragma mark Cleanup
-- (void)cancelOperation;
 - (void)clearDelegatesAndCancel;
 
 @end

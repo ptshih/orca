@@ -168,14 +168,6 @@ static NSThread *_opThread = nil;
     return;
   }
   
-  // Actually begin the operation
-  _operationState = NetworkOperationStateStart;
-  
-  // Inform delegate that operation started
-  if (self.delegate && [self.delegate respondsToSelector:@selector(networkOperationDidStart:)]) {
-    [self.delegate performSelectorOnMainThread:@selector(networkOperationDidStart:) withObject:self waitUntilDone:NO];
-  }
-  
   // Prepare Request
   [self prepareRequest];
   
@@ -185,30 +177,36 @@ static NSThread *_opThread = nil;
 }
 
 - (void)startConnection {
-  @synchronized (self) {
-    // Called on OP THREAD
-    
-    if ([self isCancelled]) {
-      return;
-    }
-    
-    // Fire KVO notifications
-    [self willChangeValueForKey:@"isExecuting"];
-    _isExecuting = YES;
-    [self didChangeValueForKey:@"isExecuting"];
-    
-    // Increment the number of active operations
-    _activeOperationCount++;
-    
-    // Show network indicator
-    [[self class] performSelectorOnMainThread:@selector(showNetworkActivityIndicator) withObject:nil waitUntilDone:NO];  
+  // Called on OP THREAD
+  
+  if ([self isCancelled]) {
+    return;
+  }
+  
+  // Fire KVO notifications
+  [self willChangeValueForKey:@"isExecuting"];
+  _isExecuting = YES;
+  [self didChangeValueForKey:@"isExecuting"];
+  
+  // Increment the number of active operations
+  _activeOperationCount++;
+  
+  // Show network indicator
+  [[self class] performSelectorOnMainThread:@selector(showNetworkActivityIndicator) withObject:nil waitUntilDone:NO];  
+  
+  // Actually begin the operation
+  _operationState = NetworkOperationStateStart;
+  
+  // Inform delegate that operation started
+  if (self.delegate && [self.delegate respondsToSelector:@selector(networkOperationDidStart:)]) {
+    [self.delegate performSelector:@selector(networkOperationDidStart:) withObject:self];
   }
   
   _connection = [[NSURLConnection alloc] initWithRequest:self.request delegate:self];
 }
 
 - (void)finish {
-  // MAIN THREAD
+  // Called on OP THREAD
   
   // Fire KVO notifications
   [self willChangeValueForKey:@"isExecuting"];
@@ -255,117 +253,111 @@ static NSThread *_opThread = nil;
         break;
     }
   }
-  [self performSelectorOnMainThread:@selector(finish) withObject:nil waitUntilDone:NO];
+  
+  [self finish];
   
   // END OF OPERATION
 }
 
 - (void)cancel {
   // Called on OP THREAD
-  @synchronized (self) {
-    if ([self isFinished]) {
-      return;
-    }
-    
-    // cancel the operation
-    // Fire KVO notifications
-    [self willChangeValueForKey:@"isCancelled"];
-    _isCancelled = YES;
-    [self didChangeValueForKey:@"isCancelled"];
-    
-    // Cancel the async connection
-    if (_connection) {
-      [_connection cancel];
-    }
-    
-    [self finishConnection];
+  if ([self isFinished]) {
+    return;
   }
+  
+  if ([self isExecuting]) {
+    // Decrement the number of active operations
+    _activeOperationCount--;
+    
+    // Hide network indicator if needed
+    [[self class] performSelectorOnMainThread:@selector(hideNetworkActivityIndicatorIfNeeded) withObject:nil waitUntilDone:NO];
+  }
+  
+  // Cancel the async connection
+  if (_connection) {
+    [_connection cancel];
+  }
+  
+  // cancel the operation
+  // Fire KVO notifications
+  [self willChangeValueForKey:@"isCancelled"];
+  _isCancelled = YES;
+  [self didChangeValueForKey:@"isCancelled"];
+  
+  _operationState = NetworkOperationStateCancelled;
+  
+  // Inform delegate operation cancelled
+  if (self.delegate && [self.delegate respondsToSelector:@selector(networkOperationDidCancel:)]) {
+    [self.delegate performSelectorOnMainThread:@selector(networkOperationDidCancel:) withObject:self waitUntilDone:NO];
+  }
+  
+  [self finish];
 }
 
 #pragma mark Cancel Operation
-- (void)cancelOperation {
-  // CALLED on REQUESTOR THREAD
-  
-  [self performSelector:@selector(cancel) onThread:_opThread withObject:nil waitUntilDone:NO];
-}
-
 - (void)clearDelegatesAndCancel {
-  // Called on REQUESTOR THREAD
+  // Called on MAIN THREAD
   
-  // Don't let the delegate disappear until we can safely cancel
-  @synchronized (self) {
-    self.delegate = nil;
-  }
-  
-  [self cancelOperation];
+  // Don't let the delegate disappear until we can safely cancel  
+  [self performSelector:@selector(cancel) onThread:_opThread withObject:nil waitUntilDone:YES];
+  self.delegate = nil;
 }
 
 #pragma mark -
 #pragma mark NSURLConnection Delegate
 // Connection received HTTP response, ready to begin receiving data
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-  @synchronized (self) {
-  
-    // Reset or Initialize responseData
-    if (_responseData) {
-      [_responseData release], _responseData = nil;
-    }
-    _responseData = [[NSMutableData alloc] init];
-    
-    // Store the HTTP response
-    _urlResponse = [response retain];
-    
-    // Parse the response status and headers
-    [self parseUrlResponse];
-    
-    // Parse the response cookies
-    [self parseCookies];
-  
+  // Reset or Initialize responseData
+  if (_responseData) {
+    [_responseData release], _responseData = nil;
   }
+  _responseData = [[NSMutableData alloc] init];
+  
+  // Store the HTTP response
+  _urlResponse = [response retain];
+  
+  // Parse the response status and headers
+  [self parseUrlResponse];
+  
+  // Parse the response cookies
+  [self parseCookies];
 }
 
 // Connection is receiving data
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-  @synchronized (self) {
-    [_responseData appendData:data];
-  }
+  [_responseData appendData:data];
 }
 
 // Connection finished receiving all data
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-  @synchronized (self) {
-    _operationState = NetworkOperationStateFinished;
-    
-    // Finish op
-    [self finishConnection];
-  }
+  _operationState = NetworkOperationStateFinished;
+  
+  // Finish op
+  [self performSelector:@selector(finishConnection) onThread:_opThread withObject:nil waitUntilDone:NO];
 }
 
 // Connection failed
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-  @synchronized (self) {
+  // Read the error
+  _responseError = [error copy];
   
-    // Read the error
-    _responseError = [error copy];
-    
-    // Check for timeout
-    NSString *errorDomain = [_responseError domain];
-    NSInteger errorCode = [_responseError code];
-    
-    if ([errorDomain isEqualToString:@"NSURLErrorDomain"]) {
-      switch (errorCode) {
-        case NSURLErrorTimedOut:
-          _operationState = NetworkOperationStateTimeout;
-          break;
-        default:
-          _operationState = NetworkOperationStateFailed;
-          break;
-      }
+  // Check for timeout
+  NSString *errorDomain = [_responseError domain];
+  NSInteger errorCode = [_responseError code];
+  
+  if ([errorDomain isEqualToString:@"NSURLErrorDomain"]) {
+    switch (errorCode) {
+      case NSURLErrorTimedOut:
+        _operationState = NetworkOperationStateTimeout;
+        break;
+      default:
+        _operationState = NetworkOperationStateFailed;
+        break;
     }
-  
-    // Finish op
-    [self finishConnection];
   }
+  
+  // Finish op
+  [self performSelector:@selector(finishConnection) onThread:_opThread withObject:nil waitUntilDone:NO];
 }
 
 #pragma mark -
@@ -527,7 +519,7 @@ static NSThread *_opThread = nil;
         [self.requestData appendData:[[NSString stringWithFormat:@"Content-Type: %@\r\n\r\n", contentType] dataUsingEncoding:NSUTF8StringEncoding]];
         [self.requestData appendData:imageData];
       } else {
-//        NSAssert([dataParam isKindOfClass:[NSData class]], @"dataParam must be a UIImage or NSData");
+        //        NSAssert([dataParam isKindOfClass:[NSData class]], @"dataParam must be a UIImage or NSData");
         NSString *extension = nil;
         if (self.attachmentType == NetworkOperationAttachmentTypeMP4) {
           extension = @"mp4";
@@ -595,6 +587,7 @@ static NSThread *_opThread = nil;
   
   NSArray *newCookies = [NSHTTPCookie cookiesWithResponseHeaderFields:self.responseHeaders forURL:self.requestURL];
   self.responseCookies = newCookies;
+  [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookies:newCookies forURL:self.requestURL mainDocumentURL:nil];
 }
 
 

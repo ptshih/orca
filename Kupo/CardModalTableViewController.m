@@ -33,6 +33,10 @@
   [self dismissModalViewControllerAnimated:YES];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+  return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+}
+
 - (void)dealloc {
   [super dealloc];
 }

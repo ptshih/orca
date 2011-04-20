@@ -56,39 +56,39 @@
     return self;
   }
   
-  // Required
-  self.id = [dictionary valueForKey:@"id"];
-  self.tag = [dictionary valueForKey:@"tag"];
-  self.name = [dictionary valueForKey:@"name"];
-  self.authorId = [dictionary valueForKey:@"author_id"];
-  self.authorFacebookId = [dictionary valueForKey:@"author_facebook_id"];
-  self.authorName = [dictionary valueForKey:@"author_name"];
+//  // Required
+//  self.id = [dictionary valueForKey:@"id"];
+//  self.tag = [dictionary valueForKey:@"tag"];
+//  self.name = [dictionary valueForKey:@"name"];
+//  self.authorId = [dictionary valueForKey:@"author_id"];
+//  self.authorFacebookId = [dictionary valueForKey:@"author_facebook_id"];
+//  self.authorName = [dictionary valueForKey:@"author_name"];
   self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
-  
-  // These might be null
-  self.lastActivity = [dictionary valueForKey:@"last_activity"] ? [dictionary valueForKey:@"last_activity"] : nil;
-  
-  // Participants Summary
-  NSMutableArray *participantIds = [NSMutableArray array];
-  NSMutableArray *participantFacebookIds = [NSMutableArray array];
-  NSMutableArray *participantFirstNames = [NSMutableArray array];
-  NSMutableArray *participantFullNames = [NSMutableArray array];
-  NSArray *participants = [dictionary valueForKey:@"participants"];
-  for (NSDictionary *participant in participants) {
-    [participantIds addObject:[participant valueForKey:@"id"]];
-    [participantFacebookIds addObject:[participant valueForKey:@"facebook_id"]];
-    [participantFirstNames addObject:[participant valueForKey:@"first_name"]];
-    [participantFullNames addObject:[participant valueForKey:@"name"]];
-  }
-  
-  self.participantIds = [participantIds componentsJoinedByString:@","];
-  self.participantFacebookIds = [participantFacebookIds componentsJoinedByString:@","];
-  self.participantFirstNames = [participantFirstNames componentsJoinedByString:@", "];
-  self.participantFullNames = [participantFullNames componentsJoinedByString:@", "];
-  
-  // Is Read
-  self.isRead = [NSNumber numberWithBool:NO];
-  
+//  
+//  // These might be null
+//  self.lastActivity = [dictionary valueForKey:@"last_activity"] ? [dictionary valueForKey:@"last_activity"] : nil;
+//  
+//  // Participants Summary
+//  NSMutableArray *participantIds = [NSMutableArray array];
+//  NSMutableArray *participantFacebookIds = [NSMutableArray array];
+//  NSMutableArray *participantFirstNames = [NSMutableArray array];
+//  NSMutableArray *participantFullNames = [NSMutableArray array];
+//  NSArray *participants = [dictionary valueForKey:@"participants"];
+//  for (NSDictionary *participant in participants) {
+//    [participantIds addObject:[participant valueForKey:@"id"]];
+//    [participantFacebookIds addObject:[participant valueForKey:@"facebook_id"]];
+//    [participantFirstNames addObject:[participant valueForKey:@"first_name"]];
+//    [participantFullNames addObject:[participant valueForKey:@"name"]];
+//  }
+//  
+//  self.participantIds = [participantIds componentsJoinedByString:@","];
+//  self.participantFacebookIds = [participantFacebookIds componentsJoinedByString:@","];
+//  self.participantFirstNames = [participantFirstNames componentsJoinedByString:@", "];
+//  self.participantFullNames = [participantFullNames componentsJoinedByString:@", "];
+//  
+//  // Is Read
+//  self.isRead = [NSNumber numberWithBool:NO];
+//  
   return self;
 }
 

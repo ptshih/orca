@@ -22,7 +22,7 @@ static KupoDataCenter *_defaultCenter = nil;
   @synchronized(self) {
     if (_defaultCenter == nil) {
       _defaultCenter = [[self alloc] init];
-      _defaultCenter.context = [LICoreDataStack newManagedObjectContext];
+      _defaultCenter.context = [LICoreDataStack sharedManagedObjectContext];
     }
     return _defaultCenter;
   }

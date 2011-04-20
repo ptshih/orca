@@ -109,24 +109,30 @@
 }
 
 - (void)newEvent {
-  if (!_composeViewController) {
-    _composeViewController = [[ComposeViewController alloc] init];
-  }
-  
-  if (!_composeNavController) {
-    _composeNavController = [[UINavigationController alloc] initWithRootViewController:_composeViewController];
-  }
-  
-  [self presentModalViewController:_composeNavController animated:YES];
+//  if (!_composeViewController) {
+//    _composeViewController = [[ComposeViewController alloc] init];
+//  }
+//  
+//  if (!_composeNavController) {
+//    _composeNavController = [[UINavigationController alloc] initWithRootViewController:_composeViewController];
+//  }
+//  
+//  [self presentModalViewController:_composeNavController animated:YES];
+  ComposeViewController *cvc = [[ComposeViewController alloc] init];
+  UINavigationController *composeNav = [[UINavigationController alloc] initWithRootViewController:cvc];
+  [self presentModalViewController:composeNav animated:YES];
+  [cvc release];
+  [composeNav release];
 }
 
 #pragma mark -
 #pragma mark TableView
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
   [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
-  [cell setNeedsLayout];
   [(EventCell *)cell loadImage];
   [(EventCell *)cell loadParticipantPictures];
+  [cell setNeedsDisplay];
+  [cell setNeedsLayout];
 }
 
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -162,16 +168,16 @@
   }
     
   // Mark isRead state
-  if (![event.isRead boolValue]) {
-    event.isRead = [NSNumber numberWithBool:YES];
-    
-    NSError *error = nil;
-    if ([self.context hasChanges]) {
-      if (![self.context save:&error]) {
-        abort(); // NOTE: DO NOT SHIP
-      }
-    }
-  }
+//  if (![event.isRead boolValue]) {
+//    event.isRead = [NSNumber numberWithBool:YES];
+//    
+//    NSError *error = nil;
+//    if ([self.context hasChanges]) {
+//      if (![self.context save:&error]) {
+//        abort(); // NOTE: DO NOT SHIP
+//      }
+//    }
+//  }
   
   KupoViewController *kvc = [[KupoViewController alloc] init];
   kvc.event = event;

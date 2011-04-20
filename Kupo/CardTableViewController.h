@@ -10,9 +10,8 @@
 #import "CardViewController.h"
 #import "HeaderTabView.h"
 #import "EGORefreshTableHeaderView.h"
-#import "HeaderTabViewDelegate.h"
 
-@interface CardTableViewController : CardViewController <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate, EGORefreshTableHeaderDelegate, HeaderTabViewDelegate> {
+@interface CardTableViewController : CardViewController <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate, EGORefreshTableHeaderDelegate> {
   UITableView *_tableView;
   NSMutableArray *_sections;
   NSMutableArray *_items;

@@ -23,11 +23,11 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _context = [LICoreDataStack newManagedObjectContext];
+    _context = [LICoreDataStack sharedManagedObjectContext];
     _fetchedResultsController = nil;
     _sectionNameKeyPathForFetchedResultsController = nil;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextSaveDidNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextSaveDidNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
   }
   return self;
 }
@@ -64,9 +64,9 @@
 
 
 #pragma mark Core Data
-- (void)managedObjectContextSaveDidNotification:(NSNotification *)notification {
-  [self.context mergeChangesFromContextDidSaveNotification:notification];
-}
+//- (void)managedObjectContextSaveDidNotification:(NSNotification *)notification {
+//  [self.context mergeChangesFromContextDidSaveNotification:notification];
+//}
 
 - (NSFetchedResultsController*)fetchedResultsController  {
   if (_fetchedResultsController) return _fetchedResultsController;
@@ -88,7 +88,7 @@
     DLog(@"Fetch failed with error: %@", [error localizedDescription]);
   }
   
-  [_tableView reloadData];
+//  [_tableView reloadData];
   [self updateState];  
 }
 
@@ -121,7 +121,7 @@
   
   UITableView *tableView = _tableView;
   
-  DLog(@"type: %d", type);
+  DLog(@"type: %d, old indexPath: %@, new indexPath: %@", type, indexPath, newIndexPath);
   
   switch(type) {
       
@@ -133,8 +133,8 @@
       [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
       break;
       
-    case NSFetchedResultsChangeUpdate:
-      [self tableView:tableView configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];;
+    case NSFetchedResultsChangeUpdate:      
+      [self tableView:tableView configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
       break;
       
     case NSFetchedResultsChangeMove:

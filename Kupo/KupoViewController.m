@@ -97,9 +97,10 @@
 #pragma mark TableView
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
   [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
-  [cell setNeedsLayout];
   [(KupoCell *)cell loadImage];
   [(KupoCell *)cell loadPhoto];
+  [cell setNeedsDisplay];
+  [cell setNeedsLayout];
 }
 
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {

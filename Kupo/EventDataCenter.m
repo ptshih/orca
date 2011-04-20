@@ -22,7 +22,7 @@ static EventDataCenter *_defaultCenter = nil;
   @synchronized(self) {
     if (_defaultCenter == nil) {
       _defaultCenter = [[self alloc] init];
-      _defaultCenter.context = [LICoreDataStack newManagedObjectContext];
+      _defaultCenter.context = [LICoreDataStack sharedManagedObjectContext];
     }
     return _defaultCenter;
   }
@@ -124,10 +124,9 @@ static EventDataCenter *_defaultCenter = nil;
 }
 
 #pragma mark Fetch Requests
-- (NSFetchRequest *)getEventsFetchRequest {
-  NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO selector:@selector(compare:)];
-  NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
-  [sortDescriptor release];
+- (NSFetchRequest *)getEventsFetchRequest { 
+  NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO] autorelease];
+  NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
   NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getEvents" substitutionVariables:[NSDictionary dictionary]];
   [fetchRequest setSortDescriptors:sortDescriptors];
 //  [fetchRequest setFetchLimit:limit];

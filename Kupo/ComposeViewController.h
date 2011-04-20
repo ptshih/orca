@@ -16,6 +16,7 @@
 @interface ComposeViewController : CardModalViewController <UITextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate> {
   UIToolbar *_composeToolbar;
   UIView *_composeView;
+  UITextField *_tag;
   PSTextView *_message;
   UIImageView *_backgroundView;
   
