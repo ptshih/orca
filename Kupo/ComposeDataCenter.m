@@ -24,6 +24,34 @@ static ComposeDataCenter *_defaultCenter = nil;
   }
 }
 
+- (void)sendEventComposeWithEventName:(NSString *)eventName andEventTag:(NSString *)eventTag andMessage:(NSString *)message andImage:(UIImage *)image andVideo:(NSData *)video {
+  NSURL *eventComposeUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/events/new", KUPO_BASE_URL]];
+  
+  NSMutableDictionary *params = [NSMutableDictionary dictionary];
+  
+  [params setValue:eventName forKey:@"name"];
+  if (eventTag) [params setValue:eventTag forKey:@"tag"];
+  [params setValue:@"#scrapboard for iPhone" forKey:@"source"];
+  
+  if ([message length] > 0) {
+    [params setValue:message forKey:@"message"];
+  }
+  
+  NetworkOperationAttachmentType attachmentType = NetworkOperationAttachmentTypeNone;
+  
+  if (image) {
+    [params setValue:image forKey:@"image"];
+    if (video) {
+      [params setValue:video forKey:@"video"];
+      attachmentType = NetworkOperationAttachmentTypeMP4;
+    } else {
+      attachmentType = NetworkOperationAttachmentTypeJPEG;
+    }
+  }
+  
+  [self sendOperationWithURL:eventComposeUrl andMethod:POST andHeaders:nil andParams:params andAttachmentType:attachmentType];
+}
+
 - (void)sendKupoComposeWithEventId:(NSString *)eventId andMessage:(NSString *)message andImage:(UIImage *)image andVideo:(NSData *)video {
   NSURL *kupoComposeUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/kupos/new", KUPO_BASE_URL]];
   

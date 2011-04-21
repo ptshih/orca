@@ -8,9 +8,6 @@
 
 #import "ComposeViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
-#import "UIImage+ScalingAndCropping.h"
-#import "Event.h"
-#import "ComposeDataCenter.h"
 
 #define SPACING 4.0
 #define PORTRAIT_HEIGHT 180.0
@@ -92,8 +89,6 @@
 
 @implementation ComposeViewController
 
-@synthesize message = _message;
-@synthesize eventId = _eventId;
 @synthesize delegate = _delegate;
 
 - (id)init {
@@ -115,8 +110,6 @@
   [_nullView removeFromSuperview];
   self.view.backgroundColor = [UIColor whiteColor];
   
-  _navTitleLabel.text = @"New Event";
-  
   // Show the dismiss button
   [self showDismissButton];
   
@@ -128,39 +121,20 @@
   _composeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
   _composeView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:_composeView];
-  
-  _tag = [[UITextField alloc] initWithFrame:CGRectMake(10, 5, 300, 24)];
-  _tag.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-  _tag.borderStyle = UITextBorderStyleNone;
-  _tag.placeholder = @"Name Your New Event";
-//  _tag.backgroundColor = [UIColor grayColor];
-  
-  [_composeView addSubview:_tag];
-  
-  UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 34, 320, 1)];
-  separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-  separator.backgroundColor = SEPARATOR_COLOR;
-  [_composeView addSubview:separator];
-  [separator release];
 
-  _message = [[PSTextView alloc] initWithFrame:CGRectMake(0, 35, 320, 121)];
+  // Message Field
+  _message = [[PSTextView alloc] initWithFrame:CGRectZero];
   _message.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_message.returnKeyType = UIReturnKeyDefault;
 	_message.font = [UIFont boldSystemFontOfSize:14.0];
 	_message.delegate = self;
-//  _message.backgroundColor = [UIColor blueColor];
   [_composeView addSubview:_message];
   
-//  _backgroundView = [[UIImageView alloc] initWithFrame:_message.frame];
-//  _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-//  _backgroundView.image = [[UIImage imageNamed:@"textview_bg.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15];
-//  [_composeView insertSubview:_backgroundView atIndex:0];
-  
   // Toolbar
-  _composeToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 156, 320, 44)];
+  _composeToolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
+  _composeToolbar.frame = CGRectMake(0, self.view.bounds.size.height - 44, 320, 44);
   _composeToolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
   _composeToolbar.tintColor = NAV_COLOR_DARK_BLUE;
-//  _composeToolbar.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"button-bar-background.png"]];
   
   UIBarButtonItem *photoButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"button-bar-camera.png"] style:UIBarButtonItemStylePlain target:self action:@selector(uploadPicture)] autorelease];
   
@@ -177,12 +151,12 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  [_tag becomeFirstResponder];
+  [super viewWillAppear:animated];
+  // Subclass should implement
 }
 
 - (void)send {  
-  [[ComposeDataCenter defaultCenter] sendKupoComposeWithEventId:self.eventId andMessage:_message.text andImage:_uploadedImage andVideo:_uploadedVideo];
-  [self dismissModalViewControllerAnimated:YES];
+  // Subclass should implement
 }
 
 - (void)dataCenterDidFinish:(LINetworkOperation *)operation {
@@ -232,6 +206,12 @@
   }
   
   [self presentModalViewController:imagePicker animated:YES];
+}
+
+#pragma mark -
+#pragma mark UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+  
 }
 
 #pragma mark UITextViewDelegate
@@ -286,6 +266,8 @@
     _composeView.height = self.view.bounds.size.height + keyboardFrame.size.height;
   }
   
+  _composeToolbar.top = _composeView.height - _composeToolbar.height;
+  
 //  _message.height = up ? self.view.bounds.size.height - 44 - keyboardFrame.size.height - 20 : 30;
 //  _backgroundView.height = _message.height;
 //  _photoUpload.top = _message.bottom + 10;
@@ -301,9 +283,7 @@
   [[ComposeDataCenter defaultCenter] setDelegate:nil];
 
   RELEASE_SAFELY(_composeToolbar);
-  RELEASE_SAFELY(_eventId);
   RELEASE_SAFELY(_composeView);
-  RELEASE_SAFELY(_tag);
   RELEASE_SAFELY(_message);
   RELEASE_SAFELY(_uploadedImage);
   RELEASE_SAFELY(_uploadedVideo);

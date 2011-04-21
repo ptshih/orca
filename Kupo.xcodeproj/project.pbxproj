@@ -246,6 +246,10 @@
 		25FB8C1D133ABEDC00C130A8 /* Kupo+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C1B133ABED700C130A8 /* Kupo+Serialize.m */; };
 		25FB8C20133ACB2400C130A8 /* pods.json in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8C1F133ACB2400C130A8 /* pods.json */; };
 		25FB8C21133ACB2400C130A8 /* pods.json in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8C1F133ACB2400C130A8 /* pods.json */; };
+		25FE399E135ECF9800DE1EA5 /* KupoComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FE399D135ECF9800DE1EA5 /* KupoComposeViewController.m */; };
+		25FE399F135ECF9800DE1EA5 /* KupoComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FE399D135ECF9800DE1EA5 /* KupoComposeViewController.m */; };
+		25FE39A3135ECFE300DE1EA5 /* EventComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FE39A2135ECFE300DE1EA5 /* EventComposeViewController.m */; };
+		25FE39A4135ECFE300DE1EA5 /* EventComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FE39A2135ECFE300DE1EA5 /* EventComposeViewController.m */; };
 		25FF620413440D1C001EF441 /* ShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FF620313440D1B001EF441 /* ShareCell.m */; };
 		25FF620713440E39001EF441 /* share_email.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FF620513440E39001EF441 /* share_email.png */; };
 		25FF620813440E39001EF441 /* share_email@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FF620613440E39001EF441 /* share_email@2x.png */; };
@@ -533,6 +537,10 @@
 		25FB8C1A133ABED100C130A8 /* Kupo+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Kupo+Serialize.h"; sourceTree = "<group>"; };
 		25FB8C1B133ABED700C130A8 /* Kupo+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Kupo+Serialize.m"; sourceTree = "<group>"; };
 		25FB8C1F133ACB2400C130A8 /* pods.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pods.json; sourceTree = "<group>"; };
+		25FE399C135ECF9800DE1EA5 /* KupoComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KupoComposeViewController.h; sourceTree = "<group>"; };
+		25FE399D135ECF9800DE1EA5 /* KupoComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KupoComposeViewController.m; sourceTree = "<group>"; };
+		25FE39A1135ECFE300DE1EA5 /* EventComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventComposeViewController.h; sourceTree = "<group>"; };
+		25FE39A2135ECFE300DE1EA5 /* EventComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventComposeViewController.m; sourceTree = "<group>"; };
 		25FF620213440D1A001EF441 /* ShareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareCell.h; sourceTree = "<group>"; };
 		25FF620313440D1B001EF441 /* ShareCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareCell.m; sourceTree = "<group>"; };
 		25FF620513440E39001EF441 /* share_email.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_email.png; sourceTree = "<group>"; };
@@ -589,6 +597,10 @@
 				25EFD41A1343F59F000108B8 /* CardModalTableViewController.m */,
 				250B3189133EBF0B0011EEDD /* ComposeViewController.h */,
 				250B318A133EBF0B0011EEDD /* ComposeViewController.m */,
+				25FE399C135ECF9800DE1EA5 /* KupoComposeViewController.h */,
+				25FE399D135ECF9800DE1EA5 /* KupoComposeViewController.m */,
+				25FE39A1135ECFE300DE1EA5 /* EventComposeViewController.h */,
+				25FE39A2135ECFE300DE1EA5 /* EventComposeViewController.m */,
 				25FB8BDA133A9B1000C130A8 /* MeViewController.h */,
 				25FB8BDB133A9B1200C130A8 /* MeViewController.m */,
 				25033EB3134866A000633052 /* NearbyViewController.h */,
@@ -1373,6 +1385,8 @@
 				25B2F4A9135180EB00DDF1BC /* PSNullView.m in Sources */,
 				25B4C9A0135B1C97005949DD /* Kupo.m in Sources */,
 				25F27DBC135C3F1500776F5E /* Event.m in Sources */,
+				25FE399E135ECF9800DE1EA5 /* KupoComposeViewController.m in Sources */,
+				25FE39A3135ECFE300DE1EA5 /* EventComposeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1435,6 +1449,8 @@
 				25B2F4AA135180EB00DDF1BC /* PSNullView.m in Sources */,
 				25B4C9A1135B1C97005949DD /* Kupo.m in Sources */,
 				25F27DBD135C3F1500776F5E /* Event.m in Sources */,
+				25FE399F135ECF9800DE1EA5 /* KupoComposeViewController.m in Sources */,
+				25FE39A4135ECFE300DE1EA5 /* EventComposeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

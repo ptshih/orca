@@ -10,7 +10,7 @@
 #import "KupoDataCenter.h"
 #import "KupoCell.h"
 #import "Event.h"
-#import "ComposeViewController.h"
+#import "KupoComposeViewController.h"
 #import "DetailViewController.h"
 #import "VideoViewController.h"
 
@@ -31,7 +31,7 @@
   [super viewDidLoad];
   
   // Nav Title
-  _navTitleLabel.text = self.event.name;
+  _navTitleLabel.text = self.event.tag;
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -84,7 +84,7 @@
 }
    
 - (void)composeKupo {
-  ComposeViewController *kcvc = [[ComposeViewController alloc] init];
+  KupoComposeViewController *kcvc = [[KupoComposeViewController alloc] init];
   kcvc.eventId = self.event.id;
   UINavigationController *kupoNav = [[UINavigationController alloc] initWithRootViewController:kcvc];
   kupoNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;

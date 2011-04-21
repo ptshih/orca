@@ -10,13 +10,12 @@
 #import "CardModalViewController.h"
 #import "ComposeDelegate.h"
 #import "PSTextView.h"
+#import "UIImage+ScalingAndCropping.h"
+#import "ComposeDataCenter.h"
 
-@class ComposeDataCenter;
-
-@interface ComposeViewController : CardModalViewController <UITextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate> {
+@interface ComposeViewController : CardModalViewController <UITextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate> {
   UIToolbar *_composeToolbar;
   UIView *_composeView;
-  UITextField *_tag;
   PSTextView *_message;
   UIImageView *_backgroundView;
   
@@ -25,15 +24,14 @@
   NSData *_uploadedVideo;
   NSString *_uploadedVideoPath;
   
-  NSString *_eventId;
   BOOL _shouldSaveToAlbum;
   
   id <ComposeDelegate> _delegate;
 }
 
 @property (nonatomic, assign) id <ComposeDelegate> delegate;
-@property (nonatomic, retain) PSTextView *message;
-@property (nonatomic, retain) NSString *eventId;
+
+- (void)send;
 
 - (void)uploadPicture;
 

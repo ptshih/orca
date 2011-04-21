@@ -9,7 +9,7 @@
 #import "EventViewController.h"
 #import "EventDataCenter.h"
 #import "KupoViewController.h"
-#import "ComposeViewController.h"
+#import "EventComposeViewController.h"
 #import "MeViewController.h"
 #import "NearbyViewController.h"
 #import "Event.h"
@@ -118,11 +118,11 @@
 //  }
 //  
 //  [self presentModalViewController:_composeNavController animated:YES];
-  ComposeViewController *cvc = [[ComposeViewController alloc] init];
-  UINavigationController *composeNav = [[UINavigationController alloc] initWithRootViewController:cvc];
-  [self presentModalViewController:composeNav animated:YES];
-  [cvc release];
-  [composeNav release];
+  EventComposeViewController *ecvc = [[EventComposeViewController alloc] init];
+  UINavigationController *eventComposeNav = [[UINavigationController alloc] initWithRootViewController:ecvc];
+  [self presentModalViewController:eventComposeNav animated:YES];
+  [ecvc release];
+  [eventComposeNav release];
 }
 
 #pragma mark -
@@ -296,8 +296,6 @@
   RELEASE_SAFELY(_meViewController);
   RELEASE_SAFELY(_nearbyNavController);
   RELEASE_SAFELY(_meNavController);
-  RELEASE_SAFELY(_composeNavController);
-  RELEASE_SAFELY(_composeViewController);
   [super dealloc];
 }
 
