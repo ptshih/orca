@@ -68,6 +68,10 @@
 //  [self.context mergeChangesFromContextDidSaveNotification:notification];
 //}
 
+- (void)resetFetchedResultsController {
+  RELEASE_SAFELY(_fetchedResultsController);
+}
+
 - (NSFetchedResultsController*)fetchedResultsController  {
   if (_fetchedResultsController) return _fetchedResultsController;
   
@@ -78,7 +82,7 @@
   }
   
   return _fetchedResultsController;
-} 
+}
 
 - (void)executeFetch {
   NSError *error = nil;

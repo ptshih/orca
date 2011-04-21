@@ -20,5 +20,6 @@
 
 - (id)initWithFrame:(CGRect)frame andButtonTitles:(NSArray *)titles;
 - (void)setSelectedForTabAtIndex:(NSInteger)index;
+- (void)selectTabAtIndex:(NSInteger)index;
 
 @end

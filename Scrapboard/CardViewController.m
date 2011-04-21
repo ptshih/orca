@@ -77,14 +77,11 @@
 
 #pragma mark HeaderTabView
 // Subclasses may call
+// Subclasses must implement the delegate
 - (void)setupHeaderTabView {
   _headerTabView = [[HeaderTabView alloc] initWithFrame:CGRectMake(0, 0, 320, 44.0) andButtonTitles:[NSArray arrayWithObjects:@"Followed", @"Firehose", nil]];
   _headerTabView.delegate = self;
   [self.view addSubview:_headerTabView];
-}
-
-- (void)tabSelectedAtIndex:(NSNumber *)index {
-  [[NSNotificationCenter defaultCenter] postNotificationName:kHeaderTabSelected object:nil userInfo:[NSDictionary dictionaryWithObject:index forKey:@"tabIndex"]];
 }
 
 // Called when the user logs out and we need to clear all cached data

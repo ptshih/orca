@@ -7,6 +7,7 @@
 //
 
 #import "EventViewController.h"
+#import "EventDataCenter.h"
 
 @implementation EventViewController
 
@@ -15,9 +16,12 @@
 - (id)init {
   self = [super init];
   if (self) {
+    _eventType = [[NSUserDefaults standardUserDefaults] integerForKey:@"lastEventType"];
     _shouldReloadOnAppear = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
+    
+    [[EventDataCenter defaultCenter] setDelegate:self];
   }
   return self;
 }
@@ -41,9 +45,6 @@
   self.navigationItem.rightBarButtonItem = rightButton;
   [rightButton release];
   
-  // HeaderTabView
-  [self setupHeaderTabView];
-  
   // Table
   CGRect tableFrame = CGRectMake(0, 44, CARD_WIDTH, CARD_HEIGHT - 44);
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
@@ -56,9 +57,14 @@
   // Load More
   [self setupLoadMoreView];
   
-  [self executeFetch];
+  // HeaderTabView
+  [self setupHeaderTabView];
+  [self updateTitle];
+  
   if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
-    [self reloadCardController];
+    [_headerTabView selectTabAtIndex:_eventType];
+  } else {
+    [_headerTabView setSelectedForTabAtIndex:_eventType];
   }
 }
 
@@ -68,6 +74,32 @@
     _shouldReloadOnAppear = NO;
     [self reloadCardController];
   }
+}
+
+- (void)updateTitle {
+  // Nav Title
+  if (_eventType == EventTypeFollowed) {
+    _navTitleLabel.text = @"My Scrapboards";
+  } else {
+    _navTitleLabel.text = @"All Scrapboards"; 
+  }
+}
+
+#pragma mark HeaderTabViewDelegate
+- (void)tabSelectedAtIndex:(NSNumber *)index {
+  _eventType = [index integerValue];
+  if (_eventType == EventTypeFollowed) {
+    [[EventDataCenter defaultCenter] setApiEndpoint:@"users/me/followed"];
+    [[EventDataCenter defaultCenter] setFetchTemplate:@"getFollowedEvents"];
+  } else {
+    [[EventDataCenter defaultCenter] setApiEndpoint:@"users/me/events"];
+    [[EventDataCenter defaultCenter] setFetchTemplate:@"getAllEvents"];
+  }
+  [self updateTitle];
+  [self resetFetchedResultsController];
+  [self executeFetch];
+  [_tableView reloadData];
+  [self reloadCardController];
 }
 
 - (void)profile {
@@ -185,6 +217,16 @@
 #pragma mark CardViewController
 - (void)reloadCardController {
   [super reloadCardController];
+
+  if (_eventType == EventTypeFollowed) {
+    // Get since date
+    NSDate *sinceDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"since.events.followed"];
+    [[EventDataCenter defaultCenter] getEventsWithSince:sinceDate];
+  } else {
+    // Get since date
+    NSDate *sinceDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"since.events.firehose"];
+    [[EventDataCenter defaultCenter] getEventsWithSince:sinceDate];
+  }
   
   // Get since date
 //  NSDate *sinceDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"since.events"];
@@ -202,6 +244,30 @@
   [self dataSourceDidLoad];
   
   [self executeFetch];
+  
+  if (_eventType == EventTypeFollowed) {
+    if ([self.fetchedResultsController.fetchedObjects count] > 0) {
+      // Set since and until date
+      Event *firstEvent = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
+      Event *lastEvent = [[self.fetchedResultsController fetchedObjects] lastObject];
+      NSDate *sinceDate = firstEvent.timestamp;
+      NSDate *untilDate = lastEvent.timestamp;
+      [[NSUserDefaults standardUserDefaults] setValue:sinceDate forKey:@"since.events.followed"];
+      [[NSUserDefaults standardUserDefaults] setValue:untilDate forKey:@"until.events.followed"];
+      [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+  } else {
+    if ([self.fetchedResultsController.fetchedObjects count] > 0) {
+      // Set since and until date
+      Event *firstEvent = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
+      Event *lastEvent = [[self.fetchedResultsController fetchedObjects] lastObject];
+      NSDate *sinceDate = firstEvent.timestamp;
+      NSDate *untilDate = lastEvent.timestamp;
+      [[NSUserDefaults standardUserDefaults] setValue:sinceDate forKey:@"since.events.firehose"];
+      [[NSUserDefaults standardUserDefaults] setValue:untilDate forKey:@"until.events.firehose"];
+      [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+  }
   
 //  if ([self.fetchedResultsController.fetchedObjects count] > 0) {
 //    // Set since and until date
@@ -224,6 +290,16 @@
 - (void)loadMore {
   [super loadMore];
   
+  if (_eventType == EventTypeFollowed) {
+    // get until date
+    NSDate *untilDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"until.events.followed"];
+    [[EventDataCenter defaultCenter] loadMoreEventsWithUntil:untilDate];
+  } else {
+    // get until date
+    NSDate *untilDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"until.events.firehose"];
+    [[EventDataCenter defaultCenter] loadMoreEventsWithUntil:untilDate];
+  }
+  
   // get until date
 //  NSDate *untilDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"until.events"];
 //  [[EventDataCenter defaultCenter] loadMoreEventsWithUntil:untilDate];
@@ -232,8 +308,7 @@
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-//  return [[EventDataCenter defaultCenter] getEventsFetchRequest];
-  return nil;
+  return [[EventDataCenter defaultCenter] getEventsFetchRequest];
 }
 
 #pragma mark -
@@ -255,6 +330,7 @@
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kCoreDataDidReset object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
+  [[EventDataCenter defaultCenter] setDelegate:nil];
   RELEASE_SAFELY(_meViewController);
   RELEASE_SAFELY(_meNavController);
   [super dealloc];

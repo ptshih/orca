@@ -15,13 +15,22 @@
 #import "Event.h"
 #import "EventCell.h"
 
+enum {
+  EventTypeFollowed = 0,
+  EventTypeFirehose = 1
+};
+typedef uint32_t EventType;
+
 @interface EventViewController : CardCoreDataTableViewController <MeDelegate, UIAlertViewDelegate> {
   MeViewController *_meViewController;
   UINavigationController *_meNavController;
   
+  EventType _eventType;
   BOOL _shouldReloadOnAppear;
 }
 
 @property (nonatomic, assign) BOOL shouldReloadOnAppear;
+
+- (void)updateTitle;
 
 @end

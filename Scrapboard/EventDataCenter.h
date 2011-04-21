@@ -11,10 +11,13 @@
 
 @interface EventDataCenter : PSDataCenter {
   NSManagedObjectContext *_context;
-  NSString *_eventsEndpoint;
+  NSString *_apiEndpoint;
+  NSString *_fetchTemplate;
 }
 
 @property (nonatomic, assign) NSManagedObjectContext *context;
+@property (nonatomic, retain) NSString *apiEndpoint;
+@property (nonatomic, retain) NSString *fetchTemplate;
 
 - (void)getEventsWithSince:(NSDate *)sinceDate;
 - (void)loadMoreEventsWithUntil:(NSDate *)untilDate;

@@ -24,7 +24,7 @@
     newEvent.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     
     // These might be null
-    newEvent.isFollowed = [dictionary valueForKey:@"is_followed"] ? [dictionary valueForKey:@"is_followed"] : NO;
+    newEvent.isFollowed = [dictionary valueForKey:@"is_followed"] ? [dictionary valueForKey:@"is_followed"] : [NSNumber numberWithBool:NO];
     newEvent.lastActivity = [dictionary valueForKey:@"last_activity"] ? [dictionary valueForKey:@"last_activity"] : nil;
     
     // Participants Summary

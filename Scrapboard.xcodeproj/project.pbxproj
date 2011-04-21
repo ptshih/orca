@@ -103,6 +103,12 @@
 		25B2F4AA135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
 		25B4C9A0135B1C97005949DD /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B4C99F135B1C97005949DD /* Kupo.m */; };
 		25B4C9A1135B1C97005949DD /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B4C99F135B1C97005949DD /* Kupo.m */; };
+		25BA900613602DD300D4A86B /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8C14133ABD2300C130A8 /* EventViewController.m */; };
+		25BA900813602DDD00D4A86B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BB4133A0D3D00C130A8 /* LoginViewController.m */; };
+		25BA900913602DDD00D4A86B /* KupoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BD8133A9B0300C130A8 /* KupoViewController.m */; };
+		25BA900A13602DE500D4A86B /* CardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BDF133AA6AB00C130A8 /* CardViewController.m */; };
+		25BA900B13602DE500D4A86B /* CardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BE1133AA6BA00C130A8 /* CardTableViewController.m */; };
+		25BA900C13602DE500D4A86B /* CardCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2538FF3C133AD22800ACE127 /* CardCoreDataTableViewController.m */; };
 		25CEF8071339F278006F23A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8061339F278006F23A7 /* UIKit.framework */; };
 		25CEF8091339F278006F23A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8081339F278006F23A7 /* Foundation.framework */; };
 		25CEF80B1339F278006F23A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80A1339F278006F23A7 /* CoreGraphics.framework */; };
@@ -1515,6 +1521,12 @@
 				25A2A8B1135FF8E60005808D /* FirehoseViewController.m in Sources */,
 				25A2A8B5135FF9190005808D /* FirehoseDataCenter.m in Sources */,
 				25A2A8B9135FFDD30005808D /* Event.m in Sources */,
+				25BA900613602DD300D4A86B /* EventViewController.m in Sources */,
+				25BA900813602DDD00D4A86B /* LoginViewController.m in Sources */,
+				25BA900913602DDD00D4A86B /* KupoViewController.m in Sources */,
+				25BA900A13602DE500D4A86B /* CardViewController.m in Sources */,
+				25BA900B13602DE500D4A86B /* CardTableViewController.m in Sources */,
+				25BA900C13602DE500D4A86B /* CardCoreDataTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

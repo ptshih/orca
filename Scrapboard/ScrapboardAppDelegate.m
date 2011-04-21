@@ -11,7 +11,7 @@
 #import "FBConnect.h"
 #import "LICoreDataStack.h"
 #import "LoginViewController.h"
-#import "LauncherViewController.h"
+#import "EventViewController.h"
 #import "LoginDataCenter.h"
 
 
@@ -53,13 +53,15 @@
   // Setup Facebook
   _facebook = [[Facebook alloc] initWithAppId:FB_APP_ID];
   
-  _launcherViewController = [[LauncherViewController alloc] init];
+  EventViewController *evc = [[EventViewController alloc] init];
+  _navigationController = [[UINavigationController alloc] initWithRootViewController:evc];
+  [evc release];
   
   // LoginVC
   _loginViewController = [[LoginViewController alloc] init];
   _loginViewController.delegate = self;
   
-  [self.window addSubview:_launcherViewController.view];
+  [self.window addSubview:_navigationController.view];
   [self.window makeKeyAndVisible];
   
   // Login if necessary
@@ -118,8 +120,8 @@
 #pragma mark Login
 - (void)tryLogin {
   if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
-    if (![_launcherViewController.modalViewController isEqual:_loginViewController] && _loginViewController != nil) {
-      [_launcherViewController presentModalViewController:_loginViewController animated:NO];
+    if (![_navigationController.modalViewController isEqual:_loginViewController] && _loginViewController != nil) {
+      [_navigationController presentModalViewController:_loginViewController animated:NO];
     }
   } else {
     _facebook.accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
@@ -190,8 +192,8 @@
   }
   
   // Session/Register request finished
-  if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
-    [_launcherViewController dismissModalViewControllerAnimated:YES];
+  if ([_navigationController.modalViewController isEqual:_loginViewController]) {
+    [_navigationController dismissModalViewControllerAnimated:YES];
   }
 }
 
@@ -223,7 +225,7 @@
   [[LoginDataCenter defaultCenter] setDelegate:nil];
   RELEASE_SAFELY(_sessionKey);
   RELEASE_SAFELY(_loginViewController);
-  RELEASE_SAFELY(_launcherViewController);
+  RELEASE_SAFELY(_navigationController);
   RELEASE_SAFELY(_facebook);
   RELEASE_SAFELY(_window);
   [super dealloc];

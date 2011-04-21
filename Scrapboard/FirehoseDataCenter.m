@@ -26,7 +26,7 @@ static FirehoseDataCenter *_defaultCenter = nil;
 - (id)init {
   self = [super init];
   if (self) {
-    _eventsEndpoint = [@"users/me/events" retain];
+    _apiEndpoint = [@"users/me/events" retain];
   }
   return self;
 }

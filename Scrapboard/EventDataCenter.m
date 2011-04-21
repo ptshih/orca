@@ -15,6 +15,8 @@ static EventDataCenter *_defaultCenter = nil;
 @implementation EventDataCenter
 
 @synthesize context = _context;
+@synthesize apiEndpoint = _apiEndpoint;
+@synthesize fetchTemplate = _fetchTemplate;
 
 #pragma mark -
 #pragma mark Shared Instance
@@ -32,7 +34,7 @@ static EventDataCenter *_defaultCenter = nil;
   if (self) {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
     self.context = [LICoreDataStack sharedManagedObjectContext];
-    _eventsEndpoint = [@"users/me/events" retain];
+    _apiEndpoint = [@"users/me/events" retain];
   }
   return self;
 }
@@ -41,7 +43,7 @@ static EventDataCenter *_defaultCenter = nil;
 }
 
 - (void)getEventsWithSince:(NSDate *)sinceDate {
-  NSURL *eventsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, _eventsEndpoint]];
+  NSURL *eventsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, _apiEndpoint]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
@@ -53,7 +55,7 @@ static EventDataCenter *_defaultCenter = nil;
 }
 
 - (void)loadMoreEventsWithUntil:(NSDate *)untilDate {
-  NSURL *eventsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, _eventsEndpoint]];
+  NSURL *eventsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, _apiEndpoint]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
@@ -128,14 +130,15 @@ static EventDataCenter *_defaultCenter = nil;
 - (NSFetchRequest *)getEventsFetchRequest { 
   NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO] autorelease];
   NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
-  NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getAllEvents" substitutionVariables:[NSDictionary dictionary]];
+  NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:_fetchTemplate substitutionVariables:[NSDictionary dictionary]];
   [fetchRequest setSortDescriptors:sortDescriptors];
 //  [fetchRequest setFetchLimit:limit];
   return fetchRequest;
 }
 
 - (void)dealloc {
-  RELEASE_SAFELY(_eventsEndpoint);
+  RELEASE_SAFELY(_apiEndpoint);
+  RELEASE_SAFELY(_fetchTemplate);
   [super dealloc];
 }
 

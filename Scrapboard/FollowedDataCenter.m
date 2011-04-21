@@ -26,7 +26,7 @@ static FollowedDataCenter *_defaultCenter = nil;
 - (id)init {
   self = [super init];
   if (self) {
-    _eventsEndpoint = [@"users/me/followed" retain];
+    _apiEndpoint = [@"users/me/followed" retain];
   }
   return self;
 }

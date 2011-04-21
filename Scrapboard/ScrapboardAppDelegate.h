@@ -12,13 +12,12 @@
 
 @class Facebook;
 @class LoginViewController;
-@class LauncherViewController;
 
 @interface ScrapboardAppDelegate : NSObject <UIApplicationDelegate, LoginDelegate, PSDataCenterDelegate> {
   UIWindow *_window;
   Facebook *_facebook;
   LoginViewController *_loginViewController;
-  LauncherViewController *_launcherViewController;
+  UINavigationController *_navigationController;
   
   // Session
   NSString *_sessionKey;
