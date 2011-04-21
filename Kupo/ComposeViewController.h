@@ -19,7 +19,11 @@
   PSTextView *_message;
   UIImageView *_backgroundView;
   
+  // Photo
+  UIButton *_mediaPreview;
+  
   // Uploaded Image/Video
+  UIImage *_thumbnailImage;
   UIImage *_uploadedImage;
   NSData *_uploadedVideo;
   NSString *_uploadedVideoPath;
@@ -32,8 +36,10 @@
 @property (nonatomic, assign) id <ComposeDelegate> delegate;
 
 - (void)send;
-
-- (void)uploadPicture;
+- (void)uploadMedia;
+- (void)showMedia;
+- (void)showFriends;
+- (void)showPlaces;
 
 - (void)moveTextViewForKeyboard:(NSNotification*)aNotification up:(BOOL)up;
 

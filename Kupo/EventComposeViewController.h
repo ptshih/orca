@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ComposeViewController.h"
 
-@interface EventComposeViewController : ComposeViewController {
+@interface EventComposeViewController : ComposeViewController <UITextFieldDelegate> {
   UITextField *_name;
 }
 

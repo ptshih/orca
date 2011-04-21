@@ -21,6 +21,8 @@
   _name.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   _name.borderStyle = UITextBorderStyleNone;
   _name.placeholder = @"Name Your Event";
+  _name.returnKeyType = UIReturnKeyNext;
+  _name.delegate = self;
   [_composeView addSubview:_name];
   
   UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 34, 320, 1)];
@@ -30,30 +32,32 @@
   [separator release];
   
   _message.frame = CGRectMake(0, 35, 320, 121);
+  
+  [_name becomeFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [_name becomeFirstResponder];
 }
 
 - (void)send {
-  if ([_message.text length] == 0) {
-    if (!_uploadedImage) {
-      UIAlertView *emptyAlert = [[[UIAlertView alloc] initWithTitle:@"Whoops!" message:@"You must either upload a photo/video or write a message!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease];
-      [emptyAlert show];
-      return;
-    }
-  }
-  
-  // Subclass should implement
   if ([_name.text length] == 0) {
     UIAlertView *emptyAlert = [[[UIAlertView alloc] initWithTitle:@"Whoops!" message:@"You must enter an event name!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease];
     [emptyAlert show];
+  } else if (![_message hasText]) {
+    if (!_uploadedImage) {
+      UIAlertView *emptyAlert = [[[UIAlertView alloc] initWithTitle:@"Whoops!" message:@"You must either upload a photo/video or write a message!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease];
+      [emptyAlert show];
+    }
   } else {
     [[ComposeDataCenter defaultCenter] sendEventComposeWithEventName:_name.text andEventTag:nil andMessage:_message.text andImage:_uploadedImage andVideo:_uploadedVideo];
     [self dismissModalViewControllerAnimated:YES];
   }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+  [_message becomeFirstResponder];
+  return NO;
 }
 
 - (void)dealloc {

@@ -26,6 +26,10 @@
   NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
   UIImage *originalImage;
   
+  if (_thumbnailImage) {
+    [_thumbnailImage release], _thumbnailImage = nil;
+  }
+  
   if (_uploadedImage) {
     [_uploadedImage release], _uploadedImage = nil;
   }
@@ -54,7 +58,8 @@
     
     _uploadedImage = [[originalImage scaleProportionalToSize:CGSizeMake(640, 640)] retain];
 //    _uploadedImage = [originalImage retain];
-//    [_photoUpload setBackgroundImage:_uploadedImage forState:UIControlStateNormal];
+    _thumbnailImage = [[originalImage cropProportionalToSize:CGSizeMake(_mediaPreview.width, _mediaPreview.height)] retain];
+    [_mediaPreview setBackgroundImage:_thumbnailImage forState:UIControlStateNormal];
   }
   
   // Handle a movie capture
@@ -70,6 +75,8 @@
     UIGraphicsEndImageContext();
     _uploadedImage = [[videoThumbImage cropProportionalToSize:CGSizeMake(320, 320)] retain];
 //    [_photoUpload setBackgroundImage:_uploadedImage forState:UIControlStateNormal];
+    _thumbnailImage = [[videoThumbImage cropProportionalToSize:CGSizeMake(_mediaPreview.width, _mediaPreview.height)] retain];
+    [_mediaPreview setBackgroundImage:_thumbnailImage forState:UIControlStateNormal];
   }
   
   // Write the photo to the user's album
@@ -124,7 +131,7 @@
 
   // Message Field
   _message = [[PSTextView alloc] initWithFrame:CGRectZero];
-  _message.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _message.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	_message.returnKeyType = UIReturnKeyDefault;
 	_message.font = [UIFont boldSystemFontOfSize:14.0];
 	_message.delegate = self;
@@ -133,14 +140,14 @@
   // Toolbar
   _composeToolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
   _composeToolbar.frame = CGRectMake(0, self.view.bounds.size.height - 44, 320, 44);
-  _composeToolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+  _composeToolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   _composeToolbar.tintColor = NAV_COLOR_DARK_BLUE;
   
-  UIBarButtonItem *photoButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"button-bar-camera.png"] style:UIBarButtonItemStylePlain target:self action:@selector(uploadPicture)] autorelease];
+  UIBarButtonItem *photoButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"button-bar-camera.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showMedia)] autorelease];
   
-  UIBarButtonItem *peopleButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"button-bar-at.png"] style:UIBarButtonItemStylePlain target:self action:@selector(uploadPicture)] autorelease];
+  UIBarButtonItem *peopleButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"button-bar-at.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showFriends)] autorelease];
   
-  UIBarButtonItem *placeButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"button-bar-place.png"] style:UIBarButtonItemStylePlain target:self action:@selector(uploadPicture)] autorelease];
+  UIBarButtonItem *placeButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"button-bar-place.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showPlaces)] autorelease];
   
   NSArray *barItems = [NSArray arrayWithObjects:photoButton, [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease], peopleButton, [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease], placeButton, nil];
 
@@ -148,6 +155,10 @@
   
   [_composeView addSubview:_composeToolbar];
 
+  _mediaPreview = [[UIButton alloc] initWithFrame:CGRectMake(0, _composeView.height, 320, 216)];
+  [_mediaPreview addTarget:self action:@selector(uploadMedia) forControlEvents:UIControlEventTouchUpInside];
+  [_mediaPreview setBackgroundImage:[UIImage imageNamed:@"photo_add.png"] forState:UIControlStateNormal];
+  [self.view addSubview:_mediaPreview];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -165,7 +176,22 @@
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
 }
 
-- (void)uploadPicture {
+- (void)showMedia {
+  [self.view endEditing:YES];
+  return;
+}
+
+- (void)showFriends {
+  [self.view endEditing:YES];
+  return; 
+}
+
+- (void)showPlaces {
+  [self.view endEditing:YES];
+  return;
+}
+
+- (void)uploadMedia {
   UIActionSheet *actionSheet = [[UIActionSheet alloc] init];
   
   if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -262,11 +288,10 @@
   
   if (up) {
     _composeView.height = self.view.bounds.size.height - keyboardFrame.size.height;
+    _composeToolbar.top = _composeView.height - _composeToolbar.height;
   } else {
     _composeView.height = self.view.bounds.size.height + keyboardFrame.size.height;
   }
-  
-  _composeToolbar.top = _composeView.height - _composeToolbar.height;
   
 //  _message.height = up ? self.view.bounds.size.height - 44 - keyboardFrame.size.height - 20 : 30;
 //  _backgroundView.height = _message.height;
@@ -282,9 +307,11 @@
   
   [[ComposeDataCenter defaultCenter] setDelegate:nil];
 
+  RELEASE_SAFELY(_mediaPreview);
   RELEASE_SAFELY(_composeToolbar);
   RELEASE_SAFELY(_composeView);
   RELEASE_SAFELY(_message);
+  RELEASE_SAFELY(_thumbnailImage);
   RELEASE_SAFELY(_uploadedImage);
   RELEASE_SAFELY(_uploadedVideo);
   RELEASE_SAFELY(_uploadedVideoPath);

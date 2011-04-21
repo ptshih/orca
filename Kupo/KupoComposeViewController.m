@@ -19,11 +19,12 @@
   _navTitleLabel.text = @"New Message";
   
   _message.frame = CGRectMake(0, 0, 320, 156);
+  
+  [_message becomeFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [_message becomeFirstResponder];
 }
 
 - (void)send {
