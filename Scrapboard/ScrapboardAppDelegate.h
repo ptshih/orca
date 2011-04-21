@@ -14,7 +14,7 @@
 @class LoginViewController;
 @class EventViewController;
 
-@interface KupoAppDelegate : NSObject <UIApplicationDelegate, LoginDelegate, PSDataCenterDelegate> {
+@interface ScrapboardAppDelegate : NSObject <UIApplicationDelegate, LoginDelegate, PSDataCenterDelegate> {
   UIWindow *_window;
   Facebook *_facebook;
   LoginViewController *_loginViewController;

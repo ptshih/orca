@@ -134,15 +134,15 @@
 
 #pragma mark -
 #pragma mark LoginDelegate
-- (void)kupoDidLogin {
-  DLog(@"Kupo Logged In");
+- (void)userDidLogin {
+  DLog(@"User Logged In");
   
   // Change login screen to edu walkthru / loading
   
   [self startRegister];
 }
 
-- (void)kupoDidLogout {
+- (void)userDidLogout {
   // Delete all existing data
   [LICoreDataStack resetPersistentStore];
   [self tryLogin];
@@ -180,7 +180,7 @@
   // Determine if this is register or session
   NSString *requestUrlString = [[operation requestURL] absoluteString];
   if ([requestUrlString rangeOfString:@"register"].location != NSNotFound) {  
-    // Kupo server will send user ID, name, and array of friend ids
+    // Our server will send user ID, name, and array of friend ids
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
     [[NSUserDefaults standardUserDefaults] setObject:[[[LoginDataCenter defaultCenter] response] valueForKey:@"access_token"] forKey:@"accessToken"];
     [[NSUserDefaults standardUserDefaults] setObject:[[[LoginDataCenter defaultCenter] response] valueForKey:@"facebook_id"] forKey:@"facebookId"];

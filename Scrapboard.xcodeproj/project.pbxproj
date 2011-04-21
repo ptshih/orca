@@ -62,8 +62,6 @@
 		2538FFB2133BFEF700ACE127 /* navigationbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FFAA133BFEF700ACE127 /* navigationbar_bg@2x.png */; };
 		2538FFB3133BFEF700ACE127 /* navigationbar_button_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FFAB133BFEF700ACE127 /* navigationbar_button_back.png */; };
 		2538FFBD133C90A100ACE127 /* photo_frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FFBC133C90A100ACE127 /* photo_frame.png */; };
-		254DAEB013511BCF009D99E0 /* Kupo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 254DAEAE13511BCF009D99E0 /* Kupo.xcdatamodeld */; };
-		254DAEB113511BCF009D99E0 /* Kupo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 254DAEAE13511BCF009D99E0 /* Kupo.xcdatamodeld */; };
 		258B144613512A3800091A85 /* Nearby.m in Sources */ = {isa = PBXBuildFile; fileRef = 258B144513512A3800091A85 /* Nearby.m */; };
 		258B144713512A3800091A85 /* Nearby.m in Sources */ = {isa = PBXBuildFile; fileRef = 258B144513512A3800091A85 /* Nearby.m */; };
 		258B147413515B5300091A85 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 258B147313515B5300091A85 /* MapViewController.m */; };
@@ -81,6 +79,8 @@
 		259C7B72134A916500C37AE1 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 259C7B70134A914800C37AE1 /* MediaPlayer.framework */; };
 		259C7B75134A92FB00C37AE1 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B74134A92EE00C37AE1 /* VideoViewController.m */; };
 		259C7B76134A92FB00C37AE1 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B74134A92EE00C37AE1 /* VideoViewController.m */; };
+		25A2A7E1135FC0D70005808D /* Scrapboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A7DF135FC0D70005808D /* Scrapboard.xcdatamodeld */; };
+		25A2A7E2135FC0D70005808D /* Scrapboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A7DF135FC0D70005808D /* Scrapboard.xcdatamodeld */; };
 		25B2F4A9135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
 		25B2F4AA135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
 		25B4C9A0135B1C97005949DD /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B4C99F135B1C97005949DD /* Kupo.m */; };
@@ -90,13 +90,13 @@
 		25CEF80B1339F278006F23A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80A1339F278006F23A7 /* CoreGraphics.framework */; };
 		25CEF80D1339F278006F23A7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80C1339F278006F23A7 /* CoreData.framework */; };
 		25CEF8161339F278006F23A7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8151339F278006F23A7 /* main.m */; };
-		25CEF8191339F278006F23A7 /* KupoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8181339F278006F23A7 /* KupoAppDelegate.m */; };
+		25CEF8191339F278006F23A7 /* ScrapboardAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8181339F278006F23A7 /* ScrapboardAppDelegate.m */; };
 		25CEF8261339F279006F23A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8061339F278006F23A7 /* UIKit.framework */; };
 		25CEF8271339F279006F23A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8081339F278006F23A7 /* Foundation.framework */; };
 		25CEF8281339F279006F23A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80A1339F278006F23A7 /* CoreGraphics.framework */; };
 		25CEF8291339F279006F23A7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80C1339F278006F23A7 /* CoreData.framework */; };
-		25CEF8341339F279006F23A7 /* KupoTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 25CEF8331339F279006F23A7 /* KupoTests.h */; };
-		25CEF8361339F279006F23A7 /* KupoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8351339F279006F23A7 /* KupoTests.m */; };
+		25CEF8341339F279006F23A7 /* ScrapboardTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 25CEF8331339F279006F23A7 /* ScrapboardTests.h */; };
+		25CEF8361339F279006F23A7 /* ScrapboardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8351339F279006F23A7 /* ScrapboardTests.m */; };
 		25CEF8831339F6E9006F23A7 /* LICoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8801339F6E9006F23A7 /* LICoreDataStack.m */; };
 		25CEF8841339F6E9006F23A7 /* LICoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8801339F6E9006F23A7 /* LICoreDataStack.m */; };
 		25CEF89A1339FB8B006F23A7 /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CEF8891339FB8B006F23A7 /* NSData+Compression.m */; };
@@ -271,11 +271,11 @@
 
 /* Begin PBXFileReference section */
 		25033EA71347402100633052 /* ComposeDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeDataCenter.h; sourceTree = "<group>"; };
-		25033EA81347402300633052 /* ComposeDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeDataCenter.m; sourceTree = "<group>"; };
+		25033EA81347402300633052 /* ComposeDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ComposeDataCenter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		25033EB3134866A000633052 /* NearbyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyViewController.h; sourceTree = "<group>"; };
 		25033EB4134866A100633052 /* NearbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyViewController.m; sourceTree = "<group>"; };
 		25033EB71348670300633052 /* NearbyDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyDataCenter.h; sourceTree = "<group>"; };
-		25033EB81348670700633052 /* NearbyDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyDataCenter.m; sourceTree = "<group>"; };
+		25033EB81348670700633052 /* NearbyDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NearbyDataCenter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		2507996B13487925003269F8 /* NearbyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyCell.h; sourceTree = "<group>"; };
 		2507996C13487925003269F8 /* NearbyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyCell.m; sourceTree = "<group>"; };
 		250B3186133EBDE70011EEDD /* CardModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardModalViewController.h; sourceTree = "<group>"; };
@@ -334,7 +334,6 @@
 		2538FFAA133BFEF700ACE127 /* navigationbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationbar_bg@2x.png"; sourceTree = "<group>"; };
 		2538FFAB133BFEF700ACE127 /* navigationbar_button_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigationbar_button_back.png; sourceTree = "<group>"; };
 		2538FFBC133C90A100ACE127 /* photo_frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_frame.png; sourceTree = "<group>"; };
-		254DAEAF13511BCF009D99E0 /* Kupo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kupo.xcdatamodel; sourceTree = "<group>"; };
 		258B144413512A3800091A85 /* Nearby.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nearby.h; sourceTree = "<group>"; };
 		258B144513512A3800091A85 /* Nearby.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Nearby.m; sourceTree = "<group>"; };
 		258B147213515B5300091A85 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -351,25 +350,26 @@
 		259C7B70134A914800C37AE1 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		259C7B73134A92E300C37AE1 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		259C7B74134A92EE00C37AE1 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
+		25A2A7E0135FC0D70005808D /* Scrapboard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Scrapboard.xcdatamodel; sourceTree = "<group>"; };
 		25B2F4A7135180EB00DDF1BC /* PSNullView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNullView.h; sourceTree = "<group>"; };
 		25B2F4A8135180EB00DDF1BC /* PSNullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSNullView.m; sourceTree = "<group>"; };
 		25B4C99E135B1C96005949DD /* Kupo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kupo.h; sourceTree = "<group>"; };
 		25B4C99F135B1C97005949DD /* Kupo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Kupo.m; sourceTree = "<group>"; };
-		25CEF8021339F278006F23A7 /* Kupo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kupo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		25CEF8021339F278006F23A7 /* Scrapboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrapboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25CEF8061339F278006F23A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		25CEF8081339F278006F23A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		25CEF80A1339F278006F23A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		25CEF80C1339F278006F23A7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		25CEF8101339F278006F23A7 /* Kupo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Kupo-Info.plist"; sourceTree = "<group>"; };
-		25CEF8141339F278006F23A7 /* Kupo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Kupo-Prefix.pch"; sourceTree = "<group>"; };
+		25CEF8101339F278006F23A7 /* Scrapboard-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Scrapboard-Info.plist"; sourceTree = "<group>"; };
+		25CEF8141339F278006F23A7 /* Scrapboard-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Scrapboard-Prefix.pch"; sourceTree = "<group>"; };
 		25CEF8151339F278006F23A7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		25CEF8171339F278006F23A7 /* KupoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KupoAppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		25CEF8181339F278006F23A7 /* KupoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KupoAppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		25CEF8251339F279006F23A7 /* KupoTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KupoTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		25CEF82E1339F279006F23A7 /* KupoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KupoTests-Info.plist"; sourceTree = "<group>"; };
-		25CEF8321339F279006F23A7 /* KupoTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KupoTests-Prefix.pch"; sourceTree = "<group>"; };
-		25CEF8331339F279006F23A7 /* KupoTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KupoTests.h; sourceTree = "<group>"; };
-		25CEF8351339F279006F23A7 /* KupoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KupoTests.m; sourceTree = "<group>"; };
+		25CEF8171339F278006F23A7 /* ScrapboardAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ScrapboardAppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		25CEF8181339F278006F23A7 /* ScrapboardAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ScrapboardAppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		25CEF8251339F279006F23A7 /* ScrapboardTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrapboardTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		25CEF82E1339F279006F23A7 /* ScrapboardTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ScrapboardTests-Info.plist"; sourceTree = "<group>"; };
+		25CEF8321339F279006F23A7 /* ScrapboardTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ScrapboardTests-Prefix.pch"; sourceTree = "<group>"; };
+		25CEF8331339F279006F23A7 /* ScrapboardTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrapboardTests.h; sourceTree = "<group>"; };
+		25CEF8351339F279006F23A7 /* ScrapboardTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrapboardTests.m; sourceTree = "<group>"; };
 		25CEF87F1339F6E9006F23A7 /* LICoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LICoreDataStack.h; sourceTree = "<group>"; };
 		25CEF8801339F6E9006F23A7 /* LICoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LICoreDataStack.m; sourceTree = "<group>"; };
 		25CEF8881339FB8B006F23A7 /* NSData+Compression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Compression.h"; sourceTree = "<group>"; };
@@ -430,8 +430,8 @@
 		25EFD38A13425B2C000108B8 /* photo_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_add@2x.png"; sourceTree = "<group>"; };
 		25EFD38D13425B65000108B8 /* photo_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_add.png; sourceTree = "<group>"; };
 		25EFD3FD1343E18D000108B8 /* LoginDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginDataCenter.h; sourceTree = "<group>"; };
-		25EFD3FE1343E18E000108B8 /* LoginDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginDataCenter.m; sourceTree = "<group>"; };
-		25EFD4011343E44C000108B8 /* NetworkConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkConstants.h; sourceTree = "<group>"; };
+		25EFD3FE1343E18E000108B8 /* LoginDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LoginDataCenter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		25EFD4011343E44C000108B8 /* NetworkConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NetworkConstants.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		25EFD4031343E774000108B8 /* HashValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashValue.h; sourceTree = "<group>"; };
 		25EFD4041343E774000108B8 /* HashValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HashValue.m; sourceTree = "<group>"; };
 		25EFD4071343EE7B000108B8 /* login_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_facebook.png; sourceTree = "<group>"; };
@@ -441,7 +441,7 @@
 		25EFD40F1343F196000108B8 /* row_gradient_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = row_gradient_selected.png; sourceTree = "<group>"; };
 		25EFD4101343F19A000108B8 /* row_gradient_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "row_gradient_selected@2x.png"; sourceTree = "<group>"; };
 		25EFD4151343F406000108B8 /* MeDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeDataCenter.h; sourceTree = "<group>"; };
-		25EFD4161343F409000108B8 /* MeDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeDataCenter.m; sourceTree = "<group>"; };
+		25EFD4161343F409000108B8 /* MeDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MeDataCenter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		25EFD4191343F596000108B8 /* CardModalTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardModalTableViewController.h; sourceTree = "<group>"; };
 		25EFD41A1343F59F000108B8 /* CardModalTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardModalTableViewController.m; sourceTree = "<group>"; };
 		25F27DBA135C3F1500776F5E /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
@@ -636,8 +636,8 @@
 		25C1E5C51353C4AB00A0669E /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
-				25CEF8171339F278006F23A7 /* KupoAppDelegate.h */,
-				25CEF8181339F278006F23A7 /* KupoAppDelegate.m */,
+				25CEF8171339F278006F23A7 /* ScrapboardAppDelegate.h */,
+				25CEF8181339F278006F23A7 /* ScrapboardAppDelegate.m */,
 			);
 			name = AppDelegate;
 			sourceTree = "<group>";
@@ -645,10 +645,10 @@
 		25CEF7F71339F278006F23A7 = {
 			isa = PBXGroup;
 			children = (
-				25CEF80E1339F278006F23A7 /* Kupo */,
+				25CEF80E1339F278006F23A7 /* Scrapboard */,
 				25CEF8FE133A000C006F23A7 /* Resources */,
 				25CEF90B133A0219006F23A7 /* Facebook */,
-				25CEF82C1339F279006F23A7 /* KupoTests */,
+				25CEF82C1339F279006F23A7 /* ScrapboardTests */,
 				25FB8C1E133ACB1800C130A8 /* Fixtures */,
 				25CEF8051339F278006F23A7 /* Frameworks */,
 				25CEF8031339F278006F23A7 /* Products */,
@@ -658,8 +658,8 @@
 		25CEF8031339F278006F23A7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				25CEF8021339F278006F23A7 /* Kupo.app */,
-				25CEF8251339F279006F23A7 /* KupoTests.octest */,
+				25CEF8021339F278006F23A7 /* Scrapboard.app */,
+				25CEF8251339F279006F23A7 /* ScrapboardTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -683,7 +683,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		25CEF80E1339F278006F23A7 /* Kupo */ = {
+		25CEF80E1339F278006F23A7 /* Scrapboard */ = {
 			isa = PBXGroup;
 			children = (
 				258B143E1351293C00091A85 /* MapKit */,
@@ -699,38 +699,38 @@
 				25C1E5C51353C4AB00A0669E /* AppDelegate */,
 				25CEF80F1339F278006F23A7 /* Supporting Files */,
 			);
-			path = Kupo;
+			path = Scrapboard;
 			sourceTree = "<group>";
 		};
 		25CEF80F1339F278006F23A7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				254DAEAE13511BCF009D99E0 /* Kupo.xcdatamodeld */,
+				25A2A7DF135FC0D70005808D /* Scrapboard.xcdatamodeld */,
 				25CEF8FD1339FFD3006F23A7 /* Constants.h */,
 				25EFD4011343E44C000108B8 /* NetworkConstants.h */,
-				25CEF8101339F278006F23A7 /* Kupo-Info.plist */,
+				25CEF8101339F278006F23A7 /* Scrapboard-Info.plist */,
 				25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */,
-				25CEF8141339F278006F23A7 /* Kupo-Prefix.pch */,
+				25CEF8141339F278006F23A7 /* Scrapboard-Prefix.pch */,
 				25CEF8151339F278006F23A7 /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		25CEF82C1339F279006F23A7 /* KupoTests */ = {
+		25CEF82C1339F279006F23A7 /* ScrapboardTests */ = {
 			isa = PBXGroup;
 			children = (
-				25CEF8331339F279006F23A7 /* KupoTests.h */,
-				25CEF8351339F279006F23A7 /* KupoTests.m */,
+				25CEF8331339F279006F23A7 /* ScrapboardTests.h */,
+				25CEF8351339F279006F23A7 /* ScrapboardTests.m */,
 				25CEF82D1339F279006F23A7 /* Supporting Files */,
 			);
-			path = KupoTests;
+			path = ScrapboardTests;
 			sourceTree = "<group>";
 		};
 		25CEF82D1339F279006F23A7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				25CEF82E1339F279006F23A7 /* KupoTests-Info.plist */,
-				25CEF8321339F279006F23A7 /* KupoTests-Prefix.pch */,
+				25CEF82E1339F279006F23A7 /* ScrapboardTests-Info.plist */,
+				25CEF8321339F279006F23A7 /* ScrapboardTests-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1116,9 +1116,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		25CEF8011339F278006F23A7 /* Kupo */ = {
+		25CEF8011339F278006F23A7 /* Scrapboard */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 25CEF8391339F279006F23A7 /* Build configuration list for PBXNativeTarget "Kupo" */;
+			buildConfigurationList = 25CEF8391339F279006F23A7 /* Build configuration list for PBXNativeTarget "Scrapboard" */;
 			buildPhases = (
 				25CEF7FE1339F278006F23A7 /* Sources */,
 				25CEF7FF1339F278006F23A7 /* Frameworks */,
@@ -1128,14 +1128,14 @@
 			);
 			dependencies = (
 			);
-			name = Kupo;
+			name = Scrapboard;
 			productName = Moogle;
-			productReference = 25CEF8021339F278006F23A7 /* Kupo.app */;
+			productReference = 25CEF8021339F278006F23A7 /* Scrapboard.app */;
 			productType = "com.apple.product-type.application";
 		};
-		25CEF8241339F279006F23A7 /* KupoTests */ = {
+		25CEF8241339F279006F23A7 /* ScrapboardTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 25CEF83C1339F279006F23A7 /* Build configuration list for PBXNativeTarget "KupoTests" */;
+			buildConfigurationList = 25CEF83C1339F279006F23A7 /* Build configuration list for PBXNativeTarget "ScrapboardTests" */;
 			buildPhases = (
 				25CEF8201339F279006F23A7 /* Sources */,
 				25CEF8211339F279006F23A7 /* Frameworks */,
@@ -1147,9 +1147,9 @@
 			dependencies = (
 				25CEF82B1339F279006F23A7 /* PBXTargetDependency */,
 			);
-			name = KupoTests;
+			name = ScrapboardTests;
 			productName = MoogleTests;
-			productReference = 25CEF8251339F279006F23A7 /* KupoTests.octest */;
+			productReference = 25CEF8251339F279006F23A7 /* ScrapboardTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -1157,7 +1157,7 @@
 /* Begin PBXProject section */
 		25CEF7F91339F278006F23A7 /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 25CEF7FC1339F278006F23A7 /* Build configuration list for PBXProject "Kupo" */;
+			buildConfigurationList = 25CEF7FC1339F278006F23A7 /* Build configuration list for PBXProject "Scrapboard" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1169,8 +1169,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				25CEF8011339F278006F23A7 /* Kupo */,
-				25CEF8241339F279006F23A7 /* KupoTests */,
+				25CEF8011339F278006F23A7 /* Scrapboard */,
+				25CEF8241339F279006F23A7 /* ScrapboardTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1277,7 +1277,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25CEF8341339F279006F23A7 /* KupoTests.h in Resources */,
+				25CEF8341339F279006F23A7 /* ScrapboardTests.h in Resources */,
 				25CEF92E133A021A006F23A7 /* FBDialog.bundle in Resources */,
 				25FB8BD1133A1B9500C130A8 /* InitialDefaults.plist in Resources */,
 				25FB8C21133ACB2400C130A8 /* pods.json in Resources */,
@@ -1309,7 +1309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				25CEF8161339F278006F23A7 /* main.m in Sources */,
-				25CEF8191339F278006F23A7 /* KupoAppDelegate.m in Sources */,
+				25CEF8191339F278006F23A7 /* ScrapboardAppDelegate.m in Sources */,
 				25CEF8831339F6E9006F23A7 /* LICoreDataStack.m in Sources */,
 				25CEF89A1339FB8B006F23A7 /* NSData+Compression.m in Sources */,
 				25CEF89C1339FB8B006F23A7 /* NSDate+HumanInterval.m in Sources */,
@@ -1379,7 +1379,6 @@
 				259C7B4B1349733000C37AE1 /* Reachability.m in Sources */,
 				259C7B601349BCEA00C37AE1 /* DetailViewController.m in Sources */,
 				259C7B75134A92FB00C37AE1 /* VideoViewController.m in Sources */,
-				254DAEB013511BCF009D99E0 /* Kupo.xcdatamodeld in Sources */,
 				258B144613512A3800091A85 /* Nearby.m in Sources */,
 				258B147413515B5300091A85 /* MapViewController.m in Sources */,
 				25B2F4A9135180EB00DDF1BC /* PSNullView.m in Sources */,
@@ -1387,6 +1386,7 @@
 				25F27DBC135C3F1500776F5E /* Event.m in Sources */,
 				25FE399E135ECF9800DE1EA5 /* KupoComposeViewController.m in Sources */,
 				25FE39A3135ECFE300DE1EA5 /* EventComposeViewController.m in Sources */,
+				25A2A7E1135FC0D70005808D /* Scrapboard.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1394,7 +1394,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25CEF8361339F279006F23A7 /* KupoTests.m in Sources */,
+				25CEF8361339F279006F23A7 /* ScrapboardTests.m in Sources */,
 				25CEF8841339F6E9006F23A7 /* LICoreDataStack.m in Sources */,
 				25CEF89B1339FB8B006F23A7 /* NSData+Compression.m in Sources */,
 				25CEF89D1339FB8B006F23A7 /* NSDate+HumanInterval.m in Sources */,
@@ -1443,7 +1443,6 @@
 				259C7B4C1349733000C37AE1 /* Reachability.m in Sources */,
 				259C7B611349BCEA00C37AE1 /* DetailViewController.m in Sources */,
 				259C7B76134A92FB00C37AE1 /* VideoViewController.m in Sources */,
-				254DAEB113511BCF009D99E0 /* Kupo.xcdatamodeld in Sources */,
 				258B144713512A3800091A85 /* Nearby.m in Sources */,
 				258B147513515B5300091A85 /* MapViewController.m in Sources */,
 				25B2F4AA135180EB00DDF1BC /* PSNullView.m in Sources */,
@@ -1451,6 +1450,7 @@
 				25F27DBD135C3F1500776F5E /* Event.m in Sources */,
 				25FE399F135ECF9800DE1EA5 /* KupoComposeViewController.m in Sources */,
 				25FE39A4135ECFE300DE1EA5 /* EventComposeViewController.m in Sources */,
+				25A2A7E2135FC0D70005808D /* Scrapboard.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1459,7 +1459,7 @@
 /* Begin PBXTargetDependency section */
 		25CEF82B1339F279006F23A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 25CEF8011339F278006F23A7 /* Kupo */;
+			target = 25CEF8011339F278006F23A7 /* Scrapboard */;
 			targetProxy = 25CEF82A1339F279006F23A7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1509,10 +1509,10 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Kupo/Kupo-Prefix.pch";
-				INFOPLIST_FILE = "Kupo/Kupo-Info.plist";
+				GCC_PREFIX_HEADER = "Scrapboard/Scrapboard-Prefix.pch";
+				INFOPLIST_FILE = "Scrapboard/Scrapboard-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
-				PRODUCT_NAME = Kupo;
+				PRODUCT_NAME = Scrapboard;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1525,10 +1525,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Kupo/Kupo-Prefix.pch";
-				INFOPLIST_FILE = "Kupo/Kupo-Info.plist";
+				GCC_PREFIX_HEADER = "Scrapboard/Scrapboard-Prefix.pch";
+				INFOPLIST_FILE = "Scrapboard/Scrapboard-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
-				PRODUCT_NAME = Kupo;
+				PRODUCT_NAME = Scrapboard;
 				PROVISIONING_PROFILE = "";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -1545,13 +1545,13 @@
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "KupoTests/KupoTests-Prefix.pch";
-				INFOPLIST_FILE = "KupoTests/KupoTests-Info.plist";
+				GCC_PREFIX_HEADER = "ScrapboardTests/ScrapboardTests-Prefix.pch";
+				INFOPLIST_FILE = "ScrapboardTests/ScrapboardTests-Info.plist";
 				OTHER_LDFLAGS = (
 					"-framework",
 					SenTestingKit,
 				);
-				PRODUCT_NAME = KupoTests;
+				PRODUCT_NAME = ScrapboardTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -1567,13 +1567,13 @@
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "KupoTests/KupoTests-Prefix.pch";
-				INFOPLIST_FILE = "KupoTests/KupoTests-Info.plist";
+				GCC_PREFIX_HEADER = "ScrapboardTests/ScrapboardTests-Prefix.pch";
+				INFOPLIST_FILE = "ScrapboardTests/ScrapboardTests-Info.plist";
 				OTHER_LDFLAGS = (
 					"-framework",
 					SenTestingKit,
 				);
-				PRODUCT_NAME = KupoTests;
+				PRODUCT_NAME = ScrapboardTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -1582,7 +1582,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		25CEF7FC1339F278006F23A7 /* Build configuration list for PBXProject "Kupo" */ = {
+		25CEF7FC1339F278006F23A7 /* Build configuration list for PBXProject "Scrapboard" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				25CEF8371339F279006F23A7 /* Debug */,
@@ -1591,7 +1591,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		25CEF8391339F279006F23A7 /* Build configuration list for PBXNativeTarget "Kupo" */ = {
+		25CEF8391339F279006F23A7 /* Build configuration list for PBXNativeTarget "Scrapboard" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				25CEF83A1339F279006F23A7 /* Debug */,
@@ -1600,7 +1600,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		25CEF83C1339F279006F23A7 /* Build configuration list for PBXNativeTarget "KupoTests" */ = {
+		25CEF83C1339F279006F23A7 /* Build configuration list for PBXNativeTarget "ScrapboardTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				25CEF83D1339F279006F23A7 /* Debug */,
@@ -1612,13 +1612,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		254DAEAE13511BCF009D99E0 /* Kupo.xcdatamodeld */ = {
+		25A2A7DF135FC0D70005808D /* Scrapboard.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				254DAEAF13511BCF009D99E0 /* Kupo.xcdatamodel */,
+				25A2A7E0135FC0D70005808D /* Scrapboard.xcdatamodel */,
 			);
-			currentVersion = 254DAEAF13511BCF009D99E0 /* Kupo.xcdatamodel */;
-			path = Kupo.xcdatamodeld;
+			currentVersion = 25A2A7E0135FC0D70005808D /* Scrapboard.xcdatamodel */;
+			path = Scrapboard.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
