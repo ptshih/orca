@@ -14,6 +14,7 @@
 #define TIMESTAMP_FONT_SIZE 12.0
 #define PHOTO_SIZE 100.0
 #define PHOTO_SPACING 5.0
+#define QUOTE_SPACING 5.0
 
 static UIImage *_quoteImage = nil;
 
@@ -55,6 +56,8 @@ static UIImage *_quoteImage = nil;
     [self.contentView addSubview:_messageLabel];
     [self.contentView addSubview:_timestampLabel];
     
+    _quoteImageView = [[UIImageView alloc] initWithImage:_quoteImage];
+    
     _photoImageView = [[PSImageView alloc] initWithFrame:CGRectMake(0, 0, PHOTO_SIZE, PHOTO_SIZE)];
     _photoImageView.placeholderImage = [[UIImage imageNamed:@"photo_frame.png"] stretchableImageWithLeftCapWidth:16 topCapHeight:16];
   }
@@ -81,22 +84,30 @@ static UIImage *_quoteImage = nil;
   [_nameLabel sizeToFitFixedWidth:(textWidth - _timestampLabel.width - MARGIN_X)];
   _nameLabel.left = left;
   _nameLabel.top = top;
-  
-  // Row 2
   top = _nameLabel.bottom;
   
+  // Row 2
+
   // Message Label
-  _messageLabel.text = _kupo.message;
-  [_messageLabel sizeToFitFixedWidth:textWidth];
-  _messageLabel.left = left;
-  _messageLabel.top = top;
+  if ([_kupo.message length] > 0) {
+    [self.contentView addSubview:_quoteImageView];
+    _quoteImageView.left = left;
+    _quoteImageView.top = top;
+    
+    _messageLabel.text = _kupo.message;
+    [_messageLabel sizeToFitFixedWidth:textWidth - _quoteImageView.width - QUOTE_SPACING];
+    _messageLabel.left = left + _quoteImageView.width + QUOTE_SPACING;
+    _messageLabel.top = top;
+    top = _messageLabel.bottom;
+  } else {
+    [_quoteImageView removeFromSuperview];
+  }
   
   // Row 3
-  top = _messageLabel.bottom;
   
   // Optional Photo Thumbnail
   if (_hasPhoto) {
-    [self addSubview:_photoImageView];
+    [self.contentView addSubview:_photoImageView];
     _photoImageView.left = left;
     _photoImageView.top = top + PHOTO_SPACING;
     _photoImageView.width = PHOTO_SIZE;
@@ -190,6 +201,7 @@ static UIImage *_quoteImage = nil;
   RELEASE_SAFELY(_messageLabel);
   RELEASE_SAFELY(_timestampLabel);
   RELEASE_SAFELY(_kupo);
+  RELEASE_SAFELY(_quoteImageView);
   RELEASE_SAFELY(_photoImageView);
   [super dealloc];
 }

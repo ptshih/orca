@@ -16,6 +16,7 @@
   UILabel *_timestampLabel;
   
   Kupo *_kupo;
+  UIImageView *_quoteImageView;
   PSImageView *_photoImageView; // optional
   BOOL _hasPhoto;
 }
