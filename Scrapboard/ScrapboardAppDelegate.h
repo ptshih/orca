@@ -12,14 +12,13 @@
 
 @class Facebook;
 @class LoginViewController;
-@class EventViewController;
+@class LauncherViewController;
 
 @interface ScrapboardAppDelegate : NSObject <UIApplicationDelegate, LoginDelegate, PSDataCenterDelegate> {
   UIWindow *_window;
   Facebook *_facebook;
   LoginViewController *_loginViewController;
-  EventViewController *_eventViewController;
-  UINavigationController *_navigationController;
+  LauncherViewController *_launcherViewController;
   
   // Session
   NSString *_sessionKey;
@@ -28,7 +27,6 @@
 @property (nonatomic, retain) UIWindow *window;
 @property (readonly) Facebook *facebook;
 @property (retain) NSString *sessionKey;
-@property (nonatomic, retain) UINavigationController *navigationController;
 
 // Private
 + (void)setupDefaults;

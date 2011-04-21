@@ -81,6 +81,18 @@
 		259C7B76134A92FB00C37AE1 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B74134A92EE00C37AE1 /* VideoViewController.m */; };
 		25A2A7E1135FC0D70005808D /* Scrapboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A7DF135FC0D70005808D /* Scrapboard.xcdatamodeld */; };
 		25A2A7E2135FC0D70005808D /* Scrapboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A7DF135FC0D70005808D /* Scrapboard.xcdatamodeld */; };
+		25A2A7E6135FE0230005808D /* LauncherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A7E5135FE0230005808D /* LauncherViewController.m */; };
+		25A2A7E7135FE0230005808D /* LauncherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A7E5135FE0230005808D /* LauncherViewController.m */; };
+		25A2A8A4135FF61A0005808D /* FollowedDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A8A3135FF6190005808D /* FollowedDataCenter.m */; };
+		25A2A8A5135FF61A0005808D /* FollowedDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A8A3135FF6190005808D /* FollowedDataCenter.m */; };
+		25A2A8A8135FF6D00005808D /* FollowedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A8A7135FF6CF0005808D /* FollowedViewController.m */; };
+		25A2A8A9135FF6D00005808D /* FollowedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A8A7135FF6CF0005808D /* FollowedViewController.m */; };
+		25A2A8B0135FF8E60005808D /* FirehoseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A8AF135FF8E50005808D /* FirehoseViewController.m */; };
+		25A2A8B1135FF8E60005808D /* FirehoseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A8AF135FF8E50005808D /* FirehoseViewController.m */; };
+		25A2A8B4135FF9190005808D /* FirehoseDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A8B3135FF9190005808D /* FirehoseDataCenter.m */; };
+		25A2A8B5135FF9190005808D /* FirehoseDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A8B3135FF9190005808D /* FirehoseDataCenter.m */; };
+		25A2A8B8135FFDD30005808D /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A8B7135FFDD30005808D /* Event.m */; };
+		25A2A8B9135FFDD30005808D /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A8B7135FFDD30005808D /* Event.m */; };
 		25B2F4A9135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
 		25B2F4AA135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
 		25B4C9A0135B1C97005949DD /* Kupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B4C99F135B1C97005949DD /* Kupo.m */; };
@@ -168,8 +180,6 @@
 		25EFD4181343F40E000108B8 /* MeDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD4161343F409000108B8 /* MeDataCenter.m */; };
 		25EFD41B1343F5A9000108B8 /* CardModalTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD41A1343F59F000108B8 /* CardModalTableViewController.m */; };
 		25EFD41C1343F5A9000108B8 /* CardModalTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD41A1343F59F000108B8 /* CardModalTableViewController.m */; };
-		25F27DBC135C3F1500776F5E /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F27DBB135C3F1500776F5E /* Event.m */; };
-		25F27DBD135C3F1500776F5E /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F27DBB135C3F1500776F5E /* Event.m */; };
 		25F27E07135D6DCE00776F5E /* button-bar-at.png in Resources */ = {isa = PBXBuildFile; fileRef = 25F27DF8135D6DCE00776F5E /* button-bar-at.png */; };
 		25F27E08135D6DCE00776F5E /* button-bar-at@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25F27DF9135D6DCE00776F5E /* button-bar-at@2x.png */; };
 		25F27E09135D6DCE00776F5E /* button-bar-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 25F27DFA135D6DCE00776F5E /* button-bar-background.png */; };
@@ -351,6 +361,18 @@
 		259C7B73134A92E300C37AE1 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		259C7B74134A92EE00C37AE1 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
 		25A2A7E0135FC0D70005808D /* Scrapboard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Scrapboard.xcdatamodel; sourceTree = "<group>"; };
+		25A2A7E4135FE0230005808D /* LauncherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LauncherViewController.h; sourceTree = "<group>"; };
+		25A2A7E5135FE0230005808D /* LauncherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LauncherViewController.m; sourceTree = "<group>"; };
+		25A2A8A2135FF6190005808D /* FollowedDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowedDataCenter.h; sourceTree = "<group>"; };
+		25A2A8A3135FF6190005808D /* FollowedDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowedDataCenter.m; sourceTree = "<group>"; };
+		25A2A8A6135FF6CE0005808D /* FollowedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowedViewController.h; sourceTree = "<group>"; };
+		25A2A8A7135FF6CF0005808D /* FollowedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowedViewController.m; sourceTree = "<group>"; };
+		25A2A8AE135FF8E40005808D /* FirehoseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirehoseViewController.h; sourceTree = "<group>"; };
+		25A2A8AF135FF8E50005808D /* FirehoseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirehoseViewController.m; sourceTree = "<group>"; };
+		25A2A8B2135FF9180005808D /* FirehoseDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirehoseDataCenter.h; sourceTree = "<group>"; };
+		25A2A8B3135FF9190005808D /* FirehoseDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirehoseDataCenter.m; sourceTree = "<group>"; };
+		25A2A8B6135FFDD30005808D /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		25A2A8B7135FFDD30005808D /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		25B2F4A7135180EB00DDF1BC /* PSNullView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNullView.h; sourceTree = "<group>"; };
 		25B2F4A8135180EB00DDF1BC /* PSNullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSNullView.m; sourceTree = "<group>"; };
 		25B4C99E135B1C96005949DD /* Kupo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kupo.h; sourceTree = "<group>"; };
@@ -444,8 +466,6 @@
 		25EFD4161343F409000108B8 /* MeDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MeDataCenter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		25EFD4191343F596000108B8 /* CardModalTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardModalTableViewController.h; sourceTree = "<group>"; };
 		25EFD41A1343F59F000108B8 /* CardModalTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardModalTableViewController.m; sourceTree = "<group>"; };
-		25F27DBA135C3F1500776F5E /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
-		25F27DBB135C3F1500776F5E /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		25F27DF8135D6DCE00776F5E /* button-bar-at.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-bar-at.png"; sourceTree = "<group>"; };
 		25F27DF9135D6DCE00776F5E /* button-bar-at@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-bar-at@2x.png"; sourceTree = "<group>"; };
 		25F27DFA135D6DCE00776F5E /* button-bar-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-bar-background.png"; sourceTree = "<group>"; };
@@ -813,8 +833,8 @@
 				258B144513512A3800091A85 /* Nearby.m */,
 				25B4C99E135B1C96005949DD /* Kupo.h */,
 				25B4C99F135B1C97005949DD /* Kupo.m */,
-				25F27DBA135C3F1500776F5E /* Event.h */,
-				25F27DBB135C3F1500776F5E /* Event.m */,
+				25A2A8B6135FFDD30005808D /* Event.h */,
+				25A2A8B7135FFDD30005808D /* Event.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1026,6 +1046,10 @@
 				25FB8B98133A069E00C130A8 /* PSDataCenter.m */,
 				25FB8C0B133ABCC900C130A8 /* EventDataCenter.h */,
 				25FB8C0C133ABCCA00C130A8 /* EventDataCenter.m */,
+				25A2A8A2135FF6190005808D /* FollowedDataCenter.h */,
+				25A2A8A3135FF6190005808D /* FollowedDataCenter.m */,
+				25A2A8B2135FF9180005808D /* FirehoseDataCenter.h */,
+				25A2A8B3135FF9190005808D /* FirehoseDataCenter.m */,
 				25FB8C0F133ABCD900C130A8 /* KupoDataCenter.h */,
 				25FB8C10133ABCDA00C130A8 /* KupoDataCenter.m */,
 				25EFD3FD1343E18D000108B8 /* LoginDataCenter.h */,
@@ -1049,12 +1073,18 @@
 				25FB8BB4133A0D3D00C130A8 /* LoginViewController.m */,
 				25FB8C13133ABD1200C130A8 /* EventViewController.h */,
 				25FB8C14133ABD2300C130A8 /* EventViewController.m */,
+				25A2A8A6135FF6CE0005808D /* FollowedViewController.h */,
+				25A2A8A7135FF6CF0005808D /* FollowedViewController.m */,
+				25A2A8AE135FF8E40005808D /* FirehoseViewController.h */,
+				25A2A8AF135FF8E50005808D /* FirehoseViewController.m */,
 				25FB8BD7133A9B0000C130A8 /* KupoViewController.h */,
 				25FB8BD8133A9B0300C130A8 /* KupoViewController.m */,
 				259C7B5E1349BCE400C37AE1 /* DetailViewController.h */,
 				259C7B5F1349BCE600C37AE1 /* DetailViewController.m */,
 				259C7B73134A92E300C37AE1 /* VideoViewController.h */,
 				259C7B74134A92EE00C37AE1 /* VideoViewController.m */,
+				25A2A7E4135FE0230005808D /* LauncherViewController.h */,
+				25A2A7E5135FE0230005808D /* LauncherViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1383,10 +1413,15 @@
 				258B147413515B5300091A85 /* MapViewController.m in Sources */,
 				25B2F4A9135180EB00DDF1BC /* PSNullView.m in Sources */,
 				25B4C9A0135B1C97005949DD /* Kupo.m in Sources */,
-				25F27DBC135C3F1500776F5E /* Event.m in Sources */,
 				25FE399E135ECF9800DE1EA5 /* KupoComposeViewController.m in Sources */,
 				25FE39A3135ECFE300DE1EA5 /* EventComposeViewController.m in Sources */,
 				25A2A7E1135FC0D70005808D /* Scrapboard.xcdatamodeld in Sources */,
+				25A2A7E6135FE0230005808D /* LauncherViewController.m in Sources */,
+				25A2A8A4135FF61A0005808D /* FollowedDataCenter.m in Sources */,
+				25A2A8A8135FF6D00005808D /* FollowedViewController.m in Sources */,
+				25A2A8B0135FF8E60005808D /* FirehoseViewController.m in Sources */,
+				25A2A8B4135FF9190005808D /* FirehoseDataCenter.m in Sources */,
+				25A2A8B8135FFDD30005808D /* Event.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1447,10 +1482,15 @@
 				258B147513515B5300091A85 /* MapViewController.m in Sources */,
 				25B2F4AA135180EB00DDF1BC /* PSNullView.m in Sources */,
 				25B4C9A1135B1C97005949DD /* Kupo.m in Sources */,
-				25F27DBD135C3F1500776F5E /* Event.m in Sources */,
 				25FE399F135ECF9800DE1EA5 /* KupoComposeViewController.m in Sources */,
 				25FE39A4135ECFE300DE1EA5 /* EventComposeViewController.m in Sources */,
 				25A2A7E2135FC0D70005808D /* Scrapboard.xcdatamodeld in Sources */,
+				25A2A7E7135FE0230005808D /* LauncherViewController.m in Sources */,
+				25A2A8A5135FF61A0005808D /* FollowedDataCenter.m in Sources */,
+				25A2A8A9135FF6D00005808D /* FollowedViewController.m in Sources */,
+				25A2A8B1135FF8E60005808D /* FirehoseViewController.m in Sources */,
+				25A2A8B5135FF9190005808D /* FirehoseDataCenter.m in Sources */,
+				25A2A8B9135FFDD30005808D /* Event.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -46,7 +46,7 @@
   MapViewController *mvc = [[MapViewController alloc] init];
   mvc.nearbyPlace = _nearbyPlace;
   mvc.modalTransitionStyle = UIModalTransitionStylePartialCurl;
-  [APP_DELEGATE.navigationController.modalViewController presentModalViewController:mvc animated:YES];
+//  [APP_DELEGATE.navigationController.modalViewController presentModalViewController:mvc animated:YES];
   [mvc release];
 }
 

@@ -11,15 +11,15 @@
 #import "FBConnect.h"
 #import "LICoreDataStack.h"
 #import "LoginViewController.h"
-#import "EventViewController.h"
+#import "LauncherViewController.h"
 #import "LoginDataCenter.h"
+
 
 @implementation ScrapboardAppDelegate
 
 @synthesize window = _window;
 @synthesize facebook = _facebook;
 @synthesize sessionKey = _sessionKey;
-@synthesize navigationController = _navigationController;
 
 + (void)initialize {
   [self setupDefaults];
@@ -53,16 +53,13 @@
   // Setup Facebook
   _facebook = [[Facebook alloc] initWithAppId:FB_APP_ID];
   
-  _eventViewController = [[EventViewController alloc] init];
-  
-  // NavigationController
-  _navigationController = [[UINavigationController alloc] initWithRootViewController:_eventViewController];
+  _launcherViewController = [[LauncherViewController alloc] init];
   
   // LoginVC
   _loginViewController = [[LoginViewController alloc] init];
   _loginViewController.delegate = self;
   
-  [self.window addSubview:_navigationController.view];
+  [self.window addSubview:_launcherViewController.view];
   [self.window makeKeyAndVisible];
   
   // Login if necessary
@@ -121,8 +118,8 @@
 #pragma mark Login
 - (void)tryLogin {
   if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
-    if (![_navigationController.modalViewController isEqual:_loginViewController] && _loginViewController != nil) {
-      [_navigationController presentModalViewController:_loginViewController animated:NO];
+    if (![_launcherViewController.modalViewController isEqual:_loginViewController] && _loginViewController != nil) {
+      [_launcherViewController presentModalViewController:_loginViewController animated:NO];
     }
   } else {
     _facebook.accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
@@ -189,12 +186,12 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     // Flag event controller to reload after logging in
-    _eventViewController.shouldReloadOnAppear = YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
   }
   
   // Session/Register request finished
-  if ([_navigationController.modalViewController isEqual:_loginViewController]) {
-    [_navigationController dismissModalViewControllerAnimated:YES];
+  if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
+    [_launcherViewController dismissModalViewControllerAnimated:YES];
   }
 }
 
@@ -226,8 +223,7 @@
   [[LoginDataCenter defaultCenter] setDelegate:nil];
   RELEASE_SAFELY(_sessionKey);
   RELEASE_SAFELY(_loginViewController);
-  RELEASE_SAFELY(_eventViewController);
-  RELEASE_SAFELY(_navigationController);
+  RELEASE_SAFELY(_launcherViewController);
   RELEASE_SAFELY(_facebook);
   RELEASE_SAFELY(_window);
   [super dealloc];

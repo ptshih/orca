@@ -9,16 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "CardCoreDataTableViewController.h"
 #import "MeDelegate.h"
-
-@class NearbyViewController;
-@class MeViewController;
+#import "KupoViewController.h"
+#import "EventComposeViewController.h"
+#import "MeViewController.h"
+#import "Event.h"
+#import "EventCell.h"
 
 @interface EventViewController : CardCoreDataTableViewController <MeDelegate, UIAlertViewDelegate> {
-  NearbyViewController *_nearbyViewController;
-  UINavigationController *_nearbyNavController;
   MeViewController *_meViewController;
   UINavigationController *_meNavController;
-  NSInteger _limit;
   
   BOOL _shouldReloadOnAppear;
 }

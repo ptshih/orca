@@ -2,7 +2,7 @@
 //  Event.m
 //  Scrapboard
 //
-//  Created by Peter Shih on 4/18/11.
+//  Created by Peter Shih on 4/20/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -12,16 +12,17 @@
 @implementation Event
 @dynamic id;
 @dynamic authorId;
+@dynamic participantIds;
+@dynamic participantFullNames;
 @dynamic timestamp;
 @dynamic authorName;
 @dynamic lastActivity;
-@dynamic participantFirstNames;
-@dynamic participantIds;
 @dynamic isRead;
 @dynamic tag;
-@dynamic participantFullNames;
+@dynamic participantFacebookIds;
+@dynamic participantFirstNames;
 @dynamic authorFacebookId;
 @dynamic name;
-@dynamic participantFacebookIds;
+@dynamic isFollowed;
 
 @end

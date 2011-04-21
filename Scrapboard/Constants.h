@@ -34,6 +34,7 @@
 #define NUM_CARDS 2
 #define CARD_WIDTH 320.0
 #define CARD_HEIGHT 460.0
+#define CARD_SCROLL_HEIGHT 411.0
 #define CARD_HEIGHT_WITH_NAV 416.0
 
 #define RADIANS(degrees) ((degrees * M_PI) / 180.0)

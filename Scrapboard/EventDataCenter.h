@@ -11,6 +11,7 @@
 
 @interface EventDataCenter : PSDataCenter {
   NSManagedObjectContext *_context;
+  NSString *_eventsEndpoint;
 }
 
 @property (nonatomic, assign) NSManagedObjectContext *context;

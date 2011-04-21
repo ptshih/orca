@@ -22,7 +22,6 @@ static KupoDataCenter *_defaultCenter = nil;
   @synchronized(self) {
     if (_defaultCenter == nil) {
       _defaultCenter = [[self alloc] init];
-      _defaultCenter.context = [LICoreDataStack sharedManagedObjectContext];
     }
     return _defaultCenter;
   }
@@ -32,6 +31,7 @@ static KupoDataCenter *_defaultCenter = nil;
   self = [super init];
   if (self) {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
+    self.context = [LICoreDataStack sharedManagedObjectContext];
   }
   return self;
 }

@@ -28,7 +28,7 @@ static UIImage *_backgroundImage = nil;
   [super viewDidLoad];
   self.view.opaque = YES;
   self.view.backgroundColor = [UIColor colorWithPatternImage:_backgroundImage];
-  self.view.frame = CGRectMake(0, 20, 320, 460);
+  self.view.frame = CGRectMake(0, 20, 320, CARD_HEIGHT);
   self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
   self.view.autoresizesSubviews = YES;
 }

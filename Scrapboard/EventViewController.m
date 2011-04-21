@@ -7,13 +7,6 @@
 //
 
 #import "EventViewController.h"
-#import "EventDataCenter.h"
-#import "KupoViewController.h"
-#import "EventComposeViewController.h"
-#import "MeViewController.h"
-#import "NearbyViewController.h"
-#import "Event.h"
-#import "EventCell.h"
 
 @implementation EventViewController
 
@@ -22,10 +15,6 @@
 - (id)init {
   self = [super init];
   if (self) {
-    [[EventDataCenter defaultCenter] setDelegate:self];
-    
-    _limit = 50;
-    
     _shouldReloadOnAppear = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
@@ -52,9 +41,6 @@
   self.navigationItem.rightBarButtonItem = rightButton;
   [rightButton release];
   
-  // Nav Title
-  _navTitleLabel.text = @"#scrapboard";
-  
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
@@ -66,10 +52,6 @@
   
   // Load More
   [self setupLoadMoreView];
-  
-//  UIBarButtonItem *post = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(post)];
-//  self.navigationItem.rightBarButtonItem = post;
-//  [post release];
   
   [self executeFetch];
   if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
@@ -96,28 +78,7 @@
   [self presentModalViewController:_meNavController animated:YES];
 }
 
-- (void)checkin {
-  if (!_nearbyViewController) {
-    _nearbyViewController = [[NearbyViewController alloc] init];
-  }
-  
-  if (!_nearbyNavController) {
-    _nearbyNavController = [[UINavigationController alloc] initWithRootViewController:_nearbyViewController];
-  }
-  
-  [self presentModalViewController:_nearbyNavController animated:YES];
-}
-
 - (void)newEvent {
-//  if (!_composeViewController) {
-//    _composeViewController = [[ComposeViewController alloc] init];
-//  }
-//  
-//  if (!_composeNavController) {
-//    _composeNavController = [[UINavigationController alloc] initWithRootViewController:_composeViewController];
-//  }
-//  
-//  [self presentModalViewController:_composeNavController animated:YES];
   EventComposeViewController *ecvc = [[EventComposeViewController alloc] init];
   UINavigationController *eventComposeNav = [[UINavigationController alloc] initWithRootViewController:ecvc];
   [self presentModalViewController:eventComposeNav animated:YES];
@@ -220,12 +181,11 @@
 #pragma mark -
 #pragma mark CardViewController
 - (void)reloadCardController {
-  DLog(@"reload on thread: %@", [NSThread currentThread]);
   [super reloadCardController];
   
   // Get since date
-  NSDate *sinceDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"since.events"];
-  [[EventDataCenter defaultCenter] getEventsWithSince:sinceDate];
+//  NSDate *sinceDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"since.events"];
+//  [[EventDataCenter defaultCenter] getEventsWithSince:sinceDate];
 //  [[EventDataCenter defaultCenter] loadEventsFromFixture];
 }
 
@@ -240,16 +200,16 @@
   
   [self executeFetch];
   
-  if ([self.fetchedResultsController.fetchedObjects count] > 0) {
-    // Set since and until date
-    Event *firstEvent = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
-    Event *lastEvent = [[self.fetchedResultsController fetchedObjects] lastObject];
-    NSDate *sinceDate = firstEvent.timestamp;
-    NSDate *untilDate = lastEvent.timestamp;
-    [[NSUserDefaults standardUserDefaults] setValue:sinceDate forKey:@"since.events"];
-    [[NSUserDefaults standardUserDefaults] setValue:untilDate forKey:@"until.events"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-  }
+//  if ([self.fetchedResultsController.fetchedObjects count] > 0) {
+//    // Set since and until date
+//    Event *firstEvent = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
+//    Event *lastEvent = [[self.fetchedResultsController fetchedObjects] lastObject];
+//    NSDate *sinceDate = firstEvent.timestamp;
+//    NSDate *untilDate = lastEvent.timestamp;
+//    [[NSUserDefaults standardUserDefaults] setValue:sinceDate forKey:@"since.events"];
+//    [[NSUserDefaults standardUserDefaults] setValue:untilDate forKey:@"until.events"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//  }
 }
 
 - (void)dataCenterDidFail:(LINetworkOperation *)operation {
@@ -262,14 +222,15 @@
   [super loadMore];
   
   // get until date
-  NSDate *untilDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"until.events"];
-  [[EventDataCenter defaultCenter] loadMoreEventsWithUntil:untilDate];
+//  NSDate *untilDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"until.events"];
+//  [[EventDataCenter defaultCenter] loadMoreEventsWithUntil:untilDate];
 }
 
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [[EventDataCenter defaultCenter] getEventsFetchRequest];
+//  return [[EventDataCenter defaultCenter] getEventsFetchRequest];
+  return nil;
 }
 
 #pragma mark -
@@ -291,10 +252,7 @@
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kCoreDataDidReset object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
-  [[EventDataCenter defaultCenter] setDelegate:nil];
-  RELEASE_SAFELY(_nearbyViewController);
   RELEASE_SAFELY(_meViewController);
-  RELEASE_SAFELY(_nearbyNavController);
   RELEASE_SAFELY(_meNavController);
   [super dealloc];
 }

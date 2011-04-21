@@ -22,7 +22,6 @@ static EventDataCenter *_defaultCenter = nil;
   @synchronized(self) {
     if (_defaultCenter == nil) {
       _defaultCenter = [[self alloc] init];
-      _defaultCenter.context = [LICoreDataStack sharedManagedObjectContext];
     }
     return _defaultCenter;
   }
@@ -32,6 +31,8 @@ static EventDataCenter *_defaultCenter = nil;
   self = [super init];
   if (self) {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
+    self.context = [LICoreDataStack sharedManagedObjectContext];
+    _eventsEndpoint = [@"users/me/events" retain];
   }
   return self;
 }
@@ -40,7 +41,7 @@ static EventDataCenter *_defaultCenter = nil;
 }
 
 - (void)getEventsWithSince:(NSDate *)sinceDate {
-  NSURL *eventsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/me/events", API_BASE_URL]];
+  NSURL *eventsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, _eventsEndpoint]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
@@ -52,7 +53,7 @@ static EventDataCenter *_defaultCenter = nil;
 }
 
 - (void)loadMoreEventsWithUntil:(NSDate *)untilDate {
-  NSURL *eventsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/me/events", API_BASE_URL]];
+  NSURL *eventsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, _eventsEndpoint]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
@@ -127,13 +128,14 @@ static EventDataCenter *_defaultCenter = nil;
 - (NSFetchRequest *)getEventsFetchRequest { 
   NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO] autorelease];
   NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
-  NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getEvents" substitutionVariables:[NSDictionary dictionary]];
+  NSFetchRequest * fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getAllEvents" substitutionVariables:[NSDictionary dictionary]];
   [fetchRequest setSortDescriptors:sortDescriptors];
 //  [fetchRequest setFetchLimit:limit];
   return fetchRequest;
 }
 
 - (void)dealloc {
+  RELEASE_SAFELY(_eventsEndpoint);
   [super dealloc];
 }
 
