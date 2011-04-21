@@ -14,6 +14,7 @@
 
 static UIImage *_btnNormal;
 static UIImage *_btnSelected;
+static UIImage *_btnBackground;
 
 @interface HeaderTabView (Private)
 
@@ -27,13 +28,15 @@ static UIImage *_btnSelected;
 @synthesize delegate = _delegate;
 
 + (void)initialize {
-  _btnNormal = [[[UIImage imageNamed:@"btn_filter.png"] stretchableImageWithLeftCapWidth:37 topCapHeight:14] retain];
-  _btnSelected = [[[UIImage imageNamed:@"btn_filter_selected.png"] stretchableImageWithLeftCapWidth:37 topCapHeight:14] retain];
+  _btnNormal = [[[UIImage imageNamed:@"button-header-tab.png"] stretchableImageWithLeftCapWidth:37 topCapHeight:14] retain];
+  _btnSelected = [[[UIImage imageNamed:@"button-header-tab-selected.png"] stretchableImageWithLeftCapWidth:37 topCapHeight:14] retain];
+  _btnBackground = [[UIImage imageNamed:@"button-header-bg.png"] retain];
 }
 
 - (id)initWithFrame:(CGRect)frame andButtonTitles:(NSArray *)titles {
   self = [super initWithFrame:frame];
   if (self) {
+    self.backgroundColor = [UIColor colorWithPatternImage:_btnBackground];
     _buttons = [[NSMutableArray array] retain];
     
     NSUInteger numButtons = [titles count];
@@ -68,10 +71,10 @@ static UIImage *_btnSelected;
 
 - (void)selectButton:(id)sender {
   NSNumber *buttonIndex = [NSNumber numberWithInteger:[self.buttons indexOfObject:sender]];
-  for (UIButton *button in self.buttons) {
-    [button setSelected:NO];
-  }
-  [[self.buttons objectAtIndex:[buttonIndex integerValue]] setSelected:YES];
+//  for (UIButton *button in self.buttons) {
+//    [button setSelected:NO];
+//  }
+//  [[self.buttons objectAtIndex:[buttonIndex integerValue]] setSelected:YES];
   
   // Inform delegate
   if (self.delegate) {
@@ -85,7 +88,7 @@ static UIImage *_btnSelected;
 
 - (void)setSelectedForTabAtIndex:(NSInteger)index {
   [[self.buttons objectAtIndex:index] setSelected:YES];
-  [self selectButton:[self.buttons objectAtIndex:index]];
+//  [self selectButton:[self.buttons objectAtIndex:index]];
 }
 
 - (void)dealloc {

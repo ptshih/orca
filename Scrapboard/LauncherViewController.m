@@ -17,7 +17,7 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _isQuickScroll = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(headerTabSelected:) name:kHeaderTabSelected object:nil];
   }
   return self;
 }
@@ -48,9 +48,9 @@
 
 - (void)setupChrome { 
   // Setup CardScrollView
-  _cardScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, CARD_WIDTH, CARD_SCROLL_HEIGHT)];
+  _cardScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT)];
   _cardScrollView.delegate = self;
-  _cardScrollView.contentSize = CGSizeMake(CARD_WIDTH * NUM_CARDS, CARD_SCROLL_HEIGHT);
+  _cardScrollView.contentSize = CGSizeMake(CARD_WIDTH * NUM_CARDS, CARD_HEIGHT);
   _cardScrollView.contentOffset = CGPointMake(CARD_WIDTH * _currentPage, 0); // start at page 1
   _cardScrollView.scrollsToTop = NO;
   _cardScrollView.pagingEnabled = YES;
@@ -58,13 +58,6 @@
   _cardScrollView.showsHorizontalScrollIndicator = NO;
   
   [self.view addSubview:_cardScrollView];
-  
-  _cardTabBar = [[UITabBar alloc] initWithFrame:CGRectMake(0, self.view.height - 49, 320, 49)];
-  _cardTabBar.delegate = self;
-  UITabBarItem *followedTabItem = [[[UITabBarItem alloc] initWithTitle:@"Followed" image:nil tag:1000] autorelease];
-  UITabBarItem *firehoseTabItem = [[[UITabBarItem alloc] initWithTitle:@"Firehose" image:nil tag:1001] autorelease];
-  [_cardTabBar setItems:[NSArray arrayWithObjects:followedTabItem, firehoseTabItem, nil]];
-  [self.view addSubview:_cardTabBar];
 }
 
 - (void)setupControllers {
@@ -76,8 +69,8 @@
   UINavigationController *firehoseNavController = [[UINavigationController alloc] initWithRootViewController:firehoseViewController];
   
   // Set nav delegates
-  followedNavController.delegate = followedViewController;
-  firehoseNavController.delegate = firehoseViewController;
+  followedNavController.delegate = self;
+  firehoseNavController.delegate = self;
   
   // Add controllers to array
   _cards = [[NSArray alloc] initWithObjects:followedNavController, firehoseNavController, nil];
@@ -85,7 +78,7 @@
   // Set frames for cards and add to card scroll view
   int i = 0;
   for (UINavigationController *card in _cards) {
-    card.view.frame = CGRectMake(CARD_WIDTH * i, 0, CARD_WIDTH, CARD_SCROLL_HEIGHT);
+    card.view.frame = CGRectMake(CARD_WIDTH * i, 0, CARD_WIDTH, CARD_HEIGHT);
     [_cardScrollView addSubview:card.view];
     i++;
   }
@@ -96,19 +89,34 @@
   [firehoseNavController release];
 }
 
+#pragma mark UINavigationControllerDelegate
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+  //  DLog(@"nav will show controller: %@", [viewController class]);
+  // Tell the new visible controller to reload it's data if it responds to it
+  id visibleViewController = [_cards objectAtIndex:_currentPage];
+  
+  // Disable scrolling if not on top layer
+  if ([[visibleViewController viewControllers] count] > 1) {
+    _cardScrollView.scrollEnabled = NO;
+  } else {
+    _cardScrollView.scrollEnabled = YES;
+  }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+  //  DLog(@"nav did show controller: %@", [viewController class]);
+}
+
+- (void)headerTabSelected:(NSNotification *)note {
+  NSDictionary *payload = [note userInfo];
+  NSNumber *tabIndex = [payload valueForKey:@"tabIndex"];
+  [_cardScrollView scrollRectToVisible:[[[self.cards objectAtIndex:[tabIndex integerValue]] view] frame] animated:YES];
+}
 
 #pragma mark -
 #pragma mark Card State Machine
 - (void)updateScrollsToTop {
   // Because only ONE scrollView can have scrollsToTop set to YES under the entire view hieararchy, we need to loop thru all the cards and disable all scrollViews except for the one that is currently visible.
-}
-
-- (void)reloadVisibleCard {
-  // Tell the new visible controller to reload it's data if it responds to it
-  id visibleViewController = [_cards objectAtIndex:_currentPage];
-  if ([[visibleViewController topViewController] respondsToSelector:@selector(reloadCardController)]) {
-    [[visibleViewController topViewController] performSelector:@selector(reloadCardController)];
-  }
 }
 
 - (void)updateCards {
@@ -140,27 +148,6 @@
   
 }
 
-#pragma mark CardTabBar
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-  _isQuickScroll = YES;
-  
-  NSUInteger translatedIndex = ([tabBar.items indexOfObject:item] > 1) ? [tabBar.items indexOfObject:item] - 1 : [tabBar.items indexOfObject:item];
-  [self scrollToCardAtIndex:translatedIndex];
-}
-
-- (void)scrollToCardAtIndex:(NSInteger)index {
-  if (_currentPage == index) return; // Don't scroll if it's the same page
-  
-  [_cardScrollView scrollRectToVisible:[[[self.cards objectAtIndex:index] view] frame] animated:YES];
-  
-  [self zoomOutBeforeScrolling];
-}
-
-- (void)setActiveCardTab {
-  NSUInteger translatedIndex = (_currentPage > 1) ? _currentPage + 1 : _currentPage;
-  _cardTabBar.selectedItem = [_cardTabBar.items objectAtIndex:translatedIndex];
-}
-
 #pragma mark -
 #pragma mark UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
@@ -173,10 +160,6 @@
   CGFloat pageWidth = _cardScrollView.frame.size.width;
   int page = floor((_cardScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
   _currentPage = page;
-  
-  if (!_isQuickScroll) {
-    [self setActiveCardTab];
-  }
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {  
@@ -214,11 +197,6 @@
 }
 
 - (void)zoomInAfterScrolling {
-  if (_isQuickScroll) {
-    _isQuickScroll = NO;
-    [self setActiveCardTab];
-  }
-  
   // When the card is finished paging, zoom it out to take the full screen
   for (UINavigationController *card in _cards) {
     [self zoomIn:card];
@@ -275,6 +253,7 @@
 
 
 - (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kHeaderTabSelected object:nil];
   RELEASE_SAFELY(_cardScrollView);
   RELEASE_SAFELY(_cards);
   [super dealloc];

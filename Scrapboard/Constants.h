@@ -29,6 +29,7 @@
 #define kCoreDataDidReset @"CoreDataDidReset"
 //#define kComposeDidFinish @"ComposeDidFinish"
 //#define kComposeDidFail @"ComposeDidFail"
+#define kHeaderTabSelected @"HeaderTabSelected"
 
 // Cards
 #define NUM_CARDS 2

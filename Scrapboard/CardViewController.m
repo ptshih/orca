@@ -75,6 +75,18 @@
 
 }
 
+#pragma mark HeaderTabView
+// Subclasses may call
+- (void)setupHeaderTabView {
+  _headerTabView = [[HeaderTabView alloc] initWithFrame:CGRectMake(0, 0, 320, 44.0) andButtonTitles:[NSArray arrayWithObjects:@"Followed", @"Firehose", nil]];
+  _headerTabView.delegate = self;
+  [self.view addSubview:_headerTabView];
+}
+
+- (void)tabSelectedAtIndex:(NSNumber *)index {
+  [[NSNotificationCenter defaultCenter] postNotificationName:kHeaderTabSelected object:nil userInfo:[NSDictionary dictionaryWithObject:index forKey:@"tabIndex"]];
+}
+
 // Called when the user logs out and we need to clear all cached data
 // Subclasses should override this method
 - (void)clearCachedData {
@@ -148,15 +160,6 @@
   }
 }
 
-#pragma mark UINavigationControllerDelegate
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-//  DLog(@"nav will show controller: %@", [viewController class]);
-}
-
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-//  DLog(@"nav did show controller: %@", [viewController class]);
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
   return YES;
 //  return UIInterfaceOrientationIsPortrait(interfaceOrientation);
@@ -171,6 +174,7 @@
 }
 
 - (void)dealloc {
+  RELEASE_SAFELY(_headerTabView);
   RELEASE_SAFELY(_nullView);
   RELEASE_SAFELY(_navTitleLabel);
   [super dealloc];

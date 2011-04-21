@@ -41,8 +41,11 @@
   self.navigationItem.rightBarButtonItem = rightButton;
   [rightButton release];
   
+  // HeaderTabView
+  [self setupHeaderTabView];
+  
   // Table
-  CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
+  CGRect tableFrame = CGRectMake(0, 44, CARD_WIDTH, CARD_HEIGHT - 44);
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
   [self setupSearchDisplayControllerWithScopeButtonTitles:[NSArray arrayWithObjects:@"Event", @"Person", nil]];

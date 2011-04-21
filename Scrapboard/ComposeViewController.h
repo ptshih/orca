@@ -13,7 +13,7 @@
 #import "UIImage+ScalingAndCropping.h"
 #import "ComposeDataCenter.h"
 
-@interface ComposeViewController : CardModalViewController <UITextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate> {
+@interface ComposeViewController : CardModalViewController <UITextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate, UINavigationControllerDelegate> {
   UIToolbar *_composeToolbar;
   UIView *_composeView;
   PSTextView *_message;

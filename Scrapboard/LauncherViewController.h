@@ -8,26 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LauncherViewController : UIViewController <UIScrollViewDelegate, UITabBarDelegate> {
+@interface LauncherViewController : UIViewController <UIScrollViewDelegate, UINavigationControllerDelegate> {
   UIScrollView *_cardScrollView;
-  UITabBar *_cardTabBar;
   
   NSArray *_cards;
   NSInteger _currentPage;
   NSInteger _previousPage;
-  
-  BOOL _isQuickScroll;
 }
 
 @property (nonatomic, retain) NSArray *cards;
 
 // Cards
 - (void)updateScrollsToTop;
-- (void)reloadVisibleCard;
 - (void)clearAllCachedData;
-
-// Tab
-- (void)scrollToCardAtIndex:(NSInteger)index;
 
 // Scrolling and Animations
 - (void)zoomOutBeforeScrolling;

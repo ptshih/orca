@@ -11,13 +11,15 @@
 #import "CardStateMachine.h"
 #import "UINavigationBar+Custom.h"
 #import "PSDataCenterDelegate.h"
+#import "HeaderTabView.h"
+#import "HeaderTabViewDelegate.h"
 
 @class PSNullView;
 
-@interface CardViewController : PSViewController <CardStateMachine, PSDataCenterDelegate, UINavigationControllerDelegate> {
+@interface CardViewController : PSViewController <CardStateMachine, PSDataCenterDelegate, HeaderTabViewDelegate> {
   UIScrollView *_activeScrollView; // subclasses should set this if they have a scrollView
   UILabel *_navTitleLabel;
-  
+  HeaderTabView *_headerTabView;
   PSNullView *_nullView;
 }
 
@@ -26,7 +28,9 @@
 - (void)reloadCardController;
 - (void)resetCardController;
 - (void)dataSourceDidLoad;
+
 - (void)setupNullView;
+- (void)setupHeaderTabView;
 - (void)addBackButton;
 
 @end
