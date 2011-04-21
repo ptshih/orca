@@ -30,7 +30,7 @@
 - (void)dataSourceDidLoad;
 
 - (void)setupNullView;
-- (void)setupHeaderTabView;
+- (void)setupHeaderTabViewWithFrame:(CGRect)frame;
 - (void)addBackButton;
 
 @end

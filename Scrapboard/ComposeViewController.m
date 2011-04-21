@@ -133,7 +133,7 @@
   _message = [[PSTextView alloc] initWithFrame:CGRectZero];
   _message.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	_message.returnKeyType = UIReturnKeyDefault;
-	_message.font = [UIFont boldSystemFontOfSize:14.0];
+	_message.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0];
 	_message.delegate = self;
   _message.placeholder = @"Type a message...";
   _message.placeholderColor = [UIColor lightGrayColor];

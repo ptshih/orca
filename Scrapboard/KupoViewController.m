@@ -60,7 +60,7 @@
   [super setupFooterView];
   
   // Setup the fake image view
-  PSImageView *profileImage = [[PSImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
+  PSImageView *profileImage = [[PSImageView alloc] initWithFrame:CGRectMake(10, 7, 30, 30)];
   profileImage.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", [[NSUserDefaults standardUserDefaults] objectForKey:@"facebookId"]];
   [profileImage loadImage];
   profileImage.layer.cornerRadius = 5.0;
@@ -69,7 +69,7 @@
   [profileImage release];
   
   // Setup the fake comment button
-  UIButton *commentButton = [[UIButton alloc] initWithFrame:CGRectMake(45, 5, 265, 30)];
+  UIButton *commentButton = [[UIButton alloc] initWithFrame:CGRectMake(45, 7, 265, 30)];
   commentButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   commentButton.titleLabel.font = [UIFont systemFontOfSize:14];
   [commentButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];

@@ -87,10 +87,10 @@
 
 // Optional footer view
 - (void)setupFooterView {
-  _tableView.frame = CGRectMake(_tableView.left, _tableView.top, _tableView.width, _tableView.height - 40);
-  _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 40, 320, 40)];
+  _tableView.frame = CGRectMake(_tableView.left, _tableView.top, _tableView.width, _tableView.height - 44);
+  _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 44, 320, 44)];
   _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-  _footerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"gradient_gray.png"]];
+  _footerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"button-header-bg.png"]];
 
   [self.view addSubview:_footerView];
 }

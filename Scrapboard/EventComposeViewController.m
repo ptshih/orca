@@ -17,11 +17,12 @@
   _navTitleLabel.text = @"New Event";
   
   // Event Tag Field
-  _name = [[UITextField alloc] initWithFrame:CGRectMake(10, 5, 300, 24)];
+  _name = [[UITextField alloc] initWithFrame:CGRectMake(7, 5, 306, 24)];
   _name.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   _name.borderStyle = UITextBorderStyleNone;
   _name.placeholder = @"Name Your Event";
   _name.returnKeyType = UIReturnKeyNext;
+  _name.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0];
   _name.delegate = self;
   [_composeView addSubview:_name];
   

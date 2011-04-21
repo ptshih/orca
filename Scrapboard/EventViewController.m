@@ -46,7 +46,7 @@
   [rightButton release];
   
   // Table
-  CGRect tableFrame = CGRectMake(0, 44, CARD_WIDTH, CARD_HEIGHT - 44);
+  CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT - 44);
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
   [self setupSearchDisplayControllerWithScopeButtonTitles:[NSArray arrayWithObjects:@"Event", @"Person", nil]];
@@ -58,7 +58,7 @@
   [self setupLoadMoreView];
   
   // HeaderTabView
-  [self setupHeaderTabView];
+  [self setupHeaderTabViewWithFrame:CGRectMake(0, CARD_HEIGHT - 44, CARD_WIDTH, 44)];
   [self updateTitle];
   
   if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {

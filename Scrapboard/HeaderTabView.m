@@ -28,14 +28,15 @@ static UIImage *_btnBackground;
 @synthesize delegate = _delegate;
 
 + (void)initialize {
-  _btnNormal = [[[UIImage imageNamed:@"button-header-tab.png"] stretchableImageWithLeftCapWidth:37 topCapHeight:14] retain];
-  _btnSelected = [[[UIImage imageNamed:@"button-header-tab-selected.png"] stretchableImageWithLeftCapWidth:37 topCapHeight:14] retain];
+  _btnNormal = [[[UIImage imageNamed:@"button-header-tab.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:14] retain];
+  _btnSelected = [[[UIImage imageNamed:@"button-header-tab-selected.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:14] retain];
   _btnBackground = [[UIImage imageNamed:@"button-header-bg.png"] retain];
 }
 
 - (id)initWithFrame:(CGRect)frame andButtonTitles:(NSArray *)titles {
   self = [super initWithFrame:frame];
   if (self) {
+    self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     self.backgroundColor = [UIColor colorWithPatternImage:_btnBackground];
     _buttons = [[NSMutableArray array] retain];
     
@@ -47,6 +48,7 @@ static UIImage *_btnBackground;
     int i = 0;
     for (NSString *title in titles) {
       button = [[UIButton alloc] initWithFrame:CGRectMake(BUTTON_SPACING + (buttonWidth * i) + (BUTTON_SPACING * i), 8.0, buttonWidth, BUTTON_HEIGHT)];
+      button.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
       
       button.adjustsImageWhenHighlighted = NO;
       [button setBackgroundImage:_btnNormal forState:UIControlStateNormal];

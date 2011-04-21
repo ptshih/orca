@@ -78,8 +78,8 @@
 #pragma mark HeaderTabView
 // Subclasses may call
 // Subclasses must implement the delegate
-- (void)setupHeaderTabView {
-  _headerTabView = [[HeaderTabView alloc] initWithFrame:CGRectMake(0, 0, 320, 44.0) andButtonTitles:[NSArray arrayWithObjects:@"Followed", @"Firehose", nil]];
+- (void)setupHeaderTabViewWithFrame:(CGRect)frame {
+  _headerTabView = [[HeaderTabView alloc] initWithFrame:frame andButtonTitles:[NSArray arrayWithObjects:@"Followed", @"Firehose", nil]];
   _headerTabView.delegate = self;
   [self.view addSubview:_headerTabView];
 }
