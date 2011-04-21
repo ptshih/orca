@@ -10,6 +10,13 @@
 
 
 @interface PSTextView : UITextView {
+  NSString *_placeholder;
+  UIColor *_placeholderColor;
+  
+  BOOL _shouldDrawPlaceholder;
 }
+
+@property (nonatomic, retain) NSString *placeholder;
+@property (nonatomic, retain) UIColor *placeholderColor;
 
 @end

@@ -135,13 +135,16 @@
 	_message.returnKeyType = UIReturnKeyDefault;
 	_message.font = [UIFont boldSystemFontOfSize:14.0];
 	_message.delegate = self;
+  _message.placeholder = @"Type a message...";
+  _message.placeholderColor = [UIColor lightGrayColor];
   [_composeView addSubview:_message];
   
   // Toolbar
   _composeToolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
-  _composeToolbar.frame = CGRectMake(0, self.view.bounds.size.height - 44, 320, 44);
+  _composeToolbar.frame = CGRectMake(0, 156, 320, 44);
   _composeToolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   _composeToolbar.tintColor = NAV_COLOR_DARK_BLUE;
+  _composeToolbar.alpha = 0.0;
   
   UIBarButtonItem *photoButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"button-bar-camera.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showMedia)] autorelease];
   
@@ -288,10 +291,13 @@
   
   if (up) {
     _composeView.height = self.view.bounds.size.height - keyboardFrame.size.height;
-    _composeToolbar.top = _composeView.height - _composeToolbar.height;
   } else {
     _composeView.height = self.view.bounds.size.height + keyboardFrame.size.height;
   }
+  
+  _composeToolbar.alpha = 1.0;
+  
+//  _composeToolbar.top = _composeView.height - _composeToolbar.height;
   
 //  _message.height = up ? self.view.bounds.size.height - 44 - keyboardFrame.size.height - 20 : 30;
 //  _backgroundView.height = _message.height;

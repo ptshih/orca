@@ -87,7 +87,7 @@
   KupoComposeViewController *kcvc = [[KupoComposeViewController alloc] init];
   kcvc.eventId = self.event.id;
   UINavigationController *kupoNav = [[UINavigationController alloc] initWithRootViewController:kcvc];
-  kupoNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//  kupoNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
   [self presentModalViewController:kupoNav animated:YES];
   [kcvc release];
   [kupoNav release];

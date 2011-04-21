@@ -28,7 +28,7 @@
 }
 
 - (void)send {
-  if ([_message.text length] == 0) {
+  if (![_message hasText] || [_message.text isEqualToString:_message.placeholder]) {
     if (!_uploadedImage) {
       UIAlertView *emptyAlert = [[[UIAlertView alloc] initWithTitle:@"Whoops!" message:@"You must either upload a photo/video or write a message!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease];
       [emptyAlert show];

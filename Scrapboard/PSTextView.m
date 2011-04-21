@@ -8,18 +8,77 @@
 
 #import "PSTextView.h"
 
+@interface PSTextView (Private)
+
+- (void)updateShouldDrawPlaceholder;
+- (void)textChanged:(NSNotification *)notification;
+
+@end
 
 @implementation PSTextView
+
+@synthesize placeholder = _placeholder;
+@synthesize placeholderColor = _placeholderColor;
 
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:self];
+    
+    self.placeholderColor = [UIColor lightGrayColor];
+    _shouldDrawPlaceholder = NO;
+    
     self.backgroundColor = [UIColor clearColor];
   }
   return self;
 }
 
+
+- (void)drawRect:(CGRect)rect {
+  [super drawRect:rect];
+  
+  if (_shouldDrawPlaceholder) {
+    [_placeholderColor set];
+    [_placeholder drawInRect:CGRectMake(8.0, 8.0, self.frame.size.width - 16.0, self.frame.size.height - 16.0) withFont:self.font];
+  }
+}
+
+
+#pragma mark Setters
+- (void)setText:(NSString *)string {
+  [super setText:string];
+  [self updateShouldDrawPlaceholder];
+}
+
+
+- (void)setPlaceholder:(NSString *)string {
+  if ([string isEqual:_placeholder]) {
+    return;
+  }
+  
+  [_placeholder release];
+  _placeholder = [string retain];
+  
+  [self updateShouldDrawPlaceholder];
+}
+
+
+#pragma mark Private Methods
+
+- (void)updateShouldDrawPlaceholder {
+  BOOL prev = _shouldDrawPlaceholder;
+  _shouldDrawPlaceholder = self.placeholder && self.placeholderColor && self.text.length == 0;
+  
+  if (prev != _shouldDrawPlaceholder) {
+    [self setNeedsDisplay];
+  }
+}
+
+- (void)textChanged:(NSNotification *)notificaiton {
+  [self updateShouldDrawPlaceholder];    
+}
+
+#pragma mark Content Inset/Offset
 - (void)setContentOffset:(CGPoint)s {
 	if(self.tracking || self.decelerating){
 		//initiated by user...
@@ -47,7 +106,11 @@
 
 
 - (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidChangeNotification object:self];
+  
+  [_placeholder release], _placeholder = nil;
+  [_placeholderColor release], _placeholderColor = nil;
+
   [super dealloc];
 }
-
 @end

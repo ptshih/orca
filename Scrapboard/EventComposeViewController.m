@@ -44,7 +44,7 @@
   if ([_name.text length] == 0) {
     UIAlertView *emptyAlert = [[[UIAlertView alloc] initWithTitle:@"Whoops!" message:@"You must enter an event name!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease];
     [emptyAlert show];
-  } else if (![_message hasText]) {
+  } else if (![_message hasText] || [_message.text isEqualToString:_message.placeholder]) {
     if (!_uploadedImage) {
       UIAlertView *emptyAlert = [[[UIAlertView alloc] initWithTitle:@"Whoops!" message:@"You must either upload a photo/video or write a message!" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease];
       [emptyAlert show];
