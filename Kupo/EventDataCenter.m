@@ -107,11 +107,11 @@ static EventDataCenter *_defaultCenter = nil;
     if ([foundEvents count] > 0 && i < [foundEvents count] && [[eventDict valueForKey:@"id"] isEqualToString:[[foundEvents objectAtIndex:i] id]]) {
       DLog(@"found duplicated event with id: %@", [[foundEvents objectAtIndex:i] id]);
       [[foundEvents objectAtIndex:i] updateEventWithDictionary:eventDict];
+      i++;
     } else {
       // Insert
       [Event addEventWithDictionary:eventDict inContext:self.context];
     }
-    i++;
   }
   
   // Save to Core Data
