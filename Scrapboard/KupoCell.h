@@ -17,9 +17,11 @@
   
   Kupo *_kupo;
   UIImageView *_quoteImageView;
+  UIImageView *_photoFrameView;
   PSImageView *_photoImageView; // optional
   BOOL _hasPhoto;
 }
 
 - (void)loadPhoto;
+
 @end

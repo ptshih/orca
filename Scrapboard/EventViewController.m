@@ -16,12 +16,13 @@
 - (id)init {
   self = [super init];
   if (self) {
+    [[EventDataCenter defaultCenter] setDelegate:self];
+    
     _eventType = [[NSUserDefaults standardUserDefaults] integerForKey:@"lastEventType"];
     _shouldReloadOnAppear = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
     
-    [[EventDataCenter defaultCenter] setDelegate:self];
   }
   return self;
 }
@@ -88,6 +89,7 @@
 #pragma mark HeaderTabViewDelegate
 - (void)tabSelectedAtIndex:(NSNumber *)index {
   _eventType = [index integerValue];
+  [[NSUserDefaults standardUserDefaults] setInteger:_eventType forKey:@"lastEventType"];
   if (_eventType == EventTypeFollowed) {
     [[EventDataCenter defaultCenter] setApiEndpoint:@"users/me/followed"];
     [[EventDataCenter defaultCenter] setFetchTemplate:@"getFollowedEvents"];
@@ -150,7 +152,7 @@
     event = [self.fetchedResultsController objectAtIndexPath:indexPath];
   }
   
-  return [EventCell rowHeightForObject:event];
+  return [EventCell rowHeightForObject:event forInterfaceOrientation:[self interfaceOrientation]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

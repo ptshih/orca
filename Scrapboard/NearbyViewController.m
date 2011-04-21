@@ -80,7 +80,7 @@
 #pragma mark TableView Stuff
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   id item = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-  return [NearbyCell rowHeightForObject:item];
+  return [NearbyCell rowHeightForObject:item forInterfaceOrientation:[self interfaceOrientation]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

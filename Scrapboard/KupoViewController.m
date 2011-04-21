@@ -22,6 +22,7 @@
   self = [super init];
   if (self) {
     [[KupoDataCenter defaultCenter] setDelegate:self];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
   }
   return self;
@@ -111,7 +112,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   Kupo *kupo = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  return [KupoCell rowHeightForObject:kupo];
+  return [KupoCell rowHeightForObject:kupo forInterfaceOrientation:[self interfaceOrientation]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

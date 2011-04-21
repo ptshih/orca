@@ -125,7 +125,7 @@
   
   UITableView *tableView = _tableView;
   
-  DLog(@"type: %d, old indexPath: %@, new indexPath: %@", type, indexPath, newIndexPath);
+  DLog(@"type: %d, old indexPath: %@, new indexPath: %@, class: %@", type, indexPath, newIndexPath, NSStringFromClass([self class]));
   
   switch(type) {
       

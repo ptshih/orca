@@ -26,7 +26,7 @@ typedef uint32_t PSCellType;
 }
 
 + (PSCellType)cellType;
-+ (CGFloat)rowWidth;
++ (CGFloat)rowWidthForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
 /**
  Used for static height cells
@@ -39,7 +39,7 @@ typedef uint32_t PSCellType;
  Attempts to call layoutSubviews for the corresponding cell class
  With the object passed
  */
-+ (CGFloat)rowHeightForObject:(id)object;
++ (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
 - (void)fillCellWithObject:(id)object;
 

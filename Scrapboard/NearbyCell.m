@@ -68,7 +68,7 @@
   [super prepareForReuse];
 }
 
-+ (CGFloat)rowHeightForObject:(id)object {
++ (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
   return 110.0;
 }
 

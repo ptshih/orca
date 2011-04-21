@@ -13,15 +13,17 @@
 #define MESSAGE_FONT_SIZE 16.0
 #define TIMESTAMP_FONT_SIZE 12.0
 #define PHOTO_SIZE 100.0
-#define PHOTO_SPACING 5.0
+#define PHOTO_SPACING 10.0
 #define QUOTE_SPACING 5.0
 
 static UIImage *_quoteImage = nil;
+static UIImage *_frameImage = nil;
 
 @implementation KupoCell
 
 + (void)initialize {
   _quoteImage = [[UIImage imageNamed:@"quote_mark.png"] retain];
+  _frameImage = [[[UIImage imageNamed:@"photo_frame.png"] stretchableImageWithLeftCapWidth:16 topCapHeight:16] retain];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -57,9 +59,8 @@ static UIImage *_quoteImage = nil;
     [self.contentView addSubview:_timestampLabel];
     
     _quoteImageView = [[UIImageView alloc] initWithImage:_quoteImage];
-    
+    _photoFrameView = [[UIImageView alloc] initWithImage:_frameImage];
     _photoImageView = [[PSImageView alloc] initWithFrame:CGRectMake(0, 0, PHOTO_SIZE, PHOTO_SIZE)];
-    _photoImageView.placeholderImage = [[UIImage imageNamed:@"photo_frame.png"] stretchableImageWithLeftCapWidth:16 topCapHeight:16];
   }
   return self;
 }
@@ -107,14 +108,20 @@ static UIImage *_quoteImage = nil;
   
   // Optional Photo Thumbnail
   if (_hasPhoto) {
+    [self.contentView addSubview:_photoFrameView];
+    _photoFrameView.left = left - 5;
+    _photoFrameView.top = top;
+    _photoFrameView.width = PHOTO_SIZE + PHOTO_SPACING * 2;
+    _photoFrameView.height = PHOTO_SIZE + PHOTO_SPACING * 2;
     [self.contentView addSubview:_photoImageView];
-    _photoImageView.left = left;
+    _photoImageView.left = left + PHOTO_SPACING - 5;
     _photoImageView.top = top + PHOTO_SPACING;
     _photoImageView.width = PHOTO_SIZE;
     _photoImageView.height = PHOTO_SIZE;
-    _photoImageView.layer.masksToBounds = YES;
-    _photoImageView.layer.cornerRadius = 10.0;
+//    _photoImageView.layer.masksToBounds = YES;
+//    _photoImageView.layer.cornerRadius = 10.0;
   } else {
+    [_photoFrameView removeFromSuperview];
     [_photoImageView removeFromSuperview];
   }
 }
@@ -130,12 +137,12 @@ static UIImage *_quoteImage = nil;
 
 #pragma mark -
 #pragma mark Fill and Height
-+ (CGFloat)rowHeightForObject:(id)object {
++ (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
   Kupo *kupo = (Kupo *)object;
   
   CGFloat top = MARGIN_Y;
   CGFloat left = MARGIN_X + 60; // image
-  CGFloat width = [[self class] rowWidth] - left - MARGIN_X;
+  CGFloat width = [[self class] rowWidthForInterfaceOrientation:interfaceOrientation] - left - MARGIN_X;
   CGSize constrainedSize = CGSizeMake(width, INT_MAX);
   CGSize size = CGSizeZero;
   
@@ -151,12 +158,13 @@ static UIImage *_quoteImage = nil;
   constrainedSize = CGSizeMake(width, INT_MAX);
   
   // Message
+  constrainedSize = CGSizeMake(width - 16 - QUOTE_SPACING, INT_MAX);
   size = [kupo.message sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:MESSAGE_FONT_SIZE] constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeWordWrap];
   desiredHeight += size.height;
 
   
   if ([kupo.hasPhoto boolValue]) {
-    desiredHeight += 110.0;
+    desiredHeight += 120.0;
   }
   
   desiredHeight += MARGIN_Y;

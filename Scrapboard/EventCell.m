@@ -151,12 +151,12 @@
 
 #pragma mark -
 #pragma mark Fill and Height
-+ (CGFloat)rowHeightForObject:(id)object {
++ (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
   Event *event = (Event *)object;
   
   CGFloat top = MARGIN_Y;
   CGFloat left = MARGIN_X + 60; // image
-  CGFloat width = [[self class] rowWidth] - left - MARGIN_X;
+  CGFloat width = [[self class] rowWidthForInterfaceOrientation:interfaceOrientation] - left - MARGIN_X;
   CGSize constrainedSize = CGSizeMake(width, INT_MAX);
   CGSize size = CGSizeZero;
   

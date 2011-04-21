@@ -24,29 +24,11 @@
   return PSCellTypePlain;
 }
 
-+ (CGFloat)rowWidth {
-  switch ([[self class] cellType]) {
-    case PSCellTypePlain:
-      if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
-        return 320.0;
-      } else {
-        return 480.0;
-      }
-      break;
-    case PSCellTypeGrouped:
-      if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
-        return 300.0;
-      } else {
-        return 460.0;
-      }
-      break;
-    default:
-      if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
-        return 320.0;
-      } else {
-        return 480.0;
-      }
-      break;
++ (CGFloat)rowWidthForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+  if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+    return 320.0;
+  } else {
+    return 480.0;
   }
 }
 
@@ -55,7 +37,7 @@
 }
 
 // This is a class method because it is called before the cell has finished its layout
-+ (CGFloat)rowHeightForObject:(id)object {
++ (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
   // subclass must override
   return 0.0;
 }
