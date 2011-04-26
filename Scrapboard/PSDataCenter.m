@@ -7,226 +7,216 @@
 //
 
 #import "PSDataCenter.h"
-
-static PSDataCenter *_defaultCenter = nil;
+#import "NSString+URLEncoding.h"
 
 @interface PSDataCenter (Private)
 
-- (BOOL)serializeResponse:(NSData *)responseData;
+- (id)sanitizeResponse:(NSData *)responseData;
 - (NSDictionary *)sanitizeDictionary:(NSDictionary *)dictionary forKeys:(NSArray *)keys;
 - (NSArray *)sanitizeArray:(NSArray *)array;
+- (NSString *)buildRequestParamsString:(NSDictionary *)params;
+- (NSMutableData *)buildRequestParamsData:(NSDictionary *)params;
 
 @end
 
 @implementation PSDataCenter
 
 @synthesize delegate = _delegate;
-@synthesize response = _response;
-@synthesize rawResponse = _rawResponse;
-@synthesize op = _op;
+@synthesize pendingRequests = _pendingRequests;
 
-#pragma mark -
-#pragma mark Shared Instance
-// Subclasses MUST implement
-+ (id)defaultCenter {
-  @synchronized(self) {
-    if (_defaultCenter == nil) {
-      _defaultCenter = [[self alloc] init];
-    }
-    return _defaultCenter;
-  }
-}
-
-#pragma mark -
-#pragma mark Singleton Initialization
 - (id)init {
   self = [super init];
   if (self) {
+    _pendingRequests = [[NSMutableArray alloc] initWithCapacity:1];
   }
-  return self;
-}
-
-- (id)copyWithZone:(NSZone *)zone {
-  return self;
-}
-
-- (id)retain {
-  return self;
-}
-
-- (NSUInteger)retainCount {
-  return NSUIntegerMax;
-}
-
-- (void)release {
-}
-
-- (id)autorelease {
   return self;
 }
 
 #pragma mark -
 #pragma mark Serialize
-- (BOOL)serializeResponse:(NSData *)responseData {
+- (id)sanitizeResponse:(NSData *)responseData {
   // Serialize the response
-  if (_response) {
-    [_response release];
-    _response = nil;
-  }
-  if (_rawResponse) {
-    [_rawResponse release];
-    _rawResponse = nil;
-  }
-  
-  _rawResponse = [[responseData JSONValue] retain];
-//  _rawResponse = [[responseData objectFromJSONData] retain];
+  id rawResponse = [responseData JSONValue];
+  id response = nil;
   
   // We should sanitize the response
-  if ([_rawResponse isKindOfClass:[NSArray class]]) {
-    _response = [[self sanitizeArray:_rawResponse] retain];
-  } else if ([_rawResponse isKindOfClass:[NSDictionary class]]) {
-    _response = [[self sanitizeDictionary:_rawResponse forKeys:[_rawResponse allKeys]] retain];
+  if ([rawResponse isKindOfClass:[NSArray class]]) {
+    response = [self sanitizeArray:rawResponse];
+  } else if ([rawResponse isKindOfClass:[NSDictionary class]]) {
+    response = [self sanitizeDictionary:rawResponse forKeys:[rawResponse allKeys]];
   } else {
     // Throw an assertion, why is it not a dictionary or an array???
     DLog(@"### ERROR IN DATA CENTER, RESPONSE IS NEITHER AN ARRAY NOR A DICTIONARY");
   }
   
-  if (self.response) {
-    return YES;
+  if (response) {
+    return response;
   } else {
-    return NO;
+    return nil;
   }
 }
 
 #pragma mark -
 #pragma mark Send Operation
-- (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params {
-  [self sendOperationWithURL:url andMethod:method andHeaders:headers andParams:params andAttachmentType:NetworkOperationAttachmentTypeNone];
-}
-
-- (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params andAttachmentType:(NetworkOperationAttachmentType)attachmentType {
-  if (_op) {
-    if (_op) [_op clearDelegatesAndCancel];
-    RELEASE_SAFELY(_op);
+- (void)sendRequestWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params andUserInfo:(NSDictionary *)userInfo {
+  // Read any optional params
+  NSMutableDictionary *requestParams = [NSMutableDictionary dictionaryWithDictionary:params];
+  
+  // Send access_token as a parameter if exists
+  NSString *accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"accessToken"];
+  if (accessToken) {
+    [requestParams setValue:accessToken forKey:@"access_token"];
   }
   
-  _op = [[LINetworkOperation alloc] initWithURL:url];
-  _op.delegate = self;
+  // GET parameters
+  if ([method isEqualToString:GET]) {
+    url = [NSURL URLWithString:[NSString stringWithFormat:@"?%@", [self buildRequestParamsString:requestParams]] relativeToURL:url];
+  }
   
-  // Set op method (defaults to GET)
-  _op.requestMethod = method ? method : GET;
+  __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+  request.requestMethod = method;
   
-  if (attachmentType != NetworkOperationAttachmentTypeNone) {
-    _op.hasAttachment = YES;
-    _op.attachmentType = attachmentType;
-  } else {
-    _op.hasAttachment = NO;
-    _op.attachmentType = NetworkOperationAttachmentTypeNone;
+  // Request userInfo
+  request.userInfo = userInfo;
+  
+  // POST parameters
+  if ([method isEqualToString:POST]) {
+    request.postBody = [self buildRequestParamsData:requestParams];
+    request.postLength = [request.postBody length];
   }
   
   // Add Headers
-  [_op addRequestHeader:@"X-UDID" value:[[UIDevice currentDevice] uniqueIdentifier]];
-  [_op addRequestHeader:@"X-Device-Model" value:[[UIDevice currentDevice] model]];
-  [_op addRequestHeader:@"X-App-Version" value:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
-  [_op addRequestHeader:@"X-System-Name" value:[[UIDevice currentDevice] systemName]];
-  [_op addRequestHeader:@"X-System-Version" value:[[UIDevice currentDevice] systemVersion]];
-  [_op addRequestHeader:@"X-User-Language" value:USER_LANGUAGE];
-  [_op addRequestHeader:@"X-User-Locale" value:USER_LOCALE];
-  if (APP_DELEGATE.sessionKey) [_op addRequestHeader:@"X-Session-Key" value:APP_DELEGATE.sessionKey];
+  [request addRequestHeader:@"X-UDID" value:[[UIDevice currentDevice] uniqueIdentifier]];
+  [request addRequestHeader:@"X-Device-Model" value:[[UIDevice currentDevice] model]];
+  [request addRequestHeader:@"X-App-Version" value:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+  [request addRequestHeader:@"X-System-Name" value:[[UIDevice currentDevice] systemName]];
+  [request addRequestHeader:@"X-System-Version" value:[[UIDevice currentDevice] systemVersion]];
+  [request addRequestHeader:@"X-User-Language" value:USER_LANGUAGE];
+  [request addRequestHeader:@"X-User-Locale" value:USER_LOCALE];
+  if (APP_DELEGATE.sessionKey) [request addRequestHeader:@"X-Session-Key" value:APP_DELEGATE.sessionKey];
   
-  // Build Headers if exists
+  // Build Custom Headers if exists
   if (headers) {
     NSArray *allKeys = [headers allKeys];
     NSArray *allValues = [headers allValues];
     for (int i = 0; i < [headers count]; i++) {
       // NOTE: should probably type transform coerce in the future
-      [_op addRequestHeader:[allKeys objectAtIndex:i] value:[allValues objectAtIndex:i]];
+      [request addRequestHeader:[allKeys objectAtIndex:i] value:[allValues objectAtIndex:i]];
     }
   }
   
-  // Add FB Access Token Param
-  // Send access_token as a parameter
+  // Request Completion Block
+  [request setCompletionBlock:^{
+    id response = [self sanitizeResponse:[request responseData]];
+    if (response) {
+      [self dataCenterRequestFinished:request withResponse:response];
+    }
+    
+    // Remove request from pendingRequests
+    [_pendingRequests removeObject:request];
+  }];
+  [request setFailedBlock:^{
+    NSError *error = [request error];
+    NSLog(@"Request failed with error: %@", [error localizedDescription]);
+    [self dataCenterRequestFailed:request withError:error];
+    
+    // Remove request from pendingRequests
+    [_pendingRequests removeObject:request];
+  }];
+  
+  // Start the Request
+  [_pendingRequests addObject:request];
+  [request startAsynchronous];
+}
+
+- (void)sendFormRequestWithURL:(NSURL *)url andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params andFile:(NSDictionary *)file andUserInfo:(NSDictionary *)userInfo {
+  NSMutableDictionary *requestParams = [NSMutableDictionary dictionaryWithDictionary:params];
+  
+  // Send access_token as a parameter if exists
   NSString *accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"accessToken"];
   if (accessToken) {
-    [_op addRequestParam:@"access_token" value:accessToken];
+    [requestParams setValue:accessToken forKey:@"access_token"];
   }
   
+  __block ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+  request.requestMethod = POST;
+  
+  // Request userInfo
+  request.userInfo = userInfo;
+  
+  // POST body
   // Build Params if exists
-  if (params) {
-    NSArray *allKeys = [params allKeys];
-    NSArray *allValues = [params allValues];
-    for (int i = 0; i < [params count]; i++) {
+  if (requestParams) {
+    NSArray *allKeys = [requestParams allKeys];
+    NSArray *allValues = [requestParams allValues];
+    for (int i = 0; i < [requestParams count]; i++) {
+      [request setPostValue:[allValues objectAtIndex:i] forKey:[allKeys objectAtIndex:i]];
+    }
+  }
+
+  // POST file
+  [request setData:[file objectForKey:@"fileData"] withFileName:[file objectForKey:@"fileName"] andContentType:[file objectForKey:@"fileContentType"] forKey:[file objectForKey:@"fileKey"]];
+  
+  // Add Headers
+  [request addRequestHeader:@"X-UDID" value:[[UIDevice currentDevice] uniqueIdentifier]];
+  [request addRequestHeader:@"X-Device-Model" value:[[UIDevice currentDevice] model]];
+  [request addRequestHeader:@"X-App-Version" value:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+  [request addRequestHeader:@"X-System-Name" value:[[UIDevice currentDevice] systemName]];
+  [request addRequestHeader:@"X-System-Version" value:[[UIDevice currentDevice] systemVersion]];
+  [request addRequestHeader:@"X-User-Language" value:USER_LANGUAGE];
+  [request addRequestHeader:@"X-User-Locale" value:USER_LOCALE];
+  if (APP_DELEGATE.sessionKey) [request addRequestHeader:@"X-Session-Key" value:APP_DELEGATE.sessionKey];
+  
+  // Build Custom Headers if exists
+  if (headers) {
+    NSArray *allKeys = [headers allKeys];
+    NSArray *allValues = [headers allValues];
+    for (int i = 0; i < [headers count]; i++) {
       // NOTE: should probably type transform coerce in the future
-      [_op addRequestParam:[allKeys objectAtIndex:i] value:[allValues objectAtIndex:i]];
+      [request addRequestHeader:[allKeys objectAtIndex:i] value:[allValues objectAtIndex:i]];
     }
   }
   
-  [[LINetworkQueue sharedQueue] addOperation:_op];
-}
-
-#pragma mark -
-#pragma mark LINetworkOperationDelegate
-- (void)networkOperationDidFinish:(LINetworkOperation *)operation {
-//  DLog(@"Callback: Operation finished: %@", operation);
-  // This is on the main thread
-  NSInteger statusCode = [operation responseStatusCode];
-  if(statusCode >= 200 && statusCode < 400) {
-    // Assume this is a successful response
-    if ([self serializeResponse:[operation responseData]]) {
-      [self dataCenterFinishedWithOperation:operation];
-    } else {
-      // Something is wrong with the response
-      [self dataCenterFailedWithOperation:operation];
+  // Request Completion Block
+  [request setCompletionBlock:^{
+    id response = [self sanitizeResponse:[request responseData]];
+    if (response) {
+      [self dataCenterRequestFinished:request withResponse:response];
     }
-  } else {
-    // Assume this is a BAD response code
-    [self dataCenterFailedWithOperation:operation];
-  }
-}
-
-- (void)networkOperationDidFail:(LINetworkOperation *)operation {
-//  DLog(@"Callback: Operation failed: %@", operation);
-  // Just fail it for now
-  [self dataCenterFailedWithOperation:operation];
-}
-
-// UNUSED
-- (void)networkOperationDidStart:(LINetworkOperation *)operation {
-//  DLog(@"Callback: Operation started: %@", operation);  
-}
-
-- (void)networkOperationDidTimeout:(LINetworkOperation *)operation {
-//  DLog(@"Callback: Operation timed out: %@", operation);
-}
-
-#pragma mark -
-#pragma mark Delegate Callbacks
-// Subclass should Implement
-- (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {
-  // By now the response should already be serialized into self.parsedResponse of type id
+    
+    // Remove request from pendingRequests
+    [_pendingRequests removeObject:request];
+  }];
+  [request setFailedBlock:^{
+    NSError *error = [request error];
+    
+    [self dataCenterRequestFailed:request withError:error];
+    
+    // Remove request from pendingRequests
+    [_pendingRequests removeObject:request];
+  }];
   
-  // Inform delegate the operation Finished
-  if (self.delegate) {
-    [self.delegate retain];
-    if ([self.delegate respondsToSelector:@selector(dataCenterDidFinish:)]) {
-      [self.delegate performSelector:@selector(dataCenterDidFinish:) withObject:operation];
-    }
-    [self.delegate release];
+  // Start the Request
+  [_pendingRequests addObject:request];
+  [request startAsynchronous];
+}
+
+#pragma mark -
+#pragma mark Callbacks
+// Subclass should Implement AND call super's implementation
+- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponse:(id)response {
+  id mergedResponse = [[PSURLCache sharedCache] cacheResponse:response forURLPath:[[request.originalURL baseURL] absoluteString] shouldMerge:YES];
+  
+  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
+    [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:request withObject:mergedResponse];
   }
 }
 
-// Subclass should Implement (Optional)
-- (void)dataCenterFailedWithOperation:(LINetworkOperation *)operation {
-  // Inform delegate the operation Failed
-  if (self.delegate) {
-    [self.delegate retain];
-    if ([self.delegate respondsToSelector:@selector(dataCenterDidFail:)]) {
-      [self.delegate performSelector:@selector(dataCenterDidFail:) withObject:operation];
-    }
-    [self.delegate release];
+- (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
+  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFail:withResponse:)]) {
+    [_delegate performSelector:@selector(dataCenterDidFail:withResponse:) withObject:request withObject:error];
   }
 }
-
 
 #pragma mark -
 #pragma mark Private Convenience Methods
@@ -265,12 +255,35 @@ static PSDataCenter *_defaultCenter = nil;
   return sanitizedDictionary;
 }
 
-//- (void)dealloc {
-//  if (_op) [_op clearDelegatesAndCancel];
-//  RELEASE_SAFELY(_op);
-//  RELEASE_SAFELY (_response);
-//  RELEASE_SAFELY(_rawResponse);
-//  [super dealloc];
-//}
+- (NSString *)buildRequestParamsString:(NSDictionary *)params {
+  if (!params) return nil;
+  
+  NSMutableString *encodedParameterPairs = [NSMutableString string];
+  
+  NSArray *allKeys = [params allKeys];
+  NSArray *allValues = [params allValues];
+  
+  for (int i = 0; i < [params count]; i++) {
+    [encodedParameterPairs appendFormat:@"%@=%@", [[allKeys objectAtIndex:i] encodedURLParameterString], [[allValues objectAtIndex:i] encodedURLParameterString]];
+    if (i < [params count] - 1) {
+      [encodedParameterPairs appendString:@"&"];
+    }
+  }
+  
+  return encodedParameterPairs;
+}
+     
+- (NSMutableData *)buildRequestParamsData:(NSDictionary *)params {
+  return [NSMutableData dataWithData:[[self buildRequestParamsString:params] dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES]];
+}
+
+- (void)dealloc {
+  for (ASIHTTPRequest *request in _pendingRequests) {
+    [request clearDelegatesAndCancel];
+  }
+  [_pendingRequests removeAllObjects];
+  RELEASE_SAFELY(_pendingRequests);
+  [super dealloc];
+}
 
 @end

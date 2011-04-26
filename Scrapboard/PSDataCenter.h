@@ -7,12 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 #import "PSObject.h"
 #import "PSDataCenterDelegate.h"
-#import "LINetworkOperation.h"
-#import "LINetworkQueue.h"
-#import "LICoreDataStack.h"
+#import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
+#import "PSURLCache.h"
 #import "JSON.h"
 #import "NetworkConstants.h"
 
@@ -20,18 +19,11 @@
 
 @interface PSDataCenter : PSObject <PSDataCenterDelegate> {
   id <PSDataCenterDelegate> _delegate;
-  id _response;
-  id _rawResponse;
-  LINetworkOperation *_op;
+  NSMutableArray *_pendingRequests;
 }
 
 @property (nonatomic, assign) id <PSDataCenterDelegate> delegate;
-@property (nonatomic, retain) id response;
-@property (nonatomic, retain) id rawResponse;
-@property (nonatomic, retain) LINetworkOperation *op;
-
-
-+ (id)defaultCenter;
+@property (nonatomic, retain) NSMutableArray *pendingRequests;
 
 /**
  Send network operation to server (GET/POST)
@@ -43,12 +35,16 @@
  headers - optional
  params - optional
  */
-- (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params;
+- (void)sendRequestWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params andUserInfo:(NSDictionary *)userInfo;
 
-- (void)sendOperationWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params andAttachmentType:(NetworkOperationAttachmentType)attachmentType;
+/**
+ Send network request with an attachment, FORM DATA POST
+ */
+- (void)sendFormRequestWithURL:(NSURL *)url andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params andFile:(NSDictionary *)file andUserInfo:(NSDictionary *)userInfo;
+
 
 // Subclass should Implement AND call super's implementation
-- (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation;
-- (void)dataCenterFailedWithOperation:(LINetworkOperation *)operation;
+- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponse:(id)response;
+- (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error;
 
 @end

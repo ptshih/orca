@@ -7,7 +7,6 @@
 //
 
 #import "MeViewController.h"
-#import "MeDataCenter.h"
 #import "ShareCell.h"
 
 @implementation MeViewController
@@ -17,7 +16,6 @@
 - (id)init {
   self = [super init];
   if (self) {
-    [[MeDataCenter defaultCenter] setDelegate:self];
   }
   return self;
 }
@@ -155,26 +153,7 @@
   return cell;
 }
 
-#pragma mark PSDataCenterDelegate
-- (void)dataCenterDidFinish:(LINetworkOperation *)operation {
-  [self.sections removeAllObjects];
-  [self.items removeAllObjects];
-  
-  [self.sections addObject:@"Share Kupo with your Friends!"];
-  
-  [self.items addObject:[NSArray arrayWithObjects:@"facebook", @"email", @"text", nil]];
-  
-  [_tableView reloadData];
-  [self dataSourceDidLoad];
-}
-
-- (void)dataCenterDidFail:(LINetworkOperation *)operation {
-
-}
-
-
 - (void)dealloc {
-  [[MeDataCenter defaultCenter] setDelegate:nil];
   [super dealloc];
 }
 

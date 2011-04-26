@@ -12,8 +12,6 @@
 #import "Facebook.h"
 #import "MeDelegate.h"
 
-@class MeDataCenter;
-
 @interface MeViewController : CardModalTableViewController <FBDialogDelegate> {
   id <MeDelegate> _delegate;
 }

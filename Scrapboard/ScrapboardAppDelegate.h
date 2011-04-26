@@ -12,12 +12,16 @@
 
 @class Facebook;
 @class LoginViewController;
+@class LauncherViewController;
+@class LoginDataCenter;
 
 @interface ScrapboardAppDelegate : NSObject <UIApplicationDelegate, LoginDelegate, PSDataCenterDelegate> {
   UIWindow *_window;
   Facebook *_facebook;
   LoginViewController *_loginViewController;
-  UINavigationController *_navigationController;
+  LauncherViewController *_launcherViewController;
+  
+  LoginDataCenter *_loginDataCenter;
   
   // Session
   NSString *_sessionKey;
@@ -29,7 +33,6 @@
 
 // Private
 + (void)setupDefaults;
-- (void)saveContext;
 - (void)animateHideLogin;
 - (void)startSession;
 - (void)startRegister;

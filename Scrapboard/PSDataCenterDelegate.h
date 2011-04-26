@@ -7,12 +7,12 @@
  *
  */
 
-@class LINetworkOperation;
+@class ASIHTTPRequest;
 
 @protocol PSDataCenterDelegate <NSObject>
 
 @optional
-- (void)dataCenterDidFinish:(LINetworkOperation *)operation;
-- (void)dataCenterDidFail:(LINetworkOperation *)operation;
+- (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response;
+- (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error;
 
 @end

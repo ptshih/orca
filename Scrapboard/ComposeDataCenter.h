@@ -19,6 +19,4 @@
 // Create a new kupo for event
 - (void)sendKupoComposeWithEventId:(NSString *)eventId andMessage:(NSString *)message andImage:(UIImage *)image andVideo:(NSData *)video;
 
-- (void)sendCheckinComposeWithEventId:(NSString *)eventId andComment:(NSString *)comment andImage:(UIImage *)image andVideo:(NSData *)video;
-
 @end

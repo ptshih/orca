@@ -9,20 +9,7 @@
 #import "ComposeDataCenter.h"
 #import "KupoLocation.h"
 
-static ComposeDataCenter *_defaultCenter = nil;
-
 @implementation ComposeDataCenter
-
-#pragma mark -
-#pragma mark Shared Instance
-+ (id)defaultCenter {
-  @synchronized(self) {
-    if (_defaultCenter == nil) {
-      _defaultCenter = [[self alloc] init];
-    }
-    return _defaultCenter;
-  }
-}
 
 - (void)sendEventComposeWithEventName:(NSString *)eventName andEventTag:(NSString *)eventTag andMessage:(NSString *)message andImage:(UIImage *)image andVideo:(NSData *)video {
   NSURL *eventComposeUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/events/new", API_BASE_URL]];
@@ -37,19 +24,15 @@ static ComposeDataCenter *_defaultCenter = nil;
     [params setValue:message forKey:@"message"];
   }
   
-  NetworkOperationAttachmentType attachmentType = NetworkOperationAttachmentTypeNone;
-  
   if (image) {
     [params setValue:image forKey:@"image"];
     if (video) {
       [params setValue:video forKey:@"video"];
-      attachmentType = NetworkOperationAttachmentTypeMP4;
     } else {
-      attachmentType = NetworkOperationAttachmentTypeJPEG;
     }
   }
   
-  [self sendOperationWithURL:eventComposeUrl andMethod:POST andHeaders:nil andParams:params andAttachmentType:attachmentType];
+  [self sendFormRequestWithURL:eventComposeUrl andHeaders:nil andParams:params andFile:nil andUserInfo:nil];
 }
 
 - (void)sendKupoComposeWithEventId:(NSString *)eventId andMessage:(NSString *)message andImage:(UIImage *)image andVideo:(NSData *)video {
@@ -77,65 +60,25 @@ static ComposeDataCenter *_defaultCenter = nil;
     [params setValue:message forKey:@"message"];
   }
   
-  NetworkOperationAttachmentType attachmentType = NetworkOperationAttachmentTypeNone;
-  
   if (image) {
     [params setValue:image forKey:@"image"];
     if (video) {
       [params setValue:video forKey:@"video"];
-      attachmentType = NetworkOperationAttachmentTypeMP4;
     } else {
-      attachmentType = NetworkOperationAttachmentTypeJPEG;
     }
   }
-  
-  [self sendOperationWithURL:kupoComposeUrl andMethod:POST andHeaders:nil andParams:params andAttachmentType:attachmentType];
+
+  [self sendFormRequestWithURL:kupoComposeUrl andHeaders:nil andParams:params andFile:nil andUserInfo:nil];
 }
 
-- (void)sendCheckinComposeWithEventId:(NSString *)eventId andComment:(NSString *)comment andImage:(UIImage *)image andVideo:(NSData *)video {
-  // params[:message], params[:event], params[:lat], params[:lng], params[:tags]
-  
-  NSURL *checkinComposeUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/checkins/new", API_BASE_URL]];
-  
-  NSMutableDictionary *params = [NSMutableDictionary dictionary];
-  
-  [params setValue:@"0" forKey:@"kupo_type"];
-  
-  [params setValue:eventId forKey:@"event_id"];
-  
-  // Location
-  CGFloat lat = [[KupoLocation sharedInstance] latitude];
-  CGFloat lng = [[KupoLocation sharedInstance] longitude];
-  [params setObject:[NSString stringWithFormat:@"%f", lat] forKey:@"lat"];
-  [params setObject:[NSString stringWithFormat:@"%f", lng] forKey:@"lng"];
-  
-  if ([comment length] > 0) {
-    [params setValue:comment forKey:@"comment"];
-  }
-
-  NetworkOperationAttachmentType attachmentType = NetworkOperationAttachmentTypeNone;
-  
-  if (image) {
-    [params setValue:image forKey:@"image"];
-    if (video) {
-      [params setValue:video forKey:@"video"];
-      attachmentType = NetworkOperationAttachmentTypeMP4;
-    } else {
-      attachmentType = NetworkOperationAttachmentTypeJPEG;
-    }
-  }
-  
-  [self sendOperationWithURL:checkinComposeUrl andMethod:POST andHeaders:nil andParams:params andAttachmentType:attachmentType];
-}
-
-- (void)dataCenterFinishedWithOperation:(LINetworkOperation *)operation {
+- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponse:(id)response {
   [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
-  [super dataCenterFinishedWithOperation:operation];
+  [super dataCenterRequestFinished:request withResponse:response];
 }
 
-- (void)dataCenterFailedWithOperation:(LINetworkOperation *)operation {
+- (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
   [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
-  [super dataCenterFailedWithOperation:operation];
+  [super dataCenterRequestFailed:request withError:error];
 }
 
 @end

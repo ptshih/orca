@@ -9,11 +9,9 @@
 #import "ScrapboardAppDelegate.h"
 #import "Constants.h"
 #import "FBConnect.h"
-#import "LICoreDataStack.h"
 #import "LoginViewController.h"
-#import "EventViewController.h"
+#import "LauncherViewController.h"
 #import "LoginDataCenter.h"
-
 
 @implementation ScrapboardAppDelegate
 
@@ -48,20 +46,18 @@
   self.window.backgroundColor = FB_COLOR_DARK_GRAY_BLUE;
   
   // Login/Session/Register data center
-  [[LoginDataCenter defaultCenter] setDelegate:self];
+  _loginDataCenter = [[LoginDataCenter alloc] init];
 
   // Setup Facebook
   _facebook = [[Facebook alloc] initWithAppId:FB_APP_ID];
   
-  EventViewController *evc = [[EventViewController alloc] init];
-  _navigationController = [[UINavigationController alloc] initWithRootViewController:evc];
-  [evc release];
+  _launcherViewController = [[LauncherViewController alloc] init];
   
   // LoginVC
   _loginViewController = [[LoginViewController alloc] init];
   _loginViewController.delegate = self;
   
-  [self.window addSubview:_navigationController.view];
+  [self.window addSubview:_launcherViewController.view];
   [self.window makeKeyAndVisible];
   
   // Login if necessary
@@ -97,31 +93,15 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
   // Saves changes in the application's managed object context before the application terminates.
-//  [self saveContext];
 }
 
-- (void)saveContext {
-  NSError *error = nil;
-  NSManagedObjectContext *managedObjectContext = [LICoreDataStack sharedManagedObjectContext];
-  if (managedObjectContext != nil) {
-    if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-      /*
-       Replace this implementation with code to handle the error appropriately.
-       
-       abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-       */
-      NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-      abort();
-    } 
-  }
-}
 
 #pragma mark -
 #pragma mark Login
 - (void)tryLogin {
   if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
-    if (![_navigationController.modalViewController isEqual:_loginViewController] && _loginViewController != nil) {
-      [_navigationController presentModalViewController:_loginViewController animated:NO];
+    if (![_launcherViewController.modalViewController isEqual:_loginViewController] && _loginViewController != nil) {
+      [_launcherViewController presentModalViewController:_loginViewController animated:NO];
     }
   } else {
     _facebook.accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
@@ -143,7 +123,6 @@
 
 - (void)userDidLogout {
   // Delete all existing data
-  [LICoreDataStack resetPersistentStore];
   [self tryLogin];
 }
 
@@ -151,13 +130,15 @@
 - (void)startSession {
   // This gets called on subsequent app launches
   [self resetSessionKey];
-  [[LoginDataCenter defaultCenter] startSession];
+#warning session disabled
+//  [_loginDataCenter startSession];
 }
 
 - (void)startRegister {
   // This gets called] if it is the first time logging in
   [self resetSessionKey];
-  [[LoginDataCenter defaultCenter] startRegister];
+#warning register disabled
+//  [_loginDataCenter startRegister];
 }
 
 - (void)resetSessionKey {
@@ -174,17 +155,17 @@
 }
 
 #pragma mark PSDataCenterDelegate
-- (void)dataCenterDidFinish:(LINetworkOperation *)operation {
+- (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
   
   // Determine if this is register or session
-  NSString *requestUrlString = [[operation requestURL] absoluteString];
-  if ([requestUrlString rangeOfString:@"register"].location != NSNotFound) {  
+  NSString *loginType = [request.userInfo valueForKey:@"login"];
+  if ([loginType isEqualToString:@"register"]) {  
     // Our server will send user ID, name, and array of friend ids
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
-    [[NSUserDefaults standardUserDefaults] setObject:[[[LoginDataCenter defaultCenter] response] valueForKey:@"access_token"] forKey:@"accessToken"];
-    [[NSUserDefaults standardUserDefaults] setObject:[[[LoginDataCenter defaultCenter] response] valueForKey:@"facebook_id"] forKey:@"facebookId"];
-    [[NSUserDefaults standardUserDefaults] setObject:[[[LoginDataCenter defaultCenter] response] valueForKey:@"name"] forKey:@"facebookName"];
-    [[NSUserDefaults standardUserDefaults] setObject:[[[LoginDataCenter defaultCenter] response] valueForKey:@"friends"] forKey:@"friends"];
+    [[NSUserDefaults standardUserDefaults] setObject:[response valueForKey:@"access_token"] forKey:@"accessToken"];
+    [[NSUserDefaults standardUserDefaults] setObject:[response valueForKey:@"facebook_id"] forKey:@"facebookId"];
+    [[NSUserDefaults standardUserDefaults] setObject:[response valueForKey:@"name"] forKey:@"facebookName"];
+    [[NSUserDefaults standardUserDefaults] setObject:[response valueForKey:@"friends"] forKey:@"friends"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     // Flag event controller to reload after logging in
@@ -192,12 +173,12 @@
   }
   
   // Session/Register request finished
-  if ([_navigationController.modalViewController isEqual:_loginViewController]) {
-    [_navigationController dismissModalViewControllerAnimated:YES];
+  if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
+    [_launcherViewController dismissModalViewControllerAnimated:YES];
   }
 }
 
-- (void)dataCenterDidFail:(LINetworkOperation *)operation {
+- (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
   // Session/Register request failed
   // Show login again
   _loginViewController.loginButton.hidden = NO;
@@ -222,10 +203,10 @@
 }
 
 - (void)dealloc {
-  [[LoginDataCenter defaultCenter] setDelegate:nil];
+  RELEASE_SAFELY(_loginDataCenter);
   RELEASE_SAFELY(_sessionKey);
   RELEASE_SAFELY(_loginViewController);
-  RELEASE_SAFELY(_navigationController);
+  RELEASE_SAFELY(_launcherViewController);
   RELEASE_SAFELY(_facebook);
   RELEASE_SAFELY(_window);
   [super dealloc];

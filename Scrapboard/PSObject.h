@@ -11,7 +11,7 @@
 #import "NSObject+ConvenienceMethods.h"
 
 @interface PSObject : NSObject {
-    
+
 }
 
 @end

@@ -103,8 +103,6 @@
   if (self) {
     _shouldSaveToAlbum = NO;
     
-    [[ComposeDataCenter defaultCenter] setDelegate:self];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
   }
@@ -171,12 +169,6 @@
 
 - (void)send {  
   // Subclass should implement
-}
-
-- (void)dataCenterDidFinish:(LINetworkOperation *)operation {
-}
-
-- (void)dataCenterDidFail:(LINetworkOperation *)operation {
 }
 
 - (void)showMedia {
@@ -310,8 +302,6 @@
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-  
-  [[ComposeDataCenter defaultCenter] setDelegate:nil];
 
   RELEASE_SAFELY(_mediaPreview);
   RELEASE_SAFELY(_composeToolbar);

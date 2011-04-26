@@ -9,11 +9,17 @@
 #import "CardViewController.h"
 #import "PSNullView.h"
 
+static UIImage *_backgroundImage = nil;
+
 @interface CardViewController (Private)
 
 @end
 
 @implementation CardViewController
+
++ (void)initialize {
+  _backgroundImage = [[UIImage imageNamed:@"bamboo_bg_alpha.png"] retain];
+}
 
 - (id)init {
   self = [super init];
@@ -25,6 +31,9 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  self.view.backgroundColor = [UIColor colorWithPatternImage:_backgroundImage];
+  self.view.frame = CGRectMake(0, 20, 320, CARD_HEIGHT);
   
   _nullView = [[PSNullView alloc] initWithFrame:self.view.bounds];
   [self.view addSubview:_nullView];
