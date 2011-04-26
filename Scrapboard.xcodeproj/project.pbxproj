@@ -76,6 +76,18 @@
 		2538FFBD133C90A100ACE127 /* photo_frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FFBC133C90A100ACE127 /* photo_frame.png */; };
 		25961C7B134D3DD800A3D4CD /* bamboo_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 25961C79134D3DD800A3D4CD /* bamboo_bg.png */; };
 		25961C7C134D3DD800A3D4CD /* bamboo_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25961C7A134D3DD800A3D4CD /* bamboo_bg@2x.png */; };
+		259AD52413668FE000FA2B8D /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD52313668FE000FA2B8D /* AlbumCell.m */; };
+		259AD52513668FE000FA2B8D /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD52313668FE000FA2B8D /* AlbumCell.m */; };
+		259AD52913668FED00FA2B8D /* SnapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD52813668FED00FA2B8D /* SnapCell.m */; };
+		259AD52A13668FED00FA2B8D /* SnapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD52813668FED00FA2B8D /* SnapCell.m */; };
+		259AD5351366ABDE00FA2B8D /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5341366ABDE00FA2B8D /* Album.m */; };
+		259AD5361366ABDE00FA2B8D /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5341366ABDE00FA2B8D /* Album.m */; };
+		259AD5391366ABDE00FA2B8D /* Snap.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5381366ABDE00FA2B8D /* Snap.m */; };
+		259AD53A1366ABDE00FA2B8D /* Snap.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5381366ABDE00FA2B8D /* Snap.m */; };
+		259AD53D1366ABDE00FA2B8D /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD53C1366ABDE00FA2B8D /* Comment.m */; };
+		259AD53E1366ABDE00FA2B8D /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD53C1366ABDE00FA2B8D /* Comment.m */; };
+		259AD5411366AC1700FA2B8D /* Album+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5401366AC1700FA2B8D /* Album+Serialize.m */; };
+		259AD5421366AC1700FA2B8D /* Album+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5401366AC1700FA2B8D /* Album+Serialize.m */; };
 		259C7B4B1349733000C37AE1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B4A1349733000C37AE1 /* Reachability.m */; };
 		259C7B4C1349733000C37AE1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B4A1349733000C37AE1 /* Reachability.m */; };
 		259C7B4E1349735D00C37AE1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 259C7B4D1349735D00C37AE1 /* CFNetwork.framework */; };
@@ -344,6 +356,18 @@
 		25961C79134D3DD800A3D4CD /* bamboo_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bamboo_bg.png; sourceTree = "<group>"; };
 		25961C7A134D3DD800A3D4CD /* bamboo_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bamboo_bg@2x.png"; sourceTree = "<group>"; };
 		25961C9E134D46CD00A3D4CD /* MeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeDelegate.h; sourceTree = "<group>"; };
+		259AD52213668FE000FA2B8D /* AlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumCell.h; sourceTree = "<group>"; };
+		259AD52313668FE000FA2B8D /* AlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCell.m; sourceTree = "<group>"; };
+		259AD52713668FED00FA2B8D /* SnapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapCell.h; sourceTree = "<group>"; };
+		259AD52813668FED00FA2B8D /* SnapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapCell.m; sourceTree = "<group>"; };
+		259AD5331366ABDE00FA2B8D /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
+		259AD5341366ABDE00FA2B8D /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
+		259AD5371366ABDE00FA2B8D /* Snap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snap.h; sourceTree = "<group>"; };
+		259AD5381366ABDE00FA2B8D /* Snap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Snap.m; sourceTree = "<group>"; };
+		259AD53B1366ABDE00FA2B8D /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		259AD53C1366ABDE00FA2B8D /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		259AD53F1366AC1600FA2B8D /* Album+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Album+Serialize.h"; sourceTree = "<group>"; };
+		259AD5401366AC1700FA2B8D /* Album+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Album+Serialize.m"; sourceTree = "<group>"; };
 		259C7B491349733000C37AE1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		259C7B4A1349733000C37AE1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		259C7B4D1349735D00C37AE1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -811,6 +835,14 @@
 			children = (
 				25CEF8F31339FE46006F23A7 /* PSObject.h */,
 				25CEF8F41339FE46006F23A7 /* PSObject.m */,
+				259AD53B1366ABDE00FA2B8D /* Comment.h */,
+				259AD53C1366ABDE00FA2B8D /* Comment.m */,
+				259AD5371366ABDE00FA2B8D /* Snap.h */,
+				259AD5381366ABDE00FA2B8D /* Snap.m */,
+				259AD5331366ABDE00FA2B8D /* Album.h */,
+				259AD5341366ABDE00FA2B8D /* Album.m */,
+				259AD53F1366AC1600FA2B8D /* Album+Serialize.h */,
+				259AD5401366AC1700FA2B8D /* Album+Serialize.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1091,6 +1123,10 @@
 				25FB8BEE133AA7E700C130A8 /* PSImageCell.m */,
 				25FF620213440D1A001EF441 /* ShareCell.h */,
 				25FF620313440D1B001EF441 /* ShareCell.m */,
+				259AD52213668FE000FA2B8D /* AlbumCell.h */,
+				259AD52313668FE000FA2B8D /* AlbumCell.m */,
+				259AD52713668FED00FA2B8D /* SnapCell.h */,
+				259AD52813668FED00FA2B8D /* SnapCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1370,6 +1406,12 @@
 				25DC5F4E13668A0200868001 /* Scrapboard.xcdatamodeld in Sources */,
 				25DC5F5313668A6D00868001 /* LICoreDataStack.m in Sources */,
 				25DC5F5713668A8600868001 /* CardCoreDataTableViewController.m in Sources */,
+				259AD52413668FE000FA2B8D /* AlbumCell.m in Sources */,
+				259AD52913668FED00FA2B8D /* SnapCell.m in Sources */,
+				259AD5351366ABDE00FA2B8D /* Album.m in Sources */,
+				259AD5391366ABDE00FA2B8D /* Snap.m in Sources */,
+				259AD53D1366ABDE00FA2B8D /* Comment.m in Sources */,
+				259AD5411366AC1700FA2B8D /* Album+Serialize.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1437,6 +1479,12 @@
 				25DC5F4F13668A0200868001 /* Scrapboard.xcdatamodeld in Sources */,
 				25DC5F5413668A6D00868001 /* LICoreDataStack.m in Sources */,
 				25DC5F5813668A8600868001 /* CardCoreDataTableViewController.m in Sources */,
+				259AD52513668FE000FA2B8D /* AlbumCell.m in Sources */,
+				259AD52A13668FED00FA2B8D /* SnapCell.m in Sources */,
+				259AD5361366ABDE00FA2B8D /* Album.m in Sources */,
+				259AD53A1366ABDE00FA2B8D /* Snap.m in Sources */,
+				259AD53E1366ABDE00FA2B8D /* Comment.m in Sources */,
+				259AD5421366AC1700FA2B8D /* Album+Serialize.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

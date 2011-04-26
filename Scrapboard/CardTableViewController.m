@@ -17,14 +17,12 @@
 @implementation CardTableViewController
 
 @synthesize tableView = _tableView;
-@synthesize sections = _sections;
 @synthesize items = _items;
 @synthesize searchItems = _searchItems;
 
 - (id)init {
   self = [super init];
   if (self) {    
-    _sections = [[NSMutableArray alloc] initWithCapacity:1];
     _items = [[NSMutableArray alloc] initWithCapacity:1];
   }
   return self;
@@ -144,7 +142,6 @@
 // Called when the user logs out and we need to clear all cached data
 // Subclasses should override this method
 - (void)clearCachedData {
-  [self.sections removeAllObjects];
   [self.items removeAllObjects];
   [_tableView reloadData];
   [self dataSourceDidLoad];
@@ -179,8 +176,8 @@
   if (_tableView == self.searchDisplayController.searchResultsTableView) {
     return ([_searchItems count] > 0);
   } else {
-    if ([self.sections count] > 0) {
-      return ([[self.items objectAtIndex:0] count] > 0); // check section 0
+    if ([self.items count] > 0) {
+      return YES;
     } else {
       return NO;
     }
@@ -188,7 +185,7 @@
 }
 
 - (BOOL)dataSourceIsReady {
-  return ([self.sections count] > 0);
+  return ([self.items count] > 0);
 }
 
 - (BOOL)dataIsLoading {
@@ -210,7 +207,7 @@
   if (tableView == self.searchDisplayController.searchResultsTableView) {
     return 1;
   } else {
-    return [self.sections count];
+    return [self.items count];
   }
 }
 
@@ -223,20 +220,17 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-  if ([[cell class] cellType] == PSCellTypePlain) {
-    UIView *backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
-    backgroundView.backgroundColor = CELL_COLOR_ALPHA;
+  UIView *backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
+  backgroundView.backgroundColor = CELL_COLOR_ALPHA;
 //    backgroundView.alpha = 0.8;
-    cell.backgroundView = backgroundView;
-    
-    UIView *selectedBackgroundView = [[UIView alloc] initWithFrame:cell.bounds];
-    selectedBackgroundView.backgroundColor = CELL_SELECTED_COLOR;
-    cell.selectedBackgroundView = selectedBackgroundView;
-    
-    [backgroundView release];
-    [selectedBackgroundView release];
-  } else {
-  }
+  cell.backgroundView = backgroundView;
+  
+  UIView *selectedBackgroundView = [[UIView alloc] initWithFrame:cell.bounds];
+  selectedBackgroundView.backgroundColor = CELL_SELECTED_COLOR;
+  cell.selectedBackgroundView = selectedBackgroundView;
+  
+  [backgroundView release];
+  [selectedBackgroundView release];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -323,7 +317,6 @@
 
 - (void)dealloc {
   RELEASE_SAFELY(_tableView);
-  RELEASE_SAFELY(_sections);
   RELEASE_SAFELY(_items);
   RELEASE_SAFELY(_searchItems);
   RELEASE_SAFELY(_searchBar);

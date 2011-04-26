@@ -5,12 +5,12 @@
 	<key>isFirstLogin</key>
 	<true/>
 	<key>isLoggedIn</key>
-	<false/>
+	<true/>
+	<key>lastEventType</key>
+	<integer>0</integer>
 	<key>lastExitDate</key>
 	<date>1970-01-01T08:00:00Z</date>
 	<key>lastSelectedCard</key>
-	<integer>0</integer>
-	<key>lastEventType</key>
 	<integer>0</integer>
 	<key>placesSince</key>
 	<date>1970-01-01T08:00:00Z</date>

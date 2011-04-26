@@ -13,6 +13,7 @@
 #import "ASIFormDataRequest.h"
 #import "PSURLCache.h"
 #import "JSON.h"
+#import "LICoreDataStack.h"
 #import "NetworkConstants.h"
 
 #define SINCE_SAFETY_NET 180

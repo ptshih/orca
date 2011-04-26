@@ -42,10 +42,7 @@
   // Get the Me data from the server
 //  [_meDataCenter requestMe];
   
-  [self.sections removeAllObjects];
   [self.items removeAllObjects];
-  
-  [self.sections addObject:@"Share Kupo with your Friends!"];
   
   [self.items addObject:[NSArray arrayWithObjects:@"facebook", @"email", @"text", nil]];
   
@@ -117,9 +114,9 @@
 }
 
 #pragma mark TableView Stuff
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-  return [self.sections objectAtIndex:section];
-}
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//  return [self.sections objectAtIndex:section];
+//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [super tableView:tableView didSelectRowAtIndexPath:indexPath];

@@ -10,9 +10,19 @@
 #import "PSDataCenter.h"
 
 @interface AlbumDataCenter : PSDataCenter {
-
+  NSManagedObjectContext *_context;
 }
 
 - (void)getAlbums;
+
+/**
+ Serialize server response into Event entities
+ */
+- (void)serializeAlbumsWithDictionary:(NSDictionary *)dictionary;
+
+/**
+ Fetch Requests
+ */
+- (NSFetchRequest *)getAlbumsFetchRequest;
 
 @end
