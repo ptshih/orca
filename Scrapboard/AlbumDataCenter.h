@@ -16,7 +16,7 @@
 - (void)getAlbums;
 
 /**
- Serialize server response into Event entities
+ Serialize server response into Album entities
  */
 - (void)serializeAlbumsWithDictionary:(NSDictionary *)dictionary;
 

@@ -8,6 +8,7 @@
 
 #import "AlbumViewController.h"
 #import "AlbumDataCenter.h"
+#import "SnapViewController.h"
 
 @implementation AlbumViewController
 
@@ -85,11 +86,12 @@
 }
 
 - (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
-  
+  [self dataSourceDidLoad];
 }
 
 - (void)dealloc {
   RELEASE_SAFELY(_albumDataCenter);
   [super dealloc];
 }
+
 @end

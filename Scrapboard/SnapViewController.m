@@ -7,60 +7,74 @@
 //
 
 #import "SnapViewController.h"
-
+#import "SnapDataCenter.h"
 
 @implementation SnapViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+@synthesize albumId = _albumId;
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    _snapDataCenter = [[SnapDataCenter alloc] init];
+    _snapDataCenter.delegate = self;
+  }
+  return self;
 }
 
-- (void)dealloc
-{
-    [super dealloc];
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  
+  _navTitleLabel.text = @"Snaps";
+  
+  // Table
+  CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT - 44);
+  [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+  
+  // Pull Refresh
+  [self setupPullRefresh];
+  
+  [self resetFetchedResultsController];
+  [self executeFetch];
+  [self reloadCardController];
 }
 
-#pragma mark - View lifecycle
-
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
-}
-*/
-
-/*
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
-*/
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+- (void)reloadCardController {
+  [super reloadCardController];
+  
+  [_snapDataCenter getSnapsForAlbumWithAlbumId:_albumId];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (void)unloadCardController {
+  [super unloadCardController];
+}
+
+#pragma mark -
+#pragma mark FetchRequest
+- (NSFetchRequest *)getFetchRequest {
+  return [_snapDataCenter getSnapsFetchRequestWithAlbumId:_albumId];
+}
+
+#pragma mark -
+#pragma mark PSDataCenterDelegate
+- (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
+  NSLog(@"DC finish with response: %@", response);
+  [self dataSourceDidLoad];
+  [self executeFetch];
+}
+
+- (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
+  [self dataSourceDidLoad];
+}
+
+- (void)dealloc {
+  RELEASE_SAFELY(_albumId);
+  RELEASE_SAFELY(_snapDataCenter);
+  [super dealloc];
 }
 
 @end

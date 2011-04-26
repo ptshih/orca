@@ -88,6 +88,10 @@
 		259AD53E1366ABDE00FA2B8D /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD53C1366ABDE00FA2B8D /* Comment.m */; };
 		259AD5411366AC1700FA2B8D /* Album+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5401366AC1700FA2B8D /* Album+Serialize.m */; };
 		259AD5421366AC1700FA2B8D /* Album+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5401366AC1700FA2B8D /* Album+Serialize.m */; };
+		259AD5451366AEDE00FA2B8D /* Snap+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5441366AEDD00FA2B8D /* Snap+Serialize.m */; };
+		259AD5461366AEDE00FA2B8D /* Snap+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5441366AEDD00FA2B8D /* Snap+Serialize.m */; };
+		259AD5491366B09100FA2B8D /* SnapDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5481366B09100FA2B8D /* SnapDataCenter.m */; };
+		259AD54A1366B09100FA2B8D /* SnapDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5481366B09100FA2B8D /* SnapDataCenter.m */; };
 		259C7B4B1349733000C37AE1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B4A1349733000C37AE1 /* Reachability.m */; };
 		259C7B4C1349733000C37AE1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B4A1349733000C37AE1 /* Reachability.m */; };
 		259C7B4E1349735D00C37AE1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 259C7B4D1349735D00C37AE1 /* CFNetwork.framework */; };
@@ -368,6 +372,10 @@
 		259AD53C1366ABDE00FA2B8D /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		259AD53F1366AC1600FA2B8D /* Album+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Album+Serialize.h"; sourceTree = "<group>"; };
 		259AD5401366AC1700FA2B8D /* Album+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Album+Serialize.m"; sourceTree = "<group>"; };
+		259AD5431366AEDD00FA2B8D /* Snap+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Snap+Serialize.h"; sourceTree = "<group>"; };
+		259AD5441366AEDD00FA2B8D /* Snap+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Snap+Serialize.m"; sourceTree = "<group>"; };
+		259AD5471366B09100FA2B8D /* SnapDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapDataCenter.h; sourceTree = "<group>"; };
+		259AD5481366B09100FA2B8D /* SnapDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapDataCenter.m; sourceTree = "<group>"; };
 		259C7B491349733000C37AE1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		259C7B4A1349733000C37AE1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		259C7B4D1349735D00C37AE1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -839,6 +847,8 @@
 				259AD53C1366ABDE00FA2B8D /* Comment.m */,
 				259AD5371366ABDE00FA2B8D /* Snap.h */,
 				259AD5381366ABDE00FA2B8D /* Snap.m */,
+				259AD5431366AEDD00FA2B8D /* Snap+Serialize.h */,
+				259AD5441366AEDD00FA2B8D /* Snap+Serialize.m */,
 				259AD5331366ABDE00FA2B8D /* Album.h */,
 				259AD5341366ABDE00FA2B8D /* Album.m */,
 				259AD53F1366AC1600FA2B8D /* Album+Serialize.h */,
@@ -1067,6 +1077,8 @@
 				2511A8DF13657BE500C9CF9A /* ComposeDataCenter.m */,
 				25DC5F2D136626EC00868001 /* AlbumDataCenter.h */,
 				25DC5F2E136626EC00868001 /* AlbumDataCenter.m */,
+				259AD5471366B09100FA2B8D /* SnapDataCenter.h */,
+				259AD5481366B09100FA2B8D /* SnapDataCenter.m */,
 			);
 			name = DataCenters;
 			sourceTree = "<group>";
@@ -1412,6 +1424,8 @@
 				259AD5391366ABDE00FA2B8D /* Snap.m in Sources */,
 				259AD53D1366ABDE00FA2B8D /* Comment.m in Sources */,
 				259AD5411366AC1700FA2B8D /* Album+Serialize.m in Sources */,
+				259AD5451366AEDE00FA2B8D /* Snap+Serialize.m in Sources */,
+				259AD5491366B09100FA2B8D /* SnapDataCenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1485,6 +1499,8 @@
 				259AD53A1366ABDE00FA2B8D /* Snap.m in Sources */,
 				259AD53E1366ABDE00FA2B8D /* Comment.m in Sources */,
 				259AD5421366AC1700FA2B8D /* Album+Serialize.m in Sources */,
+				259AD5461366AEDE00FA2B8D /* Snap+Serialize.m in Sources */,
+				259AD54A1366B09100FA2B8D /* SnapDataCenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CardCoreDataTableViewController.h"
 
+@class SnapDataCenter;
 
-@interface SnapViewController : UIViewController {
-    
+@interface SnapViewController : CardCoreDataTableViewController {
+  SnapDataCenter *_snapDataCenter;
+  NSString *_albumId;
 }
+
+@property (nonatomic, retain) NSString *albumId;
 
 @end

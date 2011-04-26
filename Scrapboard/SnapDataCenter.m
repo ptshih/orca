@@ -1,35 +1,35 @@
 //
-//  AlbumDataCenter.m
+//  SnapDataCenter.m
 //  Scrapboard
 //
-//  Created by Peter Shih on 4/25/11.
+//  Created by Peter Shih on 4/26/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "AlbumDataCenter.h"
-#import "Album.h"
-#import "Album+Serialize.h"
+#import "SnapDataCenter.h"
+#import "Snap.h"
+#import "Snap+Serialize.h"
 
-@implementation AlbumDataCenter
+@implementation SnapDataCenter
 
 - (id)init {
   self = [super init];
   if (self) {
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
+    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
     _context = [LICoreDataStack sharedManagedObjectContext];
   }
   return self;
 }
 
-- (void)getAlbums {
-  NSURL *albumsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, @"albums"]];
+- (void)getSnapsForAlbumWithAlbumId:(NSString *)albumId {
+  NSURL *snapsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, @"snaps"]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   
-  [self sendRequestWithURL:albumsUrl andMethod:GET andHeaders:nil andParams:params andUserInfo:nil];
+  [self sendRequestWithURL:snapsUrl andMethod:GET andHeaders:nil andParams:params andUserInfo:nil];
 }
 
-- (void)serializeAlbumsWithDictionary:(NSDictionary *)dictionary {
+- (void)serializeSnapsWithDictionary:(NSDictionary *)dictionary {
   NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES];
   
   NSArray *sortedEntities = [[dictionary valueForKey:@"data"] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
@@ -40,7 +40,7 @@
   }
   
   NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
-  [fetchRequest setEntity:[NSEntityDescription entityForName:@"Album" inManagedObjectContext:_context]];
+  [fetchRequest setEntity:[NSEntityDescription entityForName:@"Snap" inManagedObjectContext:_context]];
   [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(id IN %@)", sortedEntityIds]];
   [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"id" ascending:YES] autorelease]]];
   
@@ -52,11 +52,11 @@
   for (NSDictionary *entityDict in sortedEntities) {
     if ([foundEntities count] > 0 && i < [foundEntities count] && [[entityDict valueForKey:@"id"] isEqualToString:[[foundEntities objectAtIndex:i] id]]) {
       DLog(@"found duplicated event with id: %@", [[foundEntities objectAtIndex:i] id]);
-      [[foundEntities objectAtIndex:i] updateAlbumWithDictionary:entityDict];
+      [[foundEntities objectAtIndex:i] updateSnapWithDictionary:entityDict];
       i++;
     } else {
       // Insert
-      [Album addAlbumWithDictionary:entityDict inContext:_context];
+      [Snap addSnapWithDictionary:entityDict inContext:_context];
     }
   }
   
@@ -71,7 +71,7 @@
 
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponse:(id)response {
-  [self serializeAlbumsWithDictionary:response];
+  [self serializeSnapsWithDictionary:response];
   [super dataCenterRequestFinished:request withResponse:response];
 }
 
@@ -79,12 +79,12 @@
   [super dataCenterRequestFailed:request withError:error];
 }
 
-- (NSFetchRequest *)getAlbumsFetchRequest {
-  NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO] autorelease];
-  NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
-  NSFetchRequest *fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getAlbums" substitutionVariables:[NSDictionary dictionary]];
+- (NSFetchRequest *)getSnapsFetchRequestWithAlbumId:(NSString *)albumId {
+  NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO selector:@selector(compare:)];
+  NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+  [sortDescriptor release];
+  NSFetchRequest *fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getSnapsForAlbum" substitutionVariables:[NSDictionary dictionaryWithObject:albumId forKey:@"desiredAlbumId"]];
   [fetchRequest setSortDescriptors:sortDescriptors];
-  //  [fetchRequest setFetchLimit:limit];
   return fetchRequest;
 }
 
