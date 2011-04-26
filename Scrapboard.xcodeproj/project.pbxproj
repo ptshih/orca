@@ -92,6 +92,8 @@
 		259AD5461366AEDE00FA2B8D /* Snap+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5441366AEDD00FA2B8D /* Snap+Serialize.m */; };
 		259AD5491366B09100FA2B8D /* SnapDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5481366B09100FA2B8D /* SnapDataCenter.m */; };
 		259AD54A1366B09100FA2B8D /* SnapDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5481366B09100FA2B8D /* SnapDataCenter.m */; };
+		259AD54D1366B67300FA2B8D /* HeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD54C1366B67300FA2B8D /* HeaderCell.m */; };
+		259AD54E1366B67300FA2B8D /* HeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD54C1366B67300FA2B8D /* HeaderCell.m */; };
 		259C7B4B1349733000C37AE1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B4A1349733000C37AE1 /* Reachability.m */; };
 		259C7B4C1349733000C37AE1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B4A1349733000C37AE1 /* Reachability.m */; };
 		259C7B4E1349735D00C37AE1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 259C7B4D1349735D00C37AE1 /* CFNetwork.framework */; };
@@ -376,6 +378,8 @@
 		259AD5441366AEDD00FA2B8D /* Snap+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Snap+Serialize.m"; sourceTree = "<group>"; };
 		259AD5471366B09100FA2B8D /* SnapDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapDataCenter.h; sourceTree = "<group>"; };
 		259AD5481366B09100FA2B8D /* SnapDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapDataCenter.m; sourceTree = "<group>"; };
+		259AD54B1366B67200FA2B8D /* HeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderCell.h; sourceTree = "<group>"; };
+		259AD54C1366B67300FA2B8D /* HeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderCell.m; sourceTree = "<group>"; };
 		259C7B491349733000C37AE1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		259C7B4A1349733000C37AE1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		259C7B4D1349735D00C37AE1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -1139,6 +1143,8 @@
 				259AD52313668FE000FA2B8D /* AlbumCell.m */,
 				259AD52713668FED00FA2B8D /* SnapCell.h */,
 				259AD52813668FED00FA2B8D /* SnapCell.m */,
+				259AD54B1366B67200FA2B8D /* HeaderCell.h */,
+				259AD54C1366B67300FA2B8D /* HeaderCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1426,6 +1432,7 @@
 				259AD5411366AC1700FA2B8D /* Album+Serialize.m in Sources */,
 				259AD5451366AEDE00FA2B8D /* Snap+Serialize.m in Sources */,
 				259AD5491366B09100FA2B8D /* SnapDataCenter.m in Sources */,
+				259AD54D1366B67300FA2B8D /* HeaderCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1501,6 +1508,7 @@
 				259AD5421366AC1700FA2B8D /* Album+Serialize.m in Sources */,
 				259AD5461366AEDE00FA2B8D /* Snap+Serialize.m in Sources */,
 				259AD54A1366B09100FA2B8D /* SnapDataCenter.m in Sources */,
+				259AD54E1366B67300FA2B8D /* HeaderCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

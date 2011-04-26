@@ -169,7 +169,7 @@
 #pragma mark UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   if (tableView == self.searchDisplayController.searchResultsTableView) {
-    return 1;
+    return _sectionNameKeyPathForFetchedResultsController ? [_searchItems count] : 1;
   } else {
     return [[self.fetchedResultsController sections] count];
   }

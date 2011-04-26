@@ -9,6 +9,8 @@
 #import "SnapViewController.h"
 #import "SnapDataCenter.h"
 #import "Album.h"
+#import "Snap.h"
+#import "HeaderCell.h"
 
 @implementation SnapViewController
 
@@ -19,6 +21,7 @@
   if (self) {
     _snapDataCenter = [[SnapDataCenter alloc] init];
     _snapDataCenter.delegate = self;
+    _sectionNameKeyPathForFetchedResultsController = @"id";
   }
   return self;
 }
@@ -34,7 +37,7 @@
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
-  [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+  [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleNone];
   
   // Pull Refresh
   [self setupPullRefresh];
@@ -52,6 +55,25 @@
 
 - (void)unloadCardController {
   [super unloadCardController];
+}
+
+#pragma mark -
+#pragma mark TableView
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+  Snap *snap = nil;
+  if (tableView != self.searchDisplayController.searchResultsTableView) {
+    snap = [[self.fetchedResultsController fetchedObjects] objectAtIndex:section];
+  } else {
+    snap = [_searchItems objectAtIndex:section];
+  }
+  HeaderCell *headerCell = [[[HeaderCell alloc] initWithFrame:CGRectMake(0, 0, 320, 44)] autorelease];
+  [headerCell fillCellWithObject:nil];
+  [headerCell loadImage];
+  return headerCell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+  return 44.0;
 }
 
 #pragma mark -

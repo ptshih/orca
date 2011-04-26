@@ -167,8 +167,7 @@ static UIImage *_backgroundImage = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-  return YES;
-//  return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+  return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 
 - (void)didReceiveMemoryWarning {

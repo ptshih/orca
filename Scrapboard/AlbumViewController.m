@@ -9,6 +9,7 @@
 #import "AlbumViewController.h"
 #import "AlbumDataCenter.h"
 #import "SnapViewController.h"
+#import "Album.h"
 
 @implementation AlbumViewController
 
@@ -17,6 +18,7 @@
   if (self) {
     _albumDataCenter = [[AlbumDataCenter alloc] init];
     _albumDataCenter.delegate = self;
+    _sectionNameKeyPathForFetchedResultsController = @"id";
   }
   return self;
 }
@@ -32,7 +34,7 @@
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
-  [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+  [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleNone];
   
   [self setupSearchDisplayControllerWithScopeButtonTitles:[NSArray arrayWithObjects:@"Album", @"Person", nil]];
   
@@ -52,6 +54,19 @@
 
 - (void)unloadCardController {
   [super unloadCardController];
+}
+
+#pragma mark -
+#pragma mark TableView
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+  Album *album = nil;
+  if (tableView != self.searchDisplayController.searchResultsTableView) {
+    album = [[self.fetchedResultsController fetchedObjects] objectAtIndex:section];
+  } else {
+    album = [_searchItems objectAtIndex:section];
+  }
+  return album.name;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
