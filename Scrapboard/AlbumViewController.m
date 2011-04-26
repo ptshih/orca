@@ -18,7 +18,7 @@
   if (self) {
     _albumDataCenter = [[AlbumDataCenter alloc] init];
     _albumDataCenter.delegate = self;
-    _sectionNameKeyPathForFetchedResultsController = @"id";
+    _sectionNameKeyPathForFetchedResultsController = @"daysAgo";
   }
   return self;
 }
@@ -60,6 +60,8 @@
 #pragma mark TableView
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+  return [[[self.fetchedResultsController sections] objectAtIndex:section] name];
+  
   Album *album = nil;
   if (tableView != self.searchDisplayController.searchResultsTableView) {
     album = [[self.fetchedResultsController fetchedObjects] objectAtIndex:section];

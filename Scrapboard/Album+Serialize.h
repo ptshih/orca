@@ -11,6 +11,9 @@
 
 @interface Album (Serialize)
 
+// This is used for sectioning in tableview
+- (NSString *)daysAgo;
+
 + (Album *)addAlbumWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
 
 - (Album *)updateAlbumWithDictionary:(NSDictionary *)dictionary;

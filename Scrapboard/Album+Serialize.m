@@ -10,6 +10,19 @@
 
 @implementation Album (Serialize)
 
+- (NSString *)daysAgo {
+  NSInteger day = 24 * 60 * 60;
+  
+  NSInteger delta = [self.timestamp timeIntervalSinceNow];
+  delta *= -1;
+  
+  if (delta < 1 * day) {
+    return @"Happening Now";
+  } else {
+    return [NSString stringWithFormat:@"%d days ago", delta / day];
+  }
+}
+
 + (Album *)addAlbumWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context {
   if (dictionary) {
     Album *newAlbum = [NSEntityDescription insertNewObjectForEntityForName:@"Album" inManagedObjectContext:context];
