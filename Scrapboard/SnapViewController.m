@@ -8,10 +8,11 @@
 
 #import "SnapViewController.h"
 #import "SnapDataCenter.h"
+#import "Album.h"
 
 @implementation SnapViewController
 
-@synthesize albumId = _albumId;
+@synthesize album = _album;
 
 - (id)init {
   self = [super init];
@@ -29,10 +30,10 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  _navTitleLabel.text = @"Snaps";
+  _navTitleLabel.text = _album.name;
   
   // Table
-  CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT - 44);
+  CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
   // Pull Refresh
@@ -46,7 +47,7 @@
 - (void)reloadCardController {
   [super reloadCardController];
   
-  [_snapDataCenter getSnapsForAlbumWithAlbumId:_albumId];
+  [_snapDataCenter getSnapsForAlbumWithAlbumId:_album.id];
 }
 
 - (void)unloadCardController {
@@ -56,7 +57,7 @@
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [_snapDataCenter getSnapsFetchRequestWithAlbumId:_albumId];
+  return [_snapDataCenter getSnapsFetchRequestWithAlbumId:_album.id];
 }
 
 #pragma mark -
@@ -72,7 +73,7 @@
 }
 
 - (void)dealloc {
-  RELEASE_SAFELY(_albumId);
+  RELEASE_SAFELY(_album);
   RELEASE_SAFELY(_snapDataCenter);
   [super dealloc];
 }

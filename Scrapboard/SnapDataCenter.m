@@ -22,7 +22,7 @@
 }
 
 - (void)getSnapsForAlbumWithAlbumId:(NSString *)albumId {
-  NSURL *snapsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, @"snaps"]];
+  NSURL *snapsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, @"snaps_test"]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   

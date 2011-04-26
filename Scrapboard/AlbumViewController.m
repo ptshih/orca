@@ -31,7 +31,7 @@
   _navTitleLabel.text = @"Albums";
   
   // Table
-  CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT - 44);
+  CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
   [self setupSearchDisplayControllerWithScopeButtonTitles:[NSArray arrayWithObjects:@"Album", @"Person", nil]];
@@ -52,6 +52,34 @@
 
 - (void)unloadCardController {
   [super unloadCardController];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+  
+  Album *album = nil;
+  if (tableView == self.searchDisplayController.searchResultsTableView) {
+    album = [_searchItems objectAtIndex:indexPath.row];
+  } else {
+    album = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  }
+  
+  // Mark isRead state
+  //  if (![event.isRead boolValue]) {
+  //    event.isRead = [NSNumber numberWithBool:YES];
+  //    
+  //    NSError *error = nil;
+  //    if ([self.context hasChanges]) {
+  //      if (![self.context save:&error]) {
+  //        abort(); // NOTE: DO NOT SHIP
+  //      }
+  //    }
+  //  }
+  
+  SnapViewController *svc = [[SnapViewController alloc] init];
+  svc.album = album;
+  [self.navigationController pushViewController:svc animated:YES];
+  [svc release];
 }
 
 #pragma mark -

@@ -10,12 +10,13 @@
 #import "CardCoreDataTableViewController.h"
 
 @class SnapDataCenter;
+@class Album;
 
 @interface SnapViewController : CardCoreDataTableViewController {
   SnapDataCenter *_snapDataCenter;
-  NSString *_albumId;
+  Album *_album;
 }
 
-@property (nonatomic, retain) NSString *albumId;
+@property (nonatomic, retain) Album *album;
 
 @end

@@ -16,7 +16,7 @@
 - (void)getSnapsForAlbumWithAlbumId:(NSString *)albumId;
 
 /**
- Serialize server response into Event entities
+ Serialize server response into Snap entities
  */
 - (void)serializeSnapsWithDictionary:(NSDictionary *)dictionary;
 
