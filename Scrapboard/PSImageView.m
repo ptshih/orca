@@ -10,16 +10,20 @@
 #import "LINetworkQueue.h"
 #import "LINetworkOperation.h"
 #import "LIImageCache.h"
+#import "UIImage+ScalingAndCropping.h"
 
 @implementation PSImageView
 
 @synthesize urlPath = _urlPath;
 @synthesize placeholderImage = _placeholderImage;
+@synthesize shouldScale = _shouldScale;
 @synthesize delegate = _delegate;
 
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    _shouldScale = NO;
+    
     _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     _loadingIndicator.hidesWhenStopped = YES;
     _loadingIndicator.frame = self.bounds;
@@ -78,7 +82,12 @@
 
 #pragma mark LINetworkOperationDelegate
 - (void)networkOperationDidFinish:(LINetworkOperation *)operation {
-  UIImage *image = [UIImage imageWithData:[operation responseData]];
+  UIImage *image = nil;
+  if (_shouldScale) {
+    image = [[UIImage imageWithData:[operation responseData]] cropProportionalToSize:self.bounds.size];
+  } else {
+    image = [UIImage imageWithData:[operation responseData]];
+  }
   if (image) {
     [[LIImageCache sharedCache] cacheImage:image forURLPath:[[operation requestURL] absoluteString]];
     if (self.urlPath == [[operation requestURL] absoluteString]) {

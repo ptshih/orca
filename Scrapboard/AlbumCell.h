@@ -7,10 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PSImageCell.h"
 #import "Album.h"
 
-@interface AlbumCell : UITableViewCell {
-    
+@interface AlbumCell : PSImageCell {
+  UIView *_bubbleView;
+  UIImageView *_bubbleImageView;
+  PSImageView *_photoView;
+  UILabel *_nameLabel;
+  UILabel *_messageLabel;
+  UILabel *_timestampLabel;
+  
+  UIView *_activityView;
+  UILabel *_activityLabel;
 }
+
+- (void)loadPhoto;
 
 @end

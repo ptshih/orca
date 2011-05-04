@@ -33,6 +33,7 @@
     newAlbum.userId = [dictionary valueForKey:@"user_id"];
     newAlbum.userName = [dictionary valueForKey:@"user_name"];
     newAlbum.userPictureUrl = [dictionary valueForKey:@"user_picture_url"];
+    newAlbum.message = [dictionary valueForKey:@"message"];
     newAlbum.photoUrl = [dictionary valueForKey:@"photo_url"];
     newAlbum.type = [dictionary valueForKey:@"type"];
     newAlbum.photoCount = [dictionary valueForKey:@"photo_count"];
@@ -65,6 +66,7 @@
   self.userId = [dictionary valueForKey:@"user_id"];
   self.userName = [dictionary valueForKey:@"user_name"];
   self.userPictureUrl = [dictionary valueForKey:@"user_picture_url"];
+  self.message = [dictionary valueForKey:@"message"];
   self.photoUrl = [dictionary valueForKey:@"photo_url"];
   self.type = [dictionary valueForKey:@"type"];
   self.photoCount = [dictionary valueForKey:@"photo_count"];

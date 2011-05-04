@@ -97,11 +97,11 @@
     // Landscape
     self = [self scaleProportionalToSize:CGSizeMake(INT_MAX, maxDimension)];
     leftMargin = ceil((self.size.width - desiredWidth) / 2);
-    topMargin = 0;
+    topMargin = ceil((self.size.height - desiredHeight) / 2);
   } else if (self.size.width < self.size.height) {
     // Portrait
     self = [self scaleProportionalToSize:CGSizeMake(maxDimension, INT_MAX)];
-    leftMargin = 0;
+    leftMargin = ceil((self.size.width - desiredWidth) / 2);
     topMargin = ceil((self.size.height - desiredHeight) / 2);
   } else {
     // Square

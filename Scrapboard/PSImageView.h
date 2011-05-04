@@ -16,12 +16,15 @@
   UIActivityIndicatorView *_loadingIndicator;
   UIImage *_placeholderImage;
   
+  BOOL _shouldScale;
+  
   LINetworkOperation *_op;
   id <PSImageViewDelegate> _delegate;
 }
 
 @property (nonatomic, copy) NSString *urlPath;
 @property (nonatomic, retain) UIImage *placeholderImage;
+@property (nonatomic, assign) BOOL shouldScale;
 @property (nonatomic, assign) id <PSImageViewDelegate> delegate;
 
 - (void)loadImage;

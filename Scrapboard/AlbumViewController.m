@@ -9,6 +9,7 @@
 #import "AlbumViewController.h"
 #import "AlbumDataCenter.h"
 #import "SnapViewController.h"
+#import "AlbumCell.h"
 #import "Album.h"
 
 @implementation AlbumViewController
@@ -68,9 +69,27 @@
 
 #pragma mark -
 #pragma mark TableView
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  return [AlbumCell rowHeightForObject:album forInterfaceOrientation:[self interfaceOrientation]];
+}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
   return [[[self.fetchedResultsController sections] objectAtIndex:section] name];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+  [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
+  [(AlbumCell *)cell loadImage];
+  [(AlbumCell *)cell loadPhoto];
+//  [cell setNeedsDisplay];
+//  [cell setNeedsLayout];
+}
+
+- (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
+  Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
+  [cell fillCellWithObject:album];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -94,6 +113,20 @@
   svc.album = album;
   [self.navigationController pushViewController:svc animated:YES];
   [svc release];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  AlbumCell *cell = nil;
+  NSString *reuseIdentifier = [NSString stringWithFormat:@"%@_TableViewCell_%d", [self class], indexPath.section];
+  
+  cell = (AlbumCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+  if(cell == nil) { 
+    cell = [[[AlbumCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+  }
+  
+  [self tableView:tableView configureCell:cell atIndexPath:indexPath];
+  
+  return cell;
 }
 
 #pragma mark -
