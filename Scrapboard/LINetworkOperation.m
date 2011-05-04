@@ -220,7 +220,7 @@ static NSThread *_opThread = nil;
 - (void)finishConnection {
   // Called on OP THREAD
   
-  if ([self isExecuting]) {
+  if ([self isExecuting] && ![self isCancelled]) {
     // Decrement the number of active operations
     _activeOperationCount--;
     
@@ -603,6 +603,7 @@ static NSThread *_opThread = nil;
 
 #pragma mark Network Activity Indicator
 + (void)showNetworkActivityIndicator {
+  //  NSLog(@"show opCount: %d", _activeOperationCount);
   if (_activeOperationCount > 0) {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
   }
@@ -617,6 +618,7 @@ static NSThread *_opThread = nil;
 }
 
 + (void)hideNetworkActivityIndicatorIfNeeded {
+  //  NSLog(@"hideIfNeeded opCount: %d", _activeOperationCount);
   if (_activeOperationCount == 0) {
     [[self class] performSelectorOnMainThread:@selector(hideNetworkActivityIndicator) withObject:nil waitUntilDone:NO];
   }
@@ -662,6 +664,10 @@ static NSThread *_opThread = nil;
   [descDict setObject:[NSNumber numberWithBool:self.shouldTimeout] forKey:@"Config: Should Timeout"];
   
   return [descDict description];
+}
+
++ (NSUInteger)activeOperationCount {
+  return _activeOperationCount;
 }
 
 - (void)dealloc {

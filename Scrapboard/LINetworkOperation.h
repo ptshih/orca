@@ -127,7 +127,7 @@ typedef enum {
 @property (nonatomic, assign) NetworkOperationAttachmentType attachmentType;
 
 // Delegate
-@property (nonatomic, assign) id delegate;
+@property (assign) id delegate;
 
 #pragma mark Init
 - (id)initWithURL:(NSURL *)URL;
@@ -142,5 +142,7 @@ typedef enum {
 
 #pragma mark Cleanup
 - (void)clearDelegatesAndCancel;
+
++ (NSUInteger)activeOperationCount;
 
 @end

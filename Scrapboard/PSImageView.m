@@ -58,6 +58,10 @@
     } else {
       self.image = _placeholderImage;
       [_loadingIndicator startAnimating];
+      if (_op) {
+        [_op clearDelegatesAndCancel];
+        RELEASE_SAFELY(_op);
+      }
       _op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:_urlPath]];
       _op.delegate = self;
       _op.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
