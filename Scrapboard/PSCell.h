@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Constants.h"
 #import "NetworkConstants.h"
+#import "PSImageView.h"
 
 #define MARGIN_X 10.0
 #define MARGIN_Y 5.0

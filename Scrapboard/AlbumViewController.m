@@ -30,7 +30,12 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  // Title and Buttons
   _navTitleLabel.text = @"Albums";
+  
+  UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newAlbum)];
+  self.navigationItem.rightBarButtonItem = rightButton;
+  [rightButton release];
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -43,6 +48,7 @@
   
   [self resetFetchedResultsController];
   [self executeFetch];
+  [self updateState];
   [self reloadCardController];
 }
 
@@ -56,30 +62,21 @@
   [super unloadCardController];
 }
 
+- (void)newAlbum {
+  
+}
+
 #pragma mark -
 #pragma mark TableView
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
   return [[[self.fetchedResultsController sections] objectAtIndex:section] name];
-  
-  Album *album = nil;
-  if (tableView != self.searchDisplayController.searchResultsTableView) {
-    album = [[self.fetchedResultsController fetchedObjects] objectAtIndex:section];
-  } else {
-    album = [_searchItems objectAtIndex:section];
-  }
-  return album.name;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   
-  Album *album = nil;
-  if (tableView == self.searchDisplayController.searchResultsTableView) {
-    album = [_searchItems objectAtIndex:indexPath.row];
-  } else {
-    album = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  }
+  Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   // Mark isRead state
   //  if (![event.isRead boolValue]) {
@@ -106,14 +103,14 @@
   
   if ([scope isEqualToString:@"Person"]) {
     // search friend's full name
-    predicate = [NSPredicate predicateWithFormat:@"participantFullNames CONTAINS[cd] %@ OR userName CONTAINS[cd] %@", searchText, searchText];
+    predicate = [NSPredicate predicateWithFormat:@"userName CONTAINS[cd] %@", searchText, searchText];
   } else {
     // default to album name
     predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
   }
   
-  [_searchItems removeAllObjects];
-  [_searchItems addObjectsFromArray:[[self.fetchedResultsController fetchedObjects] filteredArrayUsingPredicate:predicate]];
+  [self.fetchedResultsController.fetchRequest setPredicate:predicate];
+  [self executeFetch];
 }
 
 #pragma mark -
@@ -128,6 +125,7 @@
   NSLog(@"DC finish with response: %@", response);
   [self dataSourceDidLoad];
   [self executeFetch];
+  [self updateState];
 }
 
 - (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {

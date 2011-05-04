@@ -15,4 +15,6 @@
   AlbumDataCenter *_albumDataCenter;
 }
 
+- (void)newAlbum;
+
 @end

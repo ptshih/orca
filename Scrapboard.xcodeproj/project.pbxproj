@@ -80,8 +80,6 @@
 		259AD52513668FE000FA2B8D /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD52313668FE000FA2B8D /* AlbumCell.m */; };
 		259AD52913668FED00FA2B8D /* SnapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD52813668FED00FA2B8D /* SnapCell.m */; };
 		259AD52A13668FED00FA2B8D /* SnapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD52813668FED00FA2B8D /* SnapCell.m */; };
-		259AD5351366ABDE00FA2B8D /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5341366ABDE00FA2B8D /* Album.m */; };
-		259AD5361366ABDE00FA2B8D /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5341366ABDE00FA2B8D /* Album.m */; };
 		259AD5391366ABDE00FA2B8D /* Snap.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5381366ABDE00FA2B8D /* Snap.m */; };
 		259AD53A1366ABDE00FA2B8D /* Snap.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5381366ABDE00FA2B8D /* Snap.m */; };
 		259AD53D1366ABDE00FA2B8D /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD53C1366ABDE00FA2B8D /* Comment.m */; };
@@ -112,6 +110,8 @@
 		25BA900813602DDD00D4A86B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BB4133A0D3D00C130A8 /* LoginViewController.m */; };
 		25BA900A13602DE500D4A86B /* CardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BDF133AA6AB00C130A8 /* CardViewController.m */; };
 		25BA900B13602DE500D4A86B /* CardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BE1133AA6BA00C130A8 /* CardTableViewController.m */; };
+		25C67E21137132AA00330DA7 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C67E20137132AA00330DA7 /* Album.m */; };
+		25C67E22137132AA00330DA7 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C67E20137132AA00330DA7 /* Album.m */; };
 		25CEF8071339F278006F23A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8061339F278006F23A7 /* UIKit.framework */; };
 		25CEF8091339F278006F23A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8081339F278006F23A7 /* Foundation.framework */; };
 		25CEF80B1339F278006F23A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80A1339F278006F23A7 /* CoreGraphics.framework */; };
@@ -366,8 +366,6 @@
 		259AD52313668FE000FA2B8D /* AlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCell.m; sourceTree = "<group>"; };
 		259AD52713668FED00FA2B8D /* SnapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapCell.h; sourceTree = "<group>"; };
 		259AD52813668FED00FA2B8D /* SnapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapCell.m; sourceTree = "<group>"; };
-		259AD5331366ABDE00FA2B8D /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
-		259AD5341366ABDE00FA2B8D /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		259AD5371366ABDE00FA2B8D /* Snap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snap.h; sourceTree = "<group>"; };
 		259AD5381366ABDE00FA2B8D /* Snap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Snap.m; sourceTree = "<group>"; };
 		259AD53B1366ABDE00FA2B8D /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
@@ -393,6 +391,8 @@
 		25A2A8EF136015A60005808D /* button-header-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-header-bg@2x.png"; sourceTree = "<group>"; };
 		25B2F4A7135180EB00DDF1BC /* PSNullView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNullView.h; sourceTree = "<group>"; };
 		25B2F4A8135180EB00DDF1BC /* PSNullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSNullView.m; sourceTree = "<group>"; };
+		25C67E1F137132AA00330DA7 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
+		25C67E20137132AA00330DA7 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		25CEF8021339F278006F23A7 /* Scrapboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrapboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25CEF8061339F278006F23A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		25CEF8081339F278006F23A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -853,10 +853,10 @@
 				259AD5381366ABDE00FA2B8D /* Snap.m */,
 				259AD5431366AEDD00FA2B8D /* Snap+Serialize.h */,
 				259AD5441366AEDD00FA2B8D /* Snap+Serialize.m */,
-				259AD5331366ABDE00FA2B8D /* Album.h */,
-				259AD5341366ABDE00FA2B8D /* Album.m */,
 				259AD53F1366AC1600FA2B8D /* Album+Serialize.h */,
 				259AD5401366AC1700FA2B8D /* Album+Serialize.m */,
+				25C67E1F137132AA00330DA7 /* Album.h */,
+				25C67E20137132AA00330DA7 /* Album.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1426,13 +1426,13 @@
 				25DC5F5713668A8600868001 /* CardCoreDataTableViewController.m in Sources */,
 				259AD52413668FE000FA2B8D /* AlbumCell.m in Sources */,
 				259AD52913668FED00FA2B8D /* SnapCell.m in Sources */,
-				259AD5351366ABDE00FA2B8D /* Album.m in Sources */,
 				259AD5391366ABDE00FA2B8D /* Snap.m in Sources */,
 				259AD53D1366ABDE00FA2B8D /* Comment.m in Sources */,
 				259AD5411366AC1700FA2B8D /* Album+Serialize.m in Sources */,
 				259AD5451366AEDE00FA2B8D /* Snap+Serialize.m in Sources */,
 				259AD5491366B09100FA2B8D /* SnapDataCenter.m in Sources */,
 				259AD54D1366B67300FA2B8D /* HeaderCell.m in Sources */,
+				25C67E21137132AA00330DA7 /* Album.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1502,13 +1502,13 @@
 				25DC5F5813668A8600868001 /* CardCoreDataTableViewController.m in Sources */,
 				259AD52513668FE000FA2B8D /* AlbumCell.m in Sources */,
 				259AD52A13668FED00FA2B8D /* SnapCell.m in Sources */,
-				259AD5361366ABDE00FA2B8D /* Album.m in Sources */,
 				259AD53A1366ABDE00FA2B8D /* Snap.m in Sources */,
 				259AD53E1366ABDE00FA2B8D /* Comment.m in Sources */,
 				259AD5421366AC1700FA2B8D /* Album+Serialize.m in Sources */,
 				259AD5461366AEDE00FA2B8D /* Snap+Serialize.m in Sources */,
 				259AD54A1366B09100FA2B8D /* SnapDataCenter.m in Sources */,
 				259AD54E1366B67300FA2B8D /* HeaderCell.m in Sources */,
+				25C67E22137132AA00330DA7 /* Album.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -33,7 +33,12 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  // Title and Buttons
   _navTitleLabel.text = _album.name;
+  
+  UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(newSnap)];
+  self.navigationItem.rightBarButtonItem = rightButton;
+  [rightButton release];
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -44,6 +49,7 @@
   
   [self resetFetchedResultsController];
   [self executeFetch];
+  [self updateState];
   [self reloadCardController];
 }
 
@@ -57,15 +63,15 @@
   [super unloadCardController];
 }
 
+- (void)newSnap {
+  
+}
+
 #pragma mark -
 #pragma mark TableView
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-  Snap *snap = nil;
-  if (tableView != self.searchDisplayController.searchResultsTableView) {
-    snap = [[self.fetchedResultsController fetchedObjects] objectAtIndex:section];
-  } else {
-    snap = [_searchItems objectAtIndex:section];
-  }
+  Snap *snap = [[self.fetchedResultsController fetchedObjects] objectAtIndex:section];
+
   HeaderCell *headerCell = [[[HeaderCell alloc] initWithFrame:CGRectMake(0, 0, 320, 44)] autorelease];
   [headerCell fillCellWithObject:nil];
   [headerCell loadImage];
@@ -88,6 +94,7 @@
   NSLog(@"DC finish with response: %@", response);
   [self dataSourceDidLoad];
   [self executeFetch];
+  [self updateState];
 }
 
 - (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {

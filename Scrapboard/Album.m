@@ -2,7 +2,7 @@
 //  Album.m
 //  Scrapboard
 //
-//  Created by Peter Shih on 4/26/11.
+//  Created by Peter Shih on 5/4/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,20 +11,20 @@
 
 @implementation Album
 @dynamic id;
-@dynamic participantIds;
-@dynamic participantFullNames;
 @dynamic timestamp;
-@dynamic lastActivity;
 @dynamic isFollowed;
 @dynamic userPictureUrl;
 @dynamic userId;
 @dynamic isRead;
 @dynamic userName;
-@dynamic tag;
-@dynamic participantFacebookIds;
 @dynamic lat;
 @dynamic lng;
-@dynamic participantFirstNames;
 @dynamic name;
+@dynamic message;
+@dynamic photoUrl;
+@dynamic type;
+@dynamic photoCount;
+@dynamic likeCount;
+@dynamic commentCount;
 
 @end

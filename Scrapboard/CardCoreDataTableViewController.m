@@ -42,11 +42,7 @@
 
 #pragma mark State Machine
 - (BOOL)dataIsAvailable {
-  if (_tableView == self.searchDisplayController.searchResultsTableView) {
-    return ([_searchItems count] > 0);
-  } else {
-    return (_fetchedResultsController && _fetchedResultsController.fetchedObjects.count > 0);
-  }
+  return (_fetchedResultsController && _fetchedResultsController.fetchedObjects.count > 0);
 }
 
 - (void)updateState {
@@ -91,9 +87,6 @@
   } else {
     DLog(@"Fetch failed with error: %@", [error localizedDescription]);
   }
-  
-//  [_tableView reloadData];
-  [self updateState];  
 }
 
 - (NSFetchRequest *)getFetchRequest {
@@ -157,30 +150,27 @@
   // SUBCLASS MUST IMPLEMENT
 }
 
+- (void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView {
+  [self.fetchedResultsController.fetchRequest setPredicate:nil];
+  [self executeFetch];
+}
+
+#pragma mark UITableViewDelegate
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
   // subclass must implement
 }
 
-#pragma mark UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  if (tableView == self.searchDisplayController.searchResultsTableView) {
-    return _sectionNameKeyPathForFetchedResultsController ? [_searchItems count] : 1;
-  } else {
-    return [[self.fetchedResultsController sections] count];
-  }
+  return [[self.fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  if (tableView == self.searchDisplayController.searchResultsTableView) {
-    return [_searchItems count];
-  } else {
-    return [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
-  }
+  return [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

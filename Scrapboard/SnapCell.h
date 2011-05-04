@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PSCell.h"
+#import "Snap.h"
 
-
-@interface SnapCell : UITableViewCell {
-    
+@interface SnapCell : PSCell {
+  Snap *_snap;
+  PSImageView *_photoImageView; // optional
 }
 
 @end

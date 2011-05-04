@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "PSCell.h"
-#import "PSImageView.h"
 
 #define IMAGE_WIDTH_PLAIN 40.0
 #define IMAGE_HEIGHT_PLAIN 40.0

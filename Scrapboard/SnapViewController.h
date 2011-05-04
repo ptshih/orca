@@ -19,4 +19,6 @@
 
 @property (nonatomic, retain) Album *album;
 
+- (void)newSnap;
+
 @end
