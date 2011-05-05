@@ -1,15 +1,15 @@
 //
 //  PSImageView.m
-//  Scrapboard
+//  PSNetworkStack
 //
 //  Created by Peter Shih on 3/10/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright 2011 Seven Minute Apps. All rights reserved.
 //
 
 #import "PSImageView.h"
-#import "LINetworkQueue.h"
-#import "LINetworkOperation.h"
-#import "LIImageCache.h"
+#import "PSNetworkQueue.h"
+#import "PSNetworkOperation.h"
+#import "PSImageCache.h"
 #import "UIImage+ScalingAndCropping.h"
 
 @implementation PSImageView
@@ -41,17 +41,17 @@
 //    _urlPath = urlPathCopy;
 //    
 //    // Image not found in cache, fire a request
-//    LINetworkOperation *op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:_urlPath]];
+//    PSNetworkOperation *op = [[PSNetworkOperation alloc] initWithURL:[NSURL URLWithString:_urlPath]];
 //    op.delegate = self;
 //    [op setQueuePriority:NSOperationQueuePriorityVeryLow];
-//    [[LINetworkQueue sharedQueue] addOperation:op];
+//    [[PSNetworkQueue sharedQueue] addOperation:op];
 //    [op release];
 //  }
 //}
 
 - (void)loadImage {
   if (_urlPath) {
-    UIImage *image = [[LIImageCache sharedCache] imageForURLPath:_urlPath];
+    UIImage *image = [[PSImageCache sharedCache] imageForURLPath:_urlPath];
     if (image) {
       self.image = image;
       [self imageDidLoad];
@@ -62,11 +62,11 @@
         [_op clearDelegatesAndCancel];
         RELEASE_SAFELY(_op);
       }
-      _op = [[LINetworkOperation alloc] initWithURL:[NSURL URLWithString:_urlPath]];
+      _op = [[PSNetworkOperation alloc] initWithURL:[NSURL URLWithString:_urlPath]];
       _op.delegate = self;
       _op.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
       [_op setQueuePriority:NSOperationQueuePriorityVeryLow];
-      [[LINetworkQueue sharedQueue] addOperation:_op];
+      [[PSNetworkQueue sharedQueue] addOperation:_op];
     }
   }
 }
@@ -84,8 +84,8 @@
   }
 }
 
-#pragma mark LINetworkOperationDelegate
-- (void)networkOperationDidFinish:(LINetworkOperation *)operation {
+#pragma mark PSNetworkOperationDelegate
+- (void)networkOperationDidFinish:(PSNetworkOperation *)operation {
   UIImage *image = nil;
   if (_shouldScale) {
     image = [[UIImage imageWithData:[operation responseData]] cropProportionalToSize:self.bounds.size];
@@ -93,7 +93,7 @@
     image = [UIImage imageWithData:[operation responseData]];
   }
   if (image) {
-    [[LIImageCache sharedCache] cacheImage:image forURLPath:[[operation requestURL] absoluteString]];
+    [[PSImageCache sharedCache] cacheImage:image forURLPath:[[operation requestURL] absoluteString]];
     if (self.urlPath == [[operation requestURL] absoluteString]) {
       self.image = image;
       [self imageDidLoad];
@@ -103,7 +103,7 @@
   //  NSLog(@"Image width: %f, height: %f", image.size.width, image.size.height);
 }
 
-- (void)networkOperationDidFail:(LINetworkOperation *)operation {
+- (void)networkOperationDidFail:(PSNetworkOperation *)operation {
   self.image = _placeholderImage;
 }
 

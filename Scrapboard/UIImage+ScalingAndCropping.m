@@ -90,25 +90,20 @@
   CGFloat desiredWidth = desiredSize.width;
   CGFloat desiredHeight = desiredSize.height;
   CGFloat maxDimension = (desiredWidth > desiredHeight) ? desiredWidth : desiredHeight;
-  CGFloat leftMargin = 0;
-  CGFloat topMargin = 0;
   
   if (self.size.width > self.size.height) {
     // Landscape
     self = [self scaleProportionalToSize:CGSizeMake(INT_MAX, maxDimension)];
-    leftMargin = ceil((self.size.width - desiredWidth) / 2);
-    topMargin = ceil((self.size.height - desiredHeight) / 2);
   } else if (self.size.width < self.size.height) {
     // Portrait
     self = [self scaleProportionalToSize:CGSizeMake(maxDimension, INT_MAX)];
-    leftMargin = ceil((self.size.width - desiredWidth) / 2);
-    topMargin = ceil((self.size.height - desiredHeight) / 2);
   } else {
     // Square
     self = [self scaleProportionalToSize:CGSizeMake(maxDimension, maxDimension)];
-    leftMargin = ceil((self.size.width - desiredWidth) / 2);
-    topMargin = ceil((self.size.height - desiredHeight) / 2);
   }
+  
+  CGFloat leftMargin = ceil((self.size.width - desiredWidth) / 2);
+  CGFloat topMargin = ceil((self.size.height - desiredHeight) / 2);
   
   CGRect desiredRect = CGRectMake(leftMargin, topMargin, desiredWidth, desiredHeight);
   

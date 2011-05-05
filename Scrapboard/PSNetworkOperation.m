@@ -1,13 +1,13 @@
 //
-//  LINetworkOperation.m
-//  NetworkStack
+//  PSNetworkOperation.m
+//  PSNetworkStack
 //
 //  Created by Peter Shih on 1/27/11.
-//  Copyright 2011 LinkedIn. All rights reserved.
+//  Copyright 2011 Seven Minute Apps. All rights reserved.
 //
 
-#import "LINetworkOperation.h"
-#import "NSString+URLEncoding.h"
+#import "PSNetworkOperation.h"
+#import "NSString+URLEncoding+PS.h"
 
 #define JSON_REQUEST_HEADER @"application/json"
 
@@ -21,7 +21,7 @@ static NSUInteger _activeOperationCount = 0;
 
 static NSThread *_opThread = nil;
 
-@interface LINetworkOperation (Private)
+@interface PSNetworkOperation (Private)
 
 + (void)showNetworkActivityIndicator;
 + (void)hideNetworkActivityIndicator;
@@ -48,7 +48,7 @@ static NSThread *_opThread = nil;
 
 @end
 
-@implementation LINetworkOperation
+@implementation PSNetworkOperation
 
 // Connection
 @synthesize connection = _connection;
@@ -97,7 +97,7 @@ static NSThread *_opThread = nil;
 
 #pragma mark Initialization
 + (void)initialize {
-  if (self == [LINetworkOperation class]) {
+  if (self == [PSNetworkOperation class]) {
     // Allocs for class (statics)
     _opThread = [[NSThread alloc] initWithTarget:[self class] selector:@selector(opThreadMain) object:nil];
     [_opThread start];
@@ -557,6 +557,8 @@ static NSThread *_opThread = nil;
 }
 
 - (void)addRequestParam:(NSString *)param value:(id)value {
+  // Do some transforming here
+  // If someone tries to pass in an NSNumber, we should coerce it to an NSString
   [self.requestParams setObject:value forKey:param];
 }
 
@@ -603,7 +605,7 @@ static NSThread *_opThread = nil;
 
 #pragma mark Network Activity Indicator
 + (void)showNetworkActivityIndicator {
-  //  NSLog(@"show opCount: %d", _activeOperationCount);
+//  NSLog(@"show opCount: %d", _activeOperationCount);
   if (_activeOperationCount > 0) {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
   }
@@ -618,7 +620,7 @@ static NSThread *_opThread = nil;
 }
 
 + (void)hideNetworkActivityIndicatorIfNeeded {
-  //  NSLog(@"hideIfNeeded opCount: %d", _activeOperationCount);
+//  NSLog(@"hideIfNeeded opCount: %d", _activeOperationCount);
   if (_activeOperationCount == 0) {
     [[self class] performSelectorOnMainThread:@selector(hideNetworkActivityIndicator) withObject:nil waitUntilDone:NO];
   }

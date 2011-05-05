@@ -1,17 +1,17 @@
 //
-//  LINetworkQueue.m
-//  NetworkStack
+//  PSNetworkQueue.m
+//  PSNetworkStack
 //
 //  Created by Peter Shih on 1/27/11.
-//  Copyright 2011 LinkedIn. All rights reserved.
+//  Copyright 2011 Seven Minute Apps. All rights reserved.
 //
 
-#import "LINetworkQueue.h"
-#import "LINetworkOperation.h"
+#import "PSNetworkQueue.h"
+#import "PSNetworkOperation.h"
 
-static LINetworkQueue *_sharedQueue = nil;
+static PSNetworkQueue *_sharedQueue = nil;
 
-@implementation LINetworkQueue
+@implementation PSNetworkQueue
 
 - (id)init {
   self = [super init];
@@ -23,12 +23,12 @@ static LINetworkQueue *_sharedQueue = nil;
 }
 
 - (void)cancelAllOperations {
-  for (LINetworkOperation *op in [self operations]) {
+  for (PSNetworkOperation *op in [self operations]) {
     [op clearDelegatesAndCancel];
   }
 }
 
-+ (LINetworkQueue *)sharedQueue {
++ (PSNetworkQueue *)sharedQueue {
   @synchronized(self) {
     if (_sharedQueue == nil) {
       _sharedQueue = [[self alloc] init];

@@ -1,20 +1,20 @@
 //
-//  LIImageCache.m
-//  InPad
+//  PSImageCache.m
+//  PSNetworkStack
 //
 //  Created by Peter Shih on 3/10/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "LIImageCache.h"
+#import "PSImageCache.h"
 
-static LIImageCache *_sharedCache;
+static PSImageCache *_sharedCache;
 
-@implementation LIImageCache
+@implementation PSImageCache
 
 @synthesize imageCache = _imageCache;
 
-+ (LIImageCache *)sharedCache {
++ (PSImageCache *)sharedCache {
   if (!_sharedCache) {
     _sharedCache = [[self alloc] init];
   }

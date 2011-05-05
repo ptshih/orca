@@ -1,6 +1,6 @@
 //
-//  LIImageCache.h
-//  InPad
+//  PSImageCache.h
+//  PSNetworkStack
 //
 //  Created by Peter Shih on 3/10/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
@@ -14,16 +14,16 @@
  - implement disk storage
  - implement header caching
  
- - move to NetworkStack
+ - move to PSNetworkStack
  */
 
-@interface LIImageCache : NSObject {
+@interface PSImageCache : NSObject {
   NSMutableDictionary *_imageCache;
 }
 
 @property (retain) NSMutableDictionary *imageCache;
 
-+ (LIImageCache *)sharedCache;
++ (PSImageCache *)sharedCache;
 
 // Image Cache
 - (void)cacheImage:(UIImage *)image forURLPath:(NSString *)urlPath;

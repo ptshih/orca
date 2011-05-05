@@ -1,9 +1,9 @@
 //
-//  LINetworkOperation.h
-//  NetworkStack
+//  PSNetworkOperation.h
+//  PSNetworkStack
 //
 //  Created by Peter Shih on 1/27/11.
-//  Copyright 2011 LinkedIn. All rights reserved.
+//  Copyright 2011 Seven Minute Apps. All rights reserved.
 //
 //  Things to test:
 //  Test GZIP compression/decompression
@@ -12,7 +12,7 @@
 //  Test all delegate callbacks
 
 #import <Foundation/Foundation.h>
-#import "LINetworkOperationDelegate.h"
+#import "PSNetworkOperationDelegate.h"
 
 typedef enum {
   NetworkOperationStateIdle = -1,
@@ -30,7 +30,7 @@ typedef enum {
   NetworkOperationAttachmentTypeMP4 = 2
 } NetworkOperationAttachmentType;
 
-@interface LINetworkOperation : NSOperation {
+@interface PSNetworkOperation : NSOperation {
   // Connection
   NSURLConnection *_connection;
   BOOL _isExecuting;
@@ -77,7 +77,7 @@ typedef enum {
   NetworkOperationState _operationState;
   
   // Delegate
-  id <LINetworkOperationDelegate> _delegate;
+  id <PSNetworkOperationDelegate> _delegate;
   
   // Stuff to reuse from NSOperation
   // queuePriority

@@ -1,24 +1,24 @@
 //
 //  PSImageView.h
-//  Scrapboard
+//  PSNetworkStack
 //
 //  Created by Peter Shih on 3/10/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright 2011 Seven Minute Apps. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "LINetworkOperationDelegate.h"
+#import "PSNetworkOperationDelegate.h"
 #import "PSImageViewDelegate.h"
 #import "Constants.h"
 
-@interface PSImageView : UIImageView <LINetworkOperationDelegate, PSImageViewDelegate> {
+@interface PSImageView : UIImageView <PSNetworkOperationDelegate, PSImageViewDelegate> {
   NSString *_urlPath;
   UIActivityIndicatorView *_loadingIndicator;
   UIImage *_placeholderImage;
   
   BOOL _shouldScale;
   
-  LINetworkOperation *_op;
+  PSNetworkOperation *_op;
   id <PSImageViewDelegate> _delegate;
 }
 
