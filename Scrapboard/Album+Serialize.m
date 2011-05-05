@@ -33,15 +33,19 @@
     newAlbum.userId = [dictionary valueForKey:@"user_id"];
     newAlbum.userName = [dictionary valueForKey:@"user_name"];
     newAlbum.userPictureUrl = [dictionary valueForKey:@"user_picture_url"];
-    newAlbum.message = [dictionary valueForKey:@"message"];
-    newAlbum.photoUrl = [dictionary valueForKey:@"photo_url"];
     newAlbum.type = [dictionary valueForKey:@"type"];
+    newAlbum.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
+    
+    // Counts
     newAlbum.photoCount = [dictionary valueForKey:@"photo_count"];
     newAlbum.commentCount = [dictionary valueForKey:@"comment_count"];
     newAlbum.likeCount = [dictionary valueForKey:@"like_count"];
-    newAlbum.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     
     // These might be null
+    newAlbum.message = [dictionary valueForKey:@"message"] ? [dictionary valueForKey:@"message"] : nil;
+    newAlbum.photoUrl = [dictionary valueForKey:@"photo_url"] ? [dictionary valueForKey:@"photo_url"] : nil;
+    newAlbum.videoUrl = [dictionary valueForKey:@"video_url"] ? [dictionary valueForKey:@"video_url"] : nil;
+    
     newAlbum.isFollowed = [dictionary valueForKey:@"is_followed"] ? [dictionary valueForKey:@"is_followed"] : [NSNumber numberWithBool:NO];
     
     return newAlbum;
@@ -51,6 +55,7 @@
 }
 
 - (Album *)updateAlbumWithDictionary:(NSDictionary *)dictionary {
+  // Is Followed
   if ([dictionary valueForKey:@"is_followed"]) {
     self.isFollowed = [dictionary valueForKey:@"is_followed"];
   }
@@ -66,13 +71,18 @@
   self.userId = [dictionary valueForKey:@"user_id"];
   self.userName = [dictionary valueForKey:@"user_name"];
   self.userPictureUrl = [dictionary valueForKey:@"user_picture_url"];
-  self.message = [dictionary valueForKey:@"message"];
-  self.photoUrl = [dictionary valueForKey:@"photo_url"];
   self.type = [dictionary valueForKey:@"type"];
+  self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
+  
+  // Counts
   self.photoCount = [dictionary valueForKey:@"photo_count"];
   self.commentCount = [dictionary valueForKey:@"comment_count"];
   self.likeCount = [dictionary valueForKey:@"like_count"];
-  self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
+  
+  // These might be null
+  self.message = [dictionary valueForKey:@"message"] ? [dictionary valueForKey:@"message"] : nil;
+  self.photoUrl = [dictionary valueForKey:@"photo_url"] ? [dictionary valueForKey:@"photo_url"] : nil;
+  self.videoUrl = [dictionary valueForKey:@"video_url"] ? [dictionary valueForKey:@"video_url"] : nil;
   
   // Is Read
   self.isRead = [NSNumber numberWithBool:NO];

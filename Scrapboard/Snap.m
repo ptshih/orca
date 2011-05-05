@@ -2,19 +2,19 @@
 //  Snap.m
 //  Scrapboard
 //
-//  Created by Peter Shih on 4/26/11.
+//  Created by Peter Shih on 5/4/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
 #import "Snap.h"
 #import "Comment.h"
+#import "Like.h"
 
 
 @implementation Snap
 @dynamic id;
 @dynamic message;
 @dynamic timestamp;
-@dynamic videoFileName;
 @dynamic type;
 @dynamic userPictureUrl;
 @dynamic userId;
@@ -23,9 +23,10 @@
 @dynamic isLiked;
 @dynamic albumId;
 @dynamic lng;
-@dynamic photoFileName;
-@dynamic likes;
+@dynamic photoUrl;
+@dynamic videoUrl;
 @dynamic comments;
+@dynamic likes;
 
 - (void)addCommentsObject:(Comment *)value {    
     NSSet *changedObjects = [[NSSet alloc] initWithObjects:&value count:1];
@@ -53,6 +54,35 @@
     [self willChangeValueForKey:@"comments" withSetMutation:NSKeyValueMinusSetMutation usingObjects:value];
     [[self primitiveValueForKey:@"comments"] minusSet:value];
     [self didChangeValueForKey:@"comments" withSetMutation:NSKeyValueMinusSetMutation usingObjects:value];
+}
+
+
+- (void)addLikesObject:(Like *)value {    
+    NSSet *changedObjects = [[NSSet alloc] initWithObjects:&value count:1];
+    [self willChangeValueForKey:@"likes" withSetMutation:NSKeyValueUnionSetMutation usingObjects:changedObjects];
+    [[self primitiveValueForKey:@"likes"] addObject:value];
+    [self didChangeValueForKey:@"likes" withSetMutation:NSKeyValueUnionSetMutation usingObjects:changedObjects];
+    [changedObjects release];
+}
+
+- (void)removeLikesObject:(Like *)value {
+    NSSet *changedObjects = [[NSSet alloc] initWithObjects:&value count:1];
+    [self willChangeValueForKey:@"likes" withSetMutation:NSKeyValueMinusSetMutation usingObjects:changedObjects];
+    [[self primitiveValueForKey:@"likes"] removeObject:value];
+    [self didChangeValueForKey:@"likes" withSetMutation:NSKeyValueMinusSetMutation usingObjects:changedObjects];
+    [changedObjects release];
+}
+
+- (void)addLikes:(NSSet *)value {    
+    [self willChangeValueForKey:@"likes" withSetMutation:NSKeyValueUnionSetMutation usingObjects:value];
+    [[self primitiveValueForKey:@"likes"] unionSet:value];
+    [self didChangeValueForKey:@"likes" withSetMutation:NSKeyValueUnionSetMutation usingObjects:value];
+}
+
+- (void)removeLikes:(NSSet *)value {
+    [self willChangeValueForKey:@"likes" withSetMutation:NSKeyValueMinusSetMutation usingObjects:value];
+    [[self primitiveValueForKey:@"likes"] minusSet:value];
+    [self didChangeValueForKey:@"likes" withSetMutation:NSKeyValueMinusSetMutation usingObjects:value];
 }
 
 

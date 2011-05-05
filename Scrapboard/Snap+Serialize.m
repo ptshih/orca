@@ -18,18 +18,18 @@
     // Required
     newSnap.id = [dictionary valueForKey:@"id"];
     newSnap.albumId = [dictionary valueForKey:@"album_id"];
-    newSnap.type = [dictionary valueForKey:@"type"];
     newSnap.userId = [dictionary valueForKey:@"user_id"];
     newSnap.userName = [dictionary valueForKey:@"user_name"];
     newSnap.userPictureUrl = [dictionary valueForKey:@"user_picture_url"];
+    newSnap.type = [dictionary valueForKey:@"type"];
     newSnap.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     
     // These might be null
-    newSnap.isLiked = [dictionary valueForKey:@"is_liked"] ? [dictionary valueForKey:@"is_liked"] : [NSNumber numberWithBool:NO];
-    newSnap.likes = [dictionary valueForKey:@"message"] ? [dictionary valueForKey:@"likes"] : nil;
     newSnap.message = [dictionary valueForKey:@"message"] ? [dictionary valueForKey:@"message"] : nil;
-    newSnap.photoFileName = [dictionary valueForKey:@"photo_file_name"] ? [dictionary valueForKey:@"photo_file_name"] : nil;
-    newSnap.videoFileName = [dictionary valueForKey:@"video_file_name"] ? [dictionary valueForKey:@"video_file_name"] : nil;
+    newSnap.photoUrl = [dictionary valueForKey:@"photo_url"] ? [dictionary valueForKey:@"photo_url"] : nil;
+    newSnap.videoUrl = [dictionary valueForKey:@"video_url"] ? [dictionary valueForKey:@"video_url"] : nil;
+    
+    newSnap.isLiked = [dictionary valueForKey:@"is_liked"] ? [dictionary valueForKey:@"is_liked"] : [NSNumber numberWithBool:NO];
 
     return newSnap;
   } else {
@@ -41,18 +41,19 @@
   // Required
   self.id = [dictionary valueForKey:@"id"];
   self.albumId = [dictionary valueForKey:@"album_id"];
-  self.type = [dictionary valueForKey:@"type"];
   self.userId = [dictionary valueForKey:@"user_id"];
   self.userName = [dictionary valueForKey:@"user_name"];
   self.userPictureUrl = [dictionary valueForKey:@"user_picture_url"];
+  self.type = [dictionary valueForKey:@"type"];
   self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
   
   // These might be null
-  self.isLiked = [dictionary valueForKey:@"is_liked"] ? [dictionary valueForKey:@"is_liked"] : [NSNumber numberWithBool:NO];
-  self.likes = [dictionary valueForKey:@"message"] ? [dictionary valueForKey:@"likes"] : nil;
   self.message = [dictionary valueForKey:@"message"] ? [dictionary valueForKey:@"message"] : nil;
-  self.photoFileName = [dictionary valueForKey:@"photo_file_name"] ? [dictionary valueForKey:@"photo_file_name"] : nil;
-  self.videoFileName = [dictionary valueForKey:@"video_file_name"] ? [dictionary valueForKey:@"video_file_name"] : nil;
+  self.photoUrl = [dictionary valueForKey:@"photo_url"] ? [dictionary valueForKey:@"photo_url"] : nil;
+  self.videoUrl = [dictionary valueForKey:@"video_url"] ? [dictionary valueForKey:@"video_url"] : nil;
+  
+  self.isLiked = [dictionary valueForKey:@"is_liked"] ? [dictionary valueForKey:@"is_liked"] : [NSNumber numberWithBool:NO];
+
   
   return self;
 }

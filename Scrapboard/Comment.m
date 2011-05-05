@@ -2,7 +2,7 @@
 //  Comment.m
 //  Scrapboard
 //
-//  Created by Peter Shih on 4/26/11.
+//  Created by Peter Shih on 5/4/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,11 +11,11 @@
 
 
 @implementation Comment
-@dynamic userPictureUrl;
-@dynamic id;
-@dynamic message;
 @dynamic userId;
 @dynamic userName;
+@dynamic id;
+@dynamic message;
+@dynamic userPictureUrl;
 @dynamic timestamp;
 @dynamic snap;
 

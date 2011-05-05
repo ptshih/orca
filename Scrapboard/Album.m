@@ -11,20 +11,21 @@
 
 @implementation Album
 @dynamic id;
+@dynamic message;
 @dynamic timestamp;
 @dynamic isFollowed;
 @dynamic userPictureUrl;
-@dynamic userId;
 @dynamic isRead;
+@dynamic userId;
 @dynamic userName;
 @dynamic lat;
-@dynamic lng;
-@dynamic name;
-@dynamic message;
-@dynamic photoUrl;
 @dynamic type;
-@dynamic photoCount;
+@dynamic photoUrl;
+@dynamic lng;
 @dynamic likeCount;
 @dynamic commentCount;
+@dynamic name;
+@dynamic photoCount;
+@dynamic videoUrl;
 
 @end
