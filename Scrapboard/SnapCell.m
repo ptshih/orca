@@ -24,6 +24,7 @@
     
     // Photo
     _photoView = [[PSImageView alloc] initWithFrame:CGRectMake(MARGIN_X, MARGIN_Y, cellWidth, cellWidth)];
+    _photoView.shouldScale = YES;
     _photoView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
     _photoView.layer.borderWidth = 1.0;
     

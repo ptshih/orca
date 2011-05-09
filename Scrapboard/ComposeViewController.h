@@ -10,36 +10,26 @@
 #import "CardModalViewController.h"
 #import "ComposeDelegate.h"
 #import "PSTextView.h"
-#import "UIImage+ScalingAndCropping.h"
 #import "ComposeDataCenter.h"
 
-@interface ComposeViewController : CardModalViewController <UITextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate, UINavigationControllerDelegate> {
-  UIToolbar *_composeToolbar;
+@interface ComposeViewController : CardViewController <UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate> {
+  // Caption Bubble
   UIView *_composeView;
   PSTextView *_message;
-  UIImageView *_backgroundView;
   
-  // Photo
-  UIButton *_mediaPreview;
+  // Photo Background
+  UIImageView *_mediaPreview;
   
-  // Uploaded Image/Video
-  UIImage *_thumbnailImage;
-  UIImage *_uploadedImage;
-  NSData *_uploadedVideo;
-  NSString *_uploadedVideoPath;
-  
-  BOOL _shouldSaveToAlbum;
+  // Snapped Photo
+  UIImage *_snappedImage;
   
   id <ComposeDelegate> _delegate;
 }
 
+@property (nonatomic, retain) UIImage *snappedImage;
 @property (nonatomic, assign) id <ComposeDelegate> delegate;
 
 - (void)send;
-- (void)uploadMedia;
-- (void)showMedia;
-- (void)showFriends;
-- (void)showPlaces;
 
 - (void)moveTextViewForKeyboard:(NSNotification*)aNotification up:(BOOL)up;
 

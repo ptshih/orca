@@ -7,102 +7,20 @@
 //
 
 #import "ComposeViewController.h"
-#import <MobileCoreServices/UTCoreTypes.h>
+#import "UIImage+ScalingAndCropping.h"
 
 #define SPACING 4.0
 #define PORTRAIT_HEIGHT 180.0
 #define LANDSCAPE_HEIGHT 74.0
 
-@implementation ComposeViewController (CameraDelegateMethods)
-
-// For responding to the user tapping Cancel.
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-  [[picker parentViewController] dismissModalViewControllerAnimated:YES];
-  [picker release];
-}
-
-// For responding to the user accepting a newly-captured picture or movie
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-  NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
-  UIImage *originalImage;
-  
-  if (_thumbnailImage) {
-    [_thumbnailImage release], _thumbnailImage = nil;
-  }
-  
-  if (_uploadedImage) {
-    [_uploadedImage release], _uploadedImage = nil;
-  }
-  
-  if (_uploadedVideo) {
-    [_uploadedVideo release], _uploadedVideo = nil;
-  }
-  
-  if (_uploadedVideoPath) {
-    [_uploadedVideoPath release], _uploadedVideoPath = nil;
-  }
-  
-  if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-    _shouldSaveToAlbum = YES;
-  } else {
-    _shouldSaveToAlbum = NO;
-  }
-    
-  // Handle a still image capture
-  if (CFStringCompare((CFStringRef)mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
-    originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    // Save the new image (original or edited) to the Camera Roll
-    // This is only done when the Send button is tapped
-    //    UIImageWriteToSavedPhotosAlbum (originalImage, nil, nil , nil);
-    
-    _uploadedImage = [[originalImage scaleProportionalToSize:CGSizeMake(640, 640)] retain];
-//    _uploadedImage = [originalImage retain];
-    _thumbnailImage = [[originalImage cropProportionalToSize:CGSizeMake(_mediaPreview.width, _mediaPreview.height)] retain];
-    [_mediaPreview setBackgroundImage:_thumbnailImage forState:UIControlStateNormal];
-  }
-  
-  // Handle a movie capture
-  if (CFStringCompare((CFStringRef)mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo) {
-    _uploadedVideoPath = [[[info objectForKey:UIImagePickerControllerMediaURL] path] retain];
-    _uploadedVideo = [[NSData dataWithContentsOfURL:[info objectForKey:UIImagePickerControllerMediaURL]] retain];
-    
-    // Take a screenshot of the video for a thumbnail
-    CGSize sixzevid=CGSizeMake(picker.view.bounds.size.width,picker.view.bounds.size.height);
-    UIGraphicsBeginImageContext(sixzevid);
-    [picker.view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *videoThumbImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    _uploadedImage = [[videoThumbImage cropProportionalToSize:CGSizeMake(320, 320)] retain];
-//    [_photoUpload setBackgroundImage:_uploadedImage forState:UIControlStateNormal];
-    _thumbnailImage = [[videoThumbImage cropProportionalToSize:CGSizeMake(_mediaPreview.width, _mediaPreview.height)] retain];
-    [_mediaPreview setBackgroundImage:_thumbnailImage forState:UIControlStateNormal];
-  }
-  
-  // Write the photo to the user's album
-  if (_uploadedImage && !_uploadedVideo && _shouldSaveToAlbum) {
-    UIImageWriteToSavedPhotosAlbum(_uploadedImage, nil, nil, nil);
-  } else if (_uploadedVideo && _shouldSaveToAlbum) {
-    if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(_uploadedVideoPath)) {
-      UISaveVideoAtPathToSavedPhotosAlbum(_uploadedVideoPath, nil, nil, nil);
-    }
-  }
-  
-  [[picker parentViewController] dismissModalViewControllerAnimated:YES];
-  [picker release];
-}
-
-@end
-
 @implementation ComposeViewController
 
+@synthesize snappedImage = _snappedImage;
 @synthesize delegate = _delegate;
 
 - (id)init {
   self = [super init];
   if (self) {
-    _shouldSaveToAlbum = NO;
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
   }
@@ -112,121 +30,47 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  self.navigationController.navigationBarHidden = NO;
+  
   [_nullView removeFromSuperview];
   self.view.backgroundColor = [UIColor whiteColor];
-  
-  // Show the dismiss button
-  [self showDismissButton];
   
   // Send Button
   UIBarButtonItem *sendButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Send", @"Send") style:UIBarButtonItemStyleBordered target:self action:@selector(send)];
   self.navigationItem.rightBarButtonItem = sendButton;
   [sendButton release];
   
-  _composeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
+  
+  // Media Preview
+  _mediaPreview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
+  [self.view addSubview:_mediaPreview];
+  
+  // Set the snapped image as the preview
+  [_mediaPreview setImage:[_snappedImage cropProportionalToSize:_mediaPreview.bounds.size]];
+  
+  // Compose Caption Bubble
+  _composeView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
   _composeView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:_composeView];
 
   // Message Field
-  _message = [[PSTextView alloc] initWithFrame:CGRectZero];
-  _message.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  _message = [[PSTextView alloc] initWithFrame:_composeView.bounds];
 	_message.returnKeyType = UIReturnKeyDefault;
 	_message.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0];
 	_message.delegate = self;
-  _message.placeholder = @"Type a message...";
+  _message.placeholder = @"Add a caption";
   _message.placeholderColor = [UIColor lightGrayColor];
   [_composeView addSubview:_message];
-  
-  // Toolbar
-  _composeToolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
-  _composeToolbar.frame = CGRectMake(0, 156, 320, 44);
-  _composeToolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-  _composeToolbar.tintColor = NAV_COLOR_DARK_BLUE;
-  _composeToolbar.alpha = 0.0;
-  
-  UIBarButtonItem *photoButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"button-bar-camera.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showMedia)] autorelease];
-  
-  UIBarButtonItem *peopleButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"button-bar-at.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showFriends)] autorelease];
-  
-  UIBarButtonItem *placeButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"button-bar-place.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showPlaces)] autorelease];
-  
-  NSArray *barItems = [NSArray arrayWithObjects:photoButton, [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease], peopleButton, [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease], placeButton, nil];
-
-  [_composeToolbar setItems:barItems];
-  
-  [_composeView addSubview:_composeToolbar];
-
-  _mediaPreview = [[UIButton alloc] initWithFrame:CGRectMake(0, _composeView.height, 320, 216)];
-  [_mediaPreview addTarget:self action:@selector(uploadMedia) forControlEvents:UIControlEventTouchUpInside];
-  [_mediaPreview setBackgroundImage:[UIImage imageNamed:@"photo_add.png"] forState:UIControlStateNormal];
-  [self.view addSubview:_mediaPreview];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   // Subclass should implement
+  [_message becomeFirstResponder];
 }
 
 - (void)send {  
   // Subclass should implement
-}
-
-- (void)showMedia {
-  [self.view endEditing:YES];
-  return;
-}
-
-- (void)showFriends {
-  [self.view endEditing:YES];
-  return; 
-}
-
-- (void)showPlaces {
-  [self.view endEditing:YES];
-  return;
-}
-
-- (void)uploadMedia {
-  UIActionSheet *actionSheet = [[UIActionSheet alloc] init];
-  
-  if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-    [actionSheet addButtonWithTitle:@"Take a Photo or Video"];
-  }
-  [actionSheet addButtonWithTitle:@"Choose from Library"];
-  [actionSheet addButtonWithTitle:@"Cancel"];
-  actionSheet.delegate = self;
-  actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-  actionSheet.cancelButtonIndex = actionSheet.numberOfButtons - 1;
-  [actionSheet showInView:self.view];
-  [actionSheet autorelease];
-}
-
-#pragma mark UIActionSheetDelegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-  if(buttonIndex == actionSheet.cancelButtonIndex) return;
-  
-  UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-  imagePicker.allowsEditing = NO;
-  imagePicker.delegate = self;
-  imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:imagePicker.sourceType];
-  
-//  imagePicker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
-//  imagePicker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeMovie];
-  
-  switch (buttonIndex) {
-    case 0:
-      if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-      }
-      break;
-    case 1:
-      imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-      break;
-    default:
-      break;
-  }
-  
-  [self presentModalViewController:imagePicker animated:YES];
 }
 
 #pragma mark -
@@ -281,15 +125,11 @@
 //    self.view.height = self.view.height + keyboardFrame.size.height;
 //  }
   
-  if (up) {
-    _composeView.height = self.view.bounds.size.height - keyboardFrame.size.height;
-  } else {
-    _composeView.height = self.view.bounds.size.height + keyboardFrame.size.height;
-  }
-  
-  _composeToolbar.alpha = 1.0;
-  
-//  _composeToolbar.top = _composeView.height - _composeToolbar.height;
+//  if (up) {
+//    _composeView.height = self.view.bounds.size.height - keyboardFrame.size.height;
+//  } else {
+//    _composeView.height = self.view.bounds.size.height + keyboardFrame.size.height;
+//  }
   
 //  _message.height = up ? self.view.bounds.size.height - 44 - keyboardFrame.size.height - 20 : 30;
 //  _backgroundView.height = _message.height;
@@ -304,14 +144,9 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 
   RELEASE_SAFELY(_mediaPreview);
-  RELEASE_SAFELY(_composeToolbar);
   RELEASE_SAFELY(_composeView);
   RELEASE_SAFELY(_message);
-  RELEASE_SAFELY(_thumbnailImage);
-  RELEASE_SAFELY(_uploadedImage);
-  RELEASE_SAFELY(_uploadedVideo);
-  RELEASE_SAFELY(_uploadedVideoPath);
-  RELEASE_SAFELY(_backgroundView);
+  RELEASE_SAFELY(_snappedImage);
   [super dealloc];
 }
 

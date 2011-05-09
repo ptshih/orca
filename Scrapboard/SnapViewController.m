@@ -12,6 +12,7 @@
 #import "Snap.h"
 #import "HeaderCell.h"
 #import "SnapCell.h"
+#import "CameraViewController.h"
 
 @implementation SnapViewController
 
@@ -65,7 +66,11 @@
 }
 
 - (void)newSnap {
-  
+  CameraViewController *cvc = [[CameraViewController alloc] init];
+  UINavigationController *cnc = [[UINavigationController alloc] initWithRootViewController:cvc];
+  [self presentModalViewController:cnc animated:YES];
+  [cvc autorelease];
+  [cnc autorelease];
 }
 
 #pragma mark -

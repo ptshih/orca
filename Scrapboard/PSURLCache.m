@@ -51,9 +51,9 @@ static PSURLCache *_sharedCache;
   
   NSString *primaryKey = @"id";
   NSString *dataKey = @"data";
-  NSString *pagingKey = @"paging";
-  NSString *sinceKey = @"since";
-  NSString *untilKey = @"until";
+//  NSString *pagingKey = @"paging";
+//  NSString *sinceKey = @"since";
+//  NSString *untilKey = @"until";
   
   // Walk thru both dictionaries and merge/unique based on 'id' primary key
   NSMutableDictionary *mergedDictionary = [NSMutableDictionary dictionary];

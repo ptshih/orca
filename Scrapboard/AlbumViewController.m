@@ -11,6 +11,7 @@
 #import "SnapViewController.h"
 #import "AlbumCell.h"
 #import "Album.h"
+#import "CameraViewController.h"
 
 @implementation AlbumViewController
 
@@ -64,7 +65,11 @@
 }
 
 - (void)newAlbum {
-  
+  CameraViewController *cvc = [[CameraViewController alloc] init];
+  UINavigationController *cnc = [[UINavigationController alloc] initWithRootViewController:cvc];
+  [self presentModalViewController:cnc animated:NO];
+  [cvc autorelease];
+  [cnc autorelease];
 }
 
 #pragma mark -
