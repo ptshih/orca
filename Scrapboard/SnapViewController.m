@@ -74,7 +74,7 @@
   Snap *snap = [[self.fetchedResultsController fetchedObjects] objectAtIndex:section];
 
   HeaderCell *headerCell = [[[HeaderCell alloc] initWithFrame:CGRectMake(0, 0, 320, 44)] autorelease];
-  [headerCell fillCellWithObject:nil];
+  [headerCell fillCellWithObject:snap];
   [headerCell loadImage];
   return headerCell;
 }

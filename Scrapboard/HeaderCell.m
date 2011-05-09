@@ -61,9 +61,15 @@ static UIImage *_bgImage = nil;
 }
 
 - (void)fillCellWithObject:(id)object {
-  _psImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", @"CharlieSheen"];
-  _userNameLabel.text = @"Charlie Sheen";
-  _timestampLabel.text = @"3h";
+  Snap *snap = (Snap *)object;
+  _psImageView.urlPath = snap.userPictureUrl;
+  
+  _userNameLabel.text = snap.userName;
+  _timestampLabel.text = [snap.timestamp humanIntervalSinceNow];
+  
+//  _psImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", @"CharlieSheen"];
+//  _userNameLabel.text = @"Charlie Sheen";
+//  _timestampLabel.text = @"3h";
 }
 
 - (void)loadImage {

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PSView.h"
 #import "PSImageView.h"
+#import "Snap.h"
 
 @interface HeaderCell : PSView {
   PSImageView *_psImageView;
