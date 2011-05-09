@@ -8,9 +8,15 @@
 
 #import "AlbumCell.h"
 
-#define NAME_FONT_SIZE 14.0
-#define MESSAGE_FONT_SIZE 16.0
-#define TIMESTAMP_FONT_SIZE 12.0
+#define NAME_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0]
+#define MESSAGE_FONT [UIFont fontWithName:@"HelveticaNeue" size:16.0]
+#define TIMESTAMP_FONT [UIFont fontWithName:@"HelveticaNeue-Italic" size:12.0]
+#define ACTIVITY_FONT [UIFont fontWithName:@"HelveticaNeue" size:14.0]
+
+#define BUBBLE_HEIGHT 80.0
+#define BUBBLE_MARGIN 5.0
+
+#define ACTIVITY_HEIGHT 24.0
 
 @implementation AlbumCell
 
@@ -25,9 +31,9 @@
     _messageLabel.backgroundColor = [UIColor clearColor];
     _timestampLabel.backgroundColor = [UIColor clearColor];
     
-    _nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:NAME_FONT_SIZE];
-    _messageLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:MESSAGE_FONT_SIZE];
-    _timestampLabel.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:TIMESTAMP_FONT_SIZE];
+    _nameLabel.font = NAME_FONT;
+    _messageLabel.font = MESSAGE_FONT;
+    _timestampLabel.font = TIMESTAMP_FONT;
     
     _nameLabel.textColor = [UIColor whiteColor];
     _messageLabel.textColor = [UIColor whiteColor];
@@ -43,15 +49,19 @@
     _timestampLabel.numberOfLines = 1;
     
     // Bubble View
-    _bubbleView = [[UIView alloc] init];
+    _bubbleView = [[UIView alloc] initWithFrame:CGRectMake(_psFrameView.right, MARGIN_Y, self.contentView.width - _psFrameView.width - MARGIN_X * 2 , BUBBLE_HEIGHT)];
     
-    _bubbleImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"bubble.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:25]];
-    [_bubbleView addSubview:_bubbleImageView];
+    // Bubble BG
+    UIImageView *bubbleBg = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"bubble.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:25]] autorelease];
+    bubbleBg.frame = _bubbleView.bounds;
+    [_bubbleView addSubview:bubbleBg];
     
-    _photoView = [[PSImageView alloc] init];
+    // Bubble Photo
+    _photoView = [[PSImageView alloc] initWithFrame:CGRectMake(BUBBLE_MARGIN * 2, BUBBLE_MARGIN, _bubbleView.width - BUBBLE_MARGIN * 3, _bubbleView.height - BUBBLE_MARGIN * 2)];
     _photoView.shouldScale = YES;
     [_bubbleView addSubview:_photoView];
     
+    // Bubble Labels
     [_bubbleView addSubview:_nameLabel];
     [_bubbleView addSubview:_messageLabel];
     [_bubbleView addSubview:_timestampLabel];
@@ -59,9 +69,23 @@
     [self.contentView addSubview:_bubbleView];
     
     // Activity View
-    _activityView = [[UIView alloc] init];
+    _activityView = [[UIView alloc] initWithFrame:CGRectMake(_psFrameView.right + MARGIN_X, _bubbleView.bottom + MARGIN_Y, _bubbleView.width - MARGIN_X, ACTIVITY_HEIGHT)];
     
+    _activityView.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
+    _activityView.layer.cornerRadius = 4.0;
+    _activityView.layer.masksToBounds = YES;
+    _activityView.layer.borderWidth = 1.0;
+    _activityView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
+    
+    // Activity Label
     _activityLabel = [[UILabel alloc] init];
+    _activityLabel.font = ACTIVITY_FONT;
+    
+    _activityLabel.left = MARGIN_X;
+    _activityLabel.top = 0.0;
+    _activityLabel.width = _activityView.width - MARGIN_X * 2;
+    _activityLabel.height = _activityView.height;
+    _activityLabel.backgroundColor = [UIColor clearColor];
     [_activityView addSubview:_activityLabel];
     
     [self.contentView addSubview:_activityView];
@@ -77,39 +101,21 @@
   [super layoutSubviews];
   
   CGFloat top = MARGIN_Y;
-  CGFloat left = MARGIN_X + 60;
-  CGFloat textWidth = self.contentView.width - 60 - MARGIN_X * 2;
-  
-  // Bubble
-  _bubbleView.left = left;
-  _bubbleView.top = top;
-  _bubbleView.width = textWidth;
-  _bubbleView.height = 80.0;
-  
-  _bubbleImageView.frame = _bubbleView.bounds;
-  
-  // Photo
-  _photoView.frame = CGRectMake(10, 5, _bubbleView.width - 15, _bubbleView.height - 10);
+  CGFloat left = _photoView.left + MARGIN_X;
+  CGFloat textWidth = _photoView.width - MARGIN_X * 2;
 
   // Name
-  _nameLabel.top = 5;
-  _nameLabel.left = 15;
-  _nameLabel.width = _bubbleView.width - 25;
+  _nameLabel.top = top;
+  _nameLabel.left = left;
+  _nameLabel.width = textWidth;
   _nameLabel.height = 20;
   
   // Message
-  _messageLabel.top = _bubbleView.bottom - 10 - 20;
-  _messageLabel.left = 15;
-  _messageLabel.width = _bubbleView.width - 25;
+  _messageLabel.top = _photoView.bottom - 20 - MARGIN_Y;
+  _messageLabel.left = left;
+  _messageLabel.width = textWidth;
   _messageLabel.height = 20;
   
-  // Activity
-  _activityView.top = _bubbleView.bottom + 5;
-  _activityView.left = left;
-  _activityView.width = textWidth;
-  _activityView.height = 20;
-  
-  _activityLabel.frame = _activityView.bounds;
 }
 
 #pragma mark -
@@ -140,8 +146,8 @@
 
 - (void)dealloc {
   RELEASE_SAFELY(_bubbleView);
-  RELEASE_SAFELY(_bubbleImageView);
   RELEASE_SAFELY(_photoView);
+  
   RELEASE_SAFELY(_nameLabel);
   RELEASE_SAFELY(_messageLabel);
   RELEASE_SAFELY(_timestampLabel);

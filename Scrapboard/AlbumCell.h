@@ -12,8 +12,8 @@
 
 @interface AlbumCell : PSImageCell {
   UIView *_bubbleView;
-  UIImageView *_bubbleImageView;
   PSImageView *_photoView;
+  
   UILabel *_nameLabel;
   UILabel *_messageLabel;
   UILabel *_timestampLabel;

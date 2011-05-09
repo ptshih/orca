@@ -33,6 +33,11 @@
   return self;
 }
 
+- (void)setFrame:(CGRect)frame {
+  [super setFrame:frame];
+  _loadingIndicator.frame = self.bounds;
+}
+
 // Override Setter
 //- (void)setUrlPath:(NSString *)urlPath {
 //  if (urlPath) {
