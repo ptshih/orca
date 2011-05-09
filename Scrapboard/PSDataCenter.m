@@ -7,7 +7,7 @@
 //
 
 #import "PSDataCenter.h"
-#import "NSString+URLEncoding.h"
+#import "NSString+URLEncoding+PS.h"
 
 @interface PSDataCenter (Private)
 
