@@ -7,8 +7,11 @@
 //
 
 #import "HeaderCell.h"
+
 #define MARGIN_X 6.0
 #define MARGIN_Y 6.0
+
+#define LABEL_HEIGHT 32.0
 
 static UIImage *_bgImage = nil;
 
@@ -46,14 +49,13 @@ static UIImage *_bgImage = nil;
   CGFloat left = MARGIN_X + _psImageView.width + MARGIN_X;
   CGFloat textWidth = self.width - left - MARGIN_X;
   
-  [_userNameLabel sizeToFitFixedWidth:textWidth];
-  _userNameLabel.height = 32;
+  [_userNameLabel sizeToFitFixedWidth:textWidth withLineBreakMode:UILineBreakModeTailTruncation withNumberOfLines:1];
+  _userNameLabel.height = LABEL_HEIGHT;
   _userNameLabel.left = left;
   _userNameLabel.top = top;
   
-  textWidth -= _userNameLabel.width - MARGIN_X;
-  [_timestampLabel sizeToFitFixedWidth:textWidth];
-  _timestampLabel.height = 32;
+  [_timestampLabel sizeToFitFixedWidth:(_userNameLabel.width - MARGIN_X) withLineBreakMode:UILineBreakModeTailTruncation withNumberOfLines:1];
+  _timestampLabel.height = LABEL_HEIGHT;
   _timestampLabel.left = self.width - MARGIN_X - _timestampLabel.width;
   _timestampLabel.top = top;
 }

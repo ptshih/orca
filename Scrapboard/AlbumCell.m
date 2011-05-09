@@ -59,6 +59,8 @@
     // Bubble Photo
     _photoView = [[PSImageView alloc] initWithFrame:CGRectMake(BUBBLE_MARGIN * 2, BUBBLE_MARGIN, _bubbleView.width - BUBBLE_MARGIN * 3, _bubbleView.height - BUBBLE_MARGIN * 2)];
     _photoView.shouldScale = YES;
+    _photoView.layer.backgroundColor = [[UIColor blackColor] CGColor];
+    _photoView.layer.opacity = 0.8;
     [_bubbleView addSubview:_photoView];
     
     // Bubble Labels
@@ -105,16 +107,14 @@
   CGFloat textWidth = _photoView.width - MARGIN_X * 2;
 
   // Name
+  [_nameLabel sizeToFitFixedWidth:textWidth withLineBreakMode:UILineBreakModeTailTruncation withNumberOfLines:1];
   _nameLabel.top = top;
   _nameLabel.left = left;
-  _nameLabel.width = textWidth;
-  _nameLabel.height = 20;
   
   // Message
-  _messageLabel.top = _photoView.bottom - 20 - MARGIN_Y;
+  [_messageLabel sizeToFitFixedWidth:textWidth withLineBreakMode:UILineBreakModeTailTruncation withNumberOfLines:1];
+  _messageLabel.top = _photoView.bottom - _messageLabel.height;
   _messageLabel.left = left;
-  _messageLabel.width = textWidth;
-  _messageLabel.height = 20;
   
 }
 

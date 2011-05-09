@@ -11,7 +11,7 @@
 
 @interface UILabel (SizeToFitWidth)
 
-- (void)sizeToFitFixedWidth:(NSInteger)fixedWidth;
+- (void)sizeToFitFixedWidth:(NSInteger)fixedWidth withLineBreakMode:(UILineBreakMode)lineBreakMode withNumberOfLines:(NSInteger)numberOfLines;
 
 
 @end
