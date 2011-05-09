@@ -12,8 +12,10 @@
 
 @interface SnapCell : PSCell {
   PSImageView *_photoView; // optional
-  
   UIView *_captionView;
+  UIView *_ribbonView;
+  
+  UILabel *_captionLabel;
 }
 
 - (void)loadPhoto;

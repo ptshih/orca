@@ -97,6 +97,10 @@
 
 - (void)prepareForReuse {
   [super prepareForReuse];
+  _nameLabel.text = nil;
+  _messageLabel.text = nil;
+  _timestampLabel.text = nil;
+  _activityLabel.text = nil;
 }
 
 - (void)layoutSubviews {
