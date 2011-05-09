@@ -60,7 +60,7 @@
     _photoView = [[PSImageView alloc] initWithFrame:CGRectMake(BUBBLE_MARGIN * 2, BUBBLE_MARGIN, _bubbleView.width - BUBBLE_MARGIN * 3, _bubbleView.height - BUBBLE_MARGIN * 2)];
     _photoView.shouldScale = YES;
     _photoView.layer.backgroundColor = [[UIColor blackColor] CGColor];
-    _photoView.layer.opacity = 0.8;
+    _photoView.layer.opacity = 0.9;
     [_bubbleView addSubview:_photoView];
     
     // Bubble Labels
@@ -108,12 +108,12 @@
 
   // Name
   [_nameLabel sizeToFitFixedWidth:textWidth withLineBreakMode:UILineBreakModeTailTruncation withNumberOfLines:1];
-  _nameLabel.top = top;
+  _nameLabel.top = top + MARGIN_Y;
   _nameLabel.left = left;
   
   // Message
   [_messageLabel sizeToFitFixedWidth:textWidth withLineBreakMode:UILineBreakModeTailTruncation withNumberOfLines:1];
-  _messageLabel.top = _photoView.bottom - _messageLabel.height;
+  _messageLabel.top = _bubbleView.bottom - _messageLabel.height - MARGIN_Y * 3;
   _messageLabel.left = left;
   
 }
@@ -121,17 +121,20 @@
 #pragma mark -
 #pragma mark Fill and Height
 + (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-  Album *album = (Album *)object;
+//  Album *album = (Album *)object;
   return 120.0;
 }
 
 - (void)fillCellWithObject:(id)object {
   Album *album = (Album *)object;
   
+  // Author Pic
   _psImageView.urlPath = album.userPictureUrl;
   
+  // Photo
   _photoView.urlPath = album.photoUrl;
   
+  // Bubble Labels
   _nameLabel.text = album.name;
   _messageLabel.text = album.message;
   _timestampLabel.text = [album.timestamp humanIntervalSinceNow];

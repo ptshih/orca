@@ -11,8 +11,11 @@
 #import "Snap.h"
 
 @interface SnapCell : PSCell {
-  Snap *_snap;
-  PSImageView *_photoImageView; // optional
+  PSImageView *_photoView; // optional
+  
+  UIView *_captionView;
 }
+
+- (void)loadPhoto;
 
 @end

@@ -11,6 +11,7 @@
 #import "Album.h"
 #import "Snap.h"
 #import "HeaderCell.h"
+#import "SnapCell.h"
 
 @implementation SnapViewController
 
@@ -80,6 +81,39 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
   return 44.0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  Snap *snap = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  return [SnapCell rowHeightForObject:snap forInterfaceOrientation:[self interfaceOrientation]];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+  [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
+//  [(SnapCell *)cell loadImage];
+  [(SnapCell *)cell loadPhoto];
+  //  [cell setNeedsDisplay];
+  //  [cell setNeedsLayout];
+}
+
+- (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
+  Snap *snap = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
+  [cell fillCellWithObject:snap];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  SnapCell *cell = nil;
+  NSString *reuseIdentifier = [NSString stringWithFormat:@"%@_TableViewCell_%d", [self class], indexPath.section];
+  
+  cell = (SnapCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+  if(cell == nil) { 
+    cell = [[[SnapCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+  }
+  
+  [self tableView:tableView configureCell:cell atIndexPath:indexPath];
+  
+  return cell;
 }
 
 #pragma mark -

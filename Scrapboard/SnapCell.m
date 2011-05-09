@@ -11,14 +11,26 @@
 #define PHOTO_SIZE 100.0
 #define PHOTO_SPACING 10.0
 
+#define CAPTION_HEIGHT 40.0
+
 @implementation SnapCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
-    _photoImageView = [[PSImageView alloc] initWithFrame:CGRectMake(0, 0, PHOTO_SIZE, PHOTO_SIZE)];
+    CGFloat cellWidth = self.contentView.width - MARGIN_X * 2;
     
-    [self.contentView addSubview:_photoImageView];
+    _photoView = [[PSImageView alloc] initWithFrame:CGRectMake(MARGIN_X, MARGIN_Y, cellWidth, cellWidth)];
+    _photoView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
+    _photoView.layer.borderWidth = 1.0;
+    
+    _captionView = [[UIView alloc] initWithFrame:CGRectMake(0, _photoView.height - CAPTION_HEIGHT , _photoView.width, CAPTION_HEIGHT)];
+    _captionView.backgroundColor = [UIColor darkGrayColor];
+    _captionView.layer.opacity = 0.9;
+    
+    [_photoView addSubview:_captionView];
+    
+    [self.contentView addSubview:_photoView];
   }
   return self;
 }
@@ -26,39 +38,42 @@
 - (void)layoutSubviews {
   [super layoutSubviews];
   
-  CGFloat top = MARGIN_Y;
-  CGFloat left = MARGIN_X;
-  CGFloat textWidth = self.contentView.width - MARGIN_X * 2;
-  
-  // Optional Photo Thumbnail
-//  if (_snap.photoFileName) {
-//    [self.contentView addSubview:_photoFrameView];
-//    _photoFrameView.left = left - 5;
-//    _photoFrameView.top = top;
-//    _photoFrameView.width = PHOTO_SIZE + PHOTO_SPACING * 2;
-//    _photoFrameView.height = PHOTO_SIZE + PHOTO_SPACING * 2;
-//    [self.contentView addSubview:_photoImageView];
-//    _photoImageView.left = left + PHOTO_SPACING - 5;
-//    _photoImageView.top = top + PHOTO_SPACING;
-//    _photoImageView.width = PHOTO_SIZE;
-//    _photoImageView.height = PHOTO_SIZE;
-//    //    _photoImageView.layer.masksToBounds = YES;
-//    //    _photoImageView.layer.cornerRadius = 10.0;
-//  } else {
-//    [_photoFrameView removeFromSuperview];
-//    [_photoImageView removeFromSuperview];
-//  }
+//  CGFloat top = MARGIN_Y;
+//  CGFloat left = MARGIN_X;
+//  CGFloat textWidth = self.contentView.width - MARGIN_X * 2;
+//  
 }
 
 + (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-  return 120;
+  CGFloat cellWidth = [[self class] rowWidthForInterfaceOrientation:interfaceOrientation];
+  CGFloat desiredHeight = 0;
+  
+  // Top Margin
+  desiredHeight += MARGIN_Y;
+  
+  // Photo
+  desiredHeight += cellWidth - MARGIN_X * 2;
+  
+  // Bottom Margin
+  desiredHeight += MARGIN_Y;
+  
+  return desiredHeight;
 }
 
 - (void)fillCellWithObject:(id)object {
+  Snap *snap = (Snap *)object;
   
+  // Photo
+  _photoView.urlPath = snap.photoUrl;
+}
+
+- (void)loadPhoto {
+  [_photoView loadImage];
 }
 
 - (void)dealloc {
+  RELEASE_SAFELY(_photoView);
+  RELEASE_SAFELY(_captionView);
   [super dealloc];
 }
 
