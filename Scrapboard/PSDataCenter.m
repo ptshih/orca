@@ -217,10 +217,8 @@
 #pragma mark Callbacks
 // Subclass should Implement AND call super's implementation
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponse:(id)response {
-  id mergedResponse = [[PSURLCache sharedCache] cacheResponse:response forURLPath:[[request.originalURL baseURL] absoluteString] shouldMerge:YES];
-  
   if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
-    [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:request withObject:mergedResponse];
+    [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:request withObject:response];
   }
 }
 
