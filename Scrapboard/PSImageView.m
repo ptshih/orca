@@ -51,7 +51,7 @@
       }
       
       // Fire the request
-      _request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:_urlPath]];
+      _request = [[ASIHTTPRequest requestWithURL:[NSURL URLWithString:_urlPath]] retain];
       
       // Request Completion Block
       [_request setCompletionBlock:^{
