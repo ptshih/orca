@@ -93,8 +93,6 @@
   Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   [cell fillCellWithObject:album];
-  [(AlbumCell *)cell loadImage];
-  [(AlbumCell *)cell loadPhoto];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -130,6 +128,8 @@
   }
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
+  [(AlbumCell *)cell loadImage];
+  [(AlbumCell *)cell loadPhoto];
   
   return cell;
 }
@@ -160,7 +160,7 @@
 #pragma mark -
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
-  NSLog(@"DC finish with response: %@", response);
+//  NSLog(@"DC finish with response: %@", response);
   [self dataSourceDidLoad];
   [self executeFetch];
   [self updateState];

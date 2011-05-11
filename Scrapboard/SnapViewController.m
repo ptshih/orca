@@ -103,8 +103,6 @@
   Snap *snap = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   [cell fillCellWithObject:snap];
-  //  [(SnapCell *)cell loadImage];
-  [(SnapCell *)cell loadPhoto];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -117,7 +115,8 @@
   }
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
-  
+  //  [(SnapCell *)cell loadImage];
+  [(SnapCell *)cell loadPhoto];
   return cell;
 }
 
@@ -130,7 +129,7 @@
 #pragma mark -
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
-  NSLog(@"DC finish with response: %@", response);
+//  NSLog(@"DC finish with response: %@", response);
   [self dataSourceDidLoad];
   [self executeFetch];
   [self updateState];
