@@ -22,7 +22,7 @@
 }
 
 - (void)getAlbums {
-  NSURL *albumsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, @"albums_test"]];
+  NSURL *albumsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, ALBUMS_ENDPOINT]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   

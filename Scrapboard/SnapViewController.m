@@ -30,6 +30,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
 }
 
 - (void)viewDidLoad {
@@ -93,18 +99,12 @@
   return [SnapCell rowHeightForObject:snap forInterfaceOrientation:[self interfaceOrientation]];
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-  [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
-//  [(SnapCell *)cell loadImage];
-  [(SnapCell *)cell loadPhoto];
-  //  [cell setNeedsDisplay];
-  //  [cell setNeedsLayout];
-}
-
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
   Snap *snap = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   [cell fillCellWithObject:snap];
+  //  [(SnapCell *)cell loadImage];
+  [(SnapCell *)cell loadPhoto];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

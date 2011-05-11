@@ -5,7 +5,7 @@
 	<key>isFirstLogin</key>
 	<true/>
 	<key>isLoggedIn</key>
-	<true/>
+	<false/>
 	<key>lastEventType</key>
 	<integer>0</integer>
 	<key>lastExitDate</key>

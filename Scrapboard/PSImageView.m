@@ -99,7 +99,7 @@
   }
   if (image) {
     [[PSImageCache sharedCache] cacheImage:image forURLPath:[[operation requestURL] absoluteString]];
-    if (self.urlPath == [[operation requestURL] absoluteString]) {
+    if ([self.urlPath isEqualToString:[[operation requestURL] absoluteString]]) {
       self.image = image;
       [self imageDidLoad];
     }

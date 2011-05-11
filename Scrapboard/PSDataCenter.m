@@ -105,11 +105,17 @@
     }
   }
   
+  // HTTP Accept
+//  [request addRequestHeader:@"Content-Type" value:@"application/json"];
+  [request addRequestHeader:@"Accept" value:@"application/json"];
+  
   // Request Completion Block
   [request setCompletionBlock:^{
     id response = [self sanitizeResponse:[request responseData]];
     if (response) {
       [self dataCenterRequestFinished:request withResponse:response];
+    } else {
+      [self dataCenterRequestFailed:request withError:nil];
     }
     
     // Remove request from pendingRequests
@@ -177,11 +183,17 @@
     }
   }
   
+  // HTTP Accept
+  //  [request addRequestHeader:@"Content-Type" value:@"application/json"];
+  [request addRequestHeader:@"Accept" value:@"application/json"];
+  
   // Request Completion Block
   [request setCompletionBlock:^{
     id response = [self sanitizeResponse:[request responseData]];
     if (response) {
       [self dataCenterRequestFinished:request withResponse:response];
+    } else {
+      [self dataCenterRequestFailed:request withError:nil];
     }
     
     // Remove request from pendingRequests
@@ -213,8 +225,8 @@
 }
 
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
-  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFail:withResponse:)]) {
-    [_delegate performSelector:@selector(dataCenterDidFail:withResponse:) withObject:request withObject:error];
+  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFail:withError:)]) {
+    [_delegate performSelector:@selector(dataCenterDidFail:withError:) withObject:request withObject:error];
   }
 }
 

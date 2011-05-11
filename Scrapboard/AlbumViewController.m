@@ -21,12 +21,18 @@
     _albumDataCenter = [[AlbumDataCenter alloc] init];
     _albumDataCenter.delegate = self;
     _sectionNameKeyPathForFetchedResultsController = @"daysAgo";
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
   }
   return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
 }
 
 - (void)viewDidLoad {
@@ -83,18 +89,12 @@
   return [[[self.fetchedResultsController sections] objectAtIndex:section] name];
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-  [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
-  [(AlbumCell *)cell loadImage];
-  [(AlbumCell *)cell loadPhoto];
-//  [cell setNeedsDisplay];
-//  [cell setNeedsLayout];
-}
-
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
   Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   [cell fillCellWithObject:album];
+  [(AlbumCell *)cell loadImage];
+  [(AlbumCell *)cell loadPhoto];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -171,6 +171,7 @@
 }
 
 - (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
   RELEASE_SAFELY(_albumDataCenter);
   [super dealloc];
 }

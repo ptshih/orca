@@ -7,6 +7,7 @@
 //
 
 #import "ComposeViewController.h"
+#import "ComposeDataCenter.h"
 #import "UIImage+ScalingAndCropping.h"
 
 #define SPACING 4.0
@@ -65,12 +66,22 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+//  [[ComposeDataCenter sharedInstance] setDelegate:self];
+  
   // Subclass should implement
   [_message becomeFirstResponder];
 }
 
-- (void)send {  
-  // Subclass should implement
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+//  [[ComposeDataCenter sharedInstance] setDelegate:nil];
+}
+
+- (void)send {
+  [[ComposeDataCenter sharedInstance] sendSnapWithAlbumId:@"1" andMessage:_message.text andPhoto:_snappedImage shouldShare:YES];
+  
+  // Dismiss and let the op finish in the background
+  [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark -

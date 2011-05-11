@@ -13,6 +13,8 @@
 
 }
 
++ (id)sharedInstance;
+
 // Create a new snap
 - (void)sendSnapWithAlbumId:(NSString *)albumId andMessage:(NSString *)message andPhoto:(UIImage *)photo shouldShare:(BOOL)shouldShare;
 

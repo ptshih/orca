@@ -47,6 +47,7 @@
   
   // Login/Session/Register data center
   _loginDataCenter = [[LoginDataCenter alloc] init];
+  _loginDataCenter.delegate = self;
 
   // Setup Facebook
   _facebook = [[Facebook alloc] initWithAppId:FB_APP_ID];
@@ -131,14 +132,14 @@
   // This gets called on subsequent app launches
   [self resetSessionKey];
 #warning session disabled
-//  [_loginDataCenter startSession];
+  [_loginDataCenter startSession];
 }
 
 - (void)startRegister {
   // This gets called] if it is the first time logging in
   [self resetSessionKey];
 #warning register disabled
-//  [_loginDataCenter startRegister];
+  [_loginDataCenter startRegister];
 }
 
 - (void)resetSessionKey {

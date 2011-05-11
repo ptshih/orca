@@ -8,7 +8,16 @@
 
 #import "ComposeDataCenter.h"
 
+static ComposeDataCenter *_sharedInstance = nil;
+
 @implementation ComposeDataCenter
+
++ (id)sharedInstance {
+  if (_sharedInstance == nil) {
+    _sharedInstance = [[self alloc] init];
+  }
+  return _sharedInstance;
+}
 
 - (void)sendSnapWithAlbumId:(NSString *)albumId andMessage:(NSString *)message andPhoto:(UIImage *)photo shouldShare:(BOOL)shouldShare {
   NSURL *snapComposeUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/snaps", API_BASE_URL]];
@@ -19,7 +28,10 @@
   [params setValue:message forKey:@"message"];
   [params setValue:[NSNumber numberWithBool:shouldShare] forKey:@"should_share"];
   
-  NSDictionary *file = [NSDictionary dictionaryWithObjectsAndKeys:photo, @"fileData", @"photo.jpg", @"fileName", @"image/jpeg", @"fileContentType", @"photo", @"fileKey", nil];
+  NSData *imageData = nil;
+  imageData = UIImageJPEGRepresentation(photo, 0.8);
+  
+  NSDictionary *file = [NSDictionary dictionaryWithObjectsAndKeys:imageData, @"fileData", @"photo.jpg", @"fileName", @"image/jpeg", @"fileContentType", @"photo", @"fileKey", nil];
   
   [self sendFormRequestWithURL:snapComposeUrl andHeaders:nil andParams:params andFile:file andUserInfo:nil];
 }

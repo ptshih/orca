@@ -20,17 +20,28 @@
 
 #if TARGET_IPHONE_SIMULATOR
   #define STAGING
-  #define USE_LOCALHOST
+//  #define USE_LOCALHOST
 #endif
 
 #ifdef STAGING
   #ifdef USE_LOCALHOST
     #define API_BASE_URL [NSString stringWithFormat:@"http://localhost:3000/%@", API_VERSION]
   #else
-    #define API_BASE_URL [NSString stringWithFormat:@"http://scrapboard.co/%@", API_VERSION]
+    #define API_BASE_URL [NSString stringWithFormat:@"http://ohsnaplabs.com/%@", API_VERSION]
   #endif
 #else
-  #define API_BASE_URL [NSString stringWithFormat:@"http://scrapboard.co/%@", API_VERSION]
+  #define API_BASE_URL [NSString stringWithFormat:@"http://ohsnaplabs.com/%@", API_VERSION]
+#endif
+
+// API Endpoints
+//#define TEST // enable this to hit test APIs
+
+#ifdef TEST
+  #define ALBUMS_ENDPOINT @"albums_test"
+  #define SNAPS_ENDPOINT @"snaps_test"
+#else
+  #define ALBUMS_ENDPOINT @"albums"
+  #define SNAPS_ENDPOINT @"snaps"
 #endif
 
 #define S3_PHOTOS_URL @"http://s3.amazonaws.com/scrapboard/kupos/photos"
