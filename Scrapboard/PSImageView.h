@@ -7,18 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PSNetworkOperationDelegate.h"
 #import "PSImageViewDelegate.h"
+#import "ASIHTTPRequest.h"
 #import "Constants.h"
 
-@interface PSImageView : UIImageView <PSNetworkOperationDelegate, PSImageViewDelegate> {
+@interface PSImageView : UIImageView <PSImageViewDelegate> {
   NSString *_urlPath;
   UIActivityIndicatorView *_loadingIndicator;
   UIImage *_placeholderImage;
   
   BOOL _shouldScale;
   
-  PSNetworkOperation *_op;
+  ASIHTTPRequest *_request;
   id <PSImageViewDelegate> _delegate;
 }
 
@@ -30,5 +30,8 @@
 - (void)loadImage;
 - (void)unloadImage;
 - (void)imageDidLoad;
+
+- (void)requestFinished:(ASIHTTPRequest *)request;
+- (void)requestFailed:(ASIHTTPRequest *)request withError:(NSError *)error;
 
 @end

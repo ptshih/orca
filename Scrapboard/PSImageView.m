@@ -7,8 +7,6 @@
 //
 
 #import "PSImageView.h"
-#import "PSNetworkQueue.h"
-#import "PSNetworkOperation.h"
 #import "PSImageCache.h"
 #import "UIImage+ScalingAndCropping.h"
 
@@ -38,22 +36,6 @@
   _loadingIndicator.frame = self.bounds;
 }
 
-// Override Setter
-//- (void)setUrlPath:(NSString *)urlPath {
-//  if (urlPath) {
-//    NSString* urlPathCopy = [urlPath copy];
-//    [_urlPath release];
-//    _urlPath = urlPathCopy;
-//    
-//    // Image not found in cache, fire a request
-//    PSNetworkOperation *op = [[PSNetworkOperation alloc] initWithURL:[NSURL URLWithString:_urlPath]];
-//    op.delegate = self;
-//    [op setQueuePriority:NSOperationQueuePriorityVeryLow];
-//    [[PSNetworkQueue sharedQueue] addOperation:op];
-//    [op release];
-//  }
-//}
-
 - (void)loadImage {
   if (_urlPath) {
     UIImage *image = [[PSImageCache sharedCache] imageForURLPath:_urlPath];
@@ -63,15 +45,28 @@
     } else {
       self.image = _placeholderImage;
       [_loadingIndicator startAnimating];
-      if (_op) {
-        [_op clearDelegatesAndCancel];
-        RELEASE_SAFELY(_op);
+      if (_request) {
+        [_request clearDelegatesAndCancel];
+        RELEASE_SAFELY(_request);
       }
-      _op = [[PSNetworkOperation alloc] initWithURL:[NSURL URLWithString:_urlPath]];
-      _op.delegate = self;
-      _op.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
-      [_op setQueuePriority:NSOperationQueuePriorityVeryLow];
-      [[PSNetworkQueue sharedQueue] addOperation:_op];
+      
+      // Fire the request
+      _request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:_urlPath]];
+      
+      // Request Completion Block
+      [_request setCompletionBlock:^{
+        [self requestFinished:_request];
+      }];
+      
+      // Request Failed Block
+      [_request setFailedBlock:^{
+        NSError *error = [_request error];
+        
+        [self requestFailed:_request withError:error];
+      }];
+      
+      // Start the Request
+      [_request startAsynchronous];
     }
   }
 }
@@ -89,17 +84,17 @@
   }
 }
 
-#pragma mark PSNetworkOperationDelegate
-- (void)networkOperationDidFinish:(PSNetworkOperation *)operation {
+#pragma mark Request Finished
+- (void)requestFinished:(ASIHTTPRequest *)request {
   UIImage *image = nil;
   if (_shouldScale) {
-    image = [[UIImage imageWithData:[operation responseData]] cropProportionalToSize:self.bounds.size];
+    image = [[UIImage imageWithData:[request responseData]] cropProportionalToSize:self.bounds.size];
   } else {
-    image = [UIImage imageWithData:[operation responseData]];
+    image = [UIImage imageWithData:[request responseData]];
   }
   if (image) {
-    [[PSImageCache sharedCache] cacheImage:image forURLPath:[[operation requestURL] absoluteString]];
-    if ([self.urlPath isEqualToString:[[operation requestURL] absoluteString]]) {
+    [[PSImageCache sharedCache] cacheImage:image forURLPath:[[request originalURL] absoluteString]];
+    if ([self.urlPath isEqualToString:[[request originalURL] absoluteString]]) {
       self.image = image;
       [self imageDidLoad];
     }
@@ -108,13 +103,14 @@
   //  NSLog(@"Image width: %f, height: %f", image.size.width, image.size.height);
 }
 
-- (void)networkOperationDidFail:(PSNetworkOperation *)operation {
+#pragma mark Request Failed
+- (void)requestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
   self.image = _placeholderImage;
 }
 
 - (void)dealloc {
-  if (_op) [_op clearDelegatesAndCancel];
-  RELEASE_SAFELY(_op);
+  if (_request) [_request clearDelegatesAndCancel];
+  RELEASE_SAFELY(_request);
   RELEASE_SAFELY(_urlPath);
   RELEASE_SAFELY(_loadingIndicator);
   RELEASE_SAFELY(_placeholderImage);
