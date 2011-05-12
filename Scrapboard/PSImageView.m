@@ -38,6 +38,10 @@
   _loadingIndicator.frame = self.bounds;
 }
 
+- (void)setImage:(UIImage *)image {
+  [super setImage:[UIImage imageWithCGImage:image.CGImage scale:2 orientation:image.imageOrientation]];
+}
+
 - (void)loadImage {
   if (_urlPath) {
     UIImage *image = [[PSImageCache sharedCache] imageForURLPath:_urlPath];
@@ -120,7 +124,7 @@
     } else {
       newImage = image;
     }
-    [[PSImageCache sharedCache] cacheImage:UIImagePNGRepresentation(newImage) forURLPath:[[request originalURL] absoluteString]];
+    [[PSImageCache sharedCache] cacheImage:UIImageJPEGRepresentation(newImage, 1.0) forURLPath:[[request originalURL] absoluteString]];
   }
   if (newImage) {
     if ([self.urlPath isEqualToString:[[request originalURL] absoluteString]]) {

@@ -47,7 +47,8 @@
   [self.view addSubview:_mediaPreview];
   
   // Set the snapped image as the preview
-  [_mediaPreview setImage:[_snappedImage cropProportionalToSize:_mediaPreview.bounds.size]];
+  UIImage *scaledImage = [_snappedImage cropProportionalToSize:CGSizeMake(_mediaPreview.width * 2, _mediaPreview.height * 2)];
+  [_mediaPreview setImage:[UIImage imageWithCGImage:scaledImage.CGImage scale:2 orientation:scaledImage.imageOrientation]];
   
   // Compose Caption Bubble
   _composeView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
