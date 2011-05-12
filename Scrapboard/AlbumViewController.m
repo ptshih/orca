@@ -41,6 +41,10 @@
   // Title and Buttons
   _navTitleLabel.text = @"Albums";
   
+  UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:self action:@selector(logout)];
+  self.navigationItem.leftBarButtonItem = leftButton;
+  [leftButton release];  
+  
   UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newAlbum)];
   self.navigationItem.rightBarButtonItem = rightButton;
   [rightButton release];
@@ -57,7 +61,6 @@
   [self resetFetchedResultsController];
   [self executeFetch];
   [self updateState];
-  [self reloadCardController];
 }
 
 - (void)reloadCardController {
@@ -128,8 +131,6 @@
   }
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
-  [(AlbumCell *)cell loadImage];
-  [(AlbumCell *)cell loadPhoto];
   
   return cell;
 }
@@ -162,12 +163,24 @@
 - (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
 //  NSLog(@"DC finish with response: %@", response);
   [self dataSourceDidLoad];
-  [self executeFetch];
-  [self updateState];
 }
 
 - (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
   [self dataSourceDidLoad];
+}
+
+- (void)logout {
+  UIAlertView *logoutAlert = [[UIAlertView alloc] initWithTitle:@"Logout?" message:LOGOUT_ALERT delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+  [logoutAlert show];
+  [logoutAlert autorelease];
+}
+
+#pragma mark -
+#pragma mark AlertView
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+  if (buttonIndex != alertView.cancelButtonIndex) {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kLogoutRequested object:nil];
+  }
 }
 
 - (void)dealloc {

@@ -16,6 +16,8 @@
   UIView *_ribbonView;
   
   UILabel *_captionLabel;
+  
+  NSString *_test;
 }
 
 - (void)loadPhoto;

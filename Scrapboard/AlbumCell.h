@@ -13,6 +13,7 @@
 @interface AlbumCell : PSImageCell {
   UIView *_bubbleView;
   PSImageView *_photoView;
+  UIView *_captionView;
   
   UILabel *_nameLabel;
   UILabel *_messageLabel;

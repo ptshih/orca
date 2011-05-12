@@ -124,6 +124,7 @@
 
 - (void)userDidLogout {
   // Delete all existing data
+  [LICoreDataStack resetPersistentStore];
   [self tryLogin];
 }
 

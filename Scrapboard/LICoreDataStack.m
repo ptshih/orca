@@ -43,8 +43,10 @@ static NSThread *_mocThread = nil;
 
 #pragma mark Initialization Methods
 + (void)resetPersistentStore {
-  [[self class] deleteAllObjects:@"Event"];
-  [[self class] deleteAllObjects:@"Kupo"];
+  [[self class] deleteAllObjects:@"Album"];
+  [[self class] deleteAllObjects:@"Snap"];
+  [[self class] deleteAllObjects:@"Comment"];
+  [[self class] deleteAllObjects:@"Like"];
   
   [[NSNotificationCenter defaultCenter] postNotificationName:kCoreDataDidReset object:nil];
   

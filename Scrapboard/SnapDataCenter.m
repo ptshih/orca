@@ -53,7 +53,7 @@
   int i = 0;
   for (NSDictionary *entityDict in sortedEntities) {
     if ([foundEntities count] > 0 && i < [foundEntities count] && [[entityDict valueForKey:@"id"] isEqualToString:[[foundEntities objectAtIndex:i] id]]) {
-      DLog(@"found duplicated event with id: %@", [[foundEntities objectAtIndex:i] id]);
+//      DLog(@"found duplicated snap with id: %@", [[foundEntities objectAtIndex:i] id]);
       [[foundEntities objectAtIndex:i] updateSnapWithDictionary:entityDict];
       i++;
     } else {

@@ -33,11 +33,12 @@
     newAlbum.userId = [dictionary valueForKey:@"user_id"];
     newAlbum.userName = [dictionary valueForKey:@"user_name"];
     newAlbum.userPictureUrl = [dictionary valueForKey:@"user_picture_url"];
-    newAlbum.type = [dictionary valueForKey:@"type"];
+    newAlbum.mediaType = [dictionary valueForKey:@"media_type"];
     newAlbum.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     
     // Counts
     newAlbum.photoCount = [dictionary valueForKey:@"photo_count"];
+    newAlbum.videoCount = [dictionary valueForKey:@"video_count"];
     newAlbum.commentCount = [dictionary valueForKey:@"comment_count"];
     newAlbum.likeCount = [dictionary valueForKey:@"like_count"];
     
@@ -61,9 +62,9 @@
   }
   
   // Check if this was place has actually changed
-  if ([self.timestamp isEqualToDate:[NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]]]) {
-    return self;
-  }
+//  if ([self.timestamp isEqualToDate:[NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]]]) {
+//    return self;
+//  }
   
   // Required
   self.id = [dictionary valueForKey:@"id"];
@@ -71,11 +72,12 @@
   self.userId = [dictionary valueForKey:@"user_id"];
   self.userName = [dictionary valueForKey:@"user_name"];
   self.userPictureUrl = [dictionary valueForKey:@"user_picture_url"];
-  self.type = [dictionary valueForKey:@"type"];
+  self.mediaType = [dictionary valueForKey:@"media_type"];
   self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
   
   // Counts
   self.photoCount = [dictionary valueForKey:@"photo_count"];
+  self.videoCount = [dictionary valueForKey:@"video_count"];
   self.commentCount = [dictionary valueForKey:@"comment_count"];
   self.likeCount = [dictionary valueForKey:@"like_count"];
   

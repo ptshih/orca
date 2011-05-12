@@ -48,6 +48,10 @@
     _messageLabel.numberOfLines = 1;
     _timestampLabel.numberOfLines = 1;
     
+    // Shadows
+    _nameLabel.shadowColor = [UIColor blackColor];
+    _nameLabel.shadowOffset = CGSizeMake(0, 1);
+    
     // Bubble View
     _bubbleView = [[UIView alloc] initWithFrame:CGRectMake(_psFrameView.right, MARGIN_Y, self.contentView.width - _psFrameView.width - MARGIN_X * 2 , BUBBLE_HEIGHT)];
     
@@ -60,15 +64,22 @@
     _photoView = [[PSImageView alloc] initWithFrame:CGRectMake(BUBBLE_MARGIN * 2, BUBBLE_MARGIN, _bubbleView.width - BUBBLE_MARGIN * 3, _bubbleView.height - BUBBLE_MARGIN * 2)];
     _photoView.shouldScale = YES;
     _photoView.layer.backgroundColor = [[UIColor blackColor] CGColor];
-    _photoView.layer.opacity = 0.9;
+    _photoView.layer.opacity = 0.8;
     [_bubbleView addSubview:_photoView];
     
     // Bubble Labels
     [_bubbleView addSubview:_nameLabel];
-    [_bubbleView addSubview:_messageLabel];
     [_bubbleView addSubview:_timestampLabel];
     
     [self.contentView addSubview:_bubbleView];
+    
+    // Caption
+    _captionView = [[UIView alloc] initWithFrame:CGRectMake(0, _photoView.height - 20 , _photoView.width, 20)];
+    _captionView.backgroundColor = [UIColor blackColor];
+    _captionView.layer.opacity = 0.8;
+    
+    [_captionView addSubview:_messageLabel];    
+    [_photoView addSubview:_captionView];
     
     // Activity View
     _activityView = [[UIView alloc] initWithFrame:CGRectMake(_psFrameView.right + MARGIN_X, _bubbleView.bottom + MARGIN_Y, _bubbleView.width - MARGIN_X, ACTIVITY_HEIGHT)];
@@ -112,13 +123,13 @@
 
   // Name
   [_nameLabel sizeToFitFixedWidth:textWidth withLineBreakMode:UILineBreakModeTailTruncation withNumberOfLines:1];
-  _nameLabel.top = top + MARGIN_Y;
+  _nameLabel.top = top;
   _nameLabel.left = left;
   
   // Message
   [_messageLabel sizeToFitFixedWidth:textWidth withLineBreakMode:UILineBreakModeTailTruncation withNumberOfLines:1];
-  _messageLabel.top = _bubbleView.bottom - _messageLabel.height - MARGIN_Y * 3;
-  _messageLabel.left = left;
+  _messageLabel.top = 0;
+  _messageLabel.left = MARGIN_X;
   
 }
 
@@ -145,6 +156,9 @@
   
   // Activity
   _activityLabel.text = [NSString stringWithFormat:@"%@ photos, %@ likes, %@ comments", album.photoCount, album.likeCount, album.commentCount];
+  
+  [self loadImage];
+  [self loadPhoto];
 }
 
 - (void)loadPhoto {
@@ -154,6 +168,7 @@
 - (void)dealloc {
   RELEASE_SAFELY(_bubbleView);
   RELEASE_SAFELY(_photoView);
+  RELEASE_SAFELY(_captionView);
   
   RELEASE_SAFELY(_nameLabel);
   RELEASE_SAFELY(_messageLabel);

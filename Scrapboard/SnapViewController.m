@@ -115,8 +115,7 @@
   }
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
-  //  [(SnapCell *)cell loadImage];
-  [(SnapCell *)cell loadPhoto];
+  
   return cell;
 }
 
@@ -130,9 +129,8 @@
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
 //  NSLog(@"DC finish with response: %@", response);
+//  [self executeFetch];
   [self dataSourceDidLoad];
-  [self executeFetch];
-  [self updateState];
 }
 
 - (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {

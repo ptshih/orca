@@ -15,7 +15,7 @@
 @dynamic id;
 @dynamic message;
 @dynamic timestamp;
-@dynamic type;
+@dynamic mediaType;
 @dynamic userPictureUrl;
 @dynamic userId;
 @dynamic userName;

@@ -17,4 +17,6 @@
 
 - (void)newAlbum;
 
+- (void)logout;
+
 @end

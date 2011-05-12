@@ -30,8 +30,8 @@
     
     // Caption
     _captionView = [[UIView alloc] initWithFrame:CGRectMake(0, _photoView.height - CAPTION_HEIGHT , _photoView.width, CAPTION_HEIGHT)];
-    _captionView.backgroundColor = [UIColor darkGrayColor];
-    _captionView.layer.opacity = 0.9;
+    _captionView.backgroundColor = [UIColor blackColor];
+    _captionView.layer.opacity = 0.8;
     
     // Caption Label
     CGRect cf = CGRectMake(MARGIN_X, 0, _captionView.width - MARGIN_X * 2, _captionView.height);
@@ -59,6 +59,8 @@
   _ribbonView.hidden = YES;
   
   _captionLabel.text = nil;
+  
+  [_photoView unloadImage];
 }
 
 - (void)layoutSubviews {
@@ -91,14 +93,19 @@
 - (void)fillCellWithObject:(id)object {
   Snap *snap = (Snap *)object;
   
+  _test = snap.id;
+  
   // Photo
   _photoView.urlPath = snap.photoUrl;
   
   // Caption
   _captionLabel.text = snap.message;
+  
+  [self loadPhoto];
 }
 
 - (void)loadPhoto {
+  DLog(@"loadPhoto %@ for %@", [_photoView urlPath], _test);
   [_photoView loadImage];
 }
 

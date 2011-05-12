@@ -31,6 +31,8 @@
 		250B32A71341DE640011EEDD /* geo_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B32A11341DE540011EEDD /* geo_off@2x.png */; };
 		250B32A81341DE640011EEDD /* geo_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B32A21341DE580011EEDD /* geo_on.png */; };
 		250B32A91341DE640011EEDD /* geo_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B32A31341DE5D0011EEDD /* geo_on@2x.png */; };
+		250CE9CE137A857000F360F8 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 250CE9CD137A857000F360F8 /* Album.m */; };
+		250CE9CF137A857000F360F8 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 250CE9CD137A857000F360F8 /* Album.m */; };
 		2511A7FB1365552700C9CF9A /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2511A7E81365552700C9CF9A /* ASIAuthenticationDialog.m */; };
 		2511A7FC1365552700C9CF9A /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2511A7E81365552700C9CF9A /* ASIAuthenticationDialog.m */; };
 		2511A7FD1365552700C9CF9A /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2511A7EB1365552700C9CF9A /* ASIDataCompressor.m */; };
@@ -118,8 +120,6 @@
 		25C3C8E01372260E008A9115 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C3C8DE1372260D008A9115 /* Comment.m */; };
 		25C3C8E71372260E008A9115 /* Snap.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C3C8E61372260E008A9115 /* Snap.m */; };
 		25C3C8E81372260E008A9115 /* Snap.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C3C8E61372260E008A9115 /* Snap.m */; };
-		25C3C8F013722833008A9115 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C3C8EF13722833008A9115 /* Album.m */; };
-		25C3C8F113722833008A9115 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C3C8EF13722833008A9115 /* Album.m */; };
 		25C3C8F413722AA6008A9115 /* Like.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C3C8F313722AA6008A9115 /* Like.m */; };
 		25C3C8F513722AA6008A9115 /* Like.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C3C8F313722AA6008A9115 /* Like.m */; };
 		25C67E301372197E00330DA7 /* Base64Transcoder+PS.c in Sources */ = {isa = PBXBuildFile; fileRef = 25C67E2E1372197E00330DA7 /* Base64Transcoder+PS.c */; };
@@ -326,6 +326,8 @@
 		250B32A11341DE540011EEDD /* geo_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "geo_off@2x.png"; sourceTree = "<group>"; };
 		250B32A21341DE580011EEDD /* geo_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = geo_on.png; sourceTree = "<group>"; };
 		250B32A31341DE5D0011EEDD /* geo_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "geo_on@2x.png"; sourceTree = "<group>"; };
+		250CE9CC137A856F00F360F8 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
+		250CE9CD137A857000F360F8 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		2511A7E71365552700C9CF9A /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		2511A7E81365552700C9CF9A /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		2511A7E91365552700C9CF9A /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -410,8 +412,6 @@
 		25C3C8DE1372260D008A9115 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		25C3C8E51372260E008A9115 /* Snap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snap.h; sourceTree = "<group>"; };
 		25C3C8E61372260E008A9115 /* Snap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Snap.m; sourceTree = "<group>"; };
-		25C3C8EE13722833008A9115 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
-		25C3C8EF13722833008A9115 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		25C3C8F213722AA6008A9115 /* Like.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Like.h; sourceTree = "<group>"; };
 		25C3C8F313722AA6008A9115 /* Like.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Like.m; sourceTree = "<group>"; };
 		25C67E2E1372197E00330DA7 /* Base64Transcoder+PS.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "Base64Transcoder+PS.c"; sourceTree = "<group>"; };
@@ -918,10 +918,10 @@
 				25C3C8DE1372260D008A9115 /* Comment.m */,
 				25C3C8E51372260E008A9115 /* Snap.h */,
 				25C3C8E61372260E008A9115 /* Snap.m */,
-				25C3C8EE13722833008A9115 /* Album.h */,
-				25C3C8EF13722833008A9115 /* Album.m */,
 				25C3C8F213722AA6008A9115 /* Like.h */,
 				25C3C8F313722AA6008A9115 /* Like.m */,
+				250CE9CC137A856F00F360F8 /* Album.h */,
+				250CE9CD137A857000F360F8 /* Album.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1499,10 +1499,10 @@
 				25C67E41137219F200330DA7 /* PSImageCache.m in Sources */,
 				25C3C8DF1372260E008A9115 /* Comment.m in Sources */,
 				25C3C8E71372260E008A9115 /* Snap.m in Sources */,
-				25C3C8F013722833008A9115 /* Album.m in Sources */,
 				25C3C8F413722AA6008A9115 /* Like.m in Sources */,
 				2544AC7A1377CCC10072C86C /* CameraViewController.m in Sources */,
 				2544ACAC1378829E0072C86C /* CameraImageHelper.m in Sources */,
+				250CE9CE137A857000F360F8 /* Album.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1579,10 +1579,10 @@
 				25C67E42137219F200330DA7 /* PSImageCache.m in Sources */,
 				25C3C8E01372260E008A9115 /* Comment.m in Sources */,
 				25C3C8E81372260E008A9115 /* Snap.m in Sources */,
-				25C3C8F113722833008A9115 /* Album.m in Sources */,
 				25C3C8F513722AA6008A9115 /* Like.m in Sources */,
 				2544AC7B1377CCC10072C86C /* CameraViewController.m in Sources */,
 				2544ACAD1378829E0072C86C /* CameraImageHelper.m in Sources */,
+				250CE9CF137A857000F360F8 /* Album.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

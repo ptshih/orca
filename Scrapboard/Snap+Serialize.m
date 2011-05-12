@@ -21,7 +21,7 @@
     newSnap.userId = [dictionary valueForKey:@"user_id"];
     newSnap.userName = [dictionary valueForKey:@"user_name"];
     newSnap.userPictureUrl = [dictionary valueForKey:@"user_picture_url"];
-    newSnap.type = [dictionary valueForKey:@"type"];
+    newSnap.mediaType = [dictionary valueForKey:@"media_type"];
     newSnap.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     
     // These might be null
@@ -44,7 +44,7 @@
   self.userId = [dictionary valueForKey:@"user_id"];
   self.userName = [dictionary valueForKey:@"user_name"];
   self.userPictureUrl = [dictionary valueForKey:@"user_picture_url"];
-  self.type = [dictionary valueForKey:@"type"];
+  self.mediaType = [dictionary valueForKey:@"media_type"];
   self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
   
   // These might be null

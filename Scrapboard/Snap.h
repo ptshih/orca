@@ -17,7 +17,7 @@
 @property (nonatomic, retain) NSString * id;
 @property (nonatomic, retain) NSString * message;
 @property (nonatomic, retain) NSDate * timestamp;
-@property (nonatomic, retain) NSString * type;
+@property (nonatomic, retain) NSString * mediaType;
 @property (nonatomic, retain) NSString * userPictureUrl;
 @property (nonatomic, retain) NSString * userId;
 @property (nonatomic, retain) NSString * userName;

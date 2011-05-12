@@ -8,7 +8,7 @@
 
 #import "HeaderCell.h"
 
-#define MARGIN_X 6.0
+#define MARGIN_X 10.0
 #define MARGIN_Y 6.0
 
 #define LABEL_HEIGHT 32.0
@@ -26,7 +26,7 @@ static UIImage *_bgImage = nil;
   if (self) {
     self.backgroundColor = [UIColor colorWithPatternImage:_bgImage];
     
-    _psImageView = [[PSImageView alloc] initWithFrame:CGRectMake(6, 6, 32, 32)];
+    _psImageView = [[PSImageView alloc] initWithFrame:CGRectMake(MARGIN_X, MARGIN_Y, 32, 32)];
     
     _userNameLabel = [[UILabel alloc] init];
     _userNameLabel.backgroundColor = [UIColor clearColor];

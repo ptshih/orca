@@ -26,6 +26,7 @@ static ComposeDataCenter *_sharedInstance = nil;
   
   [params setValue:albumId forKey:@"album_id"];
   [params setValue:message forKey:@"message"];
+  [params setValue:@"photo" forKey:@"media_type"];
   [params setValue:[NSNumber numberWithBool:shouldShare] forKey:@"should_share"];
   
   NSData *imageData = nil;

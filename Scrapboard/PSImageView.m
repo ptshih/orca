@@ -21,6 +21,7 @@
   self = [super initWithFrame:frame];
   if (self) {
     _shouldScale = NO;
+    _placeholderImage = nil;
     
     _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     _loadingIndicator.hidesWhenStopped = YES;
@@ -39,8 +40,14 @@
 - (void)loadImage {
   if (_urlPath) {
     UIImage *image = [[PSImageCache sharedCache] imageForURLPath:_urlPath];
-    if (image) {
-      self.image = image;
+    UIImage *newImage = nil;
+    if (_shouldScale && image) {
+      newImage = [image cropProportionalToSize:self.bounds.size];
+    } else {
+      newImage = image;
+    }
+    if (newImage) {
+      self.image = newImage;
       [self imageDidLoad];
     } else {
       self.image = _placeholderImage;
@@ -72,6 +79,8 @@
 }
 
 - (void)unloadImage {
+  if (_request) [_request clearDelegatesAndCancel];
+  RELEASE_SAFELY(_request);
   [_loadingIndicator stopAnimating];
   self.image = _placeholderImage;
   self.urlPath = nil;
@@ -86,16 +95,19 @@
 
 #pragma mark Request Finished
 - (void)requestFinished:(ASIHTTPRequest *)request {
-  UIImage *image = nil;
-  if (_shouldScale) {
-    image = [[UIImage imageWithData:[request responseData]] cropProportionalToSize:self.bounds.size];
-  } else {
-    image = [UIImage imageWithData:[request responseData]];
-  }
+  UIImage *image = [UIImage imageWithData:[request responseData]];
+  UIImage *newImage = nil;
   if (image) {
+    if (_shouldScale) {
+      newImage = [image cropProportionalToSize:self.bounds.size];
+    } else {
+      newImage = image;
+    }
     [[PSImageCache sharedCache] cacheImage:image forURLPath:[[request originalURL] absoluteString]];
+  }
+  if (newImage) {
     if ([self.urlPath isEqualToString:[[request originalURL] absoluteString]]) {
-      self.image = image;
+      self.image = newImage;
       [self imageDidLoad];
     }
   }

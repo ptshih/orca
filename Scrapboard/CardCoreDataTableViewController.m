@@ -130,10 +130,11 @@
       [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
       break;
       
-    case NSFetchedResultsChangeUpdate:      
-      [self tableView:tableView configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+    case NSFetchedResultsChangeUpdate:{
+      NSIndexPath *changedIndexPath = newIndexPath ? newIndexPath : indexPath;
+      [self tableView:tableView configureCell:[tableView cellForRowAtIndexPath:changedIndexPath] atIndexPath:changedIndexPath];
       break;
-      
+    }
     case NSFetchedResultsChangeMove:
       [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
       [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];

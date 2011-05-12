@@ -2,7 +2,7 @@
 //  Album.m
 //  Scrapboard
 //
-//  Created by Peter Shih on 5/4/11.
+//  Created by Peter Shih on 5/11/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,6 +11,7 @@
 
 @implementation Album
 @dynamic id;
+@dynamic videoUrl;
 @dynamic message;
 @dynamic timestamp;
 @dynamic isFollowed;
@@ -19,13 +20,13 @@
 @dynamic userId;
 @dynamic userName;
 @dynamic lat;
-@dynamic type;
+@dynamic mediaType;
 @dynamic photoUrl;
 @dynamic lng;
 @dynamic likeCount;
 @dynamic commentCount;
 @dynamic name;
 @dynamic photoCount;
-@dynamic videoUrl;
+@dynamic videoCount;
 
 @end
