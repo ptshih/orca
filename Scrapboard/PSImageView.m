@@ -103,7 +103,7 @@
     } else {
       newImage = image;
     }
-    [[PSImageCache sharedCache] cacheImage:image forURLPath:[[request originalURL] absoluteString]];
+    [[PSImageCache sharedCache] cacheImage:[request responseData] forURLPath:[[request originalURL] absoluteString]];
   }
   if (newImage) {
     if ([self.urlPath isEqualToString:[[request originalURL] absoluteString]]) {

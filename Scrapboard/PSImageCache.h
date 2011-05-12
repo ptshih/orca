@@ -26,8 +26,13 @@
 + (PSImageCache *)sharedCache;
 
 // Image Cache
-- (void)cacheImage:(UIImage *)image forURLPath:(NSString *)urlPath;
+- (void)cacheImage:(NSData *)imageData forURLPath:(NSString *)urlPath;
 - (UIImage *)imageForURLPath:(NSString *)urlPath;
 - (BOOL)hasImageForURLPath:(NSString *)urlPath;
+- (BOOL)flushImageCacheToDisk;
+- (NSMutableDictionary *)readImageCacheFromDisk;
+
+// Helpers
++ (NSString *)applicationDocumentsDirectory;
 
 @end

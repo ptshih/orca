@@ -12,6 +12,7 @@
 #import "LoginViewController.h"
 #import "LauncherViewController.h"
 #import "LoginDataCenter.h"
+#import "PSImageCache.h"
 
 @implementation ScrapboardAppDelegate
 
@@ -79,6 +80,7 @@
    Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
    If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
    */
+  [[PSImageCache sharedCache] flushImageCacheToDisk];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -94,6 +96,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
   // Saves changes in the application's managed object context before the application terminates.
+  [[PSImageCache sharedCache] flushImageCacheToDisk];
 }
 
 
