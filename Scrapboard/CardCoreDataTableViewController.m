@@ -132,7 +132,7 @@
       
     case NSFetchedResultsChangeUpdate:{
       NSIndexPath *changedIndexPath = newIndexPath ? newIndexPath : indexPath;
-      [self tableView:tableView configureCell:[tableView cellForRowAtIndexPath:changedIndexPath] atIndexPath:changedIndexPath];
+      [self tableView:tableView configureCell:[tableView cellForRowAtIndexPath:newIndexPath] atIndexPath:newIndexPath];
       break;
     }
     case NSFetchedResultsChangeMove:
@@ -144,6 +144,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
   [_tableView endUpdates];
+  [self loadImagesForOnScreenRows];
 }
 
 #pragma mark UISearchDisplayDelegate

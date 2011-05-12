@@ -21,18 +21,18 @@
     _albumDataCenter = [[AlbumDataCenter alloc] init];
     _albumDataCenter.delegate = self;
     _sectionNameKeyPathForFetchedResultsController = @"daysAgo";
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
   }
   return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
 }
 
 - (void)viewDidLoad {
@@ -199,7 +199,6 @@
 }
 
 - (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
   RELEASE_SAFELY(_albumDataCenter);
   [super dealloc];
 }

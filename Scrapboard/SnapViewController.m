@@ -23,7 +23,7 @@
   if (self) {
     _snapDataCenter = [[SnapDataCenter alloc] init];
     _snapDataCenter.delegate = self;
-    _sectionNameKeyPathForFetchedResultsController = @"id";
+    _sectionNameKeyPathForFetchedResultsController = @"timestamp";
   }
   return self;
 }
