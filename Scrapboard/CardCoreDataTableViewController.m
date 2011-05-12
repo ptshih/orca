@@ -132,7 +132,7 @@
       
     case NSFetchedResultsChangeUpdate:{
       NSIndexPath *changedIndexPath = newIndexPath ? newIndexPath : indexPath;
-      [self tableView:tableView configureCell:[tableView cellForRowAtIndexPath:newIndexPath] atIndexPath:newIndexPath];
+      [self tableView:tableView configureCell:[tableView cellForRowAtIndexPath:changedIndexPath] atIndexPath:changedIndexPath];
       break;
     }
     case NSFetchedResultsChangeMove:
