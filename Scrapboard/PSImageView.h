@@ -28,6 +28,7 @@
 @property (nonatomic, assign) id <PSImageViewDelegate> delegate;
 
 - (void)loadImage;
+- (void)loadImageIfCached;
 - (void)unloadImage;
 - (void)imageDidLoad;
 

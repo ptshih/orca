@@ -27,6 +27,7 @@
     _loadingIndicator.hidesWhenStopped = YES;
     _loadingIndicator.frame = self.bounds;
     _loadingIndicator.contentMode = UIViewContentModeCenter;
+    [_loadingIndicator startAnimating];
     [self addSubview:_loadingIndicator];
   }
   return self;
@@ -40,14 +41,14 @@
 - (void)loadImage {
   if (_urlPath) {
     UIImage *image = [[PSImageCache sharedCache] imageForURLPath:_urlPath];
-    UIImage *newImage = nil;
-    if (_shouldScale && image) {
-      newImage = [image cropProportionalToSize:self.bounds.size];
-    } else {
-      newImage = image;
-    }
-    if (newImage) {
-      self.image = newImage;
+//    UIImage *newImage = nil;
+//    if (_shouldScale && image) {
+//      newImage = [image cropProportionalToSize:self.bounds.size];
+//    } else {
+//      newImage = image;
+//    }
+    if (image) {
+      self.image = image;
       [self imageDidLoad];
     } else {
       self.image = _placeholderImage;
@@ -78,10 +79,26 @@
   }
 }
 
+- (void)loadImageIfCached {
+  if (_urlPath) {
+    UIImage *image = [[PSImageCache sharedCache] imageForURLPath:_urlPath];
+//    UIImage *newImage = nil;
+//    if (_shouldScale && image) {
+//      newImage = image;
+//    } else {
+//      newImage = image;
+//    }
+    if (image) {
+      self.image = image;
+      [self imageDidLoad];
+    }
+  }
+}
+
 - (void)unloadImage {
   if (_request) [_request clearDelegatesAndCancel];
   RELEASE_SAFELY(_request);
-  [_loadingIndicator stopAnimating];
+  [_loadingIndicator startAnimating];
   self.image = _placeholderImage;
   self.urlPath = nil;
 }
@@ -103,7 +120,7 @@
     } else {
       newImage = image;
     }
-    [[PSImageCache sharedCache] cacheImage:[request responseData] forURLPath:[[request originalURL] absoluteString]];
+    [[PSImageCache sharedCache] cacheImage:UIImagePNGRepresentation(newImage) forURLPath:[[request originalURL] absoluteString]];
   }
   if (newImage) {
     if ([self.urlPath isEqualToString:[[request originalURL] absoluteString]]) {

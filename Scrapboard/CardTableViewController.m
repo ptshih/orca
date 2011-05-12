@@ -281,6 +281,9 @@
 
 #pragma mark UIScrollViewDelegate
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  if (!decelerate) {
+    [self loadImagesForOnScreenRows];
+  }
   if (!self.searchDisplayController.active) {
     if (_refreshHeaderView) {
       [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
@@ -289,6 +292,7 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  [self loadImagesForOnScreenRows];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
@@ -311,6 +315,27 @@
 	return [NSDate date]; // should return date data source was last changed
 }
 
+#pragma mark -
+#pragma mark Image Lazy Loading
+- (void)loadImagesForOnScreenRows {
+  //  NSArray *visibleIndexPaths = nil;
+  if (self.searchDisplayController.active) {
+    _visibleCells = [[self.searchDisplayController.searchResultsTableView visibleCells] retain];
+    //    visibleIndexPaths = [self.searchDisplayController.searchResultsTableView indexPathsForVisibleRows];
+  } else {
+    _visibleCells = [[self.tableView visibleCells] retain];
+    //    visibleIndexPaths = [self.tableView indexPathsForVisibleRows];
+  }
+  
+  // Subclass SHOULD IMPLEMENT
+  
+//  for (id cell in visibleCells) {
+//    if ([cell isKindOfClass:[PSImageCell class]]) {
+//      [(PSImageCell *)cell loadImage];
+//    }
+//  }
+}
+
 - (void)didReceiveMemoryWarning {
   // Releases the view if it doesn't have a superview.
   [super didReceiveMemoryWarning];
@@ -321,6 +346,7 @@
   RELEASE_SAFELY(_items);
   RELEASE_SAFELY(_searchItems);
   RELEASE_SAFELY(_searchBar);
+  RELEASE_SAFELY(_visibleCells);
   RELEASE_SAFELY(_refreshHeaderView);
   RELEASE_SAFELY(_footerView);
   RELEASE_SAFELY(_loadMoreView);

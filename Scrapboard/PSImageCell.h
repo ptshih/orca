@@ -21,5 +21,6 @@
 }
 
 - (void)loadImage;
+- (void)loadImageIfCached;
 
 @end

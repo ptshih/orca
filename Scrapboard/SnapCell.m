@@ -101,12 +101,16 @@
   // Caption
   _captionLabel.text = snap.message;
   
-  [self loadPhoto];
+  [self loadPhotoIfCached];
 }
 
 - (void)loadPhoto {
-  DLog(@"loadPhoto %@ for %@", [_photoView urlPath], _test);
+//  DLog(@"loadPhoto %@ for %@", [_photoView urlPath], _test);
   [_photoView loadImage];
+}
+
+- (void)loadPhotoIfCached {
+  [_photoView loadImageIfCached];
 }
 
 - (void)dealloc {

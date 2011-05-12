@@ -112,6 +112,9 @@
   _messageLabel.text = nil;
   _timestampLabel.text = nil;
   _activityLabel.text = nil;
+  
+  [_psImageView unloadImage];
+  [_photoView unloadImage];
 }
 
 - (void)layoutSubviews {
@@ -157,12 +160,19 @@
   // Activity
   _activityLabel.text = [NSString stringWithFormat:@"%@ photos, %@ likes, %@ comments", album.photoCount, album.likeCount, album.commentCount];
   
-  [self loadImage];
-  [self loadPhoto];
+  [self loadImageIfCached];
+  [self loadPhotoIfCached];
+  
+//  [self loadImage];
+//  [self loadPhoto];
 }
 
 - (void)loadPhoto {
   [_photoView loadImage];
+}
+
+- (void)loadPhotoIfCached {
+  [_photoView loadImageIfCached];
 }
 
 - (void)dealloc {

@@ -116,7 +116,20 @@
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
   
+  // Initial static render of cell
+  if (tableView.dragging == NO && tableView.decelerating == NO) {
+    [cell loadPhoto];
+  }
+  
   return cell;
+}
+
+- (void)loadImagesForOnScreenRows {
+  [super loadImagesForOnScreenRows];
+  
+  for (id cell in _visibleCells) {
+    [cell loadPhoto];
+  }
 }
 
 #pragma mark -

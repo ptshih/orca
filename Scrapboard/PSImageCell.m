@@ -38,8 +38,17 @@ static UIImage *_frameImage = nil;
   [_psImageView unloadImage];
 }
 
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  
+}
+
 - (void)loadImage {
   [_psImageView loadImage];
+}
+
+- (void)loadImageIfCached {
+  [_psImageView loadImageIfCached];
 }
 
 + (CGFloat)rowHeight {

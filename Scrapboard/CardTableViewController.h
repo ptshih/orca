@@ -15,6 +15,7 @@
   UITableView *_tableView;
   NSMutableArray *_items;
   NSMutableArray *_searchItems;
+  NSArray *_visibleCells;
 
   UISearchBar *_searchBar;
   EGORefreshTableHeaderView *_refreshHeaderView;
@@ -39,5 +40,7 @@
 - (void)hideLoadMoreView;
 
 - (void)loadMore;
+
+- (void)loadImagesForOnScreenRows;
 
 @end
