@@ -82,9 +82,8 @@
 }
 
 - (NSFetchRequest *)getSnapsFetchRequestWithAlbumId:(NSString *)albumId {
-  NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO selector:@selector(compare:)];
-  NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
-  [sortDescriptor release];
+  NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO] autorelease];
+  NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
   NSFetchRequest *fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getSnapsForAlbum" substitutionVariables:[NSDictionary dictionaryWithObject:albumId forKey:@"desiredAlbumId"]];
   [fetchRequest setSortDescriptors:sortDescriptors];
   return fetchRequest;
