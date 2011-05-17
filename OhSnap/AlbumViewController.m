@@ -53,7 +53,9 @@
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleNone];
   
-  [self setupSearchDisplayControllerWithScopeButtonTitles:[NSArray arrayWithObjects:@"Album", @"Person", nil]];
+//  [self setupSearchDisplayControllerWithScopeButtonTitles:[NSArray arrayWithObjects:@"Album", @"Person", nil]];
+  
+  [self setupSearchDisplayControllerWithScopeButtonTitles:nil];
   
   // Pull Refresh
   [self setupPullRefresh];
@@ -172,13 +174,15 @@
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
   NSPredicate *predicate = nil;
   
-  if ([scope isEqualToString:@"Person"]) {
-    // search friend's full name
-    predicate = [NSPredicate predicateWithFormat:@"userName CONTAINS[cd] %@", searchText, searchText];
-  } else {
-    // default to album name
-    predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
-  }
+  predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
+  
+//  if ([scope isEqualToString:@"Person"]) {
+//    // search friend's full name
+//    predicate = [NSPredicate predicateWithFormat:@"userName CONTAINS[cd] %@", searchText, searchText];
+//  } else {
+//    // default to album name
+//    predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
+//  }
   
   [self.fetchedResultsController.fetchRequest setPredicate:predicate];
   [self executeFetch];
