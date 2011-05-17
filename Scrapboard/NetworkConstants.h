@@ -34,7 +34,7 @@
 #endif
 
 // API Endpoints
-//#define TEST // enable this to hit test APIs
+#define TEST // enable this to hit test APIs
 
 #ifdef TEST
   #define ALBUMS_ENDPOINT @"albums_test"

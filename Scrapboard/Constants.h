@@ -43,7 +43,7 @@
 // Facebook
 #define FB_APP_ID @"132514440148709"
 #define FB_APP_SECRET @"925b0a280e685631acf466dfea13b154"
-#define FB_PERMISSIONS [NSArray arrayWithObjects:@"offline_access", @"read_stream", @"user_checkins", @"friends_checkins", @"publish_checkins", nil]
+#define FB_PERMISSIONS [NSArray arrayWithObjects:@"offline_access", @"read_stream", @"publish_stream", nil]
 #define FB_PARAMS @"id,first_name,last_name,name,gender,locale"
 #define FB_CHECKIN_PARAMS @"id,from,tags,place,message,application,created_time"
 

@@ -235,9 +235,13 @@
   
   // Loop thru all dictionaries in the array
   NSDictionary *sanitizedDictionary = nil;
-  for (NSDictionary *dictionary in array) {
-    sanitizedDictionary = [self sanitizeDictionary:dictionary forKeys:[dictionary allKeys]];
-    [sanitizedArray addObject:sanitizedDictionary];
+  for (id value in array) {
+    if ([value isKindOfClass:[NSDictionary class]]) {
+      sanitizedDictionary = [self sanitizeDictionary:value forKeys:[value allKeys]];
+      [sanitizedArray addObject:sanitizedDictionary];
+    } else {
+      [sanitizedArray addObject:value];
+    }
   }
   
   return sanitizedArray;

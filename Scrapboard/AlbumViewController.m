@@ -134,7 +134,6 @@
   
   // Initial static render of cell
   if (tableView.dragging == NO && tableView.decelerating == NO) {
-    [cell loadImage];
     [cell loadPhoto];
   }
   
@@ -145,7 +144,6 @@
   [super loadImagesForOnScreenRows];
   
   for (id cell in _visibleCells) {
-    [cell loadImage];
     [cell loadPhoto];
   }
 }

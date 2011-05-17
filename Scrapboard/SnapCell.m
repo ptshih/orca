@@ -99,7 +99,7 @@
   _photoView.urlPath = snap.photoUrl;
   
   // Caption
-  _captionLabel.text = snap.message;
+  _captionLabel.text = snap.caption;
   
   [self loadPhotoIfCached];
 }

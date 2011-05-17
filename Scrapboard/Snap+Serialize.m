@@ -21,15 +21,25 @@
     newSnap.userId = [dictionary valueForKey:@"user_id"];
     newSnap.userName = [dictionary valueForKey:@"user_name"];
     newSnap.userPictureUrl = [dictionary valueForKey:@"user_picture_url"];
-    newSnap.mediaType = [dictionary valueForKey:@"media_type"];
     newSnap.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     
-    // These might be null
-    newSnap.message = [dictionary valueForKey:@"message"] ? [dictionary valueForKey:@"message"] : nil;
+    // Photo
     newSnap.photoUrl = [dictionary valueForKey:@"photo_url"] ? [dictionary valueForKey:@"photo_url"] : nil;
-    newSnap.videoUrl = [dictionary valueForKey:@"video_url"] ? [dictionary valueForKey:@"video_url"] : nil;
     
+    // Counts
+    newSnap.commentCount = [dictionary valueForKey:@"comment_count"];
+    newSnap.likeCount = [dictionary valueForKey:@"like_count"];
+    
+    // These might be null
+    newSnap.caption = [dictionary valueForKey:@"caption"] ? [dictionary valueForKey:@"message"] : nil;
+    
+    // Is Liked Flag
     newSnap.isLiked = [dictionary valueForKey:@"is_liked"] ? [dictionary valueForKey:@"is_liked"] : [NSNumber numberWithBool:NO];
+    
+    // Lat/Lng
+    newSnap.lat = [dictionary valueForKey:@"lat"];
+    newSnap.lng = [dictionary valueForKey:@"lng"];
+    
 
     return newSnap;
   } else {
@@ -44,16 +54,24 @@
   self.userId = [dictionary valueForKey:@"user_id"];
   self.userName = [dictionary valueForKey:@"user_name"];
   self.userPictureUrl = [dictionary valueForKey:@"user_picture_url"];
-  self.mediaType = [dictionary valueForKey:@"media_type"];
   self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
   
-  // These might be null
-  self.message = [dictionary valueForKey:@"message"] ? [dictionary valueForKey:@"message"] : nil;
+  // Photo
   self.photoUrl = [dictionary valueForKey:@"photo_url"] ? [dictionary valueForKey:@"photo_url"] : nil;
-  self.videoUrl = [dictionary valueForKey:@"video_url"] ? [dictionary valueForKey:@"video_url"] : nil;
   
+  // Counts
+  self.commentCount = [dictionary valueForKey:@"comment_count"];
+  self.likeCount = [dictionary valueForKey:@"like_count"];
+  
+  // These might be null
+  self.caption = [dictionary valueForKey:@"caption"] ? [dictionary valueForKey:@"message"] : nil;
+  
+  // Is Liked Flag
   self.isLiked = [dictionary valueForKey:@"is_liked"] ? [dictionary valueForKey:@"is_liked"] : [NSNumber numberWithBool:NO];
-
+  
+  // Lat/Lng
+  self.lat = [dictionary valueForKey:@"lat"];
+  self.lng = [dictionary valueForKey:@"lng"];
   
   return self;
 }

@@ -45,12 +45,12 @@
 - (void)loadImage {
   if (_urlPath) {
     UIImage *image = [[PSImageCache sharedCache] imageForURLPath:_urlPath];
-//    UIImage *newImage = nil;
-//    if (_shouldScale && image) {
-//      newImage = [image cropProportionalToSize:self.bounds.size];
-//    } else {
-//      newImage = image;
-//    }
+    //    UIImage *newImage = nil;
+    //    if (_shouldScale && image) {
+    //      newImage = [image cropProportionalToSize:self.bounds.size];
+    //    } else {
+    //      newImage = image;
+    //    }
     if (image) {
       self.image = image;
       [self imageDidLoad];
@@ -86,12 +86,12 @@
 - (void)loadImageIfCached {
   if (_urlPath) {
     UIImage *image = [[PSImageCache sharedCache] imageForURLPath:_urlPath];
-//    UIImage *newImage = nil;
-//    if (_shouldScale && image) {
-//      newImage = image;
-//    } else {
-//      newImage = image;
-//    }
+    //    UIImage *newImage = nil;
+    //    if (_shouldScale && image) {
+    //      newImage = image;
+    //    } else {
+    //      newImage = image;
+    //    }
     if (image) {
       self.image = image;
       [self imageDidLoad];
@@ -150,4 +150,5 @@
   
   [super dealloc];
 }
+
 @end
