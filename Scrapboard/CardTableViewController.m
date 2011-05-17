@@ -36,6 +36,8 @@
 - (void)setupSearchDisplayControllerWithScopeButtonTitles:(NSArray *)scopeButtonTitles {
   _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
   _searchBar.delegate = self;
+  _searchBar.tintColor = [UIColor darkGrayColor];
+  
   if (scopeButtonTitles) {
     _searchBar.scopeButtonTitles = scopeButtonTitles;
   }
@@ -64,8 +66,8 @@
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorColor = SEPARATOR_COLOR;
   }
-  [self.view insertSubview:_tableView atIndex:0];
-//  [self.view addSubview:_tableView];
+//  [self.view insertSubview:_tableView atIndex:0];
+  [self.view addSubview:_tableView];
   
   // Set the active scrollView
   _activeScrollView = _tableView;

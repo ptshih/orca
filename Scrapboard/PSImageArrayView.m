@@ -22,8 +22,22 @@
     _animateIndex = 0;
     _shouldScale = NO;
     _images = [[NSMutableDictionary alloc] init];
+    _pendingRequests = [[NSMutableArray alloc] init];
+    
+    _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    _loadingIndicator.hidesWhenStopped = YES;
+    _loadingIndicator.frame = self.bounds;
+    _loadingIndicator.contentMode = UIViewContentModeCenter;
+    [_loadingIndicator startAnimating];
+    [self addSubview:_loadingIndicator];
+    self.backgroundColor = [UIColor blackColor];
   }
   return self;
+}
+
+- (void)setFrame:(CGRect)frame {
+  [super setFrame:frame];
+  _loadingIndicator.frame = self.bounds;
 }
 
 - (void)setImage:(UIImage *)image {
@@ -49,10 +63,17 @@
   
   // Start the Request
   [request startAsynchronous];
+  
+  [_pendingRequests addObject:request];
 }
 
 - (void)loadImageArray {
+  for (ASIHTTPRequest *request in _pendingRequests) {
+    [request clearDelegatesAndCancel];
+  }
+  [_pendingRequests removeAllObjects];
   [_images removeAllObjects];
+  
   if (_urlPathArray) {
     for (NSString *urlPath in _urlPathArray) {
       UIImage *image = [[PSImageCache sharedCache] imageForURLPath:urlPath];
@@ -60,6 +81,7 @@
         [_images setObject:image forKey:urlPath];
         [self checkImageArray];
       } else {
+        [_loadingIndicator startAnimating];
         [self getImageRequestWithUrlPath:urlPath];
       }
     }
@@ -104,14 +126,17 @@
     [_images setObject:newImage forKey:[[request originalURL] absoluteString]];
     [self checkImageArray];
   }
+  [_pendingRequests removeObject:request];
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
+  [_pendingRequests removeObject:request];
 }
 
 - (void)checkImageArray {
-  if ([_images count] == [_urlPathArray count] && !_animateTimer) {
+  if ([_images count] >= [_urlPathArray count] && !_animateTimer) {
 //    [self animateImages];
+    [_loadingIndicator stopAnimating];
     _animateTimer = [[NSTimer timerWithTimeInterval:6.0 target:self selector:@selector(animateImages) userInfo:nil repeats:YES] retain];
     [[NSRunLoop currentRunLoop] addTimer:_animateTimer forMode:NSDefaultRunLoopMode];
     [_animateTimer fire];
@@ -121,6 +146,8 @@
 - (void)dealloc {
   RELEASE_SAFELY(_urlPathArray);
   RELEASE_SAFELY(_images);
+  RELEASE_SAFELY(_pendingRequests);
+  RELEASE_SAFELY(_loadingIndicator);
   INVALIDATE_TIMER(_animateTimer);
   
   [super dealloc];

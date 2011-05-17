@@ -39,7 +39,7 @@
   [super viewDidLoad];
   
   // Title and Buttons
-  _navTitleLabel.text = @"Albums";
+  _navTitleLabel.text = @"Oh Snap!";
   
   UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:self action:@selector(logout)];
   self.navigationItem.leftBarButtonItem = leftButton;
@@ -88,14 +88,33 @@
   return [AlbumCell rowHeightForObject:album forInterfaceOrientation:[self interfaceOrientation]];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-  return [[[self.fetchedResultsController sections] objectAtIndex:section] name];
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//  return [[[self.fetchedResultsController sections] objectAtIndex:section] name];
+//}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+  NSString *sectionName = [[[self.fetchedResultsController sections] objectAtIndex:section] name];
+  
+  UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 26)] autorelease];
+  sectionHeaderView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_plain_header_gray.png"]];
+  
+  UILabel *sectionHeaderLabel = [[[UILabel alloc] initWithFrame:CGRectMake(5, 0, 310, 22)] autorelease];
+  sectionHeaderLabel.backgroundColor = [UIColor clearColor];
+  sectionHeaderLabel.text = sectionName;
+  sectionHeaderLabel.textColor = [UIColor whiteColor];
+  sectionHeaderLabel.shadowColor = [UIColor blackColor];
+  sectionHeaderLabel.shadowOffset = CGSizeMake(0, 1);
+  sectionHeaderLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0];
+  [sectionHeaderView addSubview:sectionHeaderLabel];
+  return sectionHeaderView;
 }
 
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
   Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   [cell fillCellWithObject:album];
+  [cell setNeedsLayout];
+  [cell setNeedsDisplay];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

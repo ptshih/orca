@@ -16,7 +16,7 @@
 #define API_VERSION @"v1"
 
 // If this is defined, we will hit the staging server instead of prod
-// #define STAGING
+#define STAGING
 
 #if TARGET_IPHONE_SIMULATOR
   #define STAGING

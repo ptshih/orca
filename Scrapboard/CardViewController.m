@@ -18,7 +18,7 @@ static UIImage *_backgroundImage = nil;
 @implementation CardViewController
 
 + (void)initialize {
-  _backgroundImage = [[UIImage imageNamed:@"bamboo_bg_alpha.png"] retain];
+  _backgroundImage = [[[UIImage imageNamed:@"weave-bg.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0] retain];
 }
 
 - (id)init {
@@ -32,8 +32,15 @@ static UIImage *_backgroundImage = nil;
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  self.view.backgroundColor = [UIColor colorWithPatternImage:_backgroundImage];
+  self.view.opaque = YES;
+  self.view.backgroundColor = [UIColor blackColor];
   self.view.frame = CGRectMake(0, 20, 320, CARD_HEIGHT);
+  
+  // Background View
+  UIImageView *backgroundView = [[UIImageView alloc] initWithImage:_backgroundImage];
+  backgroundView.frame = self.view.bounds;
+  [self.view addSubview:backgroundView];
+  [backgroundView release];
   
   _nullView = [[PSNullView alloc] initWithFrame:self.view.bounds];
   [self.view addSubview:_nullView];
@@ -55,7 +62,7 @@ static UIImage *_backgroundImage = nil;
   self.navigationItem.titleView = navTitleView;
   [navTitleView release];
   
-  self.navigationController.navigationBar.tintColor = NAV_COLOR_DARK_BLUE;
+  self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
   
 //  self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-logo.png"]] autorelease];
 }

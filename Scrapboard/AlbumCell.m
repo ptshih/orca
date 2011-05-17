@@ -58,7 +58,7 @@
     // Caption
     _captionView = [[UIView alloc] initWithFrame:CGRectMake(0, 60, 320, 40)];
     _captionView.backgroundColor = [UIColor blackColor];
-    _captionView.layer.opacity = 0.5;
+    _captionView.layer.opacity = 0.667;
     
     // Photo
     _photoView = [[PSImageArrayView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
@@ -72,6 +72,8 @@
     [self.contentView addSubview:_nameLabel];
     [self.contentView addSubview:_participantsLabel];
     [self.contentView addSubview:_timestampLabel];
+    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
   }
   return self;
 }

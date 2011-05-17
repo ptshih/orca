@@ -13,7 +13,10 @@
 @interface PSImageArrayView : UIImageView {
   NSArray *_urlPathArray;
   NSMutableDictionary *_images;
+  NSMutableArray *_pendingRequests;
+  UIActivityIndicatorView *_loadingIndicator;
   NSTimer *_animateTimer;
+  
   BOOL _shouldScale;
   NSInteger _animateIndex;
 }
