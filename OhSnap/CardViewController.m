@@ -9,6 +9,8 @@
 #import "CardViewController.h"
 #import "PSNullView.h"
 
+#define NAV_BUTTON_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0]
+
 static UIImage *_backgroundImage = nil;
 
 @interface CardViewController (Private)
@@ -34,7 +36,7 @@ static UIImage *_backgroundImage = nil;
   
   self.view.opaque = YES;
   self.view.backgroundColor = [UIColor blackColor];
-//  self.view.frame = CGRectMake(0, 20, 320, CARD_HEIGHT);
+  //  self.view.frame = CGRectMake(0, 20, 320, CARD_HEIGHT);
   
   // Background View
   UIImageView *backgroundView = [[UIImageView alloc] initWithImage:_backgroundImage];
@@ -45,8 +47,8 @@ static UIImage *_backgroundImage = nil;
   _nullView = [[PSNullView alloc] initWithFrame:self.view.bounds];
   [self.view addSubview:_nullView];
   
-//  self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
-
+  //  self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
+  
   // Setup Nav Bar
   UIView *navTitleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 44)];
   _navTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 44)];
@@ -64,7 +66,7 @@ static UIImage *_backgroundImage = nil;
   
   self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
   
-//  self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-logo.png"]] autorelease];
+  //  self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-logo.png"]] autorelease];
 }
 
 - (void)back {
@@ -73,22 +75,43 @@ static UIImage *_backgroundImage = nil;
 
 // Optional Implementation
 - (void)addBackButton {
-//  UIButton *back = [UIButton buttonWithType:UIButtonTypeCustom];
-//  back.frame = CGRectMake(0, 0, 60, 32);
-//  [back setTitle:@"Back" forState:UIControlStateNormal];
-//  [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
-//  [back setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
-//  back.titleLabel.font = [UIFont boldSystemFontOfSize:11.0];
-//  UIImage *backImage = [[UIImage imageNamed:@"navigationbar_button_back.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];  
-//  [back setBackgroundImage:backImage forState:UIControlStateNormal];  
-//  [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];  
-//  UIBarButtonItem *backButton = [[[UIBarButtonItem alloc] initWithCustomView:back] autorelease];
-//  self.navigationItem.leftBarButtonItem = backButton;
+  UIButton *back = [UIButton buttonWithType:UIButtonTypeCustom];
+  back.frame = CGRectMake(0, 0, 60, 30);
+  [back setTitle:@"Back" forState:UIControlStateNormal];
+  [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 9, 0, 0)];
+  back.titleLabel.font = NAV_BUTTON_FONT;
+  back.titleLabel.shadowColor = [UIColor blackColor];
+  back.titleLabel.shadowOffset = CGSizeMake(0, 1);
+  UIImage *backImage = [[UIImage imageNamed:@"navbar_back_button.png"] stretchableImageWithLeftCapWidth:19 topCapHeight:0];
+  UIImage *backHighlightedImage = [[UIImage imageNamed:@"navbar_back_highlighted_button.png"] stretchableImageWithLeftCapWidth:19 topCapHeight:0];  
+  [back setBackgroundImage:backImage forState:UIControlStateNormal];
+  [back setBackgroundImage:backHighlightedImage forState:UIControlStateHighlighted];
+  [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];  
+  UIBarButtonItem *backButton = [[[UIBarButtonItem alloc] initWithCustomView:back] autorelease];
+  self.navigationItem.leftBarButtonItem = backButton;
+}
+
+- (void)addButtonWithTitle:(NSString *)title andSelector:(SEL)selector isLeft:(BOOL)isLeft {
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  button.frame = CGRectMake(0, 0, 60, 30);
+  [button setTitle:title forState:UIControlStateNormal];
+  button.titleLabel.font = NAV_BUTTON_FONT;
+  button.titleLabel.shadowColor = [UIColor blackColor];
+  button.titleLabel.shadowOffset = CGSizeMake(0, 1);
+  [button setBackgroundImage:[[UIImage imageNamed:@"navbar_normal_button.png"] stretchableImageWithLeftCapWidth:4 topCapHeight:0] forState:UIControlStateNormal];
+  [button setBackgroundImage:[[UIImage imageNamed:@"navbar_normal_highlighted_button.png"] stretchableImageWithLeftCapWidth:4 topCapHeight:0] forState:UIControlStateHighlighted];
+  [button addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];  
+  UIBarButtonItem *navButton = [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
+  if (isLeft) {
+    self.navigationItem.leftBarButtonItem = navButton;
+  } else {
+    self.navigationItem.rightBarButtonItem = navButton;
+  }
 }
 
 // Subclasses may implement
 - (void)setupNullView {
-
+  
 }
 
 #pragma mark HeaderTabView

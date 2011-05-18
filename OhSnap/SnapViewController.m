@@ -44,9 +44,8 @@
   // Title and Buttons
   _navTitleLabel.text = _album.name;
   
-  UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(newSnap)];
-  self.navigationItem.rightBarButtonItem = rightButton;
-  [rightButton release];
+  [self addBackButton];
+  [self addButtonWithTitle:@"New" andSelector:@selector(newAlbum) isLeft:NO];
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);

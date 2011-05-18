@@ -31,6 +31,9 @@
 
 - (void)setupNullView;
 - (void)setupHeaderTabViewWithFrame:(CGRect)frame;
+
+// Nav buttons
 - (void)addBackButton;
+- (void)addButtonWithTitle:(NSString *)title andSelector:(SEL)selector isLeft:(BOOL)isLeft;
 
 @end

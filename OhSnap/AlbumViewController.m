@@ -41,13 +41,8 @@
   // Title and Buttons
   _navTitleLabel.text = @"Oh Snap!";
   
-  UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:self action:@selector(logout)];
-  self.navigationItem.leftBarButtonItem = leftButton;
-  [leftButton release];  
-  
-  UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newAlbum)];
-  self.navigationItem.rightBarButtonItem = rightButton;
-  [rightButton release];
+  [self addButtonWithTitle:@"Logout" andSelector:@selector(logout) isLeft:YES];
+  [self addButtonWithTitle:@"New" andSelector:@selector(newAlbum) isLeft:NO];
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
