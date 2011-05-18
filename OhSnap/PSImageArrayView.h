@@ -31,6 +31,7 @@
 - (void)requestFinished:(ASIHTTPRequest *)request;
 - (void)requestFailed:(ASIHTTPRequest *)request withError:(NSError *)error;
 
-- (void)checkImageArray;
+- (void)prepareImageArray;
+- (void)checkAndResetImageArray;
 
 @end

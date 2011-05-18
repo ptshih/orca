@@ -68,21 +68,41 @@
 }
 
 - (void)loadImageArray {
-  for (ASIHTTPRequest *request in _pendingRequests) {
-    [request clearDelegatesAndCancel];
+  [self checkAndResetImageArray];
+}
+
+- (void)checkAndResetImageArray {
+  // We need to check to see if we should reset the imageArray
+  // If there are any pendingRequests, we should always reset
+  if ([_pendingRequests count] > 0) {
+    for (ASIHTTPRequest *request in _pendingRequests) {
+      [request clearDelegatesAndCancel];
+    }
+    [_pendingRequests removeAllObjects];
   }
-  [_pendingRequests removeAllObjects];
-  [_images removeAllObjects];
   
-  if (_urlPathArray) {
-    for (NSString *urlPath in _urlPathArray) {
-      UIImage *image = [[PSImageCache sharedCache] imageForURLPath:urlPath];
-      if (image) {
-        [_images setObject:image forKey:urlPath];
-        [self checkImageArray];
-      } else {
-        [_loadingIndicator startAnimating];
-        [self getImageRequestWithUrlPath:urlPath];
+  // If there has been a change in the 5 images to show, we need to reset
+  BOOL hasChanged = NO;
+  for (NSString *urlPath in  _urlPathArray) {
+    if (![_images objectForKey:urlPath]) {
+      hasChanged = YES;
+      break;
+    }
+  }
+  if (hasChanged) {
+    [_images removeAllObjects];
+    INVALIDATE_TIMER(_animateTimer);
+    
+    if (_urlPathArray) {
+      for (NSString *urlPath in _urlPathArray) {
+        UIImage *image = [[PSImageCache sharedCache] imageForURLPath:urlPath];
+        if (image) {
+          [_images setObject:image forKey:urlPath];
+          [self prepareImageArray];
+        } else {
+          [_loadingIndicator startAnimating];
+          [self getImageRequestWithUrlPath:urlPath];
+        }
       }
     }
   }
@@ -124,7 +144,7 @@
   }
   if (newImage) {
     [_images setObject:newImage forKey:[[request originalURL] absoluteString]];
-    [self checkImageArray];
+    [self prepareImageArray];
   }
   [_pendingRequests removeObject:request];
 }
@@ -133,7 +153,7 @@
   [_pendingRequests removeObject:request];
 }
 
-- (void)checkImageArray {
+- (void)prepareImageArray {
   if ([_images count] >= [_urlPathArray count] && !_animateTimer) {
 //    [self animateImages];
     [_loadingIndicator stopAnimating];
