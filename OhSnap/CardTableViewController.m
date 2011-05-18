@@ -36,7 +36,8 @@
 - (void)setupSearchDisplayControllerWithScopeButtonTitles:(NSArray *)scopeButtonTitles {
   _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
   _searchBar.delegate = self;
-  _searchBar.tintColor = [UIColor darkGrayColor];
+//  _searchBar.tintColor = [UIColor darkGrayColor];
+//  _searchBar.backgroundColor = [UIColor clearColor];
   
   if (scopeButtonTitles) {
     _searchBar.scopeButtonTitles = scopeButtonTitles;

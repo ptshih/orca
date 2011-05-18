@@ -95,7 +95,7 @@
   UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 26)] autorelease];
   sectionHeaderView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_plain_header_gray.png"]];
   
-  UILabel *sectionHeaderLabel = [[[UILabel alloc] initWithFrame:CGRectMake(5, 0, 310, 22)] autorelease];
+  UILabel *sectionHeaderLabel = [[[UILabel alloc] initWithFrame:CGRectMake(5, 0, 310, 24)] autorelease];
   sectionHeaderLabel.backgroundColor = [UIColor clearColor];
   sectionHeaderLabel.text = sectionName;
   sectionHeaderLabel.textColor = [UIColor whiteColor];
