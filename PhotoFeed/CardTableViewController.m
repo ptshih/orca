@@ -126,9 +126,9 @@
   // Add to subview
   [_loadMoreView addSubview:_loadMoreButton];
   [_loadMoreView addSubview:_loadMoreActivity];
-
+  
   // Always show
-//  [self showLoadMoreView];
+  //  [self showLoadMoreView];
 }
 
 - (void)showLoadMoreView {

@@ -66,7 +66,7 @@
     default:
       break;
   }
-
+  
   // Search Scope
   [self setupSearchDisplayControllerWithScopeButtonTitles:scopeArray andPlaceholder:placeholder];
   
@@ -96,11 +96,11 @@
 }
 
 - (void)newAlbum {
-//  CameraViewController *cvc = [[CameraViewController alloc] init];
-//  UINavigationController *cnc = [[UINavigationController alloc] initWithRootViewController:cvc];
-//  [self presentModalViewController:cnc animated:NO];
-//  [cvc autorelease];
-//  [cnc autorelease];
+  //  CameraViewController *cvc = [[CameraViewController alloc] init];
+  //  UINavigationController *cnc = [[UINavigationController alloc] initWithRootViewController:cvc];
+  //  [self presentModalViewController:cnc animated:NO];
+  //  [cvc autorelease];
+  //  [cnc autorelease];
 }
 
 #pragma mark -
@@ -141,7 +141,7 @@
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   
   Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
-
+  
   PhotoViewController *svc = [[PhotoViewController alloc] init];
   svc.album = album;
   [self.navigationController pushViewController:svc animated:YES];
@@ -165,9 +165,9 @@
 - (void)loadImagesForOnScreenRows {
   [super loadImagesForOnScreenRows];
   
-//  for (id cell in _visibleCells) {
-//    [cell loadPhoto];
-//  }
+  //  for (id cell in _visibleCells) {
+  //    [cell loadPhoto];
+  //  }
 }
 
 #pragma mark -
@@ -176,7 +176,7 @@
   NSPredicate *predicate = nil;
   NSPredicate *compoundPredicate = nil;
   
-//  predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
+  //  predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
   
   if ([scope isEqualToString:@"Author"]) {
     // search friend's full name
@@ -213,7 +213,7 @@
     default:
       break;
   }
-
+  
   return [[AlbumDataCenter defaultCenter] fetchAlbumsWithTemplate:fetchTemplate andSubstitutionVariables:substitutionVariables andLimit:_limit andOffset:_offset];
 }
 

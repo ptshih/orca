@@ -90,17 +90,17 @@ static UIImage *_loadingImage = nil;
 
 #pragma mark Loading
 - (void)showNullView {
-//  [UIView beginAnimations:nil context:NULL];
-//  [UIView setAnimationDuration:0.3];
+  //  [UIView beginAnimations:nil context:NULL];
+  //  [UIView setAnimationDuration:0.3];
   self.alpha = 1.0;
-//  [UIView commitAnimations];
+  //  [UIView commitAnimations];
 }
 
 - (void)hideNullView {
-//  [UIView beginAnimations:nil context:NULL];
-//  [UIView setAnimationDuration:0.3];
+  //  [UIView beginAnimations:nil context:NULL];
+  //  [UIView setAnimationDuration:0.3];
   self.alpha = 0.0;
-//  [UIView commitAnimations];
+  //  [UIView commitAnimations];
 }
 
 - (void)dealloc {

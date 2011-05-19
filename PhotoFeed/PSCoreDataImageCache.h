@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "LICoreDataStack.h"
+#import "PSCoreDataStack.h"
 #import "Constants.h"
 
 @interface PSCoreDataImageCache : NSObject {

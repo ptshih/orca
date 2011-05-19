@@ -1,5 +1,5 @@
 //
-//  LICoreDataStack.h
+//  PSCoreDataStack.h
 //  PhotoFeed
 //
 //  Created by Peter Shih on 2/16/11.
@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "Constants.h"
 
-@interface LICoreDataStack : NSObject {
+@interface PSCoreDataStack : NSObject {
 
 }
 

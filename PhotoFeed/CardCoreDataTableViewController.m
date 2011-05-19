@@ -1,4 +1,4 @@
-    //
+//
 //  CardCoreDataTableViewController.m
 //  PhotoFeed
 //
@@ -7,7 +7,7 @@
 //
 
 #import "CardCoreDataTableViewController.h"
-#import "LICoreDataStack.h"
+#import "PSCoreDataStack.h"
 
 @interface CardCoreDataTableViewController (Private)
 
@@ -23,13 +23,13 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _context = [LICoreDataStack sharedManagedObjectContext];
+    _context = [PSCoreDataStack sharedManagedObjectContext];
     _fetchedResultsController = nil;
     _sectionNameKeyPathForFetchedResultsController = nil;
     _limit = 50;
     _offset = 0;
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextSaveDidNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
+    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextSaveDidNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
   }
   return self;
@@ -109,13 +109,13 @@
 }
 
 - (void)executeFetch {
-//  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-//    [self.fetchedResultsController performFetch:nil];
-//  });
+  //  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+  //    [self.fetchedResultsController performFetch:nil];
+  //  });
   
   NSError *error = nil;
   if ([self.fetchedResultsController performFetch:&error]) {
-//    DLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);
+    //    DLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);
   } else {
     DLog(@"Fetch failed with error: %@", [error localizedDescription]);
   }
@@ -132,7 +132,7 @@
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
-
+  
   switch(type) {
     case NSFetchedResultsChangeInsert:
       [_tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
@@ -163,7 +163,7 @@
       break;
       
     case NSFetchedResultsChangeUpdate:{
-//      NSIndexPath *changedIndexPath = newIndexPath ? newIndexPath : indexPath;
+      //      NSIndexPath *changedIndexPath = newIndexPath ? newIndexPath : indexPath;
       [self tableView:tableView configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
       break;
     }
@@ -228,7 +228,7 @@
 }
 
 - (void)dealloc {
-//  [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:nil];
+  //  [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kCoreDataDidReset object:nil];
   RELEASE_SAFELY (_fetchedResultsController);
   RELEASE_SAFELY (_sectionNameKeyPathForFetchedResultsController);

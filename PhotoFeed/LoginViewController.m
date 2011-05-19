@@ -30,10 +30,10 @@
   self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Default.png"]];
   
   // Setup Logo
-//  UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo-white-280.png"]];
-//  logo.frame = CGRectMake(20, 44, logo.width, logo.height);
-//  [self.view addSubview:logo];
-//  [logo release];
+  //  UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo-white-280.png"]];
+  //  logo.frame = CGRectMake(20, 44, logo.width, logo.height);
+  //  [self.view addSubview:logo];
+  //  [logo release];
   
   // Setup Login Buttons
   _loginButton = [[UIButton alloc] initWithFrame:CGRectZero];
@@ -57,7 +57,7 @@
   _loginButton.hidden = YES;
   [_facebook authorize:FB_PERMISSIONS delegate:self];
 }
-     
+
 - (void)logout {
   [_facebook logout:self];
 }
@@ -78,7 +78,7 @@
 
 - (void)fbDidNotLogin:(BOOL)cancelled {
   [self logout];
-//  _loginButton.hidden = NO;
+  //  _loginButton.hidden = NO;
 }
 
 - (void)fbDidLogout {

@@ -87,7 +87,7 @@
  Then it will crop 80 pixels offset from the left and right resulting in an image that is 320x480
  */
 - (UIImage *)cropProportionalToSize:(CGSize)desiredSize {
-  [self cropProportionalToSize:desiredSize withRuleOfThirds:NO];
+  return [self cropProportionalToSize:desiredSize withRuleOfThirds:NO];
 }
 
 - (UIImage *)cropProportionalToSize:(CGSize)desiredSize withRuleOfThirds:(BOOL)withRuleOfThirds {

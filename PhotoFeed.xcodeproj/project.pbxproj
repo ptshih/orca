@@ -241,8 +241,8 @@
 		25DC5F30136626ED00868001 /* AlbumDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DC5F2E136626EC00868001 /* AlbumDataCenter.m */; };
 		25DC5F3B136648A300868001 /* NSDictionary+Merge.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DC5F3A136648A300868001 /* NSDictionary+Merge.m */; };
 		25DC5F3C136648A300868001 /* NSDictionary+Merge.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DC5F3A136648A300868001 /* NSDictionary+Merge.m */; };
-		25DC5F5313668A6D00868001 /* LICoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DC5F5213668A6D00868001 /* LICoreDataStack.m */; };
-		25DC5F5413668A6D00868001 /* LICoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DC5F5213668A6D00868001 /* LICoreDataStack.m */; };
+		25DC5F5313668A6D00868001 /* PSCoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DC5F5213668A6D00868001 /* PSCoreDataStack.m */; };
+		25DC5F5413668A6D00868001 /* PSCoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DC5F5213668A6D00868001 /* PSCoreDataStack.m */; };
 		25DC5F5713668A8600868001 /* CardCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DC5F5613668A8500868001 /* CardCoreDataTableViewController.m */; };
 		25DC5F5813668A8600868001 /* CardCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DC5F5613668A8500868001 /* CardCoreDataTableViewController.m */; };
 		25EFD3861341E438000108B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EFD3851341E438000108B8 /* MobileCoreServices.framework */; };
@@ -589,8 +589,8 @@
 		25DC5F2E136626EC00868001 /* AlbumDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumDataCenter.m; sourceTree = "<group>"; };
 		25DC5F39136648A300868001 /* NSDictionary+Merge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Merge.h"; sourceTree = "<group>"; };
 		25DC5F3A136648A300868001 /* NSDictionary+Merge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Merge.m"; sourceTree = "<group>"; };
-		25DC5F5113668A6D00868001 /* LICoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LICoreDataStack.h; sourceTree = "<group>"; };
-		25DC5F5213668A6D00868001 /* LICoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LICoreDataStack.m; sourceTree = "<group>"; };
+		25DC5F5113668A6D00868001 /* PSCoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; path = PSCoreDataStack.h; sourceTree = "<group>"; };
+		25DC5F5213668A6D00868001 /* PSCoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCoreDataStack.m; sourceTree = "<group>"; };
 		25DC5F5513668A8500868001 /* CardCoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCoreDataTableViewController.h; sourceTree = "<group>"; };
 		25DC5F5613668A8500868001 /* CardCoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCoreDataTableViewController.m; sourceTree = "<group>"; };
 		25EFD3851341E438000108B8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -1169,8 +1169,8 @@
 		25DC5F5013668A6000868001 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				25DC5F5113668A6D00868001 /* LICoreDataStack.h */,
-				25DC5F5213668A6D00868001 /* LICoreDataStack.m */,
+				25DC5F5113668A6D00868001 /* PSCoreDataStack.h */,
+				25DC5F5213668A6D00868001 /* PSCoreDataStack.m */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -1665,7 +1665,7 @@
 				2511A8FC1365FA0D00C9CF9A /* PhotoViewController.m in Sources */,
 				25DC5F2F136626ED00868001 /* AlbumDataCenter.m in Sources */,
 				25DC5F3B136648A300868001 /* NSDictionary+Merge.m in Sources */,
-				25DC5F5313668A6D00868001 /* LICoreDataStack.m in Sources */,
+				25DC5F5313668A6D00868001 /* PSCoreDataStack.m in Sources */,
 				25DC5F5713668A8600868001 /* CardCoreDataTableViewController.m in Sources */,
 				259AD52413668FE000FA2B8D /* AlbumCell.m in Sources */,
 				259AD52913668FED00FA2B8D /* PhotoCell.m in Sources */,
@@ -1753,7 +1753,7 @@
 				2511A8FD1365FA0D00C9CF9A /* PhotoViewController.m in Sources */,
 				25DC5F30136626ED00868001 /* AlbumDataCenter.m in Sources */,
 				25DC5F3C136648A300868001 /* NSDictionary+Merge.m in Sources */,
-				25DC5F5413668A6D00868001 /* LICoreDataStack.m in Sources */,
+				25DC5F5413668A6D00868001 /* PSCoreDataStack.m in Sources */,
 				25DC5F5813668A8600868001 /* CardCoreDataTableViewController.m in Sources */,
 				259AD52513668FE000FA2B8D /* AlbumCell.m in Sources */,
 				259AD52A13668FED00FA2B8D /* PhotoCell.m in Sources */,

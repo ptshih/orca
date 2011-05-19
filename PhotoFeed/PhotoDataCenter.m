@@ -17,8 +17,8 @@
 - (id)init {
   self = [super init];
   if (self) {
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
-    _context = [LICoreDataStack sharedManagedObjectContext];
+    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
+    _context = [PSCoreDataStack sharedManagedObjectContext];
   }
   return self;
 }
@@ -56,7 +56,7 @@
   int i = 0;
   for (NSDictionary *entityDict in sortedEntities) {
     if ([foundEntities count] > 0 && i < [foundEntities count] && [[entityDict valueForKey:@"id"] isEqualToString:[[foundEntities objectAtIndex:i] id]]) {
-//      DLog(@"found duplicated photo with id: %@", [[foundEntities objectAtIndex:i] id]);
+      //      DLog(@"found duplicated photo with id: %@", [[foundEntities objectAtIndex:i] id]);
       [[foundEntities objectAtIndex:i] updatePhotoWithDictionary:entityDict];
       i++;
     } else {
@@ -71,13 +71,13 @@
   }
   
   // Save to Core Data
-  [LICoreDataStack saveSharedContextIfNeeded];
-//  if ([_context hasChanges]) {
-//    if (![_context save:&error]) {
-//      // CoreData ERROR!
-//      abort(); // NOTE: DO NOT SHIP
-//    }
-//  }
+  [PSCoreDataStack saveSharedContextIfNeeded];
+  //  if ([_context hasChanges]) {
+  //    if (![_context save:&error]) {
+  //      // CoreData ERROR!
+  //      abort(); // NOTE: DO NOT SHIP
+  //    }
+  //  }
 }
 
 #pragma mark PSDataCenterDelegate
@@ -93,7 +93,7 @@
 - (NSFetchRequest *)fetchPhotosForAlbum:(Album *)album withLimit:(NSUInteger)limit andOffset:(NSUInteger)offset {
   NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"position" ascending:YES] autorelease];
   NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
-  NSFetchRequest *fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPhotosForAlbum" substitutionVariables:[NSDictionary dictionaryWithObject:album forKey:@"desiredAlbum"]];
+  NSFetchRequest *fetchRequest = [[PSCoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPhotosForAlbum" substitutionVariables:[NSDictionary dictionaryWithObject:album forKey:@"desiredAlbum"]];
   [fetchRequest setSortDescriptors:sortDescriptors];
   [fetchRequest setFetchBatchSize:10];
   [fetchRequest setFetchLimit:limit];

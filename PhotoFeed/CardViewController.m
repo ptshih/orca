@@ -11,17 +11,11 @@
 
 #define NAV_BUTTON_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0]
 
-static UIImage *_backgroundImage = nil;
-
 @interface CardViewController (Private)
 
 @end
 
 @implementation CardViewController
-
-+ (void)initialize {
-//  _backgroundImage = [[[UIImage imageNamed:@"weave-bg.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0] retain];
-}
 
 - (id)init {
   self = [super init];
@@ -36,13 +30,13 @@ static UIImage *_backgroundImage = nil;
   
   self.view.opaque = YES;
   self.view.backgroundColor = [UIColor clearColor];
-//  self.view.frame = CGRectMake(0, 20, 320, CARD_HEIGHT);
+  //  self.view.frame = CGRectMake(0, 20, 320, CARD_HEIGHT);
   
   // Background View
-//  UIImageView *backgroundView = [[UIImageView alloc] initWithImage:_backgroundImage];
-//  backgroundView.frame = self.view.bounds;
-//  [self.view addSubview:backgroundView];
-//  [backgroundView release];
+  //  UIImageView *backgroundView = [[UIImageView alloc] initWithImage:_backgroundImage];
+  //  backgroundView.frame = self.view.bounds;
+  //  [self.view addSubview:backgroundView];
+  //  [backgroundView release];
   
   _nullView = [[PSNullView alloc] initWithFrame:self.view.bounds];
   [self.view addSubview:_nullView];

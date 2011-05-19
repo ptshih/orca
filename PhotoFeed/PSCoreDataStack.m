@@ -1,12 +1,12 @@
 //
-//  LICoreDataStack.m
+//  PSCoreDataStack.m
 //  PhotoFeed
 //
 //  Created by Peter Shih on 2/16/11.
 //  Copyright 2011 Seven Minute Apps. All rights reserved.
 //
 
-#import "LICoreDataStack.h"
+#import "PSCoreDataStack.h"
 
 static NSPersistentStoreCoordinator *_persistentStoreCoordinator = nil;
 static NSManagedObjectModel *_managedObjectModel = nil;
@@ -14,17 +14,17 @@ static NSManagedObjectContext *_managedObjectContext = nil;
 
 static NSThread *_mocThread = nil;
 
-@interface LICoreDataStack (Private)
+@interface PSCoreDataStack (Private)
 
 + (void)resetStoreState;
 + (NSString *)applicationDocumentsDirectory;
 
 @end
 
-@implementation LICoreDataStack
+@implementation PSCoreDataStack
 
 + (void)initialize {
-  if (self == [LICoreDataStack class]) {
+  if (self == [PSCoreDataStack class]) {
     // Allocs for class (statics)
     _mocThread = [[NSThread alloc] initWithTarget:[self class] selector:@selector(cdThreadMain) object:nil];
     [_mocThread start];
@@ -50,9 +50,9 @@ static NSThread *_mocThread = nil;
   
   [[NSNotificationCenter defaultCenter] postNotificationName:kCoreDataDidReset object:nil];
   
-//  NSLog(@"reset persistent store and context");
-//  [self resetStoreState];
-//  [self resetManagedObjectContext];
+  //  NSLog(@"reset persistent store and context");
+  //  [self resetStoreState];
+  //  [self resetManagedObjectContext];
 }
 
 + (void)deleteAllObjects:(NSString *)entityDescription {
@@ -110,7 +110,7 @@ static NSThread *_mocThread = nil;
   }
   
   // Use moc thread
-//  [[self class] performSelector:@selector(initSharedManagedObjectContextInMocThread) onThread:_mocThread withObject:nil waitUntilDone:YES];
+  //  [[self class] performSelector:@selector(initSharedManagedObjectContextInMocThread) onThread:_mocThread withObject:nil waitUntilDone:YES];
   
   // Use main thread
   NSPersistentStoreCoordinator *coordinator = [[self class] persistentStoreCoordinator];
@@ -133,8 +133,8 @@ static NSThread *_mocThread = nil;
 // returns a new retained context
 + (NSManagedObjectContext *)newManagedObjectContext {
   // Use moc thread
-//  NSManagedObjectContext *context = nil;  
-//  [[self class] performSelector:@selector(initManagedObjectContextInMocThread:) onThread:_mocThread withObject:context waitUntilDone:YES];
+  //  NSManagedObjectContext *context = nil;  
+  //  [[self class] performSelector:@selector(initManagedObjectContextInMocThread:) onThread:_mocThread withObject:context waitUntilDone:YES];
   
   // Use main thread
   NSPersistentStoreCoordinator *coordinator = [[self class] persistentStoreCoordinator];
@@ -166,7 +166,7 @@ static NSThread *_mocThread = nil;
 }
 
 + (void)saveContextIfNeededInMocThread {
-
+  
 }
 
 #pragma mark Accessors

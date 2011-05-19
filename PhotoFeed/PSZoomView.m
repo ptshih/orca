@@ -82,7 +82,7 @@
   
   [UIView commitAnimations];
 }
-   
+
 - (void)removeZoomView {
   [self removeFromSuperview];
 }

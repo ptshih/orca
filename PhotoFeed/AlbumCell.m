@@ -83,8 +83,8 @@ static UIImage *_ribbonImage = nil;
     _nameLabel.shadowOffset = CGSizeMake(0, 1);
     _captionLabel.shadowColor = [UIColor blackColor];
     _captionLabel.shadowOffset = CGSizeMake(0, 1);
-//    _countLabel.shadowColor = [UIColor blackColor];
-//    _countLabel.shadowOffset = CGSizeMake(0, 1);
+    //    _countLabel.shadowColor = [UIColor blackColor];
+    //    _countLabel.shadowOffset = CGSizeMake(0, 1);
     
     // Caption
     _captionView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -130,9 +130,9 @@ static UIImage *_ribbonImage = nil;
   
   // Check to see if there is a caption
   if ([_captionLabel.text length] > 0) {
-    _captionView.frame = CGRectMake(0, 88, 320, 32);
+    _captionView.frame = CGRectMake(0, 86, 320, 34);
   } else {
-    _captionView.frame = CGRectMake(0, 100, 320, 20);
+    _captionView.frame = CGRectMake(0, 102, 320, 18);
   }
   
   CGFloat top = _captionView.top;
@@ -142,14 +142,14 @@ static UIImage *_ribbonImage = nil;
   
   // From/Author
   desiredSize = [UILabel sizeForText:_fromLabel.text width:textWidth font:_fromLabel.font numberOfLines:1 lineBreakMode:_fromLabel.lineBreakMode];
-  _fromLabel.top = top + 1.0;
+  _fromLabel.top = top + 2.0;
   _fromLabel.left = self.contentView.width - desiredSize.width - MARGIN_X;
   _fromLabel.width = desiredSize.width;
   _fromLabel.height = desiredSize.height;
   
   // Name
   desiredSize = [UILabel sizeForText:_nameLabel.text width:(textWidth - _fromLabel.width - MARGIN_X) font:_nameLabel.font numberOfLines:1 lineBreakMode:_nameLabel.lineBreakMode];
-  _nameLabel.top = top;
+  _nameLabel.top = top + 1.0;
   _nameLabel.left = left;
   _nameLabel.width = desiredSize.width;
   _nameLabel.height = desiredSize.height;
@@ -159,7 +159,7 @@ static UIImage *_ribbonImage = nil;
   if ([_captionLabel.text length] > 0) {    
     // Caption
     desiredSize = [UILabel sizeForText:_captionLabel.text width:textWidth font:_captionLabel.font numberOfLines:1 lineBreakMode:_captionLabel.lineBreakMode];
-    _captionLabel.top = top - 3.0;
+    _captionLabel.top = top - 2.0;
     _captionLabel.left = left;
     _captionLabel.width = desiredSize.width;
     _captionLabel.height = desiredSize.height;
@@ -178,7 +178,7 @@ static UIImage *_ribbonImage = nil;
   
   // Photo
   if (album.imageData) {
-//    UIImage *cachedImage = [[UIImage imageWithData:album.imageData] cropProportionalToSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
+    //    UIImage *cachedImage = [[UIImage imageWithData:album.imageData] cropProportionalToSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
     _photoView.image = [UIImage imageWithData:album.imageData];
   } else {
     NSString *photoURLPath = [NSString stringWithFormat:@"%@?access_token=%@", album.coverPhoto, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]];
@@ -196,7 +196,7 @@ static UIImage *_ribbonImage = nil;
 - (void)loadPhoto:(NSNotification *)notification {
   NSDictionary *userInfo = [notification userInfo];
   if ([[userInfo objectForKey:@"entity"] isEqual:_album]) {
-//    UIImage *cachedImage = [[UIImage imageWithData:_album.imageData] cropProportionalToSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
+    //    UIImage *cachedImage = [[UIImage imageWithData:_album.imageData] cropProportionalToSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
     _photoView.image = [UIImage imageWithData:_album.imageData];
   }
 }

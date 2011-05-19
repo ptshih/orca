@@ -55,7 +55,7 @@
     
     // Photo
     _photoView = [[PSImageView alloc] initWithFrame:CGRectZero];
-//    _photoView.shouldScale = YES;
+    //    _photoView.shouldScale = YES;
     //    _photoView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
     //    _photoView.layer.borderWidth = 1.0;
     
@@ -80,7 +80,7 @@
   
   // Photo
   _photoView.frame = CGRectMake(0, 0, 320, round(_photoHeight / (_photoWidth / 320)));
-
+  
   CGFloat top = _photoView.bottom;
   CGFloat left = MARGIN_X;
   CGFloat textWidth = self.contentView.width - MARGIN_X * 2;
@@ -94,7 +94,7 @@
     _captionLabel.left = left;
     _captionLabel.width = desiredSize.width;
     _captionLabel.height = desiredSize.height;
-
+    
     // Caption View
     _captionView.top = top;
     _captionView.left = 0;
@@ -106,26 +106,26 @@
     _captionLabel.top -= _captionView.height;
   }
   
-//  NSLog(@"layout");
+  //  NSLog(@"layout");
 }
 
 + (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
   Photo *photo = (Photo *)object;
   
-//  CGFloat cellWidth = [[self class] rowWidthForInterfaceOrientation:interfaceOrientation];
+  //  CGFloat cellWidth = [[self class] rowWidthForInterfaceOrientation:interfaceOrientation];
   CGFloat desiredHeight = 0;
   
   // Photo
   CGFloat photoWidth = [photo.width floatValue];
   CGFloat photoHeight = [photo.height floatValue];
-
+  
   desiredHeight += round(photoHeight / (photoWidth / 320));
-
+  
   // Caption
-//  if ([photo.name length] > 0) {
-//    desiredHeight += [UILabel sizeForText:photo.name width:(cellWidth - MARGIN_X * 2) font:CAPTION_FONT numberOfLines:2 lineBreakMode:UILineBreakModeWordWrap].height;
-//    desiredHeight += MARGIN_Y * 2;
-//  }
+  //  if ([photo.name length] > 0) {
+  //    desiredHeight += [UILabel sizeForText:photo.name width:(cellWidth - MARGIN_X * 2) font:CAPTION_FONT numberOfLines:2 lineBreakMode:UILineBreakModeWordWrap].height;
+  //    desiredHeight += MARGIN_Y * 2;
+  //  }
   
   return desiredHeight;
 }

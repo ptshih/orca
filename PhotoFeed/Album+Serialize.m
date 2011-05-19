@@ -15,18 +15,18 @@
 #pragma mark -
 #pragma mark Transient Properties
 - (NSString *)daysAgo {
-//  NSInteger day = 24 * 60 * 60;
-//  
-//  NSInteger delta = [self.timestamp timeIntervalSinceNow];
-//  delta *= -1;
-//  
-//  if (delta < 1 * day) {
-//    return @"Today";
-//  } else {
-//    return [NSString stringWithFormat:@"%d days ago", delta / day];
-//  }
+  //  NSInteger day = 24 * 60 * 60;
+  //  
+  //  NSInteger delta = [self.timestamp timeIntervalSinceNow];
+  //  delta *= -1;
+  //  
+  //  if (delta < 1 * day) {
+  //    return @"Today";
+  //  } else {
+  //    return [NSString stringWithFormat:@"%d days ago", delta / day];
+  //  }
   
-//  return [self.timestamp stringDaysAgoAgainstMidnight:YES];
+  //  return [self.timestamp stringDaysAgoAgainstMidnight:YES];
   return [NSDate stringForDisplayFromDate:self.timestamp];
 }
 
@@ -59,7 +59,7 @@
     NSDictionary *from = [dictionary valueForKey:@"from"];
     newAlbum.fromId = [from valueForKey:@"id"];
     newAlbum.fromName = [from valueForKey:@"name"];
-
+    
     // Timestamp
     if ([dictionary valueForKey:@"updated_time"]) {
       newAlbum.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"updated_time"]];
@@ -92,8 +92,8 @@
     
     // Comparing photo count is much more efficient than parsing a date
     // Doesn't work, some albums have nil count
-//    NSNumber *newPhotoCount = [dictionary valueForKey:@"count"];
-//    if ([newPhotoCount isEqualToNumber:self.count]) return self;
+    //    NSNumber *newPhotoCount = [dictionary valueForKey:@"count"];
+    //    if ([newPhotoCount isEqualToNumber:self.count]) return self;
     
     // If dates are not the same, then perform an update
     

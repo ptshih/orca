@@ -58,7 +58,7 @@
   // Pull Refresh
   [self setupPullRefresh];
   
-//  [self setupLoadMoreView];
+  //  [self setupLoadMoreView];
   
   [self resetFetchedResultsController];
   [self executeFetch];
@@ -93,21 +93,21 @@
 #pragma mark -
 #pragma mark Compose
 - (void)newPhoto {
-//  CameraViewController *cvc = [[CameraViewController alloc] init];
-//  UINavigationController *cnc = [[UINavigationController alloc] initWithRootViewController:cvc];
-//  [self presentModalViewController:cnc animated:YES];
-//  [cvc autorelease];
-//  [cnc autorelease];
+  //  CameraViewController *cvc = [[CameraViewController alloc] init];
+  //  UINavigationController *cnc = [[UINavigationController alloc] initWithRootViewController:cvc];
+  //  [self presentModalViewController:cnc animated:YES];
+  //  [cvc autorelease];
+  //  [cnc autorelease];
 }
 
 #pragma mark -
 #pragma mark TableView
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
   Photo *photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:section];
-
+  
   HeaderCell *headerCell = [[[HeaderCell alloc] initWithFrame:CGRectMake(0, 0, 320, 26)] autorelease];
   [headerCell fillCellWithObject:photo];
-//  [headerCell loadImage];
+  //  [headerCell loadImage];
   [_headerCellCache setObject:headerCell forKey:[NSString stringWithFormat:@"%d", section]];
   return headerCell;
 }
@@ -138,7 +138,7 @@
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
   
-//  NSLog(@"display");
+  //  NSLog(@"display");
   return cell;
 }
 
@@ -160,13 +160,13 @@
 - (void)loadImagesForOnScreenRows {
   [super loadImagesForOnScreenRows];
   
-//  for (id cell in _visibleCells) {
-//    [cell loadPhoto];
-//  }
+  //  for (id cell in _visibleCells) {
+  //    [cell loadPhoto];
+  //  }
   
-//  for (NSIndexPath *ip in _visibleIndexPaths) {
-//    HeaderCell *headerCell = [_headerCellCache objectForKey:[NSString stringWithFormat:@"%d", ip.section]];
-//  }
+  //  for (NSIndexPath *ip in _visibleIndexPaths) {
+  //    HeaderCell *headerCell = [_headerCellCache objectForKey:[NSString stringWithFormat:@"%d", ip.section]];
+  //  }
 }
 
 #pragma mark -

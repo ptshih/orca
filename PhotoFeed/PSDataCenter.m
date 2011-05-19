@@ -92,7 +92,7 @@
   // POST parameters
   request.postBody = [self buildRequestParamsData:requestParams];
   request.postLength = [request.postBody length];
-
+  
   [request addRequestHeader:@"Accept" value:@"application/json"];
   
   // Request Completion Block
@@ -171,7 +171,7 @@
   }
   
   // HTTP Accept
-//  [request addRequestHeader:@"Content-Type" value:@"application/json"];
+  //  [request addRequestHeader:@"Content-Type" value:@"application/json"];
   [request addRequestHeader:@"Accept" value:@"application/json"];
   
   // Request Completion Block
@@ -224,7 +224,7 @@
       [request setPostValue:[allValues objectAtIndex:i] forKey:[allKeys objectAtIndex:i]];
     }
   }
-
+  
   // POST file
   [request setData:[file objectForKey:@"fileData"] withFileName:[file objectForKey:@"fileName"] andContentType:[file objectForKey:@"fileContentType"] forKey:[file objectForKey:@"fileKey"]];
   
@@ -351,7 +351,7 @@
   
   return encodedParameterPairs;
 }
-     
+
 - (NSMutableData *)buildRequestParamsData:(NSDictionary *)params {
   return [NSMutableData dataWithData:[[self buildRequestParamsString:params] dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES]];
 }

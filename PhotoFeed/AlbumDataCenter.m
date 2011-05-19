@@ -24,14 +24,14 @@ static AlbumDataCenter *_defaultCenter = nil;
 - (id)init {
   self = [super init];
   if (self) {
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
-    _context = [LICoreDataStack sharedManagedObjectContext];
+    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
+    _context = [PSCoreDataStack sharedManagedObjectContext];
   }
   return self;
 }
 
 - (void)getAlbums {
-//  curl -F "batch=[ {'method': 'GET', 'name' : 'get-friends', 'relative_url': 'me/friends', 'omit_response_on_success' : true}, {'method': 'GET', 'name' : 'get-albums', 'depends_on':'get-friends', 'relative_url': 'albums?ids=me,{result=get-friends:$.data..id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=100', 'omit_response_on_success' : false} ]" https://graph.facebook.com
+  //  curl -F "batch=[ {'method': 'GET', 'name' : 'get-friends', 'relative_url': 'me/friends', 'omit_response_on_success' : true}, {'method': 'GET', 'name' : 'get-albums', 'depends_on':'get-friends', 'relative_url': 'albums?ids=me,{result=get-friends:$.data..id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=100', 'omit_response_on_success' : false} ]" https://graph.facebook.com
   
   // Apply since if exists
   NSDate *since = [[NSUserDefaults standardUserDefaults] valueForKey:@"albums.since"];
@@ -79,7 +79,7 @@ static AlbumDataCenter *_defaultCenter = nil;
   int i = 0;
   for (NSDictionary *entityDict in sortedEntities) {
     if ([foundEntities count] > 0 && i < [foundEntities count] && [[entityDict valueForKey:@"id"] isEqualToString:[[foundEntities objectAtIndex:i] id]]) {
-//      DLog(@"found duplicated album with id: %@", [[foundEntities objectAtIndex:i] id]);
+      //      DLog(@"found duplicated album with id: %@", [[foundEntities objectAtIndex:i] id]);
       [[foundEntities objectAtIndex:i] updateAlbumWithDictionary:entityDict];
       i++;
     } else {
@@ -89,13 +89,13 @@ static AlbumDataCenter *_defaultCenter = nil;
   }
   
   // Save to Core Data
-  [LICoreDataStack saveSharedContextIfNeeded];
-//  if ([_context hasChanges]) {
-//    if (![_context save:&error]) {
-//      // CoreData ERROR!
-//      abort(); // NOTE: DO NOT SHIP
-//    }
-//  }
+  [PSCoreDataStack saveSharedContextIfNeeded];
+  //  if ([_context hasChanges]) {
+  //    if (![_context save:&error]) {
+  //      // CoreData ERROR!
+  //      abort(); // NOTE: DO NOT SHIP
+  //    }
+  //  }
 }
 
 #pragma mark PSDataCenterDelegate
@@ -115,7 +115,7 @@ static AlbumDataCenter *_defaultCenter = nil;
 - (NSFetchRequest *)fetchAlbumsWithTemplate:(NSString *)fetchTemplate andSubstitutionVariables:(NSDictionary *)substitutionVariables andLimit:(NSUInteger)limit andOffset:(NSUInteger)offset {
   NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO] autorelease];
   NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
-  NSFetchRequest *fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:fetchTemplate substitutionVariables:substitutionVariables];
+  NSFetchRequest *fetchRequest = [[PSCoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:fetchTemplate substitutionVariables:substitutionVariables];
   [fetchRequest setSortDescriptors:sortDescriptors];
   [fetchRequest setFetchBatchSize:10];
   [fetchRequest setFetchLimit:limit];

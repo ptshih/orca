@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import "CardTableViewController.h"
-#import "LICoreDataStack.h"
+#import "PSCoreDataStack.h"
 
 @interface CardCoreDataTableViewController : CardTableViewController <NSFetchedResultsControllerDelegate> {  
   NSManagedObjectContext *_context;

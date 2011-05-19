@@ -50,7 +50,7 @@
   // Login/Session/Register data center
   _loginDataCenter = [[LoginDataCenter alloc] init];
   _loginDataCenter.delegate = self;
-
+  
   // Setup Facebook
   _facebook = [[Facebook alloc] initWithAppId:FB_APP_ID];
   
@@ -81,7 +81,7 @@
    Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
    If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
    */
-//  [[PSImageCache sharedCache] flushImageCacheToDisk];
+  //  [[PSImageCache sharedCache] flushImageCacheToDisk];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -97,7 +97,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
   // Saves changes in the application's managed object context before the application terminates.
-//  [[PSImageCache sharedCache] flushImageCacheToDisk];
+  //  [[PSImageCache sharedCache] flushImageCacheToDisk];
 }
 
 
@@ -128,7 +128,7 @@
 
 - (void)userDidLogout {
   // Delete all existing data
-  [LICoreDataStack resetPersistentStore];
+  [PSCoreDataStack resetPersistentStore];
   [self tryLogin];
 }
 
@@ -144,7 +144,7 @@
   [self startDownloadAlbums];
   
 #warning session disabled
-//  [_loginDataCenter startSession];
+  //  [_loginDataCenter startSession];
 }
 
 - (void)startRegister {
@@ -152,7 +152,7 @@
   [self resetSessionKey];
   
 #warning register disabled
-//  [_loginDataCenter startRegister];
+  //  [_loginDataCenter startRegister];
 }
 
 - (void)resetSessionKey {
