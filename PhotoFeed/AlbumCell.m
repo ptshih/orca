@@ -92,6 +92,7 @@
   _captionLabel.text = nil;
   _fromLabel.text = nil;
   _locationLabel.text = nil;
+  [_photoView unloadImage];
 }
 
 - (void)layoutSubviews {

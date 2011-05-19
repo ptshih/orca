@@ -70,6 +70,17 @@
   [super unloadCardController];
 }
 
+#pragma mark -
+#pragma mark PSDataCenterDelegate
+- (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
+  //  NSLog(@"DC finish with response: %@", response);
+  [self dataSourceDidLoad];
+}
+
+- (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
+  [self dataSourceDidLoad];
+}
+
 - (void)newAlbum {
   CameraViewController *cvc = [[CameraViewController alloc] init];
   UINavigationController *cnc = [[UINavigationController alloc] initWithRootViewController:cvc];
@@ -190,17 +201,6 @@
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
   return [_albumDataCenter getAlbumsFetchRequest];
-}
-
-#pragma mark -
-#pragma mark PSDataCenterDelegate
-- (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
-//  NSLog(@"DC finish with response: %@", response);
-  [self dataSourceDidLoad];
-}
-
-- (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
-  [self dataSourceDidLoad];
 }
 
 - (void)logout {

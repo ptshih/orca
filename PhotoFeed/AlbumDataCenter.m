@@ -109,7 +109,7 @@
   NSFetchRequest *fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getAlbums" substitutionVariables:[NSDictionary dictionary]];
   [fetchRequest setSortDescriptors:sortDescriptors];
   [fetchRequest setFetchBatchSize:20];
-//  [fetchRequest setFetchLimit:100];
+//  [fetchRequest setFetchLimit:1000];
   return fetchRequest;
 }
 
