@@ -23,6 +23,6 @@
 /**
  Fetch Requests
  */
-- (NSFetchRequest *)fetchAlbumsWithLimit:(NSUInteger)limit andOffset:(NSUInteger)offset;
+- (NSFetchRequest *)fetchAlbumsWithTemplate:(NSString *)fetchTemplate andSubstitutionVariables:(NSDictionary *)substitutionVariables andLimit:(NSUInteger)limit andOffset:(NSUInteger)offset;
 
 @end

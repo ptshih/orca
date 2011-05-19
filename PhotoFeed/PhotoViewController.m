@@ -27,6 +27,7 @@
     _sectionNameKeyPathForFetchedResultsController = [@"position" retain];
     _headerCellCache = [[NSMutableDictionary alloc] init];
     _limit = 999;
+    self.hidesBottomBarWhenPushed = YES;
   }
   return self;
 }

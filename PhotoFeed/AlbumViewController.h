@@ -11,12 +11,20 @@
 
 @class AlbumDataCenter;
 
+typedef enum {
+  AlbumTypeMe = 0,
+  AlbumTypeFriends = 1,
+  AlbumTypeMobile = 2
+} AlbumType;
+
 @interface AlbumViewController : CardCoreDataTableViewController {
   AlbumDataCenter *_albumDataCenter;
+  AlbumType _albumType;
 }
 
-- (void)newAlbum;
+@property (nonatomic, assign) AlbumType albumType;
 
+- (void)newAlbum;
 - (void)logout;
 
 @end

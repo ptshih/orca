@@ -15,6 +15,8 @@
 
 @implementation AlbumViewController
 
+@synthesize albumType = _albumType;
+
 - (id)init {
   self = [super init];
   if (self) {
@@ -22,16 +24,18 @@
     _albumDataCenter.delegate = self;
     _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
+    _albumType = AlbumTypeMe;
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
   }
   return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [self executeFetch];
-  [self updateState];
-  [_tableView reloadData];
+//  [self executeFetch];
+//  [self updateState];
+//  [_tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -41,23 +45,41 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  // Title and Buttons
-  _navTitleLabel.text = @"Photo Feed";
-  
-  [self addButtonWithTitle:@"Logout" andSelector:@selector(logout) isLeft:YES];
-  [self addButtonWithTitle:@"New" andSelector:@selector(newAlbum) isLeft:NO];
-  
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleNone];
   
-  [self setupSearchDisplayControllerWithScopeButtonTitles:[NSArray arrayWithObjects:@"Album", @"Author", nil]];
+  // Album Type
+  NSArray *scopeArray = nil;
+  NSString *navTitle = nil;
+  switch (self.albumType) {
+    case AlbumTypeMe:
+      navTitle = @"My Albums";
+      scopeArray = [NSArray arrayWithObjects:@"Album", nil];
+      break;
+    case AlbumTypeFriends:
+      navTitle = @"Friends Albums";
+      scopeArray = [NSArray arrayWithObjects:@"Album", @"Author", nil];
+      break;
+    case AlbumTypeMobile:
+      navTitle = @"Mobile Albums";
+      scopeArray = [NSArray arrayWithObjects:@"Author", nil];
+      break;
+    default:
+      break;
+  }
+
+  // Search Scope
+  [self setupSearchDisplayControllerWithScopeButtonTitles:scopeArray];
   
-//  [self setupSearchDisplayControllerWithScopeButtonTitles:nil];
+  // Title and Buttons
+  [self addButtonWithTitle:@"Logout" andSelector:@selector(logout) isLeft:YES];
+  [self addButtonWithTitle:@"New" andSelector:@selector(newAlbum) isLeft:NO];  
+  _navTitleLabel.text = navTitle;
+  
   
   // Pull Refresh
   [self setupPullRefresh];
-  
   [self setupLoadMoreView];
   
   [self resetFetchedResultsController];
@@ -184,7 +206,26 @@
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [_albumDataCenter fetchAlbumsWithLimit:_limit andOffset:_offset];
+  NSString *fetchTemplate = nil;
+  NSDictionary *substitutionVariables = nil;
+  switch (self.albumType) {
+    case AlbumTypeMe:
+      fetchTemplate = @"getMyAlbums";
+      substitutionVariables = [NSDictionary dictionaryWithObject:@"548430564" forKey:@"desiredFromId"];
+      break;
+    case AlbumTypeFriends:
+      fetchTemplate = @"getFriendsAlbums";
+      substitutionVariables = [NSDictionary dictionaryWithObject:@"548430564" forKey:@"desiredFromId"];
+      break;
+    case AlbumTypeMobile:
+      fetchTemplate = @"getMobileAlbums";
+      substitutionVariables = [NSDictionary dictionary];
+      break;
+    default:
+      break;
+  }
+
+  return [_albumDataCenter fetchAlbumsWithTemplate:fetchTemplate andSubstitutionVariables:substitutionVariables andLimit:_limit andOffset:_offset];
 }
 
 - (void)logout {
@@ -202,8 +243,8 @@
 }
 
 - (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
-  RELEASE_SAFELY(_albumDataCenter);
+//  [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
+//  RELEASE_SAFELY(_albumDataCenter);
   [super dealloc];
 }
 

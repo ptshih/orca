@@ -45,7 +45,7 @@
   NSLog(@"fonts: %@",[UIFont familyNames]);
   
   _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  self.window.backgroundColor = FB_COLOR_DARK_GRAY_BLUE;
+  self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"weave-bg.png"]];
   
   // Login/Session/Register data center
   _loginDataCenter = [[LoginDataCenter alloc] init];

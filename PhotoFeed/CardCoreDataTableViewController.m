@@ -65,7 +65,7 @@
   [super loadMore];
   NSUInteger fetchedCount = [[self.fetchedResultsController fetchedObjects] count];
   //  [[self.fetchedResultsController fetchRequest] setFetchOffset:fetchedCount];
-  [[self.fetchedResultsController fetchRequest] setFetchLimit:fetchedCount + 10];
+  [[self.fetchedResultsController fetchRequest] setFetchLimit:fetchedCount + _limit];
   [self executeFetch];
   [_tableView reloadData];
 }

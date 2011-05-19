@@ -130,9 +130,9 @@ static UIImage *_ribbonImage = nil;
   
   // Check to see if there is a caption
   if ([_captionLabel.text length] > 0) {
-    _captionView.frame = CGRectMake(0, 80, 320, 40);
+    _captionView.frame = CGRectMake(0, 88, 320, 32);
   } else {
-    _captionView.frame = CGRectMake(0, 96, 320, 24);
+    _captionView.frame = CGRectMake(0, 100, 320, 20);
   }
   
   CGFloat top = _captionView.top;
@@ -142,24 +142,24 @@ static UIImage *_ribbonImage = nil;
   
   // From/Author
   desiredSize = [UILabel sizeForText:_fromLabel.text width:textWidth font:_fromLabel.font numberOfLines:1 lineBreakMode:_fromLabel.lineBreakMode];
-  _fromLabel.top = top + 4.0;
+  _fromLabel.top = top + 1.0;
   _fromLabel.left = self.contentView.width - desiredSize.width - MARGIN_X;
   _fromLabel.width = desiredSize.width;
-  _fromLabel.height = 18.0;
+  _fromLabel.height = desiredSize.height;
   
   // Name
   desiredSize = [UILabel sizeForText:_nameLabel.text width:(textWidth - _fromLabel.width - MARGIN_X) font:_nameLabel.font numberOfLines:1 lineBreakMode:_nameLabel.lineBreakMode];
-  _nameLabel.top = top + 4.0;
+  _nameLabel.top = top;
   _nameLabel.left = left;
   _nameLabel.width = desiredSize.width;
-  _nameLabel.height = 18.0;
+  _nameLabel.height = desiredSize.height;
   
   top = _nameLabel.bottom;
   
   if ([_captionLabel.text length] > 0) {    
     // Caption
     desiredSize = [UILabel sizeForText:_captionLabel.text width:textWidth font:_captionLabel.font numberOfLines:1 lineBreakMode:_captionLabel.lineBreakMode];
-    _captionLabel.top = top;
+    _captionLabel.top = top - 3.0;
     _captionLabel.left = left;
     _captionLabel.width = desiredSize.width;
     _captionLabel.height = desiredSize.height;

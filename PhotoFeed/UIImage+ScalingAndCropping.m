@@ -87,6 +87,10 @@
  Then it will crop 80 pixels offset from the left and right resulting in an image that is 320x480
  */
 - (UIImage *)cropProportionalToSize:(CGSize)desiredSize {
+  [self cropProportionalToSize:desiredSize withRuleOfThirds:NO];
+}
+
+- (UIImage *)cropProportionalToSize:(CGSize)desiredSize withRuleOfThirds:(BOOL)withRuleOfThirds {
   CGFloat desiredWidth = desiredSize.width;
   CGFloat desiredHeight = desiredSize.height;
   CGFloat maxDimension = (desiredWidth > desiredHeight) ? desiredWidth : desiredHeight;
@@ -103,7 +107,12 @@
   }
   
   CGFloat leftMargin = ceil((self.size.width - desiredWidth) / 2);
-  CGFloat topMargin = ceil((self.size.height - desiredHeight) / 2);
+  CGFloat topMargin = 0.0;
+  if (withRuleOfThirds) {
+    topMargin = ceil((self.size.height / 3) / 2);
+  } else {
+    topMargin = ceil((self.size.height - desiredHeight) / 2);
+  }
   
   CGRect desiredRect = CGRectMake(leftMargin, topMargin, desiredWidth, desiredHeight);
   

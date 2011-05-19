@@ -63,7 +63,7 @@ static PSCoreDataImageCache *_sharedCache;
     CGSize desiredSize = CGSizeFromString([request.userInfo valueForKey:@"scaledSize"]);
     if (!CGSizeEqualToSize(desiredSize, CGSizeZero)) {
       // We need to scale the image
-      UIImage *scaledImage = [[UIImage imageWithData:[request responseData]] cropProportionalToSize:desiredSize];
+      UIImage *scaledImage = [[UIImage imageWithData:[request responseData]] cropProportionalToSize:desiredSize withRuleOfThirds:YES];
       imageData = UIImageJPEGRepresentation(scaledImage, 1.0);
     } else {
       imageData = [request responseData];
