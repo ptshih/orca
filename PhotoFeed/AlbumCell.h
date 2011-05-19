@@ -9,11 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "PSCell.h"
 #import "Album.h"
-//#import "PSImageArrayView.h"
 
 @interface AlbumCell : PSCell {
-//  PSImageArrayView *_photoView;
-  PSImageView *_photoView;
+  UIImageView *_photoView;
   UIView *_captionView;
   
   UILabel *_nameLabel;
@@ -21,8 +19,5 @@
   UILabel *_fromLabel;
   UILabel *_locationLabel;
 }
-
-- (void)loadPhoto;
-- (void)loadPhotoIfCached;
 
 @end

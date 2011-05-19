@@ -170,9 +170,9 @@
 - (void)loadImagesForOnScreenRows {
   [super loadImagesForOnScreenRows];
   
-  for (id cell in _visibleCells) {
-    [cell loadPhoto];
-  }
+//  for (id cell in _visibleCells) {
+//    [cell loadPhoto];
+//  }
 }
 
 #pragma mark -

@@ -7,6 +7,8 @@
 //
 
 #import "PhotoCell.h"
+#import "PSCoreDataImageCache.h"
+#import "UIImage+ScalingAndCropping.h"
 
 #define CAPTION_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0]
 
@@ -44,8 +46,8 @@
     _captionView.layer.opacity = 0.667;
     
     // Photo
-    _photoView = [[PSImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
-    _photoView.shouldScale = YES;
+    _photoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
+//    _photoView.shouldScale = YES;
     //    _photoView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
     //    _photoView.layer.borderWidth = 1.0;
     
@@ -62,7 +64,7 @@
 - (void)prepareForReuse {
   [super prepareForReuse];
   _captionLabel.text = nil;
-  [_photoView unloadImage];
+  _photoView.image = nil;
 }
 
 - (void)layoutSubviews {
@@ -116,21 +118,15 @@
   Photo *photo = (Photo *)object;
   
   // Photo
-  _photoView.urlPath = photo.source;
+  if (photo.imageData) {
+    UIImage *cachedImage = [[UIImage imageWithData:photo.imageData] cropProportionalToSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
+    _photoView.image = [UIImage imageWithCGImage:cachedImage.CGImage scale:2 orientation:cachedImage.imageOrientation];
+  } else {
+    [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photo.source forEntity:photo];
+  }
   
   // Caption
   _captionLabel.text = photo.name;
-  
-  [self loadPhotoIfCached];
-}
-
-- (void)loadPhoto {
-//  DLog(@"loadPhoto %@ for %@", [_photoView urlPath], _test);
-  [_photoView loadImage];
-}
-
-- (void)loadPhotoIfCached {
-  [_photoView loadImageIfCached];
 }
 
 - (void)dealloc {

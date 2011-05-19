@@ -7,6 +7,8 @@
 //
 
 #import "AlbumCell.h"
+#import "PSCoreDataImageCache.h"
+#import "UIImage+ScalingAndCropping.h"
 
 #define ALBUM_CELL_HEIGHT 120.0
 
@@ -72,9 +74,7 @@
     _captionView.layer.opacity = 0.667;
     
     // Photo
-    _photoView = [[PSImageView alloc] initWithFrame:CGRectMake(0, 0, 320, ALBUM_CELL_HEIGHT)];
-    _photoView.shouldScale = YES;
-    _photoView.shouldAuth = YES;
+    _photoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, ALBUM_CELL_HEIGHT)];
     
     // Add to contentView
     [self.contentView addSubview:_photoView];
@@ -95,7 +95,7 @@
   _captionLabel.text = nil;
   _fromLabel.text = nil;
   _locationLabel.text = nil;
-  [_photoView unloadImage];
+  _photoView.image = nil;
 }
 
 - (void)layoutSubviews {
@@ -149,28 +149,19 @@
   Album *album = (Album *)object;
   
   // Photo
-  _photoView.urlPath = album.coverPhoto;
-  
-  // Photo(s)
-//  NSArray *photoArray = [album.photoUrls componentsSeparatedByString:@","];
-//  _photoView.urlPath = [photoArray objectAtIndex:0];
-//  _photoView.urlPathArray = [photoArray retain];
+  if (album.imageData) {
+    UIImage *cachedImage = [[UIImage imageWithData:album.imageData] cropProportionalToSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
+    _photoView.image = [UIImage imageWithCGImage:cachedImage.CGImage scale:2 orientation:cachedImage.imageOrientation];
+  } else {
+    NSString *photoURLPath = [NSString stringWithFormat:@"%@?access_token=%@", album.coverPhoto, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]];
+    [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photoURLPath forEntity:album];
+  }
   
   // Labels
   _nameLabel.text = album.name;
   _captionLabel.text = album.caption;
   _fromLabel.text = [NSString stringWithFormat:@"by %@", album.fromName];
   _locationLabel.text = [NSString stringWithFormat:@"at %@", album.location];
-  
-  [self loadPhotoIfCached];
-}
-
-- (void)loadPhoto {
-  [_photoView loadImage];
-}
-
-- (void)loadPhotoIfCached {
-  [_photoView loadImageIfCached];
 }
 
 - (void)dealloc {

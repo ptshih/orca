@@ -11,13 +11,10 @@
 #import "Photo.h"
 
 @interface PhotoCell : PSCell {
-  PSImageView *_photoView; // optional
+  UIImageView*_photoView; // optional
   UIView *_captionView;
 
   UILabel *_captionLabel;
 }
-
-- (void)loadPhoto;
-- (void)loadPhotoIfCached;
 
 @end

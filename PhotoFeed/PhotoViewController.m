@@ -58,6 +58,9 @@
   [self resetFetchedResultsController];
   [self executeFetch];
   [self updateState];
+  
+  // Get new from server
+  [self reloadCardController];
 }
 
 - (void)reloadCardController {
@@ -141,9 +144,9 @@
 - (void)loadImagesForOnScreenRows {
   [super loadImagesForOnScreenRows];
   
-  for (id cell in _visibleCells) {
-    [cell loadPhoto];
-  }
+//  for (id cell in _visibleCells) {
+//    [cell loadPhoto];
+//  }
   
 //  for (NSIndexPath *ip in _visibleIndexPaths) {
 //    HeaderCell *headerCell = [_headerCellCache objectForKey:[NSString stringWithFormat:@"%d", ip.section]];
