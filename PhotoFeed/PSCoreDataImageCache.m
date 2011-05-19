@@ -56,6 +56,7 @@ static PSCoreDataImageCache *_sharedCache;
   if ([entity respondsToSelector:@selector(imageData)]) {
     [entity performSelector:@selector(setImageData:) withObject:[request responseData]];
     [LICoreDataStack saveSharedContextIfNeeded];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kImageCached object:nil userInfo:request.userInfo];
   }
   
   [_pendingRequests removeObject:request];

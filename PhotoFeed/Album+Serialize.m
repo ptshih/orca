@@ -76,27 +76,24 @@
 }
 
 - (Album *)updateAlbumWithDictionary:(NSDictionary *)dictionary {
-  if (dictionary) {
-    // Check if this was place has actually changed
-  //  if ([self.timestamp isEqualToDate:[NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]]]) {
-  //    return self;
-  //  }
+  if (dictionary) {    
     
     // Check to see if this album has actually changed
-  //  NSDate *newDate = nil;
-  //  if ([dictionary valueForKey:@"updated_time"]) {
-  //    newDate = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"updated_time"]];
-  //  } else if ([dictionary valueForKey:@"created_time"]) {
-  //    newDate = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"created_time"]];
-  //  } else {
-  //    newDate = [NSDate distantPast];
-  //  }
-  //  
-  //  if ([self.timestamp isEqualToDate:newDate]) return self;
+    NSDate *newDate = nil;
+    if ([dictionary valueForKey:@"updated_time"]) {
+      newDate = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"updated_time"]];
+    } else if ([dictionary valueForKey:@"created_time"]) {
+      newDate = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"created_time"]];
+    } else {
+      newDate = [NSDate distantPast];
+    }
+    
+    if ([self.timestamp isEqualToDate:newDate]) return self;
     
     // Comparing photo count is much more efficient than parsing a date
-    NSNumber *newPhotoCount = [dictionary valueForKey:@"count"];
-    if ([newPhotoCount isEqualToNumber:self.count]) return self;
+    // Doesn't work, some albums have nil count
+//    NSNumber *newPhotoCount = [dictionary valueForKey:@"count"];
+//    if ([newPhotoCount isEqualToNumber:self.count]) return self;
     
     // If dates are not the same, then perform an update
     

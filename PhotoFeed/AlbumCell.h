@@ -13,11 +13,17 @@
 @interface AlbumCell : PSCell {
   PSImageView *_photoView;
   UIView *_captionView;
+  UIView *_ribbonView;
   
   UILabel *_nameLabel;
   UILabel *_captionLabel;
   UILabel *_fromLabel;
   UILabel *_locationLabel;
+  UILabel *_countLabel;
+  
+  Album *_album;
 }
+
+- (void)loadPhoto:(NSNotification *)notification;
 
 @end

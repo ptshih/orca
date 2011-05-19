@@ -20,7 +20,7 @@
   if (self) {
     _albumDataCenter = [[AlbumDataCenter alloc] init];
     _albumDataCenter.delegate = self;
-    _sectionNameKeyPathForFetchedResultsController = @"daysAgo";
+    _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
   }
@@ -54,6 +54,8 @@
   
   // Pull Refresh
   [self setupPullRefresh];
+  
+  [self setupLoadMoreView];
   
   [self resetFetchedResultsController];
   [self executeFetch];
@@ -195,7 +197,7 @@
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [_albumDataCenter fetchAlbums];
+  return [_albumDataCenter fetchAlbumsWithLimit:_limit andOffset:_offset];
 }
 
 - (void)logout {

@@ -26,6 +26,7 @@
     _photoDataCenter.delegate = self;
     _sectionNameKeyPathForFetchedResultsController = [@"position" retain];
     _headerCellCache = [[NSMutableDictionary alloc] init];
+    _limit = 999;
   }
   return self;
 }
@@ -55,6 +56,8 @@
   
   // Pull Refresh
   [self setupPullRefresh];
+  
+//  [self setupLoadMoreView];
   
   [self resetFetchedResultsController];
   [self executeFetch];
@@ -134,6 +137,7 @@
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
   
+//  NSLog(@"display");
   return cell;
 }
 
@@ -167,7 +171,7 @@
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [_photoDataCenter fetchPhotosForAlbum:_album];
+  return [_photoDataCenter fetchPhotosForAlbum:_album withLimit:_limit andOffset:_offset];
 }
 
 - (void)dealloc {

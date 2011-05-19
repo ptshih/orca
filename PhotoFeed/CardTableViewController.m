@@ -138,7 +138,8 @@
 
 // Subclasses should override
 - (void)loadMore {
-  // TABLE FOOTER SHOULD SHOW LOADING
+//  [_loadMoreActivity startAnimating];
+//  _loadMoreButton.enabled = NO;
 }
 
 // Called when the user logs out and we need to clear all cached data
@@ -235,7 +236,7 @@
   [selectedBackgroundView release];
   
   // Load More if needed
-  [self loadMore];
+//  [self loadMore];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

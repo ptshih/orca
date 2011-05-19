@@ -16,6 +16,8 @@
   NSFetchedResultsController * _fetchedResultsController;
   NSString * _sectionNameKeyPathForFetchedResultsController;
   NSPredicate *_predicate;
+  NSUInteger _limit;
+  NSUInteger _offset;
 }
 
 @property (nonatomic, assign) NSManagedObjectContext *context;

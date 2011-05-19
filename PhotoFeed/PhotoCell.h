@@ -13,14 +13,17 @@
 @interface PhotoCell : PSCell {
   PSImageView *_photoView; // optional
   UIView *_captionView;
-
   UILabel *_captionLabel;
   
   CGFloat _photoWidth;
   CGFloat _photoHeight;
+  
+  Photo *_photo;
 }
 
 @property (nonatomic, assign) PSImageView *photoView;
 @property (nonatomic, assign) UILabel *captionLabel;
+
+- (void)loadPhoto:(NSNotification *)notification;
 
 @end

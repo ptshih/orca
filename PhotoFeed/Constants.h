@@ -32,6 +32,7 @@
 //#define kComposeDidFinish @"ComposeDidFinish"
 //#define kComposeDidFail @"ComposeDidFail"
 #define kHeaderTabSelected @"HeaderTabSelected"
+#define kImageCached @"CoreDataImageCached"
 
 // Cards
 #define NUM_CARDS 2

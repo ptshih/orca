@@ -103,13 +103,14 @@
   [super dataCenterRequestFailed:request withError:error];
 }
 
-- (NSFetchRequest *)fetchAlbums {
+- (NSFetchRequest *)fetchAlbumsWithLimit:(NSUInteger)limit andOffset:(NSUInteger)offset {
   NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO] autorelease];
   NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
   NSFetchRequest *fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getAlbums" substitutionVariables:[NSDictionary dictionary]];
   [fetchRequest setSortDescriptors:sortDescriptors];
   [fetchRequest setFetchBatchSize:10];
-  [fetchRequest setFetchLimit:50];
+  [fetchRequest setFetchLimit:limit];
+  [fetchRequest setFetchOffset:offset];
   return fetchRequest;
 }
 

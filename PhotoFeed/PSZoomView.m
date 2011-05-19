@@ -31,7 +31,6 @@
     _shadeView.backgroundColor = [UIColor blackColor];
     _shadeView.alpha = 0.0;
     
-#warning ADD CAPTION TO ZOOM VIEW
     _captionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 408, 320, 72)];
     _captionLabel.backgroundColor = [UIColor clearColor];
     _captionLabel.font = CAPTION_FONT;
@@ -40,6 +39,7 @@
     _captionLabel.textColor = FB_COLOR_VERY_LIGHT_BLUE;
     _captionLabel.shadowColor = [UIColor blackColor];
     _captionLabel.shadowOffset = CGSizeMake(0, 1);
+    _captionLabel.alpha = 0.0;
     
     [self addSubview:_shadeView];
     [self addSubview:_zoomImageView];
@@ -53,8 +53,8 @@
 
 - (void)zoom {
   _captionLabel.text = _caption;
-  _captionLabel.frame = _oldCaptionFrame;
-  _captionLabel.width = 320;
+  _captionLabel.height = _oldCaptionFrame.size.height;
+  _captionLabel.top = 480 - _captionLabel.height;
   
   [[[UIApplication sharedApplication] keyWindow] addSubview:self];
   
@@ -64,8 +64,8 @@
   [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
   [UIView setAnimationDuration:0.4]; // Fade out is configurable in seconds (FLOAT)
   _shadeView.alpha = 1.0;
+  _captionLabel.alpha = 1.0;
   self.zoomImageView.center = [[[UIApplication sharedApplication] keyWindow] center];
-  _captionLabel.top = 480 - _captionLabel.height;
   [UIView commitAnimations];
 }
 
@@ -77,8 +77,9 @@
   [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
   [UIView setAnimationDuration:0.4]; // Fade out is configurable in seconds (FLOAT)
   _shadeView.alpha = 0.0;
+  _captionLabel.alpha = 0.0;
   self.zoomImageView.frame = _oldImageFrame;
-  _captionLabel.frame = _oldCaptionFrame;
+  
   [UIView commitAnimations];
 }
    

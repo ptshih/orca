@@ -27,7 +27,7 @@
 /**
  Fetch Requests
  */
-- (NSFetchRequest *)fetchPhotosForAlbum:(Album *)album;
+- (NSFetchRequest *)fetchPhotosForAlbum:(Album *)album withLimit:(NSUInteger)limit andOffset:(NSUInteger)offset;
 
 
 @end

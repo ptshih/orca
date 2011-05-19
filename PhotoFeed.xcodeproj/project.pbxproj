@@ -132,6 +132,8 @@
 		2559202A1385168B00557E70 /* PSURLCacheImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 255920281385168A00557E70 /* PSURLCacheImageView.m */; };
 		255920351385230600557E70 /* PSZoomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 255920341385230600557E70 /* PSZoomView.m */; };
 		255920361385230600557E70 /* PSZoomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 255920341385230600557E70 /* PSZoomView.m */; };
+		255920391385350E00557E70 /* ribbon.png in Resources */ = {isa = PBXBuildFile; fileRef = 255920371385350E00557E70 /* ribbon.png */; };
+		2559203A1385350E00557E70 /* ribbon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 255920381385350E00557E70 /* ribbon@2x.png */; };
 		259AD52413668FE000FA2B8D /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD52313668FE000FA2B8D /* AlbumCell.m */; };
 		259AD52513668FE000FA2B8D /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD52313668FE000FA2B8D /* AlbumCell.m */; };
 		259AD52913668FED00FA2B8D /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD52813668FED00FA2B8D /* PhotoCell.m */; };
@@ -470,6 +472,8 @@
 		255920281385168A00557E70 /* PSURLCacheImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSURLCacheImageView.m; sourceTree = "<group>"; };
 		255920331385230500557E70 /* PSZoomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSZoomView.h; sourceTree = "<group>"; };
 		255920341385230600557E70 /* PSZoomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSZoomView.m; sourceTree = "<group>"; };
+		255920371385350E00557E70 /* ribbon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ribbon.png; sourceTree = "<group>"; };
+		255920381385350E00557E70 /* ribbon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ribbon@2x.png"; sourceTree = "<group>"; };
 		25961C9E134D46CD00A3D4CD /* MeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeDelegate.h; sourceTree = "<group>"; };
 		259AD52213668FE000FA2B8D /* AlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumCell.h; sourceTree = "<group>"; };
 		259AD52313668FE000FA2B8D /* AlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCell.m; sourceTree = "<group>"; };
@@ -1022,6 +1026,8 @@
 		25CEF8FE133A000C006F23A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				255920371385350E00557E70 /* ribbon.png */,
+				255920381385350E00557E70 /* ribbon@2x.png */,
 				2540973F1383517900EBE848 /* searchbar_bg.png */,
 				254097401383517900EBE848 /* searchbar_bg@2x.png */,
 				2540970F13834E6500EBE848 /* navbar_back_button.png */,
@@ -1528,6 +1534,8 @@
 				2540973E1383516D00EBE848 /* navbar_save_highlighted_button@2x.png in Resources */,
 				254097411383517900EBE848 /* searchbar_bg.png in Resources */,
 				254097421383517900EBE848 /* searchbar_bg@2x.png in Resources */,
+				255920391385350E00557E70 /* ribbon.png in Resources */,
+				2559203A1385350E00557E70 /* ribbon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

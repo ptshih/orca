@@ -14,8 +14,8 @@
 @synthesize placeholderImage = _placeholderImage;
 @synthesize shouldScale = _shouldScale;
 
-- (id)init {
-  self = [super init];
+- (id)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
   if (self) {
     _shouldScale = NO;
     _placeholderImage = nil;

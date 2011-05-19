@@ -28,6 +28,7 @@
   NSURL *photosUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/photos", FB_GRAPH, album.id]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
+  [params setValue:@"999" forKey:@"limit"];
   
   [self sendRequestWithURL:photosUrl andMethod:GET andHeaders:nil andParams:params andUserInfo:nil];
 }
@@ -89,13 +90,14 @@
   [super dataCenterRequestFailed:request withError:error];
 }
 
-- (NSFetchRequest *)fetchPhotosForAlbum:(Album *)album {
+- (NSFetchRequest *)fetchPhotosForAlbum:(Album *)album withLimit:(NSUInteger)limit andOffset:(NSUInteger)offset {
   NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"position" ascending:YES] autorelease];
   NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
   NSFetchRequest *fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPhotosForAlbum" substitutionVariables:[NSDictionary dictionaryWithObject:album forKey:@"desiredAlbum"]];
   [fetchRequest setSortDescriptors:sortDescriptors];
   [fetchRequest setFetchBatchSize:10];
-  [fetchRequest setFetchLimit:20];
+  [fetchRequest setFetchLimit:limit];
+  [fetchRequest setFetchOffset:offset];
   return fetchRequest;
 }
 

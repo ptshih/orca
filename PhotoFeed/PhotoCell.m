@@ -22,6 +22,8 @@
   if (self) {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadPhoto:) name:kImageCached object:nil];
+    
     _photoWidth = 0;
     _photoHeight = 0;
     
@@ -52,7 +54,7 @@
     _captionView.layer.opacity = 0.667;
     
     // Photo
-    _photoView = [[PSImageView alloc] init];
+    _photoView = [[PSImageView alloc] initWithFrame:CGRectZero];
 //    _photoView.shouldScale = YES;
     //    _photoView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
     //    _photoView.layer.borderWidth = 1.0;
@@ -103,6 +105,8 @@
     _captionView.top -= _captionView.height;
     _captionLabel.top -= _captionView.height;
   }
+  
+//  NSLog(@"layout");
 }
 
 + (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -128,6 +132,7 @@
 
 - (void)fillCellWithObject:(id)object {
   Photo *photo = (Photo *)object;
+  _photo = photo;
   
   _photoWidth = [photo.width integerValue];
   _photoHeight = [photo.height integerValue];
@@ -144,7 +149,15 @@
   _captionLabel.text = photo.name;
 }
 
+- (void)loadPhoto:(NSNotification *)notification {
+  NSDictionary *userInfo = [notification userInfo];
+  if ([[userInfo objectForKey:@"entity"] isEqual:_photo]) {
+    _photoView.image = [UIImage imageWithData:_photo.imageData];
+  }
+}
+
 - (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kImageCached object:nil];
   RELEASE_SAFELY(_photoView);
   RELEASE_SAFELY(_captionView);
   

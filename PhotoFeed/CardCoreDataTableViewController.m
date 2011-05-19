@@ -26,6 +26,8 @@
     _context = [LICoreDataStack sharedManagedObjectContext];
     _fetchedResultsController = nil;
     _sectionNameKeyPathForFetchedResultsController = nil;
+    _limit = 10;
+    _offset = 0;
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextSaveDidNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
   }
@@ -59,7 +61,19 @@
 }
 
 - (void)loadMore {
-  
+  [super loadMore];
+  NSUInteger fetchedCount = [[self.fetchedResultsController fetchedObjects] count];
+  //  [[self.fetchedResultsController fetchRequest] setFetchOffset:fetchedCount];
+  [[self.fetchedResultsController fetchRequest] setFetchLimit:fetchedCount + 10];
+  [self executeFetch];
+  [_tableView reloadData];
+}
+
+- (void)dataSourceDidLoad {
+  [super dataSourceDidLoad];
+  [self executeFetch];
+  [_tableView reloadData];
+  [self updateState];
 }
 
 #pragma mark Core Data
@@ -77,7 +91,7 @@
   NSFetchRequest *fetchRequest = [self getFetchRequest];
   if (fetchRequest) {
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:self.sectionNameKeyPathForFetchedResultsController cacheName:nil];
-    _fetchedResultsController.delegate = self;
+    _fetchedResultsController.delegate = nil;
   }
   
   RELEASE_SAFELY(_predicate);
@@ -141,8 +155,8 @@
       break;
       
     case NSFetchedResultsChangeUpdate:{
-      NSIndexPath *changedIndexPath = newIndexPath ? newIndexPath : indexPath;
-      [self tableView:tableView configureCell:[tableView cellForRowAtIndexPath:changedIndexPath] atIndexPath:changedIndexPath];
+//      NSIndexPath *changedIndexPath = newIndexPath ? newIndexPath : indexPath;
+      [self tableView:tableView configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
       break;
     }
     case NSFetchedResultsChangeMove:

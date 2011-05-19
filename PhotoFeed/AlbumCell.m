@@ -15,70 +15,97 @@
 #define NAME_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0]
 #define CAPTION_FONT [UIFont fontWithName:@"HelveticaNeue" size:12.0]
 #define SMALL_ITALIC_FONT [UIFont fontWithName:@"HelveticaNeue-Italic" size:12.0]
+#define RIBBON_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:10.0]
+
+static UIImage *_ribbonImage = nil;
 
 @implementation AlbumCell
+
++ (void)initialize {
+  _ribbonImage = [[[UIImage imageNamed:@"ribbon.png"] stretchableImageWithLeftCapWidth:30 topCapHeight:0] retain];
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadPhoto:) name:kImageCached object:nil];
+    
     _nameLabel = [[UILabel alloc] init];
     _captionLabel = [[UILabel alloc] init];
     _fromLabel = [[UILabel alloc] init];
     _locationLabel = [[UILabel alloc] init];
+    _countLabel = [[UILabel alloc] init];
     
     // Background Color
     _nameLabel.backgroundColor = [UIColor clearColor];
     _captionLabel.backgroundColor = [UIColor clearColor];
     _fromLabel.backgroundColor = [UIColor clearColor];
     _locationLabel.backgroundColor = [UIColor clearColor];
+    _countLabel.backgroundColor = [UIColor clearColor];
     
     // Font
     _nameLabel.font = NAME_FONT;
     _captionLabel.font = CAPTION_FONT;
     _fromLabel.font = SMALL_ITALIC_FONT;
     _locationLabel.font = SMALL_ITALIC_FONT;
+    _countLabel.font = RIBBON_FONT;
     
     // Text Color
     _nameLabel.textColor = [UIColor whiteColor];
     _captionLabel.textColor = FB_COLOR_VERY_LIGHT_BLUE;
     _fromLabel.textColor = FB_COLOR_VERY_LIGHT_BLUE;
     _locationLabel.textColor = FB_COLOR_VERY_LIGHT_BLUE;
+    _countLabel.textColor = [UIColor whiteColor];
     
     // Text Alignment
     _fromLabel.textAlignment = UITextAlignmentRight;
     _locationLabel.textAlignment = UITextAlignmentRight;
+    _countLabel.textAlignment = UITextAlignmentRight;
     
     // Line Break Mode
     _nameLabel.lineBreakMode = UILineBreakModeTailTruncation;
     _captionLabel.lineBreakMode = UILineBreakModeTailTruncation;
     _fromLabel.lineBreakMode = UILineBreakModeTailTruncation;
     _locationLabel.lineBreakMode = UILineBreakModeTailTruncation;
+    _countLabel.lineBreakMode = UILineBreakModeTailTruncation;
     
     // Number of Lines
     _nameLabel.numberOfLines = 1;
     _captionLabel.numberOfLines = 1;
     _fromLabel.numberOfLines = 1;
     _locationLabel.numberOfLines = 1;
+    _countLabel.numberOfLines = 1;
     
     // Shadows
     _nameLabel.shadowColor = [UIColor blackColor];
     _nameLabel.shadowOffset = CGSizeMake(0, 1);
     _captionLabel.shadowColor = [UIColor blackColor];
     _captionLabel.shadowOffset = CGSizeMake(0, 1);
+//    _countLabel.shadowColor = [UIColor blackColor];
+//    _countLabel.shadowOffset = CGSizeMake(0, 1);
     
     // Caption
-    _captionView = [[UIView alloc] init];
+    _captionView = [[UIView alloc] initWithFrame:CGRectZero];
     _captionView.backgroundColor = [UIColor blackColor];
     _captionView.layer.opacity = 0.667;
     
     // Photo
     _photoView = [[PSImageView alloc] initWithFrame:CGRectMake(0, 0, 320, ALBUM_CELL_HEIGHT)];
     
+    // Ribbon
+    _ribbonView = [[UIView alloc] initWithFrame:CGRectMake(320 - 68, 10, 68, 24)];
+    UIImageView *ribbonImageView = [[[UIImageView alloc] initWithImage:_ribbonImage] autorelease];
+    ribbonImageView.frame = _ribbonView.bounds;
+    [_ribbonView addSubview:ribbonImageView];
+    _countLabel.frame = _ribbonView.bounds;
+    [_ribbonView addSubview:_countLabel];
+    
     // Add to contentView
     [self.contentView addSubview:_photoView];
     [self.contentView addSubview:_captionView];
+    [self.contentView addSubview:_ribbonView];
     
     // Add labels
     [self.contentView addSubview:_nameLabel];
@@ -147,6 +174,7 @@
 
 - (void)fillCellWithObject:(id)object {
   Album *album = (Album *)object;
+  _album = album;
   
   // Photo
   if (album.imageData) {
@@ -162,16 +190,27 @@
   _captionLabel.text = album.caption;
   _fromLabel.text = [NSString stringWithFormat:@"by %@", album.fromName];
   _locationLabel.text = [NSString stringWithFormat:@"at %@", album.location];
+  _countLabel.text = [NSString stringWithFormat:@"%@ photos ", album.count];
+}
+
+- (void)loadPhoto:(NSNotification *)notification {
+  NSDictionary *userInfo = [notification userInfo];
+  if ([[userInfo objectForKey:@"entity"] isEqual:_album]) {
+    _photoView.image = [UIImage imageWithData:_album.imageData];
+  }
 }
 
 - (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kImageCached object:nil];
   RELEASE_SAFELY(_photoView);
   RELEASE_SAFELY(_captionView);
+  RELEASE_SAFELY(_ribbonView);
   
   RELEASE_SAFELY(_nameLabel);
   RELEASE_SAFELY(_captionLabel);
   RELEASE_SAFELY(_fromLabel);
   RELEASE_SAFELY(_locationLabel);
+  RELEASE_SAFELY(_countLabel);
   [super dealloc];
 }
 
