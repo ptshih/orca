@@ -1,79 +1,95 @@
 //
-//  Snap+Serialize.m
+//  Photo+Serialize.m
 //  PhotoFeed
 //
 //  Created by Peter Shih on 4/26/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "Snap+Serialize.h"
+#import "Photo+Serialize.h"
+#import "NSDate+Util.h"
+#import "NSDate+Helper.h"
 
+@implementation Photo (Serialize)
 
-@implementation Snap (Serialize)
+#pragma mark -
+#pragma mark Transient Properties
+- (NSString *)fromPicture {
+  return [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", self.fromId];
+}
 
-+ (Snap *)addSnapWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context {
+#pragma mark -
+#pragma mark Create/Update
++ (Photo *)addPhotoWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context {
   if (dictionary) {
-    Snap *newSnap = [NSEntityDescription insertNewObjectForEntityForName:@"Snap" inManagedObjectContext:context];
+    Photo *newPhoto = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:context];
     
-    // Required
-    newSnap.id = [dictionary valueForKey:@"id"];
-    newSnap.albumId = [dictionary valueForKey:@"album_id"];
-    newSnap.userId = [dictionary valueForKey:@"user_id"];
-    newSnap.userName = [dictionary valueForKey:@"user_name"];
-    newSnap.userPictureUrl = [dictionary valueForKey:@"user_picture_url"];
-    newSnap.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
+    // Basic
+    newPhoto.id = [dictionary valueForKey:@"id"];
+    newPhoto.name = [dictionary valueForKey:@"name"];
+    newPhoto.position = [dictionary valueForKey:@"position"];
     
     // Photo
-    newSnap.photoUrl = [dictionary valueForKey:@"photo_url"] ? [dictionary valueForKey:@"photo_url"] : nil;
+    newPhoto.picture = [dictionary valueForKey:@"picture"];
+    newPhoto.source = [dictionary valueForKey:@"source"];
     
-    // Counts
-    newSnap.commentCount = [dictionary valueForKey:@"comment_count"];
-    newSnap.likeCount = [dictionary valueForKey:@"like_count"];
+    // Dimensions
+    newPhoto.width = [dictionary valueForKey:@"width"];
+    newPhoto.height = [dictionary valueForKey:@"height"];
     
-    // These might be null
-    newSnap.caption = [dictionary valueForKey:@"caption"] ? [dictionary valueForKey:@"message"] : nil;
+    // Author/From
+    NSDictionary *from = [dictionary valueForKey:@"from"];
+    newPhoto.fromId = [from valueForKey:@"id"];
+    newPhoto.fromName = [from valueForKey:@"name"];
     
-    // Is Liked Flag
-    newSnap.isLiked = [dictionary valueForKey:@"is_liked"] ? [dictionary valueForKey:@"is_liked"] : [NSNumber numberWithBool:NO];
+    // Timestamp
+    if ([dictionary valueForKey:@"updated_time"]) {
+      newPhoto.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"updated_time"]];
+    } else if ([dictionary valueForKey:@"created_time"]) {
+      newPhoto.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"created_time"]];
+    } else {
+      newPhoto.timestamp = [NSDate distantPast];
+    }
     
-    // Lat/Lng
-    newSnap.lat = [dictionary valueForKey:@"lat"];
-    newSnap.lng = [dictionary valueForKey:@"lng"];
-    
-
-    return newSnap;
+    return newPhoto;
   } else {
     return nil;
   }
 }
 
-- (Snap *)updateSnapWithDictionary:(NSDictionary *)dictionary {  
-  // Required
-  self.id = [dictionary valueForKey:@"id"];
-  self.albumId = [dictionary valueForKey:@"album_id"];
-  self.userId = [dictionary valueForKey:@"user_id"];
-  self.userName = [dictionary valueForKey:@"user_name"];
-  self.userPictureUrl = [dictionary valueForKey:@"user_picture_url"];
-  self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
-  
-  // Photo
-  self.photoUrl = [dictionary valueForKey:@"photo_url"] ? [dictionary valueForKey:@"photo_url"] : nil;
-  
-  // Counts
-  self.commentCount = [dictionary valueForKey:@"comment_count"];
-  self.likeCount = [dictionary valueForKey:@"like_count"];
-  
-  // These might be null
-  self.caption = [dictionary valueForKey:@"caption"] ? [dictionary valueForKey:@"message"] : nil;
-  
-  // Is Liked Flag
-  self.isLiked = [dictionary valueForKey:@"is_liked"] ? [dictionary valueForKey:@"is_liked"] : [NSNumber numberWithBool:NO];
-  
-  // Lat/Lng
-  self.lat = [dictionary valueForKey:@"lat"];
-  self.lng = [dictionary valueForKey:@"lng"];
-  
-  return self;
+- (Photo *)updatePhotoWithDictionary:(NSDictionary *)dictionary {  
+  if (dictionary) {
+    // Basic
+    self.id = [dictionary valueForKey:@"id"];
+    self.name = [dictionary valueForKey:@"name"];
+    self.position = [dictionary valueForKey:@"position"];
+    
+    // Photo
+    self.picture = [dictionary valueForKey:@"picture"];
+    self.source = [dictionary valueForKey:@"source"];
+    
+    // Dimensions
+    self.width = [dictionary valueForKey:@"width"];
+    self.height = [dictionary valueForKey:@"height"];
+    
+    // Author/From
+    NSDictionary *from = [dictionary valueForKey:@"from"];
+    self.fromId = [from valueForKey:@"id"];
+    self.fromName = [from valueForKey:@"name"];
+    
+    // Timestamp
+    if ([dictionary valueForKey:@"updated_time"]) {
+      self.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"updated_time"]];
+    } else if ([dictionary valueForKey:@"created_time"]) {
+      self.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"created_time"]];
+    } else {
+      self.timestamp = [NSDate distantPast];
+    }
+    
+    return self;
+  } else {
+    return nil;
+  }
 }
 
 @end

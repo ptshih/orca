@@ -1,5 +1,5 @@
 //
-//  SnapViewController.h
+//  PhotoViewController.h
 //  PhotoFeed
 //
 //  Created by Peter Shih on 4/25/11.
@@ -9,16 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "CardCoreDataTableViewController.h"
 
-@class SnapDataCenter;
+@class PhotoDataCenter;
 @class Album;
 
-@interface SnapViewController : CardCoreDataTableViewController {
-  SnapDataCenter *_snapDataCenter;
+@interface PhotoViewController : CardCoreDataTableViewController {
+  PhotoDataCenter *_photoDataCenter;
   Album *_album;
+  
+  NSMutableDictionary *_headerCellCache;
 }
 
-@property (nonatomic, retain) Album *album;
+@property (nonatomic, assign) Album *album;
 
-- (void)newSnap;
+- (void)newPhoto;
 
 @end

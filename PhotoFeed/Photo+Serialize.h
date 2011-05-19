@@ -1,5 +1,5 @@
 //
-//  Snap+Serialize.h
+//  Photo+Serialize.h
 //  PhotoFeed
 //
 //  Created by Peter Shih on 4/26/11.
@@ -7,12 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Snap.h"
+#import "Photo.h"
 
-@interface Snap (Serialize)
+@interface Photo (Serialize)
 
-+ (Snap *)addSnapWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
+- (NSString *)fromPicture;
 
-- (Snap *)updateSnapWithDictionary:(NSDictionary *)dictionary;
++ (Photo *)addPhotoWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
+
+- (Photo *)updatePhotoWithDictionary:(NSDictionary *)dictionary;
 
 @end

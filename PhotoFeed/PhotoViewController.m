@@ -1,29 +1,30 @@
 //
-//  SnapViewController.m
+//  PhotoViewController.m
 //  PhotoFeed
 //
 //  Created by Peter Shih on 4/25/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "SnapViewController.h"
-#import "SnapDataCenter.h"
+#import "PhotoViewController.h"
+#import "PhotoDataCenter.h"
 #import "Album.h"
-#import "Snap.h"
+#import "Photo.h"
 #import "HeaderCell.h"
-#import "SnapCell.h"
+#import "PhotoCell.h"
 #import "CameraViewController.h"
 
-@implementation SnapViewController
+@implementation PhotoViewController
 
 @synthesize album = _album;
 
 - (id)init {
   self = [super init];
   if (self) {
-    _snapDataCenter = [[SnapDataCenter alloc] init];
-    _snapDataCenter.delegate = self;
-    _sectionNameKeyPathForFetchedResultsController = @"timestamp";
+    _photoDataCenter = [[PhotoDataCenter alloc] init];
+    _photoDataCenter.delegate = self;
+    _sectionNameKeyPathForFetchedResultsController = [@"position" retain];
+    _headerCellCache = [[NSMutableDictionary alloc] init];
   }
   return self;
 }
@@ -57,20 +58,33 @@
   [self resetFetchedResultsController];
   [self executeFetch];
   [self updateState];
-  [self reloadCardController];
 }
 
 - (void)reloadCardController {
   [super reloadCardController];
   
-  [_snapDataCenter getSnapsForAlbumWithAlbumId:_album.id];
+  [_photoDataCenter getPhotosForAlbum:_album];
 }
 
 - (void)unloadCardController {
   [super unloadCardController];
 }
 
-- (void)newSnap {
+#pragma mark -
+#pragma mark PSDataCenterDelegate
+- (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
+  //  NSLog(@"DC finish with response: %@", response);
+  //  [self executeFetch];
+  [self dataSourceDidLoad];
+}
+
+- (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
+  [self dataSourceDidLoad];
+}
+
+#pragma mark -
+#pragma mark Compose
+- (void)newPhoto {
   CameraViewController *cvc = [[CameraViewController alloc] init];
   UINavigationController *cnc = [[UINavigationController alloc] initWithRootViewController:cvc];
   [self presentModalViewController:cnc animated:YES];
@@ -81,44 +95,45 @@
 #pragma mark -
 #pragma mark TableView
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-  Snap *snap = [[self.fetchedResultsController fetchedObjects] objectAtIndex:section];
+  Photo *photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:section];
 
-  HeaderCell *headerCell = [[[HeaderCell alloc] initWithFrame:CGRectMake(0, 0, 320, 44)] autorelease];
-  [headerCell fillCellWithObject:snap];
-  [headerCell loadImage];
+  HeaderCell *headerCell = [[[HeaderCell alloc] initWithFrame:CGRectMake(0, 0, 320, 26)] autorelease];
+  [headerCell fillCellWithObject:photo];
+//  [headerCell loadImage];
+  [_headerCellCache setObject:headerCell forKey:[NSString stringWithFormat:@"%d", section]];
   return headerCell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-  return 44.0;
+  return 26.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  Snap *snap = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  return [SnapCell rowHeightForObject:snap forInterfaceOrientation:[self interfaceOrientation]];
+  Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  return [PhotoCell rowHeightForObject:photo forInterfaceOrientation:[self interfaceOrientation]];
 }
 
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
-  Snap *snap = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
-  [cell fillCellWithObject:snap];
+  [cell fillCellWithObject:photo];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  SnapCell *cell = nil;
+  PhotoCell *cell = nil;
   NSString *reuseIdentifier = [NSString stringWithFormat:@"%@_TableViewCell_%d", [self class], indexPath.section];
   
-  cell = (SnapCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+  cell = (PhotoCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
   if(cell == nil) { 
-    cell = [[[SnapCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+    cell = [[[PhotoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
   }
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
   
   // Initial static render of cell
-  if (tableView.dragging == NO && tableView.decelerating == NO) {
-    [cell loadPhoto];
-  }
+//  if (tableView.dragging == NO && tableView.decelerating == NO) {
+//    [cell loadPhoto];
+//  }
   
   return cell;
 }
@@ -129,29 +144,21 @@
   for (id cell in _visibleCells) {
     [cell loadPhoto];
   }
+  
+//  for (NSIndexPath *ip in _visibleIndexPaths) {
+//    HeaderCell *headerCell = [_headerCellCache objectForKey:[NSString stringWithFormat:@"%d", ip.section]];
+//  }
 }
 
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [_snapDataCenter getSnapsFetchRequestWithAlbumId:_album.id];
-}
-
-#pragma mark -
-#pragma mark PSDataCenterDelegate
-- (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
-//  NSLog(@"DC finish with response: %@", response);
-//  [self executeFetch];
-  [self dataSourceDidLoad];
-}
-
-- (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
-  [self dataSourceDidLoad];
+  return [_photoDataCenter fetchPhotosForAlbum:_album];
 }
 
 - (void)dealloc {
-  RELEASE_SAFELY(_album);
-  RELEASE_SAFELY(_snapDataCenter);
+  RELEASE_SAFELY(_photoDataCenter);
+  RELEASE_SAFELY(_headerCellCache);
   [super dealloc];
 }
 

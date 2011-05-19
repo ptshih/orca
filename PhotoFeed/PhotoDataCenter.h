@@ -1,5 +1,5 @@
 //
-//  SnapDataCenter.h
+//  PhotoDataCenter.h
 //  PhotoFeed
 //
 //  Created by Peter Shih on 4/26/11.
@@ -8,22 +8,26 @@
 
 #import <Foundation/Foundation.h>
 #import "PSDataCenter.h"
+#import "Album.h"
 
-@interface SnapDataCenter : PSDataCenter {
+@interface PhotoDataCenter : PSDataCenter {
   NSManagedObjectContext *_context;
+  Album *_album;
 }
 
-- (void)getSnapsForAlbumWithAlbumId:(NSString *)albumId;
+@property (nonatomic, assign) Album *album;
+
+- (void)getPhotosForAlbum:(Album *)album;
 
 /**
- Serialize server response into Snap entities
+ Serialize server response into Photo entities
  */
-- (void)serializeSnapsWithDictionary:(NSDictionary *)dictionary;
+- (void)serializePhotosWithDictionary:(NSDictionary *)dictionary;
 
 /**
  Fetch Requests
  */
-- (NSFetchRequest *)getSnapsFetchRequestWithAlbumId:(NSString *)albumId;
+- (NSFetchRequest *)fetchPhotosForAlbum:(Album *)album;
 
 
 @end

@@ -1,5 +1,5 @@
 //
-//  SnapCell.h
+//  PhotoCell.h
 //  PhotoFeed
 //
 //  Created by Peter Shih on 4/25/11.
@@ -8,16 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "PSCell.h"
-#import "Snap.h"
+#import "Photo.h"
 
-@interface SnapCell : PSCell {
+@interface PhotoCell : PSCell {
   PSImageView *_photoView; // optional
   UIView *_captionView;
-  UIView *_ribbonView;
-  
+
   UILabel *_captionLabel;
-  
-  NSString *_test;
 }
 
 - (void)loadPhoto;
