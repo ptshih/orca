@@ -22,11 +22,30 @@
 }
 
 - (void)getAlbums {
-  NSURL *albumsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, ALBUMS_ENDPOINT]];
+//  curl -F "batch=[ {'method': 'GET', 'name' : 'get-friends', 'relative_url': 'me/friends', 'omit_response_on_success' : true}, {'method': 'GET', 'name' : 'get-albums', 'depends_on':'get-friends', 'relative_url': 'albums?ids=me,{result=get-friends:$.data..id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=100', 'omit_response_on_success' : false} ]" https://graph.facebook.com
+  
+  // Apply since if exists
+  NSDate *since = [[NSUserDefaults standardUserDefaults] valueForKey:@"albums.since"];
+  
+  NSMutableDictionary *friendsDict = [NSMutableDictionary dictionary];
+  [friendsDict setValue:@"GET" forKey:@"method"];
+  [friendsDict setValue:@"get-friends" forKey:@"name"];
+  [friendsDict setValue:@"me/friends" forKey:@"relative_url"];
+  [friendsDict setValue:[NSNumber numberWithBool:YES] forKey:@"omit_response_on_success"];
+  
+  NSMutableDictionary *albumsDict = [NSMutableDictionary dictionary];
+  [albumsDict setValue:@"GET" forKey:@"method"];
+  [albumsDict setValue:@"get-albums" forKey:@"name"];
+  [albumsDict setValue:@"albums?ids=me,{result=get-friends:$.data..id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=100" forKey:@"relative_url"];
+  [albumsDict setValue:[NSNumber numberWithBool:NO] forKey:@"omit_response_on_success"];
+  
+  NSArray *batchArray = [NSArray arrayWithObjects:friendsDict, albumsDict, nil];
+  NSString *batchJSON = [batchArray JSONRepresentation];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
+  [params setValue:batchJSON forKey:@"batch"];
   
-  [self sendRequestWithURL:albumsUrl andMethod:GET andHeaders:nil andParams:params andUserInfo:nil];
+  [self sendFacebookBatchRequestWithParams:params andUserInfo:nil];
 }
 
 - (void)serializeAlbumsWithDictionary:(NSDictionary *)dictionary {
@@ -61,17 +80,22 @@
   }
   
   // Save to Core Data
-  if ([_context hasChanges]) {
-    if (![_context save:&error]) {
-      // CoreData ERROR!
-      abort(); // NOTE: DO NOT SHIP
-    }
-  }
+  [LICoreDataStack saveSharedContextIfNeeded];
+//  if ([_context hasChanges]) {
+//    if (![_context save:&error]) {
+//      // CoreData ERROR!
+//      abort(); // NOTE: DO NOT SHIP
+//    }
+//  }
 }
 
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponse:(id)response {
-  [self serializeAlbumsWithDictionary:response];
+  // Process the batched results
+  NSArray *allValues = [response allValues];
+  for (NSDictionary *valueDict in allValues) {
+    [self serializeAlbumsWithDictionary:valueDict];
+  }
   [super dataCenterRequestFinished:request withResponse:response];
 }
 
@@ -84,7 +108,8 @@
   NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
   NSFetchRequest *fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getAlbums" substitutionVariables:[NSDictionary dictionary]];
   [fetchRequest setSortDescriptors:sortDescriptors];
-  //  [fetchRequest setFetchLimit:limit];
+  [fetchRequest setFetchBatchSize:20];
+//  [fetchRequest setFetchLimit:100];
   return fetchRequest;
 }
 

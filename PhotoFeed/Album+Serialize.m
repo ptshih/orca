@@ -8,20 +8,24 @@
 
 #import "Album+Serialize.h"
 #import "NSDate+Util.h"
+#import "NSDate+Helper.h"
 
 @implementation Album (Serialize)
 
 - (NSString *)daysAgo {
-  NSInteger day = 24 * 60 * 60;
+//  NSInteger day = 24 * 60 * 60;
+//  
+//  NSInteger delta = [self.timestamp timeIntervalSinceNow];
+//  delta *= -1;
+//  
+//  if (delta < 1 * day) {
+//    return @"Today";
+//  } else {
+//    return [NSString stringWithFormat:@"%d days ago", delta / day];
+//  }
   
-  NSInteger delta = [self.timestamp timeIntervalSinceNow];
-  delta *= -1;
-  
-  if (delta < 1 * day) {
-    return @"Today";
-  } else {
-    return [NSString stringWithFormat:@"%d days ago", delta / day];
-  }
+//  return [self.timestamp stringDaysAgoAgainstMidnight:YES];
+  return [NSDate stringForDisplayFromDate:self.timestamp];
 }
 
 + (Album *)addAlbumWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context {
@@ -34,7 +38,8 @@
     newAlbum.type = [dictionary valueForKey:@"type"];
     
     // Can-be-empty
-    newAlbum.coverPhoto = [dictionary valueForKey:@"cover_photo"] ? [dictionary valueForKey:@"cover_photo"] : nil;
+    
+    newAlbum.coverPhoto = [dictionary valueForKey:@"cover_photo"] ? [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", [dictionary valueForKey:@"cover_photo"]] : nil;
     newAlbum.caption = [dictionary valueForKey:@"description"] ? [dictionary valueForKey:@"description"] : nil;
     newAlbum.location = [dictionary valueForKey:@"location"] ? [dictionary valueForKey:@"location"] : nil;
     
@@ -47,7 +52,13 @@
     newAlbum.fromName = [from valueForKey:@"name"];
 
     // Timestamp
-    newAlbum.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"updated_time"]];
+    if ([dictionary valueForKey:@"updated_time"]) {
+      newAlbum.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"updated_time"]];
+    } else if ([dictionary valueForKey:@"created_time"]) {
+      newAlbum.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"created_time"]];
+    } else {
+      newAlbum.timestamp = [NSDate distantPast];
+    }
     
     return newAlbum;
   } else {
@@ -61,13 +72,31 @@
 //    return self;
 //  }
   
+  // Check to see if this album has actually changed
+//  NSDate *newDate = nil;
+//  if ([dictionary valueForKey:@"updated_time"]) {
+//    newDate = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"updated_time"]];
+//  } else if ([dictionary valueForKey:@"created_time"]) {
+//    newDate = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"created_time"]];
+//  } else {
+//    newDate = [NSDate distantPast];
+//  }
+//  
+//  if ([self.timestamp isEqualToDate:newDate]) return self;
+  
+  // Comparing photo count is much more efficient than parsing a date
+  NSNumber *newPhotoCount = [dictionary valueForKey:@"count"];
+  if ([newPhotoCount isEqualToNumber:self.count]) return self;
+  
+  // If dates are not the same, then perform an update
+  
   // Basic
   self.id = [dictionary valueForKey:@"id"];
   self.name = [dictionary valueForKey:@"name"];
   self.type = [dictionary valueForKey:@"type"];
   
   // Can-be-empty
-  self.coverPhoto = [dictionary valueForKey:@"cover_photo"] ? [dictionary valueForKey:@"cover_photo"] : nil;
+  self.coverPhoto = [dictionary valueForKey:@"cover_photo"] ? [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", [dictionary valueForKey:@"cover_photo"]] : nil;
   self.caption = [dictionary valueForKey:@"description"] ? [dictionary valueForKey:@"description"] : nil;
   self.location = [dictionary valueForKey:@"location"] ? [dictionary valueForKey:@"location"] : nil;
   
@@ -80,7 +109,13 @@
   self.fromName = [from valueForKey:@"name"];
   
   // Timestamp
-  self.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"updated_time"]];
+  if ([dictionary valueForKey:@"updated_time"]) {
+    self.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"updated_time"]];
+  } else if ([dictionary valueForKey:@"created_time"]) {
+    self.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"created_time"]];
+  } else {
+    self.timestamp = [NSDate distantPast];
+  }
   
   return self;
 }

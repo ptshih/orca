@@ -53,8 +53,9 @@
 
 // Facebook
 #define FB_AUTHORIZE_URL @"https://m.facebook.com/dialog/oauth"
-#define FB_GRAPH_FRIENDS @"https://graph.facebook.com/me/friends"
-#define FB_GRAPH_ME @"https://graph.facebook.com/me"
+#define FB_GRAPH @"https://graph.facebook.com"
+
+#define FB_ALBUMS [NSString stringWithFormat:@"%@/me/albums", FB_GRAPH]
 
 // #define FB_PERMISSIONS [NSArray arrayWithObjects:@"offline_access",@"user_photos",@"friends_photos",@"user_education_history",@"friends_education_history",@"user_work_history",@"friends_work_history",nil]
 

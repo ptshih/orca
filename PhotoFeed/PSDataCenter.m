@@ -11,6 +11,7 @@
 
 @interface PSDataCenter (Private)
 
+- (id)parseFacebookBatchResponse:(NSData *)responseData;
 - (id)sanitizeResponse:(NSData *)responseData;
 - (NSDictionary *)sanitizeDictionary:(NSDictionary *)dictionary forKeys:(NSArray *)keys;
 - (NSArray *)sanitizeArray:(NSArray *)array;
@@ -56,14 +57,76 @@
   }
 }
 
+- (id)parseFacebookBatchResponse:(NSData *)responseData {
+  id response = nil;
+  
+  // First extract the batch request that we care about at index 1
+  NSString *body = [[[responseData JSONValue] objectAtIndex:1] objectForKey:@"body"];
+  response = [body JSONValue];
+  
+  if (response) {
+    return response;
+  } else {
+    return nil;
+  }  
+}
+
 #pragma mark -
 #pragma mark Send Operation
+- (void)sendFacebookBatchRequestWithParams:(NSDictionary *)params andUserInfo:(NSDictionary *)userInfo {
+  // Read any optional params
+  NSMutableDictionary *requestParams = [NSMutableDictionary dictionaryWithDictionary:params];
+  
+  // Send access_token as a parameter if exists
+  NSString *accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
+  if (accessToken) {
+    [requestParams setValue:accessToken forKey:@"access_token"];
+  }
+  
+  __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:FB_GRAPH]];
+  request.requestMethod = @"POST";
+  
+  // Request userInfo
+  request.userInfo = userInfo;
+  
+  // POST parameters
+  request.postBody = [self buildRequestParamsData:requestParams];
+  request.postLength = [request.postBody length];
+
+  [request addRequestHeader:@"Accept" value:@"application/json"];
+  
+  // Request Completion Block
+  [request setCompletionBlock:^{
+    id response = [self parseFacebookBatchResponse:[request responseData]];
+    if (response) {
+      [self dataCenterRequestFinished:request withResponse:response];
+    } else {
+      [self dataCenterRequestFailed:request withError:nil];
+    }
+    
+    // Remove request from pendingRequests
+    [_pendingRequests removeObject:request];
+  }];
+  [request setFailedBlock:^{
+    NSError *error = [request error];
+    NSLog(@"Request failed with error: %@", [error localizedDescription]);
+    [self dataCenterRequestFailed:request withError:error];
+    
+    // Remove request from pendingRequests
+    [_pendingRequests removeObject:request];
+  }];
+  
+  // Start the Request
+  [_pendingRequests addObject:request];
+  [request startAsynchronous];
+}
+
 - (void)sendRequestWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params andUserInfo:(NSDictionary *)userInfo {
   // Read any optional params
   NSMutableDictionary *requestParams = [NSMutableDictionary dictionaryWithDictionary:params];
   
   // Send access_token as a parameter if exists
-  NSString *accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"accessToken"];
+  NSString *accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
   if (accessToken) {
     [requestParams setValue:accessToken forKey:@"access_token"];
   }
@@ -86,6 +149,7 @@
   }
   
   // Add Headers
+#ifdef SEND_METRICS_HEADERS
   [request addRequestHeader:@"X-UDID" value:[[UIDevice currentDevice] uniqueIdentifier]];
   [request addRequestHeader:@"X-Device-Model" value:[[UIDevice currentDevice] model]];
   [request addRequestHeader:@"X-App-Version" value:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
@@ -94,6 +158,7 @@
   [request addRequestHeader:@"X-User-Language" value:USER_LANGUAGE];
   [request addRequestHeader:@"X-User-Locale" value:USER_LOCALE];
   if (APP_DELEGATE.sessionKey) [request addRequestHeader:@"X-Session-Key" value:APP_DELEGATE.sessionKey];
+#endif
   
   // Build Custom Headers if exists
   if (headers) {

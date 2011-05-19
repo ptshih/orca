@@ -39,7 +39,7 @@
   [super viewDidLoad];
   
   // Title and Buttons
-  _navTitleLabel.text = @"Oh Snap!";
+  _navTitleLabel.text = @"Photo Feed";
   
   [self addButtonWithTitle:@"Logout" andSelector:@selector(logout) isLeft:YES];
   [self addButtonWithTitle:@"New" andSelector:@selector(newAlbum) isLeft:NO];
@@ -48,9 +48,9 @@
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleNone];
   
-//  [self setupSearchDisplayControllerWithScopeButtonTitles:[NSArray arrayWithObjects:@"Album", @"Person", nil]];
+  [self setupSearchDisplayControllerWithScopeButtonTitles:[NSArray arrayWithObjects:@"Album", @"Author", nil]];
   
-  [self setupSearchDisplayControllerWithScopeButtonTitles:nil];
+//  [self setupSearchDisplayControllerWithScopeButtonTitles:nil];
   
   // Pull Refresh
   [self setupPullRefresh];
@@ -168,18 +168,21 @@
 #pragma mark UISearchDisplayDelegate
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
   NSPredicate *predicate = nil;
+  NSPredicate *compoundPredicate = nil;
   
-  predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
+//  predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
   
-//  if ([scope isEqualToString:@"Person"]) {
-//    // search friend's full name
-//    predicate = [NSPredicate predicateWithFormat:@"userName CONTAINS[cd] %@", searchText, searchText];
-//  } else {
-//    // default to album name
-//    predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
-//  }
+  if ([scope isEqualToString:@"Author"]) {
+    // search friend's full name
+    predicate = [NSPredicate predicateWithFormat:@"fromName CONTAINS[cd] %@", searchText, searchText];
+  } else {
+    // default to album name
+    predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
+  }
   
-  [self.fetchedResultsController.fetchRequest setPredicate:predicate];
+  compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:_predicate, predicate, nil]];
+  
+  [self.fetchedResultsController.fetchRequest setPredicate:compoundPredicate];
   [self executeFetch];
 }
 

@@ -58,7 +58,6 @@
   [super unloadCardController];
 }
 
-
 #pragma mark Core Data
 //- (void)managedObjectContextSaveDidNotification:(NSNotification *)notification {
 //  [self.context mergeChangesFromContextDidSaveNotification:notification];
@@ -77,10 +76,17 @@
     _fetchedResultsController.delegate = self;
   }
   
+  RELEASE_SAFELY(_predicate);
+  _predicate = [[fetchRequest predicate] copy];
+  
   return _fetchedResultsController;
 }
 
 - (void)executeFetch {
+//  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+//    [self.fetchedResultsController performFetch:nil];
+//  });
+  
   NSError *error = nil;
   if ([self.fetchedResultsController performFetch:&error]) {
 //    DLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);
@@ -118,7 +124,7 @@
   
   UITableView *tableView = _tableView;
   
-  DLog(@"type: %d, old indexPath: %@, new indexPath: %@, class: %@", type, indexPath, newIndexPath, NSStringFromClass([self class]));
+//  DLog(@"type: %d, old indexPath: %@, new indexPath: %@, class: %@", type, indexPath, newIndexPath, NSStringFromClass([self class]));
   
   switch(type) {
       
@@ -153,7 +159,7 @@
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView {
-  [self.fetchedResultsController.fetchRequest setPredicate:nil];
+  [self.fetchedResultsController.fetchRequest setPredicate:_predicate];
   [self executeFetch];
 }
 
@@ -192,6 +198,7 @@
 //  [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:nil];
   RELEASE_SAFELY (_fetchedResultsController);
   RELEASE_SAFELY (_sectionNameKeyPathForFetchedResultsController);
+  RELEASE_SAFELY(_predicate);
   [super dealloc];
 }
 

@@ -120,9 +120,20 @@
 - (void)userDidLogin {
   DLog(@"User Logged In");
   
+  // Set UserDefaults
+  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
+  
+  // Flag event controller to reload after logging in
+  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
+  
+  // Session/Register request finished
+  if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
+    [_launcherViewController dismissModalViewControllerAnimated:YES];
+  }
+  
   // Change login screen to edu walkthru / loading
   
-  [self startRegister];
+//  [self startRegister];
 }
 
 - (void)userDidLogout {
@@ -136,14 +147,14 @@
   // This gets called on subsequent app launches
   [self resetSessionKey];
 #warning session disabled
-  [_loginDataCenter startSession];
+//  [_loginDataCenter startSession];
 }
 
 - (void)startRegister {
   // This gets called] if it is the first time logging in
   [self resetSessionKey];
 #warning register disabled
-  [_loginDataCenter startRegister];
+//  [_loginDataCenter startRegister];
 }
 
 - (void)resetSessionKey {

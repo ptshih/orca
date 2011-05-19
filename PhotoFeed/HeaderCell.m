@@ -65,7 +65,7 @@ static UIImage *_bgImage = nil;
   _psImageView.urlPath = snap.userPictureUrl;
   
   _userNameLabel.text = snap.userName;
-  _timestampLabel.text = [snap.timestamp humanIntervalSinceNow];
+  _timestampLabel.text = [NSDate stringForDisplayFromDate:snap.timestamp];
   
 //  _psImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", @"CharlieSheen"];
 //  _userNameLabel.text = @"Charlie Sheen";

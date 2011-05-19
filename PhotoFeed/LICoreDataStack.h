@@ -24,5 +24,6 @@
 //+ (void)initManagedObjectContextInMocThread:(NSManagedObjectContext *)context;
 + (void)initSharedManagedObjectContextInMocThread;
 + (void)deleteAllObjects:(NSString *)entityDescription;
++ (void)saveSharedContextIfNeeded;
 
 @end

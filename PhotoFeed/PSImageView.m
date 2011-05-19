@@ -29,6 +29,7 @@
     _loadingIndicator.contentMode = UIViewContentModeCenter;
     [_loadingIndicator startAnimating];
     [self addSubview:_loadingIndicator];
+    self.backgroundColor = [UIColor blackColor];
   }
   return self;
 }
@@ -63,7 +64,8 @@
       }
       
       // Fire the request
-      _request = [[ASIHTTPRequest requestWithURL:[NSURL URLWithString:_urlPath]] retain];
+      NSString *authURL = [NSString stringWithFormat:@"%@?access_token=%@", _urlPath, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]];
+      _request = [[ASIHTTPRequest requestWithURL:[NSURL URLWithString:authURL]] retain];
       
       // Request Completion Block
       [_request setCompletionBlock:^{
@@ -116,6 +118,8 @@
 
 #pragma mark Request Finished
 - (void)requestFinished:(ASIHTTPRequest *)request {
+  // URL
+  NSURL *origURL = [[request originalURL] URLByRemovingQuery];
   UIImage *image = [UIImage imageWithData:[request responseData]];
   UIImage *newImage = nil;
   if (image) {
@@ -124,12 +128,14 @@
     } else {
       newImage = image;
     }
-    [[PSImageCache sharedCache] cacheImage:UIImageJPEGRepresentation(newImage, 1.0) forURLPath:[[request originalURL] absoluteString]];
+    [[PSImageCache sharedCache] cacheImage:UIImageJPEGRepresentation(newImage, 1.0) forURLPath:[origURL absoluteString]];
   }
   if (newImage) {
-    if ([self.urlPath isEqualToString:[[request originalURL] absoluteString]]) {
+    if ([self.urlPath isEqualToString:[origURL absoluteString]]) {
       self.image = newImage;
       [self imageDidLoad];
+    } else {
+      DLog(@"urlpath: %@, origURL: %@ does NOT match", _urlPath, [origURL absoluteString]);
     }
   }
   

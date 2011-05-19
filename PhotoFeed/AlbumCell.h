@@ -17,8 +17,9 @@
   UIView *_captionView;
   
   UILabel *_nameLabel;
-  UILabel *_participantsLabel;
-  UILabel *_timestampLabel;
+  UILabel *_captionLabel;
+  UILabel *_fromLabel;
+  UILabel *_locationLabel;
 }
 
 - (void)loadPhoto;

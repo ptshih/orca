@@ -15,6 +15,7 @@
   NSManagedObjectContext *_context;
   NSFetchedResultsController * _fetchedResultsController;
   NSString * _sectionNameKeyPathForFetchedResultsController;
+  NSPredicate *_predicate;
 }
 
 @property (nonatomic, assign) NSManagedObjectContext *context;

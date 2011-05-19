@@ -63,12 +63,13 @@
   }
   
   // Save to Core Data
-  if ([_context hasChanges]) {
-    if (![_context save:&error]) {
-      // CoreData ERROR!
-      abort(); // NOTE: DO NOT SHIP
-    }
-  }
+  [LICoreDataStack saveSharedContextIfNeeded];
+//  if ([_context hasChanges]) {
+//    if (![_context save:&error]) {
+//      // CoreData ERROR!
+//      abort(); // NOTE: DO NOT SHIP
+//    }
+//  }
 }
 
 #pragma mark PSDataCenterDelegate

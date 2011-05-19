@@ -155,6 +155,21 @@ static NSThread *_mocThread = nil;
 //  }
 //}
 
+#pragma mark Save
++ (void)saveSharedContextIfNeeded {
+  NSError *error = nil;
+  if ([_managedObjectContext hasChanges]) {
+    if (![_managedObjectContext save:&error]) {
+      abort(); // NOTE: DO NOT SHIP
+    }
+  }
+}
+
++ (void)saveContextIfNeededInMocThread {
+
+}
+
+#pragma mark Accessors
 + (NSManagedObjectModel *)managedObjectModel {
   
   if (_managedObjectModel != nil) {

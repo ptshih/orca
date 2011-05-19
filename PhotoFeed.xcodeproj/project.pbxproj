@@ -100,8 +100,12 @@
 		254097461383527600EBE848 /* UISearchBar+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 254097441383527600EBE848 /* UISearchBar+Custom.m */; };
 		25409764138478BA00EBE848 /* PhotoFeed.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 25409762138478BA00EBE848 /* PhotoFeed.xcdatamodeld */; };
 		25409765138478BA00EBE848 /* PhotoFeed.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 25409762138478BA00EBE848 /* PhotoFeed.xcdatamodeld */; };
-		2540976813847A7F00EBE848 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 2540976713847A7F00EBE848 /* Album.m */; };
-		2540976913847A7F00EBE848 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 2540976713847A7F00EBE848 /* Album.m */; };
+		254097701384884700EBE848 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 2540976F1384884700EBE848 /* Album.m */; };
+		254097711384884700EBE848 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 2540976F1384884700EBE848 /* Album.m */; };
+		2540977413848ADD00EBE848 /* NSURL+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 2540977313848ADD00EBE848 /* NSURL+Util.m */; };
+		2540977513848ADD00EBE848 /* NSURL+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 2540977313848ADD00EBE848 /* NSURL+Util.m */; };
+		2540977813848EE600EBE848 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2540977713848EE600EBE848 /* NSDate+Helper.m */; };
+		2540977913848EE600EBE848 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2540977713848EE600EBE848 /* NSDate+Helper.m */; };
 		2544AC7A1377CCC10072C86C /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2544AC791377CCC10072C86C /* CameraViewController.m */; };
 		2544AC7B1377CCC10072C86C /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2544AC791377CCC10072C86C /* CameraViewController.m */; };
 		2544ACAC1378829E0072C86C /* CameraImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2544ACAB1378829E0072C86C /* CameraImageHelper.m */; };
@@ -120,6 +124,8 @@
 		2546E8C7138226A300BD8757 /* Snap.m in Sources */ = {isa = PBXBuildFile; fileRef = 2546E8C5138226A300BD8757 /* Snap.m */; };
 		2546E8D013825D9E00BD8757 /* PSImageArrayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2546E8CF13825D9D00BD8757 /* PSImageArrayView.m */; };
 		2546E8D113825D9E00BD8757 /* PSImageArrayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2546E8CF13825D9D00BD8757 /* PSImageArrayView.m */; };
+		25544F211384B1A700948E2C /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25544F201384B1A700948E2C /* ISO8601DateFormatter.m */; };
+		25544F221384B1A700948E2C /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25544F201384B1A700948E2C /* ISO8601DateFormatter.m */; };
 		259AD52413668FE000FA2B8D /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD52313668FE000FA2B8D /* AlbumCell.m */; };
 		259AD52513668FE000FA2B8D /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD52313668FE000FA2B8D /* AlbumCell.m */; };
 		259AD52913668FED00FA2B8D /* SnapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD52813668FED00FA2B8D /* SnapCell.m */; };
@@ -430,8 +436,12 @@
 		254097431383527600EBE848 /* UISearchBar+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISearchBar+Custom.h"; sourceTree = "<group>"; };
 		254097441383527600EBE848 /* UISearchBar+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISearchBar+Custom.m"; sourceTree = "<group>"; };
 		25409763138478BA00EBE848 /* PhotoFeed.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhotoFeed.xcdatamodel; sourceTree = "<group>"; };
-		2540976613847A7F00EBE848 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
-		2540976713847A7F00EBE848 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
+		2540976E1384884700EBE848 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
+		2540976F1384884700EBE848 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
+		2540977213848ADD00EBE848 /* NSURL+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Util.h"; sourceTree = "<group>"; };
+		2540977313848ADD00EBE848 /* NSURL+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Util.m"; sourceTree = "<group>"; };
+		2540977613848EE500EBE848 /* NSDate+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
+		2540977713848EE600EBE848 /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
 		2544AC781377CCC10072C86C /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		2544AC791377CCC10072C86C /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		2544ACAA1378829E0072C86C /* CameraImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraImageHelper.h; sourceTree = "<group>"; };
@@ -447,6 +457,8 @@
 		2546E8C5138226A300BD8757 /* Snap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Snap.m; sourceTree = "<group>"; };
 		2546E8CE13825D9D00BD8757 /* PSImageArrayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSImageArrayView.h; sourceTree = "<group>"; };
 		2546E8CF13825D9D00BD8757 /* PSImageArrayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSImageArrayView.m; sourceTree = "<group>"; };
+		25544F1F1384B1A700948E2C /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
+		25544F201384B1A700948E2C /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
 		25961C9E134D46CD00A3D4CD /* MeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeDelegate.h; sourceTree = "<group>"; };
 		259AD52213668FE000FA2B8D /* AlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumCell.h; sourceTree = "<group>"; };
 		259AD52313668FE000FA2B8D /* AlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCell.m; sourceTree = "<group>"; };
@@ -926,6 +938,8 @@
 				25CEF88B1339FB8B006F23A7 /* NSDate+HumanInterval.m */,
 				25CEF88C1339FB8B006F23A7 /* NSDate+Util.h */,
 				25CEF88D1339FB8B006F23A7 /* NSDate+Util.m */,
+				2540977613848EE500EBE848 /* NSDate+Helper.h */,
+				2540977713848EE600EBE848 /* NSDate+Helper.m */,
 				25CEF88E1339FB8B006F23A7 /* NSObject+ConvenienceMethods.h */,
 				25CEF88F1339FB8B006F23A7 /* NSObject+ConvenienceMethods.m */,
 				25CEF8901339FB8B006F23A7 /* NSString+ConvenienceMethods.h */,
@@ -944,6 +958,8 @@
 				250B32021341CB9F0011EEDD /* UILabel+SizeToFitWidth.m */,
 				25DC5F39136648A300868001 /* NSDictionary+Merge.h */,
 				25DC5F3A136648A300868001 /* NSDictionary+Merge.m */,
+				2540977213848ADD00EBE848 /* NSURL+Util.h */,
+				2540977313848ADD00EBE848 /* NSURL+Util.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -986,8 +1002,8 @@
 				2546E8BD138226A300BD8757 /* Comment.m */,
 				2546E8C4138226A300BD8757 /* Snap.h */,
 				2546E8C5138226A300BD8757 /* Snap.m */,
-				2540976613847A7F00EBE848 /* Album.h */,
-				2540976713847A7F00EBE848 /* Album.m */,
+				2540976E1384884700EBE848 /* Album.h */,
+				2540976F1384884700EBE848 /* Album.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1152,6 +1168,8 @@
 		25FB8B2B133A036600C130A8 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				25544F1F1384B1A700948E2C /* ISO8601DateFormatter.h */,
+				25544F201384B1A700948E2C /* ISO8601DateFormatter.m */,
 				2544ACA9137882850072C86C /* CameraImageHelper */,
 				25C67E2D1372196D00330DA7 /* Base64 */,
 				25C67E2C1372192700330DA7 /* PSImageCache */,
@@ -1624,7 +1642,10 @@
 				2546E8D013825D9E00BD8757 /* PSImageArrayView.m in Sources */,
 				254097451383527600EBE848 /* UISearchBar+Custom.m in Sources */,
 				25409764138478BA00EBE848 /* PhotoFeed.xcdatamodeld in Sources */,
-				2540976813847A7F00EBE848 /* Album.m in Sources */,
+				254097701384884700EBE848 /* Album.m in Sources */,
+				2540977413848ADD00EBE848 /* NSURL+Util.m in Sources */,
+				2540977813848EE600EBE848 /* NSDate+Helper.m in Sources */,
+				25544F211384B1A700948E2C /* ISO8601DateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1706,7 +1727,10 @@
 				2546E8D113825D9E00BD8757 /* PSImageArrayView.m in Sources */,
 				254097461383527600EBE848 /* UISearchBar+Custom.m in Sources */,
 				25409765138478BA00EBE848 /* PhotoFeed.xcdatamodeld in Sources */,
-				2540976913847A7F00EBE848 /* Album.m in Sources */,
+				254097711384884700EBE848 /* Album.m in Sources */,
+				2540977513848ADD00EBE848 /* NSURL+Util.m in Sources */,
+				2540977913848EE600EBE848 /* NSDate+Helper.m in Sources */,
+				25544F221384B1A700948E2C /* ISO8601DateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
