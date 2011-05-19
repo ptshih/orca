@@ -274,11 +274,12 @@
   tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
-- (void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView {
+- (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
   // Subclass should implement
 }
 
-- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller {
+- (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
+  // Subclass should implement
 }
 
 #pragma mark UIScrollViewDelegate

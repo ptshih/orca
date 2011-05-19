@@ -158,7 +158,10 @@
   // SUBCLASS MUST IMPLEMENT
 }
 
-- (void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView {
+- (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
+}
+
+- (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
   [self.fetchedResultsController.fetchRequest setPredicate:_predicate];
   [self executeFetch];
 }
