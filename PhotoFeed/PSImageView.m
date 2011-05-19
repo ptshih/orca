@@ -23,7 +23,7 @@
     _shouldScale = NO;
     _placeholderImage = nil;
     
-    _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _loadingIndicator.hidesWhenStopped = YES;
     _loadingIndicator.frame = self.bounds;
     _loadingIndicator.contentMode = UIViewContentModeCenter;
@@ -123,12 +123,15 @@
   UIImage *image = [UIImage imageWithData:[request responseData]];
   UIImage *newImage = nil;
   if (image) {
+    DLog(@"image size: %@", NSStringFromCGSize([image size]));
     if (_shouldScale) {
       newImage = [image cropProportionalToSize:self.bounds.size];
     } else {
       newImage = image;
     }
     [[PSImageCache sharedCache] cacheImage:UIImageJPEGRepresentation(newImage, 1.0) forURLPath:[origURL absoluteString]];
+  } else {
+    DLog(@"image failed to load for url: %@", [origURL absoluteString]);
   }
   if (newImage) {
     if ([self.urlPath isEqualToString:[origURL absoluteString]]) {
@@ -144,6 +147,7 @@
 
 #pragma mark Request Failed
 - (void)requestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
+  DLog(@"request: %@ failed with error: %@", request, error);
   self.image = _placeholderImage;
 }
 
