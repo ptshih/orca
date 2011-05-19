@@ -11,7 +11,7 @@
 
 @class AlbumViewController;
 
-@interface LauncherViewController : PSViewController {
+@interface LauncherViewController : UIViewController {
   AlbumViewController *_avc;
   UINavigationController *_anc;
 }

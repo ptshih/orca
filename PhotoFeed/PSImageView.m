@@ -123,7 +123,7 @@
   UIImage *image = [UIImage imageWithData:[request responseData]];
   UIImage *newImage = nil;
   if (image) {
-    DLog(@"image size: %@", NSStringFromCGSize([image size]));
+    DLog(@"image size: %@, url: %@", NSStringFromCGSize([image size]), _urlPath);
     if (_shouldScale) {
       newImage = [image cropProportionalToSize:self.bounds.size];
     } else {

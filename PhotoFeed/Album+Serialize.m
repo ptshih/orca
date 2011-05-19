@@ -38,8 +38,13 @@
     newAlbum.type = [dictionary valueForKey:@"type"];
     
     // Can-be-empty
-    
     newAlbum.coverPhoto = [dictionary valueForKey:@"cover_photo"] ? [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", [dictionary valueForKey:@"cover_photo"]] : nil;
+    
+#warning some albums have no cover photo
+    if (![dictionary valueForKey:@"cover_photo"]) {
+      NSLog(@"uh oh, no cover photo");
+    }
+    
     newAlbum.caption = [dictionary valueForKey:@"description"] ? [dictionary valueForKey:@"description"] : nil;
     newAlbum.location = [dictionary valueForKey:@"location"] ? [dictionary valueForKey:@"location"] : nil;
     

@@ -10,7 +10,7 @@
 #import "Constants.h"
 #import "FBConnect.h"
 #import "LoginViewController.h"
-#import "LauncherViewController.h"
+#import "AlbumViewController.h"
 #import "LoginDataCenter.h"
 #import "PSImageCache.h"
 
@@ -53,13 +53,15 @@
   // Setup Facebook
   _facebook = [[Facebook alloc] initWithAppId:FB_APP_ID];
   
-  _launcherViewController = [[LauncherViewController alloc] init];
+  _albumViewController = [[AlbumViewController alloc] init];
   
   // LoginVC
   _loginViewController = [[LoginViewController alloc] init];
   _loginViewController.delegate = self;
   
-  [self.window addSubview:_launcherViewController.view];
+  _navigationController = [[UINavigationController alloc] initWithRootViewController:_albumViewController];
+  
+  [self.window addSubview:_navigationController.view];
   [self.window makeKeyAndVisible];
   
   // Login if necessary
@@ -104,8 +106,8 @@
 #pragma mark Login
 - (void)tryLogin {
   if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
-    if (![_launcherViewController.modalViewController isEqual:_loginViewController] && _loginViewController != nil) {
-      [_launcherViewController presentModalViewController:_loginViewController animated:NO];
+    if (![_navigationController.modalViewController isEqual:_loginViewController] && _loginViewController != nil) {
+      [_navigationController presentModalViewController:_loginViewController animated:NO];
     }
   } else {
     _facebook.accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
@@ -127,8 +129,8 @@
   [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
   
   // Session/Register request finished
-  if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
-    [_launcherViewController dismissModalViewControllerAnimated:YES];
+  if ([_navigationController.modalViewController isEqual:_loginViewController]) {
+    [_navigationController dismissModalViewControllerAnimated:NO];
   }
   
   // Change login screen to edu walkthru / loading
@@ -189,8 +191,8 @@
   }
   
   // Session/Register request finished
-  if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
-    [_launcherViewController dismissModalViewControllerAnimated:YES];
+  if ([_navigationController.modalViewController isEqual:_loginViewController]) {
+    [_navigationController dismissModalViewControllerAnimated:YES];
   }
 }
 
@@ -222,7 +224,8 @@
   RELEASE_SAFELY(_loginDataCenter);
   RELEASE_SAFELY(_sessionKey);
   RELEASE_SAFELY(_loginViewController);
-  RELEASE_SAFELY(_launcherViewController);
+  RELEASE_SAFELY(_albumViewController);
+  RELEASE_SAFELY(_navigationController);
   RELEASE_SAFELY(_facebook);
   RELEASE_SAFELY(_window);
   [super dealloc];
