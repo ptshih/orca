@@ -19,6 +19,11 @@
   return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [_tabBarController viewWillAppear:animated];
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   

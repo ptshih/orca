@@ -26,10 +26,11 @@
     _context = [LICoreDataStack sharedManagedObjectContext];
     _fetchedResultsController = nil;
     _sectionNameKeyPathForFetchedResultsController = nil;
-    _limit = 10;
+    _limit = 50;
     _offset = 0;
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextSaveDidNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
   }
   return self;
 }
@@ -215,8 +216,13 @@
   return cell;
 }
 
+- (void)coreDataDidReset {
+  [self resetFetchedResultsController];
+}
+
 - (void)dealloc {
 //  [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kCoreDataDidReset object:nil];
   RELEASE_SAFELY (_fetchedResultsController);
   RELEASE_SAFELY (_sectionNameKeyPathForFetchedResultsController);
   RELEASE_SAFELY(_predicate);

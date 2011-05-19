@@ -178,11 +178,11 @@ static UIImage *_ribbonImage = nil;
   
   // Photo
   if (album.imageData) {
-    UIImage *cachedImage = [[UIImage imageWithData:album.imageData] cropProportionalToSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
-    _photoView.image = cachedImage;
+//    UIImage *cachedImage = [[UIImage imageWithData:album.imageData] cropProportionalToSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
+    _photoView.image = [UIImage imageWithData:album.imageData];
   } else {
     NSString *photoURLPath = [NSString stringWithFormat:@"%@?access_token=%@", album.coverPhoto, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]];
-    [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photoURLPath forEntity:album];
+    [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photoURLPath forEntity:album scaledSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
   }
   
   // Labels
@@ -196,6 +196,7 @@ static UIImage *_ribbonImage = nil;
 - (void)loadPhoto:(NSNotification *)notification {
   NSDictionary *userInfo = [notification userInfo];
   if ([[userInfo objectForKey:@"entity"] isEqual:_album]) {
+//    UIImage *cachedImage = [[UIImage imageWithData:_album.imageData] cropProportionalToSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
     _photoView.image = [UIImage imageWithData:_album.imageData];
   }
 }

@@ -29,6 +29,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  [self executeFetch];
+  [self updateState];
+  [_tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -58,8 +61,6 @@
   [self setupLoadMoreView];
   
   [self resetFetchedResultsController];
-  [self executeFetch];
-  [self updateState];
 }
 
 - (void)reloadCardController {
@@ -84,11 +85,11 @@
 }
 
 - (void)newAlbum {
-  CameraViewController *cvc = [[CameraViewController alloc] init];
-  UINavigationController *cnc = [[UINavigationController alloc] initWithRootViewController:cvc];
-  [self presentModalViewController:cnc animated:NO];
-  [cvc autorelease];
-  [cnc autorelease];
+//  CameraViewController *cvc = [[CameraViewController alloc] init];
+//  UINavigationController *cnc = [[UINavigationController alloc] initWithRootViewController:cvc];
+//  [self presentModalViewController:cnc animated:NO];
+//  [cvc autorelease];
+//  [cnc autorelease];
 }
 
 #pragma mark -
@@ -123,27 +124,13 @@
   Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   [cell fillCellWithObject:album];
-  [cell setNeedsLayout];
-  [cell setNeedsDisplay];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   
   Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  
-  // Mark isRead state
-  //  if (![event.isRead boolValue]) {
-  //    event.isRead = [NSNumber numberWithBool:YES];
-  //    
-  //    NSError *error = nil;
-  //    if ([self.context hasChanges]) {
-  //      if (![self.context save:&error]) {
-  //        abort(); // NOTE: DO NOT SHIP
-  //      }
-  //    }
-  //  }
-  
+
   PhotoViewController *svc = [[PhotoViewController alloc] init];
   svc.album = album;
   [self.navigationController pushViewController:svc animated:YES];

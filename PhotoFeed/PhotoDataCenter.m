@@ -17,7 +17,7 @@
 - (id)init {
   self = [super init];
   if (self) {
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
     _context = [LICoreDataStack sharedManagedObjectContext];
   }
   return self;

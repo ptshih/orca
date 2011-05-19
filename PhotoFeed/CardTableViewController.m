@@ -119,6 +119,8 @@
   // Add to subview
   [_loadMoreView addSubview:_loadMoreButton];
   [_loadMoreView addSubview:_loadMoreActivity];
+  
+  [self showLoadMoreView];
 }
 
 - (void)showLoadMoreView {
@@ -169,9 +171,6 @@
   if (_refreshHeaderView) {
     [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:_tableView];
   }
-  
-  // Is this a load more call?
-  [self showLoadMoreView];
 }
 
 #pragma mark CardStateMachine

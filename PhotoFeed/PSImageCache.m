@@ -30,12 +30,13 @@ static NSString *_cachePath = nil;
 // Image Cache
 - (void)cacheImage:(NSData *)imageData forURLPath:(NSString *)urlPath {
   if (!_imageCache) {
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:_cachePath];
-    if (fileExists) {
-      _imageCache = [[self readImageCacheFromDisk] retain];
-    } else {
-      _imageCache = [[NSMutableDictionary alloc] init];
-    }
+    _imageCache = [[NSMutableDictionary alloc] init];
+//    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:_cachePath];
+//    if (fileExists) {
+//      _imageCache = [[self readImageCacheFromDisk] retain];
+//    } else {
+//      _imageCache = [[NSMutableDictionary alloc] init];
+//    }
   }
   
   [self.imageCache setObject:imageData forKey:urlPath];

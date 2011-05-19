@@ -8,6 +8,7 @@
 
 #import "PSCoreDataImageCache.h"
 #import "ASIHTTPRequest.h"
+#import "UIImage+ScalingAndCropping.h"
 
 static PSCoreDataImageCache *_sharedCache;
 
@@ -29,10 +30,14 @@ static PSCoreDataImageCache *_sharedCache;
 }
 
 - (void)cacheImageWithURLPath:(NSString *)URLPath forEntity:(id)entity {
+  [self cacheImageWithURLPath:URLPath forEntity:entity scaledSize:CGSizeZero];
+}
+
+- (void)cacheImageWithURLPath:(NSString *)URLPath forEntity:(id)entity scaledSize:(CGSize)scaledSize {
   // Fire the request
   ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:URLPath]];
   
-  request.userInfo = [NSDictionary dictionaryWithObject:entity forKey:@"entity"];
+  request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:entity, @"entity", NSStringFromCGSize(scaledSize), @"scaledSize", nil];
   
   // Request Completion Block
   [request setCompletionBlock:^{
@@ -54,7 +59,16 @@ static PSCoreDataImageCache *_sharedCache;
 - (void)requestFinished:(ASIHTTPRequest *)request {
   id entity = [request.userInfo objectForKey:@"entity"];
   if ([entity respondsToSelector:@selector(imageData)]) {
-    [entity performSelector:@selector(setImageData:) withObject:[request responseData]];
+    NSData *imageData = nil;
+    CGSize desiredSize = CGSizeFromString([request.userInfo valueForKey:@"scaledSize"]);
+    if (!CGSizeEqualToSize(desiredSize, CGSizeZero)) {
+      // We need to scale the image
+      UIImage *scaledImage = [[UIImage imageWithData:[request responseData]] cropProportionalToSize:desiredSize];
+      imageData = UIImageJPEGRepresentation(scaledImage, 1.0);
+    } else {
+      imageData = [request responseData];
+    }
+    [entity performSelector:@selector(setImageData:) withObject:imageData];
     [LICoreDataStack saveSharedContextIfNeeded];
     [[NSNotificationCenter defaultCenter] postNotificationName:kImageCached object:nil userInfo:request.userInfo];
   }

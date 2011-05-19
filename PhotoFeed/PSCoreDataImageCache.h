@@ -17,6 +17,7 @@
 + (PSCoreDataImageCache *)sharedCache;
 
 - (void)cacheImageWithURLPath:(NSString *)URLPath forEntity:(id)entity;
+- (void)cacheImageWithURLPath:(NSString *)URLPath forEntity:(id)entity scaledSize:(CGSize)scaledSize;
 
 - (void)requestFinished:(ASIHTTPRequest *)request;
 - (void)requestFailed:(ASIHTTPRequest *)request withError:(NSError *)error;

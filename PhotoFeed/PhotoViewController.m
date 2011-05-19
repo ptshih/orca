@@ -48,7 +48,7 @@
   _navTitleLabel.text = _album.name;
   
   [self addBackButton];
-  [self addButtonWithTitle:@"New" andSelector:@selector(newAlbum) isLeft:NO];
+  [self addButtonWithTitle:@"New" andSelector:@selector(newPhoto) isLeft:NO];
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -92,11 +92,11 @@
 #pragma mark -
 #pragma mark Compose
 - (void)newPhoto {
-  CameraViewController *cvc = [[CameraViewController alloc] init];
-  UINavigationController *cnc = [[UINavigationController alloc] initWithRootViewController:cvc];
-  [self presentModalViewController:cnc animated:YES];
-  [cvc autorelease];
-  [cnc autorelease];
+//  CameraViewController *cvc = [[CameraViewController alloc] init];
+//  UINavigationController *cnc = [[UINavigationController alloc] initWithRootViewController:cvc];
+//  [self presentModalViewController:cnc animated:YES];
+//  [cvc autorelease];
+//  [cnc autorelease];
 }
 
 #pragma mark -

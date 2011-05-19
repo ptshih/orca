@@ -30,5 +30,6 @@
 - (void)resetFetchedResultsController;
 - (void)executeFetch;
 - (NSFetchRequest *)getFetchRequest;
+- (void)coreDataDidReset;
 
 @end
