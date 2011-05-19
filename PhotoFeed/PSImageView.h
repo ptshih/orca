@@ -17,6 +17,7 @@
   UIImage *_placeholderImage;
   
   BOOL _shouldScale;
+  BOOL _shouldAuth;
   
   ASIHTTPRequest *_request;
   id <PSImageViewDelegate> _delegate;
@@ -25,6 +26,7 @@
 @property (nonatomic, copy) NSString *urlPath;
 @property (nonatomic, retain) UIImage *placeholderImage;
 @property (nonatomic, assign) BOOL shouldScale;
+@property (nonatomic, assign) BOOL shouldAuth;
 @property (nonatomic, assign) id <PSImageViewDelegate> delegate;
 
 - (void)loadImage;

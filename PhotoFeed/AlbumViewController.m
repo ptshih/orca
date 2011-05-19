@@ -8,7 +8,7 @@
 
 #import "AlbumViewController.h"
 #import "AlbumDataCenter.h"
-#import "SnapViewController.h"
+#import "PhotoViewController.h"
 #import "AlbumCell.h"
 #import "Album.h"
 #import "CameraViewController.h"
@@ -106,7 +106,7 @@
   UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 26)] autorelease];
   sectionHeaderView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_plain_header_gray.png"]];
   
-  UILabel *sectionHeaderLabel = [[[UILabel alloc] initWithFrame:CGRectMake(5, 0, 310, 24)] autorelease];
+  UILabel *sectionHeaderLabel = [[[UILabel alloc] initWithFrame:CGRectMake(5, 0, 310, 26)] autorelease];
   sectionHeaderLabel.backgroundColor = [UIColor clearColor];
   sectionHeaderLabel.text = sectionName;
   sectionHeaderLabel.textColor = [UIColor whiteColor];
@@ -142,7 +142,7 @@
   //    }
   //  }
   
-  SnapViewController *svc = [[SnapViewController alloc] init];
+  PhotoViewController *svc = [[PhotoViewController alloc] init];
   svc.album = album;
   [self.navigationController pushViewController:svc animated:YES];
   [svc release];
@@ -200,7 +200,7 @@
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [_albumDataCenter getAlbumsFetchRequest];
+  return [_albumDataCenter fetchAlbums];
 }
 
 - (void)logout {

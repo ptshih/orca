@@ -12,15 +12,14 @@
 
 @class Facebook;
 @class LoginViewController;
-@class AlbumViewController;
+@class LauncherViewController;
 @class LoginDataCenter;
 
 @interface PhotoFeedAppDelegate : NSObject <UIApplicationDelegate, LoginDelegate, PSDataCenterDelegate> {
   UIWindow *_window;
   Facebook *_facebook;
   LoginViewController *_loginViewController;
-  AlbumViewController *_albumViewController;;
-  UINavigationController *_navigationController;
+  LauncherViewController *_launcherViewController;
   
   LoginDataCenter *_loginDataCenter;
   

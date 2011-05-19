@@ -7,13 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PSViewController.h"
-
-@class AlbumViewController;
 
 @interface LauncherViewController : UIViewController {
-  AlbumViewController *_avc;
-  UINavigationController *_anc;
+  UITabBarController *_tabBarController;
 }
 
 @end

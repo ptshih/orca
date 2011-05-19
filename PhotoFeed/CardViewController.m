@@ -36,7 +36,7 @@ static UIImage *_backgroundImage = nil;
   
   self.view.opaque = YES;
   self.view.backgroundColor = [UIColor blackColor];
-  //  self.view.frame = CGRectMake(0, 20, 320, CARD_HEIGHT);
+//  self.view.frame = CGRectMake(0, 20, 320, CARD_HEIGHT);
   
   // Background View
   UIImageView *backgroundView = [[UIImageView alloc] initWithImage:_backgroundImage];

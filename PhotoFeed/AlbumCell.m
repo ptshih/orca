@@ -8,7 +8,9 @@
 
 #import "AlbumCell.h"
 
-#define NAME_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0]
+#define ALBUM_CELL_HEIGHT 120.0
+
+#define NAME_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0]
 #define CAPTION_FONT [UIFont fontWithName:@"HelveticaNeue" size:12.0]
 #define SMALL_ITALIC_FONT [UIFont fontWithName:@"HelveticaNeue-Italic" size:12.0]
 
@@ -17,6 +19,8 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     _nameLabel = [[UILabel alloc] init];
     _captionLabel = [[UILabel alloc] init];
     _fromLabel = [[UILabel alloc] init];
@@ -68,8 +72,9 @@
     _captionView.layer.opacity = 0.667;
     
     // Photo
-    _photoView = [[PSImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+    _photoView = [[PSImageView alloc] initWithFrame:CGRectMake(0, 0, 320, ALBUM_CELL_HEIGHT)];
     _photoView.shouldScale = YES;
+    _photoView.shouldAuth = YES;
     
     // Add to contentView
     [self.contentView addSubview:_photoView];
@@ -80,8 +85,6 @@
     [self.contentView addSubview:_captionLabel];
     [self.contentView addSubview:_fromLabel];
     [self.contentView addSubview:_locationLabel];
-    
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
   }
   return self;
 }
@@ -100,42 +103,46 @@
   
   // Check to see if there is a caption
   if ([_captionLabel.text length] > 0) {
-    _captionView.frame = CGRectMake(0, 60, 320, 40);
+    _captionView.frame = CGRectMake(0, 80, 320, 40);
   } else {
-    _captionView.frame = CGRectMake(0, 76, 320, 24);
+    _captionView.frame = CGRectMake(0, 96, 320, 24);
   }
   
   CGFloat top = _captionView.top;
   CGFloat left = MARGIN_X;
   CGFloat textWidth = self.contentView.width - MARGIN_X * 2;
+  CGSize desiredSize = CGSizeZero;
   
-  // Timestamp
-  [_fromLabel sizeToFitFixedWidth:textWidth withLineBreakMode:_fromLabel.lineBreakMode withNumberOfLines:0];
-  _fromLabel.top = top;
-  _fromLabel.left = self.contentView.width - _fromLabel.width - MARGIN_X;
-  _fromLabel.height = 24.0;
+  // From/Author
+  desiredSize = [UILabel sizeForText:_fromLabel.text width:textWidth font:_fromLabel.font numberOfLines:1 lineBreakMode:_fromLabel.lineBreakMode];
+  _fromLabel.top = top + 4.0;
+  _fromLabel.left = self.contentView.width - desiredSize.width - MARGIN_X;
+  _fromLabel.width = desiredSize.width;
+  _fromLabel.height = 18.0;
   
   // Name
-  [_nameLabel sizeToFitFixedWidth:(textWidth - _fromLabel.width - MARGIN_X) withLineBreakMode:_nameLabel.lineBreakMode withNumberOfLines:1];
-  _nameLabel.top = top;
+  desiredSize = [UILabel sizeForText:_nameLabel.text width:(textWidth - _fromLabel.width - MARGIN_X) font:_nameLabel.font numberOfLines:1 lineBreakMode:_nameLabel.lineBreakMode];
+  _nameLabel.top = top + 4.0;
   _nameLabel.left = left;
-  _nameLabel.height = 22.0;
+  _nameLabel.width = desiredSize.width;
+  _nameLabel.height = 18.0;
   
   top = _nameLabel.bottom;
   
   if ([_captionLabel.text length] > 0) {    
     // Caption
-    [_captionLabel sizeToFitFixedWidth:textWidth withLineBreakMode:_captionLabel.lineBreakMode withNumberOfLines:1];
+    desiredSize = [UILabel sizeForText:_captionLabel.text width:textWidth font:_captionLabel.font numberOfLines:1 lineBreakMode:_captionLabel.lineBreakMode];
     _captionLabel.top = top;
     _captionLabel.left = left;
-    _captionLabel.height = 16.0;
+    _captionLabel.width = desiredSize.width;
+    _captionLabel.height = desiredSize.height;
   }
 }
 
 #pragma mark -
 #pragma mark Fill and Height
 + (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-  return 100.0;
+  return ALBUM_CELL_HEIGHT;
 }
 
 - (void)fillCellWithObject:(id)object {

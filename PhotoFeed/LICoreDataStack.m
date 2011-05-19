@@ -44,7 +44,7 @@ static NSThread *_mocThread = nil;
 #pragma mark Initialization Methods
 + (void)resetPersistentStore {
   [[self class] deleteAllObjects:@"Album"];
-  [[self class] deleteAllObjects:@"Snap"];
+  [[self class] deleteAllObjects:@"Photo"];
   [[self class] deleteAllObjects:@"Comment"];
   [[self class] deleteAllObjects:@"Like"];
   

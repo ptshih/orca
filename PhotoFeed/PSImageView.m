@@ -15,12 +15,14 @@
 @synthesize urlPath = _urlPath;
 @synthesize placeholderImage = _placeholderImage;
 @synthesize shouldScale = _shouldScale;
+@synthesize shouldAuth = _shouldAuth;
 @synthesize delegate = _delegate;
 
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     _shouldScale = NO;
+    _shouldAuth = NO;
     _placeholderImage = nil;
     
     _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -64,8 +66,13 @@
       }
       
       // Fire the request
-      NSString *authURL = [NSString stringWithFormat:@"%@?access_token=%@", _urlPath, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]];
-      _request = [[ASIHTTPRequest requestWithURL:[NSURL URLWithString:authURL]] retain];
+      NSString *newURLPath = nil;
+      if (_shouldAuth) {
+        newURLPath = [NSString stringWithFormat:@"%@?access_token=%@", _urlPath, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]];
+      } else {
+        newURLPath = _urlPath;
+      }
+      _request = [[ASIHTTPRequest requestWithURL:[NSURL URLWithString:newURLPath]] retain];
       
       // Request Completion Block
       [_request setCompletionBlock:^{
@@ -119,7 +126,12 @@
 #pragma mark Request Finished
 - (void)requestFinished:(ASIHTTPRequest *)request {
   // URL
-  NSURL *origURL = [[request originalURL] URLByRemovingQuery];
+  NSURL *origURL = nil;
+  if (_shouldAuth) {
+    origURL = [[request originalURL] URLByRemovingQuery];
+  } else {
+    origURL = [request originalURL];
+  }
   UIImage *image = [UIImage imageWithData:[request responseData]];
   UIImage *newImage = nil;
   if (image) {

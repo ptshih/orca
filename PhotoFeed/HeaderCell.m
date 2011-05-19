@@ -8,17 +8,17 @@
 
 #import "HeaderCell.h"
 
-#define MARGIN_X 10.0
-#define MARGIN_Y 6.0
+#define MARGIN_X 5.0
 
-#define LABEL_HEIGHT 32.0
+#define NAME_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0]
+#define SMALL_ITALIC_FONT [UIFont fontWithName:@"HelveticaNeue-Italic" size:12.0]
 
 static UIImage *_bgImage = nil;
 
 @implementation HeaderCell
 
 + (void)initialize {
-  _bgImage = [[UIImage imageNamed:@"row_gradient.png"] retain];
+  _bgImage = [[UIImage imageNamed:@"table_plain_header_gray.png"] retain];
 }
 
 - (id)initWithFrame:(CGRect)frame{
@@ -26,16 +26,20 @@ static UIImage *_bgImage = nil;
   if (self) {
     self.backgroundColor = [UIColor colorWithPatternImage:_bgImage];
     
-    _psImageView = [[PSImageView alloc] initWithFrame:CGRectMake(MARGIN_X, MARGIN_Y, 32, 32)];
-    
     _userNameLabel = [[UILabel alloc] init];
-    _userNameLabel.backgroundColor = [UIColor clearColor];
-    
     _timestampLabel = [[UILabel alloc] init];
+    
+    _userNameLabel.backgroundColor = [UIColor clearColor];
     _timestampLabel.backgroundColor = [UIColor clearColor];
+    
+    _userNameLabel.font = NAME_FONT;
+    _userNameLabel.textColor = [UIColor whiteColor];
+    
+    _timestampLabel.font = SMALL_ITALIC_FONT;
+    _timestampLabel.textColor = FB_COLOR_VERY_LIGHT_BLUE;
+    
     _timestampLabel.textAlignment = UITextAlignmentRight;
     
-    [self addSubview:_psImageView];
     [self addSubview:_userNameLabel];
     [self addSubview:_timestampLabel];
   }
@@ -45,41 +49,34 @@ static UIImage *_bgImage = nil;
 - (void)layoutSubviews {
   [super layoutSubviews];
   
-  CGFloat top = MARGIN_Y;
-  CGFloat left = MARGIN_X + _psImageView.width + MARGIN_X;
-  CGFloat textWidth = self.width - left - MARGIN_X;
+  CGFloat top = 0;
+  CGFloat left = MARGIN_X;
+  CGFloat textWidth = self.width - MARGIN_X * 2;
+  CGSize desiredSize = CGSizeZero;
   
-  [_userNameLabel sizeToFitFixedWidth:textWidth withLineBreakMode:UILineBreakModeTailTruncation withNumberOfLines:1];
-  _userNameLabel.height = LABEL_HEIGHT;
-  _userNameLabel.left = left;
+  desiredSize = [UILabel sizeForText:_userNameLabel.text width:textWidth font:_userNameLabel.font numberOfLines:1 lineBreakMode:_userNameLabel.lineBreakMode];
   _userNameLabel.top = top;
+  _userNameLabel.left = left;
+  _userNameLabel.width = desiredSize.width;
+  _userNameLabel.height = self.height;
   
-  [_timestampLabel sizeToFitFixedWidth:(_userNameLabel.width - MARGIN_X) withLineBreakMode:UILineBreakModeTailTruncation withNumberOfLines:1];
-  _timestampLabel.height = LABEL_HEIGHT;
-  _timestampLabel.left = self.width - MARGIN_X - _timestampLabel.width;
+  desiredSize = [UILabel sizeForText:_timestampLabel.text width:textWidth font:_timestampLabel.font numberOfLines:1 lineBreakMode:_timestampLabel.lineBreakMode];
   _timestampLabel.top = top;
+  _timestampLabel.left = self.width - _userNameLabel.width - MARGIN_X;
+  _timestampLabel.width = desiredSize.width;
+  _timestampLabel.height = self.height;
 }
 
 - (void)fillCellWithObject:(id)object {
-  Snap *snap = (Snap *)object;
-  _psImageView.urlPath = snap.userPictureUrl;
+  Photo *photo = (Photo *)object;
   
-  _userNameLabel.text = snap.userName;
-  _timestampLabel.text = [NSDate stringForDisplayFromDate:snap.timestamp];
-  
-//  _psImageView.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", @"CharlieSheen"];
-//  _userNameLabel.text = @"Charlie Sheen";
-//  _timestampLabel.text = @"3h";
-}
-
-- (void)loadImage {
-  [_psImageView loadImage];
+  _userNameLabel.text = photo.fromName;
+  _timestampLabel.text = [NSDate stringForDisplayFromDate:photo.timestamp];
 }
 
 - (void)dealloc {
   RELEASE_SAFELY(_timestampLabel);
   RELEASE_SAFELY(_userNameLabel);
-  RELEASE_SAFELY(_psImageView);
   [super dealloc];
 }
 

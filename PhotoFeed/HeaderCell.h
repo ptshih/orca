@@ -8,17 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "PSView.h"
-#import "PSImageView.h"
-#import "Snap.h"
+#import "Photo.h"
+#import "Photo+Serialize.h"
 
 @interface HeaderCell : PSView {
-  PSImageView *_psImageView;
   UILabel *_userNameLabel;
   UILabel *_timestampLabel;
 }
 
 - (void)fillCellWithObject:(id)object;
-
-- (void)loadImage;
 
 @end

@@ -23,6 +23,6 @@
 /**
  Fetch Requests
  */
-- (NSFetchRequest *)getAlbumsFetchRequest;
+- (NSFetchRequest *)fetchAlbums;
 
 @end

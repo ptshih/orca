@@ -324,10 +324,10 @@
   //  NSArray *visibleIndexPaths = nil;
   if (self.searchDisplayController.active) {
     _visibleCells = [[self.searchDisplayController.searchResultsTableView visibleCells] retain];
-    //    visibleIndexPaths = [self.searchDisplayController.searchResultsTableView indexPathsForVisibleRows];
+    _visibleIndexPaths = [[self.searchDisplayController.searchResultsTableView indexPathsForVisibleRows] retain];
   } else {
     _visibleCells = [[self.tableView visibleCells] retain];
-    //    visibleIndexPaths = [self.tableView indexPathsForVisibleRows];
+    _visibleIndexPaths = [[self.tableView indexPathsForVisibleRows] retain];
   }
   
   // Subclass SHOULD IMPLEMENT
@@ -350,6 +350,7 @@
   RELEASE_SAFELY(_searchItems);
   RELEASE_SAFELY(_searchBar);
   RELEASE_SAFELY(_visibleCells);
+  RELEASE_SAFELY(_visibleIndexPaths);
   RELEASE_SAFELY(_refreshHeaderView);
   RELEASE_SAFELY(_footerView);
   RELEASE_SAFELY(_loadMoreView);

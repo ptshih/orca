@@ -103,7 +103,7 @@
   [super dataCenterRequestFailed:request withError:error];
 }
 
-- (NSFetchRequest *)getAlbumsFetchRequest {
+- (NSFetchRequest *)fetchAlbums {
   NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO] autorelease];
   NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
   NSFetchRequest *fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getAlbums" substitutionVariables:[NSDictionary dictionary]];

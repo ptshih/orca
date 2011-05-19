@@ -19,7 +19,7 @@ static ComposeDataCenter *_sharedInstance = nil;
   return _sharedInstance;
 }
 
-- (void)sendSnapWithAlbumId:(NSString *)albumId andMessage:(NSString *)message andPhoto:(UIImage *)photo shouldShare:(BOOL)shouldShare {
+- (void)sendPhotoWithAlbumId:(NSString *)albumId andMessage:(NSString *)message andPhoto:(UIImage *)photo shouldShare:(BOOL)shouldShare {
   NSURL *snapComposeUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/snaps", API_BASE_URL]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];

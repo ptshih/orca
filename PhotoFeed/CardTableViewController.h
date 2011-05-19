@@ -16,6 +16,7 @@
   NSMutableArray *_items;
   NSMutableArray *_searchItems;
   NSArray *_visibleCells;
+  NSArray *_visibleIndexPaths;
 
   UISearchBar *_searchBar;
   EGORefreshTableHeaderView *_refreshHeaderView;

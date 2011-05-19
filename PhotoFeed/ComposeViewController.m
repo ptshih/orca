@@ -79,7 +79,7 @@
 }
 
 - (void)send {
-  [[ComposeDataCenter sharedInstance] sendSnapWithAlbumId:@"1" andMessage:_message.text andPhoto:_snappedImage shouldShare:YES];
+  [[ComposeDataCenter sharedInstance] sendPhotoWithAlbumId:@"1" andMessage:_message.text andPhoto:_snappedImage shouldShare:YES];
   
   // Dismiss and let the op finish in the background
   [self dismissModalViewControllerAnimated:YES];

@@ -11,17 +11,16 @@
 
 @implementation UILabel (SizeToFitWidth)
 
-- (void)sizeToFitFixedWidth:(NSInteger)fixedWidth withLineBreakMode:(UILineBreakMode)lineBreakMode withNumberOfLines:(NSInteger)numberOfLines {
+- (void)sizeToFitFixedWidth:(NSInteger)fixedWidth withLineBreakMode:(UILineBreakMode)lineBreakMode {
   self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, fixedWidth, 0);
   self.lineBreakMode = lineBreakMode;
-  self.numberOfLines = numberOfLines;
   [self sizeToFit];
+}
 
-  if (numberOfLines > 0) {
-    CGRect frame = self.frame;
-    frame.size.width = fixedWidth;
-    self.frame = frame;
-  }
++ (CGSize)sizeForText:(NSString*)text width:(CGFloat)width font:(UIFont*)font numberOfLines:(NSInteger)numberOfLines lineBreakMode:(UILineBreakMode)lineBreakMode {
+  
+  CGFloat lineHeight = [@"A" sizeWithFont:font].height;
+  return [text sizeWithFont:font constrainedToSize:CGSizeMake(width, numberOfLines*lineHeight) lineBreakMode:lineBreakMode];
 }
 
 @end

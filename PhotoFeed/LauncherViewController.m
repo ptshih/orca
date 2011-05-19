@@ -14,34 +14,30 @@
 - (id)init {
   self = [super init];
   if (self) {
+    _tabBarController = [[UITabBarController alloc] init];
   }
   return self;
-}
-
-- (void)loadView {
-  [super loadView];
-  self.wantsFullScreenLayout = YES;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  _avc = [[AlbumViewController alloc] init];
-  _anc = [[UINavigationController alloc] initWithRootViewController:_avc];
-  [self.view addSubview:_anc.view];
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-}
-
-- (void)viewDidUnload {
-  [super viewDidUnload];
+  // Setup Tabs
+  AlbumViewController *avc = [[AlbumViewController alloc] init];
+  UINavigationController *anc = [[UINavigationController alloc] initWithRootViewController:avc];
+  
+  // Setup Tab Items
+  avc.tabBarItem = [[[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:7000] autorelease];
+  
+  // Set Tab Controllers
+  _tabBarController.viewControllers = [NSArray arrayWithObjects:anc, nil];
+  
+  // Add to view
+  self.view = _tabBarController.view;
 }
 
 - (void)dealloc {
-  RELEASE_SAFELY(_avc);
-  RELEASE_SAFELY(_anc);
+  RELEASE_SAFELY(_tabBarController);
   [super dealloc];
 }
 
