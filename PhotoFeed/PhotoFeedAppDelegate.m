@@ -112,7 +112,6 @@
     _facebook.accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
     _facebook.expirationDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookExpirationDate"];
     [self startSession];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
   }
 }
 
@@ -134,15 +133,16 @@
 }
 
 - (void)startDownloadAlbums {
-  _albumDataCenter = [[AlbumDataCenter alloc] init];
-  _albumDataCenter.delegate = self;
-  [_albumDataCenter getAlbums];
+  [[AlbumDataCenter defaultCenter] setDelegate:self];
+  [[AlbumDataCenter defaultCenter] getAlbums];
 }
 
 #pragma mark Session
 - (void)startSession {
   // This gets called on subsequent app launches
   [self resetSessionKey];
+  [self startDownloadAlbums];
+  
 #warning session disabled
 //  [_loginDataCenter startSession];
 }
@@ -150,6 +150,7 @@
 - (void)startRegister {
   // This gets called] if it is the first time logging in
   [self resetSessionKey];
+  
 #warning register disabled
 //  [_loginDataCenter startRegister];
 }
@@ -169,8 +170,6 @@
 
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
-  RELEASE_SAFELY(_albumDataCenter);
-  
   // Set UserDefaults
   [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
   
@@ -178,12 +177,15 @@
   if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
     [_launcherViewController dismissModalViewControllerAnimated:YES];
   }
+  
+  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
 }
 
 - (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
   // Session/Register request failed
   // Show login again
   _loginViewController.loginButton.hidden = NO;
+  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
 }
 
 #pragma mark -

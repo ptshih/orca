@@ -1,4 +1,4 @@
-    //
+//
 //  CardTableViewController.m
 //  PhotoFeed
 //
@@ -34,15 +34,20 @@
 
 // SUBCLASS CAN OPTIONALLY IMPLEMENT IF THEY WANT A SEARCH BAR
 - (void)setupSearchDisplayControllerWithScopeButtonTitles:(NSArray *)scopeButtonTitles {
+  [self setupSearchDisplayControllerWithScopeButtonTitles:scopeButtonTitles andPlaceholder:nil];
+}
+
+- (void)setupSearchDisplayControllerWithScopeButtonTitles:(NSArray *)scopeButtonTitles andPlaceholder:(NSString *)placeholder {
   _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
   _searchBar.delegate = self;
   _searchBar.tintColor = [UIColor darkGrayColor];
-//  _searchBar.backgroundColor = [UIColor clearColor];
+  _searchBar.placeholder = placeholder;
+  //  _searchBar.backgroundColor = [UIColor clearColor];
   
   if (scopeButtonTitles) {
     _searchBar.scopeButtonTitles = scopeButtonTitles;
   }
-
+  
   _tableView.tableHeaderView = _searchBar;
   
   UISearchDisplayController *searchController = [[UISearchDisplayController alloc] initWithSearchBar:_searchBar contentsController:self];
@@ -67,7 +72,7 @@
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorColor = SEPARATOR_COLOR;
   }
-//  [self.view insertSubview:_tableView atIndex:0];
+  //  [self.view insertSubview:_tableView atIndex:0];
   [self.view addSubview:_tableView];
   
   // Set the active scrollView
@@ -92,7 +97,7 @@
   _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 44, 320, 44)];
   _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
   _footerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"button-header-bg.png"]];
-
+  
   [self.view addSubview:_footerView];
 }
 
@@ -104,9 +109,11 @@
   // Button
   _loadMoreButton = [[UIButton alloc] initWithFrame:_loadMoreView.frame];
   _loadMoreButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  _loadMoreButton.userInteractionEnabled = NO;
   [_loadMoreButton setBackgroundImage:[UIImage imageNamed:@"navigationbar_bg.png"] forState:UIControlStateNormal];
   [_loadMoreButton addTarget:self action:@selector(loadMore) forControlEvents:UIControlEventTouchUpInside];
   [_loadMoreButton setTitle:@"Load More..." forState:UIControlStateNormal];
+  [_loadMoreButton setTitle:@"Loading More..." forState:UIControlStateSelected];
   [_loadMoreButton.titleLabel setShadowColor:[UIColor blackColor]];
   [_loadMoreButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
   [_loadMoreButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0]];
@@ -119,13 +126,15 @@
   // Add to subview
   [_loadMoreView addSubview:_loadMoreButton];
   [_loadMoreView addSubview:_loadMoreActivity];
-  
-  [self showLoadMoreView];
+
+  // Always show
+//  [self showLoadMoreView];
 }
 
 - (void)showLoadMoreView {
   if (_loadMoreView) {
-    [_loadMoreActivity stopAnimating];
+    [_loadMoreActivity startAnimating];
+    [_loadMoreButton setSelected:YES];
     _loadMoreButton.enabled = YES;
     _tableView.tableFooterView = _loadMoreView;
   }
@@ -133,15 +142,44 @@
 
 - (void)hideLoadMoreView {
   if (_loadMoreView) {
-    _loadMoreButton = NO;
+    _loadMoreButton.enabled = NO;
     _tableView.tableFooterView = nil;
   }
 }
 
 // Subclasses should override
 - (void)loadMore {
-//  [_loadMoreActivity startAnimating];
-//  _loadMoreButton.enabled = NO;
+  [_loadMoreActivity startAnimating];
+  [_loadMoreButton setSelected:YES];
+  _loadMoreButton.enabled = NO;
+}
+
+- (void)loadMoreFinished {
+  if (!_loadMoreButton.enabled) {
+    [_loadMoreActivity startAnimating];
+    [_loadMoreButton setSelected:YES];
+    _loadMoreButton.enabled = YES;
+  }
+}
+
+- (void)loadMoreIfAvailable {
+  // Make sure we are showing the footer first before attempting to load more
+  // Once we begin loading more, this should no longer trigger
+  NSLog(@"check to load more: %@", NSStringFromCGPoint(_tableView.contentOffset));
+  CGFloat tableBottom = _tableView.contentOffset.y + _tableView.height;
+  CGFloat footerTop = _tableView.tableFooterView.top;
+  
+  if (tableBottom >= footerTop) {
+    // Footer is showing, start loading more
+    if (_loadMoreButton.enabled) {
+      [self loadMore];
+    }
+  }
+}
+
+- (void)updateState {
+  [super updateState];
+  [self loadMoreFinished];
 }
 
 // Called when the user logs out and we need to clear all cached data
@@ -224,7 +262,7 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
   UIView *backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
   backgroundView.backgroundColor = CELL_COLOR_ALPHA;
-//    backgroundView.alpha = 0.8;
+  //    backgroundView.alpha = 0.8;
   cell.backgroundView = backgroundView;
   
   UIView *selectedBackgroundView = [[UIView alloc] initWithFrame:cell.bounds];
@@ -235,7 +273,7 @@
   [selectedBackgroundView release];
   
   // Load More if needed
-//  [self loadMore];
+  //  [self loadMore];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -287,7 +325,7 @@
 #pragma mark UIScrollViewDelegate
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
   if (!decelerate) {
-    [self loadImagesForOnScreenRows];
+    [self scrollEndedTrigger];
   }
   if (!self.searchDisplayController.active) {
     if (_refreshHeaderView) {
@@ -297,13 +335,18 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  [self loadImagesForOnScreenRows];
+  [self scrollEndedTrigger];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
   if (_refreshHeaderView) {
     [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
   }
+}
+
+- (void)scrollEndedTrigger {
+  //  [self loadImagesForOnScreenRows];
+  [self loadMoreIfAvailable];
 }
 
 #pragma mark -
@@ -324,21 +367,21 @@
 #pragma mark Image Lazy Loading
 - (void)loadImagesForOnScreenRows {
   //  NSArray *visibleIndexPaths = nil;
-//  if (self.searchDisplayController.active) {
-//    _visibleCells = [[self.searchDisplayController.searchResultsTableView visibleCells] retain];
-//    _visibleIndexPaths = [[self.searchDisplayController.searchResultsTableView indexPathsForVisibleRows] retain];
-//  } else {
-//    _visibleCells = [[self.tableView visibleCells] retain];
-//    _visibleIndexPaths = [[self.tableView indexPathsForVisibleRows] retain];
-//  }
+  //  if (self.searchDisplayController.active) {
+  //    _visibleCells = [[self.searchDisplayController.searchResultsTableView visibleCells] retain];
+  //    _visibleIndexPaths = [[self.searchDisplayController.searchResultsTableView indexPathsForVisibleRows] retain];
+  //  } else {
+  //    _visibleCells = [[self.tableView visibleCells] retain];
+  //    _visibleIndexPaths = [[self.tableView indexPathsForVisibleRows] retain];
+  //  }
   
   // Subclass SHOULD IMPLEMENT
   
-//  for (id cell in visibleCells) {
-//    if ([cell isKindOfClass:[PSImageCell class]]) {
-//      [(PSImageCell *)cell loadImage];
-//    }
-//  }
+  //  for (id cell in visibleCells) {
+  //    if ([cell isKindOfClass:[PSImageCell class]]) {
+  //      [(PSImageCell *)cell loadImage];
+  //    }
+  //  }
 }
 
 - (void)didReceiveMemoryWarning {

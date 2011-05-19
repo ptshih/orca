@@ -50,6 +50,12 @@
 
 - (void)updateState {
   [super updateState];
+  NSUInteger fetchedCount = [[self.fetchedResultsController fetchedObjects] count];
+  if (fetchedCount < _limit) {
+    [self hideLoadMoreView];
+  } else {
+    [self showLoadMoreView];
+  }
 }
 
 #pragma mark Data Source
@@ -64,10 +70,11 @@
 - (void)loadMore {
   [super loadMore];
   NSUInteger fetchedCount = [[self.fetchedResultsController fetchedObjects] count];
+  _limit += fetchedCount;
   //  [[self.fetchedResultsController fetchRequest] setFetchOffset:fetchedCount];
-  [[self.fetchedResultsController fetchRequest] setFetchLimit:fetchedCount + _limit];
-  [self executeFetch];
-  [_tableView reloadData];
+  [[self.fetchedResultsController fetchRequest] setFetchLimit:_limit];
+  [self dataSourceDidLoad];
+  
 }
 
 - (void)dataSourceDidLoad {

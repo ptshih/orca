@@ -36,12 +36,17 @@
 - (void)setupFooterView;
 - (void)setupLoadMoreView;
 - (void)setupSearchDisplayControllerWithScopeButtonTitles:(NSArray *)scopeButtonTitles;
+- (void)setupSearchDisplayControllerWithScopeButtonTitles:(NSArray *)scopeButtonTitles andPlaceholder:(NSString *)placeholder;
 
 - (void)showLoadMoreView;
 - (void)hideLoadMoreView;
 
 - (void)loadMore;
+- (void)loadMoreFinished;
+- (void)loadMoreIfAvailable;
 
 - (void)loadImagesForOnScreenRows;
+
+- (void)scrollEndedTrigger;
 
 @end

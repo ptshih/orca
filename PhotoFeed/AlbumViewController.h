@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "CardCoreDataTableViewController.h"
 
-@class AlbumDataCenter;
-
 typedef enum {
   AlbumTypeMe = 0,
   AlbumTypeFriends = 1,
@@ -18,7 +16,6 @@ typedef enum {
 } AlbumType;
 
 @interface AlbumViewController : CardCoreDataTableViewController {
-  AlbumDataCenter *_albumDataCenter;
   AlbumType _albumType;
 }
 

@@ -20,22 +20,16 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _albumDataCenter = [[AlbumDataCenter alloc] init];
-    _albumDataCenter.delegate = self;
     _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
-    
     _albumType = AlbumTypeMe;
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
   }
   return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-//  [self executeFetch];
-//  [self updateState];
-//  [_tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -51,18 +45,22 @@
   
   // Album Type
   NSArray *scopeArray = nil;
+  NSString *placeholder = nil;
   NSString *navTitle = nil;
   switch (self.albumType) {
     case AlbumTypeMe:
       navTitle = @"My Albums";
+      placeholder = @"Search by Album Name";
       scopeArray = [NSArray arrayWithObjects:@"Album", nil];
       break;
     case AlbumTypeFriends:
       navTitle = @"Friends Albums";
+      placeholder = @"Search by Album or Author Name";
       scopeArray = [NSArray arrayWithObjects:@"Album", @"Author", nil];
       break;
     case AlbumTypeMobile:
       navTitle = @"Mobile Albums";
+      placeholder = @"Search by Author Name";
       scopeArray = [NSArray arrayWithObjects:@"Author", nil];
       break;
     default:
@@ -70,7 +68,7 @@
   }
 
   // Search Scope
-  [self setupSearchDisplayControllerWithScopeButtonTitles:scopeArray];
+  [self setupSearchDisplayControllerWithScopeButtonTitles:scopeArray andPlaceholder:placeholder];
   
   // Title and Buttons
   [self addButtonWithTitle:@"Logout" andSelector:@selector(logout) isLeft:YES];
@@ -83,27 +81,18 @@
   [self setupLoadMoreView];
   
   [self resetFetchedResultsController];
+  [self dataSourceDidLoad];
 }
 
 - (void)reloadCardController {
   [super reloadCardController];
-  
-  [_albumDataCenter getAlbums];
+  if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
+    [self dataSourceDidLoad];
+  }
 }
 
 - (void)unloadCardController {
   [super unloadCardController];
-}
-
-#pragma mark -
-#pragma mark PSDataCenterDelegate
-- (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
-  //  NSLog(@"DC finish with response: %@", response);
-  [self dataSourceDidLoad];
-}
-
-- (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
-  [self dataSourceDidLoad];
 }
 
 - (void)newAlbum {
@@ -225,7 +214,7 @@
       break;
   }
 
-  return [_albumDataCenter fetchAlbumsWithTemplate:fetchTemplate andSubstitutionVariables:substitutionVariables andLimit:_limit andOffset:_offset];
+  return [[AlbumDataCenter defaultCenter] fetchAlbumsWithTemplate:fetchTemplate andSubstitutionVariables:substitutionVariables andLimit:_limit andOffset:_offset];
 }
 
 - (void)logout {
@@ -243,8 +232,7 @@
 }
 
 - (void)dealloc {
-//  [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
-//  RELEASE_SAFELY(_albumDataCenter);
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
   [super dealloc];
 }
 

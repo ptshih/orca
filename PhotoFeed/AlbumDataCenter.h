@@ -13,6 +13,8 @@
   NSManagedObjectContext *_context;
 }
 
++ (AlbumDataCenter *)defaultCenter;
+
 - (void)getAlbums;
 
 /**
