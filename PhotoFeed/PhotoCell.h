@@ -11,10 +11,16 @@
 #import "Photo.h"
 
 @interface PhotoCell : PSCell {
-  UIImageView*_photoView; // optional
+  PSImageView *_photoView; // optional
   UIView *_captionView;
 
   UILabel *_captionLabel;
+  
+  CGFloat _photoWidth;
+  CGFloat _photoHeight;
 }
+
+@property (nonatomic, assign) PSImageView *photoView;
+@property (nonatomic, assign) UILabel *captionLabel;
 
 @end

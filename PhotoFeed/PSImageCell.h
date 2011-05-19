@@ -20,7 +20,4 @@
   UIImageView *_psFrameView;
 }
 
-- (void)loadImage;
-- (void)loadImageIfCached;
-
 @end

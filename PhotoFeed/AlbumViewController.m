@@ -159,11 +159,6 @@
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
   
-  // Initial static render of cell
-//  if (tableView.dragging == NO && tableView.decelerating == NO) {
-//    [cell loadPhoto];
-//  }
-  
   return cell;
 }
 

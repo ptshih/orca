@@ -35,20 +35,12 @@ static UIImage *_frameImage = nil;
 
 - (void)prepareForReuse {
   [super prepareForReuse];
-  [_psImageView unloadImage];
+  _psFrameView.image = nil;
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
   
-}
-
-- (void)loadImage {
-  [_psImageView loadImage];
-}
-
-- (void)loadImageIfCached {
-  [_psImageView loadImageIfCached];
 }
 
 + (CGFloat)rowHeight {

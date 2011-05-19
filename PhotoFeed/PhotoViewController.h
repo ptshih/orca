@@ -11,12 +11,14 @@
 
 @class PhotoDataCenter;
 @class Album;
+@class PSZoomView;
 
 @interface PhotoViewController : CardCoreDataTableViewController {
   PhotoDataCenter *_photoDataCenter;
   Album *_album;
   
   NSMutableDictionary *_headerCellCache;
+  PSZoomView *_zoomView;
 }
 
 @property (nonatomic, assign) Album *album;

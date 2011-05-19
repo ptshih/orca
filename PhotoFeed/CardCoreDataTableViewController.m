@@ -58,6 +58,10 @@
   [super unloadCardController];
 }
 
+- (void)loadMore {
+  
+}
+
 #pragma mark Core Data
 //- (void)managedObjectContextSaveDidNotification:(NSNotification *)notification {
 //  [self.context mergeChangesFromContextDidSaveNotification:notification];

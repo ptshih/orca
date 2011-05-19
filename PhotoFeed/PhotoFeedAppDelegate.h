@@ -14,6 +14,7 @@
 @class LoginViewController;
 @class LauncherViewController;
 @class LoginDataCenter;
+@class AlbumDataCenter;
 
 @interface PhotoFeedAppDelegate : NSObject <UIApplicationDelegate, LoginDelegate, PSDataCenterDelegate> {
   UIWindow *_window;
@@ -22,6 +23,8 @@
   LauncherViewController *_launcherViewController;
   
   LoginDataCenter *_loginDataCenter;
+  
+  AlbumDataCenter *_albumDataCenter;
   
   // Session
   NSString *_sessionKey;
@@ -36,6 +39,7 @@
 - (void)animateHideLogin;
 - (void)startSession;
 - (void)startRegister;
+- (void)startDownloadAlbums;
 - (void)tryLogin;
 - (void)resetSessionKey;
 

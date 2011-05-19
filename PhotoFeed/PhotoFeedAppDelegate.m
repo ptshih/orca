@@ -12,6 +12,7 @@
 #import "LoginViewController.h"
 #import "LauncherViewController.h"
 #import "LoginDataCenter.h"
+#import "AlbumDataCenter.h"
 #import "PSImageCache.h"
 
 @implementation PhotoFeedAppDelegate
@@ -120,26 +121,22 @@
 - (void)userDidLogin {
   DLog(@"User Logged In");
   
-  // Set UserDefaults
-  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
-  
-  // Flag event controller to reload after logging in
-  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
-  
-  // Session/Register request finished
-  if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
-    [_launcherViewController dismissModalViewControllerAnimated:NO];
-  }
   
   // Change login screen to edu walkthru / loading
   
-//  [self startRegister];
+  [self startDownloadAlbums];
 }
 
 - (void)userDidLogout {
   // Delete all existing data
   [LICoreDataStack resetPersistentStore];
   [self tryLogin];
+}
+
+- (void)startDownloadAlbums {
+  _albumDataCenter = [[AlbumDataCenter alloc] init];
+  _albumDataCenter.delegate = self;
+  [_albumDataCenter getAlbums];
 }
 
 #pragma mark Session
@@ -172,21 +169,10 @@
 
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
+  RELEASE_SAFELY(_albumDataCenter);
   
-  // Determine if this is register or session
-  NSString *loginType = [request.userInfo valueForKey:@"login"];
-  if ([loginType isEqualToString:@"register"]) {  
-    // Our server will send user ID, name, and array of friend ids
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
-    [[NSUserDefaults standardUserDefaults] setObject:[response valueForKey:@"access_token"] forKey:@"accessToken"];
-    [[NSUserDefaults standardUserDefaults] setObject:[response valueForKey:@"facebook_id"] forKey:@"facebookId"];
-    [[NSUserDefaults standardUserDefaults] setObject:[response valueForKey:@"name"] forKey:@"facebookName"];
-    [[NSUserDefaults standardUserDefaults] setObject:[response valueForKey:@"friends"] forKey:@"friends"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    // Flag event controller to reload after logging in
-    [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
-  }
+  // Set UserDefaults
+  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
   
   // Session/Register request finished
   if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {

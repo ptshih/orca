@@ -13,6 +13,7 @@
 #import "HeaderCell.h"
 #import "PhotoCell.h"
 #import "CameraViewController.h"
+#import "PSZoomView.h"
 
 @implementation PhotoViewController
 
@@ -133,12 +134,22 @@
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
   
-  // Initial static render of cell
-//  if (tableView.dragging == NO && tableView.decelerating == NO) {
-//    [cell loadPhoto];
-//  }
-  
   return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  PhotoCell *cell = (PhotoCell *)[tableView cellForRowAtIndexPath:indexPath];
+  
+  if (!_zoomView) {
+    _zoomView = [[PSZoomView alloc] initWithFrame:[[[UIApplication sharedApplication] keyWindow] frame]];
+  }
+  
+  _zoomView.zoomImageView.image = [[cell.photoView.image copy] autorelease];
+  _zoomView.zoomImageView.frame = [cell convertRect:cell.photoView.frame toView:nil];
+  _zoomView.oldImageFrame = [cell convertRect:cell.photoView.frame toView:nil];
+  _zoomView.oldCaptionFrame = [cell convertRect:cell.captionLabel.frame toView:nil];
+  _zoomView.caption = [[cell.captionLabel.text copy] autorelease];
+  [_zoomView zoom];
 }
 
 - (void)loadImagesForOnScreenRows {
@@ -160,8 +171,10 @@
 }
 
 - (void)dealloc {
+  _photoDataCenter.delegate = nil;
   RELEASE_SAFELY(_photoDataCenter);
   RELEASE_SAFELY(_headerCellCache);
+  RELEASE_SAFELY(_zoomView);
   [super dealloc];
 }
 

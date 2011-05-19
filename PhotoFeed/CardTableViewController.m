@@ -138,8 +138,7 @@
 
 // Subclasses should override
 - (void)loadMore {
-  [_loadMoreActivity startAnimating];
-  _loadMoreButton.enabled = NO;
+  // TABLE FOOTER SHOULD SHOW LOADING
 }
 
 // Called when the user logs out and we need to clear all cached data
@@ -234,6 +233,9 @@
   
   [backgroundView release];
   [selectedBackgroundView release];
+  
+  // Load More if needed
+  [self loadMore];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -322,13 +324,13 @@
 #pragma mark Image Lazy Loading
 - (void)loadImagesForOnScreenRows {
   //  NSArray *visibleIndexPaths = nil;
-  if (self.searchDisplayController.active) {
-    _visibleCells = [[self.searchDisplayController.searchResultsTableView visibleCells] retain];
-    _visibleIndexPaths = [[self.searchDisplayController.searchResultsTableView indexPathsForVisibleRows] retain];
-  } else {
-    _visibleCells = [[self.tableView visibleCells] retain];
-    _visibleIndexPaths = [[self.tableView indexPathsForVisibleRows] retain];
-  }
+//  if (self.searchDisplayController.active) {
+//    _visibleCells = [[self.searchDisplayController.searchResultsTableView visibleCells] retain];
+//    _visibleIndexPaths = [[self.searchDisplayController.searchResultsTableView indexPathsForVisibleRows] retain];
+//  } else {
+//    _visibleCells = [[self.tableView visibleCells] retain];
+//    _visibleIndexPaths = [[self.tableView indexPathsForVisibleRows] retain];
+//  }
   
   // Subclass SHOULD IMPLEMENT
   

@@ -14,10 +14,16 @@
 
 @implementation PhotoCell
 
+@synthesize photoView = _photoView;
+@synthesize captionLabel = _captionLabel;
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    _photoWidth = 0;
+    _photoHeight = 0;
     
     _captionLabel = [[UILabel alloc] init];
     
@@ -46,7 +52,7 @@
     _captionView.layer.opacity = 0.667;
     
     // Photo
-    _photoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
+    _photoView = [[PSImageView alloc] init];
 //    _photoView.shouldScale = YES;
     //    _photoView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
     //    _photoView.layer.borderWidth = 1.0;
@@ -69,6 +75,9 @@
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+  
+  // Photo
+  _photoView.frame = CGRectMake(0, 0, 320, round(_photoHeight / (_photoWidth / 320)));
 
   CGFloat top = _photoView.bottom;
   CGFloat left = MARGIN_X;
@@ -97,13 +106,16 @@
 }
 
 + (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-//  Photo *photo = (Photo *)object;
+  Photo *photo = (Photo *)object;
   
-  CGFloat cellWidth = [[self class] rowWidthForInterfaceOrientation:interfaceOrientation];
+//  CGFloat cellWidth = [[self class] rowWidthForInterfaceOrientation:interfaceOrientation];
   CGFloat desiredHeight = 0;
   
   // Photo
-  desiredHeight += cellWidth;
+  CGFloat photoWidth = [photo.width floatValue];
+  CGFloat photoHeight = [photo.height floatValue];
+
+  desiredHeight += round(photoHeight / (photoWidth / 320));
 
   // Caption
 //  if ([photo.name length] > 0) {
@@ -117,10 +129,13 @@
 - (void)fillCellWithObject:(id)object {
   Photo *photo = (Photo *)object;
   
+  _photoWidth = [photo.width integerValue];
+  _photoHeight = [photo.height integerValue];
+  
   // Photo
   if (photo.imageData) {
-    UIImage *cachedImage = [[UIImage imageWithData:photo.imageData] cropProportionalToSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
-    _photoView.image = [UIImage imageWithCGImage:cachedImage.CGImage scale:2 orientation:cachedImage.imageOrientation];
+    UIImage *cachedImage = [UIImage imageWithData:photo.imageData];
+    _photoView.image = cachedImage;
   } else {
     [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photo.source forEntity:photo];
   }

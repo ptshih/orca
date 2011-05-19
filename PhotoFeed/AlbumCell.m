@@ -74,7 +74,7 @@
     _captionView.layer.opacity = 0.667;
     
     // Photo
-    _photoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, ALBUM_CELL_HEIGHT)];
+    _photoView = [[PSImageView alloc] initWithFrame:CGRectMake(0, 0, 320, ALBUM_CELL_HEIGHT)];
     
     // Add to contentView
     [self.contentView addSubview:_photoView];
@@ -151,7 +151,7 @@
   // Photo
   if (album.imageData) {
     UIImage *cachedImage = [[UIImage imageWithData:album.imageData] cropProportionalToSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
-    _photoView.image = [UIImage imageWithCGImage:cachedImage.CGImage scale:2 orientation:cachedImage.imageOrientation];
+    _photoView.image = cachedImage;
   } else {
     NSString *photoURLPath = [NSString stringWithFormat:@"%@?access_token=%@", album.coverPhoto, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]];
     [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photoURLPath forEntity:album];

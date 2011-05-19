@@ -108,8 +108,8 @@
   NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
   NSFetchRequest *fetchRequest = [[LICoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getAlbums" substitutionVariables:[NSDictionary dictionary]];
   [fetchRequest setSortDescriptors:sortDescriptors];
-  [fetchRequest setFetchBatchSize:20];
-  [fetchRequest setFetchLimit:100];
+  [fetchRequest setFetchBatchSize:10];
+  [fetchRequest setFetchLimit:50];
   return fetchRequest;
 }
 

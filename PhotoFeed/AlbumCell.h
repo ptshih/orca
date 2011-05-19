@@ -11,7 +11,7 @@
 #import "Album.h"
 
 @interface AlbumCell : PSCell {
-  UIImageView *_photoView;
+  PSImageView *_photoView;
   UIView *_captionView;
   
   UILabel *_nameLabel;
