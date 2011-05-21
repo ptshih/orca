@@ -23,17 +23,19 @@
     _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
     _albumType = AlbumTypeMe;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
   }
   return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
+  [self reloadCardController];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
 }
 
 - (void)viewDidLoad {
@@ -63,6 +65,11 @@
       placeholder = @"Search by Author Name";
       scopeArray = [NSArray arrayWithObjects:@"Author", nil];
       break;
+    case AlbumTypeProfile:
+      navTitle = @"Profile Pictures";
+      placeholder = @"Search by Author Name";
+      scopeArray = [NSArray arrayWithObjects:@"Author", nil];
+      break;
     default:
       break;
   }
@@ -81,7 +88,6 @@
   [self setupLoadMoreView];
   
   [self resetFetchedResultsController];
-  [self dataSourceDidLoad];
 }
 
 - (void)reloadCardController {
@@ -210,6 +216,10 @@
       fetchTemplate = @"getMobileAlbums";
       substitutionVariables = [NSDictionary dictionary];
       break;
+    case AlbumTypeProfile:
+      fetchTemplate = @"getProfileAlbums";
+      substitutionVariables = [NSDictionary dictionary];
+      break;
     default:
       break;
   }
@@ -232,7 +242,6 @@
 }
 
 - (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
   [super dealloc];
 }
 

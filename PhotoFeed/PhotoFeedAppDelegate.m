@@ -134,6 +134,7 @@
 
 - (void)startDownloadAlbums {
   [[AlbumDataCenter defaultCenter] setDelegate:self];
+#warning disable download at boot if already logged in once
   [[AlbumDataCenter defaultCenter] getAlbums];
 }
 

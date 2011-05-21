@@ -99,17 +99,26 @@ static AlbumDataCenter *_defaultCenter = nil;
 }
 
 #pragma mark PSDataCenterDelegate
-- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponse:(id)response {
+- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponseData:(NSData *)responseData {
+#warning check for Facebook errors
   // Process the batched results
+  id response = [self parseFacebookBatchResponse:[request responseData]];
   NSArray *allValues = [response allValues];
   for (NSDictionary *valueDict in allValues) {
     [self serializeAlbumsWithDictionary:valueDict];
   }
-  [super dataCenterRequestFinished:request withResponse:response];
+  
+  // Inform Delegate
+  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
+    [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:request withObject:response];
+  }
 }
 
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
-  [super dataCenterRequestFailed:request withError:error];
+  // Inform Delegate
+  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFail:withError:)]) {
+    [_delegate performSelector:@selector(dataCenterDidFail:withError:) withObject:request withObject:error];
+  }
 }
 
 - (NSFetchRequest *)fetchAlbumsWithTemplate:(NSString *)fetchTemplate andSubstitutionVariables:(NSDictionary *)substitutionVariables andLimit:(NSUInteger)limit andOffset:(NSUInteger)offset {

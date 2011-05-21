@@ -43,5 +43,6 @@ typedef uint32_t PSCellType;
 + (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
 - (void)fillCellWithObject:(id)object;
+- (void)fillCellWithObject:(id)object shouldLoadImages:(BOOL)shouldLoadImages;
 
 @end

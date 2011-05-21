@@ -39,14 +39,18 @@
   AlbumViewController *mobile = [[AlbumViewController alloc] init];
   mobile.albumType = AlbumTypeMobile;
   UINavigationController *mobileNav = [[UINavigationController alloc] initWithRootViewController:mobile];
+  AlbumViewController *profile = [[AlbumViewController alloc] init];
+  profile.albumType = AlbumTypeProfile;
+  UINavigationController *profileNav = [[UINavigationController alloc] initWithRootViewController:profile];
   
   // Setup Tab Items
   me.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Me" image:[UIImage imageNamed:@"111-user.png"] tag:7000] autorelease];
   friends.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Friends" image:[UIImage imageNamed:@"112-group.png"] tag:7001] autorelease];
   mobile.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Mobile" image:[UIImage imageNamed:@"32-iphone.png"] tag:7002] autorelease];
+  profile.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Profile" image:[UIImage imageNamed:@"111-user.png"] tag:7003] autorelease];
   
   // Set Tab Controllers
-  _tabBarController.viewControllers = [NSArray arrayWithObjects:meNav, friendsNav, mobileNav, nil];
+  _tabBarController.viewControllers = [NSArray arrayWithObjects:meNav, friendsNav, mobileNav, profileNav, nil];
   
   // Add to view
   self.view = _tabBarController.view;

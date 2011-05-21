@@ -12,7 +12,8 @@
 typedef enum {
   AlbumTypeMe = 0,
   AlbumTypeFriends = 1,
-  AlbumTypeMobile = 2
+  AlbumTypeMobile = 2,
+  AlbumTypeProfile = 3
 } AlbumType;
 
 @interface AlbumViewController : CardCoreDataTableViewController {

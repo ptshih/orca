@@ -80,7 +80,7 @@
 - (void)dataSourceDidLoad {
   [super dataSourceDidLoad];
   [self executeFetch];
-  [_tableView reloadData];
+//  [_tableView reloadData];
   [self updateState];
 }
 
@@ -99,7 +99,7 @@
   NSFetchRequest *fetchRequest = [self getFetchRequest];
   if (fetchRequest) {
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:self.sectionNameKeyPathForFetchedResultsController cacheName:nil];
-    _fetchedResultsController.delegate = nil;
+    _fetchedResultsController.delegate = self;
   }
   
   RELEASE_SAFELY(_predicate);
@@ -176,7 +176,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
   [_tableView endUpdates];
-  [self loadImagesForOnScreenRows];
+//  [self loadImagesForOnScreenRows];
 }
 
 #pragma mark UISearchDisplayDelegate

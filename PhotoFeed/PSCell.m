@@ -44,6 +44,11 @@
 
 - (void)fillCellWithObject:(id)object {
   // Subclasses must override
+  [self fillCellWithObject:object shouldLoadImages:NO];
+}
+
+- (void)fillCellWithObject:(id)object shouldLoadImages:(BOOL)shouldLoadImages {
+  // Subclasses must override
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

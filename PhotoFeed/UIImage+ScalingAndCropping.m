@@ -122,4 +122,34 @@
   return croppedImage;
 }
 
+- (UIImage *)scaledProportionalToSize:(CGSize)desiredSize {
+  CGFloat desiredWidth = desiredSize.width;
+  CGFloat desiredHeight = desiredSize.height;
+  CGFloat maxDimension = (desiredWidth > desiredHeight) ? desiredWidth : desiredHeight;
+  
+  if (self.size.width > self.size.height) {
+    // Landscape
+    self = [self scaleProportionalToSize:CGSizeMake(INT_MAX, maxDimension)];
+  } else if (self.size.width < self.size.height) {
+    // Portrait
+    self = [self scaleProportionalToSize:CGSizeMake(maxDimension, INT_MAX)];
+  } else {
+    // Square
+    self = [self scaleProportionalToSize:CGSizeMake(maxDimension, maxDimension)];
+  }
+  return self;
+}
+
+- (UIImage *)scaledBoundedByWidth:(CGFloat)desiredWidth {
+  CGSize desiredSize = [self scaledSizeBoundedByWidth:desiredWidth];
+  
+  CGRect desiredRect = CGRectMake(0, 0, desiredSize.width, desiredSize.height);
+
+  CGImageRef imageRef = CGImageCreateWithImageInRect([self CGImage], desiredRect);
+  UIImage *scaledImage = [UIImage imageWithCGImage:imageRef];
+  CGImageRelease(imageRef);
+  return scaledImage; 
+  
+}
+
 @end

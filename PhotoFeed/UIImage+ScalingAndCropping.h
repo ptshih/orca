@@ -16,4 +16,6 @@
 - (UIImage *)scaleProportionalToSize:(CGSize)desiredSize;
 - (UIImage *)cropProportionalToSize:(CGSize)desiredSize;
 - (UIImage *)cropProportionalToSize:(CGSize)desiredSize withRuleOfThirds:(BOOL)withRuleOfThirds;
+- (UIImage *)scaledProportionalToSize:(CGSize)desiredSize;
+- (UIImage *)scaledBoundedByWidth:(CGFloat)desiredWidth;
 @end

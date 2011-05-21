@@ -165,7 +165,7 @@
 - (void)loadMoreIfAvailable {
   // Make sure we are showing the footer first before attempting to load more
   // Once we begin loading more, this should no longer trigger
-  NSLog(@"check to load more: %@", NSStringFromCGPoint(_tableView.contentOffset));
+  //  NSLog(@"check to load more: %@", NSStringFromCGPoint(_tableView.contentOffset));
   CGFloat tableBottom = _tableView.contentOffset.y + _tableView.height;
   CGFloat footerTop = _tableView.tableFooterView.top;
   
@@ -186,7 +186,6 @@
 // Subclasses should override this method
 - (void)clearCachedData {
   [self.items removeAllObjects];
-  [_tableView reloadData];
   [self dataSourceDidLoad];
 }
 
@@ -200,7 +199,6 @@
 
 - (void)unloadCardController {
   [super unloadCardController];
-  [_tableView reloadData];
 }
 
 - (void)dataSourceDidLoad {

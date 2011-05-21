@@ -21,9 +21,15 @@
   UILabel *_locationLabel;
   UILabel *_countLabel;
   
+  CGFloat _photoWidth;
+  CGFloat _photoHeight;
+  
   Album *_album;
+  BOOL _isAnimating;
 }
 
+- (void)setPhotoViewWithImage:(UIImage *)newImage;
 - (void)loadPhoto:(NSNotification *)notification;
+- (void)animateImage;
 
 @end

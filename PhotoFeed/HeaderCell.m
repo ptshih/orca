@@ -54,17 +54,17 @@ static UIImage *_bgImage = nil;
   CGFloat textWidth = self.width - MARGIN_X * 2;
   CGSize desiredSize = CGSizeZero;
   
-  desiredSize = [UILabel sizeForText:_userNameLabel.text width:textWidth font:_userNameLabel.font numberOfLines:1 lineBreakMode:_userNameLabel.lineBreakMode];
-  _userNameLabel.top = top;
-  _userNameLabel.left = left;
-  _userNameLabel.width = desiredSize.width;
-  _userNameLabel.height = self.height;
-  
   desiredSize = [UILabel sizeForText:_timestampLabel.text width:textWidth font:_timestampLabel.font numberOfLines:1 lineBreakMode:_timestampLabel.lineBreakMode];
-  _timestampLabel.top = top;
-  _timestampLabel.left = self.width - _userNameLabel.width - MARGIN_X;
   _timestampLabel.width = desiredSize.width;
   _timestampLabel.height = self.height;
+  _timestampLabel.top = top;
+  _timestampLabel.left = self.width - _timestampLabel.width - MARGIN_X;
+  
+  desiredSize = [UILabel sizeForText:_userNameLabel.text width:(textWidth - _timestampLabel.width - MARGIN_X) font:_userNameLabel.font numberOfLines:1 lineBreakMode:_userNameLabel.lineBreakMode];
+  _userNameLabel.width = desiredSize.width;
+  _userNameLabel.height = self.height;
+  _userNameLabel.top = top;
+  _userNameLabel.left = left;
 }
 
 - (void)fillCellWithObject:(id)object {

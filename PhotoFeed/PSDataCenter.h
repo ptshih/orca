@@ -45,7 +45,10 @@
 - (void)sendFacebookBatchRequestWithParams:(NSDictionary *)params andUserInfo:(NSDictionary *)userInfo;
 
 // Subclass should Implement AND call super's implementation
-- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponse:(id)response;
+- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponseData:(NSData *)responseData;
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error;
+
+// Parsing Code
+- (id)parseFacebookBatchResponse:(NSData *)responseData;
 
 @end

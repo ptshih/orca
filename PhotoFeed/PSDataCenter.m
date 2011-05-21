@@ -11,7 +11,6 @@
 
 @interface PSDataCenter (Private)
 
-- (id)parseFacebookBatchResponse:(NSData *)responseData;
 - (id)sanitizeResponse:(NSData *)responseData;
 - (NSDictionary *)sanitizeDictionary:(NSDictionary *)dictionary forKeys:(NSArray *)keys;
 - (NSArray *)sanitizeArray:(NSArray *)array;
@@ -97,12 +96,7 @@
   
   // Request Completion Block
   [request setCompletionBlock:^{
-    id response = [self parseFacebookBatchResponse:[request responseData]];
-    if (response) {
-      [self dataCenterRequestFinished:request withResponse:response];
-    } else {
-      [self dataCenterRequestFailed:request withError:nil];
-    }
+    [self dataCenterRequestFinished:request withResponseData:[request responseData]];
     
     // Remove request from pendingRequests
     [_pendingRequests removeObject:request];
@@ -176,12 +170,7 @@
   
   // Request Completion Block
   [request setCompletionBlock:^{
-    id response = [self sanitizeResponse:[request responseData]];
-    if (response) {
-      [self dataCenterRequestFinished:request withResponse:response];
-    } else {
-      [self dataCenterRequestFailed:request withError:nil];
-    }
+    [self dataCenterRequestFinished:request withResponseData:[request responseData]];
     
     // Remove request from pendingRequests
     [_pendingRequests removeObject:request];
@@ -254,12 +243,7 @@
   
   // Request Completion Block
   [request setCompletionBlock:^{
-    id response = [self sanitizeResponse:[request responseData]];
-    if (response) {
-      [self dataCenterRequestFinished:request withResponse:response];
-    } else {
-      [self dataCenterRequestFailed:request withError:nil];
-    }
+    [self dataCenterRequestFinished:request withResponseData:[request responseData]];
     
     // Remove request from pendingRequests
     [_pendingRequests removeObject:request];
@@ -279,18 +263,13 @@
 }
 
 #pragma mark -
-#pragma mark Callbacks
-// Subclass should Implement AND call super's implementation
-- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponse:(id)response {
-  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
-    [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:request withObject:response];
-  }
+#pragma mark Request Finished/Failed
+- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponseData:(NSData *)responseData {
+  // subclass should implement
 }
 
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
-  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFail:withError:)]) {
-    [_delegate performSelector:@selector(dataCenterDidFail:withError:) withObject:request withObject:error];
-  }
+  // subclass should implement
 }
 
 #pragma mark -
