@@ -265,8 +265,14 @@ static UIImage *_ribbonImage = nil;
     UIImage *cachedImage = [UIImage imageWithData:album.imageData];
     [self setPhotoViewWithImage:cachedImage];
   } else {
-    NSString *photoURLPath = [NSString stringWithFormat:@"%@?access_token=%@", album.coverPhoto, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]];
-    [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photoURLPath forEntity:album scaledSize:CGSizeZero];
+    if (album.coverPhoto) {
+      NSString *photoURLPath = [NSString stringWithFormat:@"%@?access_token=%@", album.coverPhoto, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]];
+      [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photoURLPath forEntity:album scaledSize:CGSizeZero];
+      _photoView.image = nil;
+    } else {
+      // Placeholder Image, no cover photo
+      _photoView.image = [UIImage imageNamed:@"lnkd.png"];
+    }
 //    [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photoURLPath forEntity:album scaledSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
   }
   

@@ -46,14 +46,14 @@
     
 #warning some albums have no cover photo
     if (![dictionary valueForKey:@"cover_photo"]) {
-      NSLog(@"uh oh, no cover photo");
+      NSLog(@"uh oh, no cover photo for: %@", [dictionary valueForKey:@"id"]);
     }
     
     newAlbum.caption = [dictionary valueForKey:@"description"] ? [dictionary valueForKey:@"description"] : nil;
     newAlbum.location = [dictionary valueForKey:@"location"] ? [dictionary valueForKey:@"location"] : nil;
     
     // Counts
-    newAlbum.count = [dictionary valueForKey:@"count"];
+    newAlbum.count = [dictionary valueForKey:@"count"] ? [dictionary valueForKey:@"count"] : [NSNumber numberWithInteger:0];
     
     // Author/From
     NSDictionary *from = [dictionary valueForKey:@"from"];
@@ -78,6 +78,12 @@
 - (Album *)updateAlbumWithDictionary:(NSDictionary *)dictionary {
   if (dictionary) {
     
+    // For some reason, facebook's api is really bad about cover photos
+    if ([dictionary valueForKey:@"cover_photo"] && !self.coverPhoto) {
+      NSLog(@"cover photo recovered for: %@", [dictionary valueForKey:@"id"]);
+      self.coverPhoto = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", [dictionary valueForKey:@"cover_photo"]];
+    }
+  
     // Check to see if this album has actually changed
     NSDate *newDate = nil;
     if ([dictionary valueForKey:@"updated_time"]) {
@@ -108,7 +114,7 @@
     self.location = [dictionary valueForKey:@"location"] ? [dictionary valueForKey:@"location"] : nil;
     
     // Counts
-    self.count = [dictionary valueForKey:@"count"];
+    self.count = [dictionary valueForKey:@"count"] ? [dictionary valueForKey:@"count"] : [NSNumber numberWithInteger:0];
     
     // Author/From
     NSDictionary *from = [dictionary valueForKey:@"from"];

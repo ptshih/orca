@@ -145,6 +145,7 @@
     _photoView.image = cachedImage;
   } else {
     [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photo.source forEntity:photo];
+    _photoView.image = nil;
   }
   
   // Caption
