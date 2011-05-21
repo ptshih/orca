@@ -14,10 +14,11 @@
 #import "JSON.h"
 #import "PSCoreDataStack.h"
 #import "NetworkConstants.h"
+#import "PSParserStack.h"
 
 #define SINCE_SAFETY_NET 180
 
-@interface PSDataCenter : PSObject <PSDataCenterDelegate> {
+@interface PSDataCenter : PSObject <PSDataCenterDelegate, PSParserStackDelegate> {
   id <PSDataCenterDelegate> _delegate;
   NSMutableArray *_pendingRequests;
 }
@@ -47,8 +48,5 @@
 // Subclass should Implement AND call super's implementation
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponseData:(NSData *)responseData;
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error;
-
-// Parsing Code
-- (id)parseFacebookBatchResponse:(NSData *)responseData;
 
 @end

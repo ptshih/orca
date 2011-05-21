@@ -58,6 +58,7 @@ static AlbumDataCenter *_defaultCenter = nil;
 }
 
 - (void)serializeAlbumsWithDictionary:(NSDictionary *)dictionary {
+#warning fetch these in a background thread
   NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES];
   
   NSArray *sortedEntities = [[dictionary valueForKey:@"data"] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
@@ -90,34 +91,35 @@ static AlbumDataCenter *_defaultCenter = nil;
   
   // Save to Core Data
   [PSCoreDataStack saveSharedContextIfNeeded];
-  //  if ([_context hasChanges]) {
-  //    if (![_context save:&error]) {
-  //      // CoreData ERROR!
-  //      abort(); // NOTE: DO NOT SHIP
-  //    }
-  //  }
 }
 
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponseData:(NSData *)responseData {
-#warning check for Facebook errors
-  // Process the batched results
-  id response = [self parseFacebookBatchResponse:[request responseData]];
-  NSArray *allValues = [response allValues];
-  for (NSDictionary *valueDict in allValues) {
-    [self serializeAlbumsWithDictionary:valueDict];
-  }
-  
-  // Inform Delegate
-  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
-    [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:request withObject:response];
-  }
+  // Process the batched results in a BG thread
+  [[PSParserStack sharedParser] parseData:responseData withDelegate:self];
 }
 
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
   // Inform Delegate
   if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFail:withError:)]) {
     [_delegate performSelector:@selector(dataCenterDidFail:withError:) withObject:request withObject:error];
+  }
+}
+
+- (void)parseFinishedWithResponse:(id)response {
+#warning check for Facebook errors
+  if ([response isKindOfClass:[NSArray class]]) {
+    [[PSParserStack sharedParser] parseData:[[[response lastObject] objectForKey:@"body"] dataUsingEncoding:NSUTF8StringEncoding] withDelegate:self];
+  } else {
+    NSArray *allValues = [response allValues];
+    for (NSDictionary *valueDict in allValues) {
+      [self serializeAlbumsWithDictionary:valueDict];
+    }
+    
+    // Inform Delegate
+    if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
+      [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:nil withObject:response];
+    }
   }
 }
 

@@ -56,20 +56,6 @@
   }
 }
 
-- (id)parseFacebookBatchResponse:(NSData *)responseData {
-  id response = nil;
-  
-  // First extract the batch request that we care about at index 1
-  NSString *body = [[[responseData JSONValue] objectAtIndex:1] objectForKey:@"body"];
-  response = [body JSONValue];
-  
-  if (response) {
-    return response;
-  } else {
-    return nil;
-  }  
-}
-
 #pragma mark -
 #pragma mark Send Operation
 - (void)sendFacebookBatchRequestWithParams:(NSDictionary *)params andUserInfo:(NSDictionary *)userInfo {
@@ -269,6 +255,12 @@
 }
 
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
+  // subclass should implement
+}
+
+#pragma mark -
+#pragma mark PSParserStackDelegate
+- (void)parseFinishedWithResponse:(id)response {
   // subclass should implement
 }
 

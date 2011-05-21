@@ -76,7 +76,7 @@
 }
 
 - (Album *)updateAlbumWithDictionary:(NSDictionary *)dictionary {
-  if (dictionary) {    
+  if (dictionary) {
     
     // Check to see if this album has actually changed
     NSDate *newDate = nil;

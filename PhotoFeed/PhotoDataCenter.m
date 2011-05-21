@@ -72,23 +72,12 @@
   
   // Save to Core Data
   [PSCoreDataStack saveSharedContextIfNeeded];
-  //  if ([_context hasChanges]) {
-  //    if (![_context save:&error]) {
-  //      // CoreData ERROR!
-  //      abort(); // NOTE: DO NOT SHIP
-  //    }
-  //  }
 }
 
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponseData:(NSData *)responseData {
-  id response = [responseData JSONValue];
-  [self serializePhotosWithDictionary:response];
-  
-  // Inform Delegate
-  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
-    [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:request withObject:response];
-  }
+//  id response = [responseData JSONValue];
+  [[PSParserStack sharedParser] parseData:responseData withDelegate:self];
 }
 
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
@@ -98,8 +87,18 @@
   }
 }
 
+- (void)parseFinishedWithResponse:(id)response {
+#warning check for Facebook errors
+  [self serializePhotosWithDictionary:response];
+  
+  // Inform Delegate
+  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
+    [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:nil withObject:response];
+  }
+}
+
 - (NSFetchRequest *)fetchPhotosForAlbum:(Album *)album withLimit:(NSUInteger)limit andOffset:(NSUInteger)offset {
-  NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"position" ascending:NO] autorelease];
+  NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"position" ascending:YES] autorelease];
   NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
   NSFetchRequest *fetchRequest = [[PSCoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPhotosForAlbum" substitutionVariables:[NSDictionary dictionaryWithObject:album forKey:@"desiredAlbum"]];
   [fetchRequest setSortDescriptors:sortDescriptors];

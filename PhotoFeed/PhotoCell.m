@@ -22,7 +22,7 @@
   if (self) {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadPhoto:) name:kImageCached object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadPhoto:) name:kImageCached object:nil];
     
     _photoWidth = 0;
     _photoHeight = 0;
@@ -140,12 +140,12 @@
   _photoHeight = [photo.height integerValue];
   
   // Photo
-//  if (photo.imageData) {
-//    UIImage *cachedImage = [UIImage imageWithData:photo.imageData];
-//    _photoView.image = cachedImage;
-//  } else {
-//    [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photo.source forEntity:photo];
-//  }
+  if (photo.imageData) {
+    UIImage *cachedImage = [UIImage imageWithData:photo.imageData];
+    _photoView.image = cachedImage;
+  } else {
+    [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photo.source forEntity:photo];
+  }
   
   // Caption
   _captionLabel.text = photo.name;
@@ -159,7 +159,7 @@
 }
 
 - (void)dealloc {
-//  [[NSNotificationCenter defaultCenter] removeObserver:self name:kImageCached object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kImageCached object:nil];
   RELEASE_SAFELY(_photoView);
   RELEASE_SAFELY(_captionView);
   

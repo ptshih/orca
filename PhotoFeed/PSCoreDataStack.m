@@ -110,14 +110,14 @@ static NSThread *_mocThread = nil;
   }
   
   // Use moc thread
-  //  [[self class] performSelector:@selector(initSharedManagedObjectContextInMocThread) onThread:_mocThread withObject:nil waitUntilDone:YES];
+  [[self class] performSelector:@selector(initSharedManagedObjectContextInMocThread) onThread:_mocThread withObject:nil waitUntilDone:YES];
   
   // Use main thread
-  NSPersistentStoreCoordinator *coordinator = [[self class] persistentStoreCoordinator];
-  if (coordinator != nil) {
-    _managedObjectContext = [[NSManagedObjectContext alloc] init];
-    [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-  }
+//  NSPersistentStoreCoordinator *coordinator = [[self class] persistentStoreCoordinator];
+//  if (coordinator != nil) {
+//    _managedObjectContext = [[NSManagedObjectContext alloc] init];
+//    [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+//  }
   
   return _managedObjectContext;
 }

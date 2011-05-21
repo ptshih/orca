@@ -74,13 +74,14 @@
   //  [[self.fetchedResultsController fetchRequest] setFetchOffset:fetchedCount];
   [[self.fetchedResultsController fetchRequest] setFetchLimit:_limit];
   [self dataSourceDidLoad];
-  
+  CGRect newRect = CGRectMake(0, _tableView.contentOffset.y + _loadMoreView.height, _tableView.width, _tableView.height);
+  [_tableView scrollRectToVisible:newRect animated:NO];
 }
 
 - (void)dataSourceDidLoad {
   [super dataSourceDidLoad];
   [self executeFetch];
-//  [_tableView reloadData];
+  [_tableView reloadData];
   [self updateState];
 }
 
@@ -98,8 +99,9 @@
   
   NSFetchRequest *fetchRequest = [self getFetchRequest];
   if (fetchRequest) {
-    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:self.sectionNameKeyPathForFetchedResultsController cacheName:nil];
-    _fetchedResultsController.delegate = self;
+    NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self class]];
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:self.sectionNameKeyPathForFetchedResultsController cacheName:cacheName];
+    _fetchedResultsController.delegate = nil;
   }
   
   RELEASE_SAFELY(_predicate);
@@ -185,9 +187,13 @@
 }
 
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
+  NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self class]];
+  [NSFetchedResultsController deleteCacheWithName:cacheName];
 }
 
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
+  NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self class]];
+  [NSFetchedResultsController deleteCacheWithName:cacheName];
   [self.fetchedResultsController.fetchRequest setPredicate:_predicate];
   [self executeFetch];
 }

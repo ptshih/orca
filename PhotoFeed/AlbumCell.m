@@ -31,7 +31,7 @@ static UIImage *_ribbonImage = nil;
     self.clipsToBounds = YES;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadPhoto:) name:kImageCached object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadPhoto:) name:kImageCached object:nil];
     
     _isAnimating = NO;
     _photoWidth = 0;
@@ -169,7 +169,7 @@ static UIImage *_ribbonImage = nil;
   if ([_captionLabel.text length] > 0) {    
     // Caption
     desiredSize = [UILabel sizeForText:_captionLabel.text width:textWidth font:_captionLabel.font numberOfLines:1 lineBreakMode:_captionLabel.lineBreakMode];
-    _captionLabel.top = top - 2.0;
+    _captionLabel.top = top - 5.0; // -2
     _captionLabel.left = left;
     _captionLabel.width = desiredSize.width;
     _captionLabel.height = desiredSize.height;
@@ -299,7 +299,7 @@ static UIImage *_ribbonImage = nil;
 }
 
 - (void)dealloc {
-//  [[NSNotificationCenter defaultCenter] removeObserver:self name:kImageCached object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kImageCached object:nil];
   RELEASE_SAFELY(_photoView);
   RELEASE_SAFELY(_captionView);
   RELEASE_SAFELY(_ribbonView);

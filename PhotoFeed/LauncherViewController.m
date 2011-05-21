@@ -30,18 +30,18 @@
   _tabBarController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   
   // Setup Tabs
-  AlbumViewController *me = [[AlbumViewController alloc] init];
+  AlbumViewController *me = [[[AlbumViewController alloc] init] autorelease];
   me.albumType = AlbumTypeMe;
-  UINavigationController *meNav = [[UINavigationController alloc] initWithRootViewController:me];
-  AlbumViewController *friends = [[AlbumViewController alloc] init];
+  UINavigationController *meNav = [[[UINavigationController alloc] initWithRootViewController:me] autorelease];
+  AlbumViewController *friends = [[[AlbumViewController alloc] init] autorelease];
   friends.albumType = AlbumTypeFriends;
-  UINavigationController *friendsNav = [[UINavigationController alloc] initWithRootViewController:friends];
-  AlbumViewController *mobile = [[AlbumViewController alloc] init];
+  UINavigationController *friendsNav = [[[UINavigationController alloc] initWithRootViewController:friends] autorelease];
+  AlbumViewController *mobile = [[[AlbumViewController alloc] init] autorelease];
   mobile.albumType = AlbumTypeMobile;
-  UINavigationController *mobileNav = [[UINavigationController alloc] initWithRootViewController:mobile];
-  AlbumViewController *profile = [[AlbumViewController alloc] init];
+  UINavigationController *mobileNav = [[[UINavigationController alloc] initWithRootViewController:mobile] autorelease];
+  AlbumViewController *profile = [[[AlbumViewController alloc] init] autorelease];
   profile.albumType = AlbumTypeProfile;
-  UINavigationController *profileNav = [[UINavigationController alloc] initWithRootViewController:profile];
+  UINavigationController *profileNav = [[[UINavigationController alloc] initWithRootViewController:profile] autorelease];
   
   // Setup Tab Items
   me.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Me" image:[UIImage imageNamed:@"111-user.png"] tag:7000] autorelease];

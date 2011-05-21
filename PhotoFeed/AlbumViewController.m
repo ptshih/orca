@@ -84,7 +84,7 @@
   
   
   // Pull Refresh
-  [self setupPullRefresh];
+//  [self setupPullRefresh];
   [self setupLoadMoreView];
   
   [self resetFetchedResultsController];
