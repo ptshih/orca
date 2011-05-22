@@ -130,6 +130,9 @@
       self.timestamp = [NSDate distantPast];
     }
     
+    // Clear image cache
+    self.imageData = nil;
+    
     return self;
   } else {
     return nil;

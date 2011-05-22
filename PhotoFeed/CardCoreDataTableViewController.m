@@ -196,6 +196,7 @@
   [NSFetchedResultsController deleteCacheWithName:cacheName];
   [self.fetchedResultsController.fetchRequest setPredicate:_predicate];
   [self executeFetch];
+  [_tableView reloadData];
 }
 
 #pragma mark UITableViewDelegate

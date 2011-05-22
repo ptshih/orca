@@ -196,6 +196,7 @@
   
   [self.fetchedResultsController.fetchRequest setPredicate:compoundPredicate];
   [self executeFetch];
+  [_tableView reloadData];
 }
 
 #pragma mark -

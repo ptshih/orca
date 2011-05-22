@@ -34,6 +34,7 @@ static AlbumDataCenter *_defaultCenter = nil;
   //  curl -F "batch=[ {'method': 'GET', 'name' : 'get-friends', 'relative_url': 'me/friends', 'omit_response_on_success' : true}, {'method': 'GET', 'name' : 'get-albums', 'depends_on':'get-friends', 'relative_url': 'albums?ids=me,{result=get-friends:$.data..id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=100', 'omit_response_on_success' : false} ]" https://graph.facebook.com
   
   // Apply since if exists
+#warning when applying this since, if the user adds new friends, we need to do a cold query for that friend's albums
   NSDate *since = [[NSUserDefaults standardUserDefaults] valueForKey:@"albums.since"];
   
   NSMutableDictionary *friendsDict = [NSMutableDictionary dictionary];
@@ -42,10 +43,11 @@ static AlbumDataCenter *_defaultCenter = nil;
   [friendsDict setValue:@"me/friends" forKey:@"relative_url"];
   [friendsDict setValue:[NSNumber numberWithBool:YES] forKey:@"omit_response_on_success"];
   
+  NSString *relativeUrl = [NSString stringWithFormat:@"albums?ids=me,{result=get-friends:$.data..id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=100&since=%0.0f", [since timeIntervalSince1970]];
   NSMutableDictionary *albumsDict = [NSMutableDictionary dictionary];
   [albumsDict setValue:@"GET" forKey:@"method"];
   [albumsDict setValue:@"get-albums" forKey:@"name"];
-  [albumsDict setValue:@"albums?ids=me,{result=get-friends:$.data..id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=100" forKey:@"relative_url"];
+  [albumsDict setValue:relativeUrl forKey:@"relative_url"];
   [albumsDict setValue:[NSNumber numberWithBool:NO] forKey:@"omit_response_on_success"];
   
   NSArray *batchArray = [NSArray arrayWithObjects:friendsDict, albumsDict, nil];
@@ -54,6 +56,7 @@ static AlbumDataCenter *_defaultCenter = nil;
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   [params setValue:batchJSON forKey:@"batch"];
   
+  [[NSUserDefaults standardUserDefaults] setValue:[NSDate date] forKey:@"albums.since"];
   [self sendFacebookBatchRequestWithParams:params andUserInfo:nil];
 }
 
