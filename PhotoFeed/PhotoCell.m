@@ -16,6 +16,7 @@
 
 @synthesize photoView = _photoView;
 @synthesize captionLabel = _captionLabel;
+@synthesize delegate = _delegate;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -65,8 +66,35 @@
     
     // Add labels
     [self.contentView addSubview:_captionLabel];
+    
+    UIPinchGestureRecognizer *zoomGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchZoom:)];
+    [self addGestureRecognizer:zoomGesture];
+    [zoomGesture release];
   }
   return self;
+}
+
+- (void)pinchZoom:(UIPinchGestureRecognizer *)sender {
+  DLog(@"detected pinch gesture with state: %d", [sender state]);
+  if (sender.state == UIGestureRecognizerStateBegan || sender.state == UIGestureRecognizerStateChanged) {
+    CGFloat factor = [sender scale];
+    DLog(@"scale: %f", [sender scale]);
+    if (factor > 1.5) {
+      // pinch triggered
+    }
+  } else if (sender.state == UIGestureRecognizerStateRecognized) {
+    if ([sender scale] > 1.0) {
+      [self triggerPinch];
+    } else {
+      // this is a shrink not a zoom
+    }
+  }
+}
+
+- (void)triggerPinch {
+  if (self.delegate && [self.delegate respondsToSelector:@selector(pinchZoomTriggeredForCell:)]) {
+    [self.delegate performSelector:@selector(pinchZoomTriggeredForCell:) withObject:self];
+  }
 }
 
 - (void)prepareForReuse {

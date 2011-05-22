@@ -134,6 +134,7 @@
   cell = (PhotoCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
   if(cell == nil) { 
     cell = [[[PhotoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+    cell.delegate = self;
   }
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
@@ -145,8 +146,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   PhotoCell *cell = (PhotoCell *)[tableView cellForRowAtIndexPath:indexPath];
   
+  [self zoomPhotoForCell:cell];
+}
+
+- (void)zoomPhotoForCell:(PhotoCell *)cell {
   if (!_zoomView) {
     _zoomView = [[PSZoomView alloc] initWithFrame:[[[UIApplication sharedApplication] keyWindow] frame]];
+    _zoomView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   }
   
   _zoomView.zoomImageView.image = [[cell.photoView.image copy] autorelease];
@@ -155,6 +161,10 @@
   _zoomView.oldCaptionFrame = [cell convertRect:cell.captionLabel.frame toView:nil];
   _zoomView.caption = [[cell.captionLabel.text copy] autorelease];
   [_zoomView zoom];
+}
+
+- (void)pinchZoomTriggeredForCell:(PhotoCell *)cell {
+  [self zoomPhotoForCell:cell];
 }
 
 - (void)loadImagesForOnScreenRows {

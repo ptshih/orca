@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PSCell.h"
 #import "Photo.h"
+#import "PhotoCellDelegate.h"
 
 @interface PhotoCell : PSCell {
   PSImageView *_photoView; // optional
@@ -19,10 +20,15 @@
   CGFloat _photoHeight;
   
   Photo *_photo;
+  id <PhotoCellDelegate> _delegate;
 }
 
 @property (nonatomic, assign) PSImageView *photoView;
 @property (nonatomic, assign) UILabel *captionLabel;
+@property (nonatomic, assign) id <PhotoCellDelegate> delegate;
+
+- (void)pinchZoom:(UIPinchGestureRecognizer *)gesture;
+- (void)triggerPinch;
 
 - (void)loadPhoto:(NSNotification *)notification;
 
