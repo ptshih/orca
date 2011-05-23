@@ -25,12 +25,10 @@
   return self;
 }
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
+- (void)loadView {
+  [super loadView];
   
-  self.view.opaque = YES;
   self.view.backgroundColor = [UIColor clearColor];
-  //  self.view.frame = CGRectMake(0, 20, 320, CARD_HEIGHT);
   
   // Background View
   //  UIImageView *backgroundView = [[UIImageView alloc] initWithImage:_backgroundImage];

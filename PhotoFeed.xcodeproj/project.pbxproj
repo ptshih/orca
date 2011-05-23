@@ -140,6 +140,8 @@
 		255920361385230600557E70 /* PSZoomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 255920341385230600557E70 /* PSZoomView.m */; };
 		255920391385350E00557E70 /* ribbon.png in Resources */ = {isa = PBXBuildFile; fileRef = 255920371385350E00557E70 /* ribbon.png */; };
 		2559203A1385350E00557E70 /* ribbon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 255920381385350E00557E70 /* ribbon@2x.png */; };
+		2564404E138A66F40050D948 /* ZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2564404D138A66F30050D948 /* ZoomViewController.m */; };
+		2564404F138A66F40050D948 /* ZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2564404D138A66F30050D948 /* ZoomViewController.m */; };
 		256B53EC1388571800BAE074 /* PSParserStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 256B53EB1388571800BAE074 /* PSParserStack.m */; };
 		256B53ED1388571800BAE074 /* PSParserStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 256B53EB1388571800BAE074 /* PSParserStack.m */; };
 		256B53F0138863FD00BAE074 /* lnkd.png in Resources */ = {isa = PBXBuildFile; fileRef = 256B53EF138863FD00BAE074 /* lnkd.png */; };
@@ -490,6 +492,8 @@
 		255920371385350E00557E70 /* ribbon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ribbon.png; sourceTree = "<group>"; };
 		255920381385350E00557E70 /* ribbon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ribbon@2x.png"; sourceTree = "<group>"; };
 		2564404A138902F30050D948 /* PhotoCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCellDelegate.h; sourceTree = "<group>"; };
+		2564404C138A66F30050D948 /* ZoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZoomViewController.h; sourceTree = "<group>"; };
+		2564404D138A66F30050D948 /* ZoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZoomViewController.m; sourceTree = "<group>"; };
 		256B53EA1388571800BAE074 /* PSParserStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSParserStack.h; sourceTree = "<group>"; };
 		256B53EB1388571800BAE074 /* PSParserStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSParserStack.m; sourceTree = "<group>"; };
 		256B53EF138863FD00BAE074 /* lnkd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lnkd.png; sourceTree = "<group>"; };
@@ -1323,6 +1327,8 @@
 				2511A8F71365F9FD00C9CF9A /* AlbumViewController.m */,
 				2511A8FA1365FA0B00C9CF9A /* PhotoViewController.h */,
 				2511A8FB1365FA0C00C9CF9A /* PhotoViewController.m */,
+				2564404C138A66F30050D948 /* ZoomViewController.h */,
+				2564404D138A66F30050D948 /* ZoomViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1706,6 +1712,7 @@
 				255920291385168B00557E70 /* PSURLCacheImageView.m in Sources */,
 				255920351385230600557E70 /* PSZoomView.m in Sources */,
 				256B53EC1388571800BAE074 /* PSParserStack.m in Sources */,
+				2564404E138A66F40050D948 /* ZoomViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1795,6 +1802,7 @@
 				2559202A1385168B00557E70 /* PSURLCacheImageView.m in Sources */,
 				255920361385230600557E70 /* PSZoomView.m in Sources */,
 				256B53ED1388571800BAE074 /* PSParserStack.m in Sources */,
+				2564404F138A66F40050D948 /* ZoomViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

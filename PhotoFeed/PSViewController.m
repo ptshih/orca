@@ -18,8 +18,8 @@
   return self;
 }
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
+- (void)loadView {
+  [super loadView];
   self.view.opaque = YES;
   self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   self.view.autoresizesSubviews = YES;

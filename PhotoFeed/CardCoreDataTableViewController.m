@@ -35,8 +35,8 @@
   return self;
 }
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
+- (void)loadView {
+  [super loadView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -28,8 +28,8 @@
   return self;
 }
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
+- (void)loadView {
+  [super loadView];
 }
 
 // SUBCLASS CAN OPTIONALLY IMPLEMENT IF THEY WANT A SEARCH BAR

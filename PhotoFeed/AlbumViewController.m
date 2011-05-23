@@ -38,8 +38,8 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
 }
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
+- (void)loadView {
+  [super loadView];
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);

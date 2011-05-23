@@ -33,6 +33,7 @@
 @property (nonatomic, retain) UIWindow *window;
 @property (readonly) Facebook *facebook;
 @property (retain) NSString *sessionKey;
+@property (nonatomic, assign) LauncherViewController *launcherViewController;
 
 // Private
 + (void)setupDefaults;

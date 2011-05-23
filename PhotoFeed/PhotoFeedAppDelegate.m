@@ -20,6 +20,7 @@
 @synthesize window = _window;
 @synthesize facebook = _facebook;
 @synthesize sessionKey = _sessionKey;
+@synthesize launcherViewController = _launcherViewController;
 
 + (void)initialize {
   [self setupDefaults];

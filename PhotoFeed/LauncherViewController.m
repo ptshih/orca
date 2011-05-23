@@ -23,8 +23,9 @@
   [_tabBarController viewWillAppear:animated];
 }
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
+- (void)loadView {
+  [super loadView];
+  self.wantsFullScreenLayout = YES;
   
   _tabBarController = [[UITabBarController alloc] init];
   _tabBarController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -55,6 +56,10 @@
   // Add to view
   self.view = _tabBarController.view;
 }
+
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+//  return YES;
+//}
 
 - (void)dealloc {
   RELEASE_SAFELY(_tabBarController);

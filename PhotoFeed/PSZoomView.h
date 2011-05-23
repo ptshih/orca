@@ -10,22 +10,26 @@
 #import "PSView.h"
 #import "PSImageView.h"
 
+@class Photo;
+
 @interface PSZoomView : PSView {
   PSImageView *_zoomImageView;
   UIView *_shadeView;
-  NSString *_caption;
   UILabel *_captionLabel;
+  NSString *_caption;
   CGRect _oldImageFrame;
   CGRect _oldCaptionFrame;
+  Photo *_photo;
 }
 
 @property (nonatomic, retain) PSImageView *zoomImageView;
+@property (nonatomic, retain) UIView *shadeView;
+@property (nonatomic, retain) UILabel *captionLabel;
 @property (nonatomic, retain) NSString *caption;
 @property (nonatomic, assign) CGRect oldImageFrame;
 @property (nonatomic, assign) CGRect oldCaptionFrame;
+@property (nonatomic, assign) Photo *photo;
 
 - (void)zoom;
-- (void)dismissZoom;
-- (void)removeZoomView;
 
 @end

@@ -28,8 +28,8 @@
   return self;
 }
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
+- (void)loadView {
+  [super loadView];
   
   self.navigationController.navigationBarHidden = NO;
   

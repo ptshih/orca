@@ -109,7 +109,7 @@
   [super layoutSubviews];
   
   // Photo
-  _photoView.frame = CGRectMake(0, 0, 320, round(_photoHeight / (_photoWidth / 320)));
+  _photoView.frame = CGRectMake(0, 0, 320, floor(_photoHeight / (_photoWidth / 320)));
   
   CGFloat top = _photoView.bottom;
   CGFloat left = MARGIN_X;
@@ -149,7 +149,7 @@
   CGFloat photoWidth = [photo.width floatValue];
   CGFloat photoHeight = [photo.height floatValue];
   
-  desiredHeight += round(photoHeight / (photoWidth / 320));
+  desiredHeight += floor(photoHeight / (photoWidth / 320));
   
   // Caption
   //  if ([photo.name length] > 0) {
