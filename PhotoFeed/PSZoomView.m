@@ -33,7 +33,7 @@
     _zoomImageView = [[PSImageView alloc] initWithFrame:frame];
     _zoomImageView.contentMode = UIViewContentModeScaleAspectFit;
     _zoomImageView.userInteractionEnabled = YES;
-    _zoomImageView.alpha = 0.0;
+//    _zoomImageView.alpha = 0.0;
     _zoomImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     
     _shadeView = [[UIView alloc] initWithFrame:frame];
@@ -146,7 +146,7 @@
   [UIView setAnimationDuration:0.4]; // Fade out is configurable in seconds (FLOAT)
   _shadeView.alpha = 1.0;
   _captionLabel.alpha = 1.0;
-  _zoomImageView.alpha = 1.0;
+//  _zoomImageView.alpha = 1.0;
   self.zoomImageView.center = [[[UIApplication sharedApplication] keyWindow] center];
   [UIView commitAnimations];
 }
@@ -163,7 +163,7 @@
   [UIView setAnimationDuration:0.4]; // Fade out is configurable in seconds (FLOAT)
   _shadeView.alpha = 0.0;
   _captionLabel.alpha = 0.0;
-  _zoomImageView.alpha = 0.0;
+//  _zoomImageView.alpha = 0.0;
   _zoomImageView.frame = _oldImageFrame;
   
   [UIView commitAnimations];
@@ -171,6 +171,7 @@
 
 - (void)removeZoomView {
   [self removeFromSuperview];
+  _zoomImageView.transform = CGAffineTransformIdentity;
 }
 
 - (void)orientationChangedFromNotification:(NSNotification *)notification {
