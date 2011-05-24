@@ -31,23 +31,26 @@
   self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Default.png"]];
   
   // Setup Logo
-  //  UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo-white-280.png"]];
-  //  logo.frame = CGRectMake(20, 44, logo.width, logo.height);
-  //  [self.view addSubview:logo];
-  //  [logo release];
+  UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photos-large.png"]];
+  logo.center = self.view.center;
+  [self.view addSubview:logo];
+  [logo release];
   
   // Setup Login Buttons
   _loginButton = [[UIButton alloc] initWithFrame:CGRectZero];
-  _loginButton.width = 280.0;
-  _loginButton.height = 39.0;
+  _loginButton.width = 280;
+  _loginButton.height = 36;
   _loginButton.left = 20.0;
   _loginButton.top = self.view.height - _loginButton.height - 20.0;
-  [_loginButton setBackgroundImage:[UIImage imageNamed:@"login_facebook.png"] forState:UIControlStateNormal];
-  [_loginButton setContentEdgeInsets:UIEdgeInsetsMake(-4, 28, 0, 0)];
-  [_loginButton setTitle:@"Connect with Facebook" forState:UIControlStateNormal];
+  [_loginButton setBackgroundImage:[[UIImage imageNamed:@"facebook-connect.png"] stretchableImageWithLeftCapWidth:36 topCapHeight:0] forState:UIControlStateNormal];
+  [_loginButton setContentEdgeInsets:UIEdgeInsetsMake(0, 36, 0, 0)];
+  [_loginButton setTitle:@"Login with Facebook" forState:UIControlStateNormal];
+  [_loginButton setTitle:@"Connecting to Facebook" forState:UIControlStateDisabled];
   [_loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [_loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-  _loginButton.titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
+  _loginButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0];
+  _loginButton.titleLabel.shadowColor = [UIColor blackColor];
+  _loginButton.titleLabel.shadowOffset = CGSizeMake(0, 1);
   [_loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:_loginButton];
 }
@@ -55,7 +58,7 @@
 #pragma mark -
 #pragma mark Button Actions
 - (void)login {
-  _loginButton.hidden = YES;
+  _loginButton.enabled = NO;
   [_facebook authorize:FB_PERMISSIONS delegate:self];
 }
 
@@ -78,7 +81,7 @@
 
 - (void)fbDidNotLogin:(BOOL)cancelled {
   [self logout];
-  //  _loginButton.hidden = NO;
+  _loginButton.enabled = YES;
 }
 
 - (void)fbDidLogout {
@@ -88,7 +91,7 @@
   if (self.delegate && [self.delegate respondsToSelector:@selector(userDidLogout)]) {
     [self.delegate performSelector:@selector(userDidLogout)];
   }
-  _loginButton.hidden = NO;
+  _loginButton.enabled = YES;
 }
 
 #pragma mark -

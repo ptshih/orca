@@ -249,6 +249,10 @@
 		25E56B68138B4D410026044A /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E56B67138B4D410026044A /* Album.m */; };
 		25E56B69138B4D410026044A /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E56B67138B4D410026044A /* Album.m */; };
 		25E56BC4138C51B90026044A /* overlay_320x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 25E56BC3138C51B90026044A /* overlay_320x120.png */; };
+		25E56BD7138C602F0026044A /* photos-large.png in Resources */ = {isa = PBXBuildFile; fileRef = 25E56BD5138C602D0026044A /* photos-large.png */; };
+		25E56BD8138C602F0026044A /* photos-large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25E56BD6138C602E0026044A /* photos-large@2x.png */; };
+		25E56BDB138C63CE0026044A /* facebook-connect.png in Resources */ = {isa = PBXBuildFile; fileRef = 25E56BD9138C63CD0026044A /* facebook-connect.png */; };
+		25E56BDC138C63CE0026044A /* facebook-connect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25E56BDA138C63CE0026044A /* facebook-connect@2x.png */; };
 		25EFD3861341E438000108B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EFD3851341E438000108B8 /* MobileCoreServices.framework */; };
 		25EFD3881341E449000108B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EFD3851341E438000108B8 /* MobileCoreServices.framework */; };
 		25EFD38C13425B2C000108B8 /* photo_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD38A13425B2C000108B8 /* photo_add@2x.png */; };
@@ -602,6 +606,10 @@
 		25E56B66138B4D410026044A /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
 		25E56B67138B4D410026044A /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		25E56BC3138C51B90026044A /* overlay_320x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = overlay_320x120.png; sourceTree = "<group>"; };
+		25E56BD5138C602D0026044A /* photos-large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photos-large.png"; sourceTree = "<group>"; };
+		25E56BD6138C602E0026044A /* photos-large@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photos-large@2x.png"; sourceTree = "<group>"; };
+		25E56BD9138C63CD0026044A /* facebook-connect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-connect.png"; sourceTree = "<group>"; };
+		25E56BDA138C63CE0026044A /* facebook-connect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-connect@2x.png"; sourceTree = "<group>"; };
 		25EFD3851341E438000108B8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		25EFD38A13425B2C000108B8 /* photo_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_add@2x.png"; sourceTree = "<group>"; };
 		25EFD38D13425B65000108B8 /* photo_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_add.png; sourceTree = "<group>"; };
@@ -1047,6 +1055,10 @@
 		25CEF8FE133A000C006F23A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				25E56BD9138C63CD0026044A /* facebook-connect.png */,
+				25E56BDA138C63CE0026044A /* facebook-connect@2x.png */,
+				25E56BD5138C602D0026044A /* photos-large.png */,
+				25E56BD6138C602E0026044A /* photos-large@2x.png */,
 				25E56BC3138C51B90026044A /* overlay_320x120.png */,
 				256B53EF138863FD00BAE074 /* lnkd.png */,
 				250E743B1385B9FF00247AE0 /* 111-user.png */,
@@ -1576,6 +1588,10 @@
 				250E74421385B9FF00247AE0 /* 112-group@2x.png in Resources */,
 				256B53F0138863FD00BAE074 /* lnkd.png in Resources */,
 				25E56BC4138C51B90026044A /* overlay_320x120.png in Resources */,
+				25E56BD7138C602F0026044A /* photos-large.png in Resources */,
+				25E56BD8138C602F0026044A /* photos-large@2x.png in Resources */,
+				25E56BDB138C63CE0026044A /* facebook-connect.png in Resources */,
+				25E56BDC138C63CE0026044A /* facebook-connect@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
