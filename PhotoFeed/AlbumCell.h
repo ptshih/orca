@@ -12,6 +12,7 @@
 
 @interface AlbumCell : PSCell {
   PSImageView *_photoView;
+  UIImageView *_overlayView;
   UIView *_captionView;
   UIView *_ribbonView;
   

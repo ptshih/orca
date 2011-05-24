@@ -18,11 +18,13 @@
 #define RIBBON_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:10.0]
 
 static UIImage *_ribbonImage = nil;
+static UIImage *_overlayImage = nil;
 
 @implementation AlbumCell
 
 + (void)initialize {
   _ribbonImage = [[[UIImage imageNamed:@"ribbon.png"] stretchableImageWithLeftCapWidth:30 topCapHeight:0] retain];
+  _overlayImage = [[UIImage imageNamed:@"overlay_320x120.png"] retain];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -99,6 +101,10 @@ static UIImage *_ribbonImage = nil;
     // Photo
     _photoView = [[PSImageView alloc] initWithFrame:CGRectMake(0, 0, 320, ALBUM_CELL_HEIGHT)];
 //    _photoView = [[PSImageView alloc] initWithFrame:CGRectZero];
+    
+    // Overlay
+    _overlayView = [[UIImageView alloc] initWithImage:_overlayImage];
+    _overlayView.frame = CGRectMake(0, 0, 320, ALBUM_CELL_HEIGHT);
 
     // Ribbon
     _ribbonView = [[UIView alloc] initWithFrame:CGRectMake(320 - 68, 10, 68, 24)];
@@ -110,6 +116,7 @@ static UIImage *_ribbonImage = nil;
     
     // Add to contentView
     [self.contentView addSubview:_photoView];
+    [self.contentView addSubview:_overlayView];
     [self.contentView addSubview:_captionView];
     [self.contentView addSubview:_ribbonView];
     
@@ -307,6 +314,7 @@ static UIImage *_ribbonImage = nil;
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kImageCached object:nil];
   RELEASE_SAFELY(_photoView);
+  RELEASE_SAFELY(_overlayView);
   RELEASE_SAFELY(_captionView);
   RELEASE_SAFELY(_ribbonView);
   
