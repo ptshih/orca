@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 #import "PSView.h"
 #import "PSImageView.h"
 
 @class Photo;
 
-@interface PSZoomView : PSView {
+@interface PSZoomView : PSView <UIGestureRecognizerDelegate> {
   PSImageView *_zoomImageView;
   UIView *_shadeView;
   UILabel *_captionLabel;
@@ -20,6 +21,7 @@
   CGRect _oldImageFrame;
   CGRect _oldCaptionFrame;
   Photo *_photo;
+  CGFloat _lastScale;
 }
 
 @property (nonatomic, retain) PSImageView *zoomImageView;

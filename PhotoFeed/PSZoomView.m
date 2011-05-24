@@ -57,8 +57,62 @@
     [self addSubview:_captionLabel];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadPhoto:) name:kImageCached object:nil];
+    
+    // Gestures
+    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
+    pinchGesture.delegate = self;
+    [_zoomImageView addGestureRecognizer:pinchGesture];
+    [pinchGesture release];
+    
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+    panGesture.maximumNumberOfTouches = 2;
+    [_zoomImageView addGestureRecognizer:panGesture];
+    [panGesture release];
   }
   return self;
+}
+
+#pragma mark -
+#pragma mark Gestures
+- (void)handlePinchGesture:(UIPinchGestureRecognizer *)gestureRecognizer {
+  
+  if([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
+    // Reset the last scale, necessary if there are multiple objects with different scales
+    _lastScale = [gestureRecognizer scale];
+  }
+  
+  if ([gestureRecognizer state] == UIGestureRecognizerStateBegan ||
+      [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
+    
+    CGFloat currentScale = [[[gestureRecognizer view].layer valueForKeyPath:@"transform.scale"] floatValue];
+    
+    // Constants to adjust the max/min values of zoom
+    const CGFloat kMaxScale = 2.0;
+    const CGFloat kMinScale = 1.0;
+    
+    CGFloat newScale = 1 -  (_lastScale - [gestureRecognizer scale]); // new scale is in the range (0-1)
+    newScale = MIN(newScale, kMaxScale / currentScale);
+    newScale = MAX(newScale, kMinScale / currentScale);
+    CGAffineTransform transform = CGAffineTransformScale([[gestureRecognizer view] transform], newScale, newScale);
+    [gestureRecognizer view].transform = transform;
+    
+    _lastScale = [gestureRecognizer scale];  // Store the previous scale factor for the next pinch gesture call
+  }
+}
+
+- (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer {
+  UIView *piece = [gestureRecognizer view];
+  
+  if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
+    CGPoint translation = [gestureRecognizer translationInView:[piece superview]];
+    
+    [piece setCenter:CGPointMake([piece center].x + translation.x, [piece center].y + translation.y)];
+    [gestureRecognizer setTranslation:CGPointZero inView:[piece superview]];
+  }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+  return YES;
 }
 
 - (void)reloadPhoto:(NSNotification *)notification {

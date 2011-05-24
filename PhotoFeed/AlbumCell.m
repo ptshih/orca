@@ -10,7 +10,7 @@
 #import "PSCoreDataImageCache.h"
 #import "UIImage+ScalingAndCropping.h"
 
-#define ALBUM_CELL_HEIGHT 120.0
+#define ALBUM_CELL_HEIGHT 140.0
 
 #define NAME_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0]
 #define CAPTION_FONT [UIFont fontWithName:@"Chalkboard SE" size:12.0]
@@ -94,7 +94,7 @@ static UIImage *_ribbonImage = nil;
     // Caption
     _captionView = [[UIView alloc] initWithFrame:CGRectZero];
     _captionView.backgroundColor = [UIColor blackColor];
-    _captionView.layer.opacity = 0.667;
+    _captionView.layer.opacity = 0.5;
     
     // Photo
     _photoView = [[PSImageView alloc] initWithFrame:CGRectMake(0, 0, 320, ALBUM_CELL_HEIGHT)];
@@ -140,9 +140,9 @@ static UIImage *_ribbonImage = nil;
   
   // Check to see if there is a caption
   if ([_captionLabel.text length] > 0) {
-    _captionView.frame = CGRectMake(0, 86, 320, 34);
+    _captionView.frame = CGRectMake(0, ALBUM_CELL_HEIGHT - 34, 320, 34);
   } else {
-    _captionView.frame = CGRectMake(0, 100, 320, 20);
+    _captionView.frame = CGRectMake(0, ALBUM_CELL_HEIGHT - 20, 320, 20);
   }
   
   CGFloat top = _captionView.top;
