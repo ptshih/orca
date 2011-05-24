@@ -13,8 +13,8 @@
 
 - (NSString *)fromPicture;
 
-+ (Photo *)addPhotoWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
++ (Photo *)addPhotoWithDictionary:(NSDictionary *)dictionary forAlbumId:(NSString *)albumId inContext:(NSManagedObjectContext *)context;
 
-- (Photo *)updatePhotoWithDictionary:(NSDictionary *)dictionary;
+- (Photo *)updatePhotoWithDictionary:(NSDictionary *)dictionary forAlbumId:(NSString *)albumId;
 
 @end

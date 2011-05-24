@@ -10,7 +10,7 @@
 
 @protocol PSParserStackDelegate <NSObject>
 
-- (void)parseFinishedWithResponse:(id)response;
+- (void)parseFinishedWithResponse:(id)response andUserInfo:(NSDictionary *)userInfo;
 
 @end
 
@@ -20,7 +20,7 @@
 
 + (PSParserStack *)sharedParser;
 
-- (void)parseData:(NSData *)data withDelegate:(id)delegate;
-
+- (void)parseData:(NSData *)data withDelegate:(id)delegate andUserInfo:(NSDictionary *)userInfo;
+- (void)respondToDelegate:(NSDictionary *)payload;
 
 @end

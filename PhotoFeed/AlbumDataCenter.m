@@ -25,7 +25,6 @@ static AlbumDataCenter *_defaultCenter = nil;
   self = [super init];
   if (self) {
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
-    _context = [PSCoreDataStack sharedManagedObjectContext];
   }
   return self;
 }
@@ -62,6 +61,7 @@ static AlbumDataCenter *_defaultCenter = nil;
 
 - (void)serializeAlbumsWithDictionary:(NSDictionary *)dictionary {
 #warning fetch these in a background thread
+  NSManagedObjectContext *context = [PSCoreDataStack newManagedObjectContext];
   NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES];
   
   NSArray *sortedEntities = [[dictionary valueForKey:@"data"] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
@@ -72,13 +72,13 @@ static AlbumDataCenter *_defaultCenter = nil;
   }
   
   NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
-  [fetchRequest setEntity:[NSEntityDescription entityForName:@"Album" inManagedObjectContext:_context]];
+  [fetchRequest setEntity:[NSEntityDescription entityForName:@"Album" inManagedObjectContext:context]];
   [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(id IN %@)", sortedEntityIds]];
   [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"id" ascending:YES] autorelease]]];
   
   
   NSError *error = nil;
-  NSArray *foundEntities = [_context executeFetchRequest:fetchRequest error:&error];
+  NSArray *foundEntities = [context executeFetchRequest:fetchRequest error:&error];
   
   int i = 0;
   for (NSDictionary *entityDict in sortedEntities) {
@@ -88,18 +88,19 @@ static AlbumDataCenter *_defaultCenter = nil;
       i++;
     } else {
       // Insert
-      [Album addAlbumWithDictionary:entityDict inContext:_context];
+      [Album addAlbumWithDictionary:entityDict inContext:context];
     }
   }
   
   // Save to Core Data
-  [PSCoreDataStack saveSharedContextIfNeeded];
+  [PSCoreDataStack saveInContext:context];
+  [context release];
 }
 
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponseData:(NSData *)responseData {
   // Process the batched results in a BG thread
-  [[PSParserStack sharedParser] parseData:responseData withDelegate:self];
+  [[PSParserStack sharedParser] parseData:responseData withDelegate:self andUserInfo:nil];
 }
 
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
@@ -109,10 +110,10 @@ static AlbumDataCenter *_defaultCenter = nil;
   }
 }
 
-- (void)parseFinishedWithResponse:(id)response {
+- (void)parseFinishedWithResponse:(id)response andUserInfo:(NSDictionary *)userInfo {
 #warning check for Facebook errors
   if ([response isKindOfClass:[NSArray class]]) {
-    [[PSParserStack sharedParser] parseData:[[[response lastObject] objectForKey:@"body"] dataUsingEncoding:NSUTF8StringEncoding] withDelegate:self];
+    [[PSParserStack sharedParser] parseData:[[[response lastObject] objectForKey:@"body"] dataUsingEncoding:NSUTF8StringEncoding] withDelegate:self andUserInfo:nil];
   } else {
     NSArray *allValues = [response allValues];
     for (NSDictionary *valueDict in allValues) {
@@ -135,6 +136,10 @@ static AlbumDataCenter *_defaultCenter = nil;
   [fetchRequest setFetchLimit:limit];
   [fetchRequest setFetchOffset:offset];
   return fetchRequest;
+}
+
+- (void)dealloc {
+  [super dealloc];
 }
 
 @end

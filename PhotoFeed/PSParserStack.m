@@ -46,18 +46,28 @@ static PSParserStack *_sharedParser = nil;
   [pool release];
 }
 
-- (void)parseData:(NSData *)data withDelegate:(id)delegate {
-  NSDictionary *payload = [NSDictionary dictionaryWithObjectsAndKeys:data, @"data", delegate, @"delegate", nil];
+- (void)parseData:(NSData *)data withDelegate:(id)delegate andUserInfo:(NSDictionary *)userInfo {
+  NSDictionary *payload = [NSDictionary dictionaryWithObjectsAndKeys:data, @"data", delegate, @"delegate", userInfo, @"userInfo", nil];
   [self performSelector:@selector(parseDataInThread:) onThread:_parseThread withObject:payload waitUntilDone:NO];
 }
 
 - (void)parseDataInThread:(NSDictionary *)payload {
   NSData *data = [payload objectForKey:@"data"];
   id delegate = [payload objectForKey:@"delegate"];
+  NSDictionary *userInfo = [payload objectForKey:@"userInfo"];
   id response = [data JSONValue];
   
-  if (delegate && [delegate respondsToSelector:@selector(parseFinishedWithResponse:)]) {
-    [delegate performSelectorOnMainThread:@selector(parseFinishedWithResponse:) withObject:response waitUntilDone:NO];
+  NSDictionary *responsePayload = [NSDictionary dictionaryWithObjectsAndKeys:response, @"response", delegate, @"delegate", userInfo, @"userInfo", nil];
+  
+  [self performSelectorOnMainThread:@selector(respondToDelegate:) withObject:responsePayload waitUntilDone:NO];
+}
+
+- (void)respondToDelegate:(NSDictionary *)payload {
+  id response = [payload objectForKey:@"response"];
+  id delegate = [payload objectForKey:@"delegate"];
+  NSDictionary *userInfo = [payload objectForKey:@"userInfo"];
+  if (delegate && [delegate respondsToSelector:@selector(parseFinishedWithResponse:andUserInfo:)]) {
+    [delegate parseFinishedWithResponse:response andUserInfo:userInfo];
   }
 }
 

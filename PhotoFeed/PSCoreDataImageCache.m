@@ -69,7 +69,7 @@ static PSCoreDataImageCache *_sharedCache;
       imageData = [request responseData];
     }
     [entity performSelector:@selector(setImageData:) withObject:imageData];
-    [PSCoreDataStack saveSharedContextIfNeeded];
+    [PSCoreDataStack saveInContext:[(NSManagedObject *)entity managedObjectContext]];
     [[NSNotificationCenter defaultCenter] postNotificationName:kImageCached object:nil userInfo:request.userInfo];
   }
   

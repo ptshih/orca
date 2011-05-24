@@ -128,12 +128,8 @@
 		2546E8D113825D9E00BD8757 /* PSImageArrayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2546E8CF13825D9D00BD8757 /* PSImageArrayView.m */; };
 		25544F211384B1A700948E2C /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25544F201384B1A700948E2C /* ISO8601DateFormatter.m */; };
 		25544F221384B1A700948E2C /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25544F201384B1A700948E2C /* ISO8601DateFormatter.m */; };
-		2559200C1385094C00557E70 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2559200B1385094C00557E70 /* Photo.m */; };
-		2559200D1385094C00557E70 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2559200B1385094C00557E70 /* Photo.m */; };
 		2559201113850A3A00557E70 /* PSCoreDataImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 2559201013850A3A00557E70 /* PSCoreDataImageCache.m */; };
 		2559201213850A3A00557E70 /* PSCoreDataImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 2559201013850A3A00557E70 /* PSCoreDataImageCache.m */; };
-		2559201513850EA100557E70 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 2559201413850EA100557E70 /* Album.m */; };
-		2559201613850EA100557E70 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 2559201413850EA100557E70 /* Album.m */; };
 		255920291385168B00557E70 /* PSURLCacheImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 255920281385168A00557E70 /* PSURLCacheImageView.m */; };
 		2559202A1385168B00557E70 /* PSURLCacheImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 255920281385168A00557E70 /* PSURLCacheImageView.m */; };
 		255920351385230600557E70 /* PSZoomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 255920341385230600557E70 /* PSZoomView.m */; };
@@ -250,6 +246,10 @@
 		25DC5F5413668A6D00868001 /* PSCoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DC5F5213668A6D00868001 /* PSCoreDataStack.m */; };
 		25DC5F5713668A8600868001 /* CardCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DC5F5613668A8500868001 /* CardCoreDataTableViewController.m */; };
 		25DC5F5813668A8600868001 /* CardCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DC5F5613668A8500868001 /* CardCoreDataTableViewController.m */; };
+		25E56B64138B4D400026044A /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E56B63138B4D400026044A /* Photo.m */; };
+		25E56B65138B4D400026044A /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E56B63138B4D400026044A /* Photo.m */; };
+		25E56B68138B4D410026044A /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E56B67138B4D410026044A /* Album.m */; };
+		25E56B69138B4D410026044A /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E56B67138B4D410026044A /* Album.m */; };
 		25EFD3861341E438000108B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EFD3851341E438000108B8 /* MobileCoreServices.framework */; };
 		25EFD3881341E449000108B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EFD3851341E438000108B8 /* MobileCoreServices.framework */; };
 		25EFD38C13425B2C000108B8 /* photo_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EFD38A13425B2C000108B8 /* photo_add@2x.png */; };
@@ -479,12 +479,8 @@
 		2546E8CF13825D9D00BD8757 /* PSImageArrayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSImageArrayView.m; sourceTree = "<group>"; };
 		25544F1F1384B1A700948E2C /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
 		25544F201384B1A700948E2C /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
-		2559200A1385094C00557E70 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
-		2559200B1385094C00557E70 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
 		2559200F13850A3A00557E70 /* PSCoreDataImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCoreDataImageCache.h; sourceTree = "<group>"; };
 		2559201013850A3A00557E70 /* PSCoreDataImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCoreDataImageCache.m; sourceTree = "<group>"; };
-		2559201313850EA100557E70 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
-		2559201413850EA100557E70 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		255920271385168A00557E70 /* PSURLCacheImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSURLCacheImageView.h; sourceTree = "<group>"; };
 		255920281385168A00557E70 /* PSURLCacheImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSURLCacheImageView.m; sourceTree = "<group>"; };
 		255920331385230500557E70 /* PSZoomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSZoomView.h; sourceTree = "<group>"; };
@@ -604,6 +600,10 @@
 		25DC5F5213668A6D00868001 /* PSCoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCoreDataStack.m; sourceTree = "<group>"; };
 		25DC5F5513668A8500868001 /* CardCoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCoreDataTableViewController.h; sourceTree = "<group>"; };
 		25DC5F5613668A8500868001 /* CardCoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCoreDataTableViewController.m; sourceTree = "<group>"; };
+		25E56B62138B4D400026044A /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
+		25E56B63138B4D400026044A /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
+		25E56B66138B4D410026044A /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
+		25E56B67138B4D410026044A /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		25EFD3851341E438000108B8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		25EFD38A13425B2C000108B8 /* photo_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_add@2x.png"; sourceTree = "<group>"; };
 		25EFD38D13425B65000108B8 /* photo_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_add.png; sourceTree = "<group>"; };
@@ -1038,10 +1038,10 @@
 				2546E8B9138226A200BD8757 /* Like.m */,
 				2546E8BC138226A300BD8757 /* Comment.h */,
 				2546E8BD138226A300BD8757 /* Comment.m */,
-				2559200A1385094C00557E70 /* Photo.h */,
-				2559200B1385094C00557E70 /* Photo.m */,
-				2559201313850EA100557E70 /* Album.h */,
-				2559201413850EA100557E70 /* Album.m */,
+				25E56B62138B4D400026044A /* Photo.h */,
+				25E56B63138B4D400026044A /* Photo.m */,
+				25E56B66138B4D410026044A /* Album.h */,
+				25E56B67138B4D410026044A /* Album.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1706,13 +1706,13 @@
 				2540977413848ADD00EBE848 /* NSURL+Util.m in Sources */,
 				2540977813848EE600EBE848 /* NSDate+Helper.m in Sources */,
 				25544F211384B1A700948E2C /* ISO8601DateFormatter.m in Sources */,
-				2559200C1385094C00557E70 /* Photo.m in Sources */,
 				2559201113850A3A00557E70 /* PSCoreDataImageCache.m in Sources */,
-				2559201513850EA100557E70 /* Album.m in Sources */,
 				255920291385168B00557E70 /* PSURLCacheImageView.m in Sources */,
 				255920351385230600557E70 /* PSZoomView.m in Sources */,
 				256B53EC1388571800BAE074 /* PSParserStack.m in Sources */,
 				2564404E138A66F40050D948 /* ZoomViewController.m in Sources */,
+				25E56B64138B4D400026044A /* Photo.m in Sources */,
+				25E56B68138B4D410026044A /* Album.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1796,13 +1796,13 @@
 				2540977513848ADD00EBE848 /* NSURL+Util.m in Sources */,
 				2540977913848EE600EBE848 /* NSDate+Helper.m in Sources */,
 				25544F221384B1A700948E2C /* ISO8601DateFormatter.m in Sources */,
-				2559200D1385094C00557E70 /* Photo.m in Sources */,
 				2559201213850A3A00557E70 /* PSCoreDataImageCache.m in Sources */,
-				2559201613850EA100557E70 /* Album.m in Sources */,
 				2559202A1385168B00557E70 /* PSURLCacheImageView.m in Sources */,
 				255920361385230600557E70 /* PSZoomView.m in Sources */,
 				256B53ED1388571800BAE074 /* PSParserStack.m in Sources */,
 				2564404F138A66F40050D948 /* ZoomViewController.m in Sources */,
+				25E56B65138B4D400026044A /* Photo.m in Sources */,
+				25E56B69138B4D410026044A /* Album.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

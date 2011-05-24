@@ -8,26 +8,21 @@
 
 #import <Foundation/Foundation.h>
 #import "PSDataCenter.h"
-#import "Album.h"
 
 @interface PhotoDataCenter : PSDataCenter {
-  NSManagedObjectContext *_context;
-  Album *_album;
 }
 
-@property (nonatomic, assign) Album *album;
-
-- (void)getPhotosForAlbum:(Album *)album;
+- (void)getPhotosForAlbumId:(NSString *)albumId;
 
 /**
  Serialize server response into Photo entities
  */
-- (void)serializePhotosWithDictionary:(NSDictionary *)dictionary;
+- (void)serializePhotosWithDictionary:(NSDictionary *)dictionary forAlbumId:(NSString *)albumId;
 
 /**
  Fetch Requests
  */
-- (NSFetchRequest *)fetchPhotosForAlbum:(Album *)album withLimit:(NSUInteger)limit andOffset:(NSUInteger)offset;
+- (NSFetchRequest *)fetchPhotosForAlbumId:(NSString *)albumId withLimit:(NSUInteger)limit andOffset:(NSUInteger)offset;
 
 
 @end

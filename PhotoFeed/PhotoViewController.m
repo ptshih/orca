@@ -72,7 +72,7 @@
 - (void)reloadCardController {
   [super reloadCardController];
   
-  [_photoDataCenter getPhotosForAlbum:_album];
+  [_photoDataCenter getPhotosForAlbumId:_album.id];
 }
 
 - (void)unloadCardController {
@@ -182,7 +182,7 @@
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [_photoDataCenter fetchPhotosForAlbum:_album withLimit:_limit andOffset:_offset];
+  return [_photoDataCenter fetchPhotosForAlbumId:_album.id withLimit:_limit andOffset:_offset];
 }
 
 - (void)dealloc {

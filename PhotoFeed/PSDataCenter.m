@@ -260,7 +260,7 @@
 
 #pragma mark -
 #pragma mark PSParserStackDelegate
-- (void)parseFinishedWithResponse:(id)response {
+- (void)parseFinishedWithResponse:(id)response andUserInfo:(NSDictionary *)userInfo {
   // subclass should implement
 }
 

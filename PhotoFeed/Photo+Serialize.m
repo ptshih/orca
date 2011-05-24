@@ -20,9 +20,12 @@
 
 #pragma mark -
 #pragma mark Create/Update
-+ (Photo *)addPhotoWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context {
++ (Photo *)addPhotoWithDictionary:(NSDictionary *)dictionary forAlbumId:(NSString *)albumId inContext:(NSManagedObjectContext *)context {
   if (dictionary) {
     Photo *newPhoto = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:context];
+    
+    // AlbumId
+    newPhoto.albumId = albumId;
     
     // Basic
     newPhoto.id = [dictionary valueForKey:@"id"];
@@ -57,8 +60,11 @@
   }
 }
 
-- (Photo *)updatePhotoWithDictionary:(NSDictionary *)dictionary {  
+- (Photo *)updatePhotoWithDictionary:(NSDictionary *)dictionary forAlbumId:(NSString *)albumId {  
   if (dictionary) {
+    // AlbumId
+    self.albumId = albumId;
+    
     // Basic
     self.id = [dictionary valueForKey:@"id"];
     self.name = [dictionary valueForKey:@"name"];

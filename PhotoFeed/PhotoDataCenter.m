@@ -12,28 +12,25 @@
 
 @implementation PhotoDataCenter
 
-@synthesize album = _album;
-
 - (id)init {
   self = [super init];
   if (self) {
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
-    _context = [PSCoreDataStack sharedManagedObjectContext];
   }
   return self;
 }
 
-- (void)getPhotosForAlbum:(Album *)album {
-  self.album = album;
-  NSURL *photosUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/photos", FB_GRAPH, album.id]];
+- (void)getPhotosForAlbumId:(NSString *)albumId {
+  NSURL *photosUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/photos", FB_GRAPH, albumId]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   [params setValue:@"999" forKey:@"limit"];
   
-  [self sendRequestWithURL:photosUrl andMethod:GET andHeaders:nil andParams:params andUserInfo:nil];
+  [self sendRequestWithURL:photosUrl andMethod:GET andHeaders:nil andParams:params andUserInfo:[NSDictionary dictionaryWithObject:albumId forKey:@"albumId"]];
 }
 
-- (void)serializePhotosWithDictionary:(NSDictionary *)dictionary {
+- (void)serializePhotosWithDictionary:(NSDictionary *)dictionary forAlbumId:(NSString *)albumId {
+  NSManagedObjectContext *context = [PSCoreDataStack newManagedObjectContext];
   NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES];
   
   NSArray *sortedEntities = [[dictionary valueForKey:@"data"] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
@@ -44,40 +41,34 @@
   }
   
   NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
-  [fetchRequest setEntity:[NSEntityDescription entityForName:@"Photo" inManagedObjectContext:_context]];
+  [fetchRequest setEntity:[NSEntityDescription entityForName:@"Photo" inManagedObjectContext:context]];
   [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(id IN %@)", sortedEntityIds]];
   [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"id" ascending:YES] autorelease]]];
   
-  NSMutableSet *photos = [NSMutableSet set];
-  
   NSError *error = nil;
-  NSArray *foundEntities = [_context executeFetchRequest:fetchRequest error:&error];
+  NSArray *foundEntities = [context executeFetchRequest:fetchRequest error:&error];
   
   int i = 0;
   for (NSDictionary *entityDict in sortedEntities) {
     if ([foundEntities count] > 0 && i < [foundEntities count] && [[entityDict valueForKey:@"id"] isEqualToString:[[foundEntities objectAtIndex:i] id]]) {
       //      DLog(@"found duplicated photo with id: %@", [[foundEntities objectAtIndex:i] id]);
-      [[foundEntities objectAtIndex:i] updatePhotoWithDictionary:entityDict];
+      [[foundEntities objectAtIndex:i] updatePhotoWithDictionary:entityDict forAlbumId:albumId];
       i++;
     } else {
       // Insert
-      [photos addObject:[Photo addPhotoWithDictionary:entityDict inContext:_context]];
+      [Photo addPhotoWithDictionary:entityDict forAlbumId:albumId inContext:context];
     }
   }
   
-  // Add new photos to current album
-  if (_album) {
-    [_album addPhotos:photos];
-  }
   
   // Save to Core Data
-  [PSCoreDataStack saveSharedContextIfNeeded];
+  [PSCoreDataStack saveInContext:context];
 }
 
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponseData:(NSData *)responseData {
 //  id response = [responseData JSONValue];
-  [[PSParserStack sharedParser] parseData:responseData withDelegate:self];
+  [[PSParserStack sharedParser] parseData:responseData withDelegate:self andUserInfo:request.userInfo];
 }
 
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
@@ -87,9 +78,9 @@
   }
 }
 
-- (void)parseFinishedWithResponse:(id)response {
+- (void)parseFinishedWithResponse:(id)response andUserInfo:(NSDictionary *)userInfo {
 #warning check for Facebook errors
-  [self serializePhotosWithDictionary:response];
+  [self serializePhotosWithDictionary:response forAlbumId:[userInfo objectForKey:@"albumId"]];
   
   // Inform Delegate
   if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
@@ -97,10 +88,10 @@
   }
 }
 
-- (NSFetchRequest *)fetchPhotosForAlbum:(Album *)album withLimit:(NSUInteger)limit andOffset:(NSUInteger)offset {
+- (NSFetchRequest *)fetchPhotosForAlbumId:(NSString *)albumId withLimit:(NSUInteger)limit andOffset:(NSUInteger)offset {
   NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"position" ascending:NO] autorelease];
   NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
-  NSFetchRequest *fetchRequest = [[PSCoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPhotosForAlbum" substitutionVariables:[NSDictionary dictionaryWithObject:album forKey:@"desiredAlbum"]];
+  NSFetchRequest *fetchRequest = [[PSCoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPhotosForAlbum" substitutionVariables:[NSDictionary dictionaryWithObject:albumId forKey:@"desiredAlbumId"]];
   [fetchRequest setSortDescriptors:sortDescriptors];
   [fetchRequest setFetchBatchSize:10];
   [fetchRequest setFetchLimit:limit];

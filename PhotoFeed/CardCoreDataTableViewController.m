@@ -23,13 +23,13 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _context = [PSCoreDataStack sharedManagedObjectContext];
+    _context = [PSCoreDataStack newManagedObjectContext];
     _fetchedResultsController = nil;
     _sectionNameKeyPathForFetchedResultsController = nil;
     _limit = 50;
     _offset = 0;
     
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextSaveDidNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextSaveDidNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
   }
   return self;
@@ -86,9 +86,9 @@
 }
 
 #pragma mark Core Data
-//- (void)managedObjectContextSaveDidNotification:(NSNotification *)notification {
-//  [self.context mergeChangesFromContextDidSaveNotification:notification];
-//}
+- (void)managedObjectContextSaveDidNotification:(NSNotification *)notification {
+  [self.context mergeChangesFromContextDidSaveNotification:notification];
+}
 
 - (void)resetFetchedResultsController {
   RELEASE_SAFELY(_fetchedResultsController);
@@ -235,7 +235,7 @@
 }
 
 - (void)dealloc {
-  //  [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kCoreDataDidReset object:nil];
   RELEASE_SAFELY (_fetchedResultsController);
   RELEASE_SAFELY (_sectionNameKeyPathForFetchedResultsController);

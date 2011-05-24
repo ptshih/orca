@@ -10,7 +10,6 @@
 #import "PSDataCenter.h"
 
 @interface AlbumDataCenter : PSDataCenter {
-  NSManagedObjectContext *_context;
 }
 
 + (AlbumDataCenter *)defaultCenter;
