@@ -71,6 +71,9 @@
   __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:FB_GRAPH]];
   request.requestMethod = @"POST";
   
+  // Allow GZIP
+  request.allowCompressedResponse = YES;
+  
   // Request userInfo
   request.userInfo = userInfo;
   
@@ -118,6 +121,9 @@
   
   __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
   request.requestMethod = method;
+  
+  // Allow GZIP
+  request.allowCompressedResponse = YES;
   
   // Request userInfo
   request.userInfo = userInfo;
@@ -186,6 +192,9 @@
   
   __block ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
   request.requestMethod = POST;
+  
+  // Allow GZIP
+  request.allowCompressedResponse = YES;
   
   // Request userInfo
   request.userInfo = userInfo;
