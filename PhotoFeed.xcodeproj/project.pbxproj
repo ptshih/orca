@@ -168,6 +168,8 @@
 		25A2A8F1136015A60005808D /* button-header-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25A2A8EF136015A60005808D /* button-header-bg@2x.png */; };
 		25B2F4A9135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
 		25B2F4AA135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
+		25B9C74E138C6FEA003FEE96 /* Comment+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B9C74D138C6FEA003FEE96 /* Comment+Serialize.m */; };
+		25B9C74F138C6FEA003FEE96 /* Comment+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B9C74D138C6FEA003FEE96 /* Comment+Serialize.m */; };
 		25BA900813602DDD00D4A86B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BB4133A0D3D00C130A8 /* LoginViewController.m */; };
 		25BA900A13602DE500D4A86B /* CardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BDF133AA6AB00C130A8 /* CardViewController.m */; };
 		25BA900B13602DE500D4A86B /* CardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BE1133AA6BA00C130A8 /* CardTableViewController.m */; };
@@ -522,6 +524,8 @@
 		25A2A8EF136015A60005808D /* button-header-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-header-bg@2x.png"; sourceTree = "<group>"; };
 		25B2F4A7135180EB00DDF1BC /* PSNullView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNullView.h; sourceTree = "<group>"; };
 		25B2F4A8135180EB00DDF1BC /* PSNullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSNullView.m; sourceTree = "<group>"; };
+		25B9C74C138C6FEA003FEE96 /* Comment+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Comment+Serialize.h"; sourceTree = "<group>"; };
+		25B9C74D138C6FEA003FEE96 /* Comment+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Comment+Serialize.m"; sourceTree = "<group>"; };
 		25C67E2E1372197E00330DA7 /* Base64Transcoder+PS.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "Base64Transcoder+PS.c"; sourceTree = "<group>"; };
 		25C67E2F1372197E00330DA7 /* Base64Transcoder+PS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Base64Transcoder+PS.h"; sourceTree = "<group>"; };
 		25C67E32137219AA00330DA7 /* PSNetworkOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNetworkOperation.h; sourceTree = "<group>"; };
@@ -1040,6 +1044,8 @@
 				259AD5441366AEDD00FA2B8D /* Photo+Serialize.m */,
 				259AD53F1366AC1600FA2B8D /* Album+Serialize.h */,
 				259AD5401366AC1700FA2B8D /* Album+Serialize.m */,
+				25B9C74C138C6FEA003FEE96 /* Comment+Serialize.h */,
+				25B9C74D138C6FEA003FEE96 /* Comment+Serialize.m */,
 				2546E8B8138226A200BD8757 /* Like.h */,
 				2546E8B9138226A200BD8757 /* Like.m */,
 				25E56B66138B4D410026044A /* Album.h */,
@@ -1726,6 +1732,7 @@
 				25E56B68138B4D410026044A /* Album.m in Sources */,
 				2577726E138C6E4C006C9535 /* Photo.m in Sources */,
 				25777272138C6E4C006C9535 /* Comment.m in Sources */,
+				25B9C74E138C6FEA003FEE96 /* Comment+Serialize.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1815,6 +1822,7 @@
 				25E56B69138B4D410026044A /* Album.m in Sources */,
 				2577726F138C6E4C006C9535 /* Photo.m in Sources */,
 				25777273138C6E4C006C9535 /* Comment.m in Sources */,
+				25B9C74F138C6FEA003FEE96 /* Comment+Serialize.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

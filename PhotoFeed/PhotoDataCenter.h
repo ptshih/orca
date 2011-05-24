@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "PSDataCenter.h"
 
+@class Photo;
+
 @interface PhotoDataCenter : PSDataCenter {
 }
 
@@ -21,6 +23,11 @@
 
 - (void)serializePhotosWithPayload:(NSDictionary *)payload; // thread
 - (void)serializePhotosFinished;
+
+/**
+ Serialize comments
+ */
+- (void)serializeCommentsWithDictionary:(NSDictionary *)dictionary forPhoto:(Photo *)photo inContext:(NSManagedObjectContext *)context;
 
 /**
  Fetch Requests

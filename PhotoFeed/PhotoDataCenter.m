@@ -9,6 +9,8 @@
 #import "PhotoDataCenter.h"
 #import "Photo.h"
 #import "Photo+Serialize.h"
+#import "Comment.h"
+#import "Comment+Serialize.h"
 
 @implementation PhotoDataCenter
 
@@ -67,18 +69,33 @@
   
   NSError *error = nil;
   NSArray *foundEntities = [context executeFetchRequest:fetchRequest error:&error];
-  
+
+  Photo *photo = nil;
   int i = 0;
   for (NSDictionary *entityDict in sortedEntities) {
     if ([foundEntities count] > 0 && i < [foundEntities count] && [[entityDict valueForKey:@"id"] isEqualToString:[[foundEntities objectAtIndex:i] id]]) {
+      photo = [foundEntities objectAtIndex:i];
       //      DLog(@"found duplicated photo with id: %@", [[foundEntities objectAtIndex:i] id]);
-      [[foundEntities objectAtIndex:i] updatePhotoWithDictionary:entityDict forAlbumId:albumId];
+      [photo updatePhotoWithDictionary:entityDict forAlbumId:albumId];
       i++;
     } else {
       // Insert
-      [Photo addPhotoWithDictionary:entityDict forAlbumId:albumId inContext:context];
+      photo = [Photo addPhotoWithDictionary:entityDict forAlbumId:albumId inContext:context];
+    }
+    
+    // Serialize Comments
+    if ([entityDict objectForKey:@"comments"]) {
+      [self serializeCommentsWithDictionary:[entityDict objectForKey:@"comments"] forPhoto:photo inContext:context];
     }
   }
+}
+
+- (void)serializeCommentsWithDictionary:(NSDictionary *)dictionary forPhoto:(Photo *)photo inContext:(NSManagedObjectContext *)context {
+  NSMutableSet *comments = [NSMutableSet set];
+  for (NSDictionary *commentDict in [dictionary objectForKey:@"data"]) {
+    [comments addObject:[Comment addCommentWithDictionary:commentDict inContext:context]];
+  }
+  [photo addComments:comments];
 }
 
 #pragma mark -

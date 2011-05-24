@@ -28,4 +28,6 @@
 @property (nonatomic, retain) NSString * fromId;
 @property (nonatomic, retain) NSSet* comments;
 
+- (void)addComments:(NSSet *)value;
+
 @end
