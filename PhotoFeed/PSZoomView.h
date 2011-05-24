@@ -14,6 +14,7 @@
 @class Photo;
 
 @interface PSZoomView : PSView <UIGestureRecognizerDelegate> {
+  UIView *_containerView;
   PSImageView *_zoomImageView;
   UIView *_shadeView;
   UILabel *_captionLabel;
@@ -32,6 +33,7 @@
 @property (nonatomic, assign) CGRect oldCaptionFrame;
 @property (nonatomic, assign) Photo *photo;
 
-- (void)zoom;
+- (void)showZoom;
+- (void)removeZoom;
 
 @end

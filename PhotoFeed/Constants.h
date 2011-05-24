@@ -33,6 +33,7 @@
 //#define kComposeDidFail @"ComposeDidFail"
 #define kHeaderTabSelected @"HeaderTabSelected"
 #define kImageCached @"CoreDataImageCached"
+#define kOrientationChanged @"OrientationChangedNotification"
 
 // Cards
 #define NUM_CARDS 2

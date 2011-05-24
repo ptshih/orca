@@ -13,7 +13,6 @@
 #import "HeaderCell.h"
 #import "PhotoCell.h"
 #import "CameraViewController.h"
-#import "ZoomViewController.h"
 #import "PSZoomView.h"
 
 @implementation PhotoViewController
@@ -149,18 +148,18 @@
 }
 
 - (void)zoomPhotoForCell:(PhotoCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-  if (!_zoomViewController) {
-    _zoomViewController = [[ZoomViewController alloc] init];
+  if (!_zoomView) {
+    _zoomView = [[PSZoomView alloc] initWithFrame:[[[UIApplication sharedApplication] keyWindow] bounds]];
   }
   
   Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  _zoomViewController.zoomView.photo = photo;
-  _zoomViewController.zoomView.zoomImageView.image = [[cell.photoView.image copy] autorelease];
-  _zoomViewController.zoomView.zoomImageView.frame = [cell convertRect:cell.photoView.frame toView:nil];
-  _zoomViewController.zoomView.oldImageFrame = [cell convertRect:cell.photoView.frame toView:nil];
-  _zoomViewController.zoomView.oldCaptionFrame = [cell convertRect:cell.captionLabel.frame toView:nil];
-  _zoomViewController.zoomView.caption = [[cell.captionLabel.text copy] autorelease];
-  [_zoomViewController zoom];
+  _zoomView.photo = photo;
+  _zoomView.zoomImageView.image = [[cell.photoView.image copy] autorelease];
+  _zoomView.zoomImageView.frame = [cell convertRect:cell.photoView.frame toView:nil];
+  _zoomView.oldImageFrame = [cell convertRect:cell.photoView.frame toView:nil];
+  _zoomView.oldCaptionFrame = [cell convertRect:cell.captionLabel.frame toView:nil];
+  _zoomView.caption = [[cell.captionLabel.text copy] autorelease];
+  [_zoomView showZoom];
 }
 
 //- (void)pinchZoomTriggeredForCell:(PhotoCell *)cell {
@@ -189,7 +188,7 @@
   _photoDataCenter.delegate = nil;
   RELEASE_SAFELY(_photoDataCenter);
   RELEASE_SAFELY(_headerCellCache);
-  RELEASE_SAFELY(_zoomViewController);
+  RELEASE_SAFELY(_zoomView);
   [super dealloc];
 }
 
