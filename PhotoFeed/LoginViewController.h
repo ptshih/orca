@@ -11,7 +11,7 @@
 #import "LoginDelegate.h"
 #import "FBConnect.h"
 
-@interface LoginViewController : PSViewController <FBSessionDelegate> {
+@interface LoginViewController : PSViewController <FBSessionDelegate, PSDataCenterDelegate> {
   Facebook *_facebook;
   UIButton *_loginButton;
   id <LoginDelegate> _delegate;

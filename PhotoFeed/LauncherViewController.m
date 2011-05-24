@@ -28,6 +28,7 @@
   self.wantsFullScreenLayout = YES;
   
   _tabBarController = [[UITabBarController alloc] init];
+  _tabBarController.delegate = self;
   _tabBarController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   
   // Setup Tabs
@@ -55,6 +56,14 @@
   
   // Add to view
   self.view = _tabBarController.view;
+  
+  // Select previously chosen tab
+  _tabBarController.selectedViewController = [_tabBarController.viewControllers objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"lastSelectedTab"]];
+}
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+  NSUInteger tabIndex = [_tabBarController.viewControllers indexOfObject:viewController];
+  [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithInteger:tabIndex] forKey:@"lastSelectedTab"];
 }
 
 //- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

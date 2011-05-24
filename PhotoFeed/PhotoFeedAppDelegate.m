@@ -83,6 +83,7 @@
    If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
    */
   //  [[PSImageCache sharedCache] flushImageCacheToDisk];
+  [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -99,6 +100,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
   // Saves changes in the application's managed object context before the application terminates.
   //  [[PSImageCache sharedCache] flushImageCacheToDisk];
+  [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 

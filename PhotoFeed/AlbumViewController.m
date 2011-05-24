@@ -206,14 +206,15 @@
 - (NSFetchRequest *)getFetchRequest {
   NSString *fetchTemplate = nil;
   NSDictionary *substitutionVariables = nil;
+  NSString *facebookId = [[NSUserDefaults standardUserDefaults] stringForKey:@"facebookId"];
   switch (self.albumType) {
     case AlbumTypeMe:
       fetchTemplate = @"getMyAlbums";
-      substitutionVariables = [NSDictionary dictionaryWithObject:@"548430564" forKey:@"desiredFromId"];
+      substitutionVariables = [NSDictionary dictionaryWithObject:facebookId forKey:@"desiredFromId"];
       break;
     case AlbumTypeFriends:
       fetchTemplate = @"getFriendsAlbums";
-      substitutionVariables = [NSDictionary dictionaryWithObject:@"548430564" forKey:@"desiredFromId"];
+      substitutionVariables = [NSDictionary dictionaryWithObject:facebookId forKey:@"desiredFromId"];
       break;
     case AlbumTypeMobile:
       fetchTemplate = @"getMobileAlbums";

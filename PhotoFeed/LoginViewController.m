@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "LoginDataCenter.h"
 
 @implementation LoginViewController
 
@@ -17,7 +18,7 @@
   self = [super init];
   if (self) {
     _facebook = APP_DELEGATE.facebook;
-    
+    [[LoginDataCenter defaultCenter] setDelegate:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logout) name:kLogoutRequested object:nil];
   }
   return self;
@@ -71,9 +72,8 @@
   [[NSUserDefaults standardUserDefaults] setObject:_facebook.expirationDate forKey:@"facebookExpirationDate"];
   [[NSUserDefaults standardUserDefaults] synchronize];
   
-  if (self.delegate && [self.delegate respondsToSelector:@selector(userDidLogin)]) {
-    [self.delegate performSelector:@selector(userDidLogin)];
-  }
+  // We need to get the user's facebookId
+  [[LoginDataCenter defaultCenter] getFacebookId];
 }
 
 - (void)fbDidNotLogin:(BOOL)cancelled {
@@ -91,7 +91,26 @@
   _loginButton.hidden = NO;
 }
 
+#pragma mark -
+#pragma mark PSDataCenterDelegate
+- (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
+  NSString *facebookId = [response valueForKey:@"id"];
+  NSString *facebookName = [response valueForKey:@"name"];
+  [[NSUserDefaults standardUserDefaults] setObject:facebookId forKey:@"facebookId"];
+  [[NSUserDefaults standardUserDefaults] setObject:facebookName forKey:@"facebookName"];
+  [[NSUserDefaults standardUserDefaults] synchronize];
+  
+  if (self.delegate && [self.delegate respondsToSelector:@selector(userDidLogin)]) {
+    [self.delegate performSelector:@selector(userDidLogin)];
+  }
+}
+
+- (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
+  [self logout];
+}
+
 - (void)dealloc {
+  [[LoginDataCenter defaultCenter] setDelegate:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kLogoutRequested object:nil];
   RELEASE_SAFELY(_loginButton);
   [super dealloc];

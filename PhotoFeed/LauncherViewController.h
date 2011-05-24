@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PSViewController.h"
 
-@interface LauncherViewController : PSViewController
-{
+@interface LauncherViewController : PSViewController <UITabBarControllerDelegate> {
   UITabBarController *_tabBarController;
 }
 

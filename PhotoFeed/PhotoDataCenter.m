@@ -81,7 +81,8 @@
   }
 }
 
-#pragma mark PSDataCenterDelegate
+#pragma mark -
+#pragma mark Request finished
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponseData:(NSData *)responseData {
 //  id response = [responseData JSONValue];
   [[PSParserStack sharedParser] parseData:responseData withDelegate:self andUserInfo:request.userInfo];
