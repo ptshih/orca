@@ -73,6 +73,8 @@
   _limit += fetchedCount;
   //  [[self.fetchedResultsController fetchRequest] setFetchOffset:fetchedCount];
   [[self.fetchedResultsController fetchRequest] setFetchLimit:_limit];
+  NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self description]];
+  [NSFetchedResultsController deleteCacheWithName:cacheName];
   [self dataSourceDidLoad];
   CGRect newRect = CGRectMake(0, _tableView.contentOffset.y + _loadMoreView.height, _tableView.width, _tableView.height);
   [_tableView scrollRectToVisible:newRect animated:NO];
@@ -99,7 +101,7 @@
   
   NSFetchRequest *fetchRequest = [self getFetchRequest];
   if (fetchRequest) {
-    NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self class]];
+    NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self description]];
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:self.sectionNameKeyPathForFetchedResultsController cacheName:cacheName];
     _fetchedResultsController.delegate = nil;
   }
@@ -111,9 +113,9 @@
 }
 
 - (void)executeFetch {
-  //  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-  //    [self.fetchedResultsController performFetch:nil];
-  //  });
+//  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+//    [self.fetchedResultsController performFetch:nil];
+//  });
   
   NSError *error = nil;
   if ([self.fetchedResultsController performFetch:&error]) {
@@ -187,12 +189,12 @@
 }
 
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
-  NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self class]];
+  NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self description]];
   [NSFetchedResultsController deleteCacheWithName:cacheName];
 }
 
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
-  NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self class]];
+  NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self description]];
   [NSFetchedResultsController deleteCacheWithName:cacheName];
   [self.fetchedResultsController.fetchRequest setPredicate:_predicate];
   [self executeFetch];

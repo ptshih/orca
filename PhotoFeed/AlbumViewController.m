@@ -195,8 +195,10 @@
   compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:_predicate, predicate, nil]];
   
   [self.fetchedResultsController.fetchRequest setPredicate:compoundPredicate];
+  NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self description]];
+  [NSFetchedResultsController deleteCacheWithName:cacheName];
   [self executeFetch];
-  [_tableView reloadData];
+//  [_tableView reloadData];
 }
 
 #pragma mark -
