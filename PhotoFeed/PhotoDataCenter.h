@@ -17,7 +17,10 @@
 /**
  Serialize server response into Photo entities
  */
-- (void)serializePhotosWithDictionary:(NSDictionary *)dictionary forAlbumId:(NSString *)albumId;
+- (void)serializePhotosWithDictionary:(NSDictionary *)dictionary forAlbumId:(NSString *)albumId inContext:(NSManagedObjectContext *)context;
+
+- (void)serializePhotosWithPayload:(NSDictionary *)payload; // thread
+- (void)serializePhotosFinished;
 
 /**
  Fetch Requests

@@ -29,8 +29,28 @@
   [self sendRequestWithURL:photosUrl andMethod:GET andHeaders:nil andParams:params andUserInfo:[NSDictionary dictionaryWithObject:albumId forKey:@"albumId"]];
 }
 
-- (void)serializePhotosWithDictionary:(NSDictionary *)dictionary forAlbumId:(NSString *)albumId {
+- (void)serializePhotosWithPayload:(NSDictionary *)payload {
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   NSManagedObjectContext *context = [PSCoreDataStack newManagedObjectContext];
+  
+  [self serializePhotosWithDictionary:[payload objectForKey:@"response"] forAlbumId:[payload objectForKey:@"albumId"] inContext:context];
+  
+  // Save to Core Data
+  [PSCoreDataStack saveInContext:context];
+  [context release];
+  
+  [self performSelectorOnMainThread:@selector(serializePhotosFinished) withObject:nil waitUntilDone:NO];
+  [pool release];
+}
+
+- (void)serializePhotosFinished {
+  // Inform Delegate
+  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
+    [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:nil withObject:nil];
+  }
+}
+
+- (void)serializePhotosWithDictionary:(NSDictionary *)dictionary forAlbumId:(NSString *)albumId inContext:(NSManagedObjectContext *)context {
   NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES];
   
   NSArray *sortedEntities = [[dictionary valueForKey:@"data"] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
@@ -59,10 +79,6 @@
       [Photo addPhotoWithDictionary:entityDict forAlbumId:albumId inContext:context];
     }
   }
-  
-  
-  // Save to Core Data
-  [PSCoreDataStack saveInContext:context];
 }
 
 #pragma mark PSDataCenterDelegate
@@ -80,12 +96,8 @@
 
 - (void)parseFinishedWithResponse:(id)response andUserInfo:(NSDictionary *)userInfo {
 #warning check for Facebook errors
-  [self serializePhotosWithDictionary:response forAlbumId:[userInfo objectForKey:@"albumId"]];
-  
-  // Inform Delegate
-  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
-    [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:nil withObject:response];
-  }
+  NSDictionary *payload = [NSDictionary dictionaryWithObjectsAndKeys:response, @"response", [userInfo objectForKey:@"albumId"], @"albumId", nil];
+  [self performSelectorInBackground:@selector(serializePhotosWithPayload:) withObject:payload];
 }
 
 - (NSFetchRequest *)fetchPhotosForAlbumId:(NSString *)albumId withLimit:(NSUInteger)limit andOffset:(NSUInteger)offset {

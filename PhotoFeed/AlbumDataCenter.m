@@ -59,9 +59,29 @@ static AlbumDataCenter *_defaultCenter = nil;
   [self sendFacebookBatchRequestWithParams:params andUserInfo:nil];
 }
 
-- (void)serializeAlbumsWithDictionary:(NSDictionary *)dictionary {
-#warning fetch these in a background thread
+- (void)serializeAlbumsWithResponse:(id)response {
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   NSManagedObjectContext *context = [PSCoreDataStack newManagedObjectContext];
+  NSArray *allValues = [response allValues];
+  for (NSDictionary *valueDict in allValues) {
+    [self serializeAlbumsWithDictionary:valueDict inContext:context];
+  }
+  // Save to Core Data
+  [PSCoreDataStack saveInContext:context];
+  [context release];
+  
+  [self performSelectorOnMainThread:@selector(serializeAlbumsFinished) withObject:nil waitUntilDone:NO];
+  [pool release];
+}
+
+- (void)serializeAlbumsFinished {
+  // Inform Delegate
+  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
+    [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:nil withObject:nil];
+  }
+}
+
+- (void)serializeAlbumsWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context {
   NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES];
   
   NSArray *sortedEntities = [[dictionary valueForKey:@"data"] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
@@ -91,10 +111,6 @@ static AlbumDataCenter *_defaultCenter = nil;
       [Album addAlbumWithDictionary:entityDict inContext:context];
     }
   }
-  
-  // Save to Core Data
-  [PSCoreDataStack saveInContext:context];
-  [context release];
 }
 
 #pragma mark PSDataCenterDelegate
@@ -115,15 +131,7 @@ static AlbumDataCenter *_defaultCenter = nil;
   if ([response isKindOfClass:[NSArray class]]) {
     [[PSParserStack sharedParser] parseData:[[[response lastObject] objectForKey:@"body"] dataUsingEncoding:NSUTF8StringEncoding] withDelegate:self andUserInfo:nil];
   } else {
-    NSArray *allValues = [response allValues];
-    for (NSDictionary *valueDict in allValues) {
-      [self serializeAlbumsWithDictionary:valueDict];
-    }
-    
-    // Inform Delegate
-    if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
-      [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:nil withObject:response];
-    }
+    [self performSelectorInBackground:@selector(serializeAlbumsWithResponse:) withObject:response];
   }
 }
 

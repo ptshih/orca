@@ -19,7 +19,10 @@
 /**
  Serialize server response into Album entities
  */
-- (void)serializeAlbumsWithDictionary:(NSDictionary *)dictionary;
+- (void)serializeAlbumsWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
+
+- (void)serializeAlbumsWithResponse:(id)response; // thread
+- (void)serializeAlbumsFinished;
 
 /**
  Fetch Requests
