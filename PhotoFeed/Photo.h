@@ -2,13 +2,14 @@
 //  Photo.h
 //  PhotoFeed
 //
-//  Created by Peter Shih on 5/23/11.
+//  Created by Peter Shih on 5/24/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Comment;
 
 @interface Photo : NSManagedObject {
 @private
@@ -22,8 +23,9 @@
 @property (nonatomic, retain) NSString * fromName;
 @property (nonatomic, retain) NSString * source;
 @property (nonatomic, retain) NSNumber * height;
+@property (nonatomic, retain) NSString * albumId;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * fromId;
-@property (nonatomic, retain) NSString * albumId;
+@property (nonatomic, retain) NSSet* comments;
 
 @end

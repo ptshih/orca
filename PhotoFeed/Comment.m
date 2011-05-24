@@ -2,19 +2,21 @@
 //  Comment.m
 //  PhotoFeed
 //
-//  Created by Peter Shih on 5/16/11.
+//  Created by Peter Shih on 5/24/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
 #import "Comment.h"
+#import "Photo.h"
 
 
 @implementation Comment
-@dynamic userId;
-@dynamic userName;
 @dynamic id;
 @dynamic message;
-@dynamic userPictureUrl;
 @dynamic timestamp;
+@dynamic fromId;
+@dynamic fromName;
+@dynamic photo;
+
 
 @end
