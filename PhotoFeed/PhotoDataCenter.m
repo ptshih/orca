@@ -92,8 +92,25 @@
 
 - (void)serializeCommentsWithDictionary:(NSDictionary *)dictionary forPhoto:(Photo *)photo inContext:(NSManagedObjectContext *)context {
   NSMutableSet *comments = [NSMutableSet set];
-  for (NSDictionary *commentDict in [dictionary objectForKey:@"data"]) {
-    [comments addObject:[Comment addCommentWithDictionary:commentDict inContext:context]];
+  
+  // Check for dupes
+  // photo may have existing comments, compare those with the new ones
+  // comments don't ever get updated, no need to update, just insert new
+  
+  NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES];
+  NSArray *existingComments = [photo.comments sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+  
+  NSArray *newComments = [[dictionary valueForKey:@"data"] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+
+  int i = 0;
+  for (NSDictionary *commentDict in newComments) {
+    if ([existingComments count] > 0 && i < [existingComments count] && [[commentDict valueForKey:@"id"] isEqualToString:[[existingComments objectAtIndex:i] id]]) {
+      // existing comment found
+      NSLog(@"found existing comment with id: %@", [[existingComments objectAtIndex:i] id]);
+      i++;
+    } else {
+      [comments addObject:[Comment addCommentWithDictionary:commentDict inContext:context]];
+    }
   }
   [photo addComments:comments];
 }
