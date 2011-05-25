@@ -135,6 +135,8 @@
   [self performSelectorInBackground:@selector(serializePhotosWithPayload:) withObject:payload];
 }
 
+#pragma mark -
+#pragma mark Fetch Request
 - (NSFetchRequest *)fetchPhotosForAlbumId:(NSString *)albumId withLimit:(NSUInteger)limit andOffset:(NSUInteger)offset {
   NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO] autorelease];
   NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];

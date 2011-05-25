@@ -170,6 +170,10 @@
 		25B2F4AA135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
 		25B9C74E138C6FEA003FEE96 /* Comment+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B9C74D138C6FEA003FEE96 /* Comment+Serialize.m */; };
 		25B9C74F138C6FEA003FEE96 /* Comment+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B9C74D138C6FEA003FEE96 /* Comment+Serialize.m */; };
+		25B9C759138C8882003FEE96 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B9C758138C8882003FEE96 /* CommentViewController.m */; };
+		25B9C75A138C8882003FEE96 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B9C758138C8882003FEE96 /* CommentViewController.m */; };
+		25B9C75D138C8E24003FEE96 /* CommentDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B9C75C138C8E24003FEE96 /* CommentDataCenter.m */; };
+		25B9C75E138C8E24003FEE96 /* CommentDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B9C75C138C8E24003FEE96 /* CommentDataCenter.m */; };
 		25BA900813602DDD00D4A86B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BB4133A0D3D00C130A8 /* LoginViewController.m */; };
 		25BA900A13602DE500D4A86B /* CardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BDF133AA6AB00C130A8 /* CardViewController.m */; };
 		25BA900B13602DE500D4A86B /* CardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BE1133AA6BA00C130A8 /* CardTableViewController.m */; };
@@ -526,6 +530,10 @@
 		25B2F4A8135180EB00DDF1BC /* PSNullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSNullView.m; sourceTree = "<group>"; };
 		25B9C74C138C6FEA003FEE96 /* Comment+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Comment+Serialize.h"; sourceTree = "<group>"; };
 		25B9C74D138C6FEA003FEE96 /* Comment+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Comment+Serialize.m"; sourceTree = "<group>"; };
+		25B9C757138C8882003FEE96 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
+		25B9C758138C8882003FEE96 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
+		25B9C75B138C8E24003FEE96 /* CommentDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentDataCenter.h; sourceTree = "<group>"; };
+		25B9C75C138C8E24003FEE96 /* CommentDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentDataCenter.m; sourceTree = "<group>"; };
 		25C67E2E1372197E00330DA7 /* Base64Transcoder+PS.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "Base64Transcoder+PS.c"; sourceTree = "<group>"; };
 		25C67E2F1372197E00330DA7 /* Base64Transcoder+PS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Base64Transcoder+PS.h"; sourceTree = "<group>"; };
 		25C67E32137219AA00330DA7 /* PSNetworkOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNetworkOperation.h; sourceTree = "<group>"; };
@@ -1327,6 +1335,8 @@
 				25DC5F2E136626EC00868001 /* AlbumDataCenter.m */,
 				259AD5471366B09100FA2B8D /* PhotoDataCenter.h */,
 				259AD5481366B09100FA2B8D /* PhotoDataCenter.m */,
+				25B9C75B138C8E24003FEE96 /* CommentDataCenter.h */,
+				25B9C75C138C8E24003FEE96 /* CommentDataCenter.m */,
 			);
 			name = DataCenters;
 			sourceTree = "<group>";
@@ -1344,6 +1354,8 @@
 				2511A8F71365F9FD00C9CF9A /* AlbumViewController.m */,
 				2511A8FA1365FA0B00C9CF9A /* PhotoViewController.h */,
 				2511A8FB1365FA0C00C9CF9A /* PhotoViewController.m */,
+				25B9C757138C8882003FEE96 /* CommentViewController.h */,
+				25B9C758138C8882003FEE96 /* CommentViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1733,6 +1745,8 @@
 				2577726E138C6E4C006C9535 /* Photo.m in Sources */,
 				25777272138C6E4C006C9535 /* Comment.m in Sources */,
 				25B9C74E138C6FEA003FEE96 /* Comment+Serialize.m in Sources */,
+				25B9C759138C8882003FEE96 /* CommentViewController.m in Sources */,
+				25B9C75D138C8E24003FEE96 /* CommentDataCenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1823,6 +1837,8 @@
 				2577726F138C6E4C006C9535 /* Photo.m in Sources */,
 				25777273138C6E4C006C9535 /* Comment.m in Sources */,
 				25B9C74F138C6FEA003FEE96 /* Comment+Serialize.m in Sources */,
+				25B9C75A138C8882003FEE96 /* CommentViewController.m in Sources */,
+				25B9C75E138C8E24003FEE96 /* CommentDataCenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
