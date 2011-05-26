@@ -7,32 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PSImageViewDelegate.h"
+#import "PSImageView.h"
 #import "ASIHTTPRequest.h"
-#import "Constants.h"
 
-@interface PSURLCacheImageView : UIImageView <PSImageViewDelegate> {
+@interface PSURLCacheImageView : PSImageView {
   NSString *_urlPath;
-  UIActivityIndicatorView *_loadingIndicator;
-  UIImage *_placeholderImage;
-  
-  BOOL _shouldScale;
-  BOOL _shouldAuth;
   
   ASIHTTPRequest *_request;
-  id <PSImageViewDelegate> _delegate;
 }
 
 @property (nonatomic, copy) NSString *urlPath;
-@property (nonatomic, retain) UIImage *placeholderImage;
-@property (nonatomic, assign) BOOL shouldScale;
-@property (nonatomic, assign) BOOL shouldAuth;
-@property (nonatomic, assign) id <PSImageViewDelegate> delegate;
 
 - (void)loadImage;
 - (void)loadImageIfCached;
 - (void)unloadImage;
-- (void)imageDidLoad;
 
 - (void)requestFinished:(ASIHTTPRequest *)request;
 - (void)requestFailed:(ASIHTTPRequest *)request withError:(NSError *)error;

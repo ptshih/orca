@@ -20,9 +20,9 @@ static UIImage *_frameImage = nil;
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
     
-    _psImageView = [[PSImageView alloc] initWithFrame:CGRectMake(15, 10, 40, 40)];
+    _psImageView = [[PSURLCacheImageView alloc] initWithFrame:CGRectMake(10 + MARGIN_X, 10, IMAGE_WIDTH_PLAIN, IMAGE_HEIGHT_PLAIN)];
     _psFrameView = [[UIImageView alloc] initWithImage:_frameImage];
-    _psFrameView.frame = CGRectMake(5, 0, 60, 60);
+    _psFrameView.frame = CGRectMake(MARGIN_X, 0, IMAGE_OFFSET, IMAGE_OFFSET);
     
     [self.contentView addSubview:_psFrameView];
     [self.contentView addSubview:_psImageView];
@@ -35,21 +35,7 @@ static UIImage *_frameImage = nil;
 
 - (void)prepareForReuse {
   [super prepareForReuse];
-  _psFrameView.image = nil;
-}
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
-  
-}
-
-+ (CGFloat)rowHeight {
-  // Subclasses should override
-  return 60.0;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-  [super setSelected:selected animated:animated];
+  _psImageView.image = nil;
 }
 
 - (void)dealloc {

@@ -9,14 +9,17 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "PSCell.h"
+#import "PSURLCacheImageView.h"
 
 #define IMAGE_WIDTH_PLAIN 40.0
 #define IMAGE_HEIGHT_PLAIN 40.0
 #define IMAGE_WIDTH_GROUPED 34.0
 #define IMAGE_HEIGHT_GROUPED 34.0
 
+#define IMAGE_OFFSET 60.0
+
 @interface PSImageCell : PSCell {
-  PSImageView *_psImageView;
+  PSURLCacheImageView *_psImageView;
   UIImageView *_psFrameView;
 }
 

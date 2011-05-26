@@ -33,7 +33,7 @@
 }
 
 + (CGFloat)rowHeight {
-  return 44.0;
+  return 60.0;
 }
 
 // This is a class method because it is called before the cell has finished its layout
