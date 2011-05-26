@@ -16,8 +16,8 @@ static UIImage *_loadingImage = nil;
 @synthesize state = _state;
 
 + (void)initialize {
-  _emptyImage = [[UIImage imageNamed:@"bamboo_bg.png"] retain];
-  _loadingImage = [[UIImage imageNamed:@"bamboo_bg_alpha.png"] retain];
+//  _emptyImage = [[UIImage imageNamed:@"bamboo_bg.png"] retain];
+//  _loadingImage = [[UIImage imageNamed:@"bamboo_bg_alpha.png"] retain];
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -37,7 +37,7 @@ static UIImage *_loadingImage = nil;
 - (void)setupLoadingView {
   _loadingView = [[UIView alloc] initWithFrame:self.bounds];
   _loadingView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _loadingView.backgroundColor = [UIColor colorWithPatternImage:_loadingImage];
+//  _loadingView.backgroundColor = [UIColor colorWithPatternImage:_loadingImage];
   
   UIActivityIndicatorView *loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
   loadingIndicator.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
@@ -51,7 +51,7 @@ static UIImage *_loadingImage = nil;
   loadingLabel.backgroundColor = [UIColor clearColor];
   loadingLabel.text = @"Loading...";
   loadingLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0];
-  loadingLabel.textColor = FB_COLOR_DARK_GRAY_BLUE;
+  loadingLabel.textColor = [UIColor whiteColor];
   [loadingLabel sizeToFit];
   loadingLabel.center = _loadingView.center;
   loadingLabel.top = loadingIndicator.bottom + 5.0;
@@ -64,7 +64,7 @@ static UIImage *_loadingImage = nil;
 - (void)setupEmptyView {
   _emptyView = [[UIView alloc] initWithFrame:self.bounds];
   _emptyView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _emptyView.backgroundColor = [UIColor colorWithPatternImage:_emptyImage];
+//  _emptyView.backgroundColor = [UIColor colorWithPatternImage:_emptyImage];
 }
 
 - (void)setState:(PSNullViewState)state {
