@@ -45,7 +45,7 @@
   _navTitleLabel.text = _photo.name;
   
   [self addBackButton];
-  [self addButtonWithTitle:@"New" andSelector:@selector(newComment) isLeft:NO];
+//  [self addButtonWithTitle:@"New" andSelector:@selector(newComment) isLeft:NO];
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -56,6 +56,8 @@
   
   [self setupHeader];
   [self setupTableFooter];
+  
+  [self setupFooterView];
   
   [self resetFetchedResultsController];
   [self executeFetch];
@@ -111,6 +113,33 @@
 
 - (void)toggleHeaderFinished {
 
+}
+
+- (void)setupFooterView {
+  [super setupFooterView];
+  
+  // Setup the fake image view
+  PSURLCacheImageView *profileImage = [[PSURLCacheImageView alloc] initWithFrame:CGRectMake(10, 7, 30, 30)];
+  profileImage.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", [[NSUserDefaults standardUserDefaults] objectForKey:@"facebookId"]];
+  [profileImage loadImage];
+  profileImage.layer.cornerRadius = 5.0;
+  profileImage.layer.masksToBounds = YES;
+  [_footerView addSubview:profileImage];
+  [profileImage release];
+  
+  // Setup the fake comment button
+  UIButton *commentButton = [[UIButton alloc] initWithFrame:CGRectMake(45, 7, 265, 30)];
+  commentButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  commentButton.titleLabel.font = [UIFont systemFontOfSize:14];
+  [commentButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+  [commentButton setContentEdgeInsets:UIEdgeInsetsMake(0, 15, 0, 0)];
+  [commentButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+  [commentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+  [commentButton setTitle:@"Write a comment..." forState:UIControlStateNormal];
+  [commentButton setBackgroundImage:[[UIImage imageNamed:@"bubble.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15] forState:UIControlStateNormal];
+  [commentButton addTarget:self action:@selector(newComment) forControlEvents:UIControlEventTouchUpInside];
+  [_footerView addSubview:commentButton];
+  [commentButton release];
 }
 
 - (void)reloadCardController {

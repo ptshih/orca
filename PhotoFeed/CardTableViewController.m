@@ -127,7 +127,7 @@
   _tableView.frame = CGRectMake(_tableView.left, _tableView.top, _tableView.width, _tableView.height - 44);
   _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 44, 320, 44)];
   _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-  _footerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"button-header-bg.png"]];
+  _footerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"navigationbar_bg.png"]];
   
   [self.view addSubview:_footerView];
 }
@@ -141,7 +141,7 @@
   _loadMoreButton = [[UIButton alloc] initWithFrame:_loadMoreView.frame];
   _loadMoreButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   _loadMoreButton.userInteractionEnabled = NO;
-  [_loadMoreButton setBackgroundImage:[UIImage imageNamed:@"navigationbar_bg.png"] forState:UIControlStateNormal];
+  [_loadMoreButton setBackgroundImage:[UIImage imageNamed:@"search_background.png"] forState:UIControlStateNormal];
   [_loadMoreButton addTarget:self action:@selector(loadMore) forControlEvents:UIControlEventTouchUpInside];
   [_loadMoreButton setTitle:@"Load More..." forState:UIControlStateNormal];
   [_loadMoreButton setTitle:@"Loading More..." forState:UIControlStateSelected];

@@ -50,7 +50,7 @@
   _navTitleLabel.text = _album.name;
   
   [self addBackButton];
-  [self addButtonWithTitle:@"New" andSelector:@selector(newPhoto) isLeft:NO];
+//  [self addButtonWithTitle:@"New" andSelector:@selector(newPhoto) isLeft:NO];
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
