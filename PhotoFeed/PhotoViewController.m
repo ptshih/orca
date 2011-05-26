@@ -25,7 +25,7 @@
   if (self) {
     _photoDataCenter = [[PhotoDataCenter alloc] init];
     _photoDataCenter.delegate = self;
-    _sectionNameKeyPathForFetchedResultsController = [@"timestamp" retain];
+    _sectionNameKeyPathForFetchedResultsController = [@"position" retain];
     _headerCellCache = [[NSMutableDictionary alloc] init];
     _limit = 999;
     self.hidesBottomBarWhenPushed = YES;
