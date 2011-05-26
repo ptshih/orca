@@ -28,7 +28,12 @@
     newPhoto.albumId = albumId;
     
     // Basic
-    newPhoto.id = [dictionary valueForKey:@"id"];
+    // Coerce ID to string
+    id entityId = [dictionary valueForKey:@"id"];
+    if ([entityId isKindOfClass:[NSNumber class]]) {
+      entityId = [entityId stringValue];
+    }
+    newPhoto.id = entityId;
     newPhoto.name = [dictionary valueForKey:@"name"];
     newPhoto.position = [dictionary valueForKey:@"position"];
     
@@ -42,7 +47,12 @@
     
     // Author/From
     NSDictionary *from = [dictionary valueForKey:@"from"];
-    newPhoto.fromId = [from valueForKey:@"id"];
+    // Coerce ID to string
+    id fromId = [from valueForKey:@"id"];
+    if ([fromId isKindOfClass:[NSNumber class]]) {
+      fromId = [fromId stringValue];
+    }
+    newPhoto.fromId = fromId;
     newPhoto.fromName = [from valueForKey:@"name"];
     
     // Timestamp
@@ -61,12 +71,8 @@
 }
 
 - (Photo *)updatePhotoWithDictionary:(NSDictionary *)dictionary forAlbumId:(NSString *)albumId {  
-  if (dictionary) {
-    // AlbumId
-    self.albumId = albumId;
-    
+  if (dictionary) {    
     // Basic
-    self.id = [dictionary valueForKey:@"id"];
     self.name = [dictionary valueForKey:@"name"];
     self.position = [dictionary valueForKey:@"position"];
     
@@ -80,7 +86,12 @@
     
     // Author/From
     NSDictionary *from = [dictionary valueForKey:@"from"];
-    self.fromId = [from valueForKey:@"id"];
+    // Coerce ID to string
+    id fromId = [from valueForKey:@"id"];
+    if ([fromId isKindOfClass:[NSNumber class]]) {
+      fromId = [fromId stringValue];
+    }
+    self.fromId = fromId;
     self.fromName = [from valueForKey:@"name"];
     
     // Timestamp

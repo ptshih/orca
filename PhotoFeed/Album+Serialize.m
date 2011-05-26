@@ -37,7 +37,12 @@
     Album *newAlbum = [NSEntityDescription insertNewObjectForEntityForName:@"Album" inManagedObjectContext:context];
     
     // Basic
-    newAlbum.id = [dictionary valueForKey:@"id"];
+    // Coerce ID to string
+    id entityId = [dictionary valueForKey:@"id"];
+    if ([entityId isKindOfClass:[NSNumber class]]) {
+      entityId = [entityId stringValue];
+    }
+    newAlbum.id = entityId;
     newAlbum.name = [dictionary valueForKey:@"name"];
     newAlbum.type = [dictionary valueForKey:@"type"];
     
@@ -57,7 +62,13 @@
     
     // Author/From
     NSDictionary *from = [dictionary valueForKey:@"from"];
-    newAlbum.fromId = [from valueForKey:@"id"];
+    
+    // Coerce ID to string
+    id fromId = [from valueForKey:@"id"];
+    if ([fromId isKindOfClass:[NSNumber class]]) {
+      fromId = [fromId stringValue];
+    }
+    newAlbum.fromId = fromId;
     newAlbum.fromName = [from valueForKey:@"name"];
     
     // Timestamp
@@ -104,7 +115,6 @@
     // If dates are not the same, then perform an update
     
     // Basic
-    self.id = [dictionary valueForKey:@"id"];
     self.name = [dictionary valueForKey:@"name"];
     self.type = [dictionary valueForKey:@"type"];
     
@@ -118,7 +128,13 @@
     
     // Author/From
     NSDictionary *from = [dictionary valueForKey:@"from"];
-    self.fromId = [from valueForKey:@"id"];
+    
+    // Coerce ID to string
+    id fromId = [from valueForKey:@"id"];
+    if ([fromId isKindOfClass:[NSNumber class]]) {
+      fromId = [fromId stringValue];
+    }
+    self.fromId = fromId;
     self.fromName = [from valueForKey:@"name"];
     
     // Timestamp

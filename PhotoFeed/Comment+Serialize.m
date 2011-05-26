@@ -17,12 +17,23 @@
     Comment *newComment = [NSEntityDescription insertNewObjectForEntityForName:@"Comment" inManagedObjectContext:context];
     
     // Basic
-    newComment.id = [dictionary valueForKey:@"id"];
+    // Coerce ID to string
+    id entityId = [dictionary valueForKey:@"id"];
+    if ([entityId isKindOfClass:[NSNumber class]]) {
+      entityId = [entityId stringValue];
+    }
+    newComment.id = entityId;
     newComment.message = [dictionary valueForKey:@"message"];
     
     // Author/From
     NSDictionary *from = [dictionary valueForKey:@"from"];
-    newComment.fromId = [from valueForKey:@"id"];
+    
+    // Coerce ID to string
+    id fromId = [from valueForKey:@"id"];
+    if ([fromId isKindOfClass:[NSNumber class]]) {
+      fromId = [fromId stringValue];
+    }
+    newComment.fromId = fromId;
     newComment.fromName = [from valueForKey:@"name"];
     
     // Timestamp
