@@ -7,8 +7,20 @@
 //
 
 #import "UIImage+NSCoding.h"
+#define kEncodingKey @"UIImage"
 
+@implementation UIImage(NSCoding)
+- (id)initWithCoder:(NSCoder *)decoder {
+  self = [super init];
+  if (self) {
+    NSData *data = [decoder decodeObjectForKey:kEncodingKey];
+    self = [self initWithData:data];
+  }
+  return self;
+}
 
-@implementation UIImage (UIImage_NSCoding)
-
+- (void)encodeWithCoder:(NSCoder *)encoder {
+  NSData *data = UIImagePNGRepresentation(self);
+  [encoder encodeObject:data forKey:kEncodingKey];
+}
 @end

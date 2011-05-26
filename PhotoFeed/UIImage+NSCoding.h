@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+@interface UIImageNSCoding <NSCoding>
 
-@interface UIImage (UIImage_NSCoding)
+- (id)initWithCoder:(NSCoder *)decoder;
+- (void)encodeWithCoder:(NSCoder *)encoder;
 
 @end
