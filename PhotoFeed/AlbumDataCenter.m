@@ -32,9 +32,15 @@ static AlbumDataCenter *_defaultCenter = nil;
 - (void)getAlbums {
   //  curl -F "batch=[ {'method': 'GET', 'name' : 'get-friends', 'relative_url': 'me/friends', 'omit_response_on_success' : true}, {'method': 'GET', 'name' : 'get-albums', 'depends_on':'get-friends', 'relative_url': 'albums?ids=me,{result=get-friends:$.data..id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=100', 'omit_response_on_success' : false} ]" https://graph.facebook.com
   
+  /*
+   curl -F "access_token=D1LgK2fmX11PjBMtys6iI68Kei67r5jPCuB24sf1IrM.eyJpdiI6InFjQ0FPbHVQRDl0b3hzMGZZVWFiSGcifQ.jKiEolLuK1lIgKOnC7Q5_iYWrv-4VEKD-X-zREhyn7r8h2ROyuOJ8yDWn5usdvcbDjkerlvTYVX5A1q3KEKPDSABn0i3nK9pC5KmX9S0clAoV6yv8AGvrBy6NXRleCoJ" -F "batch=[ {'method': 'GET', 'name' : 'get-friends', 'relative_url': 'me/friends?fields=id,name', 'omit_response_on_success' : true}, {'method': 'GET', 'depends_on':'get-friends', 'relative_url': 'albums?ids={result=get-friends:$.data[0:199:1].id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=0', 'omit_response_on_success' : false}, {'method': 'GET', 'depends_on':'get-friends', 'relative_url': 'albums?ids={result=get-friends:$.data[200:399:1].id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=0', 'omit_response_on_success' : false}, {'method': 'GET', 'depends_on':'get-friends', 'relative_url': 'albums?ids={result=get-friends:$.data[400:599:1].id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=0', 'omit_response_on_success' : false}, {'method': 'GET', 'depends_on':'get-friends', 'relative_url': 'albums?ids={result=get-friends:$.data[600:799:1].id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=0', 'omit_response_on_success' : false}, {'method': 'GET', 'depends_on':'get-friends', 'relative_url': 'albums?ids={result=get-friends:$.data[800:999:1].id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=0', 'omit_response_on_success' : false}, {'method': 'GET', 'depends_on':'get-friends', 'relative_url': 'albums?ids={result=get-friends:$.data[1000:1199:1].id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=0', 'omit_response_on_success' : false} ]"
+   */
+  
   // Apply since if exists
 #warning when applying this since, if the user adds new friends, we need to do a cold query for that friend's albums
   NSDate *since = [[NSUserDefaults standardUserDefaults] valueForKey:@"albums.since"];
+  
+  NSMutableArray *batchArray = [[NSMutableArray alloc] init];
   
   NSMutableDictionary *friendsDict = [NSMutableDictionary dictionary];
   [friendsDict setValue:@"GET" forKey:@"method"];
@@ -42,15 +48,27 @@ static AlbumDataCenter *_defaultCenter = nil;
   [friendsDict setValue:@"me/friends" forKey:@"relative_url"];
   [friendsDict setValue:[NSNumber numberWithBool:YES] forKey:@"omit_response_on_success"];
   
-  NSString *relativeUrl = [NSString stringWithFormat:@"albums?ids=me,{result=get-friends:$.data..id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=100&since=%0.0f", [since timeIntervalSince1970]];
-  NSMutableDictionary *albumsDict = [NSMutableDictionary dictionary];
-  [albumsDict setValue:@"GET" forKey:@"method"];
-  [albumsDict setValue:@"get-albums" forKey:@"name"];
-  [albumsDict setValue:relativeUrl forKey:@"relative_url"];
-  [albumsDict setValue:[NSNumber numberWithBool:NO] forKey:@"omit_response_on_success"];
+  // Add friends dict to batch
+  [batchArray addObject:friendsDict];
   
-  NSArray *batchArray = [NSArray arrayWithObjects:friendsDict, albumsDict, nil];
+  NSInteger batch = 200;
+  NSInteger end = ceil(1154 / (CGFloat)batch);
+  NSString *me = @"me,";
+  
+  for (int i=0; i<end; i++) {
+    if (i > 0) me = @"";
+    NSString *relativeUrl = [NSString stringWithFormat:@"albums?ids=%@{result=get-friends:$.data[%d:%d:1].id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=0&since=%0.0f", me, (i*batch), (i*batch + batch - 1), [since timeIntervalSince1970]];
+    
+    NSMutableDictionary *albumsDict = [[NSMutableDictionary alloc] init];
+    [albumsDict setValue:@"GET" forKey:@"method"];
+    [albumsDict setValue:relativeUrl forKey:@"relative_url"];
+    [albumsDict setValue:[NSNumber numberWithBool:NO] forKey:@"omit_response_on_success"];
+    [batchArray addObject:albumsDict];
+    [albumsDict release];
+  }
+
   NSString *batchJSON = [batchArray JSONRepresentation];
+  [batchArray release];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   [params setValue:batchJSON forKey:@"batch"];
@@ -116,7 +134,14 @@ static AlbumDataCenter *_defaultCenter = nil;
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponseData:(NSData *)responseData {
   // Process the batched results in a BG thread
+#warning test fixtures
+#ifdef USE_JESSA_FIXTURES
+  NSString *path = [[NSBundle mainBundle] pathForResource:@"jessa" ofType:@"json"];
+  NSData *tmpData = [NSData dataWithContentsOfFile:path];
+  [[PSParserStack sharedParser] parseData:tmpData withDelegate:self andUserInfo:nil];
+#else
   [[PSParserStack sharedParser] parseData:responseData withDelegate:self andUserInfo:nil];
+#endif
 }
 
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
@@ -128,8 +153,13 @@ static AlbumDataCenter *_defaultCenter = nil;
 
 - (void)parseFinishedWithResponse:(id)response andUserInfo:(NSDictionary *)userInfo {
 #warning check for Facebook errors
+  // Traverse Array if batch
   if ([response isKindOfClass:[NSArray class]]) {
-    [[PSParserStack sharedParser] parseData:[[[response lastObject] objectForKey:@"body"] dataUsingEncoding:NSUTF8StringEncoding] withDelegate:self andUserInfo:nil];
+    for (id res in response) {
+      if ([res notNil] && [res isKindOfClass:[NSDictionary class]]) {
+        [[PSParserStack sharedParser] parseData:[[res objectForKey:@"body"] dataUsingEncoding:NSUTF8StringEncoding] withDelegate:self andUserInfo:nil];
+      }
+    }
   } else {
     [self performSelectorInBackground:@selector(serializeAlbumsWithResponse:) withObject:response];
   }

@@ -201,6 +201,8 @@
 		25C67E3E137219AA00330DA7 /* NSString+URLEncoding+PS.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C67E38137219AA00330DA7 /* NSString+URLEncoding+PS.m */; };
 		25C67E41137219F200330DA7 /* PSImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C67E40137219F200330DA7 /* PSImageCache.m */; };
 		25C67E42137219F200330DA7 /* PSImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C67E40137219F200330DA7 /* PSImageCache.m */; };
+		25C77C48138E41E200D09103 /* jessa.json in Resources */ = {isa = PBXBuildFile; fileRef = 25C77C47138E41E200D09103 /* jessa.json */; };
+		25C77C49138E41E200D09103 /* jessa.json in Resources */ = {isa = PBXBuildFile; fileRef = 25C77C47138E41E200D09103 /* jessa.json */; };
 		25CEF8071339F278006F23A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8061339F278006F23A7 /* UIKit.framework */; };
 		25CEF8091339F278006F23A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8081339F278006F23A7 /* Foundation.framework */; };
 		25CEF80B1339F278006F23A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80A1339F278006F23A7 /* CoreGraphics.framework */; };
@@ -573,6 +575,7 @@
 		25C67E38137219AA00330DA7 /* NSString+URLEncoding+PS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding+PS.m"; sourceTree = "<group>"; };
 		25C67E3F137219F200330DA7 /* PSImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSImageCache.h; sourceTree = "<group>"; };
 		25C67E40137219F200330DA7 /* PSImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSImageCache.m; sourceTree = "<group>"; };
+		25C77C47138E41E200D09103 /* jessa.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jessa.json; sourceTree = "<group>"; };
 		25CEF8021339F278006F23A7 /* PhotoFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25CEF8061339F278006F23A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		25CEF8081339F278006F23A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -979,6 +982,7 @@
 		25CEF80F1339F278006F23A7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				25C77C47138E41E200D09103 /* jessa.json */,
 				25409762138478BA00EBE848 /* PhotoFeed.xcdatamodeld */,
 				25CEF8FD1339FFD3006F23A7 /* Constants.h */,
 				25EFD4011343E44C000108B8 /* NetworkConstants.h */,
@@ -1664,6 +1668,7 @@
 				25B9C776138DDD7B003FEE96 /* comments-icon.png in Resources */,
 				254BE303138E0D3A00A710E8 /* table_footer_background@2x.png in Resources */,
 				254BE304138E0D3A00A710E8 /* table_footer_background.png in Resources */,
+				25C77C48138E41E200D09103 /* jessa.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1678,6 +1683,7 @@
 				2538FF27133AD07100ACE127 /* albums.json in Resources */,
 				25F0411813831B2D00FB55BB /* weave-bg@2x.png in Resources */,
 				25F0411A13831B2D00FB55BB /* weave-bg.png in Resources */,
+				25C77C49138E41E200D09103 /* jessa.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
