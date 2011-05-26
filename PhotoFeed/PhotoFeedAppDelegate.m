@@ -79,7 +79,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
   [[NSUserDefaults standardUserDefaults] synchronize];
-  [[PSImageCache sharedCache] flushImageCacheToDisk];
+//  [[PSImageCache sharedCache] flushImageCacheToDisk];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -95,7 +95,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
   [[NSUserDefaults standardUserDefaults] synchronize];
-  [[PSImageCache sharedCache] flushImageCacheToDisk];
+//  [[PSImageCache sharedCache] flushImageCacheToDisk];
 }
 
 
