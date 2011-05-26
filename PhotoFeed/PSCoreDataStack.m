@@ -26,7 +26,6 @@ static NSManagedObjectContext *_mainThreadContext = nil;
   [[self class] deleteAllObjects:@"Album"];
   [[self class] deleteAllObjects:@"Photo"];
   [[self class] deleteAllObjects:@"Comment"];
-  [[self class] deleteAllObjects:@"Like"];
   
   [[NSNotificationCenter defaultCenter] postNotificationName:kCoreDataDidReset object:nil];
   

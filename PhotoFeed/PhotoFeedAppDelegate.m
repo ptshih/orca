@@ -131,8 +131,8 @@
 
 - (void)userDidLogout {
   // Delete all existing data
-  [PSCoreDataStack resetPersistentStore];
   [self tryLogin];
+  [PSCoreDataStack resetPersistentStore];
 }
 
 - (void)startDownloadAlbums {
