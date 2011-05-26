@@ -26,7 +26,7 @@
   NSURL *photosUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/photos", FB_GRAPH, albumId]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
-  [params setValue:@"999" forKey:@"limit"];
+  [params setValue:@"0" forKey:@"limit"];
   
   [self sendRequestWithURL:photosUrl andMethod:GET andHeaders:nil andParams:params andUserInfo:[NSDictionary dictionaryWithObject:albumId forKey:@"albumId"]];
 }
