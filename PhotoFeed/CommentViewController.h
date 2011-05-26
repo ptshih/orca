@@ -26,6 +26,7 @@
 }
 
 @property (nonatomic, assign) Photo *photo;
+@property (nonatomic, assign) UIImage *photoImage;
 
 - (void)newComment;
 - (void)setupHeader;

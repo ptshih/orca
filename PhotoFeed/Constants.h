@@ -26,6 +26,7 @@
 
 // Notifications
 #define kReloadController @"ReloadController"
+#define kReloadAlbumController @"ReloadAlbumController"
 #define kLocationAcquired @"LocationAcquired"
 #define kLogoutRequested @"LogoutRequested"
 #define kCoreDataDidReset @"CoreDataDidReset"

@@ -33,7 +33,7 @@ static UIImage *_overlayImage = nil;
     self.clipsToBounds = YES;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadPhoto:) name:kImageCached object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadPhoto:) name:kImageCached object:nil];
     
     _isAnimating = NO;
     _photoWidth = 0;
@@ -99,7 +99,9 @@ static UIImage *_overlayImage = nil;
     _captionView.layer.opacity = 0.5;
     
     // Photo
-    _photoView = [[PSImageView alloc] initWithFrame:CGRectMake(0, 0, 320, ALBUM_CELL_HEIGHT)];
+    _photoView = [[PSURLCacheImageView alloc] initWithFrame:CGRectMake(0, 0, 320, ALBUM_CELL_HEIGHT)];
+    _photoView.shouldScale = YES;
+    _photoView.delegate = self;
 //    _photoView = [[PSImageView alloc] initWithFrame:CGRectZero];
     
     // Overlay
@@ -135,7 +137,8 @@ static UIImage *_overlayImage = nil;
   _captionLabel.text = nil;
   _fromLabel.text = nil;
   _locationLabel.text = nil;
-//  _photoView.image = nil;
+  _photoView.frame = CGRectMake(0, 0, 320, ALBUM_CELL_HEIGHT);
+  _photoView.image = nil;
   _photoWidth = 0;
   _photoHeight = 0;
 }
@@ -267,21 +270,30 @@ static UIImage *_overlayImage = nil;
   _album = album;
   
   // Photo
-  if (album.imageData) {
-    //    UIImage *cachedImage = [[UIImage imageWithData:album.imageData] cropProportionalToSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
-    UIImage *cachedImage = [UIImage imageWithData:album.imageData];
-    [self setPhotoViewWithImage:cachedImage];
+  if (album.coverPhoto) {
+    NSString *photoURLPath = [NSString stringWithFormat:@"%@?access_token=%@", album.coverPhoto, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]];
+    _photoView.urlPath = photoURLPath;
+    [_photoView loadImageIfCached];
   } else {
-    if (album.coverPhoto) {
-      NSString *photoURLPath = [NSString stringWithFormat:@"%@?access_token=%@", album.coverPhoto, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]];
-      [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photoURLPath forEntity:album scaledSize:CGSizeZero];
-      _photoView.image = nil;
-    } else {
-      // Placeholder Image, no cover photo
-      _photoView.image = [UIImage imageNamed:@"lnkd.png"];
-    }
-//    [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photoURLPath forEntity:album scaledSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
+    // Placeholder Image, no cover photo
+    _photoView.image = [UIImage imageNamed:@"lnkd.png"];
   }
+  
+//  if (album.imageData) {
+//    //    UIImage *cachedImage = [[UIImage imageWithData:album.imageData] cropProportionalToSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
+//    UIImage *cachedImage = [UIImage imageWithData:album.imageData];
+//    [self setPhotoViewWithImage:cachedImage];
+//  } else {
+//    if (album.coverPhoto) {
+//      NSString *photoURLPath = [NSString stringWithFormat:@"%@?access_token=%@", album.coverPhoto, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]];
+//      [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photoURLPath forEntity:album scaledSize:CGSizeZero];
+//      _photoView.image = nil;
+//    } else {
+//      // Placeholder Image, no cover photo
+//      _photoView.image = [UIImage imageNamed:@"lnkd.png"];
+//    }
+//    [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photoURLPath forEntity:album scaledSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
+//  }
   
   // Labels
   _nameLabel.text = album.name;
@@ -289,6 +301,21 @@ static UIImage *_overlayImage = nil;
   _fromLabel.text = [NSString stringWithFormat:@"by %@", album.fromName];
   _locationLabel.text = [NSString stringWithFormat:@"at %@", album.location];
   _countLabel.text = [NSString stringWithFormat:@"%@ photos ", album.count];
+}
+
+- (void)loadPhoto {
+  if (_album.coverPhoto) {
+    [_photoView loadImage];
+  }
+}
+
+- (void)imageDidLoad:(UIImage *)image {
+  // this is divided by 2 because we are using retina @2x dimensions
+  _photoWidth = image.size.width;
+  _photoHeight = image.size.height;
+  _photoView.width = self.contentView.width; // 320
+  _photoView.height = floor((self.contentView.width / _photoWidth) * _photoHeight);
+  [self animateImage];
 }
 
 - (void)loadPhoto:(NSNotification *)notification {
@@ -312,7 +339,7 @@ static UIImage *_overlayImage = nil;
 }
 
 - (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:kImageCached object:nil];
+//  [[NSNotificationCenter defaultCenter] removeObserver:self name:kImageCached object:nil];
   RELEASE_SAFELY(_photoView);
   RELEASE_SAFELY(_overlayView);
   RELEASE_SAFELY(_captionView);

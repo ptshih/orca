@@ -13,6 +13,7 @@
 
 @synthesize placeholderImage = _placeholderImage;
 @synthesize shouldScale = _shouldScale;
+@synthesize delegate = _delegate;
 
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -37,12 +38,15 @@
 }
 
 - (void)setImage:(UIImage *)image {
-  // RETINA
-  [super setImage:[UIImage imageWithCGImage:image.CGImage scale:2 orientation:image.imageOrientation]];
-  
   if (image != _placeholderImage) {
+    // RETINA
+    [super setImage:[UIImage imageWithCGImage:image.CGImage scale:2 orientation:image.imageOrientation]];
     [_loadingIndicator stopAnimating];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(imageDidLoad:)]) {
+      [self.delegate performSelector:@selector(imageDidLoad:) withObject:image];
+    }
   } else {
+    [super setImage:image];
     [_loadingIndicator startAnimating];
   }
 }

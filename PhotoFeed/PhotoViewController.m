@@ -139,6 +139,7 @@
   }
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
+  [cell loadPhoto];
   
   //  NSLog(@"display");
   return cell;
@@ -156,7 +157,7 @@
   
   Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
   _zoomView.photo = photo;
-  _zoomView.zoomImageView.image = [[cell.photoView.image copy] autorelease];
+  _zoomView.zoomImageView.image = cell.photoView.image;
   _zoomView.zoomImageView.frame = [cell convertRect:cell.photoView.frame toView:nil];
   _zoomView.oldImageFrame = [cell convertRect:cell.photoView.frame toView:nil];
   _zoomView.oldCaptionFrame = [cell convertRect:cell.captionLabel.frame toView:nil];
@@ -171,6 +172,7 @@
   Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
   CommentViewController *cvc = [[CommentViewController alloc] init];
   cvc.photo = photo;
+  cvc.photoImage = cell.photoView.image; // copy
   [self.navigationController pushViewController:cvc animated:YES];
   [cvc release];
 }

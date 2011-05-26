@@ -123,6 +123,13 @@
 - (void)userDidLogin {
   DLog(@"User Logged In");
   
+  // Set UserDefaults
+  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
+  
+  // Session/Register request finished
+  if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
+    [_launcherViewController dismissModalViewControllerAnimated:YES];
+  }
   
   // Change login screen to edu walkthru / loading
   
@@ -162,16 +169,8 @@
 }
 
 #pragma mark PSDataCenterDelegate
-- (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
-  // Set UserDefaults
-  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
-  
-  // Session/Register request finished
-  if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
-    [_launcherViewController dismissModalViewControllerAnimated:YES];
-  }
-  
-  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
+- (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {  
+  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadAlbumController object:nil];
 }
 
 - (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {

@@ -29,13 +29,13 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadAlbumController object:nil];
   [self reloadCardController];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadAlbumController object:nil];
 }
 
 - (void)loadView {
@@ -164,6 +164,7 @@
   }
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
+  [cell loadPhoto];
   
   return cell;
 }

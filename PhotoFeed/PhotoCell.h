@@ -10,9 +10,10 @@
 #import "PSCell.h"
 #import "Photo.h"
 #import "PhotoCellDelegate.h"
+#import "PSURLCacheImageView.h"
 
 @interface PhotoCell : PSCell {
-  PSImageView *_photoView; // optional
+  PSURLCacheImageView *_photoView; // optional
   UIView *_captionView;
   UILabel *_captionLabel;
   UIButton *_commentView;
@@ -25,7 +26,7 @@
   id <PhotoCellDelegate> _delegate;
 }
 
-@property (nonatomic, assign) PSImageView *photoView;
+@property (nonatomic, assign) PSURLCacheImageView *photoView;
 @property (nonatomic, assign) UILabel *captionLabel;
 @property (nonatomic, assign) id <PhotoCellDelegate> delegate;
 
@@ -33,5 +34,6 @@
 - (void)triggerPinch;
 - (void)commentsSelected;
 - (void)loadPhoto:(NSNotification *)notification;
+- (void)loadPhoto;
 
 @end

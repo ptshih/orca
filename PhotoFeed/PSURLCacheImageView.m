@@ -59,6 +59,8 @@
     UIImage *image = [[PSImageCache sharedCache] imageForURLPath:_urlPath];
     if (image) {
       self.image = image;
+    } else {
+      self.image = _placeholderImage;
     }
   }
 }
@@ -76,25 +78,16 @@
   NSURL *origURL = nil;
   origURL = [request originalURL];
 
-  UIImage *image = [UIImage imageWithData:[request responseData]];
-  UIImage *newImage = nil;
-  if (image) {
-    DLog(@"image size: %@, url: %@", NSStringFromCGSize([image size]), _urlPath);
-    if (_shouldScale) {
-      newImage = [image cropProportionalToSize:self.bounds.size];
-    } else {
-      newImage = image;
-    }
-    [[PSImageCache sharedCache] cacheImage:UIImageJPEGRepresentation(newImage, 1.0) forURLPath:[origURL absoluteString]];
-  } else {
-    DLog(@"image failed to load for url: %@", [origURL absoluteString]);
-  }
-  if (newImage) {
+  if ([request responseData]) {
+    [[PSImageCache sharedCache] cacheImage:[request responseData] forURLPath:[origURL absoluteString]];
+    
     if ([self.urlPath isEqualToString:[origURL absoluteString]]) {
-      self.image = newImage;
+      self.image = [[PSImageCache sharedCache] imageForURLPath:self.urlPath];
     } else {
       DLog(@"urlpath: %@, origURL: %@ does NOT match", _urlPath, [origURL absoluteString]);
     }
+  } else {
+    DLog(@"image failed to load for url: %@", [origURL absoluteString]);
   }
   
   //  NSLog(@"Image width: %f, height: %f", image.size.width, image.size.height);

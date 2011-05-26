@@ -35,7 +35,7 @@ static UIImage *_commentIcon = nil;
   if (self) {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadPhoto:) name:kImageCached object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadPhoto:) name:kImageCached object:nil];
     
     _photoWidth = 0;
     _photoHeight = 0;
@@ -75,7 +75,7 @@ static UIImage *_commentIcon = nil;
     _captionView.layer.opacity = 0.667;
     
     // Photo
-    _photoView = [[PSImageView alloc] initWithFrame:CGRectZero];
+    _photoView = [[PSURLCacheImageView alloc] initWithFrame:CGRectZero];
     //    _photoView.shouldScale = YES;
     //    _photoView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
     //    _photoView.layer.borderWidth = 1.0;
@@ -226,19 +226,26 @@ static UIImage *_commentIcon = nil;
   _photoHeight = [photo.height integerValue];
   
   // Photo
-  if (photo.imageData) {
-    UIImage *cachedImage = [UIImage imageWithData:photo.imageData];
-    _photoView.image = cachedImage;
-  } else {
-    [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photo.source forEntity:photo];
-    _photoView.image = nil;
-  }
+  _photoView.urlPath = photo.source;
+  [_photoView loadImageIfCached];
+  
+//  if (photo.imageData) {
+//    UIImage *cachedImage = [UIImage imageWithData:photo.imageData];
+//    _photoView.image = cachedImage;
+//  } else {
+//    [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photo.source forEntity:photo];
+//    _photoView.image = nil;
+//  }
   
   // Caption
   _captionLabel.text = photo.name;
   
   // Comment
   _commentLabel.text = [NSString stringWithFormat:@"Show %d Comments", [photo.comments count]];
+}
+
+- (void)loadPhoto {
+  [_photoView loadImage];
 }
 
 - (void)loadPhoto:(NSNotification *)notification {
@@ -249,7 +256,7 @@ static UIImage *_commentIcon = nil;
 }
 
 - (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:kImageCached object:nil];
+//  [[NSNotificationCenter defaultCenter] removeObserver:self name:kImageCached object:nil];
   RELEASE_SAFELY(_photoView);
   RELEASE_SAFELY(_captionView);
   RELEASE_SAFELY(_captionLabel);

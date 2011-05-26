@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "PSCell.h"
 #import "Album.h"
+#import "PSURLCacheImageView.h"
+#import "PSImageViewDelegate.h"
 
-@interface AlbumCell : PSCell {
-  PSImageView *_photoView;
+@interface AlbumCell : PSCell <PSImageViewDelegate> {
+  PSURLCacheImageView *_photoView;
   UIImageView *_overlayView;
   UIView *_captionView;
   UIView *_ribbonView;
@@ -31,6 +33,7 @@
 
 - (void)setPhotoViewWithImage:(UIImage *)newImage;
 - (void)loadPhoto:(NSNotification *)notification;
+- (void)loadPhoto;
 - (void)animateImage;
 
 @end

@@ -15,6 +15,7 @@
 @implementation CommentViewController
 
 @synthesize photo = _photo;
+@synthesize photoImage = _photoImage;
 
 - (id)init {
   self = [super init];
@@ -73,7 +74,6 @@
   _headerOffset = 0.0;
   _photoHeight = 0.0;
   
-  _photoImage = [UIImage imageWithData:_photo.imageData];
   _photoHeaderView = [[[UIImageView alloc] initWithImage:_photoImage] autorelease];
   _photoHeaderView.width = 320;
   _photoHeight = floor((320 / _photoImage.size.width) * _photoImage.size.height);
