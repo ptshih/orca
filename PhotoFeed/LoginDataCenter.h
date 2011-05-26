@@ -16,8 +16,6 @@
 + (LoginDataCenter *)defaultCenter;
 
 //- (void)startFacebookLogin;
-- (void)getFacebookId;
-- (void)startSession;
-- (void)startRegister;
+- (void)getMe;
 
 @end

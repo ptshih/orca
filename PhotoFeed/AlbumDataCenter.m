@@ -52,7 +52,7 @@ static AlbumDataCenter *_defaultCenter = nil;
   [batchArray addObject:friendsDict];
   
   NSInteger batch = 200;
-  NSInteger end = ceil(1154 / (CGFloat)batch);
+  NSInteger end = ceil((CGFloat)[[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] count] / (CGFloat)batch);
   NSString *me = @"me,";
   
   for (int i=0; i<end; i++) {

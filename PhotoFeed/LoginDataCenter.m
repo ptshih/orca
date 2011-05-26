@@ -19,29 +19,11 @@ static LoginDataCenter *_defaultCenter = nil;
   return _defaultCenter;
 }
 
-- (void)startSession {
-  NSURL *sessionUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/login/session", API_BASE_URL]];
-  
-  NSMutableDictionary *params = [NSMutableDictionary dictionary];
-  
-  [self sendRequestWithURL:sessionUrl andMethod:POST andHeaders:nil andParams:params andUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"session", @"login", nil]];
-}
-
-- (void)startRegister {
-  NSURL *registerUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/login/register", API_BASE_URL]];
-  
-  NSMutableDictionary *params = [NSMutableDictionary dictionary];
-  
-  [params setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"] forKey:@"facebook_access_token"];
-  
-  [self sendRequestWithURL:registerUrl andMethod:POST andHeaders:nil andParams:params andUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"register", @"login", nil]];
-}
-
-- (void)getFacebookId {
+- (void)getMe {
   NSURL *meUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/me", FB_GRAPH]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
-  [params setValue:@"id,name" forKey:@"fields"];
+  [params setValue:@"id,name,friends" forKey:@"fields"];
   
   [self sendRequestWithURL:meUrl andMethod:GET andHeaders:nil andParams:params andUserInfo:nil];
 }

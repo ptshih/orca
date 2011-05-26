@@ -76,7 +76,7 @@
   [[NSUserDefaults standardUserDefaults] synchronize];
   
   // We need to get the user's facebookId
-  [[LoginDataCenter defaultCenter] getFacebookId];
+  [[LoginDataCenter defaultCenter] getMe];
 }
 
 - (void)fbDidNotLogin:(BOOL)cancelled {
@@ -99,8 +99,10 @@
 - (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
   NSString *facebookId = [response valueForKey:@"id"];
   NSString *facebookName = [response valueForKey:@"name"];
+  NSArray *facebookFriends = [response valueForKey:@"friends"] ? [[response valueForKey:@"friends"] valueForKey:@"data"] : [NSArray array];
   [[NSUserDefaults standardUserDefaults] setObject:facebookId forKey:@"facebookId"];
   [[NSUserDefaults standardUserDefaults] setObject:facebookName forKey:@"facebookName"];
+  [[NSUserDefaults standardUserDefaults] setObject:facebookFriends forKey:@"facebookFriends"];
   [[NSUserDefaults standardUserDefaults] synchronize];
   
   if (self.delegate && [self.delegate respondsToSelector:@selector(userDidLogin)]) {

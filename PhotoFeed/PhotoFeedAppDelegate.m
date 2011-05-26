@@ -146,17 +146,6 @@
   // This gets called on subsequent app launches
   [self resetSessionKey];
   [self startDownloadAlbums];
-  
-#warning session disabled
-  //  [_loginDataCenter startSession];
-}
-
-- (void)startRegister {
-  // This gets called] if it is the first time logging in
-  [self resetSessionKey];
-  
-#warning register disabled
-  //  [_loginDataCenter startRegister];
 }
 
 - (void)resetSessionKey {
