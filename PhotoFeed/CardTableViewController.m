@@ -40,8 +40,9 @@
 - (void)setupSearchDisplayControllerWithScopeButtonTitles:(NSArray *)scopeButtonTitles andPlaceholder:(NSString *)placeholder {
   _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
   _searchBar.delegate = self;
-  _searchBar.tintColor = [UIColor darkGrayColor];
+//  _searchBar.tintColor = [UIColor darkGrayColor];
   _searchBar.placeholder = placeholder;
+  _searchBar.barStyle = UIBarStyleBlackOpaque;
   //  _searchBar.backgroundColor = [UIColor clearColor];
   
   if (scopeButtonTitles) {
@@ -59,6 +60,29 @@
   _searchItems = [[NSMutableArray alloc] initWithCapacity:1];
   
   // UITableViewCellSeparatorStyleNone
+  id searchBarTextField = nil;
+  id segmentedControl = nil;
+  for (UIView *subview in _searchBar.subviews) {
+    if ([subview isMemberOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+    } else if ([subview isMemberOfClass:NSClassFromString(@"UISegmentedControl")]) {
+      segmentedControl = subview;
+    } else if ([subview isMemberOfClass:NSClassFromString(@"UISearchBarTextField")]) {
+      searchBarTextField = subview;
+    }
+  }
+  [_searchBar removeSubviews];
+  
+//  UIImageView *scopeBackground = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"search_background.png"]] autorelease];
+//  scopeBackground.top -= 1;
+//  [segmentedControl insertSubview:scopeBackground atIndex:0];
+//  [segmentedControl setSegmentedControlStyle:UISegmentedControlStyleBar];
+//  [segmentedControl setTintColor:[UIColor blueColor]];
+  
+  // Add new background
+  UIImageView *searchBackground = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"search_background.png"]] autorelease];
+  searchBackground.top -= 1;
+  [_searchBar addSubview:searchBackground];
+  [_searchBar addSubview:searchBarTextField];
 }
 
 // SUBCLASS SHOULD CALL THIS

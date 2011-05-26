@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "CardCoreDataTableViewController.h"
+#import "PhotoCellDelegate.h"
 
 @class PhotoDataCenter;
 @class Album;
 @class PSZoomView;
 
-@interface PhotoViewController : CardCoreDataTableViewController {
+@interface PhotoViewController : CardCoreDataTableViewController <PhotoCellDelegate> {
   PhotoDataCenter *_photoDataCenter;
   Album *_album;
   

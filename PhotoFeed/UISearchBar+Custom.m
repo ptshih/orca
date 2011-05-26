@@ -12,8 +12,8 @@
 @implementation UISearchBar (Custom)
 
 - (void)drawRect:(CGRect)rect {
-	UIImage *image = [UIImage imageNamed: @"searchbar_bg.png"];
-	[image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+//	UIImage *image = [UIImage imageNamed: @"search_background.png"];
+//	[image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 }
 
 @end

@@ -14,6 +14,7 @@
 #import "PhotoCell.h"
 #import "CameraViewController.h"
 #import "PSZoomView.h"
+#import "CommentViewController.h"
 
 @implementation PhotoViewController
 
@@ -134,6 +135,7 @@
   cell = (PhotoCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
   if(cell == nil) { 
     cell = [[[PhotoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+    cell.delegate = self;
   }
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
@@ -160,6 +162,17 @@
   _zoomView.oldCaptionFrame = [cell convertRect:cell.captionLabel.frame toView:nil];
   _zoomView.caption = [[cell.captionLabel.text copy] autorelease];
   [_zoomView showZoom];
+}
+
+#pragma mark -
+#pragma mark PhotoCellDelegate
+- (void)commentsSelectedForCell:(PhotoCell *)cell {
+  NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
+  Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  CommentViewController *cvc = [[CommentViewController alloc] init];
+  cvc.photo = photo;
+  [self.navigationController pushViewController:cvc animated:YES];
+  [cvc release];
 }
 
 //- (void)pinchZoomTriggeredForCell:(PhotoCell *)cell {

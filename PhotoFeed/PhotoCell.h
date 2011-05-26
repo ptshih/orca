@@ -15,6 +15,8 @@
   PSImageView *_photoView; // optional
   UIView *_captionView;
   UILabel *_captionLabel;
+  UIButton *_commentView;
+  UILabel *_commentLabel;
   
   CGFloat _photoWidth;
   CGFloat _photoHeight;
@@ -29,7 +31,7 @@
 
 - (void)pinchZoom:(UIPinchGestureRecognizer *)gesture;
 - (void)triggerPinch;
-
+- (void)commentsSelected;
 - (void)loadPhoto:(NSNotification *)notification;
 
 @end

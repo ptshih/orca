@@ -12,11 +12,21 @@
 
 #define CAPTION_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0]
 
+#define COMMENT_HEIGHT 31.0
+
+static UIImage *_commentBackground = nil;
+static UIImage *_disclosureIndicator = nil;
+
 @implementation PhotoCell
 
 @synthesize photoView = _photoView;
 @synthesize captionLabel = _captionLabel;
 @synthesize delegate = _delegate;
+
++ (void)initialize {
+  _commentBackground = [[UIImage imageNamed:@"comment_cell_background.png"] retain];
+  _disclosureIndicator = [[UIImage imageNamed:@"disclosure_indicator_white.png"] retain];
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -29,21 +39,27 @@
     _photoHeight = 0;
     
     _captionLabel = [[UILabel alloc] init];
+    _commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_X, 0, 320 - MARGIN_X * 2, COMMENT_HEIGHT)];
     
     // Background Color
     _captionLabel.backgroundColor = [UIColor clearColor];
+    _commentLabel.backgroundColor = [UIColor clearColor];
     
     // Font
     _captionLabel.font = CAPTION_FONT;
+    _commentLabel.font = CAPTION_FONT;
     
     // Text Color
     _captionLabel.textColor = FB_COLOR_VERY_LIGHT_BLUE;
+    _commentLabel.textColor = FB_COLOR_VERY_LIGHT_BLUE;
     
     // Line Break Mode
     _captionLabel.lineBreakMode = UILineBreakModeWordWrap;
+    _commentLabel.lineBreakMode = UILineBreakModeTailTruncation;
     
     // Number of Lines
     _captionLabel.numberOfLines = 3;
+    _commentLabel.numberOfLines = 1;
     
     // Shadows
     _captionLabel.shadowColor = [UIColor blackColor];
@@ -60,18 +76,38 @@
     //    _photoView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
     //    _photoView.layer.borderWidth = 1.0;
     
+    // Comment
+    
+    _commentView = [[UIButton alloc] initWithFrame:CGRectZero];
+    [_commentView addTarget:self action:@selector(commentsSelected) forControlEvents:UIControlEventTouchUpInside];
+    [_commentView setBackgroundImage:_commentBackground forState:UIControlStateNormal];
+//    _commentView.backgroundColor = [UIColor colorWithPatternImage:_commentBackground];
+    
     // Add to contentView
     [self.contentView addSubview:_photoView];
     [self.contentView addSubview:_captionView];
+    [self.contentView addSubview:_commentView];
     
     // Add labels
     [self.contentView addSubview:_captionLabel];
+    [_commentView addSubview:_commentLabel];
+    
+    // Disclosure indicator for comment
+    UIImageView *_disclosureView = [[UIImageView alloc] initWithImage:_disclosureIndicator];
+    _disclosureView.frame = CGRectMake(320 - MARGIN_X - 10, 9, 10, 13);
+    [_commentView addSubview:_disclosureView];
     
     UIPinchGestureRecognizer *zoomGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchZoom:)];
     [self addGestureRecognizer:zoomGesture];
     [zoomGesture release];
   }
   return self;
+}
+
+- (void)commentsSelected {
+  if (self.delegate && [self.delegate respondsToSelector:@selector(commentsSelectedForCell:)]) {
+    [self.delegate performSelector:@selector(commentsSelectedForCell:) withObject:self];
+  }
 }
 
 - (void)pinchZoom:(UIPinchGestureRecognizer *)sender {
@@ -100,6 +136,7 @@
 - (void)prepareForReuse {
   [super prepareForReuse];
   _captionLabel.text = nil;
+  _commentLabel.text = nil;
   _photoView.image = nil;
   _photoWidth = 0;
   _photoHeight = 0;
@@ -118,6 +155,7 @@
   
   // Caption Label
   if ([_captionLabel.text length] > 0) {    
+    _captionView.hidden = NO;
     // Caption
     desiredSize = [UILabel sizeForText:_captionLabel.text width:textWidth font:_captionLabel.font numberOfLines:3 lineBreakMode:_captionLabel.lineBreakMode];
     _captionLabel.top = top + MARGIN_Y;
@@ -134,7 +172,15 @@
     // Move Captions up
     _captionView.top -= _captionView.height;
     _captionLabel.top -= _captionView.height;
+  } else {
+    _captionView.hidden = YES;
   }
+  
+  // Add Comment View
+  _commentView.top = _photoView.bottom;
+  _commentView.left = 0.0;
+  _commentView.width = 320;
+  _commentView.height = COMMENT_HEIGHT;
   
   //  NSLog(@"layout");
 }
@@ -148,6 +194,9 @@
   // Photo
   CGFloat photoWidth = [photo.width floatValue];
   CGFloat photoHeight = [photo.height floatValue];
+
+  // Comments
+  desiredHeight += COMMENT_HEIGHT;
   
   desiredHeight += floor(photoHeight / (photoWidth / 320));
   
@@ -178,6 +227,9 @@
   
   // Caption
   _captionLabel.text = photo.name;
+  
+  // Comment
+  _commentLabel.text = [NSString stringWithFormat:@"Show %d Comments", [photo.comments count]];
 }
 
 - (void)loadPhoto:(NSNotification *)notification {
@@ -191,8 +243,9 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kImageCached object:nil];
   RELEASE_SAFELY(_photoView);
   RELEASE_SAFELY(_captionView);
-  
   RELEASE_SAFELY(_captionLabel);
+  RELEASE_SAFELY(_commentView);
+  RELEASE_SAFELY(_commentLabel);
   [super dealloc];
 }
 
