@@ -34,7 +34,7 @@
     
     _nameLabel.textColor = FB_COLOR_DARK_GRAY_BLUE;
     _messageLabel.textColor = [UIColor darkTextColor];
-    _timestampLabel.textColor = FB_COLOR_VERY_LIGHT_BLUE;
+    _timestampLabel.textColor = [UIColor darkTextColor];
     
     _timestampLabel.textAlignment = UITextAlignmentRight;
     
@@ -63,7 +63,13 @@
   CGSize desiredSize = CGSizeZero;
   
   // Name/Timestamp
-  desiredSize = [UILabel sizeForText:_nameLabel.text width:textWidth font:_nameLabel.font numberOfLines:_nameLabel.numberOfLines lineBreakMode:_nameLabel.lineBreakMode];
+  desiredSize = [UILabel sizeForText:_timestampLabel.text width:textWidth font:_timestampLabel.font numberOfLines:1 lineBreakMode:_timestampLabel.lineBreakMode];
+  _timestampLabel.width = desiredSize.width;
+  _timestampLabel.height = desiredSize.height;
+  _timestampLabel.top = top;
+  _timestampLabel.left = self.contentView.width - _timestampLabel.width - MARGIN_X;
+  
+  desiredSize = [UILabel sizeForText:_nameLabel.text width:(textWidth - _timestampLabel.width - MARGIN_X) font:_nameLabel.font numberOfLines:_nameLabel.numberOfLines lineBreakMode:_nameLabel.lineBreakMode];
   _nameLabel.top = top;
   _nameLabel.left = left;
   _nameLabel.width = desiredSize.width;
