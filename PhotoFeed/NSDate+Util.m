@@ -79,14 +79,16 @@
 + (NSDate *)dateFromFacebookTimestamp:(NSString *)timestamp {
   //2010-12-01T21:35:43+0000  
   static NSDateFormatter *df = nil;
-  if (!df) {
-    df = [[NSDateFormatter alloc] init];    
-    [df setTimeStyle:NSDateFormatterFullStyle];
-//    [df setFormatterBehavior:NSDateFormatterBehavior10_4];
-    [df setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssz"];
+    @synchronized (self) {
+    if (!df) {
+      df = [[NSDateFormatter alloc] init];    
+      [df setTimeStyle:NSDateFormatterFullStyle];
+  //    [df setFormatterBehavior:NSDateFormatterBehavior10_4];
+      [df setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssz"];
+    }
+    NSDate *date = [df dateFromString:timestamp];
+    return date;
   }
-  NSDate *date = [df dateFromString:timestamp];
-  return date;
 }
 
 @end
