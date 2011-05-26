@@ -10,7 +10,9 @@
 #import "PSImageCell.h"
 
 @interface CommentCell : PSImageCell {
-  
+  UILabel *_nameLabel;
+  UILabel *_messageLabel;
+  UILabel *_timestampLabel;
 }
 
 @end

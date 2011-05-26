@@ -115,6 +115,13 @@
   [_refreshHeaderView refreshLastUpdatedDate];
 }
 
+// Optional table footer
+- (void)setupTableFooter {
+  UIImageView *footerImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"table_footer_background.png"]];
+  _tableView.tableFooterView = footerImage;
+  [footerImage release];
+}
+
 // Optional footer view
 - (void)setupFooterView {
   _tableView.frame = CGRectMake(_tableView.left, _tableView.top, _tableView.width, _tableView.height - 44);

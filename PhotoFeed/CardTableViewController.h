@@ -33,6 +33,7 @@
 
 - (void)setupTableViewWithFrame:(CGRect)frame andStyle:(UITableViewStyle)style andSeparatorStyle:(UITableViewCellSeparatorStyle)separatorStyle;
 - (void)setupPullRefresh;
+- (void)setupTableFooter;
 - (void)setupFooterView;
 - (void)setupLoadMoreView;
 - (void)setupSearchDisplayControllerWithScopeButtonTitles:(NSArray *)scopeButtonTitles;

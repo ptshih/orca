@@ -9,6 +9,7 @@
 #import "CommentViewController.h"
 #import "CommentDataCenter.h"
 #import "Comment.h"
+#import "CommentCell.h"
 #import "Photo.h"
 
 @implementation CommentViewController
@@ -48,19 +49,21 @@
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
-  [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleNone];
+  [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
   // Pull Refresh
   [self setupPullRefresh];
   
   [self setupHeader];
+  [self setupTableFooter];
   
   [self resetFetchedResultsController];
   [self executeFetch];
   [self updateState];
   
   // Get new from server
-  [self reloadCardController];
+  // Comments don't need to fetch from server immediately, only after a new post
+//  [self reloadCardController];
 }
 
 - (void)setupHeader {
@@ -91,6 +94,8 @@
   [UIView beginAnimations:nil context:nil];
   [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
   [UIView setAnimationDuration:0.4];
+  [UIView setAnimationDidStopSelector:@selector(toggleHeaderFinished)];
+  [UIView setAnimationDelegate:self];
   if (_isHeaderExpanded) {
     _isHeaderExpanded = NO;
     _commentHeaderView.height = _headerHeight;
@@ -102,6 +107,10 @@
   }
   _tableView.tableHeaderView = _commentHeaderView;
   [UIView commitAnimations];
+}
+
+- (void)toggleHeaderFinished {
+
 }
 
 - (void)reloadCardController {
@@ -132,6 +141,34 @@
   //  [self presentModalViewController:cnc animated:YES];
   //  [cvc autorelease];
   //  [cnc autorelease];
+}
+
+#pragma mark -
+#pragma mark Table
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  Comment *comment = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  return [CommentCell rowHeightForObject:comment forInterfaceOrientation:[self interfaceOrientation]];
+}
+
+- (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
+  Comment *comment = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
+  [cell fillCellWithObject:comment];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  CommentCell *cell = nil;
+  NSString *reuseIdentifier = [NSString stringWithFormat:@"%@_TableViewCell_%d", [self class], indexPath.section];
+  
+  cell = (CommentCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+  if(cell == nil) { 
+    cell = [[[CommentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+  }
+  
+  [self tableView:tableView configureCell:cell atIndexPath:indexPath];
+  
+  //  NSLog(@"display");
+  return cell;
 }
 
 #pragma mark -
