@@ -7,29 +7,35 @@
 //
 
 #import "CommentCell.h"
-
+#import "Comment.h"
 
 @implementation CommentCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+  self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+  if (self) {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+  }
+  return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (void)prepareForReuse {
+  [super prepareForReuse];
 }
 
-- (void)dealloc
-{
-    [super dealloc];
+- (void)layoutSubviews {
+  [super layoutSubviews];
+}
+
++ (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+  return 44.0;
+}
+
+- (void)fillCellWithObject:(id)object {
+}
+
+- (void)dealloc {
+  [super dealloc];
 }
 
 @end

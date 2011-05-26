@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PSImageCell.h"
 
-
-@interface CommentCell : UITableViewCell {
-    
+@interface CommentCell : PSImageCell {
+  
 }
 
 @end

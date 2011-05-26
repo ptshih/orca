@@ -16,6 +16,7 @@
 
 static UIImage *_commentBackground = nil;
 static UIImage *_disclosureIndicator = nil;
+static UIImage *_commentIcon = nil;
 
 @implementation PhotoCell
 
@@ -26,6 +27,7 @@ static UIImage *_disclosureIndicator = nil;
 + (void)initialize {
   _commentBackground = [[UIImage imageNamed:@"comment_cell_background.png"] retain];
   _disclosureIndicator = [[UIImage imageNamed:@"disclosure_indicator_white.png"] retain];
+  _commentIcon = [[UIImage imageNamed:@"comments-icon.png"] retain];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -39,7 +41,7 @@ static UIImage *_disclosureIndicator = nil;
     _photoHeight = 0;
     
     _captionLabel = [[UILabel alloc] init];
-    _commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_X, 0, 320 - MARGIN_X * 2, COMMENT_HEIGHT)];
+    _commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_X * 2 + 13, 0, 320 - MARGIN_X * 2, COMMENT_HEIGHT)];
     
     // Background Color
     _captionLabel.backgroundColor = [UIColor clearColor];
@@ -51,7 +53,7 @@ static UIImage *_disclosureIndicator = nil;
     
     // Text Color
     _captionLabel.textColor = FB_COLOR_VERY_LIGHT_BLUE;
-    _commentLabel.textColor = FB_COLOR_VERY_LIGHT_BLUE;
+    _commentLabel.textColor = [UIColor whiteColor];
     
     // Line Break Mode
     _captionLabel.lineBreakMode = UILineBreakModeWordWrap;
@@ -64,6 +66,8 @@ static UIImage *_disclosureIndicator = nil;
     // Shadows
     _captionLabel.shadowColor = [UIColor blackColor];
     _captionLabel.shadowOffset = CGSizeMake(0, 1);
+//    _commentLabel.shadowColor = [UIColor blackColor];
+//    _commentLabel.shadowOffset = CGSizeMake(0, 0);
     
     // Caption
     _captionView = [[UIView alloc] init];
@@ -91,6 +95,11 @@ static UIImage *_disclosureIndicator = nil;
     // Add labels
     [self.contentView addSubview:_captionLabel];
     [_commentView addSubview:_commentLabel];
+    
+    // Comment Icon
+    UIImageView *_commentIconView = [[UIImageView alloc] initWithImage:_commentIcon];
+    _commentIconView.frame = CGRectMake(MARGIN_X, 9, 13, 13);
+    [_commentView addSubview:_commentIconView];
     
     // Disclosure indicator for comment
     UIImageView *_disclosureView = [[UIImageView alloc] initWithImage:_disclosureIndicator];
