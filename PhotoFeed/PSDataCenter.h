@@ -16,7 +16,7 @@
 #import "NetworkConstants.h"
 #import "PSParserStack.h"
 
-#define SINCE_SAFETY_NET 180
+#define SINCE_SAFETY_NET 1800 // 5 minutes
 
 @interface PSDataCenter : PSObject <PSDataCenterDelegate, PSParserStackDelegate> {
   id <PSDataCenterDelegate> _delegate;

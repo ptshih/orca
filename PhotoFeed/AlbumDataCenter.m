@@ -57,7 +57,7 @@ static AlbumDataCenter *_defaultCenter = nil;
   
   for (int i=0; i<end; i++) {
     if (i > 0) me = @"";
-    NSString *relativeUrl = [NSString stringWithFormat:@"albums?ids=%@{result=get-friends:$.data[%d:%d:1].id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=0&since=%0.0f", me, (i*batch), (i*batch + batch - 1), [since timeIntervalSince1970]];
+    NSString *relativeUrl = [NSString stringWithFormat:@"albums?ids=%@{result=get-friends:$.data[%d:%d:1].id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=0&since=%0.0f", me, (i*batch), (i*batch + batch - 1), ([since timeIntervalSince1970] - SINCE_SAFETY_NET)];
     
     NSMutableDictionary *albumsDict = [[NSMutableDictionary alloc] init];
     [albumsDict setValue:@"GET" forKey:@"method"];
