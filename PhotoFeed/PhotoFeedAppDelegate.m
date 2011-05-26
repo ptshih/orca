@@ -121,11 +121,6 @@
   // Set UserDefaults
   [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
   
-  // Session/Register request finished
-  if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
-    [_launcherViewController dismissModalViewControllerAnimated:YES];
-  }
-  
   // Change login screen to edu walkthru / loading
   
   [self startDownloadAlbums];
@@ -165,6 +160,11 @@
 
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {  
+  // Session/Register request finished
+  if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
+    [_launcherViewController dismissModalViewControllerAnimated:YES];
+  }
+  
   [[NSNotificationCenter defaultCenter] postNotificationName:kReloadAlbumController object:nil];
 }
 

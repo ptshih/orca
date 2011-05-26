@@ -10,6 +10,7 @@
 #import "PSDataCenter.h"
 
 @interface AlbumDataCenter : PSDataCenter {
+  NSUInteger _responsesToBeParsed;
 }
 
 + (AlbumDataCenter *)defaultCenter;
