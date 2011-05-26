@@ -21,6 +21,7 @@
     _commentDataCenter = [[CommentDataCenter alloc] init];
     _commentDataCenter.delegate = self;
     _limit = 999;
+    _isHeaderExpanded = NO;
     self.hidesBottomBarWhenPushed = YES;
   }
   return self;
@@ -52,12 +53,55 @@
   // Pull Refresh
   [self setupPullRefresh];
   
+  [self setupHeader];
+  
   [self resetFetchedResultsController];
   [self executeFetch];
   [self updateState];
   
   // Get new from server
   [self reloadCardController];
+}
+
+- (void)setupHeader {
+  _headerHeight = 0.0;
+  _headerOffset = 0.0;
+  _photoHeight = 0.0;
+  
+  _photoImage = [UIImage imageWithData:_photo.imageData];
+  _photoHeaderView = [[[UIImageView alloc] initWithImage:_photoImage] autorelease];
+  _photoHeaderView.width = 320;
+  _photoHeight = floor((320 / _photoImage.size.width) * _photoImage.size.height);
+  _photoHeaderView.height = _photoHeight;
+  
+  _headerHeight = (_photoHeight >= 120) ? 120 : _photoHeight;
+  _headerOffset = floor((_photoHeight - _headerHeight) / 2);
+  
+  _commentHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, _headerHeight)] autorelease];
+  _commentHeaderView.clipsToBounds = YES;
+  _photoHeaderView.top = 0 - _headerOffset;
+  [_commentHeaderView addSubview:_photoHeaderView];
+  _tableView.tableHeaderView = _commentHeaderView;
+  
+  UITapGestureRecognizer *toggleHeaderTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleHeader:)] autorelease];
+  [_commentHeaderView addGestureRecognizer:toggleHeaderTap];
+}
+
+- (void)toggleHeader:(UITapGestureRecognizer *)gestureRecognizer {
+  [UIView beginAnimations:nil context:nil];
+  [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+  [UIView setAnimationDuration:0.4];
+  if (_isHeaderExpanded) {
+    _isHeaderExpanded = NO;
+    _commentHeaderView.height = _headerHeight;
+    _photoHeaderView.top -= _headerOffset;
+  } else {
+    _isHeaderExpanded = YES;
+    _commentHeaderView.height = _photoHeight;
+    _photoHeaderView.top = 0;
+  }
+  _tableView.tableHeaderView = _commentHeaderView;
+  [UIView commitAnimations];
 }
 
 - (void)reloadCardController {

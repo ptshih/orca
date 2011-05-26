@@ -15,10 +15,20 @@
 @interface CommentViewController : CardCoreDataTableViewController {
   CommentDataCenter *_commentDataCenter;
   Photo *_photo;
+  UIView *_commentHeaderView;
+  UIImage *_photoImage;
+  UIImageView *_photoHeaderView;
+  
+  CGFloat _headerHeight;
+  CGFloat _headerOffset;
+  CGFloat _photoHeight;
+  BOOL _isHeaderExpanded;
 }
 
 @property (nonatomic, assign) Photo *photo;
 
 - (void)newComment;
+- (void)setupHeader;
+- (void)toggleHeader:(UITapGestureRecognizer *)gestureRecognizer;
 
 @end
