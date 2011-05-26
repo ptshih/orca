@@ -11,7 +11,7 @@
 @class PhotoCell;
 
 @protocol PhotoCellDelegate <NSObject>
-
+@optional
 - (void)commentsSelectedForCell:(PhotoCell *)cell;
 - (void)pinchZoomTriggeredForCell:(PhotoCell *)cell;
 

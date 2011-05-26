@@ -27,7 +27,7 @@ static UIImage *_commentIcon = nil;
 + (void)initialize {
   _commentBackground = [[UIImage imageNamed:@"comment_cell_background.png"] retain];
   _disclosureIndicator = [[UIImage imageNamed:@"disclosure_indicator_white.png"] retain];
-  _commentIcon = [[UIImage imageNamed:@"comments-icon.png"] retain];
+  _commentIcon = [[UIImage imageNamed:@"comment.png"] retain];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -98,7 +98,7 @@ static UIImage *_commentIcon = nil;
     
     // Comment Icon
     UIImageView *_commentIconView = [[UIImageView alloc] initWithImage:_commentIcon];
-    _commentIconView.frame = CGRectMake(MARGIN_X, 9, 13, 13);
+    _commentIconView.frame = CGRectMake(MARGIN_X, 9, 15, 13);
     [_commentView addSubview:_commentIconView];
     
     // Disclosure indicator for comment
