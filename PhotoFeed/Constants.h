@@ -14,6 +14,7 @@
 #import "NSDate+Helper.h"
 //#import "NSDate+HumanInterval.h"
 #import "NSURL+Util.h"
+#import "UIImage+NSCoding.h"
 
 #ifdef __APPLE__
   #include "TargetConditionals.h"

@@ -75,12 +75,12 @@
 #pragma mark Request Finished
 - (void)requestFinished:(ASIHTTPRequest *)request {
   // URL
-  NSURL *origURL = nil;
-  origURL = [request originalURL];
+  NSURL *origURL = [request originalURL]; 
+//  origURL = [[request originalURL] URLByRemovingQuery];
 
   if ([request responseData]) {
     [[PSImageCache sharedCache] cacheImage:[request responseData] forURLPath:[origURL absoluteString]];
-    
+    DLog(@"cached urlpath: %@", origURL);
     if ([self.urlPath isEqualToString:[origURL absoluteString]]) {
       self.image = [[PSImageCache sharedCache] imageForURLPath:self.urlPath];
     } else {

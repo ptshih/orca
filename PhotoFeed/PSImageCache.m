@@ -31,13 +31,12 @@ static NSString *_cachePath = nil;
   self = [super init];
   if (self) {
     if (!_imageCache) {
-      _imageCache = [[NSMutableDictionary alloc] init];
-//      BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:_cachePath];
-//      if (fileExists) {
-//        _imageCache = [[self readImageCacheFromDisk] retain];
-//      } else {
-//        _imageCache = [[NSMutableDictionary alloc] init];
-//      }
+      BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:_cachePath];
+      if (fileExists) {
+        _imageCache = [[self readImageCacheFromDisk] retain];
+      } else {
+        _imageCache = [[NSMutableDictionary alloc] init];
+      }
     }
   }
   return self;
@@ -45,11 +44,13 @@ static NSString *_cachePath = nil;
 
 // Image Cache
 - (void)cacheImage:(NSData *)imageData forURLPath:(NSString *)urlPath {
+//  [self.imageCache setObject:imageData forKey:urlPath];
   [self.imageCache setObject:[UIImage imageWithData:imageData] forKey:urlPath];
 //  [self flushImageCacheToDisk];
 }
 
 - (UIImage *)imageForURLPath:(NSString *)urlPath {
+//  return [UIImage imageWithData:[self.imageCache objectForKey:urlPath]];
   return [self.imageCache objectForKey:urlPath];
 }
 
@@ -58,17 +59,11 @@ static NSString *_cachePath = nil;
 }
 
 - (NSMutableDictionary *)readImageCacheFromDisk {
-  // Read from file
-  NSError *error = nil;
-  NSData *imageCacheData = [NSData dataWithContentsOfFile:_cachePath];
-  return [NSMutableDictionary dictionaryWithDictionary:[NSPropertyListSerialization propertyListWithData:imageCacheData options:0 format:NULL error:&error]];
+  return [NSKeyedUnarchiver unarchiveObjectWithFile:_cachePath];
 }
 
 - (BOOL)flushImageCacheToDisk {
-  // Write to file
-  NSError *error = nil;
-  NSData *imageCacheData = [NSPropertyListSerialization dataWithPropertyList:_imageCache format:NSPropertyListBinaryFormat_v1_0 options:0 error:&error];
-  return [imageCacheData writeToFile:_cachePath atomically:YES];
+  return [NSKeyedArchiver archiveRootObject:_imageCache toFile:_cachePath];
 }
    
 #pragma mark Helpers

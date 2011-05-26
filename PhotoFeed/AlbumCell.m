@@ -139,6 +139,7 @@ static UIImage *_overlayImage = nil;
   _locationLabel.text = nil;
   _photoView.frame = CGRectMake(0, 0, 320, ALBUM_CELL_HEIGHT);
   _photoView.image = nil;
+  _photoView.urlPath = nil;
   _photoWidth = 0;
   _photoHeight = 0;
 }
@@ -277,6 +278,7 @@ static UIImage *_overlayImage = nil;
   } else {
     // Placeholder Image, no cover photo
     _photoView.image = [UIImage imageNamed:@"lnkd.png"];
+    _photoView.urlPath = nil;
   }
   
 //  if (album.imageData) {
