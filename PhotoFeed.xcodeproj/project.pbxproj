@@ -204,6 +204,8 @@
 		25C77C48138E41E200D09103 /* jessa.json in Resources */ = {isa = PBXBuildFile; fileRef = 25C77C47138E41E200D09103 /* jessa.json */; };
 		25C77C49138E41E200D09103 /* jessa.json in Resources */ = {isa = PBXBuildFile; fileRef = 25C77C47138E41E200D09103 /* jessa.json */; };
 		25C77C4B138E59E000D09103 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C77C4A138E59E000D09103 /* comment.png */; };
+		25C77C4E138E7B2A00D09103 /* UIImage+NSCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C77C4D138E7B2A00D09103 /* UIImage+NSCoding.m */; };
+		25C77C4F138E7B2A00D09103 /* UIImage+NSCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C77C4D138E7B2A00D09103 /* UIImage+NSCoding.m */; };
 		25CEF8071339F278006F23A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8061339F278006F23A7 /* UIKit.framework */; };
 		25CEF8091339F278006F23A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF8081339F278006F23A7 /* Foundation.framework */; };
 		25CEF80B1339F278006F23A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CEF80A1339F278006F23A7 /* CoreGraphics.framework */; };
@@ -578,6 +580,8 @@
 		25C67E40137219F200330DA7 /* PSImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSImageCache.m; sourceTree = "<group>"; };
 		25C77C47138E41E200D09103 /* jessa.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jessa.json; sourceTree = "<group>"; };
 		25C77C4A138E59E000D09103 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment.png; sourceTree = "<group>"; };
+		25C77C4C138E7B2A00D09103 /* UIImage+NSCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+NSCoding.h"; sourceTree = "<group>"; };
+		25C77C4D138E7B2A00D09103 /* UIImage+NSCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+NSCoding.m"; sourceTree = "<group>"; };
 		25CEF8021339F278006F23A7 /* PhotoFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25CEF8061339F278006F23A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		25CEF8081339F278006F23A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1050,6 +1054,8 @@
 				25DC5F3A136648A300868001 /* NSDictionary+Merge.m */,
 				2540977213848ADD00EBE848 /* NSURL+Util.h */,
 				2540977313848ADD00EBE848 /* NSURL+Util.m */,
+				25C77C4C138E7B2A00D09103 /* UIImage+NSCoding.h */,
+				25C77C4D138E7B2A00D09103 /* UIImage+NSCoding.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1812,6 +1818,7 @@
 				25B9C759138C8882003FEE96 /* CommentViewController.m in Sources */,
 				25B9C75D138C8E24003FEE96 /* CommentDataCenter.m in Sources */,
 				25B9C771138DDBCE003FEE96 /* CommentCell.m in Sources */,
+				25C77C4E138E7B2A00D09103 /* UIImage+NSCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1905,6 +1912,7 @@
 				25B9C75A138C8882003FEE96 /* CommentViewController.m in Sources */,
 				25B9C75E138C8E24003FEE96 /* CommentDataCenter.m in Sources */,
 				25B9C772138DDBCE003FEE96 /* CommentCell.m in Sources */,
+				25C77C4F138E7B2A00D09103 /* UIImage+NSCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
