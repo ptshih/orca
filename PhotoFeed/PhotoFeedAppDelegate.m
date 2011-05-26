@@ -177,8 +177,7 @@
 - (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
   // Session/Register request failed
   // Show login again
-  _loginViewController.loginButton.hidden = NO;
-  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
+  [_loginViewController logout];
 }
 
 #pragma mark -

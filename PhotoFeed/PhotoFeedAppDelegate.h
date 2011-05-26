@@ -39,7 +39,6 @@
 + (void)setupDefaults;
 - (void)animateHideLogin;
 - (void)startSession;
-- (void)startRegister;
 - (void)startDownloadAlbums;
 - (void)tryLogin;
 - (void)resetSessionKey;

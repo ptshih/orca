@@ -45,7 +45,7 @@
   [_loginButton setBackgroundImage:[[UIImage imageNamed:@"facebook-connect.png"] stretchableImageWithLeftCapWidth:36 topCapHeight:0] forState:UIControlStateNormal];
   [_loginButton setContentEdgeInsets:UIEdgeInsetsMake(0, 36, 0, 0)];
   [_loginButton setTitle:@"Login with Facebook" forState:UIControlStateNormal];
-  [_loginButton setTitle:@"Connecting to Facebook" forState:UIControlStateDisabled];
+  [_loginButton setTitle:@"Downloading Photo Albums" forState:UIControlStateDisabled];
   [_loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [_loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
   _loginButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0];
@@ -53,11 +53,19 @@
   _loginButton.titleLabel.shadowOffset = CGSizeMake(0, 1);
   [_loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:_loginButton];
+  
+  // Loading Indicator
+  _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+  _loadingIndicator.hidesWhenStopped = YES;
+  _loadingIndicator.center = self.view.center;
+  _loadingIndicator.top = _loginButton.top - _loadingIndicator.height - 20.0;
+  [self.view addSubview:_loadingIndicator];
 }
 
 #pragma mark -
 #pragma mark Button Actions
 - (void)login {
+  [_loadingIndicator startAnimating];
   _loginButton.enabled = NO;
   [_facebook authorize:FB_PERMISSIONS delegate:self];
 }
@@ -81,6 +89,7 @@
 
 - (void)fbDidNotLogin:(BOOL)cancelled {
   [self logout];
+  [_loadingIndicator stopAnimating];
   _loginButton.enabled = YES;
 }
 
@@ -91,6 +100,7 @@
   if (self.delegate && [self.delegate respondsToSelector:@selector(userDidLogout)]) {
     [self.delegate performSelector:@selector(userDidLogout)];
   }
+  [_loadingIndicator stopAnimating];
   _loginButton.enabled = YES;
 }
 
@@ -118,6 +128,7 @@
   [[LoginDataCenter defaultCenter] setDelegate:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kLogoutRequested object:nil];
   RELEASE_SAFELY(_loginButton);
+  RELEASE_SAFELY(_loadingIndicator);
   [super dealloc];
 }
 
