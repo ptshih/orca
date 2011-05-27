@@ -15,6 +15,7 @@
 #define COMMENT_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0]
 
 #define COMMENT_HEIGHT 31.0
+#define DISCLOSURE_WIDTH 10.0
 
 static UIImage *_commentBackground = nil;
 static UIImage *_disclosureIndicator = nil;
@@ -43,7 +44,7 @@ static UIImage *_commentIcon = nil;
     _photoHeight = 0;
     
     _captionLabel = [[UILabel alloc] init];
-    _commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_X, 0, 320 - MARGIN_X * 2, COMMENT_HEIGHT)];
+    _commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_X, 0, 320 - MARGIN_X * 2 - DISCLOSURE_WIDTH - MARGIN_X, COMMENT_HEIGHT)];
     
     // Background Color
     _captionLabel.backgroundColor = [UIColor clearColor];
@@ -105,7 +106,9 @@ static UIImage *_commentIcon = nil;
     
     // Disclosure indicator for comment
     UIImageView *_disclosureView = [[UIImageView alloc] initWithImage:_disclosureIndicator];
-    _disclosureView.frame = CGRectMake(320 - MARGIN_X - 10, 9, 10, 13);
+    _disclosureView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    _disclosureView.contentMode = UIViewContentModeCenter;
+    _disclosureView.frame = CGRectMake(320 - MARGIN_X - DISCLOSURE_WIDTH, 0, DISCLOSURE_WIDTH, _commentView.height);
     [_commentView addSubview:_disclosureView];
     
     UIPinchGestureRecognizer *zoomGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchZoom:)];
@@ -225,7 +228,7 @@ static UIImage *_commentIcon = nil;
   
   NSString *commentString = [NSString stringWithFormat:@"Show %d comments from %@", [photo.comments count], [[commenters allObjects] componentsJoinedByString:@", "]];
   
-  desiredSize = [UILabel sizeForText:commentString width:textWidth font:COMMENT_FONT numberOfLines:0 lineBreakMode:UILineBreakModeWordWrap];
+  desiredSize = [UILabel sizeForText:commentString width:(textWidth - DISCLOSURE_WIDTH - MARGIN_X) font:COMMENT_FONT numberOfLines:0 lineBreakMode:UILineBreakModeWordWrap];
   desiredHeight += desiredSize.height + MARGIN_Y * 2;
   
   // Caption
