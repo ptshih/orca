@@ -9,8 +9,10 @@
 #import "PhotoCell.h"
 #import "PSCoreDataImageCache.h"
 #import "UIImage+ScalingAndCropping.h"
+#import "Comment.h"
 
 #define CAPTION_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0]
+#define COMMENT_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0]
 
 #define COMMENT_HEIGHT 31.0
 
@@ -41,7 +43,7 @@ static UIImage *_commentIcon = nil;
     _photoHeight = 0;
     
     _captionLabel = [[UILabel alloc] init];
-    _commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_X * 2 + 13, 0, 320 - MARGIN_X * 2, COMMENT_HEIGHT)];
+    _commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_X, 0, 320 - MARGIN_X * 2, COMMENT_HEIGHT)];
     
     // Background Color
     _captionLabel.backgroundColor = [UIColor clearColor];
@@ -49,7 +51,7 @@ static UIImage *_commentIcon = nil;
     
     // Font
     _captionLabel.font = CAPTION_FONT;
-    _commentLabel.font = CAPTION_FONT;
+    _commentLabel.font = COMMENT_FONT;
     
     // Text Color
     _captionLabel.textColor = FB_COLOR_VERY_LIGHT_BLUE;
@@ -57,11 +59,11 @@ static UIImage *_commentIcon = nil;
     
     // Line Break Mode
     _captionLabel.lineBreakMode = UILineBreakModeWordWrap;
-    _commentLabel.lineBreakMode = UILineBreakModeTailTruncation;
+    _commentLabel.lineBreakMode = UILineBreakModeWordWrap;
     
     // Number of Lines
     _captionLabel.numberOfLines = 3;
-    _commentLabel.numberOfLines = 1;
+    _commentLabel.numberOfLines = 0;
     
     // Shadows
     _captionLabel.shadowColor = [UIColor blackColor];
@@ -97,9 +99,9 @@ static UIImage *_commentIcon = nil;
     [_commentView addSubview:_commentLabel];
     
     // Comment Icon
-    UIImageView *_commentIconView = [[UIImageView alloc] initWithImage:_commentIcon];
-    _commentIconView.frame = CGRectMake(MARGIN_X, 9, 15, 13);
-    [_commentView addSubview:_commentIconView];
+//    UIImageView *_commentIconView = [[UIImageView alloc] initWithImage:_commentIcon];
+//    _commentIconView.frame = CGRectMake(MARGIN_X, 9, 15, 13);
+//    [_commentView addSubview:_commentIconView];
     
     // Disclosure indicator for comment
     UIImageView *_disclosureView = [[UIImageView alloc] initWithImage:_disclosureIndicator];
@@ -186,10 +188,13 @@ static UIImage *_commentIcon = nil;
   }
   
   // Add Comment View
+  desiredSize = [UILabel sizeForText:_commentLabel.text width:textWidth font:_commentLabel.font numberOfLines:_commentLabel.numberOfLines lineBreakMode:_commentLabel.lineBreakMode];
   _commentView.top = _photoView.bottom;
   _commentView.left = 0.0;
   _commentView.width = 320;
-  _commentView.height = COMMENT_HEIGHT;
+  _commentView.height = desiredSize.height + MARGIN_Y * 2;
+  _commentLabel.height = desiredSize.height + MARGIN_Y * 2;
+//  _commentView.height = COMMENT_HEIGHT;
   
   //  NSLog(@"layout");
 }
@@ -197,17 +202,31 @@ static UIImage *_commentIcon = nil;
 + (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
   Photo *photo = (Photo *)object;
   
+  CGSize desiredSize = CGSizeZero;
+  CGFloat textWidth = [[self class] rowWidthForInterfaceOrientation:interfaceOrientation] - MARGIN_X * 2; // minus image
+  
   //  CGFloat cellWidth = [[self class] rowWidthForInterfaceOrientation:interfaceOrientation];
   CGFloat desiredHeight = 0;
   
   // Photo
   CGFloat photoWidth = [photo.width floatValue];
-  CGFloat photoHeight = [photo.height floatValue];
-
-  // Comments
-  desiredHeight += COMMENT_HEIGHT;
+  CGFloat photoHeight = [photo.height floatValue];  
   
   desiredHeight += floor(photoHeight / (photoWidth / 320));
+  
+  // Comments
+  //  desiredHeight += COMMENT_HEIGHT;
+  
+  // Comments with name
+  NSMutableSet *commenters = [NSMutableSet set];
+  for (Comment *comment in photo.comments) {
+    [commenters addObject:comment.fromName];
+  }
+  
+  NSString *commentString = [NSString stringWithFormat:@"Show %d comments from %@", [photo.comments count], [[commenters allObjects] componentsJoinedByString:@", "]];
+  
+  desiredSize = [UILabel sizeForText:commentString width:textWidth font:COMMENT_FONT numberOfLines:0 lineBreakMode:UILineBreakModeWordWrap];
+  desiredHeight += desiredSize.height + MARGIN_Y * 2;
   
   // Caption
   //  if ([photo.name length] > 0) {
@@ -241,7 +260,11 @@ static UIImage *_commentIcon = nil;
   _captionLabel.text = photo.name;
   
   // Comment
-  _commentLabel.text = [NSString stringWithFormat:@"Show %d Comments", [photo.comments count]];
+  NSMutableSet *commenters = [NSMutableSet set];
+  for (Comment *comment in photo.comments) {
+    [commenters addObject:comment.fromName];
+  }
+  _commentLabel.text = [NSString stringWithFormat:@"Show %d comments from %@", [photo.comments count], [[commenters allObjects] componentsJoinedByString:@", "]];
 }
 
 - (void)loadPhoto {
