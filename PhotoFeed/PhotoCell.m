@@ -12,7 +12,7 @@
 #import "Comment.h"
 
 #define CAPTION_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0]
-#define COMMENT_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0]
+#define COMMENT_FONT [UIFont fontWithName:@"HelveticaNeue" size:12.0]
 
 #define COMMENT_HEIGHT 31.0
 #define DISCLOSURE_WIDTH 10.0
@@ -191,7 +191,7 @@ static UIImage *_commentIcon = nil;
   }
   
   // Add Comment View
-  desiredSize = [UILabel sizeForText:_commentLabel.text width:textWidth font:_commentLabel.font numberOfLines:_commentLabel.numberOfLines lineBreakMode:_commentLabel.lineBreakMode];
+  desiredSize = [UILabel sizeForText:_commentLabel.text width:(textWidth - DISCLOSURE_WIDTH - MARGIN_X) font:_commentLabel.font numberOfLines:_commentLabel.numberOfLines lineBreakMode:_commentLabel.lineBreakMode];
   _commentView.top = _photoView.bottom;
   _commentView.left = 0.0;
   _commentView.width = 320;

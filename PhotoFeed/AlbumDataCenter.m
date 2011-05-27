@@ -31,7 +31,6 @@ static AlbumDataCenter *_defaultCenter = nil;
 }
 
 - (void)getAlbums {
-    _responsesToBeParsed = 0;
   //  curl -F "batch=[ {'method': 'GET', 'name' : 'get-friends', 'relative_url': 'me/friends', 'omit_response_on_success' : true}, {'method': 'GET', 'name' : 'get-albums', 'depends_on':'get-friends', 'relative_url': 'albums?ids=me,{result=get-friends:$.data..id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=100', 'omit_response_on_success' : false} ]" https://graph.facebook.com
   
   /*
@@ -75,7 +74,6 @@ static AlbumDataCenter *_defaultCenter = nil;
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   [params setValue:batchJSON forKey:@"batch"];
   
-  [[NSUserDefaults standardUserDefaults] setValue:[NSDate date] forKey:@"albums.since"];
   [self sendFacebookBatchRequestWithParams:params andUserInfo:nil];
 }
 
@@ -100,7 +98,9 @@ static AlbumDataCenter *_defaultCenter = nil;
   // Inform Delegate if all responses are parsed
   if (_responsesToBeParsed == 0 && _delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
     [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:nil withObject:nil];
+    [[NSUserDefaults standardUserDefaults] setValue:[NSDate date] forKey:@"albums.since"];
   }
+  
 }
 
 - (void)serializeAlbumsWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context {
@@ -159,13 +159,14 @@ static AlbumDataCenter *_defaultCenter = nil;
 #warning check for Facebook errors
   // Traverse Array if batch
   if ([response isKindOfClass:[NSArray class]]) {
+    _responsesToBeParsed = 0;
     for (id res in response) {
       if ([res notNil] && [res isKindOfClass:[NSDictionary class]]) {
-        _responsesToBeParsed++;
         [[PSParserStack sharedParser] parseData:[[res objectForKey:@"body"] dataUsingEncoding:NSUTF8StringEncoding] withDelegate:self andUserInfo:nil];
       }
     }
   } else {
+    _responsesToBeParsed++;
     [self performSelectorInBackground:@selector(serializeAlbumsWithResponse:) withObject:response];
   }
 }
