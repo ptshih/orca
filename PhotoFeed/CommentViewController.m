@@ -53,7 +53,7 @@
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
   // Pull Refresh
-  [self setupPullRefresh];
+//  [self setupPullRefresh];
   
   [self setupHeader];
   [self setupTableFooter];
