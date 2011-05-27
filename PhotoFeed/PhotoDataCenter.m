@@ -138,8 +138,9 @@
 #pragma mark -
 #pragma mark Fetch Request
 - (NSFetchRequest *)fetchPhotosForAlbumId:(NSString *)albumId withLimit:(NSUInteger)limit andOffset:(NSUInteger)offset {
-  NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"position" ascending:NO] autorelease];
-  NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
+  NSSortDescriptor *timestampSortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO] autorelease];
+  NSSortDescriptor *positionSortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"position" ascending:NO] autorelease];
+  NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:timestampSortDescriptor, positionSortDescriptor, nil] autorelease];
   NSFetchRequest *fetchRequest = [[PSCoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPhotosForAlbum" substitutionVariables:[NSDictionary dictionaryWithObject:albumId forKey:@"desiredAlbumId"]];
   [fetchRequest setSortDescriptors:sortDescriptors];
   [fetchRequest setFetchBatchSize:10];
