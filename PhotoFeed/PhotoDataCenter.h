@@ -14,15 +14,17 @@
 @interface PhotoDataCenter : PSDataCenter {
 }
 
+/**
+ Get photos from Server
+ */
 - (void)getPhotosForAlbumId:(NSString *)albumId;
 
 /**
  Serialize server response into Photo entities
  */
-- (void)serializePhotosWithDictionary:(NSDictionary *)dictionary forAlbumId:(NSString *)albumId inContext:(NSManagedObjectContext *)context;
-
-- (void)serializePhotosWithPayload:(NSDictionary *)payload; // thread
-- (void)serializePhotosFinished;
+- (void)serializePhotosWithRequest:(ASIHTTPRequest *)request;
+- (void)serializePhotosFinishedWithRequest:(ASIHTTPRequest *)request;
+- (void)serializePhotosWithArray:(NSArray *)array forAlbumId:(NSString *)albumId inContext:(NSManagedObjectContext *)context;
 
 /**
  Serialize comments

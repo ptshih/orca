@@ -10,20 +10,23 @@
 #import "PSDataCenter.h"
 
 @interface AlbumDataCenter : PSDataCenter {
-  NSUInteger _responsesToBeParsed;
 }
 
 + (AlbumDataCenter *)defaultCenter;
 
+/**
+ Get albums from Server
+ */
 - (void)getAlbums;
 
 /**
  Serialize server response into Album entities
  */
+- (void)serializeAlbumsWithRequest:(ASIHTTPRequest *)request;
+- (void)serializeAlbumsFinishedWithRequest:(ASIHTTPRequest *)request;
 - (void)serializeAlbumsWithArray:(NSArray *)array inContext:(NSManagedObjectContext *)context;
 
-- (void)serializeAlbumsWithResponse:(id)response; // thread
-- (void)serializeAlbumsFinished;
+
 
 /**
  Fetch Requests

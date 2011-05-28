@@ -26,11 +26,12 @@ static AlbumDataCenter *_defaultCenter = nil;
   self = [super init];
   if (self) {
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
-    _responsesToBeParsed = 0;
   }
   return self;
 }
 
+#pragma mark -
+#pragma mark Prepare Request
 - (void)getAlbums {
   //  curl -F "batch=[ {'method': 'GET', 'name' : 'get-friends', 'relative_url': 'me/friends', 'omit_response_on_success' : true}, {'method': 'GET', 'name' : 'get-albums', 'depends_on':'get-friends', 'relative_url': 'albums?ids=me,{result=get-friends:$.data..id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=100', 'omit_response_on_success' : false} ]" https://graph.facebook.com
   
@@ -86,31 +87,40 @@ static AlbumDataCenter *_defaultCenter = nil;
   [self sendRequestWithURL:albumsUrl andMethod:POST andHeaders:nil andParams:params andUserInfo:nil];
 }
 
-- (void)serializeAlbumsWithResponse:(id)response {
-  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+#pragma mark -
+#pragma mark Serialization
+- (void)serializeAlbumsWithRequest:(ASIHTTPRequest *)request {
   NSManagedObjectContext *context = [PSCoreDataStack newManagedObjectContext];
-  // response is an array of dicts
-  [self serializeAlbumsWithArray:response inContext:context];
-
+  
+  // Parse the JSON
+  id response = [[request responseData] JSONValue];
+  
+  // Process the Response for Albums
+  if ([response isKindOfClass:[NSArray class]]) {
+    for (id res in response) {
+      if ([res notNil] && [res isKindOfClass:[NSDictionary class]] && [res objectForKey:@"fql_result_set"]) {
+        // response is an array of dicts
+        [self serializeAlbumsWithArray:[res objectForKey:@"fql_result_set"] inContext:context];
+      }
+    }
+  }
+  
   // Save to Core Data
   [PSCoreDataStack saveInContext:context];
   [context release];
   
-  [self performSelectorOnMainThread:@selector(serializeAlbumsFinished) withObject:nil waitUntilDone:NO];
-  [pool release];
+  [self performSelectorOnMainThread:@selector(serializeAlbumsFinishedWithRequest:) withObject:request waitUntilDone:NO];
 }
 
-- (void)serializeAlbumsFinished {
-  _responsesToBeParsed--;
-  
+- (void)serializeAlbumsFinishedWithRequest:(ASIHTTPRequest *)request {
   // Inform Delegate if all responses are parsed
-  if (_responsesToBeParsed == 0 && _delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
-    [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:nil withObject:nil];
+  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
+    [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:request withObject:nil];
     [[NSUserDefaults standardUserDefaults] setValue:[NSDate date] forKey:@"albums.since"];
   }
-  
 }
 
+#pragma mark Core Data Serialization
 - (void)serializeAlbumsWithArray:(NSArray *)array inContext:(NSManagedObjectContext *)context {
   NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"object_id" ascending:YES];
   
@@ -148,43 +158,28 @@ static AlbumDataCenter *_defaultCenter = nil;
   }
 }
 
+#pragma mark -
 #pragma mark PSDataCenterDelegate
-- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponseData:(NSData *)responseData {
+- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {
   // Process the batched results in a BG thread
-#warning test fixtures
 #ifdef USE_JESSA_FIXTURES
   NSString *path = [[NSBundle mainBundle] pathForResource:@"jessa" ofType:@"json"];
   NSData *tmpData = [NSData dataWithContentsOfFile:path];
-  [[PSParserStack sharedParser] parseData:tmpData withDelegate:self andUserInfo:nil];
 #else
-  [[PSParserStack sharedParser] parseData:responseData withDelegate:self andUserInfo:nil];
+  NSInvocationOperation *parseOp = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(serializeAlbumsWithRequest:) object:request];
+  [[PSParserStack sharedParser] addOperation:parseOp];
 #endif
 }
 
-- (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
+- (void)dataCenterRequestFailed:(ASIHTTPRequest *)request {
   // Inform Delegate
   if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFail:withError:)]) {
-    [_delegate performSelector:@selector(dataCenterDidFail:withError:) withObject:request withObject:error];
+    [_delegate performSelector:@selector(dataCenterDidFail:withError:) withObject:request withObject:[request error]];
   }
 }
 
-- (void)parseFinishedWithResponse:(id)response andUserInfo:(NSDictionary *)userInfo {
-#warning check for Facebook errors
-  // Traverse Array if batch
-  if ([response isKindOfClass:[NSArray class]]) {
-    _responsesToBeParsed = 0;
-    for (id res in response) {
-      if ([res notNil] && [res isKindOfClass:[NSDictionary class]] && [res objectForKey:@"fql_result_set"]) {
-        _responsesToBeParsed++;
-        // response is an array of dicts
-        [self performSelectorInBackground:@selector(serializeAlbumsWithResponse:) withObject:[res objectForKey:@"fql_result_set"]];
-      }
-    }
-  } else {
-    [self performSelectorInBackground:@selector(serializeAlbumsWithResponse:) withObject:response];
-  }
-}
-
+#pragma mark -
+#pragma mark Fetch Request
 - (NSFetchRequest *)fetchAlbumsWithTemplate:(NSString *)fetchTemplate andSubstitutionVariables:(NSDictionary *)substitutionVariables andLimit:(NSUInteger)limit andOffset:(NSUInteger)offset {
   NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO] autorelease];
   NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];

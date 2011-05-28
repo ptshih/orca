@@ -22,6 +22,8 @@
   return self;
 }
 
+#pragma mark -
+#pragma mark Prepare Request
 - (void)getPhotosForAlbumId:(NSString *)albumId {
   NSURL *photosUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/photos", FB_GRAPH, albumId]];
   
@@ -31,31 +33,43 @@
   [self sendRequestWithURL:photosUrl andMethod:GET andHeaders:nil andParams:params andUserInfo:[NSDictionary dictionaryWithObject:albumId forKey:@"albumId"]];
 }
 
-- (void)serializePhotosWithPayload:(NSDictionary *)payload {
-  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+#pragma mark -
+#pragma mark Serialization
+- (void)serializePhotosWithRequest:(ASIHTTPRequest *)request {
   NSManagedObjectContext *context = [PSCoreDataStack newManagedObjectContext];
   
-  [self serializePhotosWithDictionary:[payload objectForKey:@"response"] forAlbumId:[payload objectForKey:@"albumId"] inContext:context];
+  // Parse the JSON
+  id response = [[request responseData] JSONValue];
   
+  // AlbumId from the userInfo
+  NSString *albumId = [request.userInfo valueForKey:@"albumId"];
+  
+  // Process the Response for Photos
+  if ([response isKindOfClass:[NSDictionary class]]) {
+    if ([response objectForKey:@"data"]) {
+      [self serializePhotosWithArray:[response objectForKey:@"data"] forAlbumId:albumId inContext:context];
+    }
+  }
+
   // Save to Core Data
   [PSCoreDataStack saveInContext:context];
   [context release];
-  
-  [self performSelectorOnMainThread:@selector(serializePhotosFinished) withObject:nil waitUntilDone:NO];
-  [pool release];
+ 
+  [self performSelectorOnMainThread:@selector(serializePhotosFinishedWithRequest:) withObject:request waitUntilDone:NO];
 }
 
-- (void)serializePhotosFinished {
+- (void)serializePhotosFinishedWithRequest:(ASIHTTPRequest *)request {
   // Inform Delegate
   if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
-    [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:nil withObject:nil];
+    [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:request withObject:nil];
   }
 }
 
-- (void)serializePhotosWithDictionary:(NSDictionary *)dictionary forAlbumId:(NSString *)albumId inContext:(NSManagedObjectContext *)context {
+#pragma mark Core Data Serialization
+- (void)serializePhotosWithArray:(NSArray *)array forAlbumId:(NSString *)albumId inContext:(NSManagedObjectContext *)context {
   NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES];
   
-  NSArray *sortedEntities = [[dictionary valueForKey:@"data"] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+  NSArray *sortedEntities = [array sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
   
   NSMutableArray *sortedEntityIds = [NSMutableArray array];
   for (NSDictionary *entityDict in sortedEntities) {
@@ -69,7 +83,7 @@
   
   NSError *error = nil;
   NSArray *foundEntities = [context executeFetchRequest:fetchRequest error:&error];
-
+  
   Photo *photo = nil;
   int i = 0;
   for (NSDictionary *entityDict in sortedEntities) {
@@ -116,36 +130,29 @@
 }
 
 #pragma mark -
-#pragma mark Request finished
-- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponseData:(NSData *)responseData {
-//  id response = [responseData JSONValue];
-  [[PSParserStack sharedParser] parseData:responseData withDelegate:self andUserInfo:request.userInfo];
+#pragma mark PSDataCenterDelegate
+- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {
+  NSInvocationOperation *parseOp = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(serializePhotosWithRequest:) object:request];
+  [[PSParserStack sharedParser] addOperation:parseOp];
 }
 
-- (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
+- (void)dataCenterRequestFailed:(ASIHTTPRequest *)request {
   // Inform Delegate
   if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFail:withError:)]) {
-    [_delegate performSelector:@selector(dataCenterDidFail:withError:) withObject:request withObject:error];
+    [_delegate performSelector:@selector(dataCenterDidFail:withError:) withObject:request withObject:[request error]];
   }
-}
-
-- (void)parseFinishedWithResponse:(id)response andUserInfo:(NSDictionary *)userInfo {
-#warning check for Facebook errors
-  NSDictionary *payload = [NSDictionary dictionaryWithObjectsAndKeys:response, @"response", [userInfo objectForKey:@"albumId"], @"albumId", nil];
-  [self performSelectorInBackground:@selector(serializePhotosWithPayload:) withObject:payload];
 }
 
 #pragma mark -
 #pragma mark Fetch Request
 - (NSFetchRequest *)fetchPhotosForAlbumId:(NSString *)albumId withLimit:(NSUInteger)limit andOffset:(NSUInteger)offset {
-  NSSortDescriptor *timestampSortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO] autorelease];
-  NSSortDescriptor *positionSortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"position" ascending:NO] autorelease];
-  NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:timestampSortDescriptor, positionSortDescriptor, nil] autorelease];
+  NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"position" ascending:YES] autorelease];
+  NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
   NSFetchRequest *fetchRequest = [[PSCoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPhotosForAlbum" substitutionVariables:[NSDictionary dictionaryWithObject:albumId forKey:@"desiredAlbumId"]];
   [fetchRequest setSortDescriptors:sortDescriptors];
-  [fetchRequest setFetchBatchSize:10];
-  [fetchRequest setFetchLimit:limit];
-  [fetchRequest setFetchOffset:offset];
+//  [fetchRequest setFetchBatchSize:50];
+//  [fetchRequest setFetchLimit:limit];
+//  [fetchRequest setFetchOffset:offset];
   return fetchRequest;
 }
 

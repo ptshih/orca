@@ -37,13 +37,13 @@ static ComposeDataCenter *_sharedInstance = nil;
   [self sendFormRequestWithURL:snapComposeUrl andHeaders:nil andParams:params andFile:file andUserInfo:nil];
 }
 
-- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponseData:(NSData *)responseData {
+- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {
   [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
 }
 
-- (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
+- (void)dataCenterRequestFailed:(ASIHTTPRequest *)request {
   [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
-  [super dataCenterRequestFailed:request withError:error];
+  [super dataCenterRequestFailed:request withError:[request error]];
 }
 
 @end

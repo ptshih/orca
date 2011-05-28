@@ -15,10 +15,11 @@
 @end
 
 @interface PSParserStack : NSObject {
-  
+  NSOperationQueue *_parserQueue;
 }
 
 + (PSParserStack *)sharedParser;
+- (void)addOperation:(NSOperation *)op;
 
 - (void)parseData:(NSData *)data withDelegate:(id)delegate andUserInfo:(NSDictionary *)userInfo;
 - (void)respondToDelegate:(NSDictionary *)payload;

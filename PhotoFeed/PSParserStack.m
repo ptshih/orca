@@ -37,6 +37,21 @@ static PSParserStack *_sharedParser = nil;
   return _sharedParser;
 }
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    _parserQueue = [[NSOperationQueue alloc] init];
+    [_parserQueue setMaxConcurrentOperationCount:1];
+  }
+  return self;
+}
+
+#pragma mark -
+#pragma mark NSOperationQueue Actions
+- (void)addOperation:(NSOperation *)op {
+  [_parserQueue addOperation:op];
+}
+
 #pragma mark -
 #pragma mark Thread
 + (void)parseThreadMain {

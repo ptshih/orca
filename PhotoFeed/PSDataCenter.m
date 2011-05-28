@@ -85,15 +85,13 @@
   
   // Request Completion Block
   [request setCompletionBlock:^{
-    [self dataCenterRequestFinished:request withResponseData:[request responseData]];
+    [self dataCenterRequestFinished:request];
     
     // Remove request from pendingRequests
     [_pendingRequests removeObject:request];
   }];
   [request setFailedBlock:^{
-    NSError *error = [request error];
-    NSLog(@"Request failed with error: %@", [error localizedDescription]);
-    [self dataCenterRequestFailed:request withError:error];
+    [self dataCenterRequestFailed:request];
     
     // Remove request from pendingRequests
     [_pendingRequests removeObject:request];
@@ -162,15 +160,13 @@
   
   // Request Completion Block
   [request setCompletionBlock:^{
-    [self dataCenterRequestFinished:request withResponseData:[request responseData]];
+    [self dataCenterRequestFinished:request];
     
     // Remove request from pendingRequests
     [_pendingRequests removeObject:request];
   }];
   [request setFailedBlock:^{
-    NSError *error = [request error];
-    NSLog(@"Request failed with error: %@", [error localizedDescription]);
-    [self dataCenterRequestFailed:request withError:error];
+    [self dataCenterRequestFailed:request];
     
     // Remove request from pendingRequests
     [_pendingRequests removeObject:request];
@@ -238,15 +234,13 @@
   
   // Request Completion Block
   [request setCompletionBlock:^{
-    [self dataCenterRequestFinished:request withResponseData:[request responseData]];
+    [self dataCenterRequestFinished:request];
     
     // Remove request from pendingRequests
     [_pendingRequests removeObject:request];
   }];
   [request setFailedBlock:^{
-    NSError *error = [request error];
-    
-    [self dataCenterRequestFailed:request withError:error];
+    [self dataCenterRequestFailed:request];
     
     // Remove request from pendingRequests
     [_pendingRequests removeObject:request];
@@ -259,12 +253,14 @@
 
 #pragma mark -
 #pragma mark Request Finished/Failed
-- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponseData:(NSData *)responseData {
+- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {
   // subclass should implement
 }
 
-- (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
+- (void)dataCenterRequestFailed:(ASIHTTPRequest *)request {
   // subclass should implement
+  NSError *error = [request error];
+  NSLog(@"Request failed with error: %@", [error localizedDescription]);
 }
 
 #pragma mark -

@@ -30,8 +30,8 @@ static LoginDataCenter *_defaultCenter = nil;
 
 #pragma mark -
 #pragma mark Request finished
-- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request withResponseData:(NSData *)responseData {
-  id response = [responseData JSONValue];
+- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {
+  id response = [[request responseData] JSONValue];
   
   // Inform Delegate
   if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
@@ -39,10 +39,10 @@ static LoginDataCenter *_defaultCenter = nil;
   }
 }
 
-- (void)dataCenterRequestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
+- (void)dataCenterRequestFailed:(ASIHTTPRequest *)request {
   // Inform Delegate
   if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFail:withError:)]) {
-    [_delegate performSelector:@selector(dataCenterDidFail:withError:) withObject:request withObject:error];
+    [_delegate performSelector:@selector(dataCenterDidFail:withError:) withObject:request withObject:[request error]];
   }
 }
 
