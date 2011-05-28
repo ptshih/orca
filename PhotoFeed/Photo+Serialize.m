@@ -22,6 +22,12 @@
 #pragma mark Create/Update
 + (Photo *)addPhotoWithDictionary:(NSDictionary *)dictionary forAlbumId:(NSString *)albumId inContext:(NSManagedObjectContext *)context {
   if (dictionary) {
+    
+    if (![dictionary valueForKey:@"width"] || ![dictionary valueForKey:@"height"]) {
+      // width or height was not provided, this is a bogus picture
+      return nil;
+    }
+    
     Photo *newPhoto = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:context];
     
     // AlbumId
@@ -42,6 +48,7 @@
     newPhoto.source = [dictionary valueForKey:@"source"];
     
     // Dimensions
+    // Apparently this can be nil
     newPhoto.width = [dictionary valueForKey:@"width"];
     newPhoto.height = [dictionary valueForKey:@"height"];
     
