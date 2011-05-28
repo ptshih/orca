@@ -30,15 +30,28 @@
   return [NSDate stringForDisplayFromDate:self.timestamp];
 }
 
-- (NSString *)fromName {
+//- (NSString *)fromName {
+//  // My own ID
+//  if ([self.fromId isEqualToString:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookId"]]) {
+//    return [[NSUserDefaults standardUserDefaults] stringForKey:@"facebookName"];
+//  } else {
+//    // This does a facebook id => name lookup in the local friends dict
+//    NSArray *friendIds = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"id"];
+//    NSArray *friendNames = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"name"];
+//    NSUInteger friendIndex = [friendIds indexOfObject:self.fromId];
+//    return [friendNames objectAtIndex:friendIndex];
+//  }
+//}
+
++ (NSString *)fromNameForFromId:(NSString *)fromId {
   // My own ID
-  if ([self.fromId isEqualToString:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookId"]]) {
+  if ([fromId isEqualToString:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookId"]]) {
     return [[NSUserDefaults standardUserDefaults] stringForKey:@"facebookName"];
   } else {
     // This does a facebook id => name lookup in the local friends dict
     NSArray *friendIds = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"id"];
     NSArray *friendNames = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"name"];
-    NSUInteger friendIndex = [friendIds indexOfObject:self.fromId];
+    NSUInteger friendIndex = [friendIds indexOfObject:fromId];
     return [friendNames objectAtIndex:friendIndex];
   }
 }
@@ -115,6 +128,7 @@
       ownerId = [ownerId stringValue];
     }
     newAlbum.fromId = ownerId;
+    newAlbum.fromName = [Album fromNameForFromId:ownerId];
     
     // Can Upload
     newAlbum.canUpload = [dictionary valueForKey:@"can_upload"];
@@ -188,6 +202,7 @@
       ownerId = [ownerId stringValue];
     }
     self.fromId = ownerId;
+    self.fromName = [Album fromNameForFromId:ownerId];
     
     // Can Upload
     self.canUpload = [dictionary valueForKey:@"can_upload"];

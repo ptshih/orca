@@ -25,6 +25,7 @@ static AlbumDataCenter *_defaultCenter = nil;
 - (id)init {
   self = [super init];
   if (self) {
+    _pendingRequestsToParse = 0;
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
   }
   return self;
@@ -46,45 +47,44 @@ static AlbumDataCenter *_defaultCenter = nil;
    {"query1":"SELECT uid2 FROM friend WHERE uid1 = me()", "query2":"SELECT aid,owner,cover_pid,name,description,location,size,type,modified_major,created,modified,can_upload FROM album WHERE owner IN (SELECT uid2 FROM #query1)"}
    
    */
+  
+  
+  // This is retarded... if the user has more than batchSize friends, we'll just fire off multiple requests
+  NSURL *albumsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.facebook.com/method/fql.query"]];
+  
+#warning when applying this since, if the user adds new friends, we need to do a cold query for that friend's albums
   // Apply since if exists
   NSDate *sinceDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"albums.since"];
-#warning when applying this since, if the user adds new friends, we need to do a cold query for that friend's albums
-  
-  NSURL *albumsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.facebook.com/method/fql.multiquery"]];
-  
-  NSMutableDictionary *params = [NSMutableDictionary dictionary];
-  [params setValue:@"json" forKey:@"format"];
-  
-  
+  NSTimeInterval since = [sinceDate timeIntervalSince1970] - SINCE_SAFETY_NET;
+    
   // Get batch size/count
   NSArray *friends = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"id"];
   NSInteger batchSize = 150;
   NSInteger batchCount = ceil((CGFloat)[friends count] / (CGFloat)batchSize);
   NSRange range = NSMakeRange(0, 0);
-  
-  // Since
-  NSTimeInterval since = [sinceDate timeIntervalSince1970] - SINCE_SAFETY_NET;
-  
-  // FQL Multiquery
-  NSMutableDictionary *batchDict = [NSMutableDictionary dictionary];
-  
+
   // ME
-  [batchDict setObject:[NSString stringWithFormat:@"SELECT aid,object_id,owner,name,description,location,size,type,modified_major,created,modified,can_upload FROM album WHERE owner = me() AND modified_major > %0.0f", since] forKey:@"queryme"];
+  NSMutableDictionary *params = [NSMutableDictionary dictionary];
+  [params setValue:@"json" forKey:@"format"];
+  [params setValue:[NSString stringWithFormat:@"SELECT aid,object_id,owner,name,description,location,size,type,modified_major,created,modified,can_upload FROM album WHERE owner = me() AND modified_major > %0.0f", since] forKey:@"query"];
+  _pendingRequestsToParse++;
+  [self sendRequestWithURL:albumsUrl andMethod:POST andHeaders:nil andParams:params andUserInfo:nil];
   
   // FRIENDS
   for (int i=0; i<batchCount; i++) {
-    if (i == 4) break;
+    NSMutableDictionary *friendParams = [NSMutableDictionary dictionary];
+    [friendParams setValue:@"json" forKey:@"format"];
+    
     NSInteger remainingFriends = [friends count] - (i * batchSize);
     NSInteger length = (batchSize > remainingFriends) ? remainingFriends : batchSize;
     range = NSMakeRange(i * batchSize, length);
     NSArray *batchFriends = [friends subarrayWithRange:range];
-    [batchDict setObject:[NSString stringWithFormat:@"SELECT aid,object_id,owner,cover_pid,name,description,location,size,type,modified_major,created,modified,can_upload FROM album WHERE owner IN (%@) AND modified_major > %0.0f", [batchFriends componentsJoinedByString:@","], since] forKey:[NSString stringWithFormat:@"query%d", i]];
+    
+    [friendParams setValue:[NSString stringWithFormat:@"SELECT aid,object_id,owner,cover_pid,name,description,location,size,type,modified_major,created,modified,can_upload FROM album WHERE owner IN (%@) AND modified_major > %0.0f", [batchFriends componentsJoinedByString:@","], since] forKey:@"query"];
+    
+    _pendingRequestsToParse++;
+    [self sendRequestWithURL:albumsUrl andMethod:POST andHeaders:nil andParams:friendParams andUserInfo:nil];
   }
-  
-  
-  [params setValue:[batchDict JSONRepresentation] forKey:@"queries"];
-  
-  [self sendRequestWithURL:albumsUrl andMethod:POST andHeaders:nil andParams:params andUserInfo:nil];
 }
 
 #pragma mark -
@@ -97,12 +97,7 @@ static AlbumDataCenter *_defaultCenter = nil;
   
   // Process the Response for Albums
   if ([response isKindOfClass:[NSArray class]]) {
-    for (id res in response) {
-      if ([res notNil] && [res isKindOfClass:[NSDictionary class]] && [res objectForKey:@"fql_result_set"]) {
-        // response is an array of dicts
-        [self serializeAlbumsWithArray:[res objectForKey:@"fql_result_set"] inContext:context];
-      }
-    }
+    [self serializeAlbumsWithArray:response inContext:context];
   }
   
   // Save to Core Data
@@ -113,8 +108,10 @@ static AlbumDataCenter *_defaultCenter = nil;
 }
 
 - (void)serializeAlbumsFinishedWithRequest:(ASIHTTPRequest *)request {
+  _pendingRequestsToParse--;
+  
   // Inform Delegate if all responses are parsed
-  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
+  if (_pendingRequestsToParse == 0 && _delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
     [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:request withObject:nil];
     [[NSUserDefaults standardUserDefaults] setValue:[NSDate date] forKey:@"albums.since"];
   }

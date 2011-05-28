@@ -144,6 +144,8 @@
 		255ECEE413906F1600E37BC0 /* SBJsonStreamWriterAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 255ECEDC13906F1600E37BC0 /* SBJsonStreamWriterAccumulator.m */; };
 		255ECEE513906F1600E37BC0 /* SBJsonStreamParserAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 255ECEDE13906F1600E37BC0 /* SBJsonStreamParserAccumulator.m */; };
 		255ECEE613906F1600E37BC0 /* SBJsonStreamParserAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 255ECEDE13906F1600E37BC0 /* SBJsonStreamParserAccumulator.m */; };
+		255ECEE91390C6F200E37BC0 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 255ECEE81390C6F200E37BC0 /* Album.m */; };
+		255ECEEA1390C6F200E37BC0 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 255ECEE81390C6F200E37BC0 /* Album.m */; };
 		256B53EC1388571800BAE074 /* PSParserStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 256B53EB1388571800BAE074 /* PSParserStack.m */; };
 		256B53ED1388571800BAE074 /* PSParserStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 256B53EB1388571800BAE074 /* PSParserStack.m */; };
 		256B53F0138863FD00BAE074 /* lnkd.png in Resources */ = {isa = PBXBuildFile; fileRef = 256B53EF138863FD00BAE074 /* lnkd.png */; };
@@ -151,8 +153,6 @@
 		25733C28138F282400660556 /* README.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 25733C26138F282400660556 /* README.markdown */; };
 		25733C37138FC57900660556 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25733C36138FC57900660556 /* Photo.m */; };
 		25733C38138FC57900660556 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 25733C36138FC57900660556 /* Photo.m */; };
-		25733C3B138FC8ED00660556 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 25733C3A138FC8ED00660556 /* Album.m */; };
-		25733C3C138FC8ED00660556 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 25733C3A138FC8ED00660556 /* Album.m */; };
 		25777272138C6E4C006C9535 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 25777271138C6E4C006C9535 /* Comment.m */; };
 		25777273138C6E4C006C9535 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 25777271138C6E4C006C9535 /* Comment.m */; };
 		259AD52413668FE000FA2B8D /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD52313668FE000FA2B8D /* AlbumCell.m */; };
@@ -534,6 +534,8 @@
 		255ECEDE13906F1600E37BC0 /* SBJsonStreamParserAccumulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserAccumulator.m; sourceTree = "<group>"; };
 		255ECEDF13906F1600E37BC0 /* SBJsonStreamParserAccumulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserAccumulator.h; sourceTree = "<group>"; };
 		255ECEE013906F1600E37BC0 /* SBJsonIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonIncludes.h; sourceTree = "<group>"; };
+		255ECEE71390C6F200E37BC0 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
+		255ECEE81390C6F200E37BC0 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		2564404A138902F30050D948 /* PhotoCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCellDelegate.h; sourceTree = "<group>"; };
 		256B53EA1388571800BAE074 /* PSParserStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSParserStack.h; sourceTree = "<group>"; };
 		256B53EB1388571800BAE074 /* PSParserStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSParserStack.m; sourceTree = "<group>"; };
@@ -541,8 +543,6 @@
 		25733C26138F282400660556 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = SOURCE_ROOT; };
 		25733C35138FC57900660556 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
 		25733C36138FC57900660556 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
-		25733C39138FC8ED00660556 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
-		25733C3A138FC8ED00660556 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		25777270138C6E4C006C9535 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		25777271138C6E4C006C9535 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		25961C9E134D46CD00A3D4CD /* MeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeDelegate.h; sourceTree = "<group>"; };
@@ -1130,8 +1130,8 @@
 				25777271138C6E4C006C9535 /* Comment.m */,
 				25733C35138FC57900660556 /* Photo.h */,
 				25733C36138FC57900660556 /* Photo.m */,
-				25733C39138FC8ED00660556 /* Album.h */,
-				25733C3A138FC8ED00660556 /* Album.m */,
+				255ECEE71390C6F200E37BC0 /* Album.h */,
+				255ECEE81390C6F200E37BC0 /* Album.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1858,11 +1858,11 @@
 				25B9C771138DDBCE003FEE96 /* CommentCell.m in Sources */,
 				25C77C4E138E7B2A00D09103 /* UIImage+NSCoding.m in Sources */,
 				25733C37138FC57900660556 /* Photo.m in Sources */,
-				25733C3B138FC8ED00660556 /* Album.m in Sources */,
 				255ECED813906D8F00E37BC0 /* JSONKit.m in Sources */,
 				255ECEE113906F1600E37BC0 /* SBUTF8Stream.m in Sources */,
 				255ECEE313906F1600E37BC0 /* SBJsonStreamWriterAccumulator.m in Sources */,
 				255ECEE513906F1600E37BC0 /* SBJsonStreamParserAccumulator.m in Sources */,
+				255ECEE91390C6F200E37BC0 /* Album.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1956,11 +1956,11 @@
 				25B9C772138DDBCE003FEE96 /* CommentCell.m in Sources */,
 				25C77C4F138E7B2A00D09103 /* UIImage+NSCoding.m in Sources */,
 				25733C38138FC57900660556 /* Photo.m in Sources */,
-				25733C3C138FC8ED00660556 /* Album.m in Sources */,
 				255ECED913906D8F00E37BC0 /* JSONKit.m in Sources */,
 				255ECEE213906F1600E37BC0 /* SBUTF8Stream.m in Sources */,
 				255ECEE413906F1600E37BC0 /* SBJsonStreamWriterAccumulator.m in Sources */,
 				255ECEE613906F1600E37BC0 /* SBJsonStreamParserAccumulator.m in Sources */,
+				255ECEEA1390C6F200E37BC0 /* Album.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

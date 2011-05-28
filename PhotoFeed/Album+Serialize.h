@@ -14,7 +14,9 @@
 // This is used for sectioning in tableview
 - (NSString *)daysAgo;
 
-- (NSString *)fromName;
+//- (NSString *)fromName;
+
++ (NSString *)fromNameForFromId:(NSString *)fromId;
 
 + (Album *)addAlbumWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
 

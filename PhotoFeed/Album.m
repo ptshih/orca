@@ -10,7 +10,9 @@
 
 
 @implementation Album
+@dynamic fromId;
 @dynamic location;
+@dynamic canUpload;
 @dynamic id;
 @dynamic count;
 @dynamic coverPhoto;
@@ -18,7 +20,6 @@
 @dynamic timestamp;
 @dynamic caption;
 @dynamic name;
-@dynamic canUpload;
-@dynamic fromId;
+@dynamic fromName;
 
 @end
