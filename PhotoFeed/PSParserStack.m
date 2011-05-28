@@ -8,6 +8,7 @@
 
 #import "PSParserStack.h"
 #import "JSON.h"
+#import "JSONKit.h"
 
 static NSThread *_parseThread = nil;
 static PSParserStack *_sharedParser = nil;
@@ -55,7 +56,11 @@ static PSParserStack *_sharedParser = nil;
   NSData *data = [payload objectForKey:@"data"];
   id delegate = [payload objectForKey:@"delegate"];
   NSDictionary *userInfo = [payload objectForKey:@"userInfo"];
+#ifdef USE_JSONKIT
+  id response = [data objectFromJSONData];
+#else
   id response = [data JSONValue];
+#endif
   
   NSDictionary *responsePayload = [NSDictionary dictionaryWithObjectsAndKeys:response, @"response", delegate, @"delegate", userInfo, @"userInfo", nil];
   
