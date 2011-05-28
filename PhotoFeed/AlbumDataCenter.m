@@ -61,7 +61,7 @@ static AlbumDataCenter *_defaultCenter = nil;
   NSArray *friends = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"id"];
   NSInteger batchSize = 150;
   NSInteger batchCount = ceil((CGFloat)[friends count] / (CGFloat)batchSize);
-  NSRange range = NSMakeRange(0, 0);
+  NSRange range;
 
   // ME
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -165,6 +165,7 @@ static AlbumDataCenter *_defaultCenter = nil;
 #else
   NSInvocationOperation *parseOp = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(serializeAlbumsWithRequest:) object:request];
   [[PSParserStack sharedParser] addOperation:parseOp];
+  [parseOp release];
 #endif
 }
 

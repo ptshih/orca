@@ -43,7 +43,6 @@ static ComposeDataCenter *_sharedInstance = nil;
 
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request {
   [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
-  [super dataCenterRequestFailed:request withError:[request error]];
 }
 
 @end

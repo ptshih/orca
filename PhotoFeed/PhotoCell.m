@@ -103,11 +103,12 @@ static UIImage *_commentIcon = nil;
 //    [_commentView addSubview:_commentIconView];
     
     // Disclosure indicator for comment
-    UIImageView *_disclosureView = [[UIImageView alloc] initWithImage:_disclosureIndicator];
+    UIImageView *_disclosureView = [[[UIImageView alloc] initWithImage:_disclosureIndicator] autorelease];
     _disclosureView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     _disclosureView.contentMode = UIViewContentModeCenter;
     _disclosureView.frame = CGRectMake(320 - MARGIN_X - DISCLOSURE_WIDTH, 0, DISCLOSURE_WIDTH, _commentView.height);
     [_commentView addSubview:_disclosureView];
+    
     
     UIPinchGestureRecognizer *zoomGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchZoom:)];
     [self addGestureRecognizer:zoomGesture];

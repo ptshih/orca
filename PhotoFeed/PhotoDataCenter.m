@@ -126,6 +126,7 @@
       [comments addObject:[Comment addCommentWithDictionary:commentDict inContext:context]];
     }
   }
+  
   [photo addComments:comments];
 }
 
@@ -134,6 +135,7 @@
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {
   NSInvocationOperation *parseOp = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(serializePhotosWithRequest:) object:request];
   [[PSParserStack sharedParser] addOperation:parseOp];
+  [parseOp release];
 }
 
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request {
