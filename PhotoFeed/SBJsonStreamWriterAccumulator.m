@@ -1,5 +1,5 @@
 /*
- Copyright (C) 2009 Stig Brautaset. All rights reserved.
+ Copyright (C) 2011 Stig Brautaset. All rights reserved.
  
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
@@ -27,35 +27,30 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
-
-#pragma mark JSON Writing
-
-/// Adds JSON generation to NSObject
-@interface NSObject (NSObject_SBJsonWriting)
-
-/// Returns a string containing the receiver encoded in JSON.
-- (NSString *)JSONRepresentation;
-
-@end
+#import "SBJsonStreamWriterAccumulator.h"
 
 
-#pragma mark JSON Parsing
+@implementation SBJsonStreamWriterAccumulator
 
-/// Adds JSON parsing methods to NSString
-@interface NSString (NSString_SBJsonParsing)
+@synthesize data;
 
-/// Returns the NSDictionary or NSArray represented by the receiver's JSON representation, or nil on error
-- (id)JSONValue;
+- (id)init {
+    self = [super init];
+    if (self) {
+        data = [[NSMutableData alloc] initWithCapacity:8096u];
+    }
+    return self;
+}
 
-@end
+- (void)dealloc {
+    [data release];
+    [super dealloc];
+}
 
-/// Adds JSON parsing methods to NSString
-@interface NSData (NSData_SBJsonParsing)
+#pragma SBJsonStreamWriterDelegate
 
-/// Returns the NSDictionary or NSArray represented by the receiver's JSON representation, or nil on error
-- (id)JSONValue;
+- (void)writer:(SBJsonStreamWriter *)writer appendBytes:(const void *)bytes length:(NSUInteger)length {
+    [data appendBytes:bytes length:length];
+}
 
 @end
-
-
