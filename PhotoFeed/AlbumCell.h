@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PSCell.h"
 #import "Album.h"
+#import "Album+Serialize.h"
 #import "PSURLCacheImageView.h"
 #import "PSImageViewDelegate.h"
 
@@ -32,7 +33,6 @@
 }
 
 - (void)setPhotoViewWithImage:(UIImage *)newImage;
-- (void)loadPhoto:(NSNotification *)notification;
 - (void)loadPhoto;
 - (void)animateImage;
 

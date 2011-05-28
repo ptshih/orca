@@ -59,8 +59,7 @@
     [self addSubview:_containerView];
     [_containerView addSubview:_zoomImageView];
     [_containerView addSubview:_captionLabel];
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadPhoto:) name:kImageCached object:nil];
+
     
     // Gestures
     UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
@@ -123,13 +122,6 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
   return YES;
-}
-
-- (void)reloadPhoto:(NSNotification *)notification {
-  NSDictionary *userInfo = [notification userInfo];
-  if ([[userInfo objectForKey:@"entity"] isEqual:_photo]) {
-    _zoomImageView.image = [UIImage imageWithData:_photo.imageData];
-  }
 }
 
 - (void)showZoom {
@@ -212,7 +204,6 @@
 
 - (void)dealloc {
   [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
-//  [[NSNotificationCenter defaultCenter] removeObserver:self name:kImageCached object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
   RELEASE_SAFELY(_zoomImageView);
   RELEASE_SAFELY(_shadeView);

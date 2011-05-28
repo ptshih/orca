@@ -38,8 +38,6 @@ static UIImage *_commentIcon = nil;
   if (self) {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadPhoto:) name:kImageCached object:nil];
-    
     _photoWidth = 0;
     _photoHeight = 0;
     
@@ -274,15 +272,7 @@ static UIImage *_commentIcon = nil;
   [_photoView loadImage];
 }
 
-- (void)loadPhoto:(NSNotification *)notification {
-  NSDictionary *userInfo = [notification userInfo];
-  if ([[userInfo objectForKey:@"entity"] isEqual:_photo]) {
-    _photoView.image = [UIImage imageWithData:_photo.imageData];
-  }
-}
-
 - (void)dealloc {
-//  [[NSNotificationCenter defaultCenter] removeObserver:self name:kImageCached object:nil];
   RELEASE_SAFELY(_photoView);
   RELEASE_SAFELY(_captionView);
   RELEASE_SAFELY(_captionLabel);

@@ -33,8 +33,6 @@ static UIImage *_overlayImage = nil;
     self.clipsToBounds = YES;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadPhoto:) name:kImageCached object:nil];
-    
     _isAnimating = NO;
     _photoWidth = 0;
     _photoHeight = 0;
@@ -320,15 +318,6 @@ static UIImage *_overlayImage = nil;
   [self animateImage];
 }
 
-- (void)loadPhoto:(NSNotification *)notification {
-  NSDictionary *userInfo = [notification userInfo];
-  if ([[userInfo objectForKey:@"entity"] isEqual:_album]) {
-    //    UIImage *cachedImage = [[UIImage imageWithData:_album.imageData] cropProportionalToSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
-    UIImage *cachedImage = [UIImage imageWithData:_album.imageData];
-    [self setPhotoViewWithImage:cachedImage];
-  }
-}
-
 - (void)setPhotoViewWithImage:(UIImage *)newImage {
   if ([newImage isEqual:_photoView.image]) return;
   _photoView.image = newImage;
@@ -341,7 +330,6 @@ static UIImage *_overlayImage = nil;
 }
 
 - (void)dealloc {
-//  [[NSNotificationCenter defaultCenter] removeObserver:self name:kImageCached object:nil];
   RELEASE_SAFELY(_photoView);
   RELEASE_SAFELY(_overlayView);
   RELEASE_SAFELY(_captionView);

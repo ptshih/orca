@@ -30,52 +30,102 @@
   return [NSDate stringForDisplayFromDate:self.timestamp];
 }
 
+- (NSString *)fromName {
+  // My own ID
+  if ([self.fromId isEqualToString:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookId"]]) {
+    return [[NSUserDefaults standardUserDefaults] stringForKey:@"facebookName"];
+  } else {
+    // This does a facebook id => name lookup in the local friends dict
+    NSArray *friendIds = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"id"];
+    NSArray *friendNames = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"name"];
+    NSUInteger friendIndex = [friendIds indexOfObject:self.fromId];
+    return [friendNames objectAtIndex:friendIndex];
+  }
+}
+
 #pragma mark -
 #pragma mark Create/Update
 + (Album *)addAlbumWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context {
+  /*
+   // BAD
+   aid = "100002385998437_-3";
+   "can_upload" = 0;
+   "cover_pid" = 0;
+   created = "<null>";
+   description = "";
+   location = "";
+   modified = "<null>";
+   "modified_major" = "<null>";
+   name = "Profile Pictures";
+   owner = 100002385998437;
+   size = 0;
+   type = profile;
+   
+   // GOOD
+   aid = "100002412788438_4071";
+   "can_upload" = 0;
+   "cover_pid" = "100002412788438_14137";
+   created = 1305365273;
+   description = "";
+   location = "";
+   modified = 1305365273;
+   "modified_major" = 1305365273;
+   name = "Webcam Photos";
+   owner = 100002412788438;
+   size = 1;
+   type = wall;
+   */
+  
   if (dictionary) {
+    // Check for invalid albums, if found ignore them
+    if ([[dictionary valueForKey:@"size"] integerValue] == 0) {
+      return nil;
+    }
+    
     Album *newAlbum = [NSEntityDescription insertNewObjectForEntityForName:@"Album" inManagedObjectContext:context];
     
     // Basic
-    // Coerce ID to string
-    id entityId = [dictionary valueForKey:@"id"];
-    if ([entityId isKindOfClass:[NSNumber class]]) {
-      entityId = [entityId stringValue];
+    id objectId = [dictionary valueForKey:@"object_id"];
+    if ([objectId isKindOfClass:[NSNumber class]]) {
+      objectId = [objectId stringValue];
     }
-    newAlbum.id = entityId;
+    newAlbum.id = objectId;
     newAlbum.name = [dictionary valueForKey:@"name"];
     newAlbum.type = [dictionary valueForKey:@"type"];
     
     // Can-be-empty
-    newAlbum.coverPhoto = [dictionary valueForKey:@"cover_photo"] ? [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", [dictionary valueForKey:@"cover_photo"]] : nil;
+    // We aren't using the cover photo for now
+    newAlbum.coverPhoto = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", [dictionary valueForKey:@"object_id"]];
+//    newAlbum.coverPhoto = [dictionary valueForKey:@"cover_pid"] ? [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", [dictionary valueForKey:@"cover_pid"]] : nil;
     
-#warning some albums have no cover photo
-    if (![dictionary valueForKey:@"cover_photo"]) {
-      NSLog(@"uh oh, no cover photo for: %@", [dictionary valueForKey:@"id"]);
+    // Some albums may not have a cover photo
+    if (![dictionary valueForKey:@"cover_pid"]) {
+      NSLog(@"uh oh, no cover photo for: %@", [dictionary valueForKey:@"object_id"]);
     }
     
     newAlbum.caption = [dictionary valueForKey:@"description"] ? [dictionary valueForKey:@"description"] : nil;
     newAlbum.location = [dictionary valueForKey:@"location"] ? [dictionary valueForKey:@"location"] : nil;
     
     // Counts
-    newAlbum.count = [dictionary valueForKey:@"count"] ? [dictionary valueForKey:@"count"] : [NSNumber numberWithInteger:0];
+    newAlbum.count = [dictionary valueForKey:@"size"] ? [dictionary valueForKey:@"size"] : [NSNumber numberWithInteger:0];
     
     // Author/From
-    NSDictionary *from = [dictionary valueForKey:@"from"];
-    
-    // Coerce ID to string
-    id fromId = [from valueForKey:@"id"];
-    if ([fromId isKindOfClass:[NSNumber class]]) {
-      fromId = [fromId stringValue];
+    id ownerId = [dictionary valueForKey:@"owner"];
+    if ([ownerId isKindOfClass:[NSNumber class]]) {
+      ownerId = [ownerId stringValue];
     }
-    newAlbum.fromId = fromId;
-    newAlbum.fromName = [from valueForKey:@"name"];
+    newAlbum.fromId = ownerId;
+    
+    // Can Upload
+    newAlbum.canUpload = [dictionary valueForKey:@"can_upload"];
     
     // Timestamp
-    if ([dictionary valueForKey:@"updated_time"]) {
-      newAlbum.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"updated_time"]];
-    } else if ([dictionary valueForKey:@"created_time"]) {
-      newAlbum.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"created_time"]];
+    if ([dictionary valueForKey:@"modified_major"]) {
+      newAlbum.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"modified_major"] longLongValue]];
+    } else if ([dictionary valueForKey:@"created"]) {
+      newAlbum.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"created"] longLongValue]];
+    } else if ([dictionary valueForKey:@"modified"]) {
+      newAlbum.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"modified"] longLongValue]];
     } else {
       newAlbum.timestamp = [NSDate distantPast];
     }
@@ -88,30 +138,35 @@
 
 - (Album *)updateAlbumWithDictionary:(NSDictionary *)dictionary {
   if (dictionary) {
+    // Check for invalid albums, if found ignore them
+    if ([[dictionary valueForKey:@"size"] integerValue] == 0) {
+      return nil;
+    }
     
     // For some reason, facebook's api is really bad about cover photos
-    if ([dictionary valueForKey:@"cover_photo"] && !self.coverPhoto) {
-      NSLog(@"cover photo recovered for: %@", [dictionary valueForKey:@"id"]);
-      self.coverPhoto = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", [dictionary valueForKey:@"cover_photo"]];
-    }
+//    if ([dictionary valueForKey:@"cover_pid"] && !self.coverPhoto) {
+//      NSLog(@"cover photo recovered for: %@", [dictionary valueForKey:@"object_id"]);
+//      self.coverPhoto = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", [dictionary valueForKey:@"cover_pid"]];
+//    }
   
     // Check to see if this album has actually changed
     NSDate *newDate = nil;
-    if ([dictionary valueForKey:@"updated_time"]) {
-      newDate = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"updated_time"]];
-    } else if ([dictionary valueForKey:@"created_time"]) {
-      newDate = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"created_time"]];
+    if ([dictionary valueForKey:@"modified_major"]) {
+      newDate = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"modified_major"] longLongValue]];
+    } else if ([dictionary valueForKey:@"created"]) {
+      newDate = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"created"] longLongValue]];
+    } else if ([dictionary valueForKey:@"modified"]) {
+      newDate = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"modified"] longLongValue]];
     } else {
       newDate = [NSDate distantPast];
     }
     
-    if ([self.timestamp isEqualToDate:newDate]) return self;
-    
-    // Comparing photo count is much more efficient than parsing a date
-    // Doesn't work, some albums have nil count
-    //    NSNumber *newPhotoCount = [dictionary valueForKey:@"count"];
-    //    if ([newPhotoCount isEqualToNumber:self.count]) return self;
-    
+    if ([self.timestamp isEqualToDate:newDate]) {
+      return self;
+    } else {
+      self.timestamp = newDate;
+    }
+   
     // If dates are not the same, then perform an update
     
     // Basic
@@ -119,35 +174,23 @@
     self.type = [dictionary valueForKey:@"type"];
     
     // Can-be-empty
-    self.coverPhoto = [dictionary valueForKey:@"cover_photo"] ? [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", [dictionary valueForKey:@"cover_photo"]] : nil;
+    self.coverPhoto = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", [dictionary valueForKey:@"object_id"]];
+//    self.coverPhoto = [dictionary valueForKey:@"cover_pid"] ? [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", [dictionary valueForKey:@"cover_pid"]] : nil;
     self.caption = [dictionary valueForKey:@"description"] ? [dictionary valueForKey:@"description"] : nil;
     self.location = [dictionary valueForKey:@"location"] ? [dictionary valueForKey:@"location"] : nil;
     
     // Counts
-    self.count = [dictionary valueForKey:@"count"] ? [dictionary valueForKey:@"count"] : [NSNumber numberWithInteger:0];
+    self.count = [dictionary valueForKey:@"size"] ? [dictionary valueForKey:@"size"] : [NSNumber numberWithInteger:0];
     
     // Author/From
-    NSDictionary *from = [dictionary valueForKey:@"from"];
-    
-    // Coerce ID to string
-    id fromId = [from valueForKey:@"id"];
-    if ([fromId isKindOfClass:[NSNumber class]]) {
-      fromId = [fromId stringValue];
+    id ownerId = [dictionary valueForKey:@"owner"];
+    if ([ownerId isKindOfClass:[NSNumber class]]) {
+      ownerId = [ownerId stringValue];
     }
-    self.fromId = fromId;
-    self.fromName = [from valueForKey:@"name"];
+    self.fromId = ownerId;
     
-    // Timestamp
-    if ([dictionary valueForKey:@"updated_time"]) {
-      self.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"updated_time"]];
-    } else if ([dictionary valueForKey:@"created_time"]) {
-      self.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"created_time"]];
-    } else {
-      self.timestamp = [NSDate distantPast];
-    }
-    
-    // Clear image cache
-    self.imageData = nil;
+    // Can Upload
+    self.canUpload = [dictionary valueForKey:@"can_upload"];
     
     return self;
   } else {

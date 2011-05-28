@@ -2,7 +2,7 @@
 //  Photo.m
 //  PhotoFeed
 //
-//  Created by Peter Shih on 5/24/11.
+//  Created by Peter Shih on 5/27/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -12,7 +12,6 @@
 
 @implementation Photo
 @dynamic id;
-@dynamic imageData;
 @dynamic position;
 @dynamic timestamp;
 @dynamic width;

@@ -1,3 +1,4 @@
+
 //
 //  AlbumDataCenter.m
 //  PhotoFeed
@@ -37,53 +38,60 @@ static AlbumDataCenter *_defaultCenter = nil;
    curl -F "access_token=D1LgK2fmX11PjBMtys6iI68Kei67r5jPCuB24sf1IrM.eyJpdiI6InFjQ0FPbHVQRDl0b3hzMGZZVWFiSGcifQ.jKiEolLuK1lIgKOnC7Q5_iYWrv-4VEKD-X-zREhyn7r8h2ROyuOJ8yDWn5usdvcbDjkerlvTYVX5A1q3KEKPDSABn0i3nK9pC5KmX9S0clAoV6yv8AGvrBy6NXRleCoJ" -F "batch=[ {'method': 'GET', 'name' : 'get-friends', 'relative_url': 'me/friends?fields=id,name', 'omit_response_on_success' : true}, {'method': 'GET', 'depends_on':'get-friends', 'relative_url': 'albums?ids={result=get-friends:$.data[0:199:1].id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=0', 'omit_response_on_success' : false}, {'method': 'GET', 'depends_on':'get-friends', 'relative_url': 'albums?ids={result=get-friends:$.data[200:399:1].id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=0', 'omit_response_on_success' : false}, {'method': 'GET', 'depends_on':'get-friends', 'relative_url': 'albums?ids={result=get-friends:$.data[400:599:1].id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=0', 'omit_response_on_success' : false}, {'method': 'GET', 'depends_on':'get-friends', 'relative_url': 'albums?ids={result=get-friends:$.data[600:799:1].id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=0', 'omit_response_on_success' : false}, {'method': 'GET', 'depends_on':'get-friends', 'relative_url': 'albums?ids={result=get-friends:$.data[800:999:1].id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=0', 'omit_response_on_success' : false}, {'method': 'GET', 'depends_on':'get-friends', 'relative_url': 'albums?ids={result=get-friends:$.data[1000:1199:1].id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=0', 'omit_response_on_success' : false} ]"
    */
   
+  /*
+   Multiqueries FQL
+   https://api.facebook.com/method/fql.multiquery?format=json&queries=
+   
+   {"query1":"SELECT uid2 FROM friend WHERE uid1 = me()", "query2":"SELECT aid,owner,cover_pid,name,description,location,size,type,modified_major,created,modified,can_upload FROM album WHERE owner IN (SELECT uid2 FROM #query1)"}
+   
+   */
   // Apply since if exists
+  NSDate *sinceDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"albums.since"];
 #warning when applying this since, if the user adds new friends, we need to do a cold query for that friend's albums
-  NSDate *since = [[NSUserDefaults standardUserDefaults] valueForKey:@"albums.since"];
   
-  NSMutableArray *batchArray = [[NSMutableArray alloc] init];
-  
-  NSMutableDictionary *friendsDict = [NSMutableDictionary dictionary];
-  [friendsDict setValue:@"GET" forKey:@"method"];
-  [friendsDict setValue:@"get-friends" forKey:@"name"];
-  [friendsDict setValue:@"me/friends" forKey:@"relative_url"];
-  [friendsDict setValue:[NSNumber numberWithBool:YES] forKey:@"omit_response_on_success"];
-  
-  // Add friends dict to batch
-  [batchArray addObject:friendsDict];
-  
-  NSInteger batch = 200;
-  NSInteger end = ceil((CGFloat)[[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] count] / (CGFloat)batch);
-  NSString *me = @"me,";
-  
-  for (int i=0; i<end; i++) {
-    if (i > 0) me = @"";
-    NSString *relativeUrl = [NSString stringWithFormat:@"albums?ids=%@{result=get-friends:$.data[%d:%d:1].id}&fields=id,from,name,description,type,created_time,updated_time,cover_photo,count&limit=0&since=%0.0f", me, (i*batch), (i*batch + batch - 1), ([since timeIntervalSince1970] - SINCE_SAFETY_NET)];
-    
-    NSMutableDictionary *albumsDict = [[NSMutableDictionary alloc] init];
-    [albumsDict setValue:@"GET" forKey:@"method"];
-    [albumsDict setValue:relativeUrl forKey:@"relative_url"];
-    [albumsDict setValue:[NSNumber numberWithBool:NO] forKey:@"omit_response_on_success"];
-    [batchArray addObject:albumsDict];
-    [albumsDict release];
-  }
-
-  NSString *batchJSON = [batchArray JSONRepresentation];
-  [batchArray release];
+  NSURL *albumsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.facebook.com/method/fql.multiquery"]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
-  [params setValue:batchJSON forKey:@"batch"];
+  [params setValue:@"json" forKey:@"format"];
   
-  [self sendFacebookBatchRequestWithParams:params andUserInfo:nil];
+  
+  // Get batch size/count
+  NSArray *friends = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"id"];
+  NSInteger batchSize = 150;
+  NSInteger batchCount = ceil((CGFloat)[friends count] / (CGFloat)batchSize);
+  NSRange range = NSMakeRange(0, 0);
+  
+  // Since
+  NSTimeInterval since = [sinceDate timeIntervalSince1970] - SINCE_SAFETY_NET;
+  
+  // FQL Multiquery
+  NSMutableDictionary *batchDict = [NSMutableDictionary dictionary];
+  
+  // ME
+  [batchDict setObject:[NSString stringWithFormat:@"SELECT aid,object_id,owner,name,description,location,size,type,modified_major,created,modified,can_upload FROM album WHERE owner = me() AND modified_major > %0.0f", since] forKey:@"queryme"];
+  
+  // FRIENDS
+  for (int i=0; i<batchCount; i++) {
+    if (i == 4) break;
+    NSInteger remainingFriends = [friends count] - (i * batchSize);
+    NSInteger length = (batchSize > remainingFriends) ? remainingFriends : batchSize;
+    range = NSMakeRange(i * batchSize, length);
+    NSArray *batchFriends = [friends subarrayWithRange:range];
+    [batchDict setObject:[NSString stringWithFormat:@"SELECT aid,object_id,owner,cover_pid,name,description,location,size,type,modified_major,created,modified,can_upload FROM album WHERE owner IN (%@) AND modified_major > %0.0f", [batchFriends componentsJoinedByString:@","], since] forKey:[NSString stringWithFormat:@"query%d", i]];
+  }
+  
+  
+  [params setValue:[batchDict JSONRepresentation] forKey:@"queries"];
+  
+  [self sendRequestWithURL:albumsUrl andMethod:POST andHeaders:nil andParams:params andUserInfo:nil];
 }
 
 - (void)serializeAlbumsWithResponse:(id)response {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   NSManagedObjectContext *context = [PSCoreDataStack newManagedObjectContext];
-  NSArray *allValues = [response allValues];
-  for (NSDictionary *valueDict in allValues) {
-    [self serializeAlbumsWithDictionary:valueDict inContext:context];
-  }
+  // response is an array of dicts
+  [self serializeAlbumsWithArray:response inContext:context];
+
   // Save to Core Data
   [PSCoreDataStack saveInContext:context];
   [context release];
@@ -103,14 +111,14 @@ static AlbumDataCenter *_defaultCenter = nil;
   
 }
 
-- (void)serializeAlbumsWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context {
-  NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES];
+- (void)serializeAlbumsWithArray:(NSArray *)array inContext:(NSManagedObjectContext *)context {
+  NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"object_id" ascending:YES];
   
-  NSArray *sortedEntities = [[dictionary valueForKey:@"data"] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+  NSArray *sortedEntities = [array sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
   
   NSMutableArray *sortedEntityIds = [NSMutableArray array];
   for (NSDictionary *entityDict in sortedEntities) {
-    [sortedEntityIds addObject:[entityDict valueForKey:@"id"]];
+    [sortedEntityIds addObject:[entityDict valueForKey:@"object_id"]];
   }
   
   NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
@@ -124,7 +132,12 @@ static AlbumDataCenter *_defaultCenter = nil;
   
   int i = 0;
   for (NSDictionary *entityDict in sortedEntities) {
-    if ([foundEntities count] > 0 && i < [foundEntities count] && [[entityDict valueForKey:@"id"] isEqualToString:[[foundEntities objectAtIndex:i] id]]) {
+    id objectId = [entityDict valueForKey:@"object_id"];
+    if ([objectId isKindOfClass:[NSNumber class]]) {
+      objectId = [objectId stringValue];
+    }
+    
+    if ([foundEntities count] > 0 && i < [foundEntities count] && [objectId isEqualToString:[[foundEntities objectAtIndex:i] id]]) {
       //      DLog(@"found duplicated album with id: %@", [[foundEntities objectAtIndex:i] id]);
       [[foundEntities objectAtIndex:i] updateAlbumWithDictionary:entityDict];
       i++;
@@ -161,12 +174,13 @@ static AlbumDataCenter *_defaultCenter = nil;
   if ([response isKindOfClass:[NSArray class]]) {
     _responsesToBeParsed = 0;
     for (id res in response) {
-      if ([res notNil] && [res isKindOfClass:[NSDictionary class]]) {
-        [[PSParserStack sharedParser] parseData:[[res objectForKey:@"body"] dataUsingEncoding:NSUTF8StringEncoding] withDelegate:self andUserInfo:nil];
+      if ([res notNil] && [res isKindOfClass:[NSDictionary class]] && [res objectForKey:@"fql_result_set"]) {
+        _responsesToBeParsed++;
+        // response is an array of dicts
+        [self performSelectorInBackground:@selector(serializeAlbumsWithResponse:) withObject:[res objectForKey:@"fql_result_set"]];
       }
     }
   } else {
-    _responsesToBeParsed++;
     [self performSelectorInBackground:@selector(serializeAlbumsWithResponse:) withObject:response];
   }
 }

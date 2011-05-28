@@ -45,7 +45,10 @@ static NSString *_cachePath = nil;
 // Image Cache
 - (void)cacheImage:(NSData *)imageData forURLPath:(NSString *)urlPath {
 //  [self.imageCache setObject:imageData forKey:urlPath];
-  [self.imageCache setObject:[UIImage imageWithData:imageData] forKey:urlPath];
+  UIImage *image = [UIImage imageWithData:imageData];
+  if (image) {
+    [self.imageCache setObject:[UIImage imageWithData:imageData] forKey:urlPath];
+  }
 //  [self flushImageCacheToDisk];
 }
 

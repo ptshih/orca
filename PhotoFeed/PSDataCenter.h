@@ -12,11 +12,12 @@
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 #import "JSON.h"
+#import "JSONKit.h"
 #import "PSCoreDataStack.h"
 #import "NetworkConstants.h"
 #import "PSParserStack.h"
 
-#define SINCE_SAFETY_NET 1800 // 5 minutes
+#define SINCE_SAFETY_NET 300 // 5 minutes
 
 @interface PSDataCenter : PSObject <PSDataCenterDelegate, PSParserStackDelegate> {
   id <PSDataCenterDelegate> _delegate;

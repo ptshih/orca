@@ -33,7 +33,6 @@
 - (void)pinchZoom:(UIPinchGestureRecognizer *)gesture;
 - (void)triggerPinch;
 - (void)commentsSelected;
-- (void)loadPhoto:(NSNotification *)notification;
 - (void)loadPhoto;
 
 @end
