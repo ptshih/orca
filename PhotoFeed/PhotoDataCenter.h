@@ -34,7 +34,6 @@
 /**
  Fetch Requests
  */
-- (NSFetchRequest *)fetchPhotosForAlbumId:(NSString *)albumId withLimit:(NSUInteger)limit andOffset:(NSUInteger)offset;
-
+- (NSFetchRequest *)fetchPhotosForAlbumId:(NSString *)albumId withLimit:(NSUInteger)limit andOffset:(NSUInteger)offset sortWithKey:(NSString *)sortWithKey ascending:(BOOL)ascending;
 
 @end

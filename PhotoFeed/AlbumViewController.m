@@ -60,8 +60,13 @@
       placeholder = @"Search by Album or Author Name";
       scopeArray = [NSArray arrayWithObjects:@"Album", @"Author", nil];
       break;
+    case AlbumTypeWall:
+      navTitle = @"Wall Photos";
+      placeholder = @"Search by Author Name";
+      scopeArray = [NSArray arrayWithObjects:@"Author", nil];
+      break;
     case AlbumTypeMobile:
-      navTitle = @"Mobile Albums";
+      navTitle = @"Mobile Uploads";
       placeholder = @"Search by Author Name";
       scopeArray = [NSArray arrayWithObjects:@"Author", nil];
       break;
@@ -150,6 +155,9 @@
   
   PhotoViewController *svc = [[PhotoViewController alloc] init];
   svc.album = album;
+  if (self.albumType == AlbumTypeWall) {
+    svc.sectionNameKeyPathForFetchedResultsController = @"timestamp";
+  }
   [self.navigationController pushViewController:svc animated:YES];
   [svc release];
 }
@@ -216,6 +224,10 @@
     case AlbumTypeFriends:
       fetchTemplate = @"getFriendsAlbums";
       substitutionVariables = [NSDictionary dictionaryWithObject:facebookId forKey:@"desiredFromId"];
+      break;
+    case AlbumTypeWall:
+      fetchTemplate = @"getWallAlbums";
+      substitutionVariables = [NSDictionary dictionary];
       break;
     case AlbumTypeMobile:
       fetchTemplate = @"getMobileAlbums";

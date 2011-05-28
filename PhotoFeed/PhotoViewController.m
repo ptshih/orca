@@ -196,7 +196,8 @@
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  return [_photoDataCenter fetchPhotosForAlbumId:_album.id withLimit:_limit andOffset:_offset];
+  BOOL ascending = ([self.sectionNameKeyPathForFetchedResultsController isEqualToString:@"position"]) ? YES : NO;
+  return [_photoDataCenter fetchPhotosForAlbumId:_album.id withLimit:_limit andOffset:_offset sortWithKey:self.sectionNameKeyPathForFetchedResultsController ascending:ascending];
 }
 
 - (void)dealloc {

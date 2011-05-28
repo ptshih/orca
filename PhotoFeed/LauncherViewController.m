@@ -38,6 +38,9 @@
   AlbumViewController *friends = [[[AlbumViewController alloc] init] autorelease];
   friends.albumType = AlbumTypeFriends;
   UINavigationController *friendsNav = [[[UINavigationController alloc] initWithRootViewController:friends] autorelease];
+  AlbumViewController *wall = [[[AlbumViewController alloc] init] autorelease];
+  wall.albumType = AlbumTypeWall;
+  UINavigationController *wallNav = [[[UINavigationController alloc] initWithRootViewController:wall] autorelease];
   AlbumViewController *mobile = [[[AlbumViewController alloc] init] autorelease];
   mobile.albumType = AlbumTypeMobile;
   UINavigationController *mobileNav = [[[UINavigationController alloc] initWithRootViewController:mobile] autorelease];
@@ -48,11 +51,12 @@
   // Setup Tab Items
   me.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Me" image:[UIImage imageNamed:@"111-user.png"] tag:7000] autorelease];
   friends.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Friends" image:[UIImage imageNamed:@"112-group.png"] tag:7001] autorelease];
-  mobile.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Mobile" image:[UIImage imageNamed:@"32-iphone.png"] tag:7002] autorelease];
-  profile.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Profile" image:[UIImage imageNamed:@"111-user.png"] tag:7003] autorelease];
+  wall.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Wall" image:[UIImage imageNamed:@"tab_feed.png"] tag:7003] autorelease];
+  mobile.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Mobile" image:[UIImage imageNamed:@"32-iphone.png"] tag:7004] autorelease];
+  profile.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Profile" image:[UIImage imageNamed:@"111-user.png"] tag:7005] autorelease];
   
   // Set Tab Controllers
-  _tabBarController.viewControllers = [NSArray arrayWithObjects:meNav, friendsNav, mobileNav, profileNav, nil];
+  _tabBarController.viewControllers = [NSArray arrayWithObjects:meNav, friendsNav, wallNav, mobileNav, profileNav, nil];
   
   // Add to view
   self.view = _tabBarController.view;
