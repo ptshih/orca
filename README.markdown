@@ -8,6 +8,7 @@ BUGS
 - Cyclical memcache/buffer for imageCache
 - Launch album since call failing causes a logout in bad state
 - Logging out on another client causes oauth failure which causes crash
+- If an album image is cached, since call will not trigger cache reset on album img
 
 FEATURES
 ---

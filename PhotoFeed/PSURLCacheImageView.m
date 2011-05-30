@@ -9,6 +9,7 @@
 #import "PSURLCacheImageView.h"
 #import "PSImageCache.h"
 #import "UIImage+ScalingAndCropping.h"
+#import "NSString+URLEncoding+PS.h"
 
 @implementation PSURLCacheImageView
 
@@ -20,6 +21,11 @@
   }
   return self;
 }
+
+//- (void)setUrlPath:(NSString *)urlPath {
+//  [_urlPath autorelease];
+//  _urlPath = [[urlPath encodedURLString] copy];
+//}
 
 - (void)loadImage {
   if (_urlPath) {

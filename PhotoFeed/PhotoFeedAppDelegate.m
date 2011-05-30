@@ -169,9 +169,8 @@
 }
 
 - (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
-  // Session/Register request failed
   // Show login again
-  [_loginViewController logout];
+//  [_loginViewController logout];
 }
 
 #pragma mark -
