@@ -100,8 +100,7 @@ static AlbumDataCenter *_defaultCenter = nil;
     [self serializeAlbumsWithArray:response inContext:context];
   }
   
-  // Save to Core Data
-  [PSCoreDataStack saveInContext:context];
+  // Release context
   [context release];
   
   [self performSelectorOnMainThread:@selector(serializeAlbumsFinishedWithRequest:) withObject:request waitUntilDone:NO];
@@ -119,9 +118,7 @@ static AlbumDataCenter *_defaultCenter = nil;
 
 #pragma mark Core Data Serialization
 - (void)serializeAlbumsWithArray:(NSArray *)array inContext:(NSManagedObjectContext *)context {
-  NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"object_id" ascending:YES];
-  
-  NSArray *sortedEntities = [array sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+  NSArray *sortedEntities = [array sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"object_id" ascending:YES]]];
   
   NSMutableArray *sortedEntityIds = [NSMutableArray array];
   for (NSDictionary *entityDict in sortedEntities) {
@@ -130,21 +127,21 @@ static AlbumDataCenter *_defaultCenter = nil;
   
   NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
   [fetchRequest setEntity:[NSEntityDescription entityForName:@"Album" inManagedObjectContext:context]];
-  [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(id IN %@)", sortedEntityIds]];
-  [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"id" ascending:YES] autorelease]]];
+  [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(objectId IN %@)", sortedEntityIds]];
+  [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"objectId" ascending:YES]]];
   
   
   NSError *error = nil;
   NSArray *foundEntities = [context executeFetchRequest:fetchRequest error:&error];
   
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  NSUInteger count = 0, LOOP_LIMIT = 1000;
+  
   int i = 0;
   for (NSDictionary *entityDict in sortedEntities) {
     id objectId = [entityDict valueForKey:@"object_id"];
-    if ([objectId isKindOfClass:[NSNumber class]]) {
-      objectId = [objectId stringValue];
-    }
     
-    if ([foundEntities count] > 0 && i < [foundEntities count] && [objectId isEqualToString:[[foundEntities objectAtIndex:i] id]]) {
+    if ([foundEntities count] > 0 && i < [foundEntities count] && [objectId isEqualToNumber:[[foundEntities objectAtIndex:i] objectId]]) {
       //      DLog(@"found duplicated album with id: %@", [[foundEntities objectAtIndex:i] id]);
       [[foundEntities objectAtIndex:i] updateAlbumWithDictionary:entityDict];
       i++;
@@ -152,7 +149,25 @@ static AlbumDataCenter *_defaultCenter = nil;
       // Insert
       [Album addAlbumWithDictionary:entityDict inContext:context];
     }
+    
+    // Batch import performance
+    count++;
+    if (count == LOOP_LIMIT) {
+      [PSCoreDataStack saveInContext:context];
+      [PSCoreDataStack resetInContext:context];
+      [pool drain];
+      
+      pool = [[NSAutoreleasePool alloc] init];
+      count = 0;
+    }
   }
+  
+  if (count != 0) {
+    [PSCoreDataStack saveInContext:context];
+    [PSCoreDataStack resetInContext:context];
+  }
+  
+  [pool drain];
 }
 
 #pragma mark -

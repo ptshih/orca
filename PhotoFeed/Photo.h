@@ -2,7 +2,7 @@
 //  Photo.h
 //  PhotoFeed
 //
-//  Created by Peter Shih on 5/27/11.
+//  Created by Peter Shih on 5/30/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 

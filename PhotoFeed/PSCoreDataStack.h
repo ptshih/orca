@@ -24,5 +24,6 @@
 + (void)deleteAllObjects:(NSString *)entityDescription;
 + (void)saveMainThreadContext;
 + (void)saveInContext:(NSManagedObjectContext *)context;
++ (void)resetInContext:(NSManagedObjectContext *)context;
 
 @end

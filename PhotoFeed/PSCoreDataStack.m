@@ -134,6 +134,10 @@ static NSManagedObjectContext *_mainThreadContext = nil;
   }
 }
 
++ (void)resetInContext:(NSManagedObjectContext *)context {
+  [context reset];
+}
+
 #pragma mark Accessors
 + (NSManagedObjectModel *)managedObjectModel {
   if (_managedObjectModel != nil) {

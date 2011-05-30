@@ -44,13 +44,28 @@
 //}
 
 + (NSString *)fromNameForFromId:(NSString *)fromId {
+  static NSString *facebookId = nil;
+  static NSString *facebookName = nil;
+  static NSArray *friendIds = nil;
+  static NSArray *friendNames = nil;
+  if (!facebookId) {
+    facebookId = [[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookId"] copy];
+  }
+  if (!facebookName) {
+    facebookName = [[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookName"] copy];
+  }
+  if (!friendIds) {
+    friendIds = [[[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"id"] copy];
+  }
+  if (!friendNames) {
+    friendNames = [[[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"name"] copy];
+  }
+
   // My own ID
-  if ([fromId isEqualToString:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookId"]]) {
-    return [[NSUserDefaults standardUserDefaults] stringForKey:@"facebookName"];
+  if ([fromId isEqualToString:facebookId]) {
+    return facebookName;
   } else {
     // This does a facebook id => name lookup in the local friends dict
-    NSArray *friendIds = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"id"];
-    NSArray *friendNames = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"name"];
     NSUInteger friendIndex = [friendIds indexOfObject:fromId];
     return [friendNames objectAtIndex:friendIndex];
   }
@@ -100,9 +115,15 @@
     // Basic
     id objectId = [dictionary valueForKey:@"object_id"];
     if ([objectId isKindOfClass:[NSNumber class]]) {
-      objectId = [objectId stringValue];
+      newAlbum.objectId = objectId; // this is used as index/sortkey (int64)
+      newAlbum.id = [objectId stringValue];
+    } else if ([objectId isKindOfClass:[NSString class]]) {
+      // this should never happen
+      NSLog(@"### serious error, object_id is a string ###");
+      newAlbum.objectId = [NSNumber numberWithInteger:[objectId integerValue]];
+      newAlbum.id = objectId;
     }
-    newAlbum.id = objectId;
+    
     newAlbum.name = [dictionary valueForKey:@"name"];
     newAlbum.type = [dictionary valueForKey:@"type"];
     
