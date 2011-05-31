@@ -18,11 +18,7 @@
  */
 
 @interface PSImageCache : NSObject <NSCacheDelegate> {
-//  NSMutableDictionary *_imageCache;
-  NSCache *_imageCache;
 }
-
-@property (nonatomic, retain) NSCache *imageCache;
 
 + (PSImageCache *)sharedCache;
 
@@ -30,8 +26,6 @@
 - (void)cacheImage:(NSData *)imageData forURLPath:(NSString *)urlPath;
 - (UIImage *)imageForURLPath:(NSString *)urlPath;
 - (BOOL)hasImageForURLPath:(NSString *)urlPath;
-- (BOOL)flushImageCacheToDisk;
-- (NSMutableDictionary *)readImageCacheFromDisk;
 
 // Helpers
 + (NSString *)applicationDocumentsDirectory;

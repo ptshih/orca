@@ -7,6 +7,7 @@
 //
 
 #import "PSImageCache.h"
+#import "NSString+URLEncoding+PS.h"
 
 static PSImageCache *_sharedCache;
 
@@ -14,10 +15,14 @@ static NSString *_cachePath = nil;
 
 @implementation PSImageCache
 
-@synthesize imageCache = _imageCache;
-
 + (void)initialize {
-  _cachePath = [[NSString stringWithFormat:@"%@/imageCache.plist", [[self class] applicationDocumentsDirectory]] retain];
+  _cachePath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] copy];
+  
+  BOOL isDir = NO;
+  NSError *error;
+  if (![[NSFileManager defaultManager] fileExistsAtPath:_cachePath isDirectory:&isDir] && isDir == NO) {
+    [[NSFileManager defaultManager] createDirectoryAtPath:_cachePath withIntermediateDirectories:NO attributes:nil error:&error];
+  }
 }
 
 + (PSImageCache *)sharedCache {
@@ -30,45 +35,27 @@ static NSString *_cachePath = nil;
 - (id)init {
   self = [super init];
   if (self) {
-    if (!_imageCache) {
-      BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:_cachePath];
-      if (fileExists) {
-        _imageCache = [[NSCache alloc] init];
-//        _imageCache = [[self readImageCacheFromDisk] retain];
-      } else {
-        _imageCache = [[NSCache alloc] init];
-      }
-      [_imageCache setDelegate:self];
-    }
   }
   return self;
 }
 
 // Image Cache
 - (void)cacheImage:(NSData *)imageData forURLPath:(NSString *)urlPath {
-//  [self.imageCache setObject:imageData forKey:urlPath];
-  UIImage *image = [UIImage imageWithData:imageData];
-  if (image) {
-    [self.imageCache setObject:[UIImage imageWithData:imageData] forKey:urlPath];
+  if (imageData) {
+    [imageData writeToFile:[_cachePath stringByAppendingPathComponent:[urlPath encodedURLParameterString]] atomically:YES];
   }
-//  [self flushImageCacheToDisk];
 }
 
 - (UIImage *)imageForURLPath:(NSString *)urlPath {
-//  return [UIImage imageWithData:[self.imageCache objectForKey:urlPath]];
-  return [self.imageCache objectForKey:urlPath];
+  return [UIImage imageWithContentsOfFile:[_cachePath stringByAppendingPathComponent:[urlPath encodedURLParameterString]]];
 }
 
 - (BOOL)hasImageForURLPath:(NSString *)urlPath {
-  return ([_imageCache objectForKey:urlPath] != nil);
-}
-
-- (NSMutableDictionary *)readImageCacheFromDisk {
-  return [NSKeyedUnarchiver unarchiveObjectWithFile:_cachePath];
-}
-
-- (BOOL)flushImageCacheToDisk {
-  return [NSKeyedArchiver archiveRootObject:_imageCache toFile:_cachePath];
+  static NSFileManager *fileManager = nil;
+  if (!fileManager) {
+    fileManager = [[NSFileManager alloc] init];
+  }
+  return [fileManager fileExistsAtPath:[_cachePath stringByAppendingPathComponent:[urlPath encodedURLString]]];
 }
 
 #pragma mark NSCacheDelegate
@@ -77,16 +64,6 @@ static NSString *_cachePath = nil;
 }
    
 #pragma mark Helpers
-- (NSString *)encodedURLParameterString {
-  NSString *result = (NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                         (CFStringRef)self,
-                                                                         NULL,
-                                                                         CFSTR(":/=,!$&'()*+;[]@#?"),
-                                                                         kCFStringEncodingUTF8);
-  
-  return [result autorelease];
-}
-
 + (NSString *)applicationDocumentsDirectory {
   return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 }
