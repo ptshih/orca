@@ -35,19 +35,56 @@ static NSString *_cachePath = nil;
 - (id)init {
   self = [super init];
   if (self) {
+    _buffer = [[NSCache alloc] init];
+    [_buffer setName:@"PSImageCache"];
+    [_buffer setDelegate:self];
   }
   return self;
 }
 
-// Image Cache
+- (void)dealloc {
+  if (_buffer) [_buffer release], _buffer = nil;
+  [super dealloc];
+}
+
+// Cache Image Data
 - (void)cacheImage:(NSData *)imageData forURLPath:(NSString *)urlPath {
   if (imageData) {
+    // First put it in the NSCache buffer
+    [_buffer setObject:[UIImage imageWithData:imageData] forKey:[urlPath encodedURLParameterString]];
+    
+    // Also write it to file
     [imageData writeToFile:[_cachePath stringByAppendingPathComponent:[urlPath encodedURLParameterString]] atomically:YES];
+    
+    NSLog(@"PSImageCache CACHE: %@", urlPath);
   }
 }
 
+// Read Cached Image
 - (UIImage *)imageForURLPath:(NSString *)urlPath {
-  return [UIImage imageWithContentsOfFile:[_cachePath stringByAppendingPathComponent:[urlPath encodedURLParameterString]]];
+  // First check NSCache buffer
+  //  NSData *imageData = [_buffer objectForKey:[urlPath encodedURLParameterString]];
+  UIImage *image = [_buffer objectForKey:[urlPath encodedURLParameterString]];
+  if (image) {
+    // Image exists in buffer
+    NSLog(@"PSImageCache CACHE HIT: %@", urlPath);
+    return image;
+  } else {
+    // Image not in buffer, read from disk instead
+    NSLog(@"PSImageCache CACHE MISS: %@", urlPath);
+    image = [UIImage imageWithContentsOfFile:[_cachePath stringByAppendingPathComponent:[urlPath encodedURLParameterString]]];
+    
+    // If Image is in disk, read it
+    if (image) {
+      NSLog(@"PSImageCache DISK HIT: %@", urlPath);
+      // Put this image into the buffer also
+      [_buffer setObject:image forKey:[urlPath encodedURLParameterString]];
+      return image;
+    } else {
+      NSLog(@"PSImageCache DISK MISS: %@", urlPath);
+      return nil;
+    }
+  }
 }
 
 - (BOOL)hasImageForURLPath:(NSString *)urlPath {
@@ -60,7 +97,7 @@ static NSString *_cachePath = nil;
 
 #pragma mark NSCacheDelegate
 - (void)cache:(NSCache *)cache willEvictObject:(id)obj {
-  NSLog(@"NSCache evicting object: %@", obj);
+  NSLog(@"NSCache evicting object");
 }
    
 #pragma mark Helpers

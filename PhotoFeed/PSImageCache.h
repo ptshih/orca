@@ -18,6 +18,7 @@
  */
 
 @interface PSImageCache : NSObject <NSCacheDelegate> {
+  NSCache *_buffer;
 }
 
 + (PSImageCache *)sharedCache;

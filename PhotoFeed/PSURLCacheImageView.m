@@ -86,7 +86,6 @@
 
   if ([request responseData]) {
     [[PSImageCache sharedCache] cacheImage:[request responseData] forURLPath:[origURL absoluteString]];
-    DLog(@"cached urlpath: %@", origURL);
     if ([self.urlPath isEqualToString:[origURL absoluteString]]) {
       self.image = [[PSImageCache sharedCache] imageForURLPath:self.urlPath];
     } else {
