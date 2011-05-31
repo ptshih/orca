@@ -18,8 +18,8 @@
 
 + (NSString *)fromNameForFromId:(NSString *)fromId;
 
-+ (Album *)addAlbumWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
++ (Album *)addAlbumWithDictionary:(NSDictionary *)dictionary andCover:(NSString *)cover inContext:(NSManagedObjectContext *)context;
 
-- (Album *)updateAlbumWithDictionary:(NSDictionary *)dictionary;
+- (Album *)updateAlbumWithDictionary:(NSDictionary *)dictionary andCover:(NSString *)cover;
 
 @end

@@ -73,7 +73,7 @@
 
 #pragma mark -
 #pragma mark Create/Update
-+ (Album *)addAlbumWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context {
++ (Album *)addAlbumWithDictionary:(NSDictionary *)dictionary andCover:(NSString *)cover inContext:(NSManagedObjectContext *)context {
   /*
    // BAD
    aid = "100002385998437_-3";
@@ -124,13 +124,12 @@
       newAlbum.id = objectId;
     }
     
+    newAlbum.aid = [dictionary valueForKey:@"aid"]; // used for sorting/indexing/serializing
     newAlbum.name = [dictionary valueForKey:@"name"];
     newAlbum.type = [dictionary valueForKey:@"type"];
     
     // Can-be-empty
-    // We aren't using the cover photo for now
-    newAlbum.coverPhoto = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", [dictionary valueForKey:@"object_id"]];
-//    newAlbum.coverPhoto = [dictionary valueForKey:@"cover_pid"] ? [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", [dictionary valueForKey:@"cover_pid"]] : nil;
+    newAlbum.coverPhoto = cover ? cover : nil;
     
     // Some albums may not have a cover photo
     if (![dictionary valueForKey:@"cover_pid"]) {
@@ -171,7 +170,7 @@
   }
 }
 
-- (Album *)updateAlbumWithDictionary:(NSDictionary *)dictionary {
+- (Album *)updateAlbumWithDictionary:(NSDictionary *)dictionary andCover:(NSString *)cover {
   if (dictionary) {
     // Check for invalid albums, if found ignore them
     if ([[dictionary valueForKey:@"size"] integerValue] == 0) {
@@ -209,8 +208,8 @@
     self.type = [dictionary valueForKey:@"type"];
     
     // Can-be-empty
-    self.coverPhoto = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", [dictionary valueForKey:@"object_id"]];
-//    self.coverPhoto = [dictionary valueForKey:@"cover_pid"] ? [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", [dictionary valueForKey:@"cover_pid"]] : nil;
+    self.coverPhoto = cover ? cover : nil;
+    
     self.caption = [dictionary valueForKey:@"description"] ? [dictionary valueForKey:@"description"] : nil;
     self.location = [dictionary valueForKey:@"location"] ? [dictionary valueForKey:@"location"] : nil;
     

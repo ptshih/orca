@@ -49,8 +49,13 @@ static AlbumDataCenter *_defaultCenter = nil;
    */
   
   
+  /*
+   {'query1':'SELECT aid,owner,cover_pid,name FROM album WHERE owner = me()','query2':'SELECT src_big FROM photo WHERE pid IN (SELECT cover_pid FROM #query1)'}
+   */
+  
+  
   // This is retarded... if the user has more than batchSize friends, we'll just fire off multiple requests
-  NSURL *albumsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.facebook.com/method/fql.query"]];
+  NSURL *albumsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.facebook.com/method/fql.multiquery"]];
   
 #warning when applying this since, if the user adds new friends, we need to do a cold query for that friend's albums
   // Apply since if exists
@@ -62,16 +67,22 @@ static AlbumDataCenter *_defaultCenter = nil;
   NSInteger batchSize = 150;
   NSInteger batchCount = ceil((CGFloat)[friends count] / (CGFloat)batchSize);
   NSRange range;
-
+  
   // ME
+  NSMutableDictionary *queries = [NSMutableDictionary dictionary];
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   [params setValue:@"json" forKey:@"format"];
-  [params setValue:[NSString stringWithFormat:@"SELECT aid,object_id,owner,name,description,location,size,type,modified_major,created,modified,can_upload FROM album WHERE owner = me() AND modified_major > %0.0f", since] forKey:@"query"];
+  [queries setValue:[NSString stringWithFormat:@"SELECT aid,object_id,cover_pid,owner,name,description,location,size,type,modified_major,created,modified,can_upload FROM album WHERE owner = me() AND modified_major > %0.0f", since] forKey:@"query1"];
+  [queries setValue:[NSString stringWithFormat:@"SELECT aid,src_big FROM photo WHERE pid IN (SELECT cover_pid FROM #query1)"] forKey:@"query2"];
+
+  [params setValue:[queries JSONRepresentation] forKey:@"queries"];
+  
   _pendingRequestsToParse++;
   [self sendRequestWithURL:albumsUrl andMethod:POST andHeaders:nil andParams:params andUserInfo:nil];
   
   // FRIENDS
   for (int i=0; i<batchCount; i++) {
+    NSMutableDictionary *friendQueries = [NSMutableDictionary dictionary];
     NSMutableDictionary *friendParams = [NSMutableDictionary dictionary];
     [friendParams setValue:@"json" forKey:@"format"];
     
@@ -80,7 +91,10 @@ static AlbumDataCenter *_defaultCenter = nil;
     range = NSMakeRange(i * batchSize, length);
     NSArray *batchFriends = [friends subarrayWithRange:range];
     
-    [friendParams setValue:[NSString stringWithFormat:@"SELECT aid,object_id,owner,cover_pid,name,description,location,size,type,modified_major,created,modified,can_upload FROM album WHERE owner IN (%@) AND modified_major > %0.0f", [batchFriends componentsJoinedByString:@","], since] forKey:@"query"];
+    [friendQueries setValue:[NSString stringWithFormat:@"SELECT aid,object_id,owner,cover_pid,name,description,location,size,type,modified_major,created,modified,can_upload FROM album WHERE owner IN (%@) AND modified_major > %0.0f", [batchFriends componentsJoinedByString:@","], since] forKey:@"query1"];
+    [friendQueries setValue:[NSString stringWithFormat:@"SELECT aid,src_big FROM photo WHERE pid IN (SELECT cover_pid FROM #query1)"] forKey:@"query2"];
+    
+    [friendParams setValue:[friendQueries JSONRepresentation] forKey:@"queries"];
     
     _pendingRequestsToParse++;
     [self sendRequestWithURL:albumsUrl andMethod:POST andHeaders:nil andParams:friendParams andUserInfo:nil];
@@ -118,19 +132,39 @@ static AlbumDataCenter *_defaultCenter = nil;
 
 #pragma mark Core Data Serialization
 - (void)serializeAlbumsWithArray:(NSArray *)array inContext:(NSManagedObjectContext *)context {
-  NSUInteger resultCount = [array count];
+  // Special multiquery treatment
+  NSArray *albumArray = nil;
+  NSArray *coverArray = nil;
+  for (NSDictionary *fqlResult in array) {
+    if ([[fqlResult valueForKey:@"name"] isEqualToString:@"query1"]) {
+      albumArray = [fqlResult valueForKey:@"fql_result_set"];
+    } else if ([[fqlResult valueForKey:@"name"] isEqualToString:@"query2"]) {
+      coverArray = [fqlResult valueForKey:@"fql_result_set"];
+    } else {
+      // error, invalid result
+#warning facebook response invalid, alert error
+      return;
+    }
+  }
   
-  NSArray *sortedEntities = [array sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"object_id" ascending:YES]]];
+  if ([albumArray count] != [coverArray count]) {
+    NSLog(@"albums: %d, covers: %d", [albumArray count], [coverArray count]);
+  }
+  
+  NSUInteger resultCount = [albumArray count];
+  
+  NSArray *sortedEntities = [albumArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"aid" ascending:YES]]];
+  NSArray *sortedCovers = [coverArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"aid" ascending:YES]]];
   
   NSMutableArray *sortedEntityIds = [NSMutableArray array];
   for (NSDictionary *entityDict in sortedEntities) {
-    [sortedEntityIds addObject:[entityDict valueForKey:@"object_id"]];
+    [sortedEntityIds addObject:[entityDict valueForKey:@"aid"]];
   }
   
   NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
   [fetchRequest setEntity:[NSEntityDescription entityForName:@"Album" inManagedObjectContext:context]];
-  [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(objectId IN %@)", sortedEntityIds]];
-  [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"objectId" ascending:YES]]];
+  [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(aid IN %@)", sortedEntityIds]];
+  [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"aid" ascending:YES]]];
   
   
   NSError *error = nil;
@@ -141,16 +175,31 @@ static AlbumDataCenter *_defaultCenter = nil;
   
   int i = 0;
   int k = 0;
+  int c = 0;
+  static NSString *cover = nil;
+  static NSString *aid = nil;
   for (NSDictionary *entityDict in sortedEntities) {
-    id objectId = [entityDict valueForKey:@"object_id"];
+    aid = [entityDict valueForKey:@"aid"];
     
-    if ([foundEntities count] > 0 && i < [foundEntities count] && [objectId isEqualToNumber:[[foundEntities objectAtIndex:i] objectId]]) {
+    // Cover Picture
+    if (c == [sortedCovers count]) {
+      // We ran out of covers
+      cover = nil;
+    }
+    else if ([[entityDict valueForKey:@"aid"] isEqualToString:[[sortedCovers objectAtIndex:c] valueForKey:@"aid"]]) {
+      cover = [[sortedCovers objectAtIndex:c] valueForKey:@"src_big"];
+      c++; // cover incrementer
+    } else {
+      cover = nil;
+    }
+    
+    if ([foundEntities count] > 0 && i < [foundEntities count] && [aid isEqualToString:[[foundEntities objectAtIndex:i] aid]]) {
       //      DLog(@"found duplicated album with id: %@", [[foundEntities objectAtIndex:i] id]);
-      [[foundEntities objectAtIndex:i] updateAlbumWithDictionary:entityDict];
+      [[foundEntities objectAtIndex:i] updateAlbumWithDictionary:entityDict andCover:cover];
       i++;
     } else {
       // Insert
-      [Album addAlbumWithDictionary:entityDict inContext:context];
+      [Album addAlbumWithDictionary:entityDict andCover:cover inContext:context];
     }
     
     // Batch import performance
