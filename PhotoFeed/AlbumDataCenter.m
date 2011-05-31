@@ -118,6 +118,8 @@ static AlbumDataCenter *_defaultCenter = nil;
 
 #pragma mark Core Data Serialization
 - (void)serializeAlbumsWithArray:(NSArray *)array inContext:(NSManagedObjectContext *)context {
+  NSUInteger resultCount = [array count];
+  
   NSArray *sortedEntities = [array sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"object_id" ascending:YES]]];
   
   NSMutableArray *sortedEntityIds = [NSMutableArray array];
@@ -138,6 +140,7 @@ static AlbumDataCenter *_defaultCenter = nil;
   NSUInteger count = 0, LOOP_LIMIT = 1000;
   
   int i = 0;
+  int k = 0;
   for (NSDictionary *entityDict in sortedEntities) {
     id objectId = [entityDict valueForKey:@"object_id"];
     
@@ -159,6 +162,12 @@ static AlbumDataCenter *_defaultCenter = nil;
       
       pool = [[NSAutoreleasePool alloc] init];
       count = 0;
+    }
+    
+    k++;
+    if (k % 100 == 0) {
+      NSNumber *progress = [NSNumber numberWithFloat:((CGFloat)k / (CGFloat)resultCount)];
+      [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateLoginProgress object:nil userInfo:[NSDictionary dictionaryWithObject:progress forKey:@"progress"]];
     }
   }
   

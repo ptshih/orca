@@ -36,6 +36,7 @@
 #define kHeaderTabSelected @"HeaderTabSelected"
 #define kImageCached @"CoreDataImageCached"
 #define kOrientationChanged @"OrientationChangedNotification"
+#define kUpdateLoginProgress @"UpdateLoginProgress"
 
 // Cards
 #define NUM_CARDS 2

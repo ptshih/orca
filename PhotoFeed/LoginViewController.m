@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "LoginDataCenter.h"
+#import "DDProgressView.h"
 
 @implementation LoginViewController
 
@@ -20,6 +21,7 @@
     _facebook = APP_DELEGATE.facebook;
     [[LoginDataCenter defaultCenter] setDelegate:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logout) name:kLogoutRequested object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLoginProgress:) name:kUpdateLoginProgress object:nil];
   }
   return self;
 }
@@ -33,6 +35,7 @@
   // Setup Logo
   UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photos-large.png"]];
   logo.center = self.view.center;
+  logo.top = logo.top - 80.0;
   [self.view addSubview:logo];
   [logo release];
   
@@ -54,12 +57,30 @@
   [_loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:_loginButton];
   
+  // Progress View
+  _progressView = [[DDProgressView alloc] initWithFrame:CGRectMake(0, 0, 280, 36)];
+  _progressView.progress = 0.0;
+  _progressView.center = self.view.center;
+  _progressView.top = _loginButton.top - _progressView.height - 20.0;
+  _progressView.hidden = YES;
+  [self.view addSubview:_progressView];
+  
   // Loading Indicator
   _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
   _loadingIndicator.hidesWhenStopped = YES;
   _loadingIndicator.center = self.view.center;
-  _loadingIndicator.top = _loginButton.top - _loadingIndicator.height - 20.0;
+  _loadingIndicator.top = _progressView.top - _loadingIndicator.height - 20.0;
   [self.view addSubview:_loadingIndicator];
+  
+}
+
+- (void)updateLoginProgress:(NSNotification *)notification {
+  NSLog(@"update progress: %@", [[notification userInfo] objectForKey:@"progress"]);
+  [self performSelectorOnMainThread:@selector(updateLoginProgressOnMainThread:) withObject:[[notification userInfo] objectForKey:@"progress"] waitUntilDone:NO];
+}
+
+- (void)updateLoginProgressOnMainThread:(NSNumber *)progress {
+  _progressView.progress = [progress floatValue];
 }
 
 #pragma mark -
@@ -67,6 +88,7 @@
 - (void)login {
   [_loadingIndicator startAnimating];
   _loginButton.enabled = NO;
+  _progressView.hidden = NO;
   [_facebook authorize:FB_PERMISSIONS delegate:self];
 }
 
@@ -90,7 +112,9 @@
 - (void)fbDidNotLogin:(BOOL)cancelled {
   [self logout];
   [_loadingIndicator stopAnimating];
+  _progressView.hidden = YES;
   _loginButton.enabled = YES;
+  _progressView.progress = 0.0;
 }
 
 - (void)fbDidLogout {
@@ -101,7 +125,9 @@
     [self.delegate performSelector:@selector(userDidLogout)];
   }
   [_loadingIndicator stopAnimating];
+  _progressView.hidden = YES;
   _loginButton.enabled = YES;
+  _progressView.progress = 0.0;
 }
 
 #pragma mark -
@@ -127,8 +153,10 @@
 - (void)dealloc {
   [[LoginDataCenter defaultCenter] setDelegate:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kLogoutRequested object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kUpdateLoginProgress object:nil];
   RELEASE_SAFELY(_loginButton);
   RELEASE_SAFELY(_loadingIndicator);
+  RELEASE_SAFELY(_progressView);
   [super dealloc];
 }
 

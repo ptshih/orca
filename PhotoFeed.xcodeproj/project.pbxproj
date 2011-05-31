@@ -184,6 +184,8 @@
 		25AD6DC913943A8000F43FEF /* media_progress_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25AD6DC513943A8000F43FEF /* media_progress_background@2x.png */; };
 		25AD6DCA13943A8000F43FEF /* media_progress_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 25AD6DC613943A8000F43FEF /* media_progress_bar.png */; };
 		25AD6DCB13943A8000F43FEF /* media_progress_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25AD6DC713943A8000F43FEF /* media_progress_bar@2x.png */; };
+		25AD6DD213943FE600F43FEF /* DDProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AD6DD113943FE600F43FEF /* DDProgressView.m */; };
+		25AD6DD313943FE600F43FEF /* DDProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AD6DD113943FE600F43FEF /* DDProgressView.m */; };
 		25B2F4A9135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
 		25B2F4AA135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
 		25B9C74E138C6FEA003FEE96 /* Comment+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B9C74D138C6FEA003FEE96 /* Comment+Serialize.m */; };
@@ -579,6 +581,8 @@
 		25AD6DC513943A8000F43FEF /* media_progress_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "media_progress_background@2x.png"; sourceTree = "<group>"; };
 		25AD6DC613943A8000F43FEF /* media_progress_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = media_progress_bar.png; sourceTree = "<group>"; };
 		25AD6DC713943A8000F43FEF /* media_progress_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "media_progress_bar@2x.png"; sourceTree = "<group>"; };
+		25AD6DD013943FE500F43FEF /* DDProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDProgressView.h; sourceTree = "<group>"; };
+		25AD6DD113943FE600F43FEF /* DDProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDProgressView.m; sourceTree = "<group>"; };
 		25B2F4A7135180EB00DDF1BC /* PSNullView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNullView.h; sourceTree = "<group>"; };
 		25B2F4A8135180EB00DDF1BC /* PSNullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSNullView.m; sourceTree = "<group>"; };
 		25B9C74C138C6FEA003FEE96 /* Comment+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Comment+Serialize.h"; sourceTree = "<group>"; };
@@ -1339,6 +1343,8 @@
 		25FB8B2B133A036600C130A8 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				25AD6DD013943FE500F43FEF /* DDProgressView.h */,
+				25AD6DD113943FE600F43FEF /* DDProgressView.m */,
 				255ECED413906D7F00E37BC0 /* JSONKit */,
 				256B53EA1388571800BAE074 /* PSParserStack.h */,
 				256B53EB1388571800BAE074 /* PSParserStack.m */,
@@ -1883,6 +1889,7 @@
 				252F70BE1393B04A007C7D4A /* Photo.m in Sources */,
 				252F70C21393B04B007C7D4A /* Album.m in Sources */,
 				252F70C61393B04B007C7D4A /* Comment.m in Sources */,
+				25AD6DD213943FE600F43FEF /* DDProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1981,6 +1988,7 @@
 				252F70BF1393B04A007C7D4A /* Photo.m in Sources */,
 				252F70C31393B04B007C7D4A /* Album.m in Sources */,
 				252F70C71393B04B007C7D4A /* Comment.m in Sources */,
+				25AD6DD313943FE600F43FEF /* DDProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
