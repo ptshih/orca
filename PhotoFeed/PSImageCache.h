@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PSObject.h"
 
-@interface PSImageCache : NSObject <NSCacheDelegate> {
+@interface PSImageCache : PSObject <NSCacheDelegate> {
   NSCache *_buffer;
   NSString *_cachePath;
   NSSearchPathDirectory _cacheDirectory;

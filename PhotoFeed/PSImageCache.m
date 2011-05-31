@@ -72,7 +72,7 @@ static PSImageCache *_sharedCache;
     // Also write it to file
     [imageData writeToFile:[_cachePath stringByAppendingPathComponent:[urlPath encodedURLParameterString]] atomically:YES];
     
-    NSLog(@"PSImageCache CACHE: %@", urlPath);
+    VLog(@"PSImageCache CACHE: %@", urlPath);
   }
 }
 
@@ -83,21 +83,21 @@ static PSImageCache *_sharedCache;
   UIImage *image = [_buffer objectForKey:[urlPath encodedURLParameterString]];
   if (image) {
     // Image exists in buffer
-    NSLog(@"PSImageCache CACHE HIT: %@", urlPath);
+    VLog(@"PSImageCache CACHE HIT: %@", urlPath);
     return image;
   } else {
     // Image not in buffer, read from disk instead
-    NSLog(@"PSImageCache CACHE MISS: %@", urlPath);
+    VLog(@"PSImageCache CACHE MISS: %@", urlPath);
     image = [UIImage imageWithContentsOfFile:[_cachePath stringByAppendingPathComponent:[urlPath encodedURLParameterString]]];
     
     // If Image is in disk, read it
     if (image) {
-      NSLog(@"PSImageCache DISK HIT: %@", urlPath);
+      VLog(@"PSImageCache DISK HIT: %@", urlPath);
       // Put this image into the buffer also
       [_buffer setObject:image forKey:[urlPath encodedURLParameterString]];
       return image;
     } else {
-      NSLog(@"PSImageCache DISK MISS: %@", urlPath);
+      VLog(@"PSImageCache DISK MISS: %@", urlPath);
       return nil;
     }
   }
@@ -115,7 +115,7 @@ static PSImageCache *_sharedCache;
 
 #pragma mark NSCacheDelegate
 - (void)cache:(NSCache *)cache willEvictObject:(id)obj {
-  NSLog(@"NSCache evicting object");
+  VLog(@"NSCache evicting object");
 }
    
 #pragma mark Helpers

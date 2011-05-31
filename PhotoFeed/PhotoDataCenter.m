@@ -121,7 +121,7 @@
   for (NSDictionary *commentDict in newComments) {
     if ([existingComments count] > 0 && i < [existingComments count] && [[commentDict valueForKey:@"id"] isEqualToString:[[existingComments objectAtIndex:i] id]]) {
       // existing comment found
-      NSLog(@"found existing comment with id: %@", [[existingComments objectAtIndex:i] id]);
+      VLog(@"found existing comment with id: %@", [[existingComments objectAtIndex:i] id]);
       i++;
     } else {
       [comments addObject:[Comment addCommentWithDictionary:commentDict inContext:context]];

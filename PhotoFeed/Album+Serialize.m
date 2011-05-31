@@ -132,9 +132,9 @@
     newAlbum.coverPhoto = cover ? cover : nil;
     
     // Some albums may not have a cover photo
-    if (![dictionary valueForKey:@"cover_pid"]) {
-      NSLog(@"uh oh, no cover photo for: %@", [dictionary valueForKey:@"object_id"]);
-    }
+//    if (![dictionary valueForKey:@"cover_pid"]) {
+//      NSLog(@"uh oh, no cover photo for: %@", [dictionary valueForKey:@"object_id"]);
+//    }
     
     newAlbum.caption = [dictionary valueForKey:@"description"] ? [dictionary valueForKey:@"description"] : nil;
     newAlbum.location = [dictionary valueForKey:@"location"] ? [dictionary valueForKey:@"location"] : nil;

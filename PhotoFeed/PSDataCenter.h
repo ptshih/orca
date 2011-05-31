@@ -19,7 +19,7 @@
 
 #define SINCE_SAFETY_NET 300 // 5 minutes
 
-@interface PSDataCenter : PSObject <PSDataCenterDelegate, PSParserStackDelegate> {
+@interface PSDataCenter : PSObject <PSDataCenterDelegate> {
   id <PSDataCenterDelegate> _delegate;
   NSMutableArray *_pendingRequests;
 }

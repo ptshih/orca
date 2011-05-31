@@ -8,20 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol PSParserStackDelegate <NSObject>
-
-- (void)parseFinishedWithResponse:(id)response andUserInfo:(NSDictionary *)userInfo;
-
-@end
-
 @interface PSParserStack : NSObject {
   NSOperationQueue *_parserQueue;
 }
 
 + (PSParserStack *)sharedParser;
 - (void)addOperation:(NSOperation *)op;
-
-- (void)parseData:(NSData *)data withDelegate:(id)delegate andUserInfo:(NSDictionary *)userInfo;
-- (void)respondToDelegate:(NSDictionary *)payload;
 
 @end
