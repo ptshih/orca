@@ -38,7 +38,7 @@
     
     // Timestamp
     if ([dictionary valueForKey:@"created_time"]) {
-      newComment.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"created_time"]];
+      newComment.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"created_time"] longLongValue]];
     } else {
       newComment.timestamp = [NSDate distantPast];
     }

@@ -29,6 +29,7 @@
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   [params setValue:@"0" forKey:@"limit"];
+  [params setValue:@"U" forKey:@"date_format"]; // unix timestamp
   
   [self sendRequestWithURL:photosUrl andMethod:GET andHeaders:nil andParams:params andUserInfo:[NSDictionary dictionaryWithObject:albumId forKey:@"albumId"]];
 }

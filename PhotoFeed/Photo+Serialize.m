@@ -64,9 +64,9 @@
     
     // Timestamp
     if ([dictionary valueForKey:@"updated_time"]) {
-      newPhoto.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"updated_time"]];
+      newPhoto.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"updated_time"] longLongValue]];
     } else if ([dictionary valueForKey:@"created_time"]) {
-      newPhoto.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"created_time"]];
+      newPhoto.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"created_time"] longLongValue]];
     } else {
       newPhoto.timestamp = [NSDate distantPast];
     }
@@ -103,9 +103,9 @@
     
     // Timestamp
     if ([dictionary valueForKey:@"updated_time"]) {
-      self.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"updated_time"]];
+      self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"updated_time"] longLongValue]];
     } else if ([dictionary valueForKey:@"created_time"]) {
-      self.timestamp = [NSDate dateFromFacebookTimestamp:[dictionary valueForKey:@"created_time"]];
+      self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"created_time"] longLongValue]];
     } else {
       self.timestamp = [NSDate distantPast];
     }
