@@ -17,11 +17,12 @@
  - move to PSNetworkStack
  */
 
-@interface PSImageCache : NSObject {
-  NSMutableDictionary *_imageCache;
+@interface PSImageCache : NSObject <NSCacheDelegate> {
+//  NSMutableDictionary *_imageCache;
+  NSCache *_imageCache;
 }
 
-@property (retain) NSMutableDictionary *imageCache;
+@property (nonatomic, retain) NSCache *imageCache;
 
 + (PSImageCache *)sharedCache;
 

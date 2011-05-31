@@ -33,10 +33,12 @@ static NSString *_cachePath = nil;
     if (!_imageCache) {
       BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:_cachePath];
       if (fileExists) {
-        _imageCache = [[self readImageCacheFromDisk] retain];
+        _imageCache = [[NSCache alloc] init];
+//        _imageCache = [[self readImageCacheFromDisk] retain];
       } else {
-        _imageCache = [[NSMutableDictionary alloc] init];
+        _imageCache = [[NSCache alloc] init];
       }
+      [_imageCache setDelegate:self];
     }
   }
   return self;
@@ -67,6 +69,11 @@ static NSString *_cachePath = nil;
 
 - (BOOL)flushImageCacheToDisk {
   return [NSKeyedArchiver archiveRootObject:_imageCache toFile:_cachePath];
+}
+
+#pragma mark NSCacheDelegate
+- (void)cache:(NSCache *)cache willEvictObject:(id)obj {
+  NSLog(@"NSCache evicting object: %@", obj);
 }
    
 #pragma mark Helpers
