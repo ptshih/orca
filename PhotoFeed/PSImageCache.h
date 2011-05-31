@@ -8,20 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-/**
- TODOs:
- - implement cachePolicy
- - implement disk storage
- - implement header caching
- 
- - move to PSNetworkStack
- */
-
 @interface PSImageCache : NSObject <NSCacheDelegate> {
   NSCache *_buffer;
+  NSString *_cachePath;
+  NSSearchPathDirectory _cacheDirectory;
 }
 
+@property (nonatomic, retain) NSString *cachePath;
+@property (nonatomic, assign) NSSearchPathDirectory cacheDirectory;
+
 + (PSImageCache *)sharedCache;
+- (void)setupCachePathWithCacheDirectory:(NSSearchPathDirectory)cacheDirectory;
 
 // Image Cache
 - (void)cacheImage:(NSData *)imageData forURLPath:(NSString *)urlPath;
@@ -29,6 +26,7 @@
 - (BOOL)hasImageForURLPath:(NSString *)urlPath;
 
 // Helpers
-+ (NSString *)applicationDocumentsDirectory;
++ (NSString *)documentDirectory;
++ (NSString *)cachesDirectory;
 
 @end

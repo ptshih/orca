@@ -44,6 +44,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   NSLog(@"fonts: %@",[UIFont familyNames]);
+
+  // We can configure if the imageCache should reside in cache or document directory here
+//  [[PSImageCache sharedCache] setCacheDirectory:NSCachesDirectory];
+//  [[PSImageCache sharedCache] setCacheDirectory:NSDocumentDirectory];
   
   _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"weave-bg.png"]];

@@ -11,19 +11,9 @@
 
 static PSImageCache *_sharedCache;
 
-static NSString *_cachePath = nil;
-
 @implementation PSImageCache
 
-+ (void)initialize {
-  _cachePath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] copy];
-  
-  BOOL isDir = NO;
-  NSError *error;
-  if (![[NSFileManager defaultManager] fileExistsAtPath:_cachePath isDirectory:&isDir] && isDir == NO) {
-    [[NSFileManager defaultManager] createDirectoryAtPath:_cachePath withIntermediateDirectories:NO attributes:nil error:&error];
-  }
-}
+@synthesize cachePath = _cachePath;
 
 + (PSImageCache *)sharedCache {
   if (!_sharedCache) {
@@ -38,12 +28,38 @@ static NSString *_cachePath = nil;
     _buffer = [[NSCache alloc] init];
     [_buffer setName:@"PSImageCache"];
     [_buffer setDelegate:self];
+    
+    // Set to NSDocumentDirectory by default
+    [self setupCachePathWithCacheDirectory:NSDocumentDirectory];
   }
   return self;
 }
 
+- (void)setupCachePathWithCacheDirectory:(NSSearchPathDirectory)cacheDirectory {
+  self.cachePath = [[NSSearchPathForDirectoriesInDomains(cacheDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"psimagecache"];
+  
+  BOOL isDir = NO;
+  NSError *error;
+  if (![[NSFileManager defaultManager] fileExistsAtPath:_cachePath isDirectory:&isDir] && isDir == NO) {
+    [[NSFileManager defaultManager] createDirectoryAtPath:_cachePath withIntermediateDirectories:NO attributes:nil error:&error];
+  }
+}
+
+#pragma mark Setter/Getter for cacheDirectory
+- (void)setCacheDirectory:(NSSearchPathDirectory)cacheDirectory {
+  _cacheDirectory = cacheDirectory;
+  
+  // Change the cachePath to use the new directory
+  [self setupCachePathWithCacheDirectory:cacheDirectory];
+}
+
+- (NSSearchPathDirectory)cacheDirectory {
+  return _cacheDirectory;
+}
+
 - (void)dealloc {
   if (_buffer) [_buffer release], _buffer = nil;
+  if (_cachePath) [_cachePath release], _cachePath = nil;
   [super dealloc];
 }
 
@@ -88,11 +104,13 @@ static NSString *_cachePath = nil;
 }
 
 - (BOOL)hasImageForURLPath:(NSString *)urlPath {
-  static NSFileManager *fileManager = nil;
-  if (!fileManager) {
-    fileManager = [[NSFileManager alloc] init];
+  if ([_buffer objectForKey:[urlPath encodedURLParameterString]]) {
+    // Image exists in memcache
+    return YES;
+  } else {
+    // Check disk for image
+    return [[NSFileManager defaultManager] fileExistsAtPath:[_cachePath stringByAppendingPathComponent:[urlPath encodedURLString]]];
   }
-  return [fileManager fileExistsAtPath:[_cachePath stringByAppendingPathComponent:[urlPath encodedURLString]]];
 }
 
 #pragma mark NSCacheDelegate
@@ -101,8 +119,12 @@ static NSString *_cachePath = nil;
 }
    
 #pragma mark Helpers
-+ (NSString *)applicationDocumentsDirectory {
++ (NSString *)documentDirectory {
   return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+}
+
++ (NSString *)cachesDirectory {
+  return [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
 }
 
 @end
