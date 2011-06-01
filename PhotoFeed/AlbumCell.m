@@ -12,9 +12,9 @@
 
 #define ALBUM_CELL_HEIGHT 120.0
 
-#define NAME_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0]
-#define CAPTION_FONT [UIFont fontWithName:@"Chalkboard SE" size:12.0]
-#define SMALL_ITALIC_FONT [UIFont fontWithName:@"HelveticaNeue-Italic" size:12.0]
+#define NAME_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0]
+#define CAPTION_FONT [UIFont fontWithName:@"HelveticaNeue" size:10.0]
+#define SMALL_ITALIC_FONT [UIFont fontWithName:@"HelveticaNeue" size:10.0]
 #define RIBBON_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:10.0]
 
 static UIImage *_ribbonImage = nil;
@@ -24,7 +24,7 @@ static UIImage *_overlayImage = nil;
 
 + (void)initialize {
   _ribbonImage = [[[UIImage imageNamed:@"ribbon.png"] stretchableImageWithLeftCapWidth:30 topCapHeight:0] retain];
-  _overlayImage = [[UIImage imageNamed:@"overlay_320x120.png"] retain];
+  _overlayImage = [[UIImage imageNamed:@"overlay_2_320x120.png"] retain];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -85,16 +85,18 @@ static UIImage *_overlayImage = nil;
     
     // Shadows
     _nameLabel.shadowColor = [UIColor blackColor];
-    _nameLabel.shadowOffset = CGSizeMake(0, 1);
+    _nameLabel.shadowOffset = CGSizeMake(1, 1);
     _captionLabel.shadowColor = [UIColor blackColor];
-    _captionLabel.shadowOffset = CGSizeMake(0, 1);
-    //    _countLabel.shadowColor = [UIColor blackColor];
-    //    _countLabel.shadowOffset = CGSizeMake(0, 1);
+    _captionLabel.shadowOffset = CGSizeMake(1, 1);
+    _fromLabel.shadowColor = [UIColor blackColor];
+    _fromLabel.shadowOffset = CGSizeMake(1, 1);
+    _countLabel.shadowColor = [UIColor blackColor];
+    _countLabel.shadowOffset = CGSizeMake(1, 1);
     
     // Caption
     _captionView = [[UIView alloc] initWithFrame:CGRectZero];
-    _captionView.backgroundColor = [UIColor blackColor];
-    _captionView.layer.opacity = 0.5;
+    _captionView.backgroundColor = [UIColor blueColor];
+    _captionView.layer.opacity = 0.0;
     
     // Photo
     _photoView = [[PSURLCacheImageView alloc] initWithFrame:CGRectMake(0, 0, 320, ALBUM_CELL_HEIGHT)];
@@ -148,41 +150,42 @@ static UIImage *_overlayImage = nil;
   // Photo
   
   // Check to see if there is a caption
-  if ([_captionLabel.text length] > 0) {
-    _captionView.frame = CGRectMake(0, ALBUM_CELL_HEIGHT - 34, 320, 34);
-  } else {
-    _captionView.frame = CGRectMake(0, ALBUM_CELL_HEIGHT - 20, 320, 20);
-  }
+//  if ([_captionLabel.text length] > 0) {
+//    _captionView.frame = CGRectMake(0, ALBUM_CELL_HEIGHT - 34, 320, 34);
+//  } else {
+//    _captionView.frame = CGRectMake(0, ALBUM_CELL_HEIGHT - 22, 320, 22);
+//  }
+  _captionView.frame = CGRectMake(0, ALBUM_CELL_HEIGHT - 34, 320, 34);
   
   CGFloat top = _captionView.top;
   CGFloat left = MARGIN_X;
   CGFloat textWidth = self.contentView.width - MARGIN_X * 2;
   CGSize desiredSize = CGSizeZero;
   
-  // From/Author
-  desiredSize = [UILabel sizeForText:_fromLabel.text width:textWidth font:_fromLabel.font numberOfLines:1 lineBreakMode:_fromLabel.lineBreakMode];
-  _fromLabel.top = top + 2.0;
-  _fromLabel.left = self.contentView.width - desiredSize.width - MARGIN_X;
-  _fromLabel.width = desiredSize.width;
-  _fromLabel.height = desiredSize.height;
-  
   // Name
-  desiredSize = [UILabel sizeForText:_nameLabel.text width:(textWidth - _fromLabel.width - MARGIN_X) font:_nameLabel.font numberOfLines:1 lineBreakMode:_nameLabel.lineBreakMode];
-  _nameLabel.top = top + 1.0;
+  desiredSize = [UILabel sizeForText:_nameLabel.text width:textWidth font:_nameLabel.font numberOfLines:1 lineBreakMode:_nameLabel.lineBreakMode];
+  _nameLabel.top = top;
   _nameLabel.left = left;
   _nameLabel.width = desiredSize.width;
   _nameLabel.height = desiredSize.height;
   
   top = _nameLabel.bottom;
   
-  if ([_captionLabel.text length] > 0) {    
-    // Caption
-    desiredSize = [UILabel sizeForText:_captionLabel.text width:textWidth font:_captionLabel.font numberOfLines:1 lineBreakMode:_captionLabel.lineBreakMode];
-    _captionLabel.top = top - 5.0; // -2
-    _captionLabel.left = left;
-    _captionLabel.width = desiredSize.width;
-    _captionLabel.height = desiredSize.height;
-  }
+  // From/Author
+  desiredSize = [UILabel sizeForText:_fromLabel.text width:(textWidth - 2) font:_fromLabel.font numberOfLines:1 lineBreakMode:_fromLabel.lineBreakMode];
+  _fromLabel.top = top - 2;
+  _fromLabel.left = left + 1;
+  _fromLabel.width = desiredSize.width;
+  _fromLabel.height = desiredSize.height;
+  
+//  if ([_captionLabel.text length] > 0) {    
+//    // Caption
+//    desiredSize = [UILabel sizeForText:_captionLabel.text width:textWidth font:_captionLabel.font numberOfLines:1 lineBreakMode:_captionLabel.lineBreakMode];
+//    _captionLabel.top = top - 2; // -2
+//    _captionLabel.left = left;
+//    _captionLabel.width = desiredSize.width;
+//    _captionLabel.height = desiredSize.height;
+//  }
 }
 
 
