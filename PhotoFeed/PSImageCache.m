@@ -8,6 +8,7 @@
 
 #import "PSImageCache.h"
 #import "NSString+URLEncoding+PS.h"
+#import "ASIHTTPRequest.h"
 
 static PSImageCache *_sharedCache;
 
@@ -28,6 +29,8 @@ static PSImageCache *_sharedCache;
     _buffer = [[NSCache alloc] init];
     [_buffer setName:@"PSImageCache"];
     [_buffer setDelegate:self];
+    
+    _pendingRequests = [[NSMutableDictionary alloc] init];
     
     // Set to NSDocumentDirectory by default
     [self setupCachePathWithCacheDirectory:NSDocumentDirectory];
@@ -58,8 +61,9 @@ static PSImageCache *_sharedCache;
 }
 
 - (void)dealloc {
-  if (_buffer) [_buffer release], _buffer = nil;
-  if (_cachePath) [_cachePath release], _cachePath = nil;
+  RELEASE_SAFELY(_buffer);
+  RELEASE_SAFELY(_cachePath);
+  RELEASE_SAFELY(_pendingRequests);
   [super dealloc];
 }
 
@@ -111,6 +115,46 @@ static PSImageCache *_sharedCache;
     // Check disk for image
     return [[NSFileManager defaultManager] fileExistsAtPath:[_cachePath stringByAppendingPathComponent:[urlPath encodedURLString]]];
   }
+}
+
+#pragma mark Remote Image Load Request
+- (void)loadImageForURLPath:(NSString *)urlPath {
+  __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlPath]];
+  request.requestMethod = @"GET";
+  request.allowCompressedResponse = YES;
+  
+  // Request Completion Block
+  [request setCompletionBlock:^{
+    [self loadImageRequestFinished:request];
+    // Remove request from pendingRequests
+    [_pendingRequests removeObjectForKey:[[request originalURL] absoluteString]];
+  }];
+  [request setFailedBlock:^{
+    [self loadImageRequestFailed:request];
+    
+    // Remove request from pendingRequests
+    [_pendingRequests removeObjectForKey:[[request originalURL] absoluteString]];
+  }];
+  
+  // Start the Request
+  [_pendingRequests setObject:request forKey:urlPath];
+  [request startAsynchronous];
+}
+
+- (void)loadImageRequestFinished:(ASIHTTPRequest *)request {
+  NSString *urlPath = [[request originalURL] absoluteString];
+  
+  if ([request responseData]) {
+    [self cacheImage:[request responseData] forURLPath:urlPath];
+    // fire notification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kPSImageCacheDidCacheImage object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[request responseData], @"imageData", urlPath, @"urlPath", nil]];
+  } else {
+    // something bad happened
+  }
+}
+
+- (void)loadImageRequestFailed:(ASIHTTPRequest *)request {
+  // something bad happened
 }
 
 #pragma mark NSCacheDelegate

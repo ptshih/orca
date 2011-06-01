@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "PSObject.h"
 
+@class ASIHTTPRequest;
+
 @interface PSImageCache : PSObject <NSCacheDelegate> {
   NSCache *_buffer;
   NSString *_cachePath;
   NSSearchPathDirectory _cacheDirectory;
+  NSMutableDictionary *_pendingRequests;
 }
 
 @property (nonatomic, retain) NSString *cachePath;
@@ -25,6 +28,11 @@
 - (void)cacheImage:(NSData *)imageData forURLPath:(NSString *)urlPath;
 - (UIImage *)imageForURLPath:(NSString *)urlPath;
 - (BOOL)hasImageForURLPath:(NSString *)urlPath;
+
+// Remote Request
+- (void)loadImageForURLPath:(NSString *)urlPath;
+- (void)loadImageRequestFinished:(ASIHTTPRequest *)request;
+- (void)loadImageRequestFailed:(ASIHTTPRequest *)request;
 
 // Helpers
 + (NSString *)documentDirectory;

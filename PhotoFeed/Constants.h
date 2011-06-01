@@ -37,6 +37,7 @@
 #define kImageCached @"CoreDataImageCached"
 #define kOrientationChanged @"OrientationChangedNotification"
 #define kUpdateLoginProgress @"UpdateLoginProgress"
+#define kPSImageCacheDidCacheImage @"PSImageCacheDidCacheImage"
 
 // Cards
 #define NUM_CARDS 2

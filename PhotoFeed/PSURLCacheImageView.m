@@ -18,6 +18,7 @@
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageCacheDidLoad:) name:kPSImageCacheDidCacheImage object:nil];
   }
   return self;
 }
@@ -34,28 +35,7 @@
       self.image = image;
     } else {
       self.image = _placeholderImage;
-      if (_request) {
-        [_request clearDelegatesAndCancel];
-        RELEASE_SAFELY(_request);
-      }
-      
-      // Fire the request
-      _request = [[ASIHTTPRequest requestWithURL:[NSURL URLWithString:_urlPath]] retain];
-      
-      // Request Completion Block
-      [_request setCompletionBlock:^{
-        [self requestFinished:_request];
-      }];
-      
-      // Request Failed Block
-      [_request setFailedBlock:^{
-        NSError *error = [_request error];
-        
-        [self requestFailed:_request withError:error];
-      }];
-      
-      // Start the Request
-      [_request startAsynchronous];
+      [[PSImageCache sharedCache] loadImageForURLPath:_urlPath];
     }
   }
 }
@@ -72,43 +52,27 @@
 }
 
 - (void)unloadImage {
-  if (_request) [_request clearDelegatesAndCancel];
-  RELEASE_SAFELY(_request);
   self.image = _placeholderImage;
   self.urlPath = nil;
 }
 
-#pragma mark Request Finished
-- (void)requestFinished:(ASIHTTPRequest *)request {
-  // URL
-  NSURL *origURL = [request originalURL]; 
-//  origURL = [[request originalURL] URLByRemovingQuery];
-
-  if ([request responseData]) {
-    [[PSImageCache sharedCache] cacheImage:[request responseData] forURLPath:[origURL absoluteString]];
-    if ([self.urlPath isEqualToString:[origURL absoluteString]]) {
-      self.image = [[PSImageCache sharedCache] imageForURLPath:self.urlPath];
-    } else {
-      DLog(@"urlpath: %@, origURL: %@ does NOT match", _urlPath, [origURL absoluteString]);
+- (void)imageCacheDidLoad:(NSNotification *)notification {
+  NSDictionary *userInfo = [notification userInfo];
+  NSString *urlPath = [userInfo objectForKey:@"urlPath"];
+  NSData *imageData = [userInfo objectForKey:@"imageData"];
+  if ([urlPath isEqualToString:_urlPath]) {
+    if (imageData) {
+      UIImage *image = [UIImage imageWithData:imageData];
+      if (image && ![image isEqual:self.image]) {
+        self.image = image;
+      }
     }
-  } else {
-    DLog(@"image failed to load for url: %@", [origURL absoluteString]);
   }
-  
-  //  NSLog(@"Image width: %f, height: %f", image.size.width, image.size.height);
-}
-
-#pragma mark Request Failed
-- (void)requestFailed:(ASIHTTPRequest *)request withError:(NSError *)error {
-  DLog(@"request: %@ failed with error: %@", request, error);
-  self.image = _placeholderImage;
 }
 
 - (void)dealloc {
-  if (_request) [_request clearDelegatesAndCancel];
-  RELEASE_SAFELY(_request);
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kPSImageCacheDidCacheImage object:nil];
   RELEASE_SAFELY(_urlPath);
-  
   [super dealloc];
 }
 

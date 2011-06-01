@@ -8,12 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "PSImageView.h"
-#import "ASIHTTPRequest.h"
 
 @interface PSURLCacheImageView : PSImageView {
   NSString *_urlPath;
-  
-  ASIHTTPRequest *_request;
 }
 
 @property (nonatomic, copy) NSString *urlPath;
@@ -22,7 +19,6 @@
 - (void)loadImageIfCached;
 - (void)unloadImage;
 
-- (void)requestFinished:(ASIHTTPRequest *)request;
-- (void)requestFailed:(ASIHTTPRequest *)request withError:(NSError *)error;
+- (void)imageCacheDidLoad:(NSNotification *)notification;
 
 @end
