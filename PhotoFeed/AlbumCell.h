@@ -32,7 +32,6 @@
   BOOL _isAnimating;
 }
 
-- (void)setPhotoViewWithImage:(UIImage *)newImage;
 - (void)loadPhoto;
 - (void)animateImage;
 

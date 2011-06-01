@@ -279,22 +279,6 @@ static UIImage *_overlayImage = nil;
     _photoView.urlPath = nil;
   }
   
-//  if (album.imageData) {
-//    //    UIImage *cachedImage = [[UIImage imageWithData:album.imageData] cropProportionalToSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
-//    UIImage *cachedImage = [UIImage imageWithData:album.imageData];
-//    [self setPhotoViewWithImage:cachedImage];
-//  } else {
-//    if (album.coverPhoto) {
-//      NSString *photoURLPath = [NSString stringWithFormat:@"%@?access_token=%@", album.coverPhoto, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]];
-//      [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photoURLPath forEntity:album scaledSize:CGSizeZero];
-//      _photoView.image = nil;
-//    } else {
-//      // Placeholder Image, no cover photo
-//      _photoView.image = [UIImage imageNamed:@"lnkd.png"];
-//    }
-//    [[PSCoreDataImageCache sharedCache] cacheImageWithURLPath:photoURLPath forEntity:album scaledSize:CGSizeMake(_photoView.width * 2, _photoView.height * 2)];
-//  }
-  
   // Labels
   _nameLabel.text = album.name;
   _captionLabel.text = album.caption;
@@ -313,17 +297,6 @@ static UIImage *_overlayImage = nil;
   // this is divided by 2 because we are using retina @2x dimensions
   _photoWidth = image.size.width;
   _photoHeight = image.size.height;
-  _photoView.width = self.contentView.width; // 320
-  _photoView.height = floor((self.contentView.width / _photoWidth) * _photoHeight);
-  [self animateImage];
-}
-
-- (void)setPhotoViewWithImage:(UIImage *)newImage {
-  if ([newImage isEqual:_photoView.image]) return;
-  _photoView.image = newImage;
-   // this is divided by 2 because we are using retina @2x dimensions
-  _photoWidth = newImage.size.width;
-  _photoHeight = newImage.size.height;
   _photoView.width = self.contentView.width; // 320
   _photoView.height = floor((self.contentView.width / _photoWidth) * _photoHeight);
   [self animateImage];
