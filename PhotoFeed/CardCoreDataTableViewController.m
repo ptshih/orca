@@ -23,7 +23,7 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _context = [PSCoreDataStack newManagedObjectContext];
+    _context = nil;
     _fetchedResultsController = nil;
     _sectionNameKeyPathForFetchedResultsController = nil;
     _limit = 50;
@@ -94,6 +94,9 @@
 
 - (void)resetFetchedResultsController {
   RELEASE_SAFELY(_fetchedResultsController);
+  
+  // Get a new context
+  _context = [PSCoreDataStack newManagedObjectContext];
 }
 
 - (NSFetchedResultsController*)fetchedResultsController  {
@@ -234,6 +237,10 @@
 
 - (void)coreDataDidReset {
   [self resetFetchedResultsController];
+  if (self.searchDisplayController) {
+    [self.searchDisplayController setActive:NO];
+  }
+  [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
 }
 
 - (void)dealloc {

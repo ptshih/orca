@@ -26,7 +26,6 @@ static AlbumDataCenter *_defaultCenter = nil;
   self = [super init];
   if (self) {
     _pendingRequestsToParse = 0;
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
   }
   return self;
 }

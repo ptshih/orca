@@ -133,7 +133,7 @@
 - (void)userDidLogout {
   // Delete all existing data
   [self tryLogin];
-  [PSCoreDataStack resetPersistentStore];
+  [PSCoreDataStack resetPersistentStoreCoordinator];
 }
 
 - (void)startDownloadAlbums {

@@ -12,6 +12,9 @@ static NSPersistentStoreCoordinator *_persistentStoreCoordinator = nil;
 static NSManagedObjectModel *_managedObjectModel = nil;
 static NSManagedObjectContext *_mainThreadContext = nil;
 
+static NSDictionary *_storeOptions = nil;
+static NSURL *_storeURL = nil;
+
 @interface PSCoreDataStack (Private)
 
 + (void)resetStoreState;
@@ -22,6 +25,15 @@ static NSManagedObjectContext *_mainThreadContext = nil;
 @implementation PSCoreDataStack
 
 #pragma mark Initialization Methods
++ (void)initialize {  
+  _storeOptions = [[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil] retain];
+  
+  if (![[NSUserDefaults standardUserDefaults] objectForKey:@"persistentStoreName"]) {
+    [[self class] generateNewPersistentStoreName];
+  }
+  _storeURL = [[NSURL fileURLWithPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[[NSUserDefaults standardUserDefaults] stringForKey:@"persistentStoreName"]]] retain];
+}
+
 + (void)resetPersistentStore {
   [[self class] deleteAllObjects:@"Album"];
   [[self class] deleteAllObjects:@"Photo"];
@@ -157,28 +169,76 @@ static NSManagedObjectContext *_mainThreadContext = nil;
   }
   
   // Create a new persistent store
-  _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[[self class] managedObjectModel]];
-  
-  NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
-  
-  NSURL *storeURL = [NSURL fileURLWithPath:[[[self class] applicationDocumentsDirectory] stringByAppendingPathComponent:@"PhotoFeed.sqlite"]];
-  
-  NSError *error = nil;
-  
-  if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
-    // Handle the error.
-    NSLog(@"failed to create persistent store");
-    abort(); // NOTE: DON'T SHIP THIS
-  } else {
-    NSLog(@"init persistent store with path: %@", storeURL);
+  if (![[self class] createPersistentStoreCoordinator]) {
+    // Error creating store, reset and try again
+    [[self class] resetPersistentStoreCoordinator];
+    if (![[self class] createPersistentStoreCoordinator]) {
+      // Fatal error that we can't recover from
+      abort();
+    }
   }
   
   return _persistentStoreCoordinator;
 }
 
-#pragma mark Convenience Methods
-+ (NSString *)applicationDocumentsDirectory {
-  return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
++ (BOOL)createPersistentStoreCoordinator {
+  [[self class] createDocumentDirectory];
+  
+  _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[[self class] managedObjectModel]];
+  
+  NSError *error = nil;
+  NSPersistentStore *newStore = [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:_storeURL options:_storeOptions error:&error];
+
+  if (!newStore || error) {
+    DLog(@"Failed to create persistent store: %@", [error userInfo]);
+    return NO;
+  } else {
+    DLog(@"Init persistent store with path: %@", _storeURL);
+    return YES;
+  }
+}
+
++ (void)resetPersistentStoreCoordinator {
+  [_managedObjectModel release];
+  [_persistentStoreCoordinator release];
+  _managedObjectModel = nil;
+  _persistentStoreCoordinator = nil;
+  
+  if (_storeURL) {
+    [[NSFileManager defaultManager] removeItemAtURL:_storeURL error:nil];
+  }
+  
+  [[self class] generateNewPersistentStoreName];
+  
+  [[NSNotificationCenter defaultCenter] postNotificationName:kCoreDataDidReset object:nil];
+}
+
++ (NSString *)generateNewPersistentStoreName {
+  CFUUIDRef theUUID = CFUUIDCreate(NULL);
+  CFStringRef string = CFUUIDCreateString(NULL, theUUID);
+  CFRelease(theUUID);
+  NSString *uniqueString = (NSString *)string;
+  
+  NSString *newPersistentStoreName = [NSString stringWithFormat:@"%@.sqlite", uniqueString];
+  CFRelease(uniqueString);
+  
+  // Save to UserDefaults
+  [[NSUserDefaults standardUserDefaults] setValue:newPersistentStoreName forKey:@"persistentStoreName"];
+  [[NSUserDefaults standardUserDefaults] synchronize];
+  
+  // set storeURL
+  if (_storeURL) [_storeURL autorelease];
+  _storeURL = [[NSURL fileURLWithPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[[NSUserDefaults standardUserDefaults] stringForKey:@"persistentStoreName"]]] retain];
+  
+  return newPersistentStoreName;
+}
+
++ (void)createDocumentDirectory {
+  BOOL isDir;
+  [[NSFileManager defaultManager] fileExistsAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] isDirectory:&isDir];
+  if (!isDir) {
+    [[NSFileManager defaultManager] createDirectoryAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] withIntermediateDirectories:YES attributes:nil error:nil];
+  }
 }
 
 @end

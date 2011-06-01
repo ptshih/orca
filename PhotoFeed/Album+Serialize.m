@@ -48,6 +48,18 @@
   static NSString *facebookName = nil;
   static NSArray *friendIds = nil;
   static NSArray *friendNames = nil;
+  
+  // This is a hack for logging out
+  BOOL hasCachedFriends = [[NSUserDefaults standardUserDefaults] boolForKey:@"hasCachedFriends"];
+  
+  if (!hasCachedFriends) {
+    if (facebookId) [facebookId release], facebookId = nil;
+    if (facebookName) [facebookName release], facebookName = nil;
+    if (friendIds) [friendIds release], friendIds = nil;
+    if (friendNames) [friendNames release], friendNames = nil;
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasCachedFriends"];
+  }
+  
   if (!facebookId) {
     facebookId = [[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookId"] copy];
   }
@@ -67,7 +79,12 @@
   } else {
     // This does a facebook id => name lookup in the local friends dict
     NSUInteger friendIndex = [friendIds indexOfObject:fromId];
-    return [friendNames objectAtIndex:friendIndex];
+    if (friendIndex != NSNotFound) {
+      return [friendNames objectAtIndex:friendIndex];
+    } else {
+      // friend not found?
+      return @"Anonymous";
+    }
   }
 }
 

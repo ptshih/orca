@@ -28,8 +28,16 @@
   self = [super init];
   if (self) {
     _pendingRequests = [[NSMutableArray alloc] initWithCapacity:1];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
   }
   return self;
+}
+
+- (void)coreDataDidReset {
+  for (ASIHTTPRequest *request in _pendingRequests) {
+    [request clearDelegatesAndCancel];
+  }
+  [_pendingRequests removeAllObjects];
 }
 
 #pragma mark -
@@ -333,6 +341,7 @@
 }
 
 - (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kCoreDataDidReset object:nil];
   for (ASIHTTPRequest *request in _pendingRequests) {
     [request clearDelegatesAndCancel];
   }

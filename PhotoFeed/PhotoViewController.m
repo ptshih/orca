@@ -46,6 +46,8 @@
 - (void)loadView {
   [super loadView];
   
+  [self resetFetchedResultsController];
+  
   // Title and Buttons
   _navTitleLabel.text = _album.name;
   
@@ -61,7 +63,6 @@
   
   //  [self setupLoadMoreView];
   
-  [self resetFetchedResultsController];
   [self executeFetch];
   [self updateState];
   
