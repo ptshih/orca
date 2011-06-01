@@ -50,11 +50,12 @@
 
 - (void)updateState {
   [super updateState];
+  
   NSUInteger fetchedCount = [[self.fetchedResultsController fetchedObjects] count];
-  if (fetchedCount < _limit) {
-    [self hideLoadMoreView];
-  } else {
+  if (fetchedCount % _limit == 0) {
     [self showLoadMoreView];
+  } else {
+    [self hideLoadMoreView];
   }
 }
 
@@ -69,13 +70,20 @@
 
 - (void)loadMore {
   [super loadMore];
+  NSUInteger lastFetchedCount = 0;
+  
   NSUInteger fetchedCount = [[self.fetchedResultsController fetchedObjects] count];
-  _limit += fetchedCount;
+  lastFetchedCount = fetchedCount;
   //  [[self.fetchedResultsController fetchRequest] setFetchOffset:fetchedCount];
-  [[self.fetchedResultsController fetchRequest] setFetchLimit:_limit];
+  [[self.fetchedResultsController fetchRequest] setFetchLimit:(_limit + fetchedCount)];
   NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self description]];
   [NSFetchedResultsController deleteCacheWithName:cacheName];
   [self dataSourceDidLoad];
+  
+  // See if we actually fetched more data, if not hide loadMore
+  if (lastFetchedCount == [[self.fetchedResultsController fetchedObjects] count]) {
+    [self hideLoadMoreView];
+  }
   CGRect newRect = CGRectMake(0, _tableView.contentOffset.y + _loadMoreView.height, _tableView.width, _tableView.height);
   [_tableView scrollRectToVisible:newRect animated:NO];
 }
