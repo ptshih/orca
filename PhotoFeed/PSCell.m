@@ -20,6 +20,10 @@
   return self;
 }
 
++ (NSString *)reuseIdentifier {
+  return NSStringFromClass(self);
+}
+
 + (PSCellType)cellType {
   return PSCellTypePlain;
 }

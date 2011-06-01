@@ -188,7 +188,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   CommentCell *cell = nil;
-  NSString *reuseIdentifier = [NSString stringWithFormat:@"%@_TableViewCell_%d", [self class], indexPath.section];
+  NSString *reuseIdentifier = [CommentCell reuseIdentifier];
   
   cell = (CommentCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
   if(cell == nil) { 

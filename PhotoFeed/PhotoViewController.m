@@ -131,7 +131,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   PhotoCell *cell = nil;
-  NSString *reuseIdentifier = [NSString stringWithFormat:@"%@_TableViewCell_%d", [self class], indexPath.section];
+  NSString *reuseIdentifier = [PhotoCell reuseIdentifier];
   
   cell = (PhotoCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
   if(cell == nil) { 

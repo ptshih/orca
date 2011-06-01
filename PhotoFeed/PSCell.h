@@ -26,6 +26,12 @@ typedef uint32_t PSCellType;
   UITableViewCellSeparatorStyle _separatorStyle;
 }
 
+/**
+ Reusable Cell Identifier
+ Subclasses do NOT need to implement this unless custom behavior is needed
+ */
++ (NSString *)reuseIdentifier;
+
 + (PSCellType)cellType;
 + (CGFloat)rowWidthForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
