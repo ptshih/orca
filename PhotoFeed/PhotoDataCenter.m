@@ -153,9 +153,9 @@
   NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
   NSFetchRequest *fetchRequest = [[PSCoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPhotosForAlbum" substitutionVariables:[NSDictionary dictionaryWithObject:albumId forKey:@"desiredAlbumId"]];
   [fetchRequest setSortDescriptors:sortDescriptors];
-//  [fetchRequest setFetchBatchSize:50];
-//  [fetchRequest setFetchLimit:limit];
-//  [fetchRequest setFetchOffset:offset];
+  [fetchRequest setFetchBatchSize:10];
+  [fetchRequest setFetchLimit:limit];
+  [fetchRequest setFetchOffset:offset];
   return fetchRequest;
 }
 

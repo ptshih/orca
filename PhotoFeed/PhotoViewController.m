@@ -27,7 +27,7 @@
     _photoDataCenter.delegate = self;
     _sectionNameKeyPathForFetchedResultsController = [@"position" retain];
     _headerCellCache = [[NSMutableDictionary alloc] init];
-    _limit = 1000; // unused
+    _limit = 10;
     self.hidesBottomBarWhenPushed = YES;
   }
   return self;
@@ -61,7 +61,7 @@
   // Pull Refresh
   [self setupPullRefresh];
   
-  //  [self setupLoadMoreView];
+  [self setupLoadMoreView];
   
   [self executeFetch];
   [self updateState];
