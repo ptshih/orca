@@ -119,6 +119,9 @@ static PSImageCache *_sharedCache;
 
 #pragma mark Remote Image Load Request
 - (void)loadImageForURLPath:(NSString *)urlPath {
+  // Check to make sure urlPath is not in a pendingRequest already
+  if ([_pendingRequests objectForKey:urlPath]) return;
+  
   __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlPath]];
   request.requestMethod = @"GET";
   request.allowCompressedResponse = YES;
