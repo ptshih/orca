@@ -72,7 +72,10 @@ static UIImage *_commentIcon = nil;
     
     // Caption
     _captionView = [[UIView alloc] init];
-    _captionView.backgroundColor = [UIColor blackColor];
+    _captionView.backgroundColor = [UIColor clearColor];
+    UIImageView *captionOverlay = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo-caption-overlay.png"]] autorelease];
+    captionOverlay.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [_captionView addSubview:captionOverlay];
     _captionView.layer.opacity = 0.667;
     
     // Photo

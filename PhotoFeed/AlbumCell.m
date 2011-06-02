@@ -85,11 +85,11 @@ static UIImage *_overlayImage = nil;
     
     // Shadows
     _nameLabel.shadowColor = [UIColor blackColor];
-    _nameLabel.shadowOffset = CGSizeMake(1, 1);
+    _nameLabel.shadowOffset = CGSizeMake(0, -1);
     _captionLabel.shadowColor = [UIColor blackColor];
-    _captionLabel.shadowOffset = CGSizeMake(1, 1);
+    _captionLabel.shadowOffset = CGSizeMake(0, -1);
     _fromLabel.shadowColor = [UIColor blackColor];
-    _fromLabel.shadowOffset = CGSizeMake(1, 1);
+    _fromLabel.shadowOffset = CGSizeMake(0, -1);
     _countLabel.shadowColor = [UIColor blackColor];
     _countLabel.shadowOffset = CGSizeMake(1, 1);
     
