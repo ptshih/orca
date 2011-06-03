@@ -32,6 +32,11 @@
 - (void)serializeCommentsWithDictionary:(NSDictionary *)dictionary forPhoto:(Photo *)photo inContext:(NSManagedObjectContext *)context;
 
 /**
+ Serialize Tags
+ */
+- (void)serializeTagsWithDictionary:(NSDictionary *)dictionary forPhoto:(Photo *)photo inContext:(NSManagedObjectContext *)context;
+
+/**
  Fetch Requests
  */
 - (NSFetchRequest *)fetchPhotosForAlbumId:(NSString *)albumId withLimit:(NSUInteger)limit andOffset:(NSUInteger)offset sortWithKey:(NSString *)sortWithKey ascending:(BOOL)ascending;

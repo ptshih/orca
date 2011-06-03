@@ -2,14 +2,14 @@
 //  Photo.h
 //  PhotoFeed
 //
-//  Created by Peter Shih on 5/30/11.
+//  Created by Peter Shih on 6/3/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Comment;
+@class Comment, Tag;
 
 @interface Photo : NSManagedObject {
 @private
@@ -26,5 +26,6 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * fromId;
 @property (nonatomic, retain) NSSet* comments;
+@property (nonatomic, retain) NSSet* tags;
 
 @end

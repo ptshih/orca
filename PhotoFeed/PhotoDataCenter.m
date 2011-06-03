@@ -11,6 +11,8 @@
 #import "Photo+Serialize.h"
 #import "Comment.h"
 #import "Comment+Serialize.h"
+#import "Tag.h"
+#import "Tag+Serialize.h"
 
 @implementation PhotoDataCenter
 
@@ -102,6 +104,11 @@
     if ([entityDict objectForKey:@"comments"]) {
       [self serializeCommentsWithDictionary:[entityDict objectForKey:@"comments"] forPhoto:photo inContext:context];
     }
+    
+    // Serialize Tags
+    if ([entityDict objectForKey:@"tags"]) {
+      [self serializeTagsWithDictionary:[entityDict objectForKey:@"tags"] forPhoto:photo inContext:context];
+    }
   }
 }
 
@@ -129,6 +136,31 @@
   }
   
   [photo addComments:comments];
+}
+
+- (void)serializeTagsWithDictionary:(NSDictionary *)dictionary forPhoto:(Photo *)photo inContext:(NSManagedObjectContext *)context {
+  NSMutableSet *tags = [NSMutableSet set];
+  
+  // Check for dupes
+  // photo may have existing comments, compare those with the new ones
+  // comments don't ever get updated, no need to update, just insert new
+  
+  NSArray *existingTags = [photo.tags sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"fromId" ascending:YES]]];
+  
+  NSArray *newTags = [[dictionary valueForKey:@"data"] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES]]];
+  
+  int i = 0;
+  for (NSDictionary *tagDict in newTags) {
+    if ([existingTags count] > 0 && i < [existingTags count] && [[tagDict valueForKey:@"id"] isEqualToString:[[existingTags objectAtIndex:i] fromId]]) {
+      // existing comment found
+      VLog(@"found existing tag with id: %@", [[existingTags objectAtIndex:i] fromId]);
+      i++;
+    } else {
+      [tags addObject:[Tag addTagWithDictionary:tagDict inContext:context]];
+    }
+  }
+  
+  [photo addTags:tags];
 }
 
 #pragma mark -
