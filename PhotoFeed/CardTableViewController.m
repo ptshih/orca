@@ -338,17 +338,17 @@
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView {
-  tableView.backgroundColor = [UIColor darkGrayColor];
+  tableView.backgroundColor = [UIColor blackColor];
   tableView.separatorColor = SEPARATOR_COLOR;
   tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
-  // Subclass should implement
+  // Subclass may implement
 }
 
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
-  // Subclass should implement
+  // Subclass may implement
 }
 
 #pragma mark UIScrollViewDelegate
