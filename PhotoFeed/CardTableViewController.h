@@ -20,6 +20,7 @@
   
   UISearchBar *_searchBar;
   EGORefreshTableHeaderView *_refreshHeaderView;
+  UIView *_headerView;
   UIView *_footerView;
   UIView *_loadMoreView;
   UIButton *_loadMoreButton;
@@ -34,6 +35,7 @@
 - (void)setupTableViewWithFrame:(CGRect)frame andStyle:(UITableViewStyle)style andSeparatorStyle:(UITableViewCellSeparatorStyle)separatorStyle;
 - (void)setupPullRefresh;
 - (void)setupTableFooter;
+- (void)setupHeaderView;
 - (void)setupFooterView;
 - (void)setupLoadMoreView;
 - (void)setupSearchDisplayControllerWithScopeButtonTitles:(NSArray *)scopeButtonTitles;

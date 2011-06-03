@@ -36,5 +36,6 @@
 // Nav buttons
 - (void)addBackButton;
 - (void)addButtonWithTitle:(NSString *)title andSelector:(SEL)selector isLeft:(BOOL)isLeft;
+- (void)addButtonWithImage:(UIImage *)image andSelector:(SEL)selector isLeft:(BOOL)isLeft;
 
 @end

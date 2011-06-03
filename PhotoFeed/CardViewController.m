@@ -101,6 +101,19 @@
   }
 }
 
+- (void)addButtonWithImage:(UIImage *)image andSelector:(SEL)selector isLeft:(BOOL)isLeft {
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  button.frame = CGRectMake(0, 0, 60, 30);
+  [button setBackgroundImage:image forState:UIControlStateNormal];
+  [button addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];  
+  UIBarButtonItem *navButton = [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
+  if (isLeft) {
+    self.navigationItem.leftBarButtonItem = navButton;
+  } else {
+    self.navigationItem.rightBarButtonItem = navButton;
+  }
+}
+
 // Subclasses may implement
 - (void)setupNullView {
   

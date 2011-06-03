@@ -53,13 +53,13 @@
     case AlbumTypeMe:
       navTitle = @"My Albums";
       placeholder = @"Search by Album Name";
-      scopeArray = [NSArray arrayWithObjects:@"Album", nil];
+      scopeArray = nil;
       _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
       break;
     case AlbumTypeFriends:
       navTitle = @"Friends Albums";
       placeholder = @"Search by Album or Author Name";
-      scopeArray = [NSArray arrayWithObjects:@"Album", @"Author", nil];
+      scopeArray = nil;
       _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
       break;
     case AlbumTypeWall:
@@ -110,6 +110,7 @@
   // Title and Buttons
   [self addButtonWithTitle:@"Logout" andSelector:@selector(logout) isLeft:YES];
 //  [self addButtonWithTitle:@"Search" andSelector:@selector(search) isLeft:NO];
+//  [self addButtonWithImage:[UIImage imageNamed:@"searchbar_textfield_background.png"] andSelector:@selector(search) isLeft:NO];
   _navTitleLabel.text = navTitle;
   
   
@@ -200,14 +201,6 @@
   [cell loadPhoto];
   
   return cell;
-}
-
-- (void)loadImagesForOnScreenRows {
-  [super loadImagesForOnScreenRows];
-  
-  //  for (id cell in _visibleCells) {
-  //    [cell loadPhoto];
-  //  }
 }
 
 #pragma mark -

@@ -887,8 +887,6 @@
 				250B318A133EBF0B0011EEDD /* ComposeViewController.m */,
 				2544AC781377CCC10072C86C /* CameraViewController.h */,
 				2544AC791377CCC10072C86C /* CameraViewController.m */,
-				25F10F1D13974D6000445B36 /* SearchViewController.h */,
-				25F10F1E13974D6000445B36 /* SearchViewController.m */,
 			);
 			name = Modals;
 			sourceTree = "<group>";
@@ -1525,6 +1523,8 @@
 				2511A8FB1365FA0C00C9CF9A /* PhotoViewController.m */,
 				25B9C757138C8882003FEE96 /* CommentViewController.h */,
 				25B9C758138C8882003FEE96 /* CommentViewController.m */,
+				25F10F1D13974D6000445B36 /* SearchViewController.h */,
+				25F10F1E13974D6000445B36 /* SearchViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";

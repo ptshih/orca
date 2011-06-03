@@ -122,6 +122,15 @@
   [footerImage release];
 }
 
+// Optional Header View
+- (void)setupHeaderView {
+  _tableView.frame = CGRectMake(_tableView.left, _tableView.top + 44, _tableView.width, _tableView.height - 44);
+  _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+  _headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+  
+  [self.view addSubview:_headerView];
+}
+
 // Optional footer view
 - (void)setupFooterView {
   _tableView.frame = CGRectMake(_tableView.left, _tableView.top, _tableView.width, _tableView.height - 44);
@@ -426,6 +435,7 @@
   RELEASE_SAFELY(_visibleCells);
   RELEASE_SAFELY(_visibleIndexPaths);
   RELEASE_SAFELY(_refreshHeaderView);
+  RELEASE_SAFELY(_headerView);
   RELEASE_SAFELY(_footerView);
   RELEASE_SAFELY(_loadMoreView);
   RELEASE_SAFELY(_loadMoreButton);

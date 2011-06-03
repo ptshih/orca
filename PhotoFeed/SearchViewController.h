@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CardCoreDataTableViewController.h"
 
-
-@interface SearchViewController : UIViewController {
-    
+@interface SearchViewController : CardCoreDataTableViewController {
+  
 }
+
+- (void)setupSearch;
 
 @end
