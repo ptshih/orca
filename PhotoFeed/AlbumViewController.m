@@ -20,9 +20,7 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
     _albumType = AlbumTypeMe;
-    
   }
   return self;
 }
@@ -56,37 +54,62 @@
       navTitle = @"My Albums";
       placeholder = @"Search by Album Name";
       scopeArray = [NSArray arrayWithObjects:@"Album", nil];
+      _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
       break;
     case AlbumTypeFriends:
       navTitle = @"Friends Albums";
       placeholder = @"Search by Album or Author Name";
       scopeArray = [NSArray arrayWithObjects:@"Album", @"Author", nil];
+      _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
       break;
     case AlbumTypeWall:
       navTitle = @"Wall Photos";
       placeholder = @"Search by Author Name";
       scopeArray = [NSArray arrayWithObjects:@"Author", nil];
+      _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
       break;
     case AlbumTypeMobile:
       navTitle = @"Mobile Uploads";
       placeholder = @"Search by Author Name";
       scopeArray = [NSArray arrayWithObjects:@"Author", nil];
+      _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
       break;
     case AlbumTypeProfile:
       navTitle = @"Profile Pictures";
       placeholder = @"Search by Author Name";
       scopeArray = [NSArray arrayWithObjects:@"Author", nil];
+      _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
+      break;
+    case AlbumTypeFavorites:
+      navTitle = @"Favorites";
+      placeholder = @"Album, Friend, Location...";
+      scopeArray = nil;
+      _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
+      break;
+    case AlbumTypeHistory:
+      navTitle = @"Recently Viewed";
+      placeholder = @"Album, Friend, Location...";
+      scopeArray = nil;
+      _sectionNameKeyPathForFetchedResultsController = nil;
+      break;
+    case AlbumTypeTimeline:
+      navTitle = @"Timeline";
+      placeholder = @"Album, Friend, Location...";
+      scopeArray = nil;
+      _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
       break;
     default:
       break;
   }
   
   // Search Scope
-  [self setupSearchDisplayControllerWithScopeButtonTitles:scopeArray andPlaceholder:placeholder];
+  if (placeholder) {
+    [self setupSearchDisplayControllerWithScopeButtonTitles:scopeArray andPlaceholder:placeholder];
+  }
   
   // Title and Buttons
   [self addButtonWithTitle:@"Logout" andSelector:@selector(logout) isLeft:YES];
-//  [self addButtonWithTitle:@"New" andSelector:@selector(newAlbum) isLeft:NO];
+  [self addButtonWithTitle:@"Search" andSelector:@selector(search) isLeft:NO];
   _navTitleLabel.text = navTitle;
   
   
@@ -106,7 +129,7 @@
   [super unloadCardController];
 }
 
-- (void)newAlbum {
+- (void)search {
   //  CameraViewController *cvc = [[CameraViewController alloc] init];
   //  UINavigationController *cnc = [[UINavigationController alloc] initWithRootViewController:cvc];
   //  [self presentModalViewController:cnc animated:NO];
@@ -126,6 +149,8 @@
 //}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+  if ([[self.fetchedResultsController sections] count] == 1) return nil;
+  
   NSString *sectionName = [[[self.fetchedResultsController sections] objectAtIndex:section] name];
   
   UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 26)] autorelease];
@@ -190,20 +215,37 @@
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
   NSPredicate *predicate = nil;
   NSPredicate *compoundPredicate = nil;
+  NSMutableArray *subpredicates = [NSMutableArray arrayWithCapacity:1];
   
   //  predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
   
-  if ([scope isEqualToString:@"Author"]) {
-    // search friend's full name
-    predicate = [NSPredicate predicateWithFormat:@"fromName CONTAINS[cd] %@", searchText, searchText];
-  } else {
-    // default to album name
-    predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
+  NSArray *searchTerms = [searchText componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+  
+  for (NSString *searchTerm in searchTerms) {
+    if ([scope isEqualToString:@"Author"]) {
+      // search friend's full name
+      [subpredicates addObject:[NSPredicate predicateWithFormat:@"fromName CONTAINS[cd] %@", searchTerm]];
+    } else if ([scope isEqualToString:@"Album"]) {
+      // search album name
+      [subpredicates addObject:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchTerm]];
+    } else if ([scope isEqualToString:@"Location"]) {
+      [subpredicates addObject:[NSPredicate predicateWithFormat:@"location CONTAINS[cd] %@", searchTerm]];
+    } else {
+      // search any
+      [subpredicates addObject:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@ OR fromName CONTAINS[cd] %@ OR location CONTAINS[cd] %@", searchTerm, searchTerm, searchTerm]];
+    }
   }
   
-  compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:_predicate, predicate, nil]];
+  compoundPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:subpredicates];
   
-  [self.fetchedResultsController.fetchRequest setPredicate:compoundPredicate];
+  NSPredicate *finalCompoundPredicate = nil;
+  if (_predicate) {
+    finalCompoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:_predicate, compoundPredicate, nil]];
+  } else {
+    finalCompoundPredicate = compoundPredicate;
+  }
+  
+  [self.fetchedResultsController.fetchRequest setPredicate:finalCompoundPredicate];
   NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self description]];
   [NSFetchedResultsController deleteCacheWithName:cacheName];
   [self executeFetch];
@@ -213,35 +255,57 @@
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
+  NSArray *sortDescriptors = nil;
   NSString *fetchTemplate = nil;
   NSDictionary *substitutionVariables = nil;
   NSString *facebookId = [[NSUserDefaults standardUserDefaults] stringForKey:@"facebookId"];
+  
   switch (self.albumType) {
     case AlbumTypeMe:
       fetchTemplate = @"getMyAlbums";
       substitutionVariables = [NSDictionary dictionaryWithObject:facebookId forKey:@"desiredFromId"];
+      sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO]];
       break;
     case AlbumTypeFriends:
       fetchTemplate = @"getFriendsAlbums";
       substitutionVariables = [NSDictionary dictionaryWithObject:facebookId forKey:@"desiredFromId"];
+      sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO]];
       break;
     case AlbumTypeWall:
       fetchTemplate = @"getWallAlbums";
       substitutionVariables = [NSDictionary dictionary];
+      sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO]];
       break;
     case AlbumTypeMobile:
       fetchTemplate = @"getMobileAlbums";
       substitutionVariables = [NSDictionary dictionary];
+      sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO]];
       break;
     case AlbumTypeProfile:
       fetchTemplate = @"getProfileAlbums";
       substitutionVariables = [NSDictionary dictionary];
+      sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO]];
+      break;
+    case AlbumTypeFavorites:
+      fetchTemplate = @"getFavorites";
+      substitutionVariables = [NSDictionary dictionary];
+      sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO]];
+      break;
+    case AlbumTypeHistory:
+      fetchTemplate = @"getHistory";
+      substitutionVariables = [NSDictionary dictionary];
+      sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"lastViewed" ascending:NO]];
+      break;
+    case AlbumTypeTimeline:
+      fetchTemplate = @"getTimeline";
+      substitutionVariables = [NSDictionary dictionary];
+      sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO]];
       break;
     default:
       break;
   }
   
-  return [[AlbumDataCenter defaultCenter] fetchAlbumsWithTemplate:fetchTemplate andSubstitutionVariables:substitutionVariables andLimit:_limit andOffset:_offset];
+  return [[AlbumDataCenter defaultCenter] fetchAlbumsWithTemplate:fetchTemplate andSortDescriptors:sortDescriptors andSubstitutionVariables:substitutionVariables andLimit:_limit andOffset:_offset];
 }
 
 - (void)logout {

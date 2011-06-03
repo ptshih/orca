@@ -14,7 +14,10 @@ typedef enum {
   AlbumTypeFriends = 1,
   AlbumTypeMobile = 2,
   AlbumTypeProfile = 3,
-  AlbumTypeWall = 4
+  AlbumTypeWall = 4,
+  AlbumTypeFavorites = 5,
+  AlbumTypeHistory = 6,
+  AlbumTypeTimeline = 7
 } AlbumType;
 
 @interface AlbumViewController : CardCoreDataTableViewController {
@@ -23,7 +26,7 @@ typedef enum {
 
 @property (nonatomic, assign) AlbumType albumType;
 
-- (void)newAlbum;
+- (void)search;
 - (void)logout;
 
 @end

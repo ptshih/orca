@@ -13,4 +13,6 @@
   UITabBarController *_tabBarController;
 }
 
+- (void)selectActionButton;
+
 @end
