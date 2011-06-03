@@ -109,6 +109,8 @@ static NSURL *_storeURL = nil;
     [_mainThreadContext setPersistentStoreCoordinator:coordinator];
   }
   
+  [_mainThreadContext setUndoManager:nil];
+  
   return _mainThreadContext;
 }
 
@@ -122,6 +124,7 @@ static NSURL *_storeURL = nil;
     context = [[NSManagedObjectContext alloc] init];
     [context setPersistentStoreCoordinator:coordinator];
   }
+  [context setUndoManager:nil];
   
   // not autoreleased
   return context;

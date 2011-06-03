@@ -212,9 +212,11 @@
 
 #pragma mark -
 #pragma mark UISearchDisplayDelegate
-- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
-  NSPredicate *predicate = nil;
-  NSPredicate *compoundPredicate = nil;
+- (void)delayedFilterContentWithTimer:(NSTimer *)timer {
+  NSDictionary *userInfo = [timer userInfo];
+  NSString *searchText = [userInfo objectForKey:@"searchText"];
+  NSString *scope = [userInfo objectForKey:@"scope"];
+  NSPredicate *predicate = [self.fetchedResultsController.fetchRequest predicate];
   NSMutableArray *subpredicates = [NSMutableArray arrayWithCapacity:1];
   
   //  predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
@@ -222,34 +224,27 @@
   NSArray *searchTerms = [searchText componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
   
   for (NSString *searchTerm in searchTerms) {
+    NSString *searchValue = [NSString stringWithFormat:@"%@", searchTerm];
     if ([scope isEqualToString:@"Author"]) {
       // search friend's full name
-      [subpredicates addObject:[NSPredicate predicateWithFormat:@"fromName CONTAINS[cd] %@", searchTerm]];
+      [subpredicates addObject:[NSPredicate predicateWithFormat:@"fromName CONTAINS[cd] %@", searchValue]];
     } else if ([scope isEqualToString:@"Album"]) {
       // search album name
-      [subpredicates addObject:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchTerm]];
+      [subpredicates addObject:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchValue]];
     } else if ([scope isEqualToString:@"Location"]) {
-      [subpredicates addObject:[NSPredicate predicateWithFormat:@"location CONTAINS[cd] %@", searchTerm]];
+      [subpredicates addObject:[NSPredicate predicateWithFormat:@"location CONTAINS[cd] %@", searchValue]];
     } else {
       // search any
-      [subpredicates addObject:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@ OR fromName CONTAINS[cd] %@ OR location CONTAINS[cd] %@", searchTerm, searchTerm, searchTerm]];
+      [subpredicates addObject:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@ OR fromName CONTAINS[cd] %@ OR location CONTAINS[cd] %@", searchValue, searchValue, searchValue]];
     }
   }
   
-  compoundPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:subpredicates];
-  
-  NSPredicate *finalCompoundPredicate = nil;
-  if (_predicate) {
-    finalCompoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:_predicate, compoundPredicate, nil]];
-  } else {
-    finalCompoundPredicate = compoundPredicate;
+  if (_searchPredicate) {
+    RELEASE_SAFELY(_searchPredicate);
   }
+  _searchPredicate = [[NSCompoundPredicate orPredicateWithSubpredicates:subpredicates] retain];
   
-  [self.fetchedResultsController.fetchRequest setPredicate:finalCompoundPredicate];
-  NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self description]];
-  [NSFetchedResultsController deleteCacheWithName:cacheName];
   [self executeFetch];
-//  [_tableView reloadData];
 }
 
 #pragma mark -

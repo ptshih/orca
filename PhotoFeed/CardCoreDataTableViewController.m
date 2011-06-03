@@ -29,6 +29,7 @@
     _sectionNameKeyPathForFetchedResultsController = nil;
     _limit = 50;
     _offset = 0;
+    _lastFetchedCount = 0;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextSaveDidNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
@@ -73,28 +74,16 @@
 
 - (void)loadMore {
   [super loadMore];
-  NSUInteger lastFetchedCount = 0;
   
-  NSUInteger fetchedCount = [[self.fetchedResultsController fetchedObjects] count];
-  lastFetchedCount = fetchedCount;
-  //  [[self.fetchedResultsController fetchRequest] setFetchOffset:fetchedCount];
-  [[self.fetchedResultsController fetchRequest] setFetchLimit:(_limit + fetchedCount)];
-  NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self description]];
-  [NSFetchedResultsController deleteCacheWithName:cacheName];
-  [self dataSourceDidLoad];
-  
-  // See if we actually fetched more data, if not hide loadMore
-  if (lastFetchedCount == [[self.fetchedResultsController fetchedObjects] count]) {
-    [self hideLoadMoreView];
-  }
-  CGRect newRect = CGRectMake(0, _tableView.contentOffset.y + _loadMoreView.height, _tableView.width, _tableView.height);
-  [_tableView scrollRectToVisible:newRect animated:NO];
+  _lastFetchedCount = [[self.fetchedResultsController fetchedObjects] count];
+
+  [[self.fetchedResultsController fetchRequest] setFetchLimit:(_limit + _lastFetchedCount)];
+  [self executeFetch];
 }
 
 - (void)dataSourceDidLoad {
   [super dataSourceDidLoad];
   [self executeFetch];
-//  [_tableView reloadData];
 }
 
 #pragma mark Core Data
@@ -112,39 +101,62 @@
 - (NSFetchedResultsController*)fetchedResultsController  {
   if (_fetchedResultsController) return _fetchedResultsController;
   
-  NSFetchRequest *fetchRequest = [self getFetchRequest];
-  if (fetchRequest) {
-    NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self description]];
-    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:self.sectionNameKeyPathForFetchedResultsController cacheName:cacheName];
-    _fetchedResultsController.delegate = nil;
-  }
-  
-  RELEASE_SAFELY(_predicate);
-  _predicate = [[fetchRequest predicate] copy];
+  _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:[self getFetchRequest] managedObjectContext:self.context sectionNameKeyPath:self.sectionNameKeyPathForFetchedResultsController cacheName:nil];
+  _fetchedResultsController.delegate = nil;
   
   return _fetchedResultsController;
 }
 
 - (void)executeFetch {
-  static NSUInteger fetchCount = 0;
-  fetchCount++;
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     NSError *error = nil;
-    if ([self.fetchedResultsController performFetch:&error]) {
-      //    DLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);
-      dispatch_async(dispatch_get_main_queue(), ^{
-        fetchCount--;
-        if (fetchCount == 0) {
-          if (self.searchDisplayController.active) {
-            [self.searchDisplayController.searchResultsTableView reloadData];
-          } else {
-            [_tableView reloadData];
-          }
-        }
-      });
-    } else {
-      DLog(@"Fetch failed with error: %@", [error localizedDescription]);
+    NSFetchRequest *backgroundFetch = [[self getFetchRequest] copy];
+    
+    [backgroundFetch setResultType:NSManagedObjectIDResultType];
+    [backgroundFetch setSortDescriptors:nil];
+    NSPredicate *predicate = [backgroundFetch predicate];
+    NSPredicate *combinedPredicate = nil;
+    if (_searchPredicate) {
+      if (predicate) {
+        combinedPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:predicate, _searchPredicate, nil]];
+      } else {
+        combinedPredicate = _searchPredicate;
+      }
+      [backgroundFetch setPredicate:combinedPredicate];
     }
+    
+    NSManagedObjectContext *context = [PSCoreDataStack newManagedObjectContext];
+    NSArray *results = [context executeFetchRequest:backgroundFetch error:&error];
+    
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithCapacity:2];
+    if (error) {
+      [userInfo setObject:error forKey:@"error"];
+    }
+    if (results) {
+      [userInfo setObject:results forKey:@"results"];
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+      NSLog(@"dispatch main reload: %@", [userInfo objectForKey:@"results"]);
+      NSError *frcError = nil;
+      NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self IN %@", results];
+      [self.fetchedResultsController.fetchRequest setPredicate:predicate];
+      
+      if ([self.fetchedResultsController performFetch:&frcError]) {
+        DLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);
+        
+        if (self.searchDisplayController.active) {
+          [self.searchDisplayController.searchResultsTableView reloadData];
+        } else {
+          [_tableView reloadData];
+          [self updateState];
+        }
+      } else {
+        DLog(@"Fetch failed with error: %@", [error localizedDescription]);
+      }
+      [context release];
+      [backgroundFetch release];
+      [userInfo release];
+    });
   });
   
 //  NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(executeFetchOperation) object:nil];
@@ -171,6 +183,7 @@
     [self.searchDisplayController.searchResultsTableView reloadData];
   } else {
     [_tableView reloadData];
+    [self updateState];
   }
 }
 
@@ -206,7 +219,6 @@
   DLog(@"type: %d, old indexPath: %@, new indexPath: %@, class: %@", type, indexPath, newIndexPath, NSStringFromClass([self class]));
   
   switch(type) {
-      
     case NSFetchedResultsChangeInsert:
       [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
       break;
@@ -233,19 +245,24 @@
 }
 
 #pragma mark UISearchDisplayDelegate
-- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
+- (void)delayedFilterContentWithTimer:(NSTimer *)timer {
   // SUBCLASS MUST IMPLEMENT
 }
 
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
+  if (_searchTimer && [_searchTimer isValid]) {
+    INVALIDATE_TIMER(_searchTimer);
+  }
+  NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:searchText, @"searchText", scope, @"scope", nil];
+  _searchTimer = [[NSTimer timerWithTimeInterval:0.3 target:self selector:@selector(delayedFilterContentWithTimer:) userInfo:userInfo repeats:NO] retain];
+  [[NSRunLoop currentRunLoop] addTimer:_searchTimer forMode:NSDefaultRunLoopMode];
+}
+
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
-  NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self description]];
-  [NSFetchedResultsController deleteCacheWithName:cacheName];
 }
 
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
-  NSString *cacheName = [NSString stringWithFormat:@"%@_frc_cache", [self description]];
-  [NSFetchedResultsController deleteCacheWithName:cacheName];
-  [self.fetchedResultsController.fetchRequest setPredicate:_predicate];
+  _searchPredicate = nil;
   [self executeFetch];
 }
 
@@ -305,9 +322,10 @@
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kCoreDataDidReset object:nil];
-  RELEASE_SAFELY (_fetchedResultsController);
-  RELEASE_SAFELY (_sectionNameKeyPathForFetchedResultsController);
-  RELEASE_SAFELY(_predicate);
+  RELEASE_SAFELY(_fetchedResultsController);
+  RELEASE_SAFELY(_sectionNameKeyPathForFetchedResultsController);
+  RELEASE_SAFELY(_searchPredicate);
+  INVALIDATE_TIMER(_searchTimer);
   [super dealloc];
 }
 

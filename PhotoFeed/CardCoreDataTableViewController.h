@@ -15,9 +15,11 @@
   NSManagedObjectContext *_context;
   NSFetchedResultsController * _fetchedResultsController;
   NSString * _sectionNameKeyPathForFetchedResultsController;
-  NSPredicate *_predicate;
   NSUInteger _limit;
   NSUInteger _offset;
+  NSUInteger _lastFetchedCount;
+  NSTimer *_searchTimer;
+  NSPredicate *_searchPredicate;
 }
 
 @property (nonatomic, assign) NSManagedObjectContext *context;
@@ -26,6 +28,8 @@
 
 
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath;
+
+- (void)delayedFilterContentWithTimer:(NSTimer *)timer;
 
 - (void)resetFetchedResultsController;
 - (void)executeFetch;
