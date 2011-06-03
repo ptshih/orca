@@ -8,15 +8,14 @@
 
 #import "PSURLCache.h"
 
-static PSURLCache *_sharedCache;
-
 @implementation PSURLCache
 
 + (PSURLCache *)sharedCache {
-  if (!_sharedCache) {
-    _sharedCache = [[self alloc] init];
+  static PSURLCache *sharedCache;
+  if (!sharedCache) {
+    sharedCache = [[self alloc] init];
   }
-  return _sharedCache;
+  return sharedCache;
 }
 
 // Does not handle errors right now
@@ -145,37 +144,6 @@ static PSURLCache *_sharedCache;
 
 + (NSString *)applicationDocumentsDirectory {
   return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-}
-
-#pragma mark Memory Management
-+ (id)allocWithZone:(NSZone *)zone {
-  @synchronized(self) {
-    if (_sharedCache == nil) {
-      _sharedCache = [super allocWithZone:zone];
-      return _sharedCache;
-    }
-  }
-  return nil; // on subsequent allocation attempts return nil
-}
-
-- (id)copyWithZone:(NSZone *)zone {
-  return self;
-}
-
-- (id)retain {
-  return self;
-}
-
-- (unsigned)retainCount {
-  return UINT_MAX;
-}
-
-- (void)release {
-  // do nothing
-}
-
-- (id)autorelease {
-  return self;
 }
 
 @end

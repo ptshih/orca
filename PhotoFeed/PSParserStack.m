@@ -8,16 +8,15 @@
 
 #import "PSParserStack.h"
 
-static PSParserStack *_sharedParser = nil;
-
 @implementation PSParserStack
 
 #pragma mark Shared Parser Instance
 + (PSParserStack *)sharedParser {
-  if (!_sharedParser) {
-    _sharedParser = [[self alloc] init];
+  static PSParserStack *sharedParser = nil;
+  if (!sharedParser) {
+    sharedParser = [[self alloc] init];
   }
-  return _sharedParser;
+  return sharedParser;
 }
 
 - (id)init {

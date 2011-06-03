@@ -9,8 +9,6 @@
 #import "PSNetworkQueue.h"
 #import "PSNetworkOperation.h"
 
-static PSNetworkQueue *_sharedQueue = nil;
-
 @implementation PSNetworkQueue
 
 - (id)init {
@@ -29,41 +27,13 @@ static PSNetworkQueue *_sharedQueue = nil;
 }
 
 + (PSNetworkQueue *)sharedQueue {
+  static PSNetworkQueue *sharedQueue = nil;
   @synchronized(self) {
-    if (_sharedQueue == nil) {
-      _sharedQueue = [[self alloc] init];
+    if (sharedQueue == nil) {
+      sharedQueue = [[self alloc] init];
     }
-    return _sharedQueue;
+    return sharedQueue;
   }
-}
-
-+ (id)allocWithZone:(NSZone *)zone {
-  @synchronized(self) {
-    if (_sharedQueue == nil) {
-      _sharedQueue = [super allocWithZone:zone];
-      return _sharedQueue;
-    }
-  }
-  return nil;
-}
-
-- (id)copyWithZone:(NSZone *)zone {
-  return self;
-}
-
-- (id)retain {
-  return self;
-}
-
-- (NSUInteger)retainCount {
-  return NSUIntegerMax;
-}
-
-- (void)release {
-}
-
-- (id)autorelease {
-  return self;
 }
 
 @end

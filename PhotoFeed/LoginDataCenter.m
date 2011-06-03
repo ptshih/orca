@@ -8,15 +8,14 @@
 
 #import "LoginDataCenter.h"
 
-static LoginDataCenter *_defaultCenter = nil;
-
 @implementation LoginDataCenter
 
 + (LoginDataCenter *)defaultCenter {
-  if (!_defaultCenter) {
-    _defaultCenter = [[self alloc] init];
+  static LoginDataCenter *defaultCenter = nil;
+  if (!defaultCenter) {
+    defaultCenter = [[self alloc] init];
   }
-  return _defaultCenter;
+  return defaultCenter;
 }
 
 - (void)getMe {

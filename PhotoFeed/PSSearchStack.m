@@ -8,16 +8,15 @@
 
 #import "PSSearchStack.h"
 
-static PSSearchStack *_sharedSearch = nil;
-
 @implementation PSSearchStack
 
 #pragma mark Shared Parser Instance
 + (PSSearchStack *)sharedSearch {
-  if (!_sharedSearch) {
-    _sharedSearch = [[self alloc] init];
+  static PSSearchStack *sharedSearch = nil;
+  if (!sharedSearch) {
+    sharedSearch = [[self alloc] init];
   }
-  return _sharedSearch;
+  return sharedSearch;
 }
 
 - (id)init {

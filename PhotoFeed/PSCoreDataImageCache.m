@@ -10,15 +10,14 @@
 #import "ASIHTTPRequest.h"
 #import "UIImage+ScalingAndCropping.h"
 
-static PSCoreDataImageCache *_sharedCache;
-
 @implementation PSCoreDataImageCache
 
 + (PSCoreDataImageCache *)sharedCache {
-  if (!_sharedCache) {
-    _sharedCache = [[self alloc] init];
+  static PSCoreDataImageCache *sharedCache;
+  if (!sharedCache) {
+    sharedCache = [[self alloc] init];
   }
-  return _sharedCache;
+  return sharedCache;
 }
 
 - (id)init {

@@ -8,15 +8,14 @@
 
 #import "ComposeDataCenter.h"
 
-static ComposeDataCenter *_sharedInstance = nil;
-
 @implementation ComposeDataCenter
 
-+ (id)sharedInstance {
-  if (_sharedInstance == nil) {
-    _sharedInstance = [[self alloc] init];
++ (ComposeDataCenter *)defaultCenter {
+  static ComposeDataCenter *defaultCenter = nil;
+  if (!defaultCenter) {
+    defaultCenter = [[self alloc] init];
   }
-  return _sharedInstance;
+  return defaultCenter;
 }
 
 - (void)sendPhotoWithAlbumId:(NSString *)albumId andMessage:(NSString *)message andPhoto:(UIImage *)photo shouldShare:(BOOL)shouldShare {

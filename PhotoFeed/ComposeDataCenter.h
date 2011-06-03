@@ -13,7 +13,7 @@
 
 }
 
-+ (id)sharedInstance;
++ (ComposeDataCenter *)defaultCenter;
 
 // Create a new snap
 - (void)sendPhotoWithAlbumId:(NSString *)albumId andMessage:(NSString *)message andPhoto:(UIImage *)photo shouldShare:(BOOL)shouldShare;

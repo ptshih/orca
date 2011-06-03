@@ -11,15 +11,14 @@
 #import "Album.h"
 #import "Album+Serialize.h"
 
-static AlbumDataCenter *_defaultCenter = nil;
-
 @implementation AlbumDataCenter
 
 + (AlbumDataCenter *)defaultCenter {
-  if (!_defaultCenter) {
-    _defaultCenter = [[self alloc] init];
+  static AlbumDataCenter *defaultCenter = nil;
+  if (!defaultCenter) {
+    defaultCenter = [[self alloc] init];
   }
-  return _defaultCenter;
+  return defaultCenter;
 }
 
 - (id)init {

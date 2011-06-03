@@ -10,17 +10,16 @@
 #import "NSString+URLEncoding+PS.h"
 #import "ASIHTTPRequest.h"
 
-static PSImageCache *_sharedCache;
-
 @implementation PSImageCache
 
 @synthesize cachePath = _cachePath;
 
 + (PSImageCache *)sharedCache {
-  if (!_sharedCache) {
-    _sharedCache = [[self alloc] init];
+  static PSImageCache *sharedCache;
+  if (!sharedCache) {
+    sharedCache = [[self alloc] init];
   }
-  return _sharedCache;
+  return sharedCache;
 }
 
 - (id)init {
