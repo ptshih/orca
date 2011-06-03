@@ -27,7 +27,6 @@
     _context = nil;
     _fetchedResultsController = nil;
     _sectionNameKeyPathForFetchedResultsController = nil;
-    _fetchLock = [[NSLock alloc] init];
     _limit = 50;
     _offset = 0;
     
@@ -137,7 +136,6 @@
 }
 
 - (void)executeFetchOperation {
-  [_fetchLock lock];
   NSError *error = nil;
   if ([self.fetchedResultsController performFetch:&error]) {
     //    DLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);
@@ -146,12 +144,12 @@
   }
   
   [self performSelectorOnMainThread:@selector(executeFetchOperationFinished) withObject:nil waitUntilDone:YES];
-  [_fetchLock unlock];
 }
 
 - (void)executeFetchOperationFinished {
   NSUInteger opCount = [[PSSearchStack sharedSearch] opCount];
   if (opCount > 1) return;
+  
   
   if (self.searchDisplayController.active) {
     [self.searchDisplayController.searchResultsTableView reloadData];
@@ -294,7 +292,6 @@
   RELEASE_SAFELY (_fetchedResultsController);
   RELEASE_SAFELY (_sectionNameKeyPathForFetchedResultsController);
   RELEASE_SAFELY(_predicate);
-  RELEASE_SAFELY(_fetchLock);
   [super dealloc];
 }
 
