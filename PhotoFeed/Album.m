@@ -2,7 +2,7 @@
 //  Album.m
 //  PhotoFeed
 //
-//  Created by Peter Shih on 5/31/11.
+//  Created by Peter Shih on 6/2/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,6 +11,7 @@
 
 @implementation Album
 @dynamic id;
+@dynamic fromId;
 @dynamic caption;
 @dynamic count;
 @dynamic timestamp;
@@ -20,8 +21,9 @@
 @dynamic canUpload;
 @dynamic coverPhoto;
 @dynamic objectId;
-@dynamic name;
-@dynamic fromId;
 @dynamic aid;
+@dynamic name;
+@dynamic isFavorite;
+@dynamic lastViewed;
 
 @end

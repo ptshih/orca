@@ -13,6 +13,7 @@
 
 // This is used for sectioning in tableview
 - (NSString *)daysAgo;
+- (NSString *)lastViewedDaysAgo;
 
 //- (NSString *)fromName;
 

@@ -52,7 +52,7 @@
   _navTitleLabel.text = _album.name;
   
   [self addBackButton];
-//  [self addButtonWithTitle:@"New" andSelector:@selector(newPhoto) isLeft:NO];
+  [self addButtonWithTitle:@"Favorite" andSelector:@selector(favorite) isLeft:NO];
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -65,6 +65,9 @@
   
   [self executeFetch];
   [self updateState];
+  
+  _album.lastViewed = [NSDate date];
+  [PSCoreDataStack saveInContext:[_album managedObjectContext]];
   
   // Get new from server
   [self reloadCardController];
@@ -94,12 +97,13 @@
 
 #pragma mark -
 #pragma mark Compose
-- (void)newPhoto {
-  //  CameraViewController *cvc = [[CameraViewController alloc] init];
-  //  UINavigationController *cnc = [[UINavigationController alloc] initWithRootViewController:cvc];
-  //  [self presentModalViewController:cnc animated:YES];
-  //  [cvc autorelease];
-  //  [cnc autorelease];
+- (void)favorite {
+  if ([_album.isFavorite boolValue]) {
+    _album.isFavorite = [NSNumber numberWithBool:NO];
+  } else {
+    _album.isFavorite = [NSNumber numberWithBool:YES];
+  }
+  [PSCoreDataStack saveInContext:[_album managedObjectContext]];
 }
 
 #pragma mark -

@@ -32,6 +32,6 @@
 /**
  Fetch Requests
  */
-- (NSFetchRequest *)fetchAlbumsWithTemplate:(NSString *)fetchTemplate andSubstitutionVariables:(NSDictionary *)substitutionVariables andLimit:(NSUInteger)limit andOffset:(NSUInteger)offset;
+- (NSFetchRequest *)fetchAlbumsWithTemplate:(NSString *)fetchTemplate andSortDescriptors:(NSArray *)sortDescriptors andSubstitutionVariables:(NSDictionary *)substitutionVariables andLimit:(NSUInteger)limit andOffset:(NSUInteger)offset;
 
 @end

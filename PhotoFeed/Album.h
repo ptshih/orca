@@ -2,7 +2,7 @@
 //  Album.h
 //  PhotoFeed
 //
-//  Created by Peter Shih on 5/31/11.
+//  Created by Peter Shih on 6/2/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -14,6 +14,7 @@
 @private
 }
 @property (nonatomic, retain) NSString * id;
+@property (nonatomic, retain) NSString * fromId;
 @property (nonatomic, retain) NSString * caption;
 @property (nonatomic, retain) NSNumber * count;
 @property (nonatomic, retain) NSDate * timestamp;
@@ -23,8 +24,9 @@
 @property (nonatomic, retain) NSNumber * canUpload;
 @property (nonatomic, retain) NSString * coverPhoto;
 @property (nonatomic, retain) NSNumber * objectId;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * fromId;
 @property (nonatomic, retain) NSString * aid;
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSNumber * isFavorite;
+@property (nonatomic, retain) NSDate * lastViewed;
 
 @end

@@ -171,11 +171,11 @@ static NSURL *_storeURL = nil;
   // Create a new persistent store
   if (![[self class] createPersistentStoreCoordinator]) {
     // Error creating store, reset and try again
-    [[self class] resetPersistentStoreCoordinator];
-    if (![[self class] createPersistentStoreCoordinator]) {
-      // Fatal error that we can't recover from
-      abort();
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:kLogoutRequested object:nil];
+//    if (![[self class] createPersistentStoreCoordinator]) {
+//      // Fatal error that we can't recover from
+//      abort();
+//    }
   }
   
   return _persistentStoreCoordinator;

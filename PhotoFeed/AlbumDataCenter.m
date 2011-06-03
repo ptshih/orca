@@ -250,9 +250,7 @@ static AlbumDataCenter *_defaultCenter = nil;
 
 #pragma mark -
 #pragma mark Fetch Request
-- (NSFetchRequest *)fetchAlbumsWithTemplate:(NSString *)fetchTemplate andSubstitutionVariables:(NSDictionary *)substitutionVariables andLimit:(NSUInteger)limit andOffset:(NSUInteger)offset {
-  NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO] autorelease];
-  NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
+- (NSFetchRequest *)fetchAlbumsWithTemplate:(NSString *)fetchTemplate andSortDescriptors:(NSArray *)sortDescriptors andSubstitutionVariables:(NSDictionary *)substitutionVariables andLimit:(NSUInteger)limit andOffset:(NSUInteger)offset {
   NSFetchRequest *fetchRequest = [[PSCoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:fetchTemplate substitutionVariables:substitutionVariables];
   [fetchRequest setSortDescriptors:sortDescriptors];
   [fetchRequest setFetchBatchSize:10];

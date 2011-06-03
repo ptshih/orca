@@ -30,6 +30,10 @@
   return [NSDate stringForDisplayFromDate:self.timestamp];
 }
 
+- (NSString *)lastViewedDaysAgo {
+  return [NSDate stringForDisplayFromDate:self.lastViewed];
+}
+
 //- (NSString *)fromName {
 //  // My own ID
 //  if ([self.fromId isEqualToString:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookId"]]) {
