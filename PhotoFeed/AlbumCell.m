@@ -179,6 +179,13 @@ static UIImage *_overlayImage = nil;
   _fromLabel.width = desiredSize.width;
   _fromLabel.height = desiredSize.height;
   
+  // Location
+  desiredSize = [UILabel sizeForText:_locationLabel.text width:(textWidth - _fromLabel.width - MARGIN_X - 2) font:_locationLabel.font numberOfLines:1 lineBreakMode:_locationLabel.lineBreakMode];
+  _locationLabel.top = top - 2;
+  _locationLabel.left = self.contentView.width - desiredSize.width - MARGIN_X - 1;
+  _locationLabel.width = desiredSize.width;
+  _locationLabel.height = desiredSize.height;
+  
 //  if ([_captionLabel.text length] > 0) {    
 //    // Caption
 //    desiredSize = [UILabel sizeForText:_captionLabel.text width:textWidth font:_captionLabel.font numberOfLines:1 lineBreakMode:_captionLabel.lineBreakMode];
@@ -287,7 +294,7 @@ static UIImage *_overlayImage = nil;
   _nameLabel.text = album.name;
   _captionLabel.text = album.caption;
   _fromLabel.text = [NSString stringWithFormat:@"by %@", album.fromName];
-  _locationLabel.text = [NSString stringWithFormat:@"at %@", album.location];
+  _locationLabel.text = [NSString stringWithFormat:@"%@", album.location];
   _countLabel.text = [NSString stringWithFormat:@"%@ photos ", album.count];
 }
 
