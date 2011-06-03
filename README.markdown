@@ -17,3 +17,8 @@ FEATURES
 ---
 - in photo view, allow searching for tagged friends
 - add tagged people parsing in json
+- Global AlertCenter
+
+TODO
+---
+- convert defaultCenter singletons into local static variables
