@@ -11,6 +11,7 @@
 #import "UIImage+ScalingAndCropping.h"
 
 #define ALBUM_CELL_HEIGHT 120.0
+#define ALBUM_CELL_HEIGHT_ZOOMED 144.0 // 120 * 1.2
 
 #define NAME_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0]
 #define CAPTION_FONT [UIFont fontWithName:@"HelveticaNeue" size:10.0]
@@ -300,8 +301,14 @@ static UIImage *_overlayImage = nil;
   // this is divided by 2 because we are using retina @2x dimensions
   _photoWidth = image.size.width;
   _photoHeight = image.size.height;
-  _photoView.width = self.contentView.width; // 320
-  _photoView.height = floor((self.contentView.width / _photoWidth) * _photoHeight);
+  CGFloat desiredWidth = self.contentView.width;
+  CGFloat desiredHeight = floor((self.contentView.width / _photoWidth) * _photoHeight);
+  if (desiredHeight < ALBUM_CELL_HEIGHT_ZOOMED) { // 120 * 1.2
+    desiredHeight = ALBUM_CELL_HEIGHT_ZOOMED;
+    desiredWidth = floor((desiredHeight / _photoHeight) * _photoWidth);
+  }
+  _photoView.width = desiredWidth;
+  _photoView.height = desiredHeight;
   [self animateImage];
 }
 
