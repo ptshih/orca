@@ -48,7 +48,7 @@ static UIImage *_actionImage = nil;
   UINavigationController *favoritesNav = [[[UINavigationController alloc] initWithRootViewController:favorites] autorelease];
   
   AlbumViewController *search = [[[AlbumViewController alloc] init] autorelease];
-  search.albumType = AlbumTypeWall;
+  search.albumType = AlbumTypeTimeline;
   UINavigationController *searchNav = [[[UINavigationController alloc] initWithRootViewController:search] autorelease];
   
   AlbumViewController *history = [[[AlbumViewController alloc] init] autorelease];
@@ -59,7 +59,7 @@ static UIImage *_actionImage = nil;
   UINavigationController *moreNav = [[[UINavigationController alloc] initWithRootViewController:more] autorelease];
   
   // Setup Tab Items
-  timeline.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Timeline" image:[UIImage imageNamed:@"42-photos.png"] tag:7001] autorelease];
+  timeline.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Albums" image:[UIImage imageNamed:@"42-photos.png"] tag:7001] autorelease];
   favorites.tabBarItem = [[[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:7002] autorelease];
   search.tabBarItem = nil;
   history.tabBarItem = [[[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemHistory tag:7004] autorelease];

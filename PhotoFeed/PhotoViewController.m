@@ -103,6 +103,8 @@
     _album.isFavorite = [NSNumber numberWithBool:YES];
   }
   [PSCoreDataStack saveInContext:[_album managedObjectContext]];
+  
+  // Show a Toast
 }
 
 #pragma mark -

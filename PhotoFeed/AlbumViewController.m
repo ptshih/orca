@@ -109,7 +109,7 @@
   
   // Title and Buttons
   [self addButtonWithTitle:@"Logout" andSelector:@selector(logout) isLeft:YES];
-  [self addButtonWithTitle:@"Search" andSelector:@selector(search) isLeft:NO];
+//  [self addButtonWithTitle:@"Search" andSelector:@selector(search) isLeft:NO];
   _navTitleLabel.text = navTitle;
   
   
