@@ -52,7 +52,9 @@
   [super updateState];
   
   NSUInteger fetchedCount = [[self.fetchedResultsController fetchedObjects] count];
-  if (fetchedCount % _limit == 0) {
+  if (fetchedCount == 0) {
+    [self hideLoadMoreView];
+  } else if (fetchedCount % _limit == 0) {
     [self showLoadMoreView];
   } else {
     [self hideLoadMoreView];
