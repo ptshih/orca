@@ -29,6 +29,7 @@
     _sectionNameKeyPathForFetchedResultsController = nil;
     _limit = 50;
     _offset = 0;
+    _fetchLimit = _limit;
     _lastFetchedCount = 0;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextSaveDidNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
@@ -76,8 +77,7 @@
   [super loadMore];
   
   _lastFetchedCount = [[self.fetchedResultsController fetchedObjects] count];
-
-  [[self.fetchedResultsController fetchRequest] setFetchLimit:(_limit + _lastFetchedCount)];
+  _fetchLimit = _lastFetchedCount + _limit;
   [self executeFetch];
 }
 
@@ -113,7 +113,8 @@
     NSFetchRequest *backgroundFetch = [[self getFetchRequest] copy];
     
     [backgroundFetch setResultType:NSManagedObjectIDResultType];
-    [backgroundFetch setSortDescriptors:nil];
+    [backgroundFetch setFetchLimit:_fetchLimit];
+//    [backgroundFetch setSortDescriptors:nil];
     NSPredicate *predicate = [backgroundFetch predicate];
     NSPredicate *combinedPredicate = nil;
     if (_searchPredicate) {
@@ -138,8 +139,9 @@
     dispatch_async(dispatch_get_main_queue(), ^{
       NSLog(@"dispatch main reload: %@", [userInfo objectForKey:@"results"]);
       NSError *frcError = nil;
-      NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self IN %@", results];
-      [self.fetchedResultsController.fetchRequest setPredicate:predicate];
+      NSPredicate *frcPredicate = [NSPredicate predicateWithFormat:@"self IN %@", results];
+      [self.fetchedResultsController.fetchRequest setPredicate:frcPredicate];
+      [self.fetchedResultsController.fetchRequest setFetchLimit:_fetchLimit];
       
       if ([self.fetchedResultsController performFetch:&frcError]) {
         DLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);

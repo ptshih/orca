@@ -17,6 +17,7 @@
   NSString * _sectionNameKeyPathForFetchedResultsController;
   NSUInteger _limit;
   NSUInteger _offset;
+  NSUInteger _fetchLimit;
   NSUInteger _lastFetchedCount;
   NSTimer *_searchTimer;
   NSPredicate *_searchPredicate;

@@ -254,8 +254,6 @@ static AlbumDataCenter *_defaultCenter = nil;
   NSFetchRequest *fetchRequest = [[PSCoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:fetchTemplate substitutionVariables:substitutionVariables];
   [fetchRequest setSortDescriptors:sortDescriptors];
   [fetchRequest setFetchBatchSize:10];
-  [fetchRequest setFetchLimit:limit];
-  [fetchRequest setFetchOffset:offset];
   return fetchRequest;
 }
 
