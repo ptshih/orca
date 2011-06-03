@@ -24,7 +24,6 @@
 
 @property (nonatomic, assign) Album *album;
 
-- (void)newPhoto;
 - (void)zoomPhotoForCell:(id)cell atIndexPath:(NSIndexPath *)indexPath;
 
 @end

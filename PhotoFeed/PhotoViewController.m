@@ -58,6 +58,9 @@
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleNone];
   
+  // Search
+  [self setupSearchDisplayControllerWithScopeButtonTitles:nil andPlaceholder:@"Tagged Friends..."];
+  
   // Pull Refresh
   [self setupPullRefresh];
   
@@ -199,6 +202,28 @@
   //  }
 }
 
+#pragma mark -
+#pragma mark UISearchDisplayDelegate
+- (void)delayedFilterContentWithTimer:(NSTimer *)timer {
+  NSDictionary *userInfo = [timer userInfo];
+  NSString *searchText = [userInfo objectForKey:@"searchText"];
+//  NSString *scope = [userInfo objectForKey:@"scope"];
+  NSMutableArray *subpredicates = [NSMutableArray arrayWithCapacity:1];
+  
+  NSArray *searchTerms = [[searchText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" -,/\\+_"]];
+  
+  for (NSString *searchTerm in searchTerms) {
+    NSString *searchValue = [NSString stringWithFormat:@"%@", searchTerm];
+    [subpredicates addObject:[NSPredicate predicateWithFormat:@"ANY tags.fromName CONTAINS[cd] %@", searchValue]];
+  }
+  
+  if (_searchPredicate) {
+    RELEASE_SAFELY(_searchPredicate);
+  }
+  _searchPredicate = [[NSCompoundPredicate andPredicateWithSubpredicates:subpredicates] retain];
+  
+  [self executeFetch];
+}
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
