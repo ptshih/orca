@@ -216,12 +216,11 @@
   NSDictionary *userInfo = [timer userInfo];
   NSString *searchText = [userInfo objectForKey:@"searchText"];
   NSString *scope = [userInfo objectForKey:@"scope"];
-  NSPredicate *predicate = [self.fetchedResultsController.fetchRequest predicate];
   NSMutableArray *subpredicates = [NSMutableArray arrayWithCapacity:1];
   
   //  predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
   
-  NSArray *searchTerms = [searchText componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+  NSArray *searchTerms = [[searchText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" -,/\\+_"]];
   
   for (NSString *searchTerm in searchTerms) {
     NSString *searchValue = [NSString stringWithFormat:@"%@", searchTerm];
@@ -242,7 +241,7 @@
   if (_searchPredicate) {
     RELEASE_SAFELY(_searchPredicate);
   }
-  _searchPredicate = [[NSCompoundPredicate orPredicateWithSubpredicates:subpredicates] retain];
+  _searchPredicate = [[NSCompoundPredicate andPredicateWithSubpredicates:subpredicates] retain];
   
   [self executeFetch];
 }

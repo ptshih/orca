@@ -137,14 +137,13 @@
       [userInfo setObject:results forKey:@"results"];
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-      NSLog(@"dispatch main reload: %@", [userInfo objectForKey:@"results"]);
       NSError *frcError = nil;
       NSPredicate *frcPredicate = [NSPredicate predicateWithFormat:@"self IN %@", results];
       [self.fetchedResultsController.fetchRequest setPredicate:frcPredicate];
       [self.fetchedResultsController.fetchRequest setFetchLimit:_fetchLimit];
       
       if ([self.fetchedResultsController performFetch:&frcError]) {
-        DLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);
+        VLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);
         
         if (self.searchDisplayController.active) {
           [self.searchDisplayController.searchResultsTableView reloadData];
@@ -153,40 +152,13 @@
           [self updateState];
         }
       } else {
-        DLog(@"Fetch failed with error: %@", [error localizedDescription]);
+        VLog(@"Fetch failed with error: %@", [error localizedDescription]);
       }
       [context release];
       [backgroundFetch release];
       [userInfo release];
     });
   });
-  
-//  NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(executeFetchOperation) object:nil];
-//  [[PSSearchStack sharedSearch] addOperation:op];
-//  [op release];
-}
-
-- (void)executeFetchOperation {
-  NSError *error = nil;
-  if ([self.fetchedResultsController performFetch:&error]) {
-    //    DLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);
-  } else {
-    DLog(@"Fetch failed with error: %@", [error localizedDescription]);
-  }
-  
-  [self performSelectorOnMainThread:@selector(executeFetchOperationFinished) withObject:nil waitUntilDone:YES];
-}
-
-- (void)executeFetchOperationFinished {
-  NSUInteger opCount = [[PSSearchStack sharedSearch] opCount];
-  if (opCount > 1) return;
-  
-  if (self.searchDisplayController.active) {
-    [self.searchDisplayController.searchResultsTableView reloadData];
-  } else {
-    [_tableView reloadData];
-    [self updateState];
-  }
 }
 
 - (NSFetchRequest *)getFetchRequest {
@@ -261,9 +233,11 @@
 }
 
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
+  [super searchDisplayControllerWillBeginSearch:controller];
 }
 
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
+  [super searchDisplayControllerWillEndSearch:controller];
   _searchPredicate = nil;
   [self executeFetch];
 }
