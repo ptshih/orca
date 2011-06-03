@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 
-@interface PSRandomSortDescriptor : NSObject {
-    
+@interface PSRandomSortDescriptor : NSSortDescriptor {
+  
 }
 
 @end

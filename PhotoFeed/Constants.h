@@ -15,6 +15,7 @@
 //#import "NSDate+HumanInterval.h"
 #import "NSURL+Util.h"
 #import "UIImage+NSCoding.h"
+#import "PSRandomSortDescriptor.h"
 
 #ifdef __APPLE__
   #include "TargetConditionals.h"
