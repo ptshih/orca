@@ -126,13 +126,30 @@
 }
 
 - (void)executeFetch {
-//  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-//    [self.fetchedResultsController performFetch:nil];
-//  });
+  static NSUInteger fetchCount = 0;
+  fetchCount++;
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    NSError *error = nil;
+    if ([self.fetchedResultsController performFetch:&error]) {
+      //    DLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);
+      dispatch_async(dispatch_get_main_queue(), ^{
+        fetchCount--;
+        if (fetchCount == 0) {
+          if (self.searchDisplayController.active) {
+            [self.searchDisplayController.searchResultsTableView reloadData];
+          } else {
+            [_tableView reloadData];
+          }
+        }
+      });
+    } else {
+      DLog(@"Fetch failed with error: %@", [error localizedDescription]);
+    }
+  });
   
-  NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(executeFetchOperation) object:nil];
-  [[PSSearchStack sharedSearch] addOperation:op];
-  [op release];
+//  NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(executeFetchOperation) object:nil];
+//  [[PSSearchStack sharedSearch] addOperation:op];
+//  [op release];
 }
 
 - (void)executeFetchOperation {
@@ -149,7 +166,6 @@
 - (void)executeFetchOperationFinished {
   NSUInteger opCount = [[PSSearchStack sharedSearch] opCount];
   if (opCount > 1) return;
-  
   
   if (self.searchDisplayController.active) {
     [self.searchDisplayController.searchResultsTableView reloadData];
