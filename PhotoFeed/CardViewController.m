@@ -140,7 +140,6 @@
 
 // Subclass
 - (void)dataSourceDidLoad {
-  [self updateState];
 }
 
 #pragma mark CardStateMachine

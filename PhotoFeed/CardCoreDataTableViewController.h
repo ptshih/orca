@@ -18,6 +18,8 @@
   NSPredicate *_predicate;
   NSUInteger _limit;
   NSUInteger _offset;
+  
+  NSLock *_fetchLock;
 }
 
 @property (nonatomic, assign) NSManagedObjectContext *context;

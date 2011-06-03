@@ -64,7 +64,6 @@
   [self setupLoadMoreView];
   
   [self executeFetch];
-  [self updateState];
   
   _album.lastViewed = [NSDate date];
   [PSCoreDataStack saveInContext:[_album managedObjectContext]];

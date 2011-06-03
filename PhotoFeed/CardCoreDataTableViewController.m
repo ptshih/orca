@@ -8,6 +8,7 @@
 
 #import "CardCoreDataTableViewController.h"
 #import "PSCoreDataStack.h"
+#import "PSSearchStack.h"
 
 @interface CardCoreDataTableViewController (Private)
 
@@ -26,6 +27,7 @@
     _context = nil;
     _fetchedResultsController = nil;
     _sectionNameKeyPathForFetchedResultsController = nil;
+    _fetchLock = [[NSLock alloc] init];
     _limit = 50;
     _offset = 0;
     
@@ -93,8 +95,7 @@
 - (void)dataSourceDidLoad {
   [super dataSourceDidLoad];
   [self executeFetch];
-  [_tableView reloadData];
-  [self updateState];
+//  [_tableView reloadData];
 }
 
 #pragma mark Core Data
@@ -130,11 +131,32 @@
 //    [self.fetchedResultsController performFetch:nil];
 //  });
   
+  NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(executeFetchOperation) object:nil];
+  [[PSSearchStack sharedSearch] addOperation:op];
+  [op release];
+}
+
+- (void)executeFetchOperation {
+  [_fetchLock lock];
   NSError *error = nil;
   if ([self.fetchedResultsController performFetch:&error]) {
     //    DLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);
   } else {
     DLog(@"Fetch failed with error: %@", [error localizedDescription]);
+  }
+  
+  [self performSelectorOnMainThread:@selector(executeFetchOperationFinished) withObject:nil waitUntilDone:YES];
+  [_fetchLock unlock];
+}
+
+- (void)executeFetchOperationFinished {
+  NSUInteger opCount = [[PSSearchStack sharedSearch] opCount];
+  if (opCount > 1) return;
+  
+  if (self.searchDisplayController.active) {
+    [self.searchDisplayController.searchResultsTableView reloadData];
+  } else {
+    [_tableView reloadData];
   }
 }
 
@@ -211,7 +233,20 @@
   [NSFetchedResultsController deleteCacheWithName:cacheName];
   [self.fetchedResultsController.fetchRequest setPredicate:_predicate];
   [self executeFetch];
-  [_tableView reloadData];
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
+  [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+  
+  // Return NO if we are using coreData to background fetch (because we need to manually reload the table after the fetch is finished
+  return NO;
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
+  [self filterContentForSearchText:self.searchDisplayController.searchBar.text scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
+  
+  // Return NO if we are using coreData to background fetch (because we need to manually reload the table after the fetch is finished
+  return NO;
 }
 
 #pragma mark UITableViewDelegate
@@ -259,6 +294,7 @@
   RELEASE_SAFELY (_fetchedResultsController);
   RELEASE_SAFELY (_sectionNameKeyPathForFetchedResultsController);
   RELEASE_SAFELY(_predicate);
+  RELEASE_SAFELY(_fetchLock);
   [super dealloc];
 }
 

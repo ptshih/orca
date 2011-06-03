@@ -63,7 +63,6 @@
   [self setupFooterView];
   
   [self executeFetch];
-  [self updateState];
   
   // Get new from server
   // Comments don't need to fetch from server immediately, only after a new post
