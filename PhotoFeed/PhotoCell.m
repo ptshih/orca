@@ -251,7 +251,7 @@ static UIImage *_commentIcon = nil;
   
   // Photo
   _photoView.urlPath = photo.source;
-  [_photoView loadImageIfCached];
+  [_photoView loadImageAndDownload:NO];
   
 //  if (photo.imageData) {
 //    UIImage *cachedImage = [UIImage imageWithData:photo.imageData];
@@ -273,7 +273,7 @@ static UIImage *_commentIcon = nil;
 }
 
 - (void)loadPhoto {
-  [_photoView loadImage];
+  [_photoView loadImageAndDownload:YES];
 }
 
 - (void)dealloc {

@@ -283,7 +283,7 @@ static UIImage *_overlayImage = nil;
   if (album.coverPhoto) {
 //    NSString *photoURLPath = [NSString stringWithFormat:@"%@?access_token=%@", album.coverPhoto, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]];
     _photoView.urlPath = album.coverPhoto;
-    [_photoView loadImageIfCached];
+    [_photoView loadImageAndDownload:NO];
   } else {
     // Placeholder Image, no cover photo
     _photoView.image = [UIImage imageNamed:@"lnkd.png"];
@@ -300,7 +300,7 @@ static UIImage *_overlayImage = nil;
 
 - (void)loadPhoto {
   if (_album.coverPhoto) {
-    [_photoView loadImage];
+    [_photoView loadImageAndDownload:YES];
   }
 }
 

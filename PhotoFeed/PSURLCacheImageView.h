@@ -15,8 +15,7 @@
 
 @property (nonatomic, copy) NSString *urlPath;
 
-- (void)loadImage;
-- (void)loadImageIfCached;
+- (void)loadImageAndDownload:(BOOL)download;
 - (void)unloadImage;
 
 - (void)imageCacheDidLoad:(NSNotification *)notification;

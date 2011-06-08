@@ -117,7 +117,7 @@
 }
 
 #pragma mark Remote Image Load Request
-- (void)loadImageForURLPath:(NSString *)urlPath {
+- (void)downloadImageForURLPath:(NSString *)urlPath {
   // Check to make sure urlPath is not in a pendingRequest already
   if ([_pendingRequests objectForKey:urlPath]) return;
   
@@ -127,12 +127,12 @@
   
   // Request Completion Block
   [request setCompletionBlock:^{
-    [self loadImageRequestFinished:request];
+    [self downloadImageRequestFinished:request];
     // Remove request from pendingRequests
     [_pendingRequests removeObjectForKey:[[request originalURL] absoluteString]];
   }];
   [request setFailedBlock:^{
-    [self loadImageRequestFailed:request];
+    [self downloadImageRequestFailed:request];
     
     // Remove request from pendingRequests
     [_pendingRequests removeObjectForKey:[[request originalURL] absoluteString]];
@@ -143,7 +143,7 @@
   [request startAsynchronous];
 }
 
-- (void)loadImageRequestFinished:(ASIHTTPRequest *)request {
+- (void)downloadImageRequestFinished:(ASIHTTPRequest *)request {
   NSString *urlPath = [[request originalURL] absoluteString];
   
   if ([request responseData]) {
@@ -155,7 +155,7 @@
   }
 }
 
-- (void)loadImageRequestFailed:(ASIHTTPRequest *)request {
+- (void)downloadImageRequestFailed:(ASIHTTPRequest *)request {
   // something bad happened
 }
 

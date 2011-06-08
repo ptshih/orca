@@ -121,7 +121,7 @@
   // Setup the fake image view
   PSURLCacheImageView *profileImage = [[PSURLCacheImageView alloc] initWithFrame:CGRectMake(10, 7, 30, 30)];
   profileImage.urlPath = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", [[NSUserDefaults standardUserDefaults] objectForKey:@"facebookId"]];
-  [profileImage loadImage];
+  [profileImage loadImageAndDownload:YES];
   profileImage.layer.cornerRadius = 5.0;
   profileImage.layer.masksToBounds = YES;
   [_footerView addSubview:profileImage];

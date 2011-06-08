@@ -28,26 +28,22 @@
 //  _urlPath = [[urlPath encodedURLString] copy];
 //}
 
-- (void)loadImage {
+- (void)loadImageAndDownload:(BOOL)download {
   if (_urlPath) {
-    UIImage *image = [[PSImageCache sharedCache] imageForURLPath:_urlPath];
-    if (image) {
-      self.image = image;
-    } else {
-      self.image = _placeholderImage;
-      [[PSImageCache sharedCache] loadImageForURLPath:_urlPath];
-    }
-  }
-}
-
-- (void)loadImageIfCached {
-  if (_urlPath) {
-    UIImage *image = [[PSImageCache sharedCache] imageForURLPath:_urlPath];
-    if (image) {
-      self.image = image;
-    } else {
-      self.image = _placeholderImage;
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+      UIImage *image = [[PSImageCache sharedCache] imageForURLPath:_urlPath];
+      dispatch_async(dispatch_get_main_queue(), ^{
+        if (image) { 
+          self.image = image;
+        } else {
+          self.image = _placeholderImage;
+          if (download) {
+            // Download the image data from the source URL
+            [[PSImageCache sharedCache] downloadImageForURLPath:_urlPath];
+          }
+        }
+      });
+    });
   }
 }
 
@@ -62,10 +58,14 @@
   NSData *imageData = [userInfo objectForKey:@"imageData"];
   if ([urlPath isEqualToString:_urlPath]) {
     if (imageData) {
-      UIImage *image = [UIImage imageWithData:imageData];
-      if (image && ![image isEqual:self.image]) {
-        self.image = image;
-      }
+      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImage *image = [UIImage imageWithData:imageData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+          if (image && ![image isEqual:self.image]) {
+            self.image = image;
+          }
+        });
+      });
     }
   }
 }

@@ -30,9 +30,9 @@
 - (BOOL)hasImageForURLPath:(NSString *)urlPath;
 
 // Remote Request
-- (void)loadImageForURLPath:(NSString *)urlPath;
-- (void)loadImageRequestFinished:(ASIHTTPRequest *)request;
-- (void)loadImageRequestFailed:(ASIHTTPRequest *)request;
+- (void)downloadImageForURLPath:(NSString *)urlPath;
+- (void)downloadImageRequestFinished:(ASIHTTPRequest *)request;
+- (void)downloadImageRequestFailed:(ASIHTTPRequest *)request;
 
 // Helpers
 + (NSString *)documentDirectory;

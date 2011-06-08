@@ -13,14 +13,16 @@ DONE
 - Launch album since call failing causes a logout in bad state (DONE)
 - If an album image is cached, since call will not trigger cache reset on album img (DONE)
 - convert defaultCenter singletons into local static variables (DONE)
+- search keyword delimmiters (DONE)
+- in photo view, allow searching for tagged friends (DONE)
+- add tagged people parsing in json (DONE)
 
 FEATURES
 ---
-- in photo view, allow searching for tagged friends
-- add tagged people parsing in json
 - Global AlertCenter
 - More view controller, move logout here
-- Search view controller
+- Search view controller (DEPRECATED)
+- On login, need to fetch and compare to find new friends, and get their albums
 
 TODO
 ---

@@ -116,7 +116,7 @@
   Comment *comment = (Comment *)object;
   
   _psImageView.urlPath = [NSString stringWithFormat:@"%@/%@/picture?type=square", FB_GRAPH ,comment.fromId];
-  [_psImageView loadImage];
+  [_psImageView loadImageAndDownload:YES];
   
   _nameLabel.text = comment.fromName;
   _messageLabel.text = comment.message;
