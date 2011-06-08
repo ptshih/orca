@@ -27,6 +27,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+//  [self.navigationController setNavigationBarHidden:YES animated:YES];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadAlbumController object:nil];
   [self reloadCardController];
 }
@@ -52,13 +53,13 @@
   switch (self.albumType) {
     case AlbumTypeMe:
       navTitle = @"My Albums";
-      placeholder = @"Search by Album Name";
+      placeholder = @"i.e. Thanksgiving 2011";
       scopeArray = nil;
       _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
       break;
     case AlbumTypeFriends:
       navTitle = @"Friends Albums";
-      placeholder = @"Search by Album or Author Name";
+      placeholder = @"i.e. Mark, Wedding";
       scopeArray = nil;
       _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
       break;
@@ -82,13 +83,13 @@
       break;
     case AlbumTypeFavorites:
       navTitle = @"Favorites";
-      placeholder = @"Album, Friend, Location...";
+      placeholder = @"i.e. Las Vegas";
       scopeArray = nil;
       _sectionNameKeyPathForFetchedResultsController = [@"daysAgo" retain];
       break;
     case AlbumTypeHistory:
       navTitle = @"Recently Viewed";
-      placeholder = @"Album, Friend, Location...";
+      placeholder = @"i.e. Techcrunch Disrupt NYC";
       scopeArray = nil;
       _sectionNameKeyPathForFetchedResultsController = nil;
       break;
@@ -210,13 +211,15 @@
   NSString *searchText = [userInfo objectForKey:@"searchText"];
   NSString *scope = [userInfo objectForKey:@"scope"];
   NSMutableArray *subpredicates = [NSMutableArray arrayWithCapacity:1];
-  
   //  predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
   
-  NSArray *searchTerms = [[searchText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" -,/\\+_"]];
+  NSCharacterSet *acceptedCharacterSet = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+  NSString *tmp = [[searchText componentsSeparatedByCharactersInSet:acceptedCharacterSet] componentsJoinedByString:@" "];
+  NSArray *searchTerms = [tmp componentsSeparatedByString:@" "];
   
   for (NSString *searchTerm in searchTerms) {
-    NSString *searchValue = [NSString stringWithFormat:@"%@", searchTerm];
+    if ([searchTerm length] == 0) continue;
+    NSString *searchValue = searchTerm;
     if ([scope isEqualToString:@"Author"]) {
       // search friend's full name
       [subpredicates addObject:[NSPredicate predicateWithFormat:@"fromName CONTAINS[cd] %@", searchValue]];
