@@ -27,6 +27,14 @@
   [self sendRequestWithURL:meUrl andMethod:GET andHeaders:nil andParams:params andUserInfo:nil];
 }
 
+- (void)getFriends {
+  NSURL *friendsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/me/friends", FB_GRAPH]];
+  
+  NSMutableDictionary *params = [NSMutableDictionary dictionary];
+  
+  [self sendRequestWithURL:friendsUrl andMethod:GET andHeaders:nil andParams:params andUserInfo:[NSDictionary dictionaryWithObject:@"friends" forKey:@"loginRequestType"]];
+}
+
 #pragma mark -
 #pragma mark Request finished
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {
