@@ -167,6 +167,7 @@
 }
 
 #pragma mark NSFetchedresultsControllerDelegate
+/*
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
   [_tableView beginUpdates];
 }
@@ -215,8 +216,8 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
   [_tableView endUpdates];
-//  [self loadImagesForOnScreenRows];
 }
+ */
 
 #pragma mark UISearchDisplayDelegate
 - (void)delayedFilterContentWithTimer:(NSTimer *)timer {

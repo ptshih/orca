@@ -149,7 +149,6 @@
   }
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
-  [cell loadPhoto];
   
   //  NSLog(@"display");
   return cell;
@@ -175,6 +174,10 @@
   [_zoomView showZoom];
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+  [(PhotoCell *)cell loadPhoto];
+}
+
 #pragma mark -
 #pragma mark PhotoCellDelegate
 - (void)commentsSelectedForCell:(PhotoCell *)cell {
@@ -190,18 +193,6 @@
 //- (void)pinchZoomTriggeredForCell:(PhotoCell *)cell {
 //  [self zoomPhotoForCell:cell];
 //}
-
-- (void)loadImagesForOnScreenRows {
-  [super loadImagesForOnScreenRows];
-  
-  //  for (id cell in _visibleCells) {
-  //    [cell loadPhoto];
-  //  }
-  
-  //  for (NSIndexPath *ip in _visibleIndexPaths) {
-  //    HeaderCell *headerCell = [_headerCellCache objectForKey:[NSString stringWithFormat:@"%d", ip.section]];
-  //  }
-}
 
 #pragma mark -
 #pragma mark UISearchDisplayDelegate

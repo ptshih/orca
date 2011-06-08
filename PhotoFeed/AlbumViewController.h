@@ -26,7 +26,6 @@ typedef enum {
 
 @property (nonatomic, assign) AlbumType albumType;
 
-- (void)setupSearch;
 - (void)search;
 - (void)logout;
 

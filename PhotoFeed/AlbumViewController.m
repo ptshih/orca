@@ -199,47 +199,59 @@
   }
   
   [self tableView:tableView configureCell:cell atIndexPath:indexPath];
-  [cell loadPhoto];
   
   return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+  [(AlbumCell *)cell loadPhoto];
 }
 
 #pragma mark -
 #pragma mark UISearchDisplayDelegate
 - (void)delayedFilterContentWithTimer:(NSTimer *)timer {
+  static NSCharacterSet *separatorCharacterSet = nil;
+  if (!separatorCharacterSet) {
+    separatorCharacterSet = [[[NSCharacterSet alphanumericCharacterSet] invertedSet] retain];
+  }
+  
   NSDictionary *userInfo = [timer userInfo];
   NSString *searchText = [userInfo objectForKey:@"searchText"];
   NSString *scope = [userInfo objectForKey:@"scope"];
-  NSMutableArray *subpredicates = [NSMutableArray arrayWithCapacity:1];
-  //  predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
   
-  NSCharacterSet *acceptedCharacterSet = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
-  NSString *tmp = [[searchText componentsSeparatedByCharactersInSet:acceptedCharacterSet] componentsJoinedByString:@" "];
-  NSArray *searchTerms = [tmp componentsSeparatedByString:@" "];
-  
-  for (NSString *searchTerm in searchTerms) {
-    if ([searchTerm length] == 0) continue;
-    NSString *searchValue = searchTerm;
-    if ([scope isEqualToString:@"Author"]) {
-      // search friend's full name
-      [subpredicates addObject:[NSPredicate predicateWithFormat:@"fromName CONTAINS[cd] %@", searchValue]];
-    } else if ([scope isEqualToString:@"Album"]) {
-      // search album name
-      [subpredicates addObject:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchValue]];
-    } else if ([scope isEqualToString:@"Location"]) {
-      [subpredicates addObject:[NSPredicate predicateWithFormat:@"location CONTAINS[cd] %@", searchValue]];
-    } else {
-      // search any
-      [subpredicates addObject:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@ OR fromName CONTAINS[cd] %@ OR location CONTAINS[cd] %@", searchValue, searchValue, searchValue]];
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    NSMutableArray *subpredicates = [NSMutableArray arrayWithCapacity:1];
+    //  predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
+    
+    NSString *tmp = [[searchText componentsSeparatedByCharactersInSet:separatorCharacterSet] componentsJoinedByString:@" "];
+    NSArray *searchTerms = [tmp componentsSeparatedByString:@" "];
+    
+    for (NSString *searchTerm in searchTerms) {
+      if ([searchTerm length] == 0) continue;
+      NSString *searchValue = searchTerm;
+      if ([scope isEqualToString:@"Author"]) {
+        // search friend's full name
+        [subpredicates addObject:[NSPredicate predicateWithFormat:@"fromName CONTAINS[cd] %@", searchValue]];
+      } else if ([scope isEqualToString:@"Album"]) {
+        // search album name
+        [subpredicates addObject:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchValue]];
+      } else if ([scope isEqualToString:@"Location"]) {
+        [subpredicates addObject:[NSPredicate predicateWithFormat:@"location CONTAINS[cd] %@", searchValue]];
+      } else {
+        // search any
+        [subpredicates addObject:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@ OR fromName CONTAINS[cd] %@ OR location CONTAINS[cd] %@", searchValue, searchValue, searchValue]];
+      }
     }
-  }
-  
-  if (_searchPredicate) {
-    RELEASE_SAFELY(_searchPredicate);
-  }
-  _searchPredicate = [[NSCompoundPredicate andPredicateWithSubpredicates:subpredicates] retain];
-  
-  [self executeFetch];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      if (_searchPredicate) {
+        RELEASE_SAFELY(_searchPredicate);
+      }
+      _searchPredicate = [[NSCompoundPredicate andPredicateWithSubpredicates:subpredicates] retain];
+      
+      [self executeFetch];
+    });
+  });
 }
 
 #pragma mark -
