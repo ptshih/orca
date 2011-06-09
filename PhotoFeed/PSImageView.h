@@ -15,11 +15,15 @@
   UIImage *_placeholderImage;
   
   BOOL _shouldScale;
+  BOOL _shouldAnimate;
   id <PSImageViewDelegate> _delegate;
 }
 
+- (void)animateImageFade:(NSInteger)direction;
+
 @property (nonatomic, retain) UIImage *placeholderImage;
 @property (nonatomic, assign) BOOL shouldScale;
+@property (nonatomic, assign) BOOL shouldAnimate;
 @property (nonatomic, assign) id <PSImageViewDelegate> delegate;
 
 @end

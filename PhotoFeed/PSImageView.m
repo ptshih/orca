@@ -13,12 +13,14 @@
 
 @synthesize placeholderImage = _placeholderImage;
 @synthesize shouldScale = _shouldScale;
+@synthesize shouldAnimate = _shouldAnimate;
 @synthesize delegate = _delegate;
 
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     _shouldScale = NO;
+    _shouldAnimate = NO;
     _placeholderImage = nil;
     
     _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -38,17 +40,37 @@
 }
 
 - (void)setImage:(UIImage *)image {
-  if (image != _placeholderImage) {
+  if (image && image != _placeholderImage) {
     // RETINA
     [super setImage:[UIImage imageWithCGImage:image.CGImage scale:2 orientation:image.imageOrientation]];
     [_loadingIndicator stopAnimating];
+    [self animateImageFade:0];
     if (self.delegate && [self.delegate respondsToSelector:@selector(imageDidLoad:)]) {
       [self.delegate performSelector:@selector(imageDidLoad:) withObject:image];
     }
   } else {
     [super setImage:image];
+    [self animateImageFade:1];
     [_loadingIndicator startAnimating];
   }
+}
+
+- (void)animateImageFade:(NSInteger)direction {
+  CGFloat beginAlpha, endAlpha;
+  if (direction == 0) {
+    beginAlpha = 0.0;
+    endAlpha = 1.0;
+  } else {
+    beginAlpha = 1.0;
+    endAlpha = 0.0;
+  }
+  
+  self.alpha = beginAlpha;
+  [UIView beginAnimations:nil context:nil];
+  [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+  [UIView setAnimationDuration:0.4];
+  self.alpha = endAlpha;
+  [UIView commitAnimations];
 }
 
 - (void)dealloc {

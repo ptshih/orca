@@ -102,7 +102,9 @@ static UIImage *_overlayImage = nil;
     // Photo
     _photoView = [[PSURLCacheImageView alloc] initWithFrame:CGRectMake(0, 0, 320, ALBUM_CELL_HEIGHT)];
     _photoView.shouldScale = YES;
+    _photoView.shouldAnimate = YES;
     _photoView.delegate = self;
+//    _photoView.placeholderImage = [UIImage imageNamed:@"album-placeholder.png"];
 //    _photoView = [[PSImageView alloc] initWithFrame:CGRectZero];
     
     // Overlay
@@ -279,17 +281,6 @@ static UIImage *_overlayImage = nil;
   Album *album = (Album *)object;
   _album = album;
   
-  // Photo
-  if (album.coverPhoto) {
-//    NSString *photoURLPath = [NSString stringWithFormat:@"%@?access_token=%@", album.coverPhoto, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]];
-    _photoView.urlPath = album.coverPhoto;
-    [_photoView loadImageAndDownload:NO];
-  } else {
-    // Placeholder Image, no cover photo
-    _photoView.image = [UIImage imageNamed:@"lnkd.png"];
-    _photoView.urlPath = nil;
-  }
-  
   // Labels
   _nameLabel.text = album.name;
   _captionLabel.text = album.caption;
@@ -299,9 +290,19 @@ static UIImage *_overlayImage = nil;
 }
 
 - (void)loadPhoto {
+  // Photo
   if (_album.coverPhoto) {
+    _photoView.urlPath = _album.coverPhoto;
     [_photoView loadImageAndDownload:YES];
+  } else {
+    // Placeholder Image, no cover photo
+    _photoView.image = [UIImage imageNamed:@"lnkd.png"];
+    _photoView.urlPath = nil;
   }
+  
+//  if (_album.coverPhoto) {
+//    [_photoView loadImageAndDownload:YES];
+//  }
 }
 
 - (void)imageDidLoad:(UIImage *)image {
