@@ -27,7 +27,7 @@
     _context = nil;
     _fetchedResultsController = nil;
     _sectionNameKeyPathForFetchedResultsController = nil;
-    _limit = 50;
+    _limit = 10;
     _offset = 0;
     _fetchLimit = _limit;
     _lastFetchedCount = 0;
@@ -55,7 +55,7 @@
   [super updateState];
   
   NSUInteger fetchedCount = [[self.fetchedResultsController fetchedObjects] count];
-  if (fetchedCount == 0) {
+  if (fetchedCount == 0 || fetchedCount < _fetchLimit) {
     [self hideLoadMoreView];
   } else if (fetchedCount % _limit == 0) {
     [self showLoadMoreView];

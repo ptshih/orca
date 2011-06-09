@@ -21,6 +21,8 @@
   self = [super init];
   if (self) {
     _albumType = AlbumTypeMe;
+    _limit = 50;
+    _fetchLimit = _limit;
   }
   return self;
 }
@@ -307,7 +309,7 @@
       break;
   }
   
-  return [[AlbumDataCenter defaultCenter] fetchAlbumsWithTemplate:fetchTemplate andSortDescriptors:sortDescriptors andSubstitutionVariables:substitutionVariables andLimit:_limit andOffset:_offset];
+  return [[AlbumDataCenter defaultCenter] fetchAlbumsWithTemplate:fetchTemplate andSortDescriptors:sortDescriptors andSubstitutionVariables:substitutionVariables andLimit:_fetchLimit andOffset:_offset];
 }
 
 - (void)logout {

@@ -196,7 +196,7 @@
   substitutionVariables = [NSDictionary dictionary];
   sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO]];
   
-  return [[AlbumDataCenter defaultCenter] fetchAlbumsWithTemplate:fetchTemplate andSortDescriptors:sortDescriptors andSubstitutionVariables:substitutionVariables andLimit:_limit andOffset:_offset];
+  return [[AlbumDataCenter defaultCenter] fetchAlbumsWithTemplate:fetchTemplate andSortDescriptors:sortDescriptors andSubstitutionVariables:substitutionVariables andLimit:_fetchLimit andOffset:_offset];
 }
 
 - (void)dealloc {
