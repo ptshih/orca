@@ -44,13 +44,17 @@
     // RETINA
     [super setImage:[UIImage imageWithCGImage:image.CGImage scale:2 orientation:image.imageOrientation]];
     [_loadingIndicator stopAnimating];
-    [self animateImageFade:0];
+    if (_shouldAnimate) {
+      [self animateImageFade:0];
+    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(imageDidLoad:)]) {
       [self.delegate performSelector:@selector(imageDidLoad:) withObject:image];
     }
   } else {
     [super setImage:image];
-    [self animateImageFade:1];
+    if (_shouldAnimate) {
+      [self animateImageFade:1];
+    }
     [_loadingIndicator startAnimating];
   }
 }
