@@ -392,6 +392,8 @@
 		25FB8BF0133AA7E800C130A8 /* PSImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BEE133AA7E700C130A8 /* PSImageCell.m */; };
 		25FB8C20133ACB2400C130A8 /* snaps.json in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8C1F133ACB2400C130A8 /* snaps.json */; };
 		25FB8C21133ACB2400C130A8 /* snaps.json in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8C1F133ACB2400C130A8 /* snaps.json */; };
+		25FC2F9D13A16BCC004462A9 /* loadmore-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FC2F9B13A16BCC004462A9 /* loadmore-bg.png */; };
+		25FC2F9E13A16BCC004462A9 /* loadmore-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FC2F9C13A16BCC004462A9 /* loadmore-bg@2x.png */; };
 		25FCA38B139887A4009CD59C /* PSSearchStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FCA38A139887A4009CD59C /* PSSearchStack.m */; };
 		25FCA38C139887A4009CD59C /* PSSearchStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FCA38A139887A4009CD59C /* PSSearchStack.m */; };
 		25FCA3A813996862009CD59C /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FCA3A713996862009CD59C /* Tag.m */; };
@@ -822,6 +824,8 @@
 		25FB8BED133AA7E600C130A8 /* PSImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSImageCell.h; sourceTree = "<group>"; };
 		25FB8BEE133AA7E700C130A8 /* PSImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSImageCell.m; sourceTree = "<group>"; };
 		25FB8C1F133ACB2400C130A8 /* snaps.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = snaps.json; sourceTree = "<group>"; };
+		25FC2F9B13A16BCC004462A9 /* loadmore-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loadmore-bg.png"; sourceTree = "<group>"; };
+		25FC2F9C13A16BCC004462A9 /* loadmore-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loadmore-bg@2x.png"; sourceTree = "<group>"; };
 		25FCA389139887A4009CD59C /* PSSearchStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSearchStack.h; sourceTree = "<group>"; };
 		25FCA38A139887A4009CD59C /* PSSearchStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSearchStack.m; sourceTree = "<group>"; };
 		25FCA3A613996862009CD59C /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
@@ -1199,6 +1203,8 @@
 		25CEF8FE133A000C006F23A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				25FC2F9B13A16BCC004462A9 /* loadmore-bg.png */,
+				25FC2F9C13A16BCC004462A9 /* loadmore-bg@2x.png */,
 				252049F813A04A6E005D6336 /* album-placeholder.png */,
 				252049F913A04A6E005D6336 /* album-placeholder@2x.png */,
 				256493AA13986697005B7459 /* 121-landscape.png */,
@@ -1823,6 +1829,8 @@
 				256493AD13986697005B7459 /* 121-landscape@2x.png in Resources */,
 				252049FA13A04A6E005D6336 /* album-placeholder.png in Resources */,
 				252049FB13A04A6E005D6336 /* album-placeholder@2x.png in Resources */,
+				25FC2F9D13A16BCC004462A9 /* loadmore-bg.png in Resources */,
+				25FC2F9E13A16BCC004462A9 /* loadmore-bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

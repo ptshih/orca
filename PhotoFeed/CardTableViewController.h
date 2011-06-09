@@ -26,6 +26,7 @@
   UIButton *_loadMoreButton;
   UIActivityIndicatorView *_loadMoreActivity;
   BOOL _reloading;
+  BOOL _loadingMore;
 }
 
 @property (nonatomic, retain) UITableView *tableView;

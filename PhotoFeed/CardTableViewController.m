@@ -141,65 +141,84 @@
   [self.view addSubview:_footerView];
 }
 
+// This is the button load more style
+//- (void)setupLoadMoreView {
+//  _loadMoreView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+//  _loadMoreView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//  _loadMoreView.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
+//  
+//  // Button
+//  _loadMoreButton = [[UIButton alloc] initWithFrame:_loadMoreView.frame];
+//  _loadMoreButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//  _loadMoreButton.userInteractionEnabled = NO;
+//  [_loadMoreButton setBackgroundImage:[UIImage imageNamed:@"search_background.png"] forState:UIControlStateNormal];
+//  [_loadMoreButton addTarget:self action:@selector(loadMore) forControlEvents:UIControlEventTouchUpInside];
+//  [_loadMoreButton setTitle:@"Load More..." forState:UIControlStateNormal];
+//  [_loadMoreButton setTitle:@"Loading More..." forState:UIControlStateSelected];
+//  [_loadMoreButton.titleLabel setShadowColor:[UIColor blackColor]];
+//  [_loadMoreButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+//  [_loadMoreButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0]];
+//  
+//  // Activity
+//  _loadMoreActivity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+//  _loadMoreActivity.frame = CGRectMake(12, 12, 20, 20);
+//  _loadMoreActivity.hidesWhenStopped = YES;
+//  
+//  // Add to subview
+//  [_loadMoreView addSubview:_loadMoreButton];
+//  [_loadMoreView addSubview:_loadMoreActivity];
+//  
+//  // Always show
+//  //  [self showLoadMoreView];
+//}
+
+// This is the automatic load more style
 - (void)setupLoadMoreView {
+  _loadingMore = NO;
+  
   _loadMoreView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
   _loadMoreView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-  _loadMoreView.backgroundColor = FB_COLOR_VERY_LIGHT_BLUE;
-  
-  // Button
-  _loadMoreButton = [[UIButton alloc] initWithFrame:_loadMoreView.frame];
-  _loadMoreButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-  _loadMoreButton.userInteractionEnabled = NO;
-  [_loadMoreButton setBackgroundImage:[UIImage imageNamed:@"search_background.png"] forState:UIControlStateNormal];
-  [_loadMoreButton addTarget:self action:@selector(loadMore) forControlEvents:UIControlEventTouchUpInside];
-  [_loadMoreButton setTitle:@"Load More..." forState:UIControlStateNormal];
-  [_loadMoreButton setTitle:@"Loading More..." forState:UIControlStateSelected];
-  [_loadMoreButton.titleLabel setShadowColor:[UIColor blackColor]];
-  [_loadMoreButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
-  [_loadMoreButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0]];
-  
+  _loadMoreView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"loadmore-bg.png"]];
+  UILabel *loadMoreLabel = [[[UILabel alloc] initWithFrame:_loadMoreView.bounds] autorelease];
+  loadMoreLabel.backgroundColor = [UIColor clearColor];
+  loadMoreLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  loadMoreLabel.text = @"Loading More...";
+  loadMoreLabel.shadowColor = [UIColor blackColor];
+  loadMoreLabel.shadowOffset = CGSizeMake(0, 1);
+  loadMoreLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0];
+  loadMoreLabel.textColor = [UIColor whiteColor];
+  loadMoreLabel.textAlignment = UITextAlignmentCenter;
+    
   // Activity
   _loadMoreActivity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
   _loadMoreActivity.frame = CGRectMake(12, 12, 20, 20);
   _loadMoreActivity.hidesWhenStopped = YES;
   
   // Add to subview
-  [_loadMoreView addSubview:_loadMoreButton];
+  [_loadMoreView addSubview:loadMoreLabel];
   [_loadMoreView addSubview:_loadMoreActivity];
-  
-  // Always show
-  //  [self showLoadMoreView];
 }
 
 - (void)showLoadMoreView {
   if (_loadMoreView) {
     [_loadMoreActivity startAnimating];
-    [_loadMoreButton setSelected:YES];
-    _loadMoreButton.enabled = YES;
     _tableView.tableFooterView = _loadMoreView;
   }
 }
 
 - (void)hideLoadMoreView {
   if (_loadMoreView) {
-    _loadMoreButton.enabled = NO;
     _tableView.tableFooterView = nil;
   }
 }
 
 // Subclasses should override
 - (void)loadMore {
-  [_loadMoreActivity startAnimating];
-  [_loadMoreButton setSelected:YES];
-  _loadMoreButton.enabled = NO;
+  _loadingMore = YES;
 }
 
 - (void)loadMoreFinished {
-  if (!_loadMoreButton.enabled) {
-    [_loadMoreActivity startAnimating];
-    [_loadMoreButton setSelected:YES];
-    _loadMoreButton.enabled = YES;
-  }
+  _loadingMore = NO;
 }
 
 - (void)loadMoreIfAvailable {
@@ -211,7 +230,7 @@
   
   if (tableBottom >= footerTop) {
     // Footer is showing, start loading more
-    if (_loadMoreButton.enabled) {
+    if (!_loadingMore) {
       [self loadMore];
     }
   }
