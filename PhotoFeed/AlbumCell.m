@@ -104,7 +104,7 @@ static UIImage *_overlayImage = nil;
     _photoView.shouldScale = YES;
     _photoView.shouldAnimate = YES;
     _photoView.delegate = self;
-//    _photoView.placeholderImage = [UIImage imageNamed:@"album-placeholder.png"];
+    _photoView.placeholderImage = [UIImage imageNamed:@"album-placeholder.png"];
 //    _photoView = [[PSImageView alloc] initWithFrame:CGRectZero];
     
     // Overlay

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 #import "Constants.h"
 #import "PSImageViewDelegate.h"
 
@@ -19,7 +20,8 @@
   id <PSImageViewDelegate> _delegate;
 }
 
-- (void)animateImageFade:(NSInteger)direction;
+- (void)animateImageFade:(UIImage *)image;
+- (void)animateCrossFade:(UIImage *)image;
 
 @property (nonatomic, retain) UIImage *placeholderImage;
 @property (nonatomic, assign) BOOL shouldScale;

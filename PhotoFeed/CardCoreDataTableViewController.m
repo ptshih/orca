@@ -95,7 +95,7 @@
   RELEASE_SAFELY(_fetchedResultsController);
   
   // Get a new context
-  _context = [PSCoreDataStack newManagedObjectContext];
+  _context = [PSCoreDataStack mainThreadContext];
 }
 
 - (NSFetchedResultsController*)fetchedResultsController  {

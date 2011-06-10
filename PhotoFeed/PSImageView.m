@@ -30,6 +30,7 @@
     [_loadingIndicator startAnimating];
     [self addSubview:_loadingIndicator];
     self.backgroundColor = [UIColor blackColor];
+    self.contentMode = UIViewContentModeScaleAspectFit;
   }
   return self;
 }
@@ -42,32 +43,29 @@
 - (void)setImage:(UIImage *)image {
   if (image && image != _placeholderImage) {
     // RETINA
-    [super setImage:[UIImage imageWithCGImage:image.CGImage scale:2 orientation:image.imageOrientation]];
     [_loadingIndicator stopAnimating];
+    UIImage *newImage = [UIImage imageWithCGImage:image.CGImage scale:2 orientation:image.imageOrientation];
     if (_shouldAnimate) {
-      [self animateImageFade:0];
+//      [self animateCrossFade:newImage];
+      [self animateImageFade:newImage];
+    } else {
+      [super setImage:newImage];
     }
     if (self.delegate && [self.delegate respondsToSelector:@selector(imageDidLoad:)]) {
       [self.delegate performSelector:@selector(imageDidLoad:) withObject:image];
     }
   } else {
     [super setImage:image];
-    if (_shouldAnimate) {
-      [self animateImageFade:1];
-    }
     [_loadingIndicator startAnimating];
   }
 }
 
-- (void)animateImageFade:(NSInteger)direction {
+- (void)animateImageFade:(UIImage *)image {
+  [super setImage:image];
+  
   CGFloat beginAlpha, endAlpha;
-  if (direction == 0) {
-    beginAlpha = 0.0;
-    endAlpha = 1.0;
-  } else {
-    beginAlpha = 1.0;
-    endAlpha = 0.0;
-  }
+  beginAlpha = 0.0;
+  endAlpha = 1.0;
   
   self.alpha = beginAlpha;
   [UIView beginAnimations:nil context:nil];
@@ -75,6 +73,15 @@
   [UIView setAnimationDuration:0.4];
   self.alpha = endAlpha;
   [UIView commitAnimations];
+}
+
+- (void)animateCrossFade:(UIImage *)image {
+  CABasicAnimation *crossFade = [CABasicAnimation animationWithKeyPath:@"contents"];
+  crossFade.duration = 0.4;
+  crossFade.fromValue = (id)[self.image CGImage];
+  crossFade.toValue = (id)[image CGImage];
+  [self.layer addAnimation:crossFade forKey:@"animateContents"];
+  [super setImage:image];
 }
 
 - (void)dealloc {
