@@ -19,6 +19,7 @@
  Get albums from Server
  */
 - (void)getAlbums;
+- (void)getAlbumsForFriendIds:(NSArray *)friendIds;
 
 /**
  Serialize server response into Album entities

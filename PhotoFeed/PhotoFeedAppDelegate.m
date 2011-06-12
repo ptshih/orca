@@ -43,6 +43,9 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  
+  [[AlbumDataCenter defaultCenter] setDelegate:self];
+  
   NSLog(@"fonts: %@",[UIFont familyNames]);
 
   // We can configure if the imageCache should reside in cache or document directory here
@@ -190,17 +193,28 @@
 - (void)serializeFriendsWithResponse:(id)response {
   NSArray *facebookFriends = [response valueForKey:@"data"] ? [response valueForKey:@"data"] : [NSArray array];
   
-  NSMutableDictionary *friendsDict = [NSMutableDictionary dictionary];
+  NSDictionary *existingFriends = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"facebookFriends"];
+  NSMutableDictionary *friendsDict = existingFriends ? [NSMutableDictionary dictionaryWithDictionary:existingFriends] : [NSMutableDictionary dictionary];
+  
+  NSMutableArray *newFriendIds = [NSMutableArray array];
+  
   for (NSDictionary *friend in facebookFriends) {
-    [friendsDict setValue:[friend valueForKey:@"name"] forKey:[friend valueForKey:@"id"]];
+    NSString *friendId = [friend valueForKey:@"id"];
+    if (![friendsDict valueForKey:friendId]) {
+      [newFriendIds addObject:friendId];
+    }
+    [friendsDict setValue:[friend valueForKey:@"name"] forKey:friendId];
   }
   
   [[NSUserDefaults standardUserDefaults] setObject:friendsDict forKey:@"facebookFriends"];
   [[NSUserDefaults standardUserDefaults] synchronize];
+  
+  if ([newFriendIds count] > 0) {
+    [[AlbumDataCenter defaultCenter] getAlbumsForFriendIds:newFriendIds];
+  }
 }
 
 - (void)startDownloadAlbums {
-  [[AlbumDataCenter defaultCenter] setDelegate:self];
   [[AlbumDataCenter defaultCenter] getAlbums];
 }
 

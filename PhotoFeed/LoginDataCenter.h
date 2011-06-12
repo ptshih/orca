@@ -17,7 +17,6 @@
 
 //- (void)startFacebookLogin;
 - (void)getMe;
-
 - (void)getFriends;
 
 @end

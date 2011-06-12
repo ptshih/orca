@@ -98,6 +98,22 @@
   }
 }
 
+- (void)getAlbumsForFriendIds:(NSArray *)friendIds {
+  NSURL *albumsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.facebook.com/method/fql.multiquery"]];
+  
+  NSMutableDictionary *friendQueries = [NSMutableDictionary dictionary];
+  NSMutableDictionary *friendParams = [NSMutableDictionary dictionary];
+  [friendParams setValue:@"json" forKey:@"format"];
+  
+  [friendQueries setValue:[NSString stringWithFormat:@"SELECT aid,object_id,owner,cover_pid,name,description,location,size,type,modified_major,created,modified,can_upload FROM album WHERE owner IN (%@)", [friendIds componentsJoinedByString:@","]] forKey:@"query1"];
+  [friendQueries setValue:[NSString stringWithFormat:@"SELECT aid,src_big FROM photo WHERE pid IN (SELECT cover_pid FROM #query1)"] forKey:@"query2"];
+  
+  [friendParams setValue:[friendQueries JSONRepresentation] forKey:@"queries"];
+  
+  _pendingRequestsToParse++;
+  [self sendRequestWithURL:albumsUrl andMethod:POST andHeaders:nil andParams:friendParams andUserInfo:nil];
+}
+
 #pragma mark -
 #pragma mark Serialization
 - (void)serializeAlbumsWithRequest:(ASIHTTPRequest *)request {
