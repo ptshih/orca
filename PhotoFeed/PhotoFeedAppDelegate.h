@@ -22,8 +22,6 @@
   LoginViewController *_loginViewController;
   LauncherViewController *_launcherViewController;
   
-  LoginDataCenter *_loginDataCenter;
-  
   AlbumDataCenter *_albumDataCenter;
   
   // Session
@@ -42,5 +40,10 @@
 - (void)startDownloadAlbums;
 - (void)tryLogin;
 - (void)resetSessionKey;
+
+- (void)getMe;
+- (void)serializeMeWithResponse:(id)response;
+- (void)getFriends;
+- (void)serializeFriendsWithResponse:(id)response;
 
 @end

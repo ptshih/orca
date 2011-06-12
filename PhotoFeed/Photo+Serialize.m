@@ -78,7 +78,12 @@
 }
 
 - (Photo *)updatePhotoWithDictionary:(NSDictionary *)dictionary forAlbumId:(NSString *)albumId {  
-  if (dictionary) {    
+  if (dictionary) {
+    // Photos don't really update unless position changes
+    if ([self.position isEqualToNumber:[dictionary valueForKey:@"position"]]) {
+      return self;
+    }
+    
     // Basic
     self.name = [dictionary valueForKey:@"name"];
     self.position = [dictionary valueForKey:@"position"];

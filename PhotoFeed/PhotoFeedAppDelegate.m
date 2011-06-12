@@ -51,10 +51,7 @@
   
   _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"weave-bg.png"]];
-  
-  // Login/Session/Register data center
-  _loginDataCenter = [[LoginDataCenter alloc] init];
-  _loginDataCenter.delegate = self;
+
   
   // Setup Facebook
   _facebook = [[Facebook alloc] initWithAppId:FB_APP_ID];
@@ -119,15 +116,9 @@
 
 #pragma mark -
 #pragma mark LoginDelegate
-- (void)userDidLogin {
+- (void)userDidLogin:(NSDictionary *)userInfo {
   DLog(@"User Logged In");
-  
-  // Set UserDefaults
-  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
-  
-  // Change login screen to edu walkthru / loading
-  
-  [self startDownloadAlbums];
+  [self getMe];
 }
 
 - (void)userDidLogout {
@@ -136,9 +127,80 @@
   [PSCoreDataStack resetPersistentStoreCoordinator];
 }
 
+- (void)getMe {
+  // This is called the first time logging in
+  NSURL *meUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/me?fields=id,name,friends&access_token=%@", FB_GRAPH, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]]];
+  
+  __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:meUrl];
+  request.requestMethod = @"GET";
+  request.allowCompressedResponse = YES;
+  
+  // Request Completion Block
+  [request setCompletionBlock:^{
+    [self serializeMeWithResponse:[[request responseData] JSONValue]];
+    [self startDownloadAlbums];
+  }];
+  [request setFailedBlock:^{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kLogoutRequested object:nil];
+  }];
+  
+  // Start the Request
+  [request startAsynchronous];
+}
+
+- (void)serializeMeWithResponse:(id)response {
+  NSString *facebookId = [response valueForKey:@"id"];
+  NSString *facebookName = [response valueForKey:@"name"];
+  NSArray *facebookFriends = [response valueForKey:@"friends"] ? [[response valueForKey:@"friends"] valueForKey:@"data"] : [NSArray array];
+  
+  NSMutableDictionary *friendsDict = [NSMutableDictionary dictionary];
+  for (NSDictionary *friend in facebookFriends) {
+    [friendsDict setValue:[friend valueForKey:@"name"] forKey:[friend valueForKey:@"id"]];
+  }
+  
+  // Set UserDefaults
+  [[NSUserDefaults standardUserDefaults] setObject:facebookId forKey:@"facebookId"];
+  [[NSUserDefaults standardUserDefaults] setObject:facebookName forKey:@"facebookName"];
+  [[NSUserDefaults standardUserDefaults] setObject:friendsDict forKey:@"facebookFriends"];
+  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
+  [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)getFriends {
+  // This is called subsequent app launches when already logged in
+  NSURL *friendsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/me/friends?access_token=%@", FB_GRAPH, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]]];
+  
+  __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:friendsUrl];
+  request.requestMethod = @"GET";
+  request.allowCompressedResponse = YES;
+  
+  // Request Completion Block
+  [request setCompletionBlock:^{
+    [self serializeFriendsWithResponse:[[request responseData] JSONValue]];
+    [self startDownloadAlbums];
+  }];
+  [request setFailedBlock:^{
+    [self startDownloadAlbums];
+  }];
+  
+  // Start the Request
+  [request startAsynchronous];
+}
+
+- (void)serializeFriendsWithResponse:(id)response {
+  NSArray *facebookFriends = [response valueForKey:@"data"] ? [response valueForKey:@"data"] : [NSArray array];
+  
+  NSMutableDictionary *friendsDict = [NSMutableDictionary dictionary];
+  for (NSDictionary *friend in facebookFriends) {
+    [friendsDict setValue:[friend valueForKey:@"name"] forKey:[friend valueForKey:@"id"]];
+  }
+  
+  [[NSUserDefaults standardUserDefaults] setObject:friendsDict forKey:@"facebookFriends"];
+  [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (void)startDownloadAlbums {
   [[AlbumDataCenter defaultCenter] setDelegate:self];
-#warning disable download at boot if already logged in once
   [[AlbumDataCenter defaultCenter] getAlbums];
 }
 
@@ -146,7 +208,7 @@
 - (void)startSession {
   // This gets called on subsequent app launches
   [self resetSessionKey];
-  [self startDownloadAlbums];
+  [self getFriends];
 }
 
 - (void)resetSessionKey {
@@ -196,7 +258,6 @@
 }
 
 - (void)dealloc {
-  RELEASE_SAFELY(_loginDataCenter);
   RELEASE_SAFELY(_sessionKey);
   RELEASE_SAFELY(_loginViewController);
   RELEASE_SAFELY(_launcherViewController);

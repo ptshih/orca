@@ -10,6 +10,6 @@
 
 
 @protocol LoginDelegate <NSObject>
-- (void)userDidLogin;
+- (void)userDidLogin:(NSDictionary *)userInfo;
 - (void)userDidLogout;
 @end

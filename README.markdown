@@ -4,6 +4,7 @@ BUGS
 - Finish coding 'write a comment' feature
 - Logging out on another client causes oauth failure which causes crash
 - Searching/Filtering scroll performance is bad, find a way to unload the tableview underneath it
+- LOGOUT crashes
 
 DONE
 - Logout needs some love (DONE)

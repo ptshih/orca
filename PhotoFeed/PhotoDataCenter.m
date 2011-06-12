@@ -135,7 +135,9 @@
     }
   }
   
-  [photo addComments:comments];
+  if ([comments count] > 0) {
+    [photo addComments:comments];
+  }
 }
 
 - (void)serializeTagsWithDictionary:(NSDictionary *)dictionary forPhoto:(Photo *)photo inContext:(NSManagedObjectContext *)context {
@@ -160,7 +162,9 @@
     }
   }
   
-  [photo addTags:tags];
+  if ([tags count] > 0) {
+    [photo addTags:tags];
+  }
 }
 
 #pragma mark -
@@ -186,7 +190,7 @@
   NSFetchRequest *fetchRequest = [[PSCoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPhotosForAlbum" substitutionVariables:[NSDictionary dictionaryWithObject:albumId forKey:@"desiredAlbumId"]];
   [fetchRequest setSortDescriptors:sortDescriptors];
   [fetchRequest setFetchBatchSize:10];
-  [fetchRequest setFetchLimit:limit];
+//  [fetchRequest setFetchLimit:limit];
   return fetchRequest;
 }
 

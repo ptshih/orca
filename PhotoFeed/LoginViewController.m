@@ -19,7 +19,6 @@
   self = [super init];
   if (self) {
     _facebook = APP_DELEGATE.facebook;
-    [[LoginDataCenter defaultCenter] setDelegate:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logout) name:kLogoutRequested object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLoginProgress:) name:kUpdateLoginProgress object:nil];
   }
@@ -105,8 +104,9 @@
   [[NSUserDefaults standardUserDefaults] setObject:_facebook.expirationDate forKey:@"facebookExpirationDate"];
   [[NSUserDefaults standardUserDefaults] synchronize];
   
-  // We need to get the user's facebookId
-  [[LoginDataCenter defaultCenter] getMe];
+  if (self.delegate && [self.delegate respondsToSelector:@selector(userDidLogin:)]) {
+    [self.delegate performSelector:@selector(userDidLogin:) withObject:nil];
+  }
 }
 
 - (void)fbDidNotLogin:(BOOL)cancelled {
@@ -130,28 +130,7 @@
   _progressView.progress = 0.0;
 }
 
-#pragma mark -
-#pragma mark PSDataCenterDelegate
-- (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
-  NSString *facebookId = [response valueForKey:@"id"];
-  NSString *facebookName = [response valueForKey:@"name"];
-  NSArray *facebookFriends = [response valueForKey:@"friends"] ? [[response valueForKey:@"friends"] valueForKey:@"data"] : [NSArray array];
-  [[NSUserDefaults standardUserDefaults] setObject:facebookId forKey:@"facebookId"];
-  [[NSUserDefaults standardUserDefaults] setObject:facebookName forKey:@"facebookName"];
-  [[NSUserDefaults standardUserDefaults] setObject:facebookFriends forKey:@"facebookFriends"];
-  [[NSUserDefaults standardUserDefaults] synchronize];
-  
-  if (self.delegate && [self.delegate respondsToSelector:@selector(userDidLogin)]) {
-    [self.delegate performSelector:@selector(userDidLogin)];
-  }
-}
-
-- (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
-  [self logout];
-}
-
 - (void)dealloc {
-  [[LoginDataCenter defaultCenter] setDelegate:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kLogoutRequested object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kUpdateLoginProgress object:nil];
   RELEASE_SAFELY(_loginButton);

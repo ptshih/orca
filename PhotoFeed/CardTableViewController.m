@@ -217,11 +217,10 @@
   _loadingMore = YES;
 }
 
-- (void)loadMoreFinished {
-  _loadingMore = NO;
-}
-
 - (void)loadMoreIfAvailable {
+  if (!_tableView.tableFooterView) {
+    return;
+  }
   // Make sure we are showing the footer first before attempting to load more
   // Once we begin loading more, this should no longer trigger
   //  NSLog(@"check to load more: %@", NSStringFromCGPoint(_tableView.contentOffset));
@@ -238,7 +237,6 @@
 
 - (void)updateState {
   [super updateState];
-  [self loadMoreFinished];
 }
 
 // Called when the user logs out and we need to clear all cached data

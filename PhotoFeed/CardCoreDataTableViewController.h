@@ -21,6 +21,7 @@
   NSUInteger _lastFetchedCount;
   NSTimer *_searchTimer;
   NSPredicate *_searchPredicate;
+  BOOL _changesPending;
 }
 
 @property (nonatomic, assign) NSManagedObjectContext *context;

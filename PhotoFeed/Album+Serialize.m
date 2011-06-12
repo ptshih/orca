@@ -34,24 +34,10 @@
   return [NSDate stringForDisplayFromDate:self.lastViewed];
 }
 
-//- (NSString *)fromName {
-//  // My own ID
-//  if ([self.fromId isEqualToString:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookId"]]) {
-//    return [[NSUserDefaults standardUserDefaults] stringForKey:@"facebookName"];
-//  } else {
-//    // This does a facebook id => name lookup in the local friends dict
-//    NSArray *friendIds = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"id"];
-//    NSArray *friendNames = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"name"];
-//    NSUInteger friendIndex = [friendIds indexOfObject:self.fromId];
-//    return [friendNames objectAtIndex:friendIndex];
-//  }
-//}
-
 + (NSString *)fromNameForFromId:(NSString *)fromId {
   static NSString *facebookId = nil;
   static NSString *facebookName = nil;
-  static NSArray *friendIds = nil;
-  static NSArray *friendNames = nil;
+  static NSDictionary *facebookFriends = nil;
   
   // This is a hack for logging out
   BOOL hasCachedFriends = [[NSUserDefaults standardUserDefaults] boolForKey:@"hasCachedFriends"];
@@ -59,8 +45,7 @@
   if (!hasCachedFriends) {
     if (facebookId) [facebookId release], facebookId = nil;
     if (facebookName) [facebookName release], facebookName = nil;
-    if (friendIds) [friendIds release], friendIds = nil;
-    if (friendNames) [friendNames release], friendNames = nil;
+    if (facebookFriends) [facebookFriends release], facebookFriends = nil;
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasCachedFriends"];
   }
   
@@ -70,11 +55,8 @@
   if (!facebookName) {
     facebookName = [[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookName"] copy];
   }
-  if (!friendIds) {
-    friendIds = [[[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"id"] copy];
-  }
-  if (!friendNames) {
-    friendNames = [[[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"name"] copy];
+  if (!facebookFriends) {
+    facebookFriends = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"facebookFriends"];
   }
 
   // My own ID
@@ -82,13 +64,8 @@
     return facebookName;
   } else {
     // This does a facebook id => name lookup in the local friends dict
-    NSUInteger friendIndex = [friendIds indexOfObject:fromId];
-    if (friendIndex != NSNotFound) {
-      return [friendNames objectAtIndex:friendIndex];
-    } else {
-      // friend not found?
-      return @"Anonymous";
-    }
+    NSString *friendName = [facebookFriends valueForKey:fromId];
+    return friendName ? friendName : @"Anonymous";
   }
 }
 

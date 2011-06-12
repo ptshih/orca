@@ -46,7 +46,6 @@
 - (void)hideLoadMoreView;
 
 - (void)loadMore;
-- (void)loadMoreFinished;
 - (void)loadMoreIfAvailable;
 
 - (void)loadImagesForOnScreenRows;

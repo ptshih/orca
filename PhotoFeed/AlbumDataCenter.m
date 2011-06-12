@@ -55,13 +55,12 @@
   // This is retarded... if the user has more than batchSize friends, we'll just fire off multiple requests
   NSURL *albumsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.facebook.com/method/fql.multiquery"]];
   
-#warning when applying this since, if the user adds new friends, we need to do a cold query for that friend's albums
   // Apply since if exists
   NSDate *sinceDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"albums.since"];
   NSTimeInterval since = [sinceDate timeIntervalSince1970] - SINCE_SAFETY_NET;
     
   // Get batch size/count
-  NSArray *friends = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"facebookFriends"] valueForKey:@"id"];
+  NSArray *friends = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"facebookFriends"] allKeys];
   NSInteger batchSize = 150;
   NSInteger batchCount = ceil((CGFloat)[friends count] / (CGFloat)batchSize);
   NSRange range;
@@ -244,7 +243,7 @@
   // Inform Delegate
   if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFail:withError:)]) {
     [_delegate performSelector:@selector(dataCenterDidFail:withError:) withObject:request withObject:[request error]];
-  }
+  } 
 }
 
 #pragma mark -
@@ -253,6 +252,7 @@
   NSFetchRequest *fetchRequest = [[PSCoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:fetchTemplate substitutionVariables:substitutionVariables];
   [fetchRequest setSortDescriptors:sortDescriptors];
   [fetchRequest setFetchBatchSize:10];
+  [fetchRequest setFetchLimit:limit];
   return fetchRequest;
 }
 
