@@ -9,6 +9,7 @@
 #import "LauncherViewController.h"
 #import "AlbumViewController.h"
 #import "SearchViewController.h"
+#import "MoreViewController.h"
 
 static UIImage *_actionImage = nil;
 
@@ -59,7 +60,7 @@ static UIImage *_actionImage = nil;
   history.albumType = AlbumTypeHistory;
   UINavigationController *historyNav = [[[UINavigationController alloc] initWithRootViewController:history] autorelease];
   
-  UIViewController *more = [[[UIViewController alloc] init] autorelease];
+  MoreViewController *more = [[[MoreViewController alloc] init] autorelease];
   UINavigationController *moreNav = [[[UINavigationController alloc] initWithRootViewController:more] autorelease];
   
   // Setup Tab Items

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CardTableViewController.h"
 
-@interface MoreViewController : UIViewController
+@interface MoreViewController : CardTableViewController
 
 @end
