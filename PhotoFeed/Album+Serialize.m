@@ -56,7 +56,7 @@
     facebookName = [[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookName"] copy];
   }
   if (!facebookFriends) {
-    facebookFriends = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"facebookFriends"];
+    facebookFriends = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"facebookFriends"] copy];
   }
 
   // My own ID

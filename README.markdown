@@ -17,13 +17,13 @@ DONE
 - search keyword delimmiters (DONE)
 - in photo view, allow searching for tagged friends (DONE)
 - add tagged people parsing in json (DONE)
+- On login, need to fetch and compare to find new friends, and get their albums
 
 FEATURES
 ---
 - Global AlertCenter
 - More view controller, move logout here
 - Search view controller (DEPRECATED)
-- On login, need to fetch and compare to find new friends, and get their albums
 
 TODO
 ---

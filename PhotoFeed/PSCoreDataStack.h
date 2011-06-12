@@ -20,17 +20,13 @@
 + (NSManagedObjectContext *)mainThreadContext; // shared static context
 
 // Persistent Store
-+ (BOOL)createPersistentStoreCoordinator;
 + (void)resetPersistentStoreCoordinator;
-+ (NSString *)generateNewPersistentStoreName;
-
-+ (void)resetPersistentStore;
-+ (void)resetManagedObjectContext;
-+ (void)deleteAllObjects:(NSString *)entityDescription;
++ (void)createPersistentStoreCoordinator;
++ (void)deleteAllObjects:(NSString *)entityDescription inContext:(NSManagedObjectContext *)context;
 + (void)saveMainThreadContext;
 + (void)saveInContext:(NSManagedObjectContext *)context;
 + (void)resetInContext:(NSManagedObjectContext *)context;
 
-+ (void)createDocumentDirectory;
++ (NSURL *)applicationDocumentsDirectory;
 
 @end

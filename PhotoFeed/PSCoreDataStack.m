@@ -27,32 +27,16 @@ static NSURL *_storeURL = nil;
 #pragma mark Initialization Methods
 + (void)initialize {  
   _storeOptions = [[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil] retain];
-  
-  if (![[NSUserDefaults standardUserDefaults] objectForKey:@"persistentStoreName"]) {
-    [[self class] generateNewPersistentStoreName];
-  }
-  _storeURL = [[NSURL fileURLWithPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[[NSUserDefaults standardUserDefaults] stringForKey:@"persistentStoreName"]]] retain];
+  _storeURL = [[[[self class] applicationDocumentsDirectory] URLByAppendingPathComponent:@"photofeed.sqlite"] retain];
 }
 
-+ (void)resetPersistentStore {
-  [[self class] deleteAllObjects:@"Album"];
-  [[self class] deleteAllObjects:@"Photo"];
-  [[self class] deleteAllObjects:@"Comment"];
-  
-  [[NSNotificationCenter defaultCenter] postNotificationName:kCoreDataDidReset object:nil];
-  
-  //  NSLog(@"reset persistent store and context");
-  //  [self resetStoreState];
-  //  [self resetManagedObjectContext];
-}
-
-+ (void)deleteAllObjects:(NSString *)entityDescription {
++ (void)deleteAllObjects:(NSString *)entityDescription inContext:(NSManagedObjectContext *)context {
   NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-  NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:[[self class] mainThreadContext]];
+  NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:context];
   [fetchRequest setEntity:entity];
   
   NSError *error;
-  NSArray *items = [[[self class] mainThreadContext] executeFetchRequest:fetchRequest error:&error];
+  NSArray *items = [context executeFetchRequest:fetchRequest error:&error];
   [fetchRequest release];
   
   
@@ -75,22 +59,6 @@ static NSURL *_storeURL = nil;
   [_persistentStoreCoordinator release];
   _managedObjectModel = nil;
   _persistentStoreCoordinator = nil;
-}
-
-+ (void)resetManagedObjectContext {
-  if (_mainThreadContext) {
-    [_mainThreadContext release];
-    _mainThreadContext = nil;
-  }
-  
-  NSPersistentStoreCoordinator *coordinator = [[self class] persistentStoreCoordinator];
-  NSManagedObjectContext *managedObjectContext = nil;
-  if (coordinator != nil) {
-    managedObjectContext = [[NSManagedObjectContext alloc] init];
-    [managedObjectContext setPersistentStoreCoordinator:coordinator];
-  }
-  
-  _mainThreadContext = managedObjectContext;
 }
 
 #pragma mark Core Data Accessors
@@ -133,19 +101,15 @@ static NSURL *_storeURL = nil;
 #pragma mark Save
 + (void)saveMainThreadContext {
   NSError *error = nil;
-  if ([_mainThreadContext hasChanges]) {
-    if (![_mainThreadContext save:&error]) {
-      abort(); // NOTE: DO NOT SHIP
-    }
+  if ([_mainThreadContext hasChanges] && ![_mainThreadContext save:&error]) {
+    abort(); // NOTE: DO NOT SHIP
   }
 }
 
 + (void)saveInContext:(NSManagedObjectContext *)context {
   NSError *error = nil;
-  if ([context hasChanges]) {
-    if (![context save:&error]) {
-      abort(); // NOTE: DO NOT SHIP
-    }
+  if ([context hasChanges] && ![context save:&error]) {
+    abort(); // NOTE: DO NOT SHIP
   }
 }
 
@@ -159,9 +123,8 @@ static NSURL *_storeURL = nil;
     return _managedObjectModel;
   }
   
-  NSString *path = [[NSBundle mainBundle] pathForResource:@"PhotoFeed" ofType:@"momd"];
-  NSURL *momURL = [NSURL fileURLWithPath:path];
-  _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:momURL];
+  NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"PhotoFeed" withExtension:@"momd"];
+  _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];    
   
   return _managedObjectModel;
 }
@@ -171,77 +134,70 @@ static NSURL *_storeURL = nil;
     return _persistentStoreCoordinator;
   }
   
-  // Create a new persistent store
-  if (![[self class] createPersistentStoreCoordinator]) {
-    // Error creating store, reset and try again
-    [[NSNotificationCenter defaultCenter] postNotificationName:kLogoutRequested object:nil];
-//    if (![[self class] createPersistentStoreCoordinator]) {
-//      // Fatal error that we can't recover from
-//      abort();
-//    }
+  NSError *error = nil;
+  _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+  if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:_storeURL options:_storeOptions error:&error]) {
+    /*
+     Replace this implementation with code to handle the error appropriately.
+     
+     abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+     
+     Typical reasons for an error here include:
+     * The persistent store is not accessible;
+     * The schema for the persistent store is incompatible with current managed object model.
+     Check the error message to determine what the actual problem was.
+     
+     
+     If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
+     
+     If you encounter schema incompatibility errors during development, you can reduce their frequency by:
+     * Simply deleting the existing store:
+     [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil]
+     
+     * Performing automatic lightweight migration by passing the following dictionary as the options parameter: 
+     [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+     
+     Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
+     
+     */
+    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+    abort();
   }
   
   return _persistentStoreCoordinator;
 }
 
-+ (BOOL)createPersistentStoreCoordinator {
-  [[self class] createDocumentDirectory];
-  
-  _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[[self class] managedObjectModel]];
-  
++ (void)createPersistentStoreCoordinator {
   NSError *error = nil;
-  NSPersistentStore *newStore = [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:_storeURL options:_storeOptions error:&error];
-
-  if (!newStore || error) {
-    DLog(@"Failed to create persistent store: %@", [error userInfo]);
-    return NO;
-  } else {
-    DLog(@"Init persistent store with path: %@", _storeURL);
-    return YES;
+  _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+  if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:_storeURL options:_storeOptions error:&error]) {
+    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+    abort();
   }
 }
 
 + (void)resetPersistentStoreCoordinator {
-  [_managedObjectModel release];
+  [_mainThreadContext release], _mainThreadContext = nil;
+  
   [_persistentStoreCoordinator release];
-  _managedObjectModel = nil;
   _persistentStoreCoordinator = nil;
   
   if (_storeURL) {
     [[NSFileManager defaultManager] removeItemAtURL:_storeURL error:nil];
   }
   
-  [[self class] generateNewPersistentStoreName];
+  [[self class] createPersistentStoreCoordinator];
   
   [[NSNotificationCenter defaultCenter] postNotificationName:kCoreDataDidReset object:nil];
 }
 
-+ (NSString *)generateNewPersistentStoreName {
-  CFUUIDRef theUUID = CFUUIDCreate(NULL);
-  CFStringRef string = CFUUIDCreateString(NULL, theUUID);
-  CFRelease(theUUID);
-  NSString *uniqueString = (NSString *)string;
-  
-  NSString *newPersistentStoreName = [NSString stringWithFormat:@"%@.sqlite", uniqueString];
-  CFRelease(uniqueString);
-  
-  // Save to UserDefaults
-  [[NSUserDefaults standardUserDefaults] setValue:newPersistentStoreName forKey:@"persistentStoreName"];
-  [[NSUserDefaults standardUserDefaults] synchronize];
-  
-  // set storeURL
-  if (_storeURL) [_storeURL autorelease];
-  _storeURL = [[NSURL fileURLWithPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[[NSUserDefaults standardUserDefaults] stringForKey:@"persistentStoreName"]]] retain];
-  
-  return newPersistentStoreName;
-}
+#pragma mark - Application's Documents directory
 
-+ (void)createDocumentDirectory {
-  BOOL isDir;
-  [[NSFileManager defaultManager] fileExistsAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] isDirectory:&isDir];
-  if (!isDir) {
-    [[NSFileManager defaultManager] createDirectoryAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] withIntermediateDirectories:YES attributes:nil error:nil];
-  }
+/**
+ Returns the URL to the application's Documents directory.
+ */
++ (NSURL *)applicationDocumentsDirectory {
+  return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
 @end
