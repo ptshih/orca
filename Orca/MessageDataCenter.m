@@ -1,0 +1,131 @@
+//
+//  MessageDataCenter.m
+//  Orca
+//
+//  Created by Peter Shih on 4/26/11.
+//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//
+
+#import "MessageDataCenter.h"
+#import "Message.h"
+#import "Message+Serialize.h"
+
+@implementation MessageDataCenter
+
++ (MessageDataCenter *)defaultCenter {
+  static MessageDataCenter *defaultCenter = nil;
+  if (!defaultCenter) {
+    defaultCenter = [[self alloc] init];
+  }
+  return defaultCenter;
+}
+
+- (id)init {
+  self = [super init];
+  if (self) {
+  }
+  return self;
+}
+
+#pragma mark -
+#pragma mark Prepare Request
+- (void)getMessagesForPodId:(NSString *)podId {
+  NSURL *messagesURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, MESSAGES_ENDPOINT]];
+  [self sendRequestWithURL:messagesURL andMethod:GET andHeaders:nil andParams:nil andUserInfo:nil];
+}
+
+#pragma mark -
+#pragma mark Serialization
+- (void)serializePhotosWithRequest:(ASIHTTPRequest *)request {
+  NSManagedObjectContext *context = [PSCoreDataStack newManagedObjectContext];
+  
+  // Parse the JSON
+  id response = [[[request responseData] JSONValue] valueForKey:@"data"];
+  
+  // Process the Response for Messages
+  if ([response isKindOfClass:[NSArray class]]) {
+    [self serializeMessagesWithArray:response inContext:context];
+  }
+  
+  // Save to CoreData
+  [PSCoreDataStack saveInContext:context];
+  
+  // Release context
+  [context release];
+}
+
+
+#pragma mark Core Data Serialization
+- (void)serializeMessagesWithArray:(NSArray *)array inContext:(NSManagedObjectContext *)context {
+  // Traverse response array and serialize dictionary -> coredata
+  NSString *sortKey = @"id";
+  NSString *entityName = @"Message";
+  
+  NSArray *sortedDicts = [array sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortKey ascending:YES]]];
+  NSArray *sortedKeys = [sortedDicts valueForKey:sortKey];
+  
+  NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
+  [fetchRequest setEntity:[NSEntityDescription entityForName:entityName inManagedObjectContext:context]];
+  [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(%@ IN %@)", sortKey, sortedKeys]];
+  [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortKey ascending:YES]]];
+  
+  
+  NSError *error = nil;
+  NSArray *foundEntities = [context executeFetchRequest:fetchRequest error:&error];
+  
+  Message *message = nil;
+  int i = 0;
+  for (NSDictionary *entityDict in sortedDicts) {
+    // Create a local autorelease pool
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    NSString *key = [entityDict valueForKey:sortKey];
+    if ([foundEntities count] > 0 && i < [foundEntities count] && [key isEqualToString:[[foundEntities objectAtIndex:i] id]]) {
+      // Duplicate entity found
+      message = [foundEntities objectAtIndex:i];
+      [message updateMessageWithDictionary:entityDict];
+      i++;
+    } else {
+      // No duplicate found
+      [Message addMessageWithDictionary:entityDict inContext:context];
+    }
+    
+    [pool drain];
+  }
+}
+
+#pragma mark -
+#pragma mark PSDataCenterDelegate
+- (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {
+  // Process the batched results in a BG thread
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    [self serializeMessagesWithRequest:request];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      // Inform Delegate if all responses are parsed
+      if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
+        [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:request withObject:nil];
+      }
+    });
+  });
+}
+
+- (void)dataCenterRequestFailed:(ASIHTTPRequest *)request {
+  // Inform Delegate
+  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFail:withError:)]) {
+    [_delegate performSelector:@selector(dataCenterDidFail:withError:) withObject:request withObject:[request error]];
+  }
+}
+
+#pragma mark -
+#pragma mark Fetch Request
+- (NSFetchRequest *)fetchPhotosForAlbumId:(NSString *)albumId withLimit:(NSUInteger)limit andOffset:(NSUInteger)offset sortWithKey:(NSString *)sortWithKey ascending:(BOOL)ascending {
+  NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:sortWithKey ascending:ascending] autorelease];
+  NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
+  NSFetchRequest *fetchRequest = [[PSCoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:@"getPhotosForAlbum" substitutionVariables:[NSDictionary dictionaryWithObject:albumId forKey:@"desiredAlbumId"]];
+  [fetchRequest setSortDescriptors:sortDescriptors];
+  [fetchRequest setFetchBatchSize:10];
+//  [fetchRequest setFetchLimit:limit];
+  return fetchRequest;
+}
+
+@end

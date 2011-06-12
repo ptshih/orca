@@ -8,7 +8,6 @@
 
 #import "LauncherViewController.h"
 #import "AlbumViewController.h"
-#import "SearchViewController.h"
 #import "MoreViewController.h"
 
 static UIImage *_actionImage = nil;
@@ -52,9 +51,6 @@ static UIImage *_actionImage = nil;
   AlbumViewController *favorites = [[[AlbumViewController alloc] init] autorelease];
   favorites.albumType = AlbumTypeFavorites;
   UINavigationController *favoritesNav = [[[UINavigationController alloc] initWithRootViewController:favorites] autorelease];
-  
-//  SearchViewController *search = [[[SearchViewController alloc] init] autorelease];
-//  UINavigationController *searchNav = [[[UINavigationController alloc] initWithRootViewController:search] autorelease];
   
   AlbumViewController *history = [[[AlbumViewController alloc] init] autorelease];
   history.albumType = AlbumTypeHistory;

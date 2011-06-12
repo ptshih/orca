@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "PSView.h"
-#import "Photo.h"
-#import "Photo+Serialize.h"
 
 @interface HeaderCell : PSView {
   UILabel *_userNameLabel;

@@ -50,11 +50,11 @@
 #define RADIANS(degrees) ((degrees * M_PI) / 180.0)
 
 // Facebook
-#define FB_APP_ID @"132514440148709"
-#define FB_APP_SECRET @"925b0a280e685631acf466dfea13b154"
-#define FB_PERMISSIONS [NSArray arrayWithObjects:@"offline_access", @"read_stream", @"publish_stream", @"user_photos", @"friends_photos", nil]
+#define FB_APP_ID @"147806651932979"
+#define FB_APP_SECRET @"587e59801ee014c9fdea54ad17e626c6"
+#define FB_PERMISSIONS [NSArray arrayWithObjects:nil]
+//#define FB_PERMISSIONS [NSArray arrayWithObjects:@"offline_access", @"publish_stream", nil]
 #define FB_PARAMS @"id,first_name,last_name,name,gender,locale"
-#define FB_CHECKIN_PARAMS @"id,from,tags,place,message,application,created_time"
 
 // ERROR STRINGS
 #define LOGOUT_ALERT @"Are you sure you want to logout?"

@@ -1,0 +1,32 @@
+{
+  "data": [
+           {
+           "id": "1",
+           "name": "Poker Night",
+           "fromId": "548430564",
+           "fromName": "Peter Shih",
+           "fromPictureUrl": "https://graph.facebook.com/ptshih/picture",
+           "message": "Who's buying the beer today?",
+           "participants": "Peter Shih, Gene Tsai",
+           "lat": "37.7805",
+           "lng": "-122.4100",
+           "timestamp": 1307908537
+           },
+           {
+           "id": "2",
+           "name": "South Bay Mafia",
+           "fromId": "548430564",
+           "fromName": "Peter Shih",
+           "fromPictureUrl": "https://graph.facebook.com/ptshih/picture",
+           "message": "Basketball today @ 4pm anyone?",
+           "participants": "Peter Shih, Gene Tsai, Nathan Bohannon, Thomas Liou",
+           "lat": "37.7805",
+           "lng": "-122.4100",
+           "timestamp": 1300930808
+           }
+           ],
+  "paging": {
+    "since": 1307908537,
+    "until": 1300930808
+  }
+}

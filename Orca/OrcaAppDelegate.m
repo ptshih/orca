@@ -12,7 +12,6 @@
 #import "LoginViewController.h"
 #import "LauncherViewController.h"
 #import "LoginDataCenter.h"
-#import "AlbumDataCenter.h"
 #import "PSImageCache.h"
 
 @implementation OrcaAppDelegate
@@ -210,12 +209,12 @@
   [[NSUserDefaults standardUserDefaults] synchronize];
   
   if ([newFriendIds count] > 0) {
-    [[AlbumDataCenter defaultCenter] getAlbumsForFriendIds:newFriendIds];
+//    [[AlbumDataCenter defaultCenter] getAlbumsForFriendIds:newFriendIds];
   }
 }
 
 - (void)startDownloadAlbums {
-  [[AlbumDataCenter defaultCenter] getAlbums];
+//  [[AlbumDataCenter defaultCenter] getAlbums];
 }
 
 #pragma mark Session

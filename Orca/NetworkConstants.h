@@ -37,11 +37,11 @@
 #define TEST // enable this to hit test APIs
 
 #ifdef TEST
-  #define ALBUMS_ENDPOINT @"albums_test"
-  #define SNAPS_ENDPOINT @"snaps_test"
+  #define PODS_ENDPOINT @"pods_test"
+  #define MESSAGES_ENDPOINT @"messages_test"
 #else
-  #define ALBUMS_ENDPOINT @"albums"
-  #define SNAPS_ENDPOINT @"snaps"
+  #define PODS_ENDPOINT @"pods"
+  #define MESSAGES_ENDPOINT @"messages"
 #endif
 
 #define S3_PHOTOS_URL @"http://s3.amazonaws.com/scrapboard/kupos/photos"
