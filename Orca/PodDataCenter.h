@@ -18,6 +18,7 @@
  Get pods from Server
  */
 - (void)getPods;
+- (void)getPodsFromFixtures;
 
 /**
  Serialize pods from Server

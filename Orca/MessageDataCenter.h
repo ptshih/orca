@@ -12,6 +12,8 @@
 @interface MessageDataCenter : PSDataCenter {
 }
 
++ (MessageDataCenter *)defaultCenter;
+
 /**
  Get messages from Server
  */

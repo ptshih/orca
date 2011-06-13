@@ -35,6 +35,36 @@
   [self sendRequestWithURL:podsURL andMethod:GET andHeaders:nil andParams:nil andUserInfo:nil];
 }
 
+- (void)getPodsFromFixtures {
+  NSString *filePath = [[NSBundle mainBundle] pathForResource:@"pods" ofType:@"json"];
+  NSData *fixtureData = [NSData dataWithContentsOfFile:filePath];
+  
+  // Process the batched results in a BG thread
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    NSManagedObjectContext *context = [PSCoreDataStack newManagedObjectContext];
+    
+    id response = [[fixtureData JSONValue] valueForKey:@"data"];
+    
+    // Process the Response for Pods
+    if ([response isKindOfClass:[NSArray class]]) {
+      [self serializePodsWithArray:response inContext:context];
+    }
+    
+    // Save to CoreData
+    [PSCoreDataStack saveInContext:context];
+    
+    // Release context
+    [context release];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      // Inform Delegate if all responses are parsed
+      if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
+        [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:nil withObject:nil];
+      }
+    });
+  });
+}
+
 #pragma mark -
 #pragma mark Serialization
 - (void)serializePodsWithRequest:(ASIHTTPRequest *)request {
@@ -66,7 +96,7 @@
   
   NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
   [fetchRequest setEntity:[NSEntityDescription entityForName:entityName inManagedObjectContext:context]];
-  [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(%@ IN %@)", sortKey, sortedKeys]];
+  [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(id IN %@)", sortedKeys]];
   [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortKey ascending:YES]]];
     
   
@@ -114,16 +144,6 @@
   if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFail:withError:)]) {
     [_delegate performSelector:@selector(dataCenterDidFail:withError:) withObject:request withObject:[request error]];
   } 
-}
-
-#pragma mark -
-#pragma mark Fetch Request
-- (NSFetchRequest *)fetchAlbumsWithTemplate:(NSString *)fetchTemplate andSortDescriptors:(NSArray *)sortDescriptors andSubstitutionVariables:(NSDictionary *)substitutionVariables andLimit:(NSUInteger)limit andOffset:(NSUInteger)offset {
-  NSFetchRequest *fetchRequest = [[PSCoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:fetchTemplate substitutionVariables:substitutionVariables];
-  [fetchRequest setSortDescriptors:sortDescriptors];
-  [fetchRequest setFetchBatchSize:10];
-  [fetchRequest setFetchLimit:limit];
-  return fetchRequest;
 }
 
 - (void)dealloc {

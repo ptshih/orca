@@ -14,15 +14,12 @@
 @class LoginViewController;
 @class LauncherViewController;
 @class LoginDataCenter;
-@class AlbumDataCenter;
 
 @interface OrcaAppDelegate : NSObject <UIApplicationDelegate, LoginDelegate, PSDataCenterDelegate> {
   UIWindow *_window;
   Facebook *_facebook;
   LoginViewController *_loginViewController;
   LauncherViewController *_launcherViewController;
-  
-  AlbumDataCenter *_albumDataCenter;
   
   // Session
   NSString *_sessionKey;

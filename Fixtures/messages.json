@@ -3,6 +3,7 @@
            {
            "id": "1",
            "podId" : "1",
+           "sequence": "80a2ba80-9552-11e0-aa80-0800200c9a66",
            "fromId": "548430564",
            "fromName": "Peter Shih",
            "fromPictureUrl": "https://graph.facebook.com/ptshih/picture",
@@ -14,6 +15,7 @@
            {
            "id": "2",
            "podId" : "1",
+           "sequence": "89376240-9552-11e0-aa80-0800200c9a66",
            "fromId": "548430564",
            "fromName": "Peter Shih",
            "fromPictureUrl": "https://graph.facebook.com/ptshih/picture",

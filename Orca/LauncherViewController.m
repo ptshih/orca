@@ -7,7 +7,7 @@
 //
 
 #import "LauncherViewController.h"
-#import "AlbumViewController.h"
+#import "PodViewController.h"
 #import "MoreViewController.h"
 
 static UIImage *_actionImage = nil;
@@ -40,34 +40,18 @@ static UIImage *_actionImage = nil;
   _tabBarController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   
   // Setup Tabs
-  AlbumViewController *me = [[[AlbumViewController alloc] init] autorelease];
-  me.albumType = AlbumTypeMe;
-  UINavigationController *meNav = [[[UINavigationController alloc] initWithRootViewController:me] autorelease];
-  
-  AlbumViewController *friends = [[[AlbumViewController alloc] init] autorelease];
-  friends.albumType = AlbumTypeFriends;
-  UINavigationController *friendsNav = [[[UINavigationController alloc] initWithRootViewController:friends] autorelease];
-  
-  AlbumViewController *favorites = [[[AlbumViewController alloc] init] autorelease];
-  favorites.albumType = AlbumTypeFavorites;
-  UINavigationController *favoritesNav = [[[UINavigationController alloc] initWithRootViewController:favorites] autorelease];
-  
-  AlbumViewController *history = [[[AlbumViewController alloc] init] autorelease];
-  history.albumType = AlbumTypeHistory;
-  UINavigationController *historyNav = [[[UINavigationController alloc] initWithRootViewController:history] autorelease];
+  PodViewController *pods = [[[PodViewController alloc] init] autorelease];
+  UINavigationController *podsNav = [[[UINavigationController alloc] initWithRootViewController:pods] autorelease];
   
   MoreViewController *more = [[[MoreViewController alloc] init] autorelease];
   UINavigationController *moreNav = [[[UINavigationController alloc] initWithRootViewController:more] autorelease];
   
   // Setup Tab Items
-  me.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Me" image:[UIImage imageNamed:@"111-user.png"] tag:7001] autorelease];
-  friends.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Friends" image:[UIImage imageNamed:@"112-group.png"] tag:7002] autorelease];
-  favorites.tabBarItem = [[[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:7003] autorelease];
-  history.tabBarItem = [[[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemHistory tag:7004] autorelease];
+  pods.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Pods" image:[UIImage imageNamed:@"tab_feed.png"] tag:7001] autorelease];
   more.tabBarItem = [[[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemMore tag:7005] autorelease];
   
   // Set Tab Controllers
-  _tabBarController.viewControllers = [NSArray arrayWithObjects:meNav, friendsNav, favoritesNav, historyNav, moreNav, nil];
+  _tabBarController.viewControllers = [NSArray arrayWithObjects:podsNav, moreNav, nil];
   
   // Add to view
   self.view = _tabBarController.view;

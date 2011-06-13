@@ -9,7 +9,6 @@
 #import "CameraViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "ComposeViewController.h"
-#import "CameraImageHelper.h"
 
 @implementation CameraViewController (CameraDelegateMethods)
 

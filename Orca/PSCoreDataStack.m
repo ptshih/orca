@@ -27,7 +27,7 @@ static NSURL *_storeURL = nil;
 #pragma mark Initialization Methods
 + (void)initialize {  
   _storeOptions = [[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil] retain];
-  _storeURL = [[[[self class] applicationDocumentsDirectory] URLByAppendingPathComponent:@"photofeed.sqlite"] retain];
+  _storeURL = [[[[self class] applicationDocumentsDirectory] URLByAppendingPathComponent:@"orca.sqlite"] retain];
 }
 
 + (void)deleteAllObjects:(NSString *)entityDescription inContext:(NSManagedObjectContext *)context {

@@ -58,7 +58,7 @@
 #pragma mark Core Data Serialization
 - (void)serializeMessagesWithArray:(NSArray *)array inContext:(NSManagedObjectContext *)context {
   // Traverse response array and serialize dictionary -> coredata
-  NSString *sortKey = @"id";
+  NSString *sortKey = @"sequence";
   NSString *entityName = @"Message";
   
   NSArray *sortedDicts = [array sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortKey ascending:YES]]];
@@ -66,7 +66,7 @@
   
   NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
   [fetchRequest setEntity:[NSEntityDescription entityForName:entityName inManagedObjectContext:context]];
-  [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(%@ IN %@)", sortKey, sortedKeys]];
+  [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(sequence IN %@)", sortedKeys]];
   [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortKey ascending:YES]]];
   
   

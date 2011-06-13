@@ -43,8 +43,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
-  [[AlbumDataCenter defaultCenter] setDelegate:self];
-  
   NSLog(@"fonts: %@",[UIFont familyNames]);
 
   // We can configure if the imageCache should reside in cache or document directory here
@@ -215,6 +213,9 @@
 
 - (void)startDownloadAlbums {
 //  [[AlbumDataCenter defaultCenter] getAlbums];
+  
+#warning debug bypass
+  [self dataCenterDidFinish:nil withResponse:nil];
 }
 
 #pragma mark Session
@@ -243,8 +244,6 @@
   if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
     [_launcherViewController dismissModalViewControllerAnimated:YES];
   }
-  
-  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadAlbumController object:nil];
 }
 
 - (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
