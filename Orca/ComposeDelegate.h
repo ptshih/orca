@@ -10,5 +10,7 @@
 
 
 @protocol ComposeDelegate <NSObject>
-- (void)composeDidSend;
+
+- (void)composeDidSendWithUserInfo:(NSDictionary *)userInfo;
+
 @end

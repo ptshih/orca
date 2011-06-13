@@ -65,6 +65,20 @@
   [self.window addSubview:_launcherViewController.view];
   [self.window makeKeyAndVisible];
   
+  // Let the device know we want to receive push notifications
+	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+  
+  // Handle entry via APNS
+  if (launchOptions) {
+		NSDictionary *dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+		if (dictionary) {
+			NSLog(@"Launched from push notification: %@", dictionary);
+      if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
+        [self processMessageFromRemoteNotification:dictionary];
+      }
+		}
+	}
+  
   // Login if necessary
   [self tryLogin];
   
@@ -97,6 +111,25 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
   [[NSUserDefaults standardUserDefaults] synchronize];
 //  [[PSImageCache sharedCache] flushImageCacheToDisk];
+}
+
+#pragma mark -
+#pragma mark APNS
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+  NSLog(@"Received notification while app was active: %@", userInfo);
+  [self processMessageFromRemoteNotification:userInfo];
+}
+
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
+	NSLog(@"My token is: %@", deviceToken);
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error {
+	NSLog(@"Failed to get token, error: %@", error);
+}
+
+- (void)processMessageFromRemoteNotification:(NSDictionary *)userInfo {
+  // This method should 
 }
 
 
@@ -151,6 +184,7 @@
 - (void)serializeMeWithResponse:(id)response {
   NSString *facebookId = [response valueForKey:@"id"];
   NSString *facebookName = [response valueForKey:@"name"];
+  NSString *facebookPictureUrl = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", facebookId];
   NSArray *facebookFriends = [response valueForKey:@"friends"] ? [[response valueForKey:@"friends"] valueForKey:@"data"] : [NSArray array];
   
   NSMutableDictionary *friendsDict = [NSMutableDictionary dictionary];
@@ -161,6 +195,7 @@
   // Set UserDefaults
   [[NSUserDefaults standardUserDefaults] setObject:facebookId forKey:@"facebookId"];
   [[NSUserDefaults standardUserDefaults] setObject:facebookName forKey:@"facebookName"];
+  [[NSUserDefaults standardUserDefaults] setObject:facebookPictureUrl forKey:@"facebookPictureUrl"];
   [[NSUserDefaults standardUserDefaults] setObject:friendsDict forKey:@"facebookFriends"];
   [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
   [[NSUserDefaults standardUserDefaults] synchronize];

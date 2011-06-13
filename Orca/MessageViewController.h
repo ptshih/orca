@@ -8,15 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "CardCoreDataTableViewController.h"
+#import "ComposeDelegate.h"
 
 @class Pod;
 
-@interface MessageViewController : CardCoreDataTableViewController {
+@interface MessageViewController : CardCoreDataTableViewController <ComposeDelegate> {
   Pod *_pod;
   
   NSMutableDictionary *_headerCellCache;
 }
 
 @property (nonatomic, assign) Pod *pod;
+
+- (void)newMessage;
 
 @end

@@ -11,6 +11,13 @@
 
 @implementation NSString (Util)
 
++ (NSString *)uuidString {
+  CFUUIDRef theUUID = CFUUIDCreate(NULL);
+  CFStringRef string = CFUUIDCreateString(NULL, theUUID);
+  CFRelease(theUUID);
+  return [(NSString *)string autorelease];
+}
+
 - (NSString *)stringWithPercentEscape {            
   return [(NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)[[self mutableCopy] autorelease], NULL, CFSTR("￼=,!$&'()*+;@?\n\"<>#\t :/"),kCFStringEncodingUTF8) autorelease];
 }

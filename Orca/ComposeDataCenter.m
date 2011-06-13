@@ -18,22 +18,15 @@
   return defaultCenter;
 }
 
-- (void)sendPhotoWithAlbumId:(NSString *)albumId andMessage:(NSString *)message andPhoto:(UIImage *)photo shouldShare:(BOOL)shouldShare {
-  NSURL *snapComposeUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/snaps", API_BASE_URL]];
+- (void)sendMessage:(NSString *)message andSequence:(NSString *)sequence forPodId:(NSString *)podId {
+  NSURL *composeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, @"messages"]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
-  
-  [params setValue:albumId forKey:@"album_id"];
+  [params setValue:podId forKey:@"podId"];
   [params setValue:message forKey:@"message"];
-  [params setValue:@"photo" forKey:@"media_type"];
-  [params setValue:[NSNumber numberWithBool:shouldShare] forKey:@"should_share"];
+  [params setValue:sequence forKey:@"sequence"];
   
-  NSData *imageData = nil;
-  imageData = UIImageJPEGRepresentation(photo, 0.8);
-  
-  NSDictionary *file = [NSDictionary dictionaryWithObjectsAndKeys:imageData, @"fileData", @"photo.jpg", @"fileName", @"image/jpeg", @"fileContentType", @"photo", @"fileKey", nil];
-  
-  [self sendFormRequestWithURL:snapComposeUrl andHeaders:nil andParams:params andFile:file andUserInfo:nil];
+  [self sendRequestWithURL:composeURL andMethod:POST andHeaders:nil andParams:params andUserInfo:nil];
 }
 
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {

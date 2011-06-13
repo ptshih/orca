@@ -124,6 +124,29 @@
   }
 }
 
+- (void)serializeComposedMessageWithUserInf:(NSDictionary *)userInfo {
+  // Userinfo has 3 keys (all strings)
+  // message, podId, sequence
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    NSManagedObjectContext *context = [PSCoreDataStack newManagedObjectContext];
+
+    [Message addMessageWithDictionary:userInfo inContext:context];
+    
+    // Save to CoreData
+    [PSCoreDataStack saveInContext:context];
+    
+    // Release context
+    [context release];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      // Inform Delegate if all responses are parsed
+      if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
+        [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:nil withObject:nil];
+      }
+    });
+  });
+}
+
 #pragma mark -
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {

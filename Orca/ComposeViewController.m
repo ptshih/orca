@@ -16,6 +16,7 @@
 
 @implementation ComposeViewController
 
+@synthesize podId = _podId;
 @synthesize snappedImage = _snappedImage;
 @synthesize delegate = _delegate;
 
@@ -31,37 +32,37 @@
 - (void)loadView {
   [super loadView];
   
-  self.navigationController.navigationBarHidden = NO;
-  
-  [_nullView removeFromSuperview];
-  self.view.backgroundColor = [UIColor whiteColor];
-  
-  // Send Button
-  UIBarButtonItem *sendButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Send", @"Send") style:UIBarButtonItemStyleBordered target:self action:@selector(send)];
-  self.navigationItem.rightBarButtonItem = sendButton;
-  [sendButton release];
-  
-  
-  // Media Preview
-  _mediaPreview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
-  [self.view addSubview:_mediaPreview];
-  
-  // Set the snapped image as the preview
-  UIImage *scaledImage = [_snappedImage cropProportionalToSize:CGSizeMake(_mediaPreview.width * 2, _mediaPreview.height * 2)];
-  [_mediaPreview setImage:[UIImage imageWithCGImage:scaledImage.CGImage scale:2 orientation:scaledImage.imageOrientation]];
+  self.view.backgroundColor = [UIColor clearColor];
   
   // Compose Caption Bubble
-  _composeView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
+  _composeView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 44)];
+  _composeView.backgroundColor = [UIColor whiteColor];
+  _composeView.layer.cornerRadius = 5.0;
+  _composeView.layer.masksToBounds = YES;
   _composeView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:_composeView];
 
+  // Header View
+  _headerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, _composeView.width, 44)];
+  _headerToolbar.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
+  
+  UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)] autorelease];
+  UIBarButtonItem *sendButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(send)] autorelease];
+  UIBarButtonItem *spacer = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+  UIBarButtonItem *title = [[[UIBarButtonItem alloc] initWithTitle:@"Message" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
+  
+  [_headerToolbar setItems:[NSArray arrayWithObjects:cancelButton, [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease], title,[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease], sendButton, nil]];
+  
   // Message Field
-  _message = [[PSTextView alloc] initWithFrame:_composeView.bounds];
+  _message = [[PSTextView alloc] initWithFrame:CGRectMake(0, 44, _composeView.width, _composeView.height - _headerToolbar.height)];
+  _message.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_message.returnKeyType = UIReturnKeyDefault;
 	_message.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0];
 	_message.delegate = self;
-  _message.placeholder = @"Add a caption";
+  _message.placeholder = @"Write a message...";
   _message.placeholderColor = [UIColor lightGrayColor];
+  
+  [_composeView addSubview:_headerToolbar];
   [_composeView addSubview:_message];
 }
 
@@ -79,10 +80,32 @@
 }
 
 - (void)send {
-  [[ComposeDataCenter sharedInstance] sendPhotoWithAlbumId:@"1" andMessage:_message.text andPhoto:_snappedImage shouldShare:YES];
+  // Send it asynchronously and dismiss composer
+  NSString *sequence = [NSString uuidString];
+  [[ComposeDataCenter defaultCenter] sendMessage:_message.text andSequence:sequence forPodId:_podId];
   
-  // Dismiss and let the op finish in the background
-  [self dismissModalViewControllerAnimated:YES];
+  // We should create a local copy of this message
+  NSTimeInterval currentTimestamp = [[NSDate date] timeIntervalSince1970];
+  NSInteger currentTimestampInteger = floor(currentTimestamp);
+  
+  NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+  [userInfo setValue:_message.text forKey:@"message"];
+  [userInfo setValue:_podId forKey:@"podId"];
+  [userInfo setValue:sequence forKey:@"sequence"];
+  [userInfo setValue:[NSNumber numberWithInteger:currentTimestampInteger] forKey:@"timestamp"];
+  [userInfo setValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookId"] forKey:@"fromId"];
+  [userInfo setValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookName"] forKey:@"fromName"];
+  [userInfo setValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookPictureUrl"] forKey:@"fromPictureUrl"];
+  
+  if (self.delegate && [self.delegate respondsToSelector:@selector(composeDidSendWithUserInfo:)]) {
+    [self.delegate performSelector:@selector(composeDidSendWithUserInfo:) withObject:userInfo];
+  }
+  
+  [self cancel];
+}
+
+- (void)cancel {
+  [_message resignFirstResponder];
 }
 
 #pragma mark -
@@ -127,7 +150,8 @@
 #endif  
   
   // Animate up or down
-  [UIView beginAnimations:nil context:nil];
+  NSString *dir = up ? @"up" : @"down";
+  [UIView beginAnimations:dir context:nil];
   [UIView setAnimationDuration:animationDuration];
   [UIView setAnimationCurve:animationCurve];
   
@@ -137,26 +161,27 @@
 //    self.view.height = self.view.height + keyboardFrame.size.height;
 //  }
   
-//  if (up) {
-//    _composeView.height = self.view.bounds.size.height - keyboardFrame.size.height;
-//  } else {
-//    _composeView.height = self.view.bounds.size.height + keyboardFrame.size.height;
-//  }
-  
-//  _message.height = up ? self.view.bounds.size.height - 44 - keyboardFrame.size.height - 20 : 30;
-//  _backgroundView.height = _message.height;
-//  _photoUpload.top = _message.bottom + 10;
-//  _locationButton.top = _message.bottom + 10;
+  if (up) {
+    _composeView.height = self.view.bounds.size.height - 40 - keyboardFrame.size.height;
+  } else {
+//    _composeView.height = self.view.bounds.size.height - 40 + keyboardFrame.size.height;
+    _composeView.height = 44;
+  }
 
   [UIView commitAnimations];
+  
+  if ([dir isEqualToString:@"down"]) {
+    [self dismissModalViewControllerAnimated:YES];
+  }
 }
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-
-  RELEASE_SAFELY(_mediaPreview);
+  
+  RELEASE_SAFELY(_podId);
   RELEASE_SAFELY(_composeView);
+  RELEASE_SAFELY(_headerToolbar);
   RELEASE_SAFELY(_message);
   RELEASE_SAFELY(_snappedImage);
   [super dealloc];

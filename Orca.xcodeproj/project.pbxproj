@@ -1729,7 +1729,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Peter Shih (QGWRZB9J8P)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1737,7 +1737,7 @@
 				INFOPLIST_FILE = "Orca/Orca-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = Orca;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "A8A3D014-BE4C-4536-A664-37564DF39738";
 				SDKROOT = iphoneos4.1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1747,14 +1747,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Peter Shih (QGWRZB9J8P)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Orca/Orca-Prefix.pch";
 				INFOPLIST_FILE = "Orca/Orca-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = Orca;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "A8A3D014-BE4C-4536-A664-37564DF39738";
 				SDKROOT = iphoneos4.1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;

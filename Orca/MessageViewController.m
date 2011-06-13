@@ -11,6 +11,7 @@
 #import "Message.h"
 #import "Pod.h"
 #import "MessageCell.h"
+#import "ComposeViewController.h"
 
 @implementation MessageViewController
 
@@ -24,19 +25,18 @@
     _limit = 0;
     _fetchLimit = _limit;
     self.hidesBottomBarWhenPushed = YES;
+    [[MessageDataCenter defaultCenter] setDelegate:self];
   }
   return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [[MessageDataCenter defaultCenter] setDelegate:self];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadController object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
-  [[MessageDataCenter defaultCenter] setDelegate:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadController object:nil];
 }
 
@@ -53,13 +53,17 @@
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
-  [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleNone];
+  [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
   // Search
 //  [self setupSearchDisplayControllerWithScopeButtonTitles:nil andPlaceholder:@"Tagged Friends..."];
   
   // Pull Refresh
   [self setupPullRefresh];
+  
+  [self setupTableFooter];
+  
+  [self setupFooterView];
   
 //  [self setupLoadMoreView];
   
@@ -70,6 +74,33 @@
   
   // Get new from server
   [self reloadCardController];
+}
+
+- (void)setupFooterView {
+  [super setupFooterView];
+  
+  // Setup the fake image view
+  PSURLCacheImageView *profileImage = [[PSURLCacheImageView alloc] initWithFrame:CGRectMake(10, 7, 30, 30)];
+  profileImage.urlPath = [[NSUserDefaults standardUserDefaults] stringForKey:@"facebookPictureUrl"];
+  [profileImage loadImageAndDownload:YES];
+  profileImage.layer.cornerRadius = 5.0;
+  profileImage.layer.masksToBounds = YES;
+  [_footerView addSubview:profileImage];
+  [profileImage release];
+  
+  // Setup the fake message button
+  UIButton *messageButton = [[UIButton alloc] initWithFrame:CGRectMake(45, 7, 265, 30)];
+  messageButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  messageButton.titleLabel.font = [UIFont systemFontOfSize:14];
+  [messageButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+  [messageButton setContentEdgeInsets:UIEdgeInsetsMake(0, 15, 0, 0)];
+  [messageButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+  [messageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+  [messageButton setTitle:@"Send a message..." forState:UIControlStateNormal];
+  [messageButton setBackgroundImage:[[UIImage imageNamed:@"bubble.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15] forState:UIControlStateNormal];
+  [messageButton addTarget:self action:@selector(newMessage) forControlEvents:UIControlEventTouchUpInside];
+  [_footerView addSubview:messageButton];
+  [messageButton release];
 }
 
 - (void)reloadCardController {
@@ -96,6 +127,19 @@
 
 #pragma mark -
 #pragma mark Compose
+- (void)newMessage {
+  ComposeViewController *cvc = [[ComposeViewController alloc] init];
+  cvc.delegate = self;
+  cvc.podId = _pod.id;
+  cvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+  [self presentModalViewController:cvc animated:YES];
+  [cvc release];
+}
+
+- (void)composeDidSendWithUserInfo:(NSDictionary *)userInfo {
+  // Write a local copy to core data from composed message
+  [[MessageDataCenter defaultCenter] serializeComposedMessageWithUserInf:userInfo];
+}
 
 #pragma mark -
 #pragma mark TableView
@@ -203,6 +247,7 @@
 }
 
 - (void)dealloc {
+  [[MessageDataCenter defaultCenter] setDelegate:nil];
   RELEASE_SAFELY(_headerCellCache);
   [super dealloc];
 }

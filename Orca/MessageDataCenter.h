@@ -26,4 +26,9 @@
 - (void)serializeMessagesWithRequest:(ASIHTTPRequest *)request;
 - (void)serializeMessagesWithArray:(NSArray *)array inContext:(NSManagedObjectContext *)context;
 
+/**
+ Serialize local copy of a composed message
+ */
+- (void)serializeComposedMessageWithUserInf:(NSDictionary *)userInfo;
+
 @end

@@ -218,7 +218,7 @@
 }
 
 - (void)loadMoreIfAvailable {
-  if (!_tableView.tableFooterView) {
+  if (!_loadMoreView) {
     return;
   }
   // Make sure we are showing the footer first before attempting to load more

@@ -15,7 +15,7 @@
 
 + (ComposeDataCenter *)defaultCenter;
 
-// Create a new snap
-- (void)sendPhotoWithAlbumId:(NSString *)albumId andMessage:(NSString *)message andPhoto:(UIImage *)photo shouldShare:(BOOL)shouldShare;
+// Send a message
+- (void)sendMessage:(NSString *)message andSequence:(NSString *)sequence forPodId:(NSString *)podId;
 
 @end

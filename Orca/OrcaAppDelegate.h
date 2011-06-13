@@ -43,4 +43,7 @@
 - (void)getFriends;
 - (void)serializeFriendsWithResponse:(id)response;
 
+// APNS
+- (void)processMessageFromRemoteNotification:(NSDictionary *)userInfo;
+
 @end

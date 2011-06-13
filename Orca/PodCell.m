@@ -60,8 +60,8 @@
     _participantsLabel.numberOfLines = 1;
     
     // Shadows
-    _nameLabel.shadowColor = [UIColor whiteColor];
-    _nameLabel.shadowOffset = CGSizeMake(0, -1);
+//    _nameLabel.shadowColor = [UIColor whiteColor];
+//    _nameLabel.shadowOffset = CGSizeMake(0, -1);
     
     // Add labels
     [self.contentView addSubview:_nameLabel];

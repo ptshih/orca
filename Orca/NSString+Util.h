@@ -11,6 +11,7 @@
 
 @interface NSString (Util)
 
++ (NSString *)uuidString;
 - (NSString *)stringWithPercentEscape;
 
 @end
