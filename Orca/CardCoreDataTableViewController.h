@@ -15,16 +15,11 @@
   NSManagedObjectContext *_context;
   NSFetchedResultsController * _fetchedResultsController;
   NSString * _sectionNameKeyPathForFetchedResultsController;
-  NSUInteger _limit;
-  NSUInteger _offset;
-  NSUInteger _fetchLimit;
-  NSUInteger _lastFetchedCount;
   NSTimer *_searchTimer;
   NSPredicate *_searchPredicate;
-  BOOL _isFirstLoad;
 }
 
-@property (nonatomic, retain) NSManagedObjectContext *context;
+@property (nonatomic, assign) NSManagedObjectContext *context;
 @property (nonatomic, retain) NSFetchedResultsController * fetchedResultsController;
 @property (nonatomic, retain) NSString * sectionNameKeyPathForFetchedResultsController;
 
@@ -34,7 +29,7 @@
 - (void)delayedFilterContentWithTimer:(NSTimer *)timer;
 
 - (void)resetFetchedResultsController;
-- (void)executeFetch;
+- (void)executeFetch:(BOOL)updateFRC;
 - (NSFetchRequest *)getFetchRequest;
 - (void)coreDataDidReset;
 

@@ -22,8 +22,6 @@
   if (self) {
     _sectionNameKeyPathForFetchedResultsController = nil;
     _headerCellCache = [[NSMutableDictionary alloc] init];
-    _limit = 0;
-    _fetchLimit = _limit;
     self.hidesBottomBarWhenPushed = YES;
     [[MessageDataCenter defaultCenter] setDelegate:self];
   }
@@ -56,7 +54,7 @@
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
   // Search
-//  [self setupSearchDisplayControllerWithScopeButtonTitles:nil andPlaceholder:@"Tagged Friends..."];
+  [self setupSearchDisplayControllerWithScopeButtonTitles:nil andPlaceholder:@"Search..."];
   
   // Pull Refresh
   [self setupPullRefresh];
@@ -67,7 +65,7 @@
   
 //  [self setupLoadMoreView];
   
-  [self executeFetch];
+  [self executeFetch:YES];
   
 //  _album.lastViewed = [NSDate date];
 //  [PSCoreDataStack saveInContext:[_album managedObjectContext]];
@@ -106,8 +104,8 @@
 - (void)reloadCardController {
   [super reloadCardController];
   
-//  [[MessageDataCenter defaultCenter] getMessagesFromFixtures];
-  [[MessageDataCenter defaultCenter] getMessagesForPodId:_pod.id];
+  [[MessageDataCenter defaultCenter] getMessagesFromFixtures];
+//  [[MessageDataCenter defaultCenter] getMessagesForPodId:_pod.id];
 }
 
 - (void)unloadCardController {
@@ -117,8 +115,6 @@
 #pragma mark -
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
-  //  NSLog(@"DC finish with response: %@", response);
-  //  [self executeFetch];
   [self dataSourceDidLoad];
 }
 
@@ -221,7 +217,7 @@
   
   for (NSString *searchTerm in searchTerms) {
     NSString *searchValue = [NSString stringWithFormat:@"%@", searchTerm];
-    [subpredicates addObject:[NSPredicate predicateWithFormat:@"ANY tags.fromName CONTAINS[cd] %@", searchValue]];
+    [subpredicates addObject:[NSPredicate predicateWithFormat:@"message CONTAINS[cd] %@", searchValue]];
   }
   
   if (_searchPredicate) {
@@ -229,7 +225,7 @@
   }
   _searchPredicate = [[NSCompoundPredicate andPredicateWithSubpredicates:subpredicates] retain];
   
-  [self executeFetch];
+  [self executeFetch:YES];
 }
 #pragma mark -
 #pragma mark FetchRequest
@@ -242,7 +238,6 @@
   NSFetchRequest *fetchRequest = [[PSCoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:fetchTemplate substitutionVariables:substitutionVariables];
   [fetchRequest setSortDescriptors:sortDescriptors];
   [fetchRequest setFetchBatchSize:10];
-  [fetchRequest setFetchLimit:_fetchLimit];
   
   return fetchRequest;
 }

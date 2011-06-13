@@ -27,11 +27,6 @@
     _context = nil;
     _fetchedResultsController = nil;
     _sectionNameKeyPathForFetchedResultsController = nil;
-    _limit = 0;
-    _offset = 0;
-    _fetchLimit = _limit;
-    _lastFetchedCount = 0;
-    _isFirstLoad = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changesSaved:) name:NSManagedObjectContextDidSaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
@@ -54,17 +49,6 @@
 
 - (void)updateState {
   [super updateState];
-  
-  if (!_loadMoreView) return;
-  
-  NSUInteger fetchedCount = [[self.fetchedResultsController fetchedObjects] count];
-  if (fetchedCount == 0 || fetchedCount < _fetchLimit) {
-    [self hideLoadMoreView];
-  } else if (fetchedCount % _limit == 0) {
-    [self showLoadMoreView];
-  } else {
-    [self hideLoadMoreView];
-  }
 }
 
 #pragma mark Data Source
@@ -78,15 +62,10 @@
 
 - (void)loadMore {
   [super loadMore];
-  
-  _lastFetchedCount = [[self.fetchedResultsController fetchedObjects] count];
-  _fetchLimit = _lastFetchedCount + _limit;
-  [self executeFetch];
 }
 
 - (void)dataSourceDidLoad {
   [super dataSourceDidLoad];
-  [self executeFetch];
 }
 
 #pragma mark Core Data
@@ -104,7 +83,7 @@
   RELEASE_SAFELY(_fetchedResultsController);
   
   // Get a new context
-  _context = [PSCoreDataStack newManagedObjectContext];
+  self.context = [PSCoreDataStack mainThreadContext];
 }
 
 - (NSFetchedResultsController*)fetchedResultsController  {
@@ -116,13 +95,12 @@
   return _fetchedResultsController;
 }
 
-- (void)executeFetch {
+- (void)executeFetch:(BOOL)updateFRC {
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     NSError *error = nil;
     NSFetchRequest *backgroundFetch = [[self getFetchRequest] copy];
     
     [backgroundFetch setResultType:NSManagedObjectIDResultType];
-    [backgroundFetch setFetchLimit:_fetchLimit];
 //    [backgroundFetch setSortDescriptors:nil];
     NSPredicate *predicate = [backgroundFetch predicate];
     NSPredicate *combinedPredicate = nil;
@@ -146,22 +124,27 @@
       [userInfo setObject:results forKey:@"results"];
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-      NSError *frcError = nil;
-      NSPredicate *frcPredicate = [NSPredicate predicateWithFormat:@"self IN %@", results];
-      [self.fetchedResultsController.fetchRequest setPredicate:frcPredicate];
-      [self.fetchedResultsController.fetchRequest setFetchLimit:_fetchLimit];
-      if ([self.fetchedResultsController performFetch:&frcError]) {
-        VLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);
+      if (updateFRC) {
+        NSError *frcError = nil;
+        NSPredicate *frcPredicate = [NSPredicate predicateWithFormat:@"self IN %@", results];
+        [self.fetchedResultsController.fetchRequest setPredicate:frcPredicate];
+        if ([self.fetchedResultsController performFetch:&frcError]) {
+          VLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);
 
-        if (self.searchDisplayController.active) {
-          [self.searchDisplayController.searchResultsTableView reloadData];
+          if (self.searchDisplayController.active) {
+            [self.searchDisplayController.searchResultsTableView reloadData];
+          } else {
+            [_tableView reloadData];
+            [self updateState];
+          }
         } else {
-          [_tableView reloadData];
-          [self updateState];
+          VLog(@"Fetch failed with error: %@", [error localizedDescription]);
         }
-      } else {
-        VLog(@"Fetch failed with error: %@", [error localizedDescription]);
+        
+        // Reset the FRC predicate so that it gets delegate callbacks
+        [self.fetchedResultsController.fetchRequest setPredicate:nil];
       }
+      
       [context release];
       [backgroundFetch release];
       [userInfo release];
@@ -246,7 +229,7 @@
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
   [super searchDisplayControllerWillEndSearch:controller];
   _searchPredicate = nil;
-  [self executeFetch];
+  [self executeFetch:YES];
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
@@ -308,7 +291,6 @@
   RELEASE_SAFELY(_sectionNameKeyPathForFetchedResultsController);
   RELEASE_SAFELY(_searchPredicate);
   INVALIDATE_TIMER(_searchTimer);
-  RELEASE_SAFELY(_context);
   [super dealloc];
 }
 

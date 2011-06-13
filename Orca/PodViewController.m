@@ -17,8 +17,6 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _limit = 0;
-    _fetchLimit = _limit;
     _sectionNameKeyPathForFetchedResultsController = nil;
   }
   return self;
@@ -53,6 +51,8 @@
   
   _navTitleLabel.text = @"Orca Pods";
   
+  // Search
+  [self setupSearchDisplayControllerWithScopeButtonTitles:nil andPlaceholder:@"Search..."];
   
   // Pull Refresh
   [self setupPullRefresh];
@@ -60,13 +60,15 @@
   [self setupTableFooter];
   
 //  [self setupLoadMoreView];
+  
+  [self executeFetch:YES];
 }
 
 - (void)reloadCardController {
   [super reloadCardController];
   if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
-//    [[PodDataCenter defaultCenter] getPodsFromFixtures];
-    [[PodDataCenter defaultCenter] getPods];
+    [[PodDataCenter defaultCenter] getPodsFromFixtures];
+//    [[PodDataCenter defaultCenter] getPods];
   }
 }
 
@@ -174,18 +176,8 @@
     for (NSString *searchTerm in searchTerms) {
       if ([searchTerm length] == 0) continue;
       NSString *searchValue = searchTerm;
-      if ([scope isEqualToString:@"Author"]) {
-        // search friend's full name
-        [subpredicates addObject:[NSPredicate predicateWithFormat:@"fromName CONTAINS[cd] %@", searchValue]];
-      } else if ([scope isEqualToString:@"Album"]) {
-        // search album name
-        [subpredicates addObject:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchValue]];
-      } else if ([scope isEqualToString:@"Location"]) {
-        [subpredicates addObject:[NSPredicate predicateWithFormat:@"location CONTAINS[cd] %@", searchValue]];
-      } else {
-        // search any
-        [subpredicates addObject:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@ OR fromName CONTAINS[cd] %@ OR location CONTAINS[cd] %@", searchValue, searchValue, searchValue]];
-      }
+      // search any
+      [subpredicates addObject:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@ OR fromName CONTAINS[cd] %@ OR participants CONTAINS[cd] %@", searchValue, searchValue, searchValue]];
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -194,7 +186,7 @@
       }
       _searchPredicate = [[NSCompoundPredicate andPredicateWithSubpredicates:subpredicates] retain];
       
-      [self executeFetch];
+      [self executeFetch:YES];
     });
   });
 }
@@ -211,7 +203,6 @@
   NSFetchRequest *fetchRequest = [[PSCoreDataStack managedObjectModel] fetchRequestFromTemplateWithName:fetchTemplate substitutionVariables:substitutionVariables];
   [fetchRequest setSortDescriptors:sortDescriptors];
   [fetchRequest setFetchBatchSize:10];
-  [fetchRequest setFetchLimit:_fetchLimit];
   
   return fetchRequest;
 }
