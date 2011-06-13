@@ -65,7 +65,8 @@
 - (void)reloadCardController {
   [super reloadCardController];
   if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoggedIn"]) {
-    [[PodDataCenter defaultCenter] getPodsFromFixtures];
+//    [[PodDataCenter defaultCenter] getPodsFromFixtures];
+    [[PodDataCenter defaultCenter] getPods];
   }
 }
 
