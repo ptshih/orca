@@ -7,6 +7,7 @@
 //
 
 #import "Message+Serialize.h"
+#import "NSObject+ConvenienceMethods.h"
 
 @implementation Message (Serialize)
 
@@ -22,8 +23,8 @@
     newMessage.fromName = [dictionary valueForKey:@"fromName"];
     newMessage.fromPictureUrl = [dictionary valueForKey:@"fromPictureUrl"];
     newMessage.message = [dictionary valueForKey:@"message"];
-    newMessage.lat = [dictionary valueForKey:@"lat"] ? [dictionary valueForKey:@"lat"] : nil;
-    newMessage.lng = [dictionary valueForKey:@"lng"] ? [dictionary valueForKey:@"lng"] : nil;
+    newMessage.lat = [[dictionary valueForKey:@"lat"] notNil] ? [dictionary valueForKey:@"lat"] : nil;
+    newMessage.lng = [[dictionary valueForKey:@"lng"] notNil] ? [dictionary valueForKey:@"lng"] : nil;
     //    newMessage.location = [dictionary valueForKey:@"location"];
     newMessage.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     
