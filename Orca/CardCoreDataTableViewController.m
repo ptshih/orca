@@ -31,9 +31,9 @@
     _offset = 0;
     _fetchLimit = _limit;
     _lastFetchedCount = 0;
-    _changesPending = YES;
+    _isFirstLoad = YES;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextSaveDidNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changesSaved:) name:NSManagedObjectContextDidSaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
   }
   return self;
@@ -90,23 +90,28 @@
 }
 
 #pragma mark Core Data
-- (void)managedObjectContextSaveDidNotification:(NSNotification *)notification {
-  [self.context mergeChangesFromContextDidSaveNotification:notification];
-  _changesPending = YES;
+- (void)changesSaved:(NSNotification *)notification {
+  [self performSelectorOnMainThread:@selector(changesSavedOnMainThread:) withObject:notification waitUntilDone:YES];
+}
+   
+- (void)changesSavedOnMainThread:(NSNotification *)notification {
+  if ([notification object] != self.context) {
+    [self.context mergeChangesFromContextDidSaveNotification:notification];
+  }
 }
 
 - (void)resetFetchedResultsController {
   RELEASE_SAFELY(_fetchedResultsController);
   
   // Get a new context
-  _context = [PSCoreDataStack mainThreadContext];
+  _context = [PSCoreDataStack newManagedObjectContext];
 }
 
 - (NSFetchedResultsController*)fetchedResultsController  {
   if (_fetchedResultsController) return _fetchedResultsController;
   
   _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:[self getFetchRequest] managedObjectContext:self.context sectionNameKeyPath:self.sectionNameKeyPathForFetchedResultsController cacheName:nil];
-  _fetchedResultsController.delegate = nil;
+  _fetchedResultsController.delegate = self;
   
   return _fetchedResultsController;
 }
@@ -147,16 +152,12 @@
       [self.fetchedResultsController.fetchRequest setFetchLimit:_fetchLimit];
       if ([self.fetchedResultsController performFetch:&frcError]) {
         VLog(@"Fetch request succeeded: %@", [self.fetchedResultsController fetchRequest]);
-        
+
         if (self.searchDisplayController.active) {
           [self.searchDisplayController.searchResultsTableView reloadData];
         } else {
-          if (_changesPending || _loadingMore) {
-            _changesPending = NO;
-            _loadingMore = NO;
-            [_tableView reloadData];
-            [self updateState];
-          }
+          [_tableView reloadData];
+          [self updateState];
         }
       } else {
         VLog(@"Fetch failed with error: %@", [error localizedDescription]);
@@ -174,55 +175,55 @@
 }
 
 #pragma mark NSFetchedresultsControllerDelegate
-//- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-//  [_tableView beginUpdates];
-//}
-//
-//- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
-//  
-//  switch(type) {
-//    case NSFetchedResultsChangeInsert:
-//      [_tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-//      break;
-//      
-//    case NSFetchedResultsChangeDelete:
-//      [_tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-//      break;
-//  }
-//}
-//
-//- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-//       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-//      newIndexPath:(NSIndexPath *)newIndexPath {
-//  
-//  UITableView *tableView = _tableView;
-//  
-//  DLog(@"type: %d, old indexPath: %@, new indexPath: %@, class: %@", type, indexPath, newIndexPath, NSStringFromClass([self class]));
-//  
-//  switch(type) {
-//    case NSFetchedResultsChangeInsert:
-//      [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-//      break;
-//      
-//    case NSFetchedResultsChangeDelete:
-//      [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//      break;
-//      
-//    case NSFetchedResultsChangeUpdate:{
-//      //      NSIndexPath *changedIndexPath = newIndexPath ? newIndexPath : indexPath;
-//      [self tableView:tableView configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-//      break;
-//    }
-//    case NSFetchedResultsChangeMove:
-//      [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//      [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-//      break;
-//  }
-//}
-//
-//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-//  [_tableView endUpdates];
-//}
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+  [_tableView beginUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+  
+  switch(type) {
+    case NSFetchedResultsChangeInsert:
+      [_tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+      break;
+      
+    case NSFetchedResultsChangeDelete:
+      [_tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+      break;
+  }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath {
+  
+  UITableView *tableView = _tableView;
+  
+  DLog(@"type: %d, old indexPath: %@, new indexPath: %@, class: %@", type, indexPath, newIndexPath, NSStringFromClass([self class]));
+  
+  switch(type) {
+    case NSFetchedResultsChangeInsert:
+      [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+      break;
+      
+    case NSFetchedResultsChangeDelete:
+      [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+      break;
+      
+    case NSFetchedResultsChangeUpdate:{
+      //      NSIndexPath *changedIndexPath = newIndexPath ? newIndexPath : indexPath;
+      [self tableView:tableView configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+      break;
+    }
+    case NSFetchedResultsChangeMove:
+      [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+      [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+      break;
+  }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+  [_tableView endUpdates];
+}
 
 #pragma mark UISearchDisplayDelegate
 - (void)delayedFilterContentWithTimer:(NSTimer *)timer {
@@ -302,12 +303,12 @@
 }
 
 - (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kCoreDataDidReset object:nil];
   RELEASE_SAFELY(_fetchedResultsController);
   RELEASE_SAFELY(_sectionNameKeyPathForFetchedResultsController);
   RELEASE_SAFELY(_searchPredicate);
   INVALIDATE_TIMER(_searchTimer);
+  RELEASE_SAFELY(_context);
   [super dealloc];
 }
 

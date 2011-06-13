@@ -21,10 +21,10 @@
   NSUInteger _lastFetchedCount;
   NSTimer *_searchTimer;
   NSPredicate *_searchPredicate;
-  BOOL _changesPending;
+  BOOL _isFirstLoad;
 }
 
-@property (nonatomic, assign) NSManagedObjectContext *context;
+@property (nonatomic, retain) NSManagedObjectContext *context;
 @property (nonatomic, retain) NSFetchedResultsController * fetchedResultsController;
 @property (nonatomic, retain) NSString * sectionNameKeyPathForFetchedResultsController;
 
