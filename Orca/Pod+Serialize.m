@@ -21,8 +21,8 @@
     newPod.fromId = [dictionary valueForKey:@"fromId"];
     newPod.fromName = [dictionary valueForKey:@"fromName"];
     newPod.fromPictureUrl = [dictionary valueForKey:@"fromPictureUrl"];
-    newPod.participants = [dictionary valueForKey:@"participants"];
-    newPod.message = [dictionary valueForKey:@"message"];
+    newPod.participants = [[dictionary valueForKey:@"participants"] notNil] ? [dictionary valueForKey:@"participants"] : nil;
+    newPod.message = [[dictionary valueForKey:@"message"] notNil] ? [dictionary valueForKey:@"message"] : nil;
     newPod.lat = [[dictionary valueForKey:@"lat"] notNil] ? [dictionary valueForKey:@"lat"] : nil;
     newPod.lng = [[dictionary valueForKey:@"lng"] notNil] ? [dictionary valueForKey:@"lng"] : nil;
     //    newPod.location = [dictionary valueForKey:@"location"];
@@ -44,8 +44,8 @@
       self.fromId = [dictionary valueForKey:@"fromId"];
       self.fromName = [dictionary valueForKey:@"fromName"];
       self.fromPictureUrl = [dictionary valueForKey:@"fromPictureUrl"];
-      self.participants = [dictionary valueForKey:@"participants"];
-      self.message = [dictionary valueForKey:@"message"];
+      self.participants = [[dictionary valueForKey:@"participants"] notNil] ? [dictionary valueForKey:@"participants"] : nil;
+      self.message = [[dictionary valueForKey:@"message"] notNil] ? [dictionary valueForKey:@"message"] : nil;;
       self.lat = [[dictionary valueForKey:@"lat"] notNil] ? [dictionary valueForKey:@"lat"] : nil;
       self.lng = [[dictionary valueForKey:@"lng"] notNil] ? [dictionary valueForKey:@"lng"] : nil;
       //    self.location = [dictionary valueForKey:@"location"];

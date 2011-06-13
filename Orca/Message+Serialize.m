@@ -22,7 +22,7 @@
     newMessage.fromId = [dictionary valueForKey:@"fromId"];
     newMessage.fromName = [dictionary valueForKey:@"fromName"];
     newMessage.fromPictureUrl = [dictionary valueForKey:@"fromPictureUrl"];
-    newMessage.message = [dictionary valueForKey:@"message"];
+    newMessage.message = [[dictionary valueForKey:@"message"] notNil] ? [dictionary valueForKey:@"message"] : nil;
     newMessage.lat = [[dictionary valueForKey:@"lat"] notNil] ? [dictionary valueForKey:@"lat"] : nil;
     newMessage.lng = [[dictionary valueForKey:@"lng"] notNil] ? [dictionary valueForKey:@"lng"] : nil;
     //    newMessage.location = [dictionary valueForKey:@"location"];
