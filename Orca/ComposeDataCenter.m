@@ -19,10 +19,10 @@
 }
 
 - (void)sendMessage:(NSString *)message andSequence:(NSString *)sequence forPodId:(NSString *)podId {
-  NSURL *composeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, @"messages"]];
+  NSURL *composeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/pods/%@/messages/create", API_BASE_URL, podId]];
+  
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
-  [params setValue:podId forKey:@"podId"];
   [params setValue:message forKey:@"message"];
   [params setValue:sequence forKey:@"sequence"];
   

@@ -138,7 +138,7 @@
 
 - (void)composeDidSendWithUserInfo:(NSDictionary *)userInfo {
   // Write a local copy to core data from composed message
-  [[MessageDataCenter defaultCenter] serializeComposedMessageWithUserInf:userInfo];
+  [[MessageDataCenter defaultCenter] serializeComposedMessageWithUserInfo:userInfo];
 }
 
 #pragma mark -

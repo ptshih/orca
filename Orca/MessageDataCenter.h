@@ -29,6 +29,6 @@
 /**
  Serialize local copy of a composed message
  */
-- (void)serializeComposedMessageWithUserInf:(NSDictionary *)userInfo;
+- (void)serializeComposedMessageWithUserInfo:(NSDictionary *)userInfo;
 
 @end

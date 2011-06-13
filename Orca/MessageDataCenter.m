@@ -30,7 +30,7 @@
 #pragma mark -
 #pragma mark Prepare Request
 - (void)getMessagesForPodId:(NSString *)podId {
-  NSURL *messagesURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, MESSAGES_ENDPOINT]];
+  NSURL *messagesURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/pods/%@/messages", API_BASE_URL, podId]];
   [self sendRequestWithURL:messagesURL andMethod:GET andHeaders:nil andParams:nil andUserInfo:nil];
 }
 
@@ -124,7 +124,7 @@
   }
 }
 
-- (void)serializeComposedMessageWithUserInf:(NSDictionary *)userInfo {
+- (void)serializeComposedMessageWithUserInfo:(NSDictionary *)userInfo {
   // Userinfo has 3 keys (all strings)
   // message, podId, sequence
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

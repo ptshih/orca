@@ -16,7 +16,7 @@
 #define API_VERSION @"v1"
 
 // If this is defined, we will hit the staging server instead of prod
-#define STAGING
+//#define STAGING
 
 #if TARGET_IPHONE_SIMULATOR
   #define STAGING
@@ -30,11 +30,11 @@
     #define API_BASE_URL [NSString stringWithFormat:@"http://bubbles.ohsnaplabs.com:3000/%@", API_VERSION]
   #endif
 #else
-  #define API_BASE_URL [NSString stringWithFormat:@"http://ohsnaplabs.com/%@", API_VERSION]
+  #define API_BASE_URL [NSString stringWithFormat:@"http://orcapods.herokuapp.com/%@", API_VERSION]
 #endif
 
 // API Endpoints
-#define TEST // enable this to hit test APIs
+// #define TEST // enable this to hit test APIs
 
 #ifdef TEST
   #define PODS_ENDPOINT @"pods_test"

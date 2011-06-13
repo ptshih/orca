@@ -31,7 +31,7 @@
 #pragma mark -
 #pragma mark Prepare Request
 - (void)getPods {
-  NSURL *podsURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", API_BASE_URL, PODS_ENDPOINT]];
+  NSURL *podsURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/pods", API_BASE_URL]];
   [self sendRequestWithURL:podsURL andMethod:GET andHeaders:nil andParams:nil andUserInfo:nil];
 }
 
