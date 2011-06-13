@@ -104,8 +104,8 @@
 - (void)reloadCardController {
   [super reloadCardController];
   
-  [[MessageDataCenter defaultCenter] getMessagesFromFixtures];
-//  [[MessageDataCenter defaultCenter] getMessagesForPodId:_pod.id];
+//  [[MessageDataCenter defaultCenter] getMessagesFromFixtures];
+  [[MessageDataCenter defaultCenter] getMessagesForPodId:_pod.id];
 }
 
 - (void)unloadCardController {
