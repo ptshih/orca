@@ -10,6 +10,7 @@
 #import "MessageDataCenter.h"
 #import "Message.h"
 #import "Pod.h"
+#import "MessageCell.h"
 
 @implementation MessageViewController
 
@@ -74,7 +75,7 @@
 - (void)reloadCardController {
   [super reloadCardController];
   
-//  [_photoDataCenter getPhotosForAlbumId:_album.id];
+  [[MessageDataCenter defaultCenter] getMessagesFromFixtures];
 }
 
 - (void)unloadCardController {
@@ -111,34 +112,32 @@
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 //  return 26.0;
 //}
-//
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//  Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//  return [PhotoCell rowHeightForObject:photo forInterfaceOrientation:[self interfaceOrientation]];
-//}
-//
-//- (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
-//  Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//  
-//  [cell fillCellWithObject:photo];
-//}
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//  PhotoCell *cell = nil;
-//  NSString *reuseIdentifier = [PhotoCell reuseIdentifier];
-//  
-//  cell = (PhotoCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-//  if(cell == nil) { 
-//    cell = [[[PhotoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
-//    cell.delegate = self;
-//  }
-//  
-//  [self tableView:tableView configureCell:cell atIndexPath:indexPath];
-//  
-//  //  NSLog(@"display");
-//  return cell;
-//}
-//
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  Message *message = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  return [MessageCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
+}
+
+- (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
+  Message *message = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
+  [cell fillCellWithObject:message];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  MessageCell *cell = nil;
+  NSString *reuseIdentifier = [MessageCell reuseIdentifier];
+  
+  cell = (MessageCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+  if(cell == nil) { 
+    cell = [[[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+  }
+  
+  [self tableView:tableView configureCell:cell atIndexPath:indexPath];
+  
+  return cell;
+}
+
 //- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 //  PhotoCell *cell = (PhotoCell *)[tableView cellForRowAtIndexPath:indexPath];
 //  [self zoomPhotoForCell:cell atIndexPath:indexPath];
@@ -158,11 +157,11 @@
 //  _zoomView.caption = [[cell.captionLabel.text copy] autorelease];
 //  [_zoomView showZoom];
 //}
-//
-//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-//  [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
-//  [(PhotoCell *)cell loadPhoto];
-//}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+  [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
+  [(MessageCell *)cell loadImage];
+}
 
 
 #pragma mark -
@@ -190,7 +189,7 @@
 #pragma mark -
 #pragma mark FetchRequest
 - (NSFetchRequest *)getFetchRequest {
-  NSString *sortKey = @"id";
+  NSString *sortKey = @"timestamp";
   NSString *fetchTemplate = @"getMessagesForPod";
   NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortKey ascending:NO]];
   NSDictionary *substitutionVariables = [NSDictionary dictionaryWithObject:_pod.id forKey:@"desiredPodId"];

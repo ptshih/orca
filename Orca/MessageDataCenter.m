@@ -34,9 +34,39 @@
   [self sendRequestWithURL:messagesURL andMethod:GET andHeaders:nil andParams:nil andUserInfo:nil];
 }
 
+- (void)getMessagesFromFixtures {
+  NSString *filePath = [[NSBundle mainBundle] pathForResource:@"messages" ofType:@"json"];
+  NSData *fixtureData = [NSData dataWithContentsOfFile:filePath];
+  
+  // Process the batched results in a BG thread
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    NSManagedObjectContext *context = [PSCoreDataStack newManagedObjectContext];
+    
+    id response = [[fixtureData JSONValue] valueForKey:@"data"];
+    
+    // Process the Response for Pods
+    if ([response isKindOfClass:[NSArray class]]) {
+      [self serializeMessagesWithArray:response inContext:context];
+    }
+    
+    // Save to CoreData
+    [PSCoreDataStack saveInContext:context];
+    
+    // Release context
+    [context release];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      // Inform Delegate if all responses are parsed
+      if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
+        [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:nil withObject:nil];
+      }
+    });
+  });
+}
+
 #pragma mark -
 #pragma mark Serialization
-- (void)serializePhotosWithRequest:(ASIHTTPRequest *)request {
+- (void)serializeMessagesWithRequest:(ASIHTTPRequest *)request {
   NSManagedObjectContext *context = [PSCoreDataStack newManagedObjectContext];
   
   // Parse the JSON
@@ -80,7 +110,7 @@
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     NSString *key = [entityDict valueForKey:sortKey];
-    if ([foundEntities count] > 0 && i < [foundEntities count] && [key isEqualToString:[[foundEntities objectAtIndex:i] id]]) {
+    if ([foundEntities count] > 0 && i < [foundEntities count] && [key isEqualToString:[[foundEntities objectAtIndex:i] sequence]]) {
       // Duplicate entity found
       message = [foundEntities objectAtIndex:i];
       [message updateMessageWithDictionary:entityDict];

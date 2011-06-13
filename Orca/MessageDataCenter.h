@@ -18,6 +18,7 @@
  Get messages from Server
  */
 - (void)getMessagesForPodId:(NSString *)podId;
+- (void)getMessagesFromFixtures;
 
 /**
  Serialize messages from Server

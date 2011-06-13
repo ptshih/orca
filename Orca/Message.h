@@ -22,6 +22,7 @@
 @property (nonatomic, retain) NSString * location;
 @property (nonatomic, retain) NSString * message;
 @property (nonatomic, retain) NSString * podId;
+@property (nonatomic, retain) NSString * sequence;
 @property (nonatomic, retain) NSDate * timestamp;
 
 @end

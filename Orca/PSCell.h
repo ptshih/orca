@@ -23,7 +23,6 @@ typedef uint32_t PSCellType;
 
 
 @interface PSCell : UITableViewCell {
-  UITableViewCellSeparatorStyle _separatorStyle;
 }
 
 /**

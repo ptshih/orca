@@ -60,6 +60,11 @@
 #define LOGOUT_ALERT @"Are you sure you want to logout?"
 #define FM_NETWORK_ERROR @"Orca has encountered a network error. Please check your network connection and try again."
 
+// FONTS
+#define TITLE_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0]
+#define NORMAL_FONT [UIFont fontWithName:@"HelveticaNeue" size:10.0]
+#define SUBTITLE_FONT [UIFont fontWithName:@"HelveticaNeue" size:10.0]
+
 // Colors
 // CELLS
 #define CELL_WHITE_COLOR [UIColor whiteColor]

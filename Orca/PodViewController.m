@@ -8,6 +8,9 @@
 
 #import "PodViewController.h"
 #import "PodDataCenter.h"
+#import "MessageViewController.h"
+#import "Pod.h"
+#import "PodCell.h"
 
 @implementation PodViewController
 
@@ -41,7 +44,7 @@
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
-  [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleNone];
+  [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
   // Title and Buttons
   [self addButtonWithTitle:@"Logout" andSelector:@selector(logout) isLeft:YES];
@@ -53,6 +56,8 @@
   
   // Pull Refresh
   [self setupPullRefresh];
+  
+  [self setupTableFooter];
   
 //  [self setupLoadMoreView];
 }
@@ -80,10 +85,10 @@
 
 #pragma mark -
 #pragma mark TableView
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//  Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//  return [AlbumCell rowHeightForObject:album forInterfaceOrientation:[self interfaceOrientation]];
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  Pod *pod = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  return [PodCell rowHeightForObject:pod forInterfaceOrientation:[self interfaceOrientation]];
+}
 
 //- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 //  return [[[self.fetchedResultsController sections] objectAtIndex:section] name];
@@ -108,40 +113,39 @@
 //  return sectionHeaderView;
 //}
 
-//- (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
-//  Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//  
-//  [cell fillCellWithObject:album];
-//}
-//
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//  [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//  
-//  Album *album = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//  
-//  PhotoViewController *svc = [[PhotoViewController alloc] init];
-//  svc.album = album;
-//  if (self.albumType == AlbumTypeWall) {
-//    svc.sectionNameKeyPathForFetchedResultsController = @"timestamp";
-//  }
-//  [self.navigationController pushViewController:svc animated:YES];
-//  [svc release];
-//}
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//  AlbumCell *cell = nil;
-//  NSString *reuseIdentifier = [AlbumCell reuseIdentifier];
-//  
-//  cell = (AlbumCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-//  if(cell == nil) { 
-//    cell = [[[AlbumCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
-//  }
-//  
-//  [self tableView:tableView configureCell:cell atIndexPath:indexPath];
-//  
-//  return cell;
-//}
-//
+- (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
+  Pod *pod = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
+  [cell fillCellWithObject:pod];
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+  
+  Pod *pod = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
+  MessageViewController *mvc = [[MessageViewController alloc] init];
+  mvc.pod = pod;
+  [self.navigationController pushViewController:mvc animated:YES];
+  [mvc release];
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  PodCell *cell = nil;
+  NSString *reuseIdentifier = [PodCell reuseIdentifier];
+  
+  cell = (PodCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+  if(cell == nil) { 
+    cell = [[[PodCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+  }
+  
+  [self tableView:tableView configureCell:cell atIndexPath:indexPath];
+  
+  return cell;
+}
+
 //- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 //  [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
 //  [(AlbumCell *)cell loadPhoto];

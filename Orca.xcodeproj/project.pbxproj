@@ -149,6 +149,9 @@
 		25B9C76E138DD701003FEE96 /* disclosure_indicator_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B9C76C138DD700003FEE96 /* disclosure_indicator_white.png */; };
 		25B9C775138DDD7B003FEE96 /* comments-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B9C773138DDD7A003FEE96 /* comments-icon@2x.png */; };
 		25B9C776138DDD7B003FEE96 /* comments-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B9C774138DDD7B003FEE96 /* comments-icon.png */; };
+		25BB19EE13A59B7100430C33 /* PodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25BB19ED13A59B7100430C33 /* PodCell.m */; };
+		25BB19F213A5A1BB00430C33 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25BB19F113A5A1BB00430C33 /* MessageCell.m */; };
+		25BB19F513A5A43100430C33 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 25BB19F413A5A43100430C33 /* Message.m */; };
 		25C67E301372197E00330DA7 /* Base64Transcoder+PS.c in Sources */ = {isa = PBXBuildFile; fileRef = 25C67E2E1372197E00330DA7 /* Base64Transcoder+PS.c */; };
 		25C67E39137219AA00330DA7 /* PSNetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C67E33137219AA00330DA7 /* PSNetworkOperation.m */; };
 		25C67E3B137219AA00330DA7 /* PSNetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C67E36137219AA00330DA7 /* PSNetworkQueue.m */; };
@@ -200,7 +203,6 @@
 		25E56BD8138C602F0026044A /* photos-large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25E56BD6138C602E0026044A /* photos-large@2x.png */; };
 		25E56BDB138C63CE0026044A /* facebook-connect.png in Resources */ = {isa = PBXBuildFile; fileRef = 25E56BD9138C63CD0026044A /* facebook-connect.png */; };
 		25E56BDC138C63CE0026044A /* facebook-connect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25E56BDA138C63CE0026044A /* facebook-connect@2x.png */; };
-		25E5A69F13A560B60096E4FE /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E5A69E13A560B60096E4FE /* Message.m */; };
 		25E5A6A213A560D40096E4FE /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E5A6A113A560D40096E4FE /* Pod.m */; };
 		25E5A6A513A5611B0096E4FE /* Pod+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E5A6A413A5611B0096E4FE /* Pod+Serialize.m */; };
 		25E5A6A813A5613F0096E4FE /* Message+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E5A6A713A5613E0096E4FE /* Message+Serialize.m */; };
@@ -471,6 +473,12 @@
 		25B9C76C138DD700003FEE96 /* disclosure_indicator_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disclosure_indicator_white.png; sourceTree = "<group>"; };
 		25B9C773138DDD7A003FEE96 /* comments-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comments-icon@2x.png"; sourceTree = "<group>"; };
 		25B9C774138DDD7B003FEE96 /* comments-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comments-icon.png"; sourceTree = "<group>"; };
+		25BB19EC13A59B7100430C33 /* PodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PodCell.h; sourceTree = "<group>"; };
+		25BB19ED13A59B7100430C33 /* PodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PodCell.m; sourceTree = "<group>"; };
+		25BB19F013A5A1BB00430C33 /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
+		25BB19F113A5A1BB00430C33 /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCell.m; sourceTree = "<group>"; };
+		25BB19F313A5A43100430C33 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		25BB19F413A5A43100430C33 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		25C67E2E1372197E00330DA7 /* Base64Transcoder+PS.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "Base64Transcoder+PS.c"; sourceTree = "<group>"; };
 		25C67E2F1372197E00330DA7 /* Base64Transcoder+PS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Base64Transcoder+PS.h"; sourceTree = "<group>"; };
 		25C67E32137219AA00330DA7 /* PSNetworkOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNetworkOperation.h; sourceTree = "<group>"; };
@@ -555,8 +563,6 @@
 		25E56BD6138C602E0026044A /* photos-large@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photos-large@2x.png"; sourceTree = "<group>"; };
 		25E56BD9138C63CD0026044A /* facebook-connect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-connect.png"; sourceTree = "<group>"; };
 		25E56BDA138C63CE0026044A /* facebook-connect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-connect@2x.png"; sourceTree = "<group>"; };
-		25E5A69D13A560B60096E4FE /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
-		25E5A69E13A560B60096E4FE /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		25E5A6A013A560D40096E4FE /* Pod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pod.h; sourceTree = "<group>"; };
 		25E5A6A113A560D40096E4FE /* Pod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pod.m; sourceTree = "<group>"; };
 		25E5A6A313A5611B0096E4FE /* Pod+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Pod+Serialize.h"; sourceTree = "<group>"; };
@@ -958,14 +964,14 @@
 			children = (
 				25CEF8F31339FE46006F23A7 /* PSObject.h */,
 				25CEF8F41339FE46006F23A7 /* PSObject.m */,
-				25E5A69D13A560B60096E4FE /* Message.h */,
-				25E5A69E13A560B60096E4FE /* Message.m */,
 				25E5A6A013A560D40096E4FE /* Pod.h */,
 				25E5A6A113A560D40096E4FE /* Pod.m */,
 				25E5A6A313A5611B0096E4FE /* Pod+Serialize.h */,
 				25E5A6A413A5611B0096E4FE /* Pod+Serialize.m */,
 				25E5A6A613A5613E0096E4FE /* Message+Serialize.h */,
 				25E5A6A713A5613E0096E4FE /* Message+Serialize.m */,
+				25BB19F313A5A43100430C33 /* Message.h */,
+				25BB19F413A5A43100430C33 /* Message.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1340,6 +1346,10 @@
 				25FB8BEC133AA7E600C130A8 /* PSCell.m */,
 				25FB8BED133AA7E600C130A8 /* PSImageCell.h */,
 				25FB8BEE133AA7E700C130A8 /* PSImageCell.m */,
+				25BB19EC13A59B7100430C33 /* PodCell.h */,
+				25BB19ED13A59B7100430C33 /* PodCell.m */,
+				25BB19F013A5A1BB00430C33 /* MessageCell.h */,
+				25BB19F113A5A1BB00430C33 /* MessageCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1665,10 +1675,12 @@
 				25FCA38B139887A4009CD59C /* PSSearchStack.m in Sources */,
 				25197F3B13A49147007025A6 /* MoreViewController.m in Sources */,
 				250532EF13A4C51F0037DCFA /* Orca.xcdatamodeld in Sources */,
-				25E5A69F13A560B60096E4FE /* Message.m in Sources */,
 				25E5A6A213A560D40096E4FE /* Pod.m in Sources */,
 				25E5A6A513A5611B0096E4FE /* Pod+Serialize.m in Sources */,
 				25E5A6A813A5613F0096E4FE /* Message+Serialize.m in Sources */,
+				25BB19EE13A59B7100430C33 /* PodCell.m in Sources */,
+				25BB19F213A5A1BB00430C33 /* MessageCell.m in Sources */,
+				25BB19F513A5A43100430C33 /* Message.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

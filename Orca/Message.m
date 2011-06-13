@@ -19,6 +19,7 @@
 @dynamic location;
 @dynamic message;
 @dynamic podId;
+@dynamic sequence;
 @dynamic timestamp;
 
 @end

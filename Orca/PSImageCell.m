@@ -36,6 +36,11 @@ static UIImage *_frameImage = nil;
 - (void)prepareForReuse {
   [super prepareForReuse];
   _psImageView.image = nil;
+  _psImageView.urlPath = nil;
+}
+
+- (void)loadImage {
+  [_psImageView loadImageAndDownload:YES];
 }
 
 - (void)dealloc {
