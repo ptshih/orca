@@ -48,7 +48,6 @@
   
   UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)] autorelease];
   UIBarButtonItem *sendButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(send)] autorelease];
-  UIBarButtonItem *spacer = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
   UIBarButtonItem *title = [[[UIBarButtonItem alloc] initWithTitle:@"Message" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
   
   [_headerToolbar setItems:[NSArray arrayWithObjects:cancelButton, [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease], title,[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease], sendButton, nil]];

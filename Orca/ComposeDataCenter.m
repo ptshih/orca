@@ -30,11 +30,11 @@
 }
 
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {
-  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
+  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadMessageController object:nil];
 }
 
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request {
-  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadController object:nil];
+  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadMessageController object:nil];
 }
 
 @end

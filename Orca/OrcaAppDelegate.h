@@ -32,16 +32,15 @@
 
 // Private
 + (void)setupDefaults;
-- (void)animateHideLogin;
-- (void)startSession;
-- (void)startDownloadAlbums;
+
 - (void)tryLogin;
 - (void)resetSessionKey;
 
+- (void)startSession;
+- (void)startRegister;
+
 - (void)getMe;
 - (void)serializeMeWithResponse:(id)response;
-- (void)getFriends;
-- (void)serializeFriendsWithResponse:(id)response;
 
 // APNS
 - (void)processMessageFromRemoteNotification:(NSDictionary *)userInfo;

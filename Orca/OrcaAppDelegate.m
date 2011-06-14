@@ -130,6 +130,8 @@
 
 - (void)processMessageFromRemoteNotification:(NSDictionary *)userInfo {
   // This method should 
+  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadPodController object:nil];
+  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadMessageController object:nil];
 }
 
 
@@ -162,7 +164,7 @@
 
 - (void)getMe {
   // This is called the first time logging in
-  NSURL *meUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/me?fields=id,name,friends&access_token=%@", FB_GRAPH, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]]];
+  NSURL *meUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/me?fields=id,name,first_name,last_name,friends&access_token=%@", FB_GRAPH, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]]];
   
   __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:meUrl];
   request.requestMethod = @"GET";
@@ -171,7 +173,7 @@
   // Request Completion Block
   [request setCompletionBlock:^{
     [self serializeMeWithResponse:[[request responseData] JSONValue]];
-    [self startDownloadAlbums];
+    [self startRegister];
   }];
   [request setFailedBlock:^{
     [[NSNotificationCenter defaultCenter] postNotificationName:kLogoutRequested object:nil];
@@ -184,6 +186,8 @@
 - (void)serializeMeWithResponse:(id)response {
   NSString *facebookId = [response valueForKey:@"id"];
   NSString *facebookName = [response valueForKey:@"name"];
+  NSString *facebookFirstName = [response valueForKey:@"first_name"];
+  NSString *facebookLastName = [response valueForKey:@"last_name"];
   NSString *facebookPictureUrl = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", facebookId];
   NSArray *facebookFriends = [response valueForKey:@"friends"] ? [[response valueForKey:@"friends"] valueForKey:@"data"] : [NSArray array];
   
@@ -195,69 +199,92 @@
   // Set UserDefaults
   [[NSUserDefaults standardUserDefaults] setObject:facebookId forKey:@"facebookId"];
   [[NSUserDefaults standardUserDefaults] setObject:facebookName forKey:@"facebookName"];
+  [[NSUserDefaults standardUserDefaults] setObject:facebookFirstName forKey:@"facebookFirstName"];
+  [[NSUserDefaults standardUserDefaults] setObject:facebookLastName forKey:@"facebookLastName"];
   [[NSUserDefaults standardUserDefaults] setObject:facebookPictureUrl forKey:@"facebookPictureUrl"];
   [[NSUserDefaults standardUserDefaults] setObject:friendsDict forKey:@"facebookFriends"];
   [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
   [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void)getFriends {
-  // This is called subsequent app launches when already logged in
-  NSURL *friendsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/me/friends?access_token=%@", FB_GRAPH, [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"]]];
+#pragma mark Session
+- (void)startSession {
+#warning disable sessions
+  return;
   
-  __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:friendsUrl];
+  // This gets called on subsequent app launches
+  [self resetSessionKey];
+
+  // Send a call home to our server, fire and forget
+  // This sends a call home to our server to register the user and get an access_token
+  NSURL *sessionURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/session", API_BASE_URL]];
+  
+  
+  __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:sessionURL];
   request.requestMethod = @"GET";
-  request.allowCompressedResponse = YES;
+  
+  // Metrics Headers
+  [request addRequestHeader:@"X-UDID" value:[[UIDevice currentDevice] uniqueIdentifier]];
+  [request addRequestHeader:@"X-Device-Model" value:[[UIDevice currentDevice] model]];
+  [request addRequestHeader:@"X-App-Version" value:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+  [request addRequestHeader:@"X-System-Name" value:[[UIDevice currentDevice] systemName]];
+  [request addRequestHeader:@"X-System-Version" value:[[UIDevice currentDevice] systemVersion]];
+  [request addRequestHeader:@"X-User-Language" value:USER_LANGUAGE];
+  [request addRequestHeader:@"X-User-Locale" value:USER_LOCALE];
+  if (APP_DELEGATE.sessionKey) [request addRequestHeader:@"X-Session-Key" value:APP_DELEGATE.sessionKey];
   
   // Request Completion Block
   [request setCompletionBlock:^{
-    [self serializeFriendsWithResponse:[[request responseData] JSONValue]];
-    [self startDownloadAlbums];
   }];
+  
   [request setFailedBlock:^{
-    [self startDownloadAlbums];
   }];
   
   // Start the Request
   [request startAsynchronous];
 }
 
-- (void)serializeFriendsWithResponse:(id)response {
-  NSArray *facebookFriends = [response valueForKey:@"data"] ? [response valueForKey:@"data"] : [NSArray array];
+- (void)startRegister {
+  // This sends a call home to our server to register the user and get an access_token
+  NSURL *registerURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/register", API_BASE_URL]];
   
-  NSDictionary *existingFriends = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"facebookFriends"];
-  NSMutableDictionary *friendsDict = existingFriends ? [NSMutableDictionary dictionaryWithDictionary:existingFriends] : [NSMutableDictionary dictionary];
+  NSMutableDictionary *params = [NSMutableDictionary dictionary];
+  [params setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"facebookId"] forKey:@"facebook_id"];
+  [params setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"facebookName"] forKey:@"facebook_name"];
+  [params setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"facebookFirstName"] forKey:@"facebook_first_name"];
+  [params setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"facebookLastName"] forKey:@"facebook_last_name"];
+  [params setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"] forKey:@"facebook_access_token"];
   
-  NSMutableArray *newFriendIds = [NSMutableArray array];
+  __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:registerURL];
+  request.requestMethod = @"POST";
+  request.postBody = [[LoginDataCenter defaultCenter] buildRequestParamsData:params];
+  request.postLength = [request.postBody length];
   
-  for (NSDictionary *friend in facebookFriends) {
-    NSString *friendId = [friend valueForKey:@"id"];
-    if (![friendsDict valueForKey:friendId]) {
-      [newFriendIds addObject:friendId];
+  // Metrics Headers
+  [request addRequestHeader:@"X-UDID" value:[[UIDevice currentDevice] uniqueIdentifier]];
+  [request addRequestHeader:@"X-Device-Model" value:[[UIDevice currentDevice] model]];
+  [request addRequestHeader:@"X-App-Version" value:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+  [request addRequestHeader:@"X-System-Name" value:[[UIDevice currentDevice] systemName]];
+  [request addRequestHeader:@"X-System-Version" value:[[UIDevice currentDevice] systemVersion]];
+  [request addRequestHeader:@"X-User-Language" value:USER_LANGUAGE];
+  [request addRequestHeader:@"X-User-Locale" value:USER_LOCALE];
+  
+  // Request Completion Block
+  [request setCompletionBlock:^{
+    // Read the response access_token
+    
+    // Finished login process
+    if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
+      [_launcherViewController dismissModalViewControllerAnimated:YES];
     }
-    [friendsDict setValue:[friend valueForKey:@"name"] forKey:friendId];
-  }
+  }];
   
-  [[NSUserDefaults standardUserDefaults] setObject:friendsDict forKey:@"facebookFriends"];
-  [[NSUserDefaults standardUserDefaults] synchronize];
+  [request setFailedBlock:^{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kLogoutRequested object:nil];
+  }];
   
-  if ([newFriendIds count] > 0) {
-//    [[AlbumDataCenter defaultCenter] getAlbumsForFriendIds:newFriendIds];
-  }
-}
-
-- (void)startDownloadAlbums {
-//  [[AlbumDataCenter defaultCenter] getAlbums];
-  
-#warning debug bypass
-  [self dataCenterDidFinish:nil withResponse:nil];
-}
-
-#pragma mark Session
-- (void)startSession {
-  // This gets called on subsequent app launches
-  [self resetSessionKey];
-  [self getFriends];
+  // Start the Request
+  [request startAsynchronous];
 }
 
 - (void)resetSessionKey {
@@ -271,37 +298,6 @@
   
   [[NSUserDefaults standardUserDefaults] setValue:_sessionKey forKey:@"sessionKey"];
   [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-#pragma mark PSDataCenterDelegate
-- (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {  
-  // Session/Register request finished
-  if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
-    [_launcherViewController dismissModalViewControllerAnimated:YES];
-  }
-}
-
-- (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
-  // Show login again
-//  [_loginViewController logout];
-}
-
-#pragma mark -
-#pragma mark Animations
-- (void)animateHideLogin {
-  [UIView beginAnimations:@"HideLogin" context:nil];
-  [UIView setAnimationDelegate:self];
-  [UIView setAnimationDidStopSelector:@selector(animateHideLoginFinished)];
-  [UIView setAnimationBeginsFromCurrentState:YES];
-  [UIView setAnimationCurve:UIViewAnimationCurveLinear];
-  [UIView setAnimationDuration:0.6]; // Fade out is configurable in seconds (FLOAT)
-  [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.window cache:YES];
-  [self.window exchangeSubviewAtIndex:0 withSubviewAtIndex:1];
-  [UIView commitAnimations];
-}
-
-- (void)animateHideLoginFinished {
-  [_loginViewController.view removeFromSuperview];
 }
 
 - (void)dealloc {

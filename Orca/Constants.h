@@ -30,6 +30,7 @@
 // Notifications
 #define kReloadController @"ReloadController"
 #define kReloadPodController @"ReloadPodController"
+#define kReloadMessageController @"ReloadMessageController"
 #define kLocationAcquired @"LocationAcquired"
 #define kLogoutRequested @"LogoutRequested"
 #define kCoreDataDidReset @"CoreDataDidReset"

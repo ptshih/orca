@@ -50,4 +50,7 @@
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request;
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request;
 
+- (NSString *)buildRequestParamsString:(NSDictionary *)params;
+- (NSMutableData *)buildRequestParamsData:(NSDictionary *)params;
+
 @end
