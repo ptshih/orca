@@ -50,6 +50,14 @@
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request;
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request;
 
+/**
+ Core Data Serialization Methods
+ */
+//- (void)serializeResponseArray:(NSArray *)array forEntityName:(NSString *)entityName andUniqueKey:(NSString *)uniqueKey inContext:(NSManagedObjectContext *)context;
+
+/**
+ Helpers to build request params string
+ */
 - (NSString *)buildRequestParamsString:(NSDictionary *)params;
 - (NSMutableData *)buildRequestParamsData:(NSDictionary *)params;
 

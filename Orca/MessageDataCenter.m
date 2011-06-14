@@ -87,40 +87,37 @@
 
 #pragma mark Core Data Serialization
 - (void)serializeMessagesWithArray:(NSArray *)array inContext:(NSManagedObjectContext *)context {
-  // Traverse response array and serialize dictionary -> coredata
-  NSString *sortKey = @"sequence";
+  NSString *uniqueKey = @"sequence";
   NSString *entityName = @"Message";
   
-  NSArray *sortedDicts = [array sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortKey ascending:YES]]];
-  NSArray *sortedKeys = [sortedDicts valueForKey:sortKey];
+  NSArray *newUniqueKeyArray = [array valueForKey:uniqueKey];
   
-  NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
-  [fetchRequest setEntity:[NSEntityDescription entityForName:entityName inManagedObjectContext:context]];
-  [fetchRequest setPredicate:[NSPredicate predicateWithFormat: @"(sequence IN %@)", sortedKeys]];
-  [fetchRequest setSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortKey ascending:YES]]];
-  
+  // Find all existing Messages
+  NSFetchRequest *existingFetchRequest = [[[NSFetchRequest alloc] init] autorelease];
+  [existingFetchRequest setEntity:[NSEntityDescription entityForName:entityName inManagedObjectContext:context]];
+  [existingFetchRequest setPredicate:[NSPredicate predicateWithFormat:@"(%K IN %@)", uniqueKey, newUniqueKeyArray]];
+  [existingFetchRequest setPropertiesToFetch:[NSArray arrayWithObject:uniqueKey]];
   
   NSError *error = nil;
-  NSArray *foundEntities = [context executeFetchRequest:fetchRequest error:&error];
+  NSArray *foundEntities = [context executeFetchRequest:existingFetchRequest error:&error];
   
-  Message *message = nil;
-  int i = 0;
-  for (NSDictionary *entityDict in sortedDicts) {
-    // Create a local autorelease pool
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    NSString *key = [entityDict valueForKey:sortKey];
-    if ([foundEntities count] > 0 && i < [foundEntities count] && [key isEqualToString:[[foundEntities objectAtIndex:i] sequence]]) {
-      // Duplicate entity found
-      message = [foundEntities objectAtIndex:i];
-      [message updateMessageWithDictionary:entityDict];
-      i++;
+  // Create a dictionary of existing messages
+  NSMutableDictionary *existingEntities = [NSMutableDictionary dictionary];
+  for (id foundEntity in foundEntities) {
+    [existingEntities setObject:foundEntity forKey:[foundEntity valueForKey:uniqueKey]];
+  }
+  
+  Message *existingEntity = nil;
+  for (NSDictionary *newEntity in array) {
+    NSString *key = [newEntity valueForKey:uniqueKey];
+    existingEntity = [existingEntities objectForKey:key];
+    if (existingEntity) {
+      // update
+      [existingEntity updateMessageWithDictionary:newEntity];
     } else {
-      // No duplicate found
-      [Message addMessageWithDictionary:entityDict inContext:context];
+      // insert
+      [Message addMessageWithDictionary:newEntity inContext:context];
     }
-    
-    [pool drain];
   }
 }
 

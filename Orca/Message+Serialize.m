@@ -8,6 +8,7 @@
 
 #import "Message+Serialize.h"
 #import "NSObject+ConvenienceMethods.h"
+#import "NSString+ConvenienceMethods.h"
 
 @implementation Message (Serialize)
 
@@ -38,7 +39,7 @@
 - (Message *)updateMessageWithDictionary:(NSDictionary *)dictionary {
   if (dictionary) {
     // Messages only change if there was originally no ID, and now there is
-    if (!self.id) {
+    if (![self.id notNull]) {
       self.id = [dictionary valueForKey:@"id"];
       self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     }

@@ -23,6 +23,8 @@
   
   // Session
   NSString *_sessionKey;
+  
+  BOOL _applicationWasResigned;
 }
 
 @property (nonatomic, retain) UIWindow *window;
@@ -38,6 +40,7 @@
 
 - (void)startSession;
 - (void)startRegister;
+- (void)startRegisterPushWithDeviceToken:(NSString *)deviceToken;
 
 - (void)getMe;
 - (void)serializeMeWithResponse:(id)response;

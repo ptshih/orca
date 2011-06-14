@@ -52,7 +52,7 @@
   _navTitleLabel.text = @"Orca Pods";
   
   // Search
-  [self setupSearchDisplayControllerWithScopeButtonTitles:nil andPlaceholder:@"Search..."];
+  [self setupSearchDisplayControllerWithScopeButtonTitles:nil andPlaceholder:@"Search Pods..."];
   
   // Pull Refresh
   [self setupPullRefresh];

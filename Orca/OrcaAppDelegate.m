@@ -43,6 +43,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
+  _applicationWasResigned = NO;
+  
   NSLog(@"fonts: %@",[UIFont familyNames]);
 
   // We can configure if the imageCache should reside in cache or document directory here
@@ -64,9 +66,6 @@
   
   [self.window addSubview:_launcherViewController.view];
   [self.window makeKeyAndVisible];
-  
-  // Let the device know we want to receive push notifications
-	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
   
   // Handle entry via APNS
   if (launchOptions) {
@@ -90,6 +89,7 @@
    Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
    Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
    */
+  _applicationWasResigned = YES;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -106,6 +106,12 @@
   /*
    Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
    */
+  if (_applicationWasResigned) {
+    _applicationWasResigned = NO;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kReloadPodController object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kReloadMessageController object:nil];
+  }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -121,7 +127,12 @@
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
-	NSLog(@"My token is: %@", deviceToken);
+  NSString *newToken = [deviceToken description];
+	newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+	newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+	NSLog(@"My token is: %@", newToken);
+  
+  [self startRegisterPushWithDeviceToken:newToken];
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error {
@@ -146,6 +157,9 @@
     _facebook.accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
     _facebook.expirationDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookExpirationDate"];
     [self startSession];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kReloadPodController object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kReloadMessageController object:nil];
   }
 }
 
@@ -223,6 +237,9 @@
   __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:sessionURL];
   request.requestMethod = @"GET";
   
+  // Accept JSON
+  [request addRequestHeader:@"Accept" value:@"application/json"];
+  
   // Metrics Headers
   [request addRequestHeader:@"X-UDID" value:[[UIDevice currentDevice] uniqueIdentifier]];
   [request addRequestHeader:@"X-Device-Model" value:[[UIDevice currentDevice] model]];
@@ -244,6 +261,7 @@
   [request startAsynchronous];
 }
 
+#pragma mark Register
 - (void)startRegister {
   // This sends a call home to our server to register the user and get an access_token
   NSURL *registerURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/register", API_BASE_URL]];
@@ -260,6 +278,9 @@
   request.postBody = [[LoginDataCenter defaultCenter] buildRequestParamsData:params];
   request.postLength = [request.postBody length];
   
+  // Accept JSON
+  [request addRequestHeader:@"Accept" value:@"application/json"];
+  
   // Metrics Headers
   [request addRequestHeader:@"X-UDID" value:[[UIDevice currentDevice] uniqueIdentifier]];
   [request addRequestHeader:@"X-Device-Model" value:[[UIDevice currentDevice] model]];
@@ -272,6 +293,12 @@
   // Request Completion Block
   [request setCompletionBlock:^{
     // Read the response access_token
+    id response = [[request responseData] JSONValue];
+    [[NSUserDefaults standardUserDefaults] setValue:[response valueForKey:@"access_token"] forKey:@"accessToken"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    // Let the device know we want to receive push notifications
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
     // Finished login process
     if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
@@ -281,6 +308,48 @@
   
   [request setFailedBlock:^{
     [[NSNotificationCenter defaultCenter] postNotificationName:kLogoutRequested object:nil];
+  }];
+  
+  // Start the Request
+  [request startAsynchronous];
+}
+
+#pragma mark Register Push
+- (void)startRegisterPushWithDeviceToken:(NSString *)deviceToken {
+  // This sends a call home to our server to register the user's device for push
+  NSURL *registerPushURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/registerpush", API_BASE_URL]];
+  
+  NSMutableDictionary *params = [NSMutableDictionary dictionary];
+  [params setValue:deviceToken forKey:@"device_token"];
+  
+  // Send access_token as a parameter if exists
+  NSString *accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"accessToken"];
+  if (accessToken) {
+    [params setValue:accessToken forKey:@"access_token"];
+  }
+  
+  __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:registerPushURL];
+  request.requestMethod = @"POST";
+  request.postBody = [[LoginDataCenter defaultCenter] buildRequestParamsData:params];
+  request.postLength = [request.postBody length];
+  
+  // Accept JSON
+  [request addRequestHeader:@"Accept" value:@"application/json"];
+  
+  // Metrics Headers
+  [request addRequestHeader:@"X-UDID" value:[[UIDevice currentDevice] uniqueIdentifier]];
+  [request addRequestHeader:@"X-Device-Model" value:[[UIDevice currentDevice] model]];
+  [request addRequestHeader:@"X-App-Version" value:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+  [request addRequestHeader:@"X-System-Name" value:[[UIDevice currentDevice] systemName]];
+  [request addRequestHeader:@"X-System-Version" value:[[UIDevice currentDevice] systemVersion]];
+  [request addRequestHeader:@"X-User-Language" value:USER_LANGUAGE];
+  [request addRequestHeader:@"X-User-Locale" value:USER_LOCALE];
+  
+  // Request Completion Block
+  [request setCompletionBlock:^{
+  }];
+  
+  [request setFailedBlock:^{
   }];
   
   // Start the Request

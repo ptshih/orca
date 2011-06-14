@@ -54,7 +54,7 @@
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
   // Search
-  [self setupSearchDisplayControllerWithScopeButtonTitles:nil andPlaceholder:@"Search..."];
+//  [self setupSearchDisplayControllerWithScopeButtonTitles:nil andPlaceholder:@"Search..."];
   
   // Pull Refresh
   [self setupPullRefresh];

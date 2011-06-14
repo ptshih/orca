@@ -25,7 +25,7 @@
 
 #ifdef STAGING
   #ifdef USE_LOCALHOST
-    #define API_BASE_URL [NSString stringWithFormat:@"http://orcapods.heroku.com/%@", API_VERSION]
+    #define API_BASE_URL [NSString stringWithFormat:@"http://localhost:3000/%@", API_VERSION]
   #else
     #define API_BASE_URL [NSString stringWithFormat:@"http://orcapods.heroku.com/%@", API_VERSION]
   #endif

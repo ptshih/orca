@@ -113,7 +113,7 @@
   NSMutableDictionary *requestParams = [NSMutableDictionary dictionaryWithDictionary:params];
   
   // Send access_token as a parameter if exists
-  NSString *accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
+  NSString *accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"accessToken"];
   if (accessToken) {
     [requestParams setValue:accessToken forKey:@"access_token"];
   }
