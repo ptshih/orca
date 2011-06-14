@@ -16,9 +16,9 @@
     // Create new pod entity
     Pod *newPod = [NSEntityDescription insertNewObjectForEntityForName:@"Pod" inManagedObjectContext:context];
 
-    newPod.id = [dictionary valueForKey:@"id"];
+    newPod.id = [NSString stringWithFormat:@"%@", [dictionary valueForKey:@"id"]];
     newPod.name = [dictionary valueForKey:@"name"];
-    newPod.fromId = [dictionary valueForKey:@"fromId"];
+    newPod.fromId = [NSString stringWithFormat:@"%@", [dictionary valueForKey:@"fromId"]];
     newPod.fromName = [dictionary valueForKey:@"fromName"];
     newPod.fromPictureUrl = [dictionary valueForKey:@"fromPictureUrl"];
     newPod.participants = [[dictionary valueForKey:@"participants"] notNil] ? [dictionary valueForKey:@"participants"] : nil;
@@ -41,7 +41,7 @@
     if (![self.timestamp isEqualToDate:[NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]]]) {    
       // Update properties that can change
       self.name = [dictionary valueForKey:@"name"];
-      self.fromId = [dictionary valueForKey:@"fromId"];
+      self.fromId = [NSString stringWithFormat:@"%@", [dictionary valueForKey:@"fromId"]];
       self.fromName = [dictionary valueForKey:@"fromName"];
       self.fromPictureUrl = [dictionary valueForKey:@"fromPictureUrl"];
       self.participants = [[dictionary valueForKey:@"participants"] notNil] ? [dictionary valueForKey:@"participants"] : nil;

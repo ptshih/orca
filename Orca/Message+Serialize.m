@@ -16,10 +16,10 @@
     // Create new pod entity
     Message *newMessage = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:context];
     
-    newMessage.id = [dictionary valueForKey:@"id"];
+    newMessage.id = [NSString stringWithFormat:@"%@", [dictionary valueForKey:@"id"]];
     newMessage.podId = [dictionary valueForKey:@"podId"];
     newMessage.sequence = [dictionary valueForKey:@"sequence"];
-    newMessage.fromId = [dictionary valueForKey:@"fromId"];
+    newMessage.fromId = [NSString stringWithFormat:@"%@", [dictionary valueForKey:@"fromId"]];
     newMessage.fromName = [dictionary valueForKey:@"fromName"];
     newMessage.fromPictureUrl = [dictionary valueForKey:@"fromPictureUrl"];
     newMessage.message = [[dictionary valueForKey:@"message"] notNil] ? [dictionary valueForKey:@"message"] : nil;
