@@ -157,6 +157,7 @@
     _facebook.accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
     _facebook.expirationDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookExpirationDate"];
     [self startSession];
+    [self launchFinished];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kReloadPodController object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:kReloadMessageController object:nil];
@@ -297,13 +298,7 @@
     [[NSUserDefaults standardUserDefaults] setValue:[response valueForKey:@"access_token"] forKey:@"accessToken"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    // Let the device know we want to receive push notifications
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-    
-    // Finished login process
-    if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
-      [_launcherViewController dismissModalViewControllerAnimated:YES];
-    }
+    [self launchFinished];
   }];
   
   [request setFailedBlock:^{
@@ -312,6 +307,15 @@
   
   // Start the Request
   [request startAsynchronous];
+}
+
+- (void)launchFinished {
+  // Let the device know we want to receive push notifications
+  [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+  
+  if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
+    [_launcherViewController dismissModalViewControllerAnimated:YES];
+  }
 }
 
 #pragma mark Register Push

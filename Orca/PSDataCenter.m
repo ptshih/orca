@@ -265,8 +265,7 @@
 
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request {
   // subclass should implement
-  NSError *error = [request error];
-  DLog(@"Request failed with error: %@", [error localizedDescription]);
+  DLog(@"Request failed with error: %@", [[request error] localizedDescription]);
 }
 
 #pragma mark -

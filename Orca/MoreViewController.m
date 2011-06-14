@@ -23,6 +23,8 @@
   [self setupTableViewWithFrame:self.view.bounds andStyle:UITableViewStyleGrouped andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
   [self.items addObject:[NSArray arrayWithObject:@"test"]];
+  
+  _navTitleLabel.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 }
 
 - (void)dealloc {

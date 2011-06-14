@@ -15,7 +15,6 @@
 #import "JSONKit.h"
 #import "PSCoreDataStack.h"
 #import "NetworkConstants.h"
-#import "PSParserStack.h"
 
 #define SINCE_SAFETY_NET 300 // 5 minutes
 

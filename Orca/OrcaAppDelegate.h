@@ -45,6 +45,9 @@
 - (void)getMe;
 - (void)serializeMeWithResponse:(id)response;
 
+// This is called after all call homes, push registers, etc... finish
+- (void)launchFinished;
+
 // APNS
 - (void)processMessageFromRemoteNotification:(NSDictionary *)userInfo;
 
