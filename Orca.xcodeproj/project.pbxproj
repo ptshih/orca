@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		250532EF13A4C51F0037DCFA /* Orca.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 250532ED13A4C51F0037DCFA /* Orca.xcdatamodeld */; };
+		25022A6413A7249A004A08D0 /* Orca.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 25022A6213A7249A004A08D0 /* Orca.xcdatamodeld */; };
 		250B3188133EBDE70011EEDD /* CardModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B3187133EBDE70011EEDD /* CardModalViewController.m */; };
 		250B318B133EBF0C0011EEDD /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B318A133EBF0B0011EEDD /* ComposeViewController.m */; };
 		250B31AE133EC4220011EEDD /* PSView.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B31AD133EC4220011EEDD /* PSView.m */; };
@@ -283,7 +283,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		250532EE13A4C51F0037DCFA /* Orca.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Orca.xcdatamodel; sourceTree = "<group>"; };
+		25022A6313A7249A004A08D0 /* Orca.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Orca.xcdatamodel; sourceTree = "<group>"; };
 		250B3186133EBDE70011EEDD /* CardModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardModalViewController.h; sourceTree = "<group>"; };
 		250B3187133EBDE70011EEDD /* CardModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardModalViewController.m; sourceTree = "<group>"; };
 		250B3189133EBF0B0011EEDD /* ComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
@@ -353,7 +353,7 @@
 		25197F3A13A49147007025A6 /* MoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
 		252049F813A04A6E005D6336 /* album-placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "album-placeholder.png"; sourceTree = "<group>"; };
 		252049F913A04A6E005D6336 /* album-placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "album-placeholder@2x.png"; sourceTree = "<group>"; };
-		2538FF25133AD07100ACE127 /* pods.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pods.json; sourceTree = "<group>"; };
+		2538FF25133AD07100ACE127 /* pods.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pods.json; sourceTree = "<group>"; };
 		2538FF6C133B49A100ACE127 /* PSImageViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSImageViewDelegate.h; sourceTree = "<group>"; };
 		2538FF6E133B508500ACE127 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
 		2538FF6F133B508500ACE127 /* blackArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackArrow@2x.png"; sourceTree = "<group>"; };
@@ -663,7 +663,7 @@
 		25FB8BEC133AA7E600C130A8 /* PSCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCell.m; sourceTree = "<group>"; };
 		25FB8BED133AA7E600C130A8 /* PSImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSImageCell.h; sourceTree = "<group>"; };
 		25FB8BEE133AA7E700C130A8 /* PSImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSImageCell.m; sourceTree = "<group>"; };
-		25FB8C1F133ACB2400C130A8 /* messages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = messages.json; sourceTree = "<group>"; };
+		25FB8C1F133ACB2400C130A8 /* messages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = messages.json; sourceTree = "<group>"; };
 		25FC2F9B13A16BCC004462A9 /* loadmore-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loadmore-bg.png"; sourceTree = "<group>"; };
 		25FC2F9C13A16BCC004462A9 /* loadmore-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loadmore-bg@2x.png"; sourceTree = "<group>"; };
 		25FCA389139887A4009CD59C /* PSSearchStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSearchStack.h; sourceTree = "<group>"; };
@@ -883,7 +883,7 @@
 		25CEF80F1339F278006F23A7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				250532ED13A4C51F0037DCFA /* Orca.xcdatamodeld */,
+				25022A6213A7249A004A08D0 /* Orca.xcdatamodeld */,
 				25CEF8FD1339FFD3006F23A7 /* Constants.h */,
 				25EFD4011343E44C000108B8 /* NetworkConstants.h */,
 				25CEF8101339F278006F23A7 /* Orca-Info.plist */,
@@ -1674,13 +1674,13 @@
 				2564939213982E66005B7459 /* PSRandomSortDescriptor.m in Sources */,
 				25FCA38B139887A4009CD59C /* PSSearchStack.m in Sources */,
 				25197F3B13A49147007025A6 /* MoreViewController.m in Sources */,
-				250532EF13A4C51F0037DCFA /* Orca.xcdatamodeld in Sources */,
 				25E5A6A213A560D40096E4FE /* Pod.m in Sources */,
 				25E5A6A513A5611B0096E4FE /* Pod+Serialize.m in Sources */,
 				25E5A6A813A5613F0096E4FE /* Message+Serialize.m in Sources */,
 				25BB19EE13A59B7100430C33 /* PodCell.m in Sources */,
 				25BB19F213A5A1BB00430C33 /* MessageCell.m in Sources */,
 				25BB19F513A5A43100430C33 /* Message.m in Sources */,
+				25022A6413A7249A004A08D0 /* Orca.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1785,12 +1785,11 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		250532ED13A4C51F0037DCFA /* Orca.xcdatamodeld */ = {
+		25022A6213A7249A004A08D0 /* Orca.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				250532EE13A4C51F0037DCFA /* Orca.xcdatamodel */,
+				25022A6313A7249A004A08D0 /* Orca.xcdatamodel */,
 			);
-			currentVersion = 250532EE13A4C51F0037DCFA /* Orca.xcdatamodel */;
 			path = Orca.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
