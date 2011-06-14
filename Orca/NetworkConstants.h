@@ -15,6 +15,8 @@
 // API Version
 #define API_VERSION @"v1"
 
+#define SEND_METRICS_HEADERS
+
 // If this is defined, we will hit the staging server instead of prod
 //#define STAGING
 
