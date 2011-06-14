@@ -11,7 +11,13 @@
 #import "Pod.h"
 #import "Pod+Serialize.h"
 
+static dispatch_queue_t _coreDataSerializationQueue = nil;
+
 @implementation PodDataCenter
+
++ (void)initialize {
+  _coreDataSerializationQueue = dispatch_queue_create("com.sevenminutelabs.podCoreDataSerializationQueue", NULL);
+}
 
 + (PodDataCenter *)defaultCenter {
   static PodDataCenter *defaultCenter = nil;
@@ -39,8 +45,8 @@
   NSString *filePath = [[NSBundle mainBundle] pathForResource:@"pods" ofType:@"json"];
   NSData *fixtureData = [NSData dataWithContentsOfFile:filePath];
   
-  // Process the batched results in a BG thread
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+  // Process the batched results using GCD  
+  dispatch_async(_coreDataSerializationQueue, ^{
     NSManagedObjectContext *context = [PSCoreDataStack newManagedObjectContext];
     
     id response = [[fixtureData JSONValue] valueForKey:@"data"];
@@ -90,9 +96,8 @@
   NSString *uniqueKey = @"id";
   NSString *entityName = @"Pod";
   
+  // Find all existing Pods
   NSArray *newUniqueKeyArray = [array valueForKey:uniqueKey];
-  
-  // Find all existing Messages
   NSFetchRequest *existingFetchRequest = [[[NSFetchRequest alloc] init] autorelease];
   [existingFetchRequest setEntity:[NSEntityDescription entityForName:entityName inManagedObjectContext:context]];
   [existingFetchRequest setPredicate:[NSPredicate predicateWithFormat:@"(%K IN %@)", uniqueKey, newUniqueKeyArray]];
@@ -101,7 +106,7 @@
   NSError *error = nil;
   NSArray *foundEntities = [context executeFetchRequest:existingFetchRequest error:&error];
   
-  // Create a dictionary of existing messages
+  // Create a dictionary of existing pods
   NSMutableDictionary *existingEntities = [NSMutableDictionary dictionary];
   for (id foundEntity in foundEntities) {
     [existingEntities setObject:foundEntity forKey:[foundEntity valueForKey:uniqueKey]];
@@ -124,8 +129,8 @@
 #pragma mark -
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {
-  // Process the batched results in a BG thread
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+  // Process the batched results using GCD  
+  dispatch_async(_coreDataSerializationQueue, ^{
     [self serializePodsWithRequest:request];
     dispatch_async(dispatch_get_main_queue(), ^{
       // Inform Delegate if all responses are parsed

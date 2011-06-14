@@ -10,7 +10,13 @@
 #import "Message.h"
 #import "Message+Serialize.h"
 
+static dispatch_queue_t _coreDataSerializationQueue = nil;
+
 @implementation MessageDataCenter
+
++ (void)initialize {
+  _coreDataSerializationQueue = dispatch_queue_create("com.sevenminutelabs.messageCoreDataSerializationQueue", NULL);
+}
 
 + (MessageDataCenter *)defaultCenter {
   static MessageDataCenter *defaultCenter = nil;
@@ -38,8 +44,8 @@
   NSString *filePath = [[NSBundle mainBundle] pathForResource:@"messages" ofType:@"json"];
   NSData *fixtureData = [NSData dataWithContentsOfFile:filePath];
   
-  // Process the batched results in a BG thread
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+  // Process the batched results using GCD  
+  dispatch_async(_coreDataSerializationQueue, ^{
     NSManagedObjectContext *context = [PSCoreDataStack newManagedObjectContext];
     
     id response = [[fixtureData JSONValue] valueForKey:@"data"];
@@ -90,9 +96,8 @@
   NSString *uniqueKey = @"sequence";
   NSString *entityName = @"Message";
   
-  NSArray *newUniqueKeyArray = [array valueForKey:uniqueKey];
-  
   // Find all existing Messages
+  NSArray *newUniqueKeyArray = [array valueForKey:uniqueKey];
   NSFetchRequest *existingFetchRequest = [[[NSFetchRequest alloc] init] autorelease];
   [existingFetchRequest setEntity:[NSEntityDescription entityForName:entityName inManagedObjectContext:context]];
   [existingFetchRequest setPredicate:[NSPredicate predicateWithFormat:@"(%K IN %@)", uniqueKey, newUniqueKeyArray]];
@@ -124,7 +129,7 @@
 - (void)serializeComposedMessageWithUserInfo:(NSDictionary *)userInfo {
   // Userinfo has 3 keys (all strings)
   // message, podId, sequence
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+  dispatch_async(_coreDataSerializationQueue, ^{
     NSManagedObjectContext *context = [PSCoreDataStack newManagedObjectContext];
 
     [Message addMessageWithDictionary:userInfo inContext:context];
@@ -147,8 +152,8 @@
 #pragma mark -
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {
-  // Process the batched results in a BG thread
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+  // Process the batched results using GCD
+  dispatch_async(_coreDataSerializationQueue, ^{
     [self serializeMessagesWithRequest:request];
     dispatch_async(dispatch_get_main_queue(), ^{
       // Inform Delegate if all responses are parsed

@@ -11,9 +11,15 @@
 #import "UIImage+ScalingAndCropping.h"
 #import "NSString+URLEncoding+PS.h"
 
+static dispatch_queue_t _urlCacheImageViewQueue = nil;
+
 @implementation PSURLCacheImageView
 
 @synthesize urlPath = _urlPath;
+
++ (void)initialize {
+  _urlCacheImageViewQueue = dispatch_queue_create("com.sevenminutelabs.urlCacheImageViewQueue", NULL);
+}
 
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -30,7 +36,7 @@
 
 - (void)loadImageAndDownload:(BOOL)download {
   if (_urlPath) {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(_urlCacheImageViewQueue, ^{
       UIImage *image = [[PSImageCache sharedCache] imageForURLPath:_urlPath];
       dispatch_async(dispatch_get_main_queue(), ^{
         if (image) { 

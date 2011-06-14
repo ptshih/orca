@@ -96,7 +96,12 @@
 }
 
 - (void)executeFetch:(BOOL)updateFRC {
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+  static dispatch_queue_t coreDataFetchQueue = nil;
+  if (!coreDataFetchQueue) {
+    coreDataFetchQueue = dispatch_queue_create("com.sevenminutelabs.coreDataFetchQueue", NULL);
+  }
+  
+  dispatch_async(coreDataFetchQueue, ^{
     NSError *error = nil;
     NSFetchRequest *backgroundFetch = [[self getFetchRequest] copy];
     
@@ -206,6 +211,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
   [_tableView endUpdates];
+  [self updateState];
 }
 
 #pragma mark UISearchDisplayDelegate
@@ -281,8 +287,10 @@
   [self resetFetchedResultsController];
   if (self.searchDisplayController) {
     [self.searchDisplayController setActive:NO];
+  } else {
+    [self.tableView reloadData];
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
   }
-  [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
 }
 
 - (void)dealloc {

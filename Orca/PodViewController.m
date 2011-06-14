@@ -166,7 +166,12 @@
   NSString *searchText = [userInfo objectForKey:@"searchText"];
 //  NSString *scope = [userInfo objectForKey:@"scope"];
   
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+  static dispatch_queue_t podSearchQueue = nil;
+  if (!podSearchQueue) {
+    podSearchQueue = dispatch_queue_create("com.sevenminutelabs.podSearchQueue", NULL);
+  }
+  
+  dispatch_async(podSearchQueue, ^{
     NSMutableArray *subpredicates = [NSMutableArray arrayWithCapacity:1];
     //  predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
     
