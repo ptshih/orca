@@ -29,14 +29,14 @@
   [super loadView];
   
   self.view.backgroundColor = FB_BLUE_COLOR;
-  self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Default.png"]];
+  self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"login-bg.png"]];
   
   // Setup Logo
-  UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photos-large.png"]];
-  logo.center = self.view.center;
-  logo.top = logo.top - 80.0;
-  [self.view addSubview:logo];
-  [logo release];
+//  UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photos-large.png"]];
+//  logo.center = self.view.center;
+//  logo.top = logo.top - 80.0;
+//  [self.view addSubview:logo];
+//  [logo release];
   
   // Setup Login Buttons
   _loginButton = [[UIButton alloc] initWithFrame:CGRectZero];
@@ -47,7 +47,7 @@
   [_loginButton setBackgroundImage:[[UIImage imageNamed:@"facebook-connect.png"] stretchableImageWithLeftCapWidth:36 topCapHeight:0] forState:UIControlStateNormal];
   [_loginButton setContentEdgeInsets:UIEdgeInsetsMake(0, 36, 0, 0)];
   [_loginButton setTitle:@"Login with Facebook" forState:UIControlStateNormal];
-  [_loginButton setTitle:@"Downloading Photo Albums" forState:UIControlStateDisabled];
+  [_loginButton setTitle:@"Logging you in..." forState:UIControlStateDisabled];
   [_loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [_loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
   _loginButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0];
