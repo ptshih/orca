@@ -164,7 +164,7 @@
   
   NSDictionary *userInfo = [timer userInfo];
   NSString *searchText = [userInfo objectForKey:@"searchText"];
-  NSString *scope = [userInfo objectForKey:@"scope"];
+//  NSString *scope = [userInfo objectForKey:@"scope"];
   
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     NSMutableArray *subpredicates = [NSMutableArray arrayWithCapacity:1];

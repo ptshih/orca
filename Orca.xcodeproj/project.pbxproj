@@ -1738,7 +1738,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = Orca;
 				PROVISIONING_PROFILE = "A8A3D014-BE4C-4536-A664-37564DF39738";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1755,7 +1755,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = Orca;
 				PROVISIONING_PROFILE = "A8A3D014-BE4C-4536-A664-37564DF39738";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1790,6 +1790,7 @@
 			children = (
 				25022A6313A7249A004A08D0 /* Orca.xcdatamodel */,
 			);
+			currentVersion = 25022A6313A7249A004A08D0 /* Orca.xcdatamodel */;
 			path = Orca.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
