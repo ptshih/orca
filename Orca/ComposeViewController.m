@@ -80,7 +80,7 @@
 
 - (void)send {
   // Send it asynchronously and dismiss composer
-  NSString *sequence = [NSString uuidString];
+  NSString *sequence = [NSString md5:[NSString uuidString]];
   [[ComposeDataCenter defaultCenter] sendMessage:_message.text andSequence:sequence forPodId:_podId];
   
   // We should create a local copy of this message

@@ -16,6 +16,7 @@
 #import "NSURL+Util.h"
 #import "UIImage+NSCoding.h"
 #import "NSString+Util.h"
+#import "NSString+MD5.h"
 #import "PSRandomSortDescriptor.h"
 
 #ifdef __APPLE__
@@ -64,7 +65,7 @@
 
 // FONTS
 #define TITLE_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0]
-#define NORMAL_FONT [UIFont fontWithName:@"HelveticaNeue" size:10.0]
+#define NORMAL_FONT [UIFont fontWithName:@"HelveticaNeue" size:14.0]
 #define SUBTITLE_FONT [UIFont fontWithName:@"HelveticaNeue" size:10.0]
 
 // Colors

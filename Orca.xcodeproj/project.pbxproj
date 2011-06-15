@@ -124,6 +124,8 @@
 		256B53EC1388571800BAE074 /* PSParserStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 256B53EB1388571800BAE074 /* PSParserStack.m */; };
 		256B53F0138863FD00BAE074 /* lnkd.png in Resources */ = {isa = PBXBuildFile; fileRef = 256B53EF138863FD00BAE074 /* lnkd.png */; };
 		25711AE21395F03900DD20E0 /* overlay_2_320x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 25711AE11395F03900DD20E0 /* overlay_2_320x120.png */; };
+		257393D913A888C900F12CE0 /* NSString+URLEncoding+PS.m in Sources */ = {isa = PBXBuildFile; fileRef = 257393D813A888C800F12CE0 /* NSString+URLEncoding+PS.m */; };
+		257393E513A88DF600F12CE0 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 257393E413A88DF600F12CE0 /* NSString+MD5.m */; };
 		2594670F13A7FEC900CC6890 /* PSCoreDataOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2594670E13A7FEC900CC6890 /* PSCoreDataOperationQueue.m */; };
 		259AD5491366B09100FA2B8D /* MessageDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5481366B09100FA2B8D /* MessageDataCenter.m */; };
 		259C7B4B1349733000C37AE1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B4A1349733000C37AE1 /* Reachability.m */; };
@@ -156,9 +158,6 @@
 		25BB19F213A5A1BB00430C33 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25BB19F113A5A1BB00430C33 /* MessageCell.m */; };
 		25BB19F513A5A43100430C33 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 25BB19F413A5A43100430C33 /* Message.m */; };
 		25C67E301372197E00330DA7 /* Base64Transcoder+PS.c in Sources */ = {isa = PBXBuildFile; fileRef = 25C67E2E1372197E00330DA7 /* Base64Transcoder+PS.c */; };
-		25C67E39137219AA00330DA7 /* PSNetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C67E33137219AA00330DA7 /* PSNetworkOperation.m */; };
-		25C67E3B137219AA00330DA7 /* PSNetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C67E36137219AA00330DA7 /* PSNetworkQueue.m */; };
-		25C67E3D137219AA00330DA7 /* NSString+URLEncoding+PS.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C67E38137219AA00330DA7 /* NSString+URLEncoding+PS.m */; };
 		25C67E41137219F200330DA7 /* PSImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C67E40137219F200330DA7 /* PSImageCache.m */; };
 		25C77C4B138E59E000D09103 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C77C4A138E59E000D09103 /* comment.png */; };
 		25C77C4E138E7B2A00D09103 /* UIImage+NSCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C77C4D138E7B2A00D09103 /* UIImage+NSCoding.m */; };
@@ -446,6 +445,10 @@
 		256B53EF138863FD00BAE074 /* lnkd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lnkd.png; sourceTree = "<group>"; };
 		25711AE11395F03900DD20E0 /* overlay_2_320x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = overlay_2_320x120.png; sourceTree = "<group>"; };
 		25733C26138F282400660556 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = SOURCE_ROOT; };
+		257393D713A888C800F12CE0 /* NSString+URLEncoding+PS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding+PS.h"; sourceTree = "<group>"; };
+		257393D813A888C800F12CE0 /* NSString+URLEncoding+PS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding+PS.m"; sourceTree = "<group>"; };
+		257393E313A88DF600F12CE0 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
+		257393E413A88DF600F12CE0 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		2594670D13A7FEC900CC6890 /* PSCoreDataOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCoreDataOperationQueue.h; sourceTree = "<group>"; };
 		2594670E13A7FEC900CC6890 /* PSCoreDataOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCoreDataOperationQueue.m; sourceTree = "<group>"; };
 		25961C9E134D46CD00A3D4CD /* MeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeDelegate.h; sourceTree = "<group>"; };
@@ -488,13 +491,6 @@
 		25BB19F413A5A43100430C33 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		25C67E2E1372197E00330DA7 /* Base64Transcoder+PS.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "Base64Transcoder+PS.c"; sourceTree = "<group>"; };
 		25C67E2F1372197E00330DA7 /* Base64Transcoder+PS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Base64Transcoder+PS.h"; sourceTree = "<group>"; };
-		25C67E32137219AA00330DA7 /* PSNetworkOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNetworkOperation.h; sourceTree = "<group>"; };
-		25C67E33137219AA00330DA7 /* PSNetworkOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSNetworkOperation.m; sourceTree = "<group>"; };
-		25C67E34137219AA00330DA7 /* PSNetworkOperationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNetworkOperationDelegate.h; sourceTree = "<group>"; };
-		25C67E35137219AA00330DA7 /* PSNetworkQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNetworkQueue.h; sourceTree = "<group>"; };
-		25C67E36137219AA00330DA7 /* PSNetworkQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSNetworkQueue.m; sourceTree = "<group>"; };
-		25C67E37137219AA00330DA7 /* NSString+URLEncoding+PS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding+PS.h"; sourceTree = "<group>"; };
-		25C67E38137219AA00330DA7 /* NSString+URLEncoding+PS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding+PS.m"; sourceTree = "<group>"; };
 		25C67E3F137219F200330DA7 /* PSImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSImageCache.h; sourceTree = "<group>"; };
 		25C67E40137219F200330DA7 /* PSImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSImageCache.m; sourceTree = "<group>"; };
 		25C77C4A138E59E000D09103 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment.png; sourceTree = "<group>"; };
@@ -905,6 +901,8 @@
 		25CEF8871339FB76006F23A7 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				257393D713A888C800F12CE0 /* NSString+URLEncoding+PS.h */,
+				257393D813A888C800F12CE0 /* NSString+URLEncoding+PS.m */,
 				25FB8BE4133AA7A700C130A8 /* UINavigationBar+Custom.h */,
 				25FB8BE5133AA7A700C130A8 /* UINavigationBar+Custom.m */,
 				254097431383527600EBE848 /* UISearchBar+Custom.h */,
@@ -923,6 +921,8 @@
 				25CEF8911339FB8B006F23A7 /* NSString+ConvenienceMethods.m */,
 				25CEF8921339FB8B006F23A7 /* NSString+Util.h */,
 				25CEF8931339FB8B006F23A7 /* NSString+Util.m */,
+				257393E313A88DF600F12CE0 /* NSString+MD5.h */,
+				257393E413A88DF600F12CE0 /* NSString+MD5.m */,
 				25CEF8941339FB8B006F23A7 /* UIView+Additions.h */,
 				25CEF8951339FB8B006F23A7 /* UIView+Additions.m */,
 				25CEF8961339FB8B006F23A7 /* UIImage+ScalingAndCropping.h */,
@@ -950,20 +950,6 @@
 				25CEF8E41339FD49006F23A7 /* KupoLocation.m */,
 			);
 			name = Libraries;
-			sourceTree = "<group>";
-		};
-		25CEF8E71339FD84006F23A7 /* PSNetworkStack */ = {
-			isa = PBXGroup;
-			children = (
-				25C67E32137219AA00330DA7 /* PSNetworkOperation.h */,
-				25C67E33137219AA00330DA7 /* PSNetworkOperation.m */,
-				25C67E34137219AA00330DA7 /* PSNetworkOperationDelegate.h */,
-				25C67E35137219AA00330DA7 /* PSNetworkQueue.h */,
-				25C67E36137219AA00330DA7 /* PSNetworkQueue.m */,
-				25C67E37137219AA00330DA7 /* NSString+URLEncoding+PS.h */,
-				25C67E38137219AA00330DA7 /* NSString+URLEncoding+PS.m */,
-			);
-			name = PSNetworkStack;
 			sourceTree = "<group>";
 		};
 		25CEF8F21339FE27006F23A7 /* Models */ = {
@@ -1212,7 +1198,6 @@
 				259C7B491349733000C37AE1 /* Reachability.h */,
 				259C7B4A1349733000C37AE1 /* Reachability.m */,
 				25EFD4021343E75C000108B8 /* HashValue */,
-				25CEF8E71339FD84006F23A7 /* PSNetworkStack */,
 				25FB8B56133A03A600C130A8 /* EGO */,
 				25FB8B52133A039300C130A8 /* Appirater */,
 				25FB8B2C133A036E00C130A8 /* SBJSON */,
@@ -1665,9 +1650,6 @@
 				25DC5F5713668A8600868001 /* CardCoreDataTableViewController.m in Sources */,
 				259AD5491366B09100FA2B8D /* MessageDataCenter.m in Sources */,
 				25C67E301372197E00330DA7 /* Base64Transcoder+PS.c in Sources */,
-				25C67E39137219AA00330DA7 /* PSNetworkOperation.m in Sources */,
-				25C67E3B137219AA00330DA7 /* PSNetworkQueue.m in Sources */,
-				25C67E3D137219AA00330DA7 /* NSString+URLEncoding+PS.m in Sources */,
 				25C67E41137219F200330DA7 /* PSImageCache.m in Sources */,
 				2544AC7A1377CCC10072C86C /* CameraViewController.m in Sources */,
 				2546E8D013825D9E00BD8757 /* PSImageArrayView.m in Sources */,
@@ -1695,6 +1677,8 @@
 				25BB19F513A5A43100430C33 /* Message.m in Sources */,
 				25022A6413A7249A004A08D0 /* Orca.xcdatamodeld in Sources */,
 				2594670F13A7FEC900CC6890 /* PSCoreDataOperationQueue.m in Sources */,
+				257393D913A888C900F12CE0 /* NSString+URLEncoding+PS.m in Sources */,
+				257393E513A88DF600F12CE0 /* NSString+MD5.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
