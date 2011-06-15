@@ -116,6 +116,9 @@
   NSString *accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"accessToken"];
   if (accessToken) {
     [requestParams setValue:accessToken forKey:@"access_token"];
+    DLog(@"Sending a request to url: %@ with access_token: %@", url, accessToken);
+  } else {
+    DLog(@"WARNING, NO ACCESS TOKEN in userDefaults, NOT SENDING ONE: %@", url);
   }
   
   // GET parameters

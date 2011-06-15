@@ -295,6 +295,7 @@
   [request setCompletionBlock:^{
     // Read the response access_token
     id response = [[request responseData] JSONValue];
+    VLog(@"got access token from register: %@", response);
     [[NSUserDefaults standardUserDefaults] setValue:[response valueForKey:@"access_token"] forKey:@"accessToken"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     

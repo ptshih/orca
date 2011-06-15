@@ -123,7 +123,7 @@
 #	define DLog(...)
 #endif
 
-//#define VERBOSE_DEBUG
+#define VERBOSE_DEBUG
 #ifdef VERBOSE_DEBUG
 #define VLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 #else

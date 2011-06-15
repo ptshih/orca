@@ -25,6 +25,8 @@
   [params setValue:message forKey:@"message"];
   [params setValue:sequence forKey:@"sequence"];
   
+  VLog(@"Sending a new message: %@ with sequence: %@", message, sequence);
+  
   [self sendRequestWithURL:composeURL andMethod:POST andHeaders:nil andParams:params andUserInfo:nil];
 }
 
