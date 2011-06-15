@@ -44,12 +44,12 @@
     
     // Line Break Mode
     _nameLabel.lineBreakMode = UILineBreakModeTailTruncation;
-    _messageLabel.lineBreakMode = UILineBreakModeTailTruncation;
+    _messageLabel.lineBreakMode = UILineBreakModeWordWrap;
     _timestampLabel.lineBreakMode = UILineBreakModeTailTruncation;
     
     // Number of Lines
     _nameLabel.numberOfLines = 1;
-    _messageLabel.numberOfLines = 1;
+    _messageLabel.numberOfLines = 0;
     _timestampLabel.numberOfLines = 1;
     
     // Shadows
@@ -80,14 +80,14 @@
   CGSize desiredSize = CGSizeZero;
   
   // Timestamp
-  desiredSize = [UILabel sizeForText:_timestampLabel.text width:textWidth font:_timestampLabel.font numberOfLines:1 lineBreakMode:_timestampLabel.lineBreakMode];
+  desiredSize = [UILabel sizeForText:_timestampLabel.text width:textWidth font:_timestampLabel.font numberOfLines:_timestampLabel.numberOfLines lineBreakMode:_timestampLabel.lineBreakMode];
   _timestampLabel.width = desiredSize.width;
   _timestampLabel.height = desiredSize.height;
   _timestampLabel.top = top;
   _timestampLabel.left = self.contentView.width - MARGIN_X - _timestampLabel.width;
   
   // Name
-  desiredSize = [UILabel sizeForText:_nameLabel.text width:(textWidth - _timestampLabel.width - MARGIN_X) font:_nameLabel.font numberOfLines:1 lineBreakMode:_nameLabel.lineBreakMode];
+  desiredSize = [UILabel sizeForText:_nameLabel.text width:(textWidth - _timestampLabel.width - MARGIN_X) font:_nameLabel.font numberOfLines:_nameLabel.numberOfLines lineBreakMode:_nameLabel.lineBreakMode];
   _nameLabel.width = desiredSize.width;
   _nameLabel.height = desiredSize.height;
   _nameLabel.top = top;
@@ -96,7 +96,7 @@
   top = _nameLabel.bottom;
   
   // Message
-  desiredSize = [UILabel sizeForText:_messageLabel.text width:textWidth font:_messageLabel.font numberOfLines:1 lineBreakMode:_messageLabel.lineBreakMode];
+  desiredSize = [UILabel sizeForText:_messageLabel.text width:textWidth font:_messageLabel.font numberOfLines:_messageLabel.numberOfLines lineBreakMode:_messageLabel.lineBreakMode];
   _messageLabel.width = desiredSize.width;
   _messageLabel.height = desiredSize.height;
   _messageLabel.top = top;
@@ -108,7 +108,31 @@
 #pragma mark -
 #pragma mark Fill and Height
 + (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-  return 60;
+  Message *message = (Message *)object;
+  
+  CGSize desiredSize = CGSizeZero;
+  CGFloat textWidth = [[self class] rowWidthForInterfaceOrientation:interfaceOrientation] - MARGIN_X - MARGIN_X - 60; // minus image
+  
+  CGFloat desiredHeight = 0;
+  
+  // Top margin
+  desiredHeight += MARGIN_Y;
+  
+  // Name
+  desiredHeight += 21; // desiredHeight from Name Label
+  
+  // Message
+  desiredSize = [UILabel sizeForText:message.message width:textWidth font:NORMAL_FONT numberOfLines:0 lineBreakMode:UILineBreakModeWordWrap];
+  desiredHeight += desiredSize.height;
+  
+  // Bottom margin
+  desiredHeight += MARGIN_Y;
+  
+  if (desiredHeight < 60) {
+    desiredHeight = 60;
+  }
+  
+  return desiredHeight;
 }
 
 - (void)fillCellWithObject:(id)object {
