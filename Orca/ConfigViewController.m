@@ -27,7 +27,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self setupBackgroundWithImage:[UIImage imageNamed:@"weave-bg.png"]];
+  [self setupBackgroundWithImage:[UIImage imageNamed:@"bg-weave.png"]];
   
   UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
   [toolbar setItems:[NSArray arrayWithObjects:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)], nil]];

@@ -29,7 +29,7 @@
   [super loadView];
   
   self.view.backgroundColor = FB_BLUE_COLOR;
-  self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"login-bg.png"]];
+  self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg-ocean-orca.png"]];
   
   // Setup Logo
 //  UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photos-large.png"]];

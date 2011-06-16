@@ -54,7 +54,7 @@
 //  [[PSImageCache sharedCache] setCacheDirectory:NSDocumentDirectory];
   
   _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"weave-bg.png"]];
+  self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg-weave.png"]];
 
   UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"texture-spotlight.png"]];
   backgroundView.frame = self.window.bounds;

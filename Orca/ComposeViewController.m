@@ -40,7 +40,7 @@ static UIImage *_imageBorderImage = nil;
 - (void)loadView {
   [super loadView];
   
-  self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"weave-bg.png"]];
+  self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg-weave.png"]];
   
   UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"texture-spotlight.png"]];
   backgroundView.frame = self.view.bounds;
