@@ -47,10 +47,10 @@
   _headerToolbar.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
   
   UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)] autorelease];
-  UIBarButtonItem *sendButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(send)] autorelease];
+  UIBarButtonItem *sendButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Send", @"Send") style:UIBarButtonItemStyleDone target:self action:@selector(send)] autorelease];
   UIBarButtonItem *title = [[[UIBarButtonItem alloc] initWithTitle:@"Message" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
   
-  [_headerToolbar setItems:[NSArray arrayWithObjects:cancelButton, [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease], title,[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease], sendButton, nil]];
+  [_headerToolbar setItems:[NSArray arrayWithObjects:cancelButton, [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease], title, [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease], sendButton, nil]];
   
   // Message Field
   _message = [[PSTextView alloc] initWithFrame:CGRectMake(0, 44, _composeView.width, _composeView.height - _headerToolbar.height)];
@@ -161,7 +161,7 @@
 //  }
   
   if (up) {
-    _composeView.height = self.view.bounds.size.height - 40 - keyboardFrame.size.height;
+    _composeView.height = self.view.bounds.size.height - 20 - keyboardFrame.size.height;
   } else {
 //    _composeView.height = self.view.bounds.size.height - 40 + keyboardFrame.size.height;
     _composeView.height = 44;

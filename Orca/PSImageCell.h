@@ -16,6 +16,7 @@
 #define IMAGE_WIDTH_GROUPED 34.0
 #define IMAGE_HEIGHT_GROUPED 34.0
 
+#define IMAGE_MARGIN 10.0
 #define IMAGE_OFFSET 60.0
 
 @interface PSImageCell : PSCell {

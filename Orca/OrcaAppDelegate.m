@@ -43,7 +43,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
+  // Application Lifecycle States
   _applicationWasResigned = NO;
+  _applicationWasBackgrounded = NO;
   
   NSLog(@"fonts: %@",[UIFont familyNames]);
 
@@ -85,38 +87,40 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-  /*
-   Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-   Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-   */
   _applicationWasResigned = YES;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+  _applicationWasBackgrounded = YES;
+  
+  // Flush NSUserDefaults just in case
   [[NSUserDefaults standardUserDefaults] synchronize];
-//  [[PSImageCache sharedCache] flushImageCacheToDisk];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-  // Login if necessary
-  [self tryLogin];
+  // Reload all controllers when entering foreground
+  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadPodController object:nil];
+  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadMessageController object:nil];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-  /*
-   Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-   */
   if (_applicationWasResigned) {
     _applicationWasResigned = NO;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kReloadPodController object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:kReloadMessageController object:nil];
   }
+  
+  if (_applicationWasBackgrounded) {
+    _applicationWasBackgrounded = NO;
+    
+    // UNUSED
+  }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+  // Flush NSUserDefaults just in case
   [[NSUserDefaults standardUserDefaults] synchronize];
-//  [[PSImageCache sharedCache] flushImageCacheToDisk];
 }
 
 #pragma mark -
@@ -157,10 +161,6 @@
     _facebook.accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
     _facebook.expirationDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookExpirationDate"];
     [self startSession];
-    [self launchFinished];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kReloadPodController object:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kReloadMessageController object:nil];
   }
 }
 
@@ -223,7 +223,7 @@
 }
 
 #pragma mark Session
-- (void)startSession {
+- (void)startSession {  
 #warning disable sessions
   return;
   
@@ -312,7 +312,9 @@
 
 - (void)launchFinished {
   // Let the device know we want to receive push notifications
-  [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+  [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+  
+  // UIRemoteNotificationTypeBadge
   
   if ([_launcherViewController.modalViewController isEqual:_loginViewController]) {
     [_launcherViewController dismissModalViewControllerAnimated:YES];

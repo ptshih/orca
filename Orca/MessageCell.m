@@ -32,7 +32,7 @@
     // Font
     _nameLabel.font = TITLE_FONT;
     _messageLabel.font = NORMAL_FONT;
-    _timestampLabel.font = SUBTITLE_FONT;
+    _timestampLabel.font = TIMESTAMP_FONT;
     
     // Text Color
     _nameLabel.textColor = [UIColor darkTextColor];
@@ -75,7 +75,7 @@
   [super layoutSubviews];
   
   CGFloat top = MARGIN_Y;
-  CGFloat left = MARGIN_X + _psFrameView.right;
+  CGFloat left = _psFrameView.right;
   CGFloat textWidth = self.contentView.width - MARGIN_X - left;
   CGSize desiredSize = CGSizeZero;
   
@@ -111,7 +111,7 @@
   Message *message = (Message *)object;
   
   CGSize desiredSize = CGSizeZero;
-  CGFloat textWidth = [[self class] rowWidthForInterfaceOrientation:interfaceOrientation] - MARGIN_X - MARGIN_X - 60; // minus image
+  CGFloat textWidth = [[self class] rowWidthForInterfaceOrientation:interfaceOrientation] - MARGIN_X - IMAGE_OFFSET; // minus image
   
   CGFloat desiredHeight = 0;
   
@@ -142,7 +142,7 @@
   // Labels
   _nameLabel.text = message.fromName;
   _messageLabel.text = message.message;
-  _timestampLabel.text = [message.timestamp stringDaysAgo];
+  _timestampLabel.text = [NSDate stringForDisplayFromDate:message.timestamp];
   
   // Profile Picture
   _psImageView.urlPath = message.fromPictureUrl;

@@ -12,7 +12,7 @@
 #import "NetworkConstants.h"
 #import "PSImageView.h"
 
-#define MARGIN_X 5.0
+#define MARGIN_X 10.0
 #define MARGIN_Y 5.0
 
 enum {

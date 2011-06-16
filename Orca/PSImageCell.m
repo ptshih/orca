@@ -20,9 +20,9 @@ static UIImage *_frameImage = nil;
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
     
-    _psImageView = [[PSURLCacheImageView alloc] initWithFrame:CGRectMake(10 + MARGIN_X, 10, IMAGE_WIDTH_PLAIN, IMAGE_HEIGHT_PLAIN)];
+    _psImageView = [[PSURLCacheImageView alloc] initWithFrame:CGRectMake(IMAGE_MARGIN, IMAGE_MARGIN, IMAGE_WIDTH_PLAIN, IMAGE_HEIGHT_PLAIN)];
     _psFrameView = [[UIImageView alloc] initWithImage:_frameImage];
-    _psFrameView.frame = CGRectMake(MARGIN_X, 0, IMAGE_OFFSET, IMAGE_OFFSET);
+    _psFrameView.frame = CGRectMake(0, 0, IMAGE_OFFSET, IMAGE_OFFSET);
     
     [self.contentView addSubview:_psFrameView];
     [self.contentView addSubview:_psImageView];

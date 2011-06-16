@@ -25,6 +25,7 @@
   NSString *_sessionKey;
   
   BOOL _applicationWasResigned;
+  BOOL _applicationWasBackgrounded;
 }
 
 @property (nonatomic, retain) UIWindow *window;

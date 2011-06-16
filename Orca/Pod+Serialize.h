@@ -11,6 +11,8 @@
 
 @interface Pod (Serialize)
 
+- (NSString *)daysAgo;
+
 + (Pod *)addPodWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
 
 - (Pod *)updatePodWithDictionary:(NSDictionary *)dictionary;

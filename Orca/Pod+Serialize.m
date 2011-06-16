@@ -9,8 +9,15 @@
 #import "Pod+Serialize.h"
 #import "NSObject+ConvenienceMethods.h"
 #import "NSString+ConvenienceMethods.h"
+#import "NSDate+Helper.h"
 
 @implementation Pod (Serialize)
+
+#pragma mark -
+#pragma mark Transient Properties
+- (NSString *)daysAgo {
+  return [NSDate stringForDisplayFromDate:self.timestamp];
+}
 
 + (Pod *)addPodWithDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context {
   if (dictionary) {
@@ -39,7 +46,12 @@
 - (Pod *)updatePodWithDictionary:(NSDictionary *)dictionary {
   if (dictionary) {
     // First check to make sure this pod actually changed
-    if (![self.timestamp isEqualToDate:[NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]]]) {    
+    NSDate *existingTimestamp = self.timestamp;
+    NSDate *newTimestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
+    if (![existingTimestamp isEqualToDate:newTimestamp]) {
+      // timestamp changed, update pod info
+      self.unread = [NSNumber numberWithBool:YES]; // set unread
+      
       // Update properties that can change
       self.name = [dictionary valueForKey:@"name"];
       self.fromId = [NSString stringWithFormat:@"%@", [dictionary valueForKey:@"fromId"]];

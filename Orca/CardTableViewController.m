@@ -317,7 +317,7 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
   if (tableView.style == UITableViewStylePlain) {
     UIView *backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
-    backgroundView.backgroundColor = CELL_LIGHT_GRAY_COLOR;
+    backgroundView.backgroundColor = CELL_BACKGROUND_COLOR;
     cell.backgroundView = backgroundView;
     
     UIView *selectedBackgroundView = [[UIView alloc] initWithFrame:cell.bounds];

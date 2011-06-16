@@ -66,10 +66,14 @@
 // FONTS
 #define TITLE_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0]
 #define NORMAL_FONT [UIFont fontWithName:@"HelveticaNeue" size:14.0]
-#define SUBTITLE_FONT [UIFont fontWithName:@"HelveticaNeue" size:10.0]
+#define SUBTITLE_FONT [UIFont fontWithName:@"HelveticaNeue" size:12.0]
+#define TIMESTAMP_FONT [UIFont fontWithName:@"HelveticaNeue" size:10.0]
 
 // Colors
 // CELLS
+#define CELL_BACKGROUND_COLOR CELL_WHITE_COLOR
+#define CELL_SELECTED_COLOR KUPO_BLUE_COLOR
+
 #define CELL_WHITE_COLOR [UIColor whiteColor]
 #define CELL_BLACK_COLOR [UIColor blackColor]
 #define CELL_GRAY_BLUE_COLOR RGBCOLOR(62,76,102)
@@ -83,7 +87,7 @@
 #define CELL_UNREAD_COLOR KUPO_BLUE_COLOR
 #define CELL_COLOR_ALPHA RGBACOLOR(255,255,255,0.9)
 #define CELL_COLOR RGBCOLOR(255,255,255)
-#define CELL_SELECTED_COLOR KUPO_BLUE_COLOR
+
 
 #define TABLE_BG_COLOR_ALPHA RGBACOLOR(235,235,235,0.9)
 #define TABLE_BG_COLOR RGBCOLOR(235,235,235)

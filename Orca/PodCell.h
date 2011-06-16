@@ -17,6 +17,8 @@
   UILabel *_messageLabel;
   UILabel *_timestampLabel;
   UILabel *_participantsLabel;
+  
+  UIImageView *_unreadImageView;
 }
 
 @end

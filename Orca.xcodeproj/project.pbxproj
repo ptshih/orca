@@ -32,6 +32,9 @@
 		250B32A71341DE640011EEDD /* geo_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B32A11341DE540011EEDD /* geo_off@2x.png */; };
 		250B32A81341DE640011EEDD /* geo_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B32A21341DE580011EEDD /* geo_on.png */; };
 		250B32A91341DE640011EEDD /* geo_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B32A31341DE5D0011EEDD /* geo_on@2x.png */; };
+		250D2ED413A8BAB300781A24 /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 250D2ED313A8BAB300781A24 /* Pod.m */; };
+		250D2EEF13A8C19700781A24 /* unread.png in Resources */ = {isa = PBXBuildFile; fileRef = 250D2EED13A8C19700781A24 /* unread.png */; };
+		250D2EF013A8C19700781A24 /* unread@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250D2EEE13A8C19700781A24 /* unread@2x.png */; };
 		250E74381385B9F500247AE0 /* 32-iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 250E74361385B9F500247AE0 /* 32-iphone.png */; };
 		250E74391385B9F500247AE0 /* 32-iphone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250E74371385B9F500247AE0 /* 32-iphone@2x.png */; };
 		250E743F1385B9FF00247AE0 /* 111-user.png in Resources */ = {isa = PBXBuildFile; fileRef = 250E743B1385B9FF00247AE0 /* 111-user.png */; };
@@ -51,6 +54,7 @@
 		2511A8E81365F96E00C9CF9A /* LauncherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2511A8E71365F96D00C9CF9A /* LauncherViewController.m */; };
 		2511A8F81365F9FE00C9CF9A /* PodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2511A8F71365F9FD00C9CF9A /* PodViewController.m */; };
 		2511A8FC1365FA0D00C9CF9A /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2511A8FB1365FA0C00C9CF9A /* MessageViewController.m */; };
+		2515FE6713A9D703008F6943 /* ConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2515FE6613A9D703008F6943 /* ConfigViewController.m */; };
 		25197F3B13A49147007025A6 /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25197F3A13A49147007025A6 /* MoreViewController.m */; };
 		252049FA13A04A6E005D6336 /* album-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 252049F813A04A6E005D6336 /* album-placeholder.png */; };
 		252049FB13A04A6E005D6336 /* album-placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 252049F913A04A6E005D6336 /* album-placeholder@2x.png */; };
@@ -205,7 +209,6 @@
 		25E56BD8138C602F0026044A /* photos-large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25E56BD6138C602E0026044A /* photos-large@2x.png */; };
 		25E56BDB138C63CE0026044A /* facebook-connect.png in Resources */ = {isa = PBXBuildFile; fileRef = 25E56BD9138C63CD0026044A /* facebook-connect.png */; };
 		25E56BDC138C63CE0026044A /* facebook-connect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25E56BDA138C63CE0026044A /* facebook-connect@2x.png */; };
-		25E5A6A213A560D40096E4FE /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E5A6A113A560D40096E4FE /* Pod.m */; };
 		25E5A6A513A5611B0096E4FE /* Pod+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E5A6A413A5611B0096E4FE /* Pod+Serialize.m */; };
 		25E5A6A813A5613F0096E4FE /* Message+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E5A6A713A5613E0096E4FE /* Message+Serialize.m */; };
 		25EFD3861341E438000108B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EFD3851341E438000108B8 /* MobileCoreServices.framework */; };
@@ -317,6 +320,10 @@
 		250B32A11341DE540011EEDD /* geo_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "geo_off@2x.png"; sourceTree = "<group>"; };
 		250B32A21341DE580011EEDD /* geo_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = geo_on.png; sourceTree = "<group>"; };
 		250B32A31341DE5D0011EEDD /* geo_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "geo_on@2x.png"; sourceTree = "<group>"; };
+		250D2ED213A8BAB300781A24 /* Pod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pod.h; sourceTree = "<group>"; };
+		250D2ED313A8BAB300781A24 /* Pod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pod.m; sourceTree = "<group>"; };
+		250D2EED13A8C19700781A24 /* unread.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unread.png; sourceTree = "<group>"; };
+		250D2EEE13A8C19700781A24 /* unread@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unread@2x.png"; sourceTree = "<group>"; };
 		250E74361385B9F500247AE0 /* 32-iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-iphone.png"; sourceTree = "<group>"; };
 		250E74371385B9F500247AE0 /* 32-iphone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-iphone@2x.png"; sourceTree = "<group>"; };
 		250E743B1385B9FF00247AE0 /* 111-user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "111-user.png"; sourceTree = "<group>"; };
@@ -353,6 +360,8 @@
 		2511A8F71365F9FD00C9CF9A /* PodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PodViewController.m; sourceTree = "<group>"; };
 		2511A8FA1365FA0B00C9CF9A /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
 		2511A8FB1365FA0C00C9CF9A /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
+		2515FE6513A9D703008F6943 /* ConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigViewController.h; sourceTree = "<group>"; };
+		2515FE6613A9D703008F6943 /* ConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigViewController.m; sourceTree = "<group>"; };
 		25197F3913A49147007025A6 /* MoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreViewController.h; sourceTree = "<group>"; };
 		25197F3A13A49147007025A6 /* MoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
 		252049F813A04A6E005D6336 /* album-placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "album-placeholder.png"; sourceTree = "<group>"; };
@@ -566,8 +575,6 @@
 		25E56BD6138C602E0026044A /* photos-large@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photos-large@2x.png"; sourceTree = "<group>"; };
 		25E56BD9138C63CD0026044A /* facebook-connect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-connect.png"; sourceTree = "<group>"; };
 		25E56BDA138C63CE0026044A /* facebook-connect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-connect@2x.png"; sourceTree = "<group>"; };
-		25E5A6A013A560D40096E4FE /* Pod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pod.h; sourceTree = "<group>"; };
-		25E5A6A113A560D40096E4FE /* Pod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pod.m; sourceTree = "<group>"; };
 		25E5A6A313A5611B0096E4FE /* Pod+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Pod+Serialize.h"; sourceTree = "<group>"; };
 		25E5A6A413A5611B0096E4FE /* Pod+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Pod+Serialize.m"; sourceTree = "<group>"; };
 		25E5A6A613A5613E0096E4FE /* Message+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Message+Serialize.h"; sourceTree = "<group>"; };
@@ -957,14 +964,14 @@
 			children = (
 				25CEF8F31339FE46006F23A7 /* PSObject.h */,
 				25CEF8F41339FE46006F23A7 /* PSObject.m */,
-				25E5A6A013A560D40096E4FE /* Pod.h */,
-				25E5A6A113A560D40096E4FE /* Pod.m */,
-				25E5A6A313A5611B0096E4FE /* Pod+Serialize.h */,
-				25E5A6A413A5611B0096E4FE /* Pod+Serialize.m */,
-				25E5A6A613A5613E0096E4FE /* Message+Serialize.h */,
-				25E5A6A713A5613E0096E4FE /* Message+Serialize.m */,
 				25BB19F313A5A43100430C33 /* Message.h */,
 				25BB19F413A5A43100430C33 /* Message.m */,
+				25E5A6A613A5613E0096E4FE /* Message+Serialize.h */,
+				25E5A6A713A5613E0096E4FE /* Message+Serialize.m */,
+				250D2ED213A8BAB300781A24 /* Pod.h */,
+				250D2ED313A8BAB300781A24 /* Pod.m */,
+				25E5A6A313A5611B0096E4FE /* Pod+Serialize.h */,
+				25E5A6A413A5611B0096E4FE /* Pod+Serialize.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -972,6 +979,8 @@
 		25CEF8FE133A000C006F23A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				250D2EED13A8C19700781A24 /* unread.png */,
+				250D2EEE13A8C19700781A24 /* unread@2x.png */,
 				250581AC13A80CE000AC1180 /* login-bg.png */,
 				250581AD13A80CE000AC1180 /* login-bg@2x.png */,
 				25FC2F9B13A16BCC004462A9 /* loadmore-bg.png */,
@@ -1304,6 +1313,8 @@
 				2511A8FB1365FA0C00C9CF9A /* MessageViewController.m */,
 				25197F3913A49147007025A6 /* MoreViewController.h */,
 				25197F3A13A49147007025A6 /* MoreViewController.m */,
+				2515FE6513A9D703008F6943 /* ConfigViewController.h */,
+				2515FE6613A9D703008F6943 /* ConfigViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1572,6 +1583,8 @@
 				25FC2F9E13A16BCC004462A9 /* loadmore-bg@2x.png in Resources */,
 				250581AE13A80CE000AC1180 /* login-bg.png in Resources */,
 				250581AF13A80CE000AC1180 /* login-bg@2x.png in Resources */,
+				250D2EEF13A8C19700781A24 /* unread.png in Resources */,
+				250D2EF013A8C19700781A24 /* unread@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1669,7 +1682,6 @@
 				2564939213982E66005B7459 /* PSRandomSortDescriptor.m in Sources */,
 				25FCA38B139887A4009CD59C /* PSSearchStack.m in Sources */,
 				25197F3B13A49147007025A6 /* MoreViewController.m in Sources */,
-				25E5A6A213A560D40096E4FE /* Pod.m in Sources */,
 				25E5A6A513A5611B0096E4FE /* Pod+Serialize.m in Sources */,
 				25E5A6A813A5613F0096E4FE /* Message+Serialize.m in Sources */,
 				25BB19EE13A59B7100430C33 /* PodCell.m in Sources */,
@@ -1679,6 +1691,8 @@
 				2594670F13A7FEC900CC6890 /* PSCoreDataOperationQueue.m in Sources */,
 				257393D913A888C900F12CE0 /* NSString+URLEncoding+PS.m in Sources */,
 				257393E513A88DF600F12CE0 /* NSString+MD5.m in Sources */,
+				250D2ED413A8BAB300781A24 /* Pod.m in Sources */,
+				2515FE6713A9D703008F6943 /* ConfigViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1689,7 +1703,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Peter Shih (QGWRZB9J8P)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1700,7 +1714,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "0A5329FE-E591-466E-B506-C87EBCAACF0C";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1709,7 +1723,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Peter Shih (QGWRZB9J8P)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
@@ -1718,7 +1732,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "0A5329FE-E591-466E-B506-C87EBCAACF0C";
 				SDKROOT = iphoneos;
 			};
 			name = Release;
@@ -1735,7 +1749,7 @@
 				INFOPLIST_FILE = "Orca/Orca-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = Orca;
-				PROVISIONING_PROFILE = "11121DA1-4DA9-4479-BB98-5969D0280EA9";
+				PROVISIONING_PROFILE = "0A5329FE-E591-466E-B506-C87EBCAACF0C";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1752,7 +1766,7 @@
 				INFOPLIST_FILE = "Orca/Orca-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = Orca;
-				PROVISIONING_PROFILE = "11121DA1-4DA9-4479-BB98-5969D0280EA9";
+				PROVISIONING_PROFILE = "0A5329FE-E591-466E-B506-C87EBCAACF0C";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;

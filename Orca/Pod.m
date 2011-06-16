@@ -2,7 +2,7 @@
 //  Pod.m
 //  Orca
 //
-//  Created by Peter Shih on 6/12/11.
+//  Created by Peter Shih on 6/15/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,15 +11,16 @@
 
 @implementation Pod
 @dynamic fromId;
-@dynamic fromName;
 @dynamic fromPictureUrl;
+@dynamic fromName;
 @dynamic id;
-@dynamic lat;
-@dynamic lng;
 @dynamic location;
 @dynamic message;
-@dynamic name;
 @dynamic participants;
+@dynamic lat;
+@dynamic lng;
+@dynamic name;
 @dynamic timestamp;
+@dynamic unread;
 
 @end

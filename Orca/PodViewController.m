@@ -127,6 +127,8 @@
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   
   Pod *pod = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  pod.unread = [NSNumber numberWithBool:NO];
+  [PSCoreDataStack saveInContext:[pod managedObjectContext]];
   
   MessageViewController *mvc = [[MessageViewController alloc] init];
   mvc.pod = pod;

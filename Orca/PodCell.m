@@ -8,11 +8,15 @@
 
 #import "PodCell.h"
 
-#define POD_CELL_HEIGHT 60.0
+#define POD_CELL_HEIGHT 70.0
+#define POD_UNREAD_OFFSET 20.0
+
+static UIImage *_unreadImage = nil;
 
 @implementation PodCell
 
 + (void)initialize {
+  _unreadImage = [[UIImage imageNamed:@"unread.png"] retain];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -35,7 +39,7 @@
     // Font
     _nameLabel.font = TITLE_FONT;
     _messageLabel.font = NORMAL_FONT;
-    _timestampLabel.font = SUBTITLE_FONT;
+    _timestampLabel.font = TIMESTAMP_FONT;
     _participantsLabel.font = SUBTITLE_FONT;
     
     // Text Color
@@ -68,6 +72,12 @@
     [self.contentView addSubview:_messageLabel];
     [self.contentView addSubview:_timestampLabel];
     [self.contentView addSubview:_participantsLabel];
+    
+    // Unread
+    _unreadImageView = [[UIImageView alloc] initWithImage:_unreadImage];
+    _unreadImageView.frame = CGRectMake(0, 0, _unreadImage.size.width, _unreadImage.size.height);
+    _unreadImageView.hidden = YES;
+    [self.contentView addSubview:_unreadImageView];
   }
   return self;
 }
@@ -78,14 +88,15 @@
   _messageLabel.text = nil;
   _timestampLabel.text = nil;
   _participantsLabel.text = nil;
+  _unreadImageView.hidden = YES;
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
     
   CGFloat top = MARGIN_Y;
-  CGFloat left = MARGIN_X;
-  CGFloat textWidth = self.contentView.width - MARGIN_X * 2;
+  CGFloat left = POD_UNREAD_OFFSET;
+  CGFloat textWidth = self.contentView.width - MARGIN_X - left;
   CGSize desiredSize = CGSizeZero;
   
   // Timestamp
@@ -111,7 +122,7 @@
   _messageLabel.top = top;
   _messageLabel.left = left;
   
-  top = _messageLabel.bottom;
+  top = _messageLabel.bottom + 2.0;
   
   // Participants
   desiredSize = [UILabel sizeForText:_participantsLabel.text width:textWidth font:_participantsLabel.font numberOfLines:1 lineBreakMode:_participantsLabel.lineBreakMode];
@@ -135,9 +146,10 @@
   
   // Labels
   _nameLabel.text = pod.name;
-  _messageLabel.text = pod.message;
-  _timestampLabel.text = [pod.timestamp stringDaysAgo];
+  _messageLabel.text = [NSString stringWithFormat:@"%@: %@", pod.fromName, pod.message];
+  _timestampLabel.text = [NSDate stringForDisplayFromDate:pod.timestamp];
   _participantsLabel.text = [NSString stringWithFormat:@"%@", pod.participants];
+  _unreadImageView.hidden = [pod.unread boolValue] ? NO : YES;
 }
 
 - (void)dealloc {
@@ -145,6 +157,7 @@
   RELEASE_SAFELY(_messageLabel);
   RELEASE_SAFELY(_timestampLabel);
   RELEASE_SAFELY(_participantsLabel);
+  RELEASE_SAFELY(_unreadImageView);
   [super dealloc];
 }
 
