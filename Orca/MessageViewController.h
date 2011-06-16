@@ -21,5 +21,6 @@
 @property (nonatomic, assign) Pod *pod;
 
 - (void)newMessage;
+- (void)config;
 
 @end

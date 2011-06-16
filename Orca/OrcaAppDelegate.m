@@ -56,6 +56,10 @@
   _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"weave-bg.png"]];
 
+  UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"texture-spotlight.png"]];
+  backgroundView.frame = self.window.bounds;
+  [self.window insertSubview:backgroundView atIndex:0];
+  [backgroundView release];
   
   // Setup Facebook
   _facebook = [[Facebook alloc] initWithAppId:FB_APP_ID];

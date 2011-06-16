@@ -362,9 +362,9 @@
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView {
-  tableView.backgroundColor = [UIColor blackColor];
+  tableView.backgroundColor = SEPARATOR_COLOR;
   tableView.separatorColor = SEPARATOR_COLOR;
-  tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 }
 
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {

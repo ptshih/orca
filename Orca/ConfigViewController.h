@@ -9,8 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "CardViewController.h"
 
+@class Pod;
+
 @interface ConfigViewController : CardViewController {
-  
+  Pod *_pod;
 }
+
+@property (nonatomic, assign) Pod *pod;
+
+- (void)dismiss;
 
 @end

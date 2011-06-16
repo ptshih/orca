@@ -12,6 +12,7 @@
 #import "Pod.h"
 #import "MessageCell.h"
 #import "ComposeViewController.h"
+#import "ConfigViewController.h"
 
 @implementation MessageViewController
 
@@ -47,7 +48,7 @@
   _navTitleLabel.text = _pod.name;
   
   [self addBackButton];
-//  [self addButtonWithTitle:@"Favorite" andSelector:@selector(favorite) isLeft:NO];
+  [self addButtonWithTitle:@"Settings" andSelector:@selector(config) isLeft:NO];
   
   // Table
   CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -122,8 +123,7 @@
   [self dataSourceDidLoad];
 }
 
-#pragma mark -
-#pragma mark Compose
+#pragma mark - Compose
 - (void)newMessage {
   ComposeViewController *cvc = [[ComposeViewController alloc] init];
   cvc.delegate = self;
@@ -138,8 +138,15 @@
   [[MessageDataCenter defaultCenter] serializeComposedMessageWithUserInfo:userInfo];
 }
 
-#pragma mark -
-#pragma mark TableView
+#pragma mark - Config
+- (void)config {
+  ConfigViewController *cvc = [[ConfigViewController alloc] init];
+  cvc.pod = _pod;
+  [self presentModalViewController:cvc animated:YES];
+  [cvc release];
+}
+
+#pragma mark - TableView
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 //  Photo *photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:section];
 //  

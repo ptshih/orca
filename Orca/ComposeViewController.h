@@ -26,6 +26,8 @@
   UILabel *_heading;
   
   // Snapped Photo
+  UIButton *_attachPhoto;
+  UIImageView *_paperclipView;
   UIImage *_snappedImage;
   
   id <ComposeDelegate> _delegate;

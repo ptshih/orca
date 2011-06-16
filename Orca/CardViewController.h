@@ -32,6 +32,7 @@
 
 - (void)setupNullView;
 - (void)setupHeaderTabViewWithFrame:(CGRect)frame;
+- (void)setupBackgroundWithImage:(UIImage *)image;
 
 // Nav buttons
 - (void)addBackButton;

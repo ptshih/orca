@@ -28,13 +28,7 @@
 - (void)loadView {
   [super loadView];
   
-  self.view.backgroundColor = [UIColor clearColor];
-  
-  // Background View
-  //  UIImageView *backgroundView = [[UIImageView alloc] initWithImage:_backgroundImage];
-  //  backgroundView.frame = self.view.bounds;
-  //  [self.view addSubview:backgroundView];
-  //  [backgroundView release];
+//  self.view.backgroundColor = [UIColor clearColor];
   
   _nullView = [[PSNullView alloc] initWithFrame:self.view.bounds];
   [self.view addSubview:_nullView];
@@ -59,6 +53,14 @@
   self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
   
   //  self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-logo.png"]] autorelease];
+}
+
+- (void)setupBackgroundWithImage:(UIImage *)image {
+  // Background View
+  UIImageView *backgroundView = [[UIImageView alloc] initWithImage:image];
+  backgroundView.frame = self.view.bounds;
+  [self.view insertSubview:backgroundView atIndex:0];
+  [backgroundView release];
 }
 
 - (void)back {
