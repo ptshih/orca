@@ -7,6 +7,7 @@
 //
 
 #import "MessageViewController.h"
+#import "PodDataCenter.h"
 #import "MessageDataCenter.h"
 #import "Message.h"
 #import "Pod.h"
@@ -136,6 +137,9 @@
 - (void)composeDidSendWithUserInfo:(NSDictionary *)userInfo {
   // Write a local copy to core data from composed message
   [[MessageDataCenter defaultCenter] serializeComposedMessageWithUserInfo:userInfo];
+  
+  // Update pod with most recent message locally
+  [[PodDataCenter defaultCenter] updatePod:_pod withUserInfo:userInfo];
 }
 
 #pragma mark - Config
@@ -170,6 +174,7 @@
   Message *message = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   [cell fillCellWithObject:message];
+  [cell layoutIfNeeded];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -181,7 +186,9 @@
     cell = [[[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
   }
   
-  [self tableView:tableView configureCell:cell atIndexPath:indexPath];
+  // Configure Cell
+  Message *message = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  [cell fillCellWithObject:message];
   
   return cell;
 }

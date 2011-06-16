@@ -126,6 +126,22 @@ static dispatch_queue_t _coreDataSerializationQueue = nil;
   }
 }
 
+#pragma mark - Update Pod / Compose
+- (void)updatePod:(Pod *)pod withUserInfo:(NSDictionary *)userInfo {
+  // Userinfo has 3 keys (all strings)
+  // message, podId, sequence
+  
+  pod.fromId = [userInfo objectForKey:@"fromId"];
+  pod.fromName = [userInfo objectForKey:@"fromName"];
+  pod.fromPictureUrl = [userInfo objectForKey:@"fromPictureUrl"];
+  pod.sequence = [userInfo objectForKey:@"sequence"];
+  pod.message = [userInfo objectForKey:@"message"];
+  pod.timestamp = [NSDate dateWithTimeIntervalSince1970:[[userInfo objectForKey:@"timestamp"] longLongValue]];
+  
+  // Save to CoreData
+  [PSCoreDataStack saveInContext:[pod managedObjectContext]];
+}
+
 #pragma mark -
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {

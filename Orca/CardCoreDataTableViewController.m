@@ -198,7 +198,6 @@
       break;
       
     case NSFetchedResultsChangeUpdate:{
-      //      NSIndexPath *changedIndexPath = newIndexPath ? newIndexPath : indexPath;
       [self tableView:tableView configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
       break;
     }
@@ -255,6 +254,7 @@
 #pragma mark UITableViewDelegate
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
   // subclass must implement
+  // This is only called by the NSFetchedResultsDelegate when a row is updated
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

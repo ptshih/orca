@@ -161,6 +161,7 @@ static NSURL *_storeURL = nil;
      
      */
     NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+    [[self class] resetPersistentStoreCoordinator];
     abort();
   }
   

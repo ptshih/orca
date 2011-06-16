@@ -25,6 +25,7 @@
     Pod *newPod = [NSEntityDescription insertNewObjectForEntityForName:@"Pod" inManagedObjectContext:context];
 
     newPod.id = [NSString stringWithFormat:@"%@", [dictionary valueForKey:@"id"]];
+    newPod.sequence = [[dictionary valueForKey:@"sequence"] notNil] ? [dictionary valueForKey:@"sequence"] : nil;
     newPod.name = [dictionary valueForKey:@"name"];
     newPod.fromId = [NSString stringWithFormat:@"%@", [dictionary valueForKey:@"fromId"]];
     newPod.fromName = [dictionary valueForKey:@"fromName"];
@@ -46,9 +47,12 @@
 - (Pod *)updatePodWithDictionary:(NSDictionary *)dictionary {
   if (dictionary) {
     // First check to make sure this pod actually changed
-    NSDate *existingTimestamp = self.timestamp;
-    NSDate *newTimestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
-    if (![existingTimestamp isEqualToDate:newTimestamp]) {
+//    NSDate *existingTimestamp = self.timestamp;
+//    NSDate *newTimestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
+    // Compare last known sequence local <-> remote    
+//    if (![existingTimestamp isEqualToDate:newTimestamp]) {
+    NSString *newSequence = [[dictionary valueForKey:@"sequence"] notNil] ? [dictionary valueForKey:@"sequence"] : nil;
+    if (newSequence && ![self.sequence isEqualToString:newSequence]) {
       // timestamp changed, update pod info
       self.unread = [NSNumber numberWithBool:YES]; // set unread
       

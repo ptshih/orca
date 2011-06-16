@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "PSDataCenter.h"
 
+@class Pod;
+
 @interface PodDataCenter : PSDataCenter {
 }
 
@@ -25,5 +27,10 @@
  */
 - (void)serializePodsWithRequest:(ASIHTTPRequest *)request;
 - (void)serializePodsWithArray:(NSArray *)array inContext:(NSManagedObjectContext *)context;
+
+/**
+ Update Pod from compose
+ */
+- (void)updatePod:(Pod *)pod withUserInfo:(NSDictionary *)userInfo;
 
 @end

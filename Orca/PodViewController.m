@@ -120,6 +120,7 @@
   Pod *pod = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   [cell fillCellWithObject:pod];
+  [cell layoutIfNeeded];
 }
 
 
@@ -146,7 +147,9 @@
     cell = [[[PodCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
   }
   
-  [self tableView:tableView configureCell:cell atIndexPath:indexPath];
+  // Configure Cell
+  Pod *pod = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  [cell fillCellWithObject:pod];
   
   return cell;
 }
