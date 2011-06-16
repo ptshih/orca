@@ -367,6 +367,7 @@
 		2515FF2213AA83B2008F6943 /* bg-darkgray-320x44@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-darkgray-320x44@2x.png"; sourceTree = "<group>"; };
 		2515FF2513AA848E008F6943 /* unread.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unread.png; sourceTree = "<group>"; };
 		2515FF2613AA8490008F6943 /* unread@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unread@2x.png"; sourceTree = "<group>"; };
+		2515FF3113AAA821008F6943 /* PSImageCacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSImageCacheDelegate.h; sourceTree = "<group>"; };
 		25197F3913A49147007025A6 /* MoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreViewController.h; sourceTree = "<group>"; };
 		25197F3A13A49147007025A6 /* MoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
 		2538FF25133AD07100ACE127 /* pods.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pods.json; sourceTree = "<group>"; };
@@ -812,6 +813,7 @@
 			children = (
 				25C67E3F137219F200330DA7 /* PSImageCache.h */,
 				25C67E40137219F200330DA7 /* PSImageCache.m */,
+				2515FF3113AAA821008F6943 /* PSImageCacheDelegate.h */,
 				25FB8B8E133A057900C130A8 /* PSImageView.h */,
 				25FB8B8F133A057900C130A8 /* PSImageView.m */,
 				2546E8CE13825D9D00BD8757 /* PSImageArrayView.h */,

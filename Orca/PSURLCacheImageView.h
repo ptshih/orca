@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "PSImageView.h"
+#import "PSImageCacheDelegate.h"
 
-@interface PSURLCacheImageView : PSImageView {
+@interface PSURLCacheImageView : PSImageView <PSImageCacheDelegate> {
   NSString *_urlPath;
 }
 
@@ -18,6 +19,6 @@
 - (void)loadImageAndDownload:(BOOL)download;
 - (void)unloadImage;
 
-- (void)imageCacheDidLoad:(NSNotification *)notification;
+//- (void)imageCacheDidLoad:(NSNotification *)notification;
 
 @end
