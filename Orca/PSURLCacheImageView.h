@@ -19,6 +19,7 @@
 - (void)loadImageAndDownload:(BOOL)download;
 - (void)unloadImage;
 
-//- (void)imageCacheDidLoad:(NSNotification *)notification;
+// Image cache loaded from notification
+- (void)imageCacheDidLoad:(NSNotification *)notification;
 
 @end

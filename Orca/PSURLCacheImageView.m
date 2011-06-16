@@ -24,20 +24,20 @@ static dispatch_queue_t _urlCacheImageViewQueue = nil;
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageCacheDidLoad:) name:kPSImageCacheDidCacheImage object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageCacheDidLoad:) name:kPSImageCacheDidCacheImage object:nil];
   }
   return self;
 }
 
 //- (void)setUrlPath:(NSString *)urlPath {
 //  [_urlPath autorelease];
-//  _urlPath = [[urlPath encodedURLString] copy];
+//  _urlPath = [urlPath copy];
 //}
 
 - (void)loadImageAndDownload:(BOOL)download {
   if (_urlPath) {
     dispatch_async(_urlCacheImageViewQueue, ^{
-      UIImage *image = [[PSImageCache sharedCache] imageForURLPath:_urlPath shouldDownload:download withDelegate:self];
+      UIImage *image = [[PSImageCache sharedCache] imageForURLPath:_urlPath shouldDownload:download withDelegate:nil];
       dispatch_async(dispatch_get_main_queue(), ^{
         if (image) { 
           self.image = image;
@@ -54,23 +54,23 @@ static dispatch_queue_t _urlCacheImageViewQueue = nil;
   self.urlPath = nil;
 }
 
-//- (void)imageCacheDidLoad:(NSNotification *)notification {
-//  NSDictionary *userInfo = [notification userInfo];
-//  NSString *urlPath = [userInfo objectForKey:@"urlPath"];
-//  NSData *imageData = [userInfo objectForKey:@"imageData"];
-//  if ([urlPath isEqualToString:_urlPath]) {
-//    if (imageData) {
-//      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        UIImage *image = [UIImage imageWithData:imageData];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//          if (image && ![image isEqual:self.image]) {
-//            self.image = image;
-//          }
-//        });
-//      });
-//    }
-//  }
-//}
+- (void)imageCacheDidLoad:(NSNotification *)notification {
+  NSDictionary *userInfo = [notification userInfo];
+  NSString *urlPath = [userInfo objectForKey:@"urlPath"];
+  NSData *imageData = [userInfo objectForKey:@"imageData"];
+  if ([urlPath isEqualToString:_urlPath]) {
+    if (imageData) {
+      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImage *image = [UIImage imageWithData:imageData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+          if (image && ![image isEqual:self.image]) {
+            self.image = image;
+          }
+        });
+      });
+    }
+  }
+}
 
 #pragma mark - PSImageCacheDelegate
 - (void)imageCacheDidLoad:(NSData *)imageData forURLPath:(NSString *)urlPath {
@@ -90,7 +90,7 @@ static dispatch_queue_t _urlCacheImageViewQueue = nil;
 }
 
 - (void)dealloc {
-//  [[NSNotificationCenter defaultCenter] removeObserver:self name:kPSImageCacheDidCacheImage object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kPSImageCacheDidCacheImage object:nil];
   RELEASE_SAFELY(_urlPath);
   [super dealloc];
 }

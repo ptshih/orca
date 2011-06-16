@@ -73,7 +73,7 @@
     [_buffer setObject:[UIImage imageWithData:imageData] forKey:[urlPath encodedURLParameterString]];
     
     // Also write it to file
-//    [imageData writeToFile:[_cachePath stringByAppendingPathComponent:[urlPath encodedURLParameterString]] atomically:YES];
+    [imageData writeToFile:[_cachePath stringByAppendingPathComponent:[urlPath encodedURLParameterString]] atomically:YES];
     
     VLog(@"PSImageCache CACHE: %@", urlPath);
   }
@@ -123,7 +123,7 @@
 #pragma mark Remote Image Load Request
 - (void)downloadImageForURLPath:(NSString *)urlPath withDelegate:(id)delegate {
   // Check to make sure urlPath is not in a pendingRequest already
-//  if ([_pendingRequests objectForKey:urlPath]) return;
+  if ([_pendingRequests objectForKey:urlPath]) return;
   
   __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlPath]];
   request.requestMethod = @"GET";
@@ -153,12 +153,12 @@
   if ([request responseData]) {
     [self cacheImage:[request responseData] forURLPath:urlPath];
     // Notify delegate
-    if (delegate && [delegate respondsToSelector:@selector(imageCacheDidLoad:forURLPath:)]) {
-      [delegate performSelector:@selector(imageCacheDidLoad:forURLPath:) withObject:[request responseData] withObject:urlPath];
-    }
+//    if (delegate && [delegate respondsToSelector:@selector(imageCacheDidLoad:forURLPath:)]) {
+//      [delegate performSelector:@selector(imageCacheDidLoad:forURLPath:) withObject:[request responseData] withObject:urlPath];
+//    }
     
-    // fire notification DEPRECATED
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kPSImageCacheDidCacheImage object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[request responseData], @"imageData", urlPath, @"urlPath", nil]];
+    // fire notification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kPSImageCacheDidCacheImage object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[request responseData], @"imageData", urlPath, @"urlPath", nil]];
   } else {
     // something bad happened
   }
