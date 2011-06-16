@@ -32,36 +32,73 @@
 - (void)loadView {
   [super loadView];
   
-  self.view.backgroundColor = [UIColor clearColor];
+  self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"weave-bg.png"]];
   
   // Compose Caption Bubble
-  _composeView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 44)];
-  _composeView.backgroundColor = [UIColor whiteColor];
-  _composeView.layer.cornerRadius = 5.0;
-  _composeView.layer.masksToBounds = YES;
+  _composeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+  _composeView.backgroundColor = [UIColor clearColor];
+//  _composeView.layer.cornerRadius = 5.0;
+//  _composeView.layer.masksToBounds = YES;
   _composeView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:_composeView];
+  
+  // Compose BG
+  UIImageView *composeBackground = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"compose-bg.png"]] autorelease];
+  composeBackground.frame = _composeView.bounds;
+  composeBackground.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  [_composeView addSubview:composeBackground];
 
   // Header View
-  _headerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, _composeView.width, 44)];
-  _headerToolbar.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
+  _headerView = [[UIView alloc] initWithFrame:CGRectMake(5, 13, 310, 40)];
+  _headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   
-  UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)] autorelease];
-  UIBarButtonItem *sendButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Send", @"Send") style:UIBarButtonItemStyleDone target:self action:@selector(send)] autorelease];
-  UIBarButtonItem *title = [[[UIBarButtonItem alloc] initWithTitle:@"Message" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
+  _cancel = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+  [_cancel addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
+  [_cancel setBackgroundImage:[[UIImage imageNamed:@"compose-cancel.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateNormal];
+  [_cancel setBackgroundImage:[[UIImage imageNamed:@"compose-cancel-pressed.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateHighlighted];
+  [_cancel setTitle:@"Cancel" forState:UIControlStateNormal];
+  [_cancel setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+  [_cancel setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  _cancel.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0];
+  _cancel.titleLabel.shadowOffset = CGSizeMake(0, 1);
+  _cancel.frame = CGRectMake(5, 5, 60, 30);
+  _cancel.alpha = 0.0;
+  [_headerView addSubview:_cancel];
   
-  [_headerToolbar setItems:[NSArray arrayWithObjects:cancelButton, [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease], title, [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease], sendButton, nil]];
+  _send = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+  [_send addTarget:self action:@selector(send) forControlEvents:UIControlEventTouchUpInside];
+  [_send setBackgroundImage:[[UIImage imageNamed:@"compose-send.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateNormal];
+  [_send setBackgroundImage:[[UIImage imageNamed:@"compose-send-pressed.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0] forState:UIControlStateHighlighted];
+  [_send setTitle:@"Send" forState:UIControlStateNormal];
+  [_send setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  [_send setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
+  _send.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0];
+  _send.titleLabel.shadowOffset = CGSizeMake(0, 1);
+  _send.frame = CGRectMake(310 - 5 - 60, 5, 60, 30);
+  _send.alpha = 0.0;
+  [_headerView addSubview:_send];
+  
+  _heading = [[UILabel alloc] initWithFrame:CGRectMake(70, 5, 170, 30)];
+  _heading.backgroundColor = [UIColor clearColor];
+  _heading.text = @"Say Something...";
+  _heading.textColor = [UIColor darkGrayColor];
+  _heading.textAlignment = UITextAlignmentCenter;
+  _heading.shadowColor = [UIColor whiteColor];
+  _heading.shadowOffset = CGSizeMake(0, 1);
+  _heading.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0];
+  _heading.alpha = 0.0;
+  [_headerView addSubview:_heading];
   
   // Message Field
-  _message = [[PSTextView alloc] initWithFrame:CGRectMake(0, 44, _composeView.width, _composeView.height - _headerToolbar.height)];
-  _message.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _message = [[PSTextView alloc] initWithFrame:CGRectMake(5, _headerView.bottom + 3, 310, 20)];
+  _message.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	_message.returnKeyType = UIReturnKeyDefault;
 	_message.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0];
 	_message.delegate = self;
   _message.placeholder = @"Write a message...";
   _message.placeholderColor = [UIColor lightGrayColor];
   
-  [_composeView addSubview:_headerToolbar];
+  [_composeView addSubview:_headerView];
   [_composeView addSubview:_message];
 }
 
@@ -161,10 +198,19 @@
 //  }
   
   if (up) {
-    _composeView.height = self.view.bounds.size.height - 20 - keyboardFrame.size.height;
+//    _composeView.height = self.view.bounds.size.height - keyboardFrame.size.height;
+    _composeView.height = 222;
+    _message.height = 140;
+    _cancel.alpha = 1.0;
+    _send.alpha = 1.0;
+    _heading.alpha = 1.0;
   } else {
 //    _composeView.height = self.view.bounds.size.height - 40 + keyboardFrame.size.height;
-    _composeView.height = 44;
+    _composeView.height = 40;
+    _message.height = 20;
+    _cancel.alpha = 0.0;
+    _send.alpha = 0.0;
+    _heading.alpha = 0.0;
   }
 
   [UIView commitAnimations];
@@ -180,7 +226,10 @@
   
   RELEASE_SAFELY(_podId);
   RELEASE_SAFELY(_composeView);
-  RELEASE_SAFELY(_headerToolbar);
+  RELEASE_SAFELY(_headerView);
+  RELEASE_SAFELY(_cancel);
+  RELEASE_SAFELY(_send);
+  RELEASE_SAFELY(_heading);
   RELEASE_SAFELY(_message);
   RELEASE_SAFELY(_snappedImage);
   [super dealloc];

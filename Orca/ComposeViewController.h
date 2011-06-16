@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CardModalViewController.h"
+#import "CardViewController.h"
 #import "ComposeDelegate.h"
 #import "PSTextView.h"
 #import "ComposeDataCenter.h"
@@ -17,8 +17,13 @@
   
   // Caption Bubble
   UIView *_composeView;
-  UIToolbar *_headerToolbar;
+  UIView *_headerView;
   PSTextView *_message;
+  
+  // Header View
+  UIButton *_send;
+  UIButton *_cancel;
+  UILabel *_heading;
   
   // Snapped Photo
   UIImage *_snappedImage;

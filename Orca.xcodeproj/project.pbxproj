@@ -55,6 +55,22 @@
 		2511A8F81365F9FE00C9CF9A /* PodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2511A8F71365F9FD00C9CF9A /* PodViewController.m */; };
 		2511A8FC1365FA0D00C9CF9A /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2511A8FB1365FA0C00C9CF9A /* MessageViewController.m */; };
 		2515FE6713A9D703008F6943 /* ConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2515FE6613A9D703008F6943 /* ConfigViewController.m */; };
+		2515FE6B13A9DA27008F6943 /* ConfigDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2515FE6A13A9DA27008F6943 /* ConfigDataCenter.m */; };
+		2515FE6E13A9E592008F6943 /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2515FE6D13A9E592008F6943 /* ActivityViewController.m */; };
+		2515FE7213AA0944008F6943 /* compose-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FE7013AA0944008F6943 /* compose-bg.png */; };
+		2515FE7313AA0944008F6943 /* compose-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FE7113AA0944008F6943 /* compose-bg@2x.png */; };
+		2515FE9D13AA0CE8008F6943 /* compose-cancel-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FE9113AA0CE7008F6943 /* compose-cancel-pressed.png */; };
+		2515FE9E13AA0CE8008F6943 /* compose-cancel-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FE9213AA0CE7008F6943 /* compose-cancel-pressed@2x.png */; };
+		2515FE9F13AA0CE8008F6943 /* compose-cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FE9313AA0CE7008F6943 /* compose-cancel.png */; };
+		2515FEA013AA0CE8008F6943 /* compose-cancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FE9413AA0CE7008F6943 /* compose-cancel@2x.png */; };
+		2515FEA113AA0CE8008F6943 /* compose-image-border.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FE9513AA0CE7008F6943 /* compose-image-border.png */; };
+		2515FEA213AA0CE8008F6943 /* compose-image-border@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FE9613AA0CE7008F6943 /* compose-image-border@2x.png */; };
+		2515FEA313AA0CE8008F6943 /* compose-paperclip.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FE9713AA0CE7008F6943 /* compose-paperclip.png */; };
+		2515FEA413AA0CE8008F6943 /* compose-paperclip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FE9813AA0CE7008F6943 /* compose-paperclip@2x.png */; };
+		2515FEA513AA0CE8008F6943 /* compose-send-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FE9913AA0CE7008F6943 /* compose-send-pressed.png */; };
+		2515FEA613AA0CE8008F6943 /* compose-send-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FE9A13AA0CE7008F6943 /* compose-send-pressed@2x.png */; };
+		2515FEA713AA0CE8008F6943 /* compose-send.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FE9B13AA0CE8008F6943 /* compose-send.png */; };
+		2515FEA813AA0CE8008F6943 /* compose-send@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FE9C13AA0CE8008F6943 /* compose-send@2x.png */; };
 		25197F3B13A49147007025A6 /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25197F3A13A49147007025A6 /* MoreViewController.m */; };
 		252049FA13A04A6E005D6336 /* album-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 252049F813A04A6E005D6336 /* album-placeholder.png */; };
 		252049FB13A04A6E005D6336 /* album-placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 252049F913A04A6E005D6336 /* album-placeholder@2x.png */; };
@@ -362,6 +378,24 @@
 		2511A8FB1365FA0C00C9CF9A /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
 		2515FE6513A9D703008F6943 /* ConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigViewController.h; sourceTree = "<group>"; };
 		2515FE6613A9D703008F6943 /* ConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigViewController.m; sourceTree = "<group>"; };
+		2515FE6913A9DA27008F6943 /* ConfigDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigDataCenter.h; sourceTree = "<group>"; };
+		2515FE6A13A9DA27008F6943 /* ConfigDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigDataCenter.m; sourceTree = "<group>"; };
+		2515FE6C13A9E592008F6943 /* ActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityViewController.h; sourceTree = "<group>"; };
+		2515FE6D13A9E592008F6943 /* ActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewController.m; sourceTree = "<group>"; };
+		2515FE7013AA0944008F6943 /* compose-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose-bg.png"; sourceTree = "<group>"; };
+		2515FE7113AA0944008F6943 /* compose-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose-bg@2x.png"; sourceTree = "<group>"; };
+		2515FE9113AA0CE7008F6943 /* compose-cancel-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose-cancel-pressed.png"; sourceTree = "<group>"; };
+		2515FE9213AA0CE7008F6943 /* compose-cancel-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose-cancel-pressed@2x.png"; sourceTree = "<group>"; };
+		2515FE9313AA0CE7008F6943 /* compose-cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose-cancel.png"; sourceTree = "<group>"; };
+		2515FE9413AA0CE7008F6943 /* compose-cancel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose-cancel@2x.png"; sourceTree = "<group>"; };
+		2515FE9513AA0CE7008F6943 /* compose-image-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose-image-border.png"; sourceTree = "<group>"; };
+		2515FE9613AA0CE7008F6943 /* compose-image-border@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose-image-border@2x.png"; sourceTree = "<group>"; };
+		2515FE9713AA0CE7008F6943 /* compose-paperclip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose-paperclip.png"; sourceTree = "<group>"; };
+		2515FE9813AA0CE7008F6943 /* compose-paperclip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose-paperclip@2x.png"; sourceTree = "<group>"; };
+		2515FE9913AA0CE7008F6943 /* compose-send-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose-send-pressed.png"; sourceTree = "<group>"; };
+		2515FE9A13AA0CE7008F6943 /* compose-send-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose-send-pressed@2x.png"; sourceTree = "<group>"; };
+		2515FE9B13AA0CE8008F6943 /* compose-send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose-send.png"; sourceTree = "<group>"; };
+		2515FE9C13AA0CE8008F6943 /* compose-send@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose-send@2x.png"; sourceTree = "<group>"; };
 		25197F3913A49147007025A6 /* MoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreViewController.h; sourceTree = "<group>"; };
 		25197F3A13A49147007025A6 /* MoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
 		252049F813A04A6E005D6336 /* album-placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "album-placeholder.png"; sourceTree = "<group>"; };
@@ -763,6 +797,27 @@
 			name = PSURLCache;
 			sourceTree = "<group>";
 		};
+		2515FE6F13AA0944008F6943 /* compose */ = {
+			isa = PBXGroup;
+			children = (
+				2515FE7013AA0944008F6943 /* compose-bg.png */,
+				2515FE7113AA0944008F6943 /* compose-bg@2x.png */,
+				2515FE9113AA0CE7008F6943 /* compose-cancel-pressed.png */,
+				2515FE9213AA0CE7008F6943 /* compose-cancel-pressed@2x.png */,
+				2515FE9313AA0CE7008F6943 /* compose-cancel.png */,
+				2515FE9413AA0CE7008F6943 /* compose-cancel@2x.png */,
+				2515FE9513AA0CE7008F6943 /* compose-image-border.png */,
+				2515FE9613AA0CE7008F6943 /* compose-image-border@2x.png */,
+				2515FE9713AA0CE7008F6943 /* compose-paperclip.png */,
+				2515FE9813AA0CE7008F6943 /* compose-paperclip@2x.png */,
+				2515FE9913AA0CE7008F6943 /* compose-send-pressed.png */,
+				2515FE9A13AA0CE7008F6943 /* compose-send-pressed@2x.png */,
+				2515FE9B13AA0CE8008F6943 /* compose-send.png */,
+				2515FE9C13AA0CE8008F6943 /* compose-send@2x.png */,
+			);
+			path = compose;
+			sourceTree = "<group>";
+		};
 		2538FF6D133B507700ACE127 /* EGO */ = {
 			isa = PBXGroup;
 			children = (
@@ -979,6 +1034,7 @@
 		25CEF8FE133A000C006F23A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2515FE6F13AA0944008F6943 /* compose */,
 				250D2EED13A8C19700781A24 /* unread.png */,
 				250D2EEE13A8C19700781A24 /* unread@2x.png */,
 				250581AC13A80CE000AC1180 /* login-bg.png */,
@@ -1294,6 +1350,8 @@
 				25DC5F2E136626EC00868001 /* PodDataCenter.m */,
 				259AD5471366B09100FA2B8D /* MessageDataCenter.h */,
 				259AD5481366B09100FA2B8D /* MessageDataCenter.m */,
+				2515FE6913A9DA27008F6943 /* ConfigDataCenter.h */,
+				2515FE6A13A9DA27008F6943 /* ConfigDataCenter.m */,
 			);
 			name = DataCenters;
 			sourceTree = "<group>";
@@ -1315,6 +1373,8 @@
 				25197F3A13A49147007025A6 /* MoreViewController.m */,
 				2515FE6513A9D703008F6943 /* ConfigViewController.h */,
 				2515FE6613A9D703008F6943 /* ConfigViewController.m */,
+				2515FE6C13A9E592008F6943 /* ActivityViewController.h */,
+				2515FE6D13A9E592008F6943 /* ActivityViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1585,6 +1645,20 @@
 				250581AF13A80CE000AC1180 /* login-bg@2x.png in Resources */,
 				250D2EEF13A8C19700781A24 /* unread.png in Resources */,
 				250D2EF013A8C19700781A24 /* unread@2x.png in Resources */,
+				2515FE7213AA0944008F6943 /* compose-bg.png in Resources */,
+				2515FE7313AA0944008F6943 /* compose-bg@2x.png in Resources */,
+				2515FE9D13AA0CE8008F6943 /* compose-cancel-pressed.png in Resources */,
+				2515FE9E13AA0CE8008F6943 /* compose-cancel-pressed@2x.png in Resources */,
+				2515FE9F13AA0CE8008F6943 /* compose-cancel.png in Resources */,
+				2515FEA013AA0CE8008F6943 /* compose-cancel@2x.png in Resources */,
+				2515FEA113AA0CE8008F6943 /* compose-image-border.png in Resources */,
+				2515FEA213AA0CE8008F6943 /* compose-image-border@2x.png in Resources */,
+				2515FEA313AA0CE8008F6943 /* compose-paperclip.png in Resources */,
+				2515FEA413AA0CE8008F6943 /* compose-paperclip@2x.png in Resources */,
+				2515FEA513AA0CE8008F6943 /* compose-send-pressed.png in Resources */,
+				2515FEA613AA0CE8008F6943 /* compose-send-pressed@2x.png in Resources */,
+				2515FEA713AA0CE8008F6943 /* compose-send.png in Resources */,
+				2515FEA813AA0CE8008F6943 /* compose-send@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1693,6 +1767,8 @@
 				257393E513A88DF600F12CE0 /* NSString+MD5.m in Sources */,
 				250D2ED413A8BAB300781A24 /* Pod.m in Sources */,
 				2515FE6713A9D703008F6943 /* ConfigViewController.m in Sources */,
+				2515FE6B13A9DA27008F6943 /* ConfigDataCenter.m in Sources */,
+				2515FE6E13A9E592008F6943 /* ActivityViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -71,8 +71,8 @@
   back.frame = CGRectMake(0, 0, 60, 30);
   [back setTitle:@"Back" forState:UIControlStateNormal];
   [back setTitleEdgeInsets:UIEdgeInsetsMake(0, 9, 0, 0)];
+  [back setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
   back.titleLabel.font = NAV_BUTTON_FONT;
-  back.titleLabel.shadowColor = [UIColor blackColor];
   back.titleLabel.shadowOffset = CGSizeMake(0, 1);
   UIImage *backImage = [[UIImage imageNamed:@"navbar_back_button.png"] stretchableImageWithLeftCapWidth:19 topCapHeight:0];
   UIImage *backHighlightedImage = [[UIImage imageNamed:@"navbar_back_highlighted_button.png"] stretchableImageWithLeftCapWidth:19 topCapHeight:0];  
@@ -87,8 +87,8 @@
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   button.frame = CGRectMake(0, 0, 60, 30);
   [button setTitle:title forState:UIControlStateNormal];
+  [button setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
   button.titleLabel.font = NAV_BUTTON_FONT;
-  button.titleLabel.shadowColor = [UIColor blackColor];
   button.titleLabel.shadowOffset = CGSizeMake(0, 1);
   [button setBackgroundImage:[[UIImage imageNamed:@"navbar_normal_button.png"] stretchableImageWithLeftCapWidth:4 topCapHeight:0] forState:UIControlStateNormal];
   [button setBackgroundImage:[[UIImage imageNamed:@"navbar_normal_highlighted_button.png"] stretchableImageWithLeftCapWidth:4 topCapHeight:0] forState:UIControlStateHighlighted];
