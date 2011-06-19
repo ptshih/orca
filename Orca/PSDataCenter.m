@@ -295,6 +295,8 @@
   // Request Completion Block
   [request setCompletionBlock:^{
     [self dataCenterRequestFinished:request];
+    // No need to notify, we've already faked the cache
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kMessageCellReloadPhoto object:nil userInfo:[NSDictionary dictionaryWithObject:sequence forKey:@"sequence"]];
     
     // Remove request from pendingRequests
     [_pendingRequests removeObject:request];

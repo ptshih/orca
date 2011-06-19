@@ -11,6 +11,7 @@
 #import "ComposeDataCenter.h"
 #import "UIImage+ScalingAndCropping.h"
 #import "PSAlertCenter.h"
+#import "PSImageCache.h"
 
 #define SPACING 4.0
 #define PORTRAIT_HEIGHT 180.0
@@ -33,7 +34,9 @@ static UIImage *_imageBorderImage = nil;
   
   // Handle a still image capture
   if (CFStringCompare((CFStringRef)mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
-    _pickedImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
+    UIImage *originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    _pickedImage = [originalImage scaleProportionalToSize:CGSizeMake(640, 640)];
     [_pickedImage retain];
     [_attachPhoto setImage:[_pickedImage cropProportionalToSize:CGSizeMake(66, 66) withRuleOfThirds:NO] forState:UIControlStateNormal];
   }
@@ -190,7 +193,6 @@ static UIImage *_imageBorderImage = nil;
 }
 
 - (void)send {
-#warning test s3 send
   if (![_message hasText]) {
     [[PSAlertCenter defaultCenter] postAlertWithTitle:@"Whoops!" andMessage:@"You tried to send an empty message..." andDelegate:nil];
     return;
@@ -202,18 +204,27 @@ static UIImage *_imageBorderImage = nil;
   NSString *sequence = [NSString md5:[NSString uuidString]];
   
   // Fire off the S3 request if there is an attached photo
+  BOOL hasPhoto = NO;
   if (_pickedImage) {
+    hasPhoto = YES;
     [self sendS3WithSequence:sequence];
   }
   
   // Send it asynchronously and dismiss composer
-  [[ComposeDataCenter defaultCenter] sendMessage:_message.text andSequence:sequence forPodId:_podId];
+  [[ComposeDataCenter defaultCenter] sendMessage:_message.text andSequence:sequence forPodId:_podId hasPhoto:hasPhoto];
   
   // We should create a local copy of this message
   NSTimeInterval currentTimestamp = [[NSDate date] timeIntervalSince1970];
   NSInteger currentTimestampInteger = floor(currentTimestamp);
   
   NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+  if (_pickedImage) {
+    NSString *awsUrl = [NSString stringWithFormat:@"%@/%@.jpg", S3_BUCKET_URL, sequence];
+    [userInfo setValue:awsUrl forKey:@"attachmentUrl"];
+    
+    // Write the pickedImage to cache
+    [[PSImageCache sharedCache] cacheImage:UIImageJPEGRepresentation(_pickedImage, 1.0) forURLPath:awsUrl];
+  }
   [userInfo setValue:_message.text forKey:@"message"];
   [userInfo setValue:_podId forKey:@"podId"];
   [userInfo setValue:sequence forKey:@"sequence"];

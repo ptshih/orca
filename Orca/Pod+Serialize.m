@@ -57,6 +57,7 @@
       self.unread = [NSNumber numberWithBool:YES]; // set unread
       
       // Update properties that can change
+      self.sequence = [[dictionary valueForKey:@"sequence"] notNil] ? [dictionary valueForKey:@"sequence"] : nil;
       self.name = [dictionary valueForKey:@"name"];
       self.fromId = [NSString stringWithFormat:@"%@", [dictionary valueForKey:@"fromId"]];
       self.fromName = [dictionary valueForKey:@"fromName"];

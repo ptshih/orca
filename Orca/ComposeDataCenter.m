@@ -18,12 +18,13 @@
   return defaultCenter;
 }
 
-- (void)sendMessage:(NSString *)message andSequence:(NSString *)sequence forPodId:(NSString *)podId {
+- (void)sendMessage:(NSString *)message andSequence:(NSString *)sequence forPodId:(NSString *)podId hasPhoto:(BOOL)hasPhoto {
   NSURL *composeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/pods/%@/messages/create", API_BASE_URL, podId]];
   
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   [params setValue:message forKey:@"message"];
   [params setValue:sequence forKey:@"sequence"];
+  [params setValue:[NSString stringWithFormat:@"%@", [NSNumber numberWithBool:hasPhoto]] forKey:@"has_photo"];
   
   VLog(@"Sending a new message: %@ with sequence: %@", message, sequence);
   

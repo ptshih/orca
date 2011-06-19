@@ -42,6 +42,7 @@
 #define kOrientationChanged @"OrientationChangedNotification"
 #define kUpdateLoginProgress @"UpdateLoginProgress"
 #define kPSImageCacheDidCacheImage @"PSImageCacheDidCacheImage"
+#define kMessageCellReloadPhoto @"MessageCellReloadPhoto"
 
 // Cards
 #define NUM_CARDS 2

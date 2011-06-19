@@ -2,7 +2,7 @@
 //  Message.m
 //  Orca
 //
-//  Created by Peter Shih on 6/16/11.
+//  Created by Peter Shih on 6/18/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -21,5 +21,6 @@
 @dynamic lat;
 @dynamic lng;
 @dynamic timestamp;
+@dynamic attachmentUrl;
 
 @end

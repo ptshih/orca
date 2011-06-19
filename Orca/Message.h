@@ -2,7 +2,7 @@
 //  Message.h
 //  Orca
 //
-//  Created by Peter Shih on 6/16/11.
+//  Created by Peter Shih on 6/18/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -24,5 +24,6 @@
 @property (nonatomic, retain) NSDecimalNumber * lat;
 @property (nonatomic, retain) NSDecimalNumber * lng;
 @property (nonatomic, retain) NSDate * timestamp;
+@property (nonatomic, retain) NSString * attachmentUrl;
 
 @end

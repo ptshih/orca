@@ -16,6 +16,12 @@
   UILabel *_nameLabel;
   UILabel *_messageLabel;
   UILabel *_timestampLabel;
+  PSURLCacheImageView *_photoView; // optional
+  CGFloat _photoWidth;
+  CGFloat _photoHeight;
 }
+
+- (void)loadPhoto;
+- (void)loadPhotoFromNotification:(id)notification;
 
 @end

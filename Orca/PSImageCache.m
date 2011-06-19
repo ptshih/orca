@@ -69,11 +69,14 @@
 // Cache Image Data
 - (void)cacheImage:(NSData *)imageData forURLPath:(NSString *)urlPath {
   if (imageData) {
-    // First put it in the NSCache buffer
-    [_buffer setObject:[UIImage imageWithData:imageData] forKey:[urlPath encodedURLParameterString]];
-    
-    // Also write it to file
-    [imageData writeToFile:[_cachePath stringByAppendingPathComponent:[urlPath encodedURLParameterString]] atomically:YES];
+    UIImage *image = [UIImage imageWithData:imageData];
+    if (image) {
+      // First put it in the NSCache buffer
+      [_buffer setObject:[UIImage imageWithData:imageData] forKey:[urlPath encodedURLParameterString]];
+      
+      // Also write it to file
+      [imageData writeToFile:[_cachePath stringByAppendingPathComponent:[urlPath encodedURLParameterString]] atomically:YES];
+    }
     
     VLog(@"PSImageCache CACHE: %@", urlPath);
   }

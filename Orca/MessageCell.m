@@ -7,6 +7,7 @@
 //
 
 #import "MessageCell.h"
+#import "PSURLCacheImageView.h"
 
 //UILabel *_nameLabel;
 //UILabel *_messageLabel;
@@ -56,10 +57,17 @@
 //    _nameLabel.shadowColor = [UIColor whiteColor];
 //    _nameLabel.shadowOffset = CGSizeMake(0, -1);
     
+    // Photo
+    _photoView = [[PSURLCacheImageView alloc] initWithFrame:CGRectMake(0, 0, 250, 120)];
+    _photoView.hidden = YES;
+    [self.contentView addSubview:_photoView];
+    
     // Add labels
     [self.contentView addSubview:_nameLabel];
     [self.contentView addSubview:_messageLabel];
     [self.contentView addSubview:_timestampLabel];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadPhotoFromNotification:) name:kMessageCellReloadPhoto object:nil];
   }
   return self;
 }
@@ -69,6 +77,10 @@
   _nameLabel.text = nil;
   _messageLabel.text = nil;
   _timestampLabel.text = nil;
+  [_photoView unloadImage];
+  _photoView.hidden = YES;
+  _photoWidth = 0;
+  _photoHeight = 0;
 }
 
 - (void)layoutSubviews {
@@ -103,6 +115,14 @@
   _messageLabel.left = left;
   
   top = _messageLabel.bottom;
+  
+  // Photo
+  if (_photoView.urlPath) {
+    top += 5;
+    _photoView.hidden = NO;
+    _photoView.top = top;
+    _photoView.left = left;
+  }
 }
 
 #pragma mark -
@@ -125,6 +145,11 @@
   desiredSize = [UILabel sizeForText:message.message width:textWidth font:NORMAL_FONT numberOfLines:0 lineBreakMode:UILineBreakModeWordWrap];
   desiredHeight += desiredSize.height;
   
+  // Optional Photo
+  if (message.attachmentUrl) {
+    desiredHeight += 130;
+  }
+  
   // Bottom margin
   desiredHeight += MARGIN_Y;
   
@@ -146,12 +171,31 @@
   
   // Profile Picture
   _psImageView.urlPath = message.fromPictureUrl;
+  
+  // Photo
+  _photoView.urlPath = message.attachmentUrl;
+  [_photoView loadImageAndDownload:NO];
+}
+
+- (void)loadPhoto {
+  if (_photoView.urlPath) {
+    [_photoView loadImageAndDownload:YES];
+  }
+}
+
+- (void)loadPhotoFromNotification:(NSNotification *)notification {
+  NSString *sequence = [[notification userInfo] objectForKey:@"sequence"];
+  if (sequence && [sequence isEqualToString:_message.sequence]) {
+    [self loadPhoto];
+  }
 }
 
 - (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kMessageCellReloadPhoto object:nil];
   RELEASE_SAFELY(_nameLabel);
   RELEASE_SAFELY(_messageLabel);
   RELEASE_SAFELY(_timestampLabel);
+  RELEASE_SAFELY(_photoView);
   [super dealloc];
 }
 
