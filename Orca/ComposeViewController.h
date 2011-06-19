@@ -12,7 +12,7 @@
 #import "PSTextView.h"
 #import "ComposeDataCenter.h"
 
-@interface ComposeViewController : CardViewController <UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate> {
+@interface ComposeViewController : CardViewController <UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
   NSString *_podId;
   
   // Caption Bubble
@@ -28,17 +28,19 @@
   // Snapped Photo
   UIButton *_attachPhoto;
   UIImageView *_paperclipView;
-  UIImage *_snappedImage;
+  UIImage *_pickedImage;
   
   id <ComposeDelegate> _delegate;
 }
 
 @property (nonatomic, copy) NSString *podId;
-@property (nonatomic, retain) UIImage *snappedImage;
 @property (nonatomic, assign) id <ComposeDelegate> delegate;
 
+- (void)attachPhoto;
 - (void)send;
 - (void)cancel;
+
+- (void)sendS3WithSequence:(NSString *)sequence;
 
 - (void)moveTextViewForKeyboard:(NSNotification*)aNotification up:(BOOL)up;
 

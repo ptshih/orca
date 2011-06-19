@@ -46,6 +46,12 @@
   #define MESSAGES_ENDPOINT @"messages"
 #endif
 
+// AWS S3
+#define S3_KEY @"AKIAJRFSK3RWQ7XLGNFA"
+#define S3_SECRET_KEY @"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"
+#define S3_URL @"http://s3.amazonaws.com"
+#define S3_BUCKET @"orcapods"
+
 #define S3_PHOTOS_URL @"http://s3.amazonaws.com/scrapboard/kupos/photos"
 #define S3_VIDEOS_URL @"http://s3.amazonaws.com/scrapboard/kupos/videos"
 

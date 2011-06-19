@@ -46,7 +46,6 @@
   
   // Push compose controller
   ComposeViewController *cvc = [[ComposeViewController alloc] init];
-  cvc.snappedImage = _snappedImage; // set the snapped image ref
   [self.navigationController pushViewController:cvc animated:YES];
   [cvc release];
 }

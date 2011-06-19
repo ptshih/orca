@@ -45,6 +45,11 @@
 
 - (void)sendFacebookBatchRequestWithParams:(NSDictionary *)params andUserInfo:(NSDictionary *)userInfo;
 
+/**
+ AWS S3
+ */
+- (void)sendAWSS3RequestWithData:(NSData *)data andUserInfo:(NSDictionary *)userInfo;
+
 // Subclass should Implement AND call super's implementation
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request;
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request;
@@ -59,5 +64,8 @@
  */
 - (NSString *)buildRequestParamsString:(NSDictionary *)params;
 - (NSMutableData *)buildRequestParamsData:(NSDictionary *)params;
+
+// AWS Signature
+- (NSString *)signedAWSAuthHeaderWithRequest:(ASIHTTPRequest *)request;
 
 @end

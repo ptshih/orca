@@ -6,9 +6,11 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
+#import <MobileCoreServices/UTCoreTypes.h>
 #import "ComposeViewController.h"
 #import "ComposeDataCenter.h"
 #import "UIImage+ScalingAndCropping.h"
+#import "PSAlertCenter.h"
 
 #define SPACING 4.0
 #define PORTRAIT_HEIGHT 180.0
@@ -17,10 +19,34 @@
 static UIImage *_paperclipImage = nil;
 static UIImage *_imageBorderImage = nil;
 
+@implementation ComposeViewController (PickerDelegateMethods)
+
+// For responding to the user tapping Cancel.
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+  [[picker parentViewController] dismissModalViewControllerAnimated:YES];
+  [picker release];
+}
+
+// For responding to the user accepting a newly-captured picture or movie
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+  NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+  
+  // Handle a still image capture
+  if (CFStringCompare((CFStringRef)mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
+    _pickedImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
+    [_pickedImage retain];
+    [_attachPhoto setImage:[_pickedImage cropProportionalToSize:CGSizeMake(66, 66) withRuleOfThirds:NO] forState:UIControlStateNormal];
+  }
+
+  [[picker parentViewController] dismissModalViewControllerAnimated:YES];
+  [picker release];
+}
+
+@end
+
 @implementation ComposeViewController
 
 @synthesize podId = _podId;
-@synthesize snappedImage = _snappedImage;
 @synthesize delegate = _delegate;
 
 + (void)initialize {
@@ -89,6 +115,7 @@ static UIImage *_imageBorderImage = nil;
   _send.titleLabel.shadowOffset = CGSizeMake(0, -1);
   _send.frame = CGRectMake(310 - 5 - 60, 5, 60, 30);
   _send.alpha = 0.0;
+  _send.enabled = NO;
   [_headerView addSubview:_send];
   
   _heading = [[UILabel alloc] initWithFrame:CGRectMake(70, 5, 170, 30)];
@@ -113,6 +140,7 @@ static UIImage *_imageBorderImage = nil;
   
   // Attach Photo
   _attachPhoto = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+  [_attachPhoto addTarget:self action:@selector(attachPhoto) forControlEvents:UIControlEventTouchUpInside];
   _attachPhoto.frame = CGRectMake(0, 0, _imageBorderImage.size.width, _imageBorderImage.size.height);
   _attachPhoto.left = _composeView.width - 5 - _attachPhoto.width;
   _attachPhoto.top = _headerView.bottom + 13;
@@ -144,9 +172,41 @@ static UIImage *_imageBorderImage = nil;
 //  [[ComposeDataCenter sharedInstance] setDelegate:nil];
 }
 
+- (void)attachPhoto {
+  UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+  imagePicker.allowsEditing = NO;
+  imagePicker.delegate = self;
+  imagePicker.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+  
+  // Source Type
+  imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+  
+  // Media Types
+  //  imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:imagePicker.sourceType];
+  imagePicker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
+  //  imagePicker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeMovie];
+  
+  [self presentModalViewController:imagePicker animated:YES];
+}
+
 - (void)send {
-  // Send it asynchronously and dismiss composer
+#warning test s3 send
+  if (![_message hasText]) {
+    [[PSAlertCenter defaultCenter] postAlertWithTitle:@"Whoops!" andMessage:@"You tried to send an empty message..." andDelegate:nil];
+    return;
+  }
+  
+  _send.enabled = NO;
+  
+  // Calculate the sequence hash
   NSString *sequence = [NSString md5:[NSString uuidString]];
+  
+  // Fire off the S3 request if there is an attached photo
+  if (_pickedImage) {
+    [self sendS3WithSequence:sequence];
+  }
+  
+  // Send it asynchronously and dismiss composer
   [[ComposeDataCenter defaultCenter] sendMessage:_message.text andSequence:sequence forPodId:_podId];
   
   // We should create a local copy of this message
@@ -173,6 +233,14 @@ static UIImage *_imageBorderImage = nil;
   [_message resignFirstResponder];
 }
 
+- (void)sendS3WithSequence:(NSString *)sequence {  
+  NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+  [userInfo setValue:sequence forKey:@"sequence"];
+  
+  NSData *imageData = UIImageJPEGRepresentation(_pickedImage, 1.0);
+  [[ComposeDataCenter defaultCenter] sendAWSS3RequestWithData:imageData andUserInfo:userInfo];
+}
+
 #pragma mark -
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -180,6 +248,13 @@ static UIImage *_imageBorderImage = nil;
 }
 
 #pragma mark UITextViewDelegate
+- (void)textViewDidChange:(UITextView *)textView {
+  if ([_message hasText]) {
+    _send.enabled = YES;
+  } else {
+    _send.enabled = NO;
+  }
+}
 
 #pragma mark UIKeyboard
 - (void)keyboardWillShow:(NSNotification *)aNotification {
@@ -267,7 +342,7 @@ static UIImage *_imageBorderImage = nil;
   RELEASE_SAFELY(_attachPhoto);
   RELEASE_SAFELY(_paperclipView);
   RELEASE_SAFELY(_message);
-  RELEASE_SAFELY(_snappedImage);
+  RELEASE_SAFELY(_pickedImage);
   [super dealloc];
 }
 

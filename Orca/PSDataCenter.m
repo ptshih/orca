@@ -8,6 +8,9 @@
 
 #import "PSDataCenter.h"
 #import "NSString+URLEncoding+PS.h"
+#import "NSData+Base64.h"
+#import "NSString+MIME.h"
+#import "NSDate+AWS.h"
 
 @interface PSDataCenter (Private)
 
@@ -260,6 +263,54 @@
   [request startAsynchronous];
 }
 
+- (void)sendAWSS3RequestWithData:(NSData *)data andUserInfo:(NSDictionary *)userInfo {
+  NSString *sequence = [userInfo objectForKey:@"sequence"];
+  NSString *resource = [NSString stringWithFormat:@"%@/%@.jpg", S3_BUCKET, sequence];
+  NSURL *s3URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", S3_URL, resource]];
+  
+  __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:s3URL];
+  request.requestMethod = PUT;
+  [request setShouldContinueWhenAppEntersBackground:YES];
+  
+  // Set AWS Headers
+  NSString *contentMD5 = [data base64md5String];
+  [request addRequestHeader:@"Content-MD5" value:contentMD5];
+  [request addRequestHeader:@"Content-Type" value:@"image/jpeg"];
+  [request addRequestHeader:@"Content-Length" value:[NSString stringWithFormat:@"%d", [data length]]];
+  [request addRequestHeader:@"Date" value:[[NSDate date] awsRequestFormat]];
+  [request addRequestHeader:@"x-amz-acl" value:@"public-read"];
+
+  // Authorization header LAST
+  NSString *authorization = [NSString stringWithFormat:@"AWS %@:%@", S3_KEY, [self signedAWSAuthHeaderWithRequest:request]];
+  [request addRequestHeader:@"Authorization" value:authorization];
+  
+  
+  // POST parameters
+  request.postBody = [NSMutableData dataWithData:data];
+  request.postLength = [request.postBody length];
+  
+  // Request userInfo
+  request.userInfo = userInfo;
+  
+  // Request Completion Block
+  [request setCompletionBlock:^{
+    [self dataCenterRequestFinished:request];
+    
+    // Remove request from pendingRequests
+    [_pendingRequests removeObject:request];
+  }];
+  [request setFailedBlock:^{
+    [self dataCenterRequestFailed:request];
+    
+    // Remove request from pendingRequests
+    [_pendingRequests removeObject:request];
+  }];
+  
+  // Start the Request
+  [_pendingRequests addObject:request];
+  [request startAsynchronous];
+}
+
 #pragma mark -
 #pragma mark Request Finished/Failed
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {
@@ -338,6 +389,24 @@
 
 - (NSMutableData *)buildRequestParamsData:(NSDictionary *)params {
   return [NSMutableData dataWithData:[[self buildRequestParamsString:params] dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES]];
+}
+
+#pragma mark - AWS Signature
+- (NSString *)signedAWSAuthHeaderWithRequest:(ASIHTTPRequest *)request {
+  NSString *contentMD5 = [request.requestHeaders objectForKey:@"Content-MD5"] ? [request.requestHeaders objectForKey:@"Content-MD5"] : @"";
+  NSString *contentType = [request.requestHeaders objectForKey:@"Content-Type"] ? [request.requestHeaders objectForKey:@"Content-Type"] : @"";
+  NSString *date = [request.requestHeaders objectForKey:@"Date"] ? [request.requestHeaders objectForKey:@"Date"] : @"";
+  NSString *acl = [request.requestHeaders objectForKey:@"x-amz-acl"] ? [NSString stringWithFormat:@"x-amz-acl:%@", [request.requestHeaders objectForKey:@"x-amz-acl"]] : @"";
+  
+  NSString *resource = [request.url path];
+
+  NSString *stringToSign = [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@\n%@", request.requestMethod, contentMD5, contentType, date, acl, resource];
+  
+  DLog(@"String to sign: %@", stringToSign);
+  
+  NSString *signature = [[stringToSign dataUsingEncoding:NSASCIIStringEncoding] signedHMACStringWithKey:S3_SECRET_KEY usingAlgorithm:kCCHmacAlgSHA1];
+  DLog(@"Got signature: %@", signature);
+  return signature;
 }
 
 - (void)dealloc {
