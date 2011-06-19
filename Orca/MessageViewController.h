@@ -20,6 +20,7 @@
 
 @property (nonatomic, assign) Pod *pod;
 
+- (void)setupFooter;
 - (void)newMessage;
 - (void)config;
 

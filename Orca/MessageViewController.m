@@ -49,10 +49,10 @@
   _navTitleLabel.text = _pod.name;
   
   [self addBackButton];
-  [self addButtonWithTitle:@"Settings" andSelector:@selector(config) isLeft:NO];
+  [self addButtonWithTitle:@"Settings" andSelector:@selector(config) isLeft:NO type:PSBarButtonTypeNormal];
   
   // Table
-  CGRect tableFrame = CGRectMake(0, 0, CARD_WIDTH, CARD_HEIGHT);
+  CGRect tableFrame = self.view.bounds;
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
   // Search
@@ -61,9 +61,7 @@
   // Pull Refresh
   [self setupPullRefresh];
   
-  [self setupTableFooter];
-  
-  [self setupFooterView];
+  [self setupFooter];
   
 //  [self setupLoadMoreView];
   
@@ -76,8 +74,14 @@
   [self reloadCardController];
 }
 
-- (void)setupFooterView {
-  [super setupFooterView];
+- (void)setupTableFooter {
+  UIImageView *footerImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"table_footer_background.png"]];
+  _tableView.tableFooterView = footerImage;
+  [footerImage release];
+}
+
+- (void)setupFooter {
+  UIView *footerView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)] autorelease];
   
   // Setup the fake image view
   PSURLCacheImageView *profileImage = [[PSURLCacheImageView alloc] initWithFrame:CGRectMake(10, 7, 30, 30)];
@@ -85,7 +89,7 @@
   [profileImage loadImageAndDownload:YES];
   profileImage.layer.cornerRadius = 5.0;
   profileImage.layer.masksToBounds = YES;
-  [_footerView addSubview:profileImage];
+  [footerView addSubview:profileImage];
   [profileImage release];
   
   // Setup the fake message button
@@ -99,8 +103,12 @@
   [messageButton setTitle:@"Send a message..." forState:UIControlStateNormal];
   [messageButton setBackgroundImage:[[UIImage imageNamed:@"bubble.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15] forState:UIControlStateNormal];
   [messageButton addTarget:self action:@selector(newMessage) forControlEvents:UIControlEventTouchUpInside];
-  [_footerView addSubview:messageButton];
+  [footerView addSubview:messageButton];
   [messageButton release];
+  
+  footerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"navigationbar_bg.png"]];
+  
+  [self setupFooterWithView:footerView];
 }
 
 - (void)reloadCardController {
@@ -146,8 +154,10 @@
 - (void)config {
   ConfigViewController *cvc = [[ConfigViewController alloc] init];
   cvc.pod = _pod;
-  [self presentModalViewController:cvc animated:YES];
+  UINavigationController *cnc = [[UINavigationController alloc] initWithRootViewController:cvc];
+  [self presentModalViewController:cnc animated:YES];
   [cvc release];
+  [cnc release];
 }
 
 #pragma mark - TableView

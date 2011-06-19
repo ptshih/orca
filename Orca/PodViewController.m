@@ -45,7 +45,7 @@
   [self setupTableViewWithFrame:tableFrame andStyle:UITableViewStylePlain andSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
   
   // Title and Buttons
-  [self addButtonWithTitle:@"Logout" andSelector:@selector(logout) isLeft:YES];
+  [self addButtonWithTitle:@"Logout" andSelector:@selector(logout) isLeft:YES type:PSBarButtonTypeNormal];
 //  [self addButtonWithTitle:@"Search" andSelector:@selector(search) isLeft:NO];
 //  [self addButtonWithImage:[UIImage imageNamed:@"searchbar_textfield_background.png"] andSelector:@selector(search) isLeft:NO];
   
@@ -57,11 +57,15 @@
   // Pull Refresh
   [self setupPullRefresh];
   
-  [self setupTableFooter];
-  
 //  [self setupLoadMoreView];
   
   [self executeFetch:YES];
+}
+
+- (void)setupTableFooter {
+  UIImageView *footerImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"table_footer_background.png"]];
+  _tableView.tableFooterView = footerImage;
+  [footerImage release];
 }
 
 - (void)reloadCardController {

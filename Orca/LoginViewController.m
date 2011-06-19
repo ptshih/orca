@@ -50,8 +50,8 @@
   [_loginButton setTitle:@"Logging you in..." forState:UIControlStateDisabled];
   [_loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [_loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+  [_loginButton setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
   _loginButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0];
-  _loginButton.titleLabel.shadowColor = [UIColor blackColor];
   _loginButton.titleLabel.shadowOffset = CGSizeMake(0, 1);
   [_loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:_loginButton];

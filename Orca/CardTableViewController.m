@@ -24,6 +24,7 @@
   self = [super init];
   if (self) {    
     _items = [[NSMutableArray alloc] initWithCapacity:1];
+    _sectionTitles = [[NSMutableArray alloc] initWithCapacity:1];
   }
   return self;
 }
@@ -99,6 +100,10 @@
   //  [self.view insertSubview:_tableView atIndex:0];
   [self.view addSubview:_tableView];
   
+  // Setup optional header/footer
+  [self setupTableHeader];
+  [self setupTableFooter];
+  
   // Set the active scrollView
   _activeScrollView = _tableView;
 }
@@ -115,30 +120,27 @@
   [_refreshHeaderView refreshLastUpdatedDate];
 }
 
+// Optional table header
+- (void)setupTableHeader {
+  // subclass should implement
+}
+
 // Optional table footer
 - (void)setupTableFooter {
-  UIImageView *footerImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"table_footer_background.png"]];
-  _tableView.tableFooterView = footerImage;
-  [footerImage release];
+  // subclass should implement
 }
 
 // Optional Header View
-- (void)setupHeaderView {
-  _tableView.frame = CGRectMake(_tableView.left, _tableView.top + 44, _tableView.width, _tableView.height - 44);
-  _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-  _headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-  
-  [self.view addSubview:_headerView];
+- (void)setupHeaderWithView:(UIView *)headerView {
+  _tableView.frame = CGRectMake(_tableView.left, _tableView.top + headerView.height, _tableView.width, _tableView.height - headerView.height);  
+  [self.view addSubview:headerView];
 }
 
 // Optional footer view
-- (void)setupFooterView {
-  _tableView.frame = CGRectMake(_tableView.left, _tableView.top, _tableView.width, _tableView.height - 44);
-  _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 44, 320, 44)];
-  _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-  _footerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"navigationbar_bg.png"]];
-  
-  [self.view addSubview:_footerView];
+- (void)setupFooterWithView:(UIView *)footerView {
+  _tableView.frame = CGRectMake(_tableView.left, _tableView.top, _tableView.width, _tableView.height - footerView.height);
+  footerView.top = self.view.height - footerView.height - 44; // 44 navbar
+  [self.view addSubview:footerView];
 }
 
 // This is the button load more style
@@ -242,7 +244,7 @@
 // Called when the user logs out and we need to clear all cached data
 // Subclasses should override this method
 - (void)clearCachedData {
-  [self.items removeAllObjects];
+  [_items removeAllObjects];
   [self dataSourceDidLoad];
 }
 
@@ -271,7 +273,7 @@
   if (_tableView == self.searchDisplayController.searchResultsTableView) {
     return ([_searchItems count] > 0);
   } else {
-    if ([self.items count] > 0) {
+    if ([_items count] > 0) {
       return YES;
     } else {
       return NO;
@@ -280,7 +282,7 @@
 }
 
 - (BOOL)dataSourceIsReady {
-  return ([self.items count] > 0);
+  return ([_items count] > 0);
 }
 
 - (BOOL)dataIsLoading {
@@ -302,15 +304,15 @@
   if (tableView == self.searchDisplayController.searchResultsTableView) {
     return 1;
   } else {
-    return [self.items count];
+    return [_items count];
   }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   if (tableView == self.searchDisplayController.searchResultsTableView) {
-    return [self.searchItems count];
+    return [_searchItems count];
   } else {
-    return [[self.items objectAtIndex:section] count];
+    return [[_items objectAtIndex:section] count];
   }
 }
 
@@ -444,14 +446,13 @@
 
 - (void)dealloc {
   RELEASE_SAFELY(_tableView);
+  RELEASE_SAFELY(_sectionTitles);
   RELEASE_SAFELY(_items);
   RELEASE_SAFELY(_searchItems);
   RELEASE_SAFELY(_searchBar);
   RELEASE_SAFELY(_visibleCells);
   RELEASE_SAFELY(_visibleIndexPaths);
   RELEASE_SAFELY(_refreshHeaderView);
-  RELEASE_SAFELY(_headerView);
-  RELEASE_SAFELY(_footerView);
   RELEASE_SAFELY(_loadMoreView);
   RELEASE_SAFELY(_loadMoreButton);
   RELEASE_SAFELY(_loadMoreActivity);

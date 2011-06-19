@@ -85,17 +85,36 @@
   self.navigationItem.leftBarButtonItem = backButton;
 }
 
-- (void)addButtonWithTitle:(NSString *)title andSelector:(SEL)selector isLeft:(BOOL)isLeft {
+- (void)addButtonWithTitle:(NSString *)title andSelector:(SEL)selector isLeft:(BOOL)isLeft type:(PSBarButtonType)type {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   button.frame = CGRectMake(0, 0, 60, 30);
   [button setTitle:title forState:UIControlStateNormal];
   [button setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
   button.titleLabel.font = NAV_BUTTON_FONT;
   button.titleLabel.shadowOffset = CGSizeMake(0, 1);
-  [button setBackgroundImage:[[UIImage imageNamed:@"navbar_normal_button.png"] stretchableImageWithLeftCapWidth:4 topCapHeight:0] forState:UIControlStateNormal];
-  [button setBackgroundImage:[[UIImage imageNamed:@"navbar_normal_highlighted_button.png"] stretchableImageWithLeftCapWidth:4 topCapHeight:0] forState:UIControlStateHighlighted];
   [button addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];  
   UIBarButtonItem *navButton = [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
+  
+  // Button Type
+  UIImage *img = nil;
+  UIImage *imgHighlighted = nil;
+  switch (type) {
+    case PSBarButtonTypeBlue:
+      img = [UIImage imageNamed:@"navbar_blue_button.png"];
+      imgHighlighted = [UIImage imageNamed:@"navbar_blue_highlighted_button.png"];
+      break;
+    case PSBarButtonTypeRed:
+      img = [UIImage imageNamed:@"navbar_red_button.png"];
+      imgHighlighted = [UIImage imageNamed:@"navbar_red_highlighted_button.png"];
+      break;
+    default:
+      img = [UIImage imageNamed:@"navbar_normal_button.png"];
+      imgHighlighted = [UIImage imageNamed:@"navbar_normal_highlighted_button.png"];
+      break;
+  }
+  [button setBackgroundImage:[img stretchableImageWithLeftCapWidth:4 topCapHeight:0] forState:UIControlStateNormal];
+  [button setBackgroundImage:[imgHighlighted stretchableImageWithLeftCapWidth:4 topCapHeight:0] forState:UIControlStateHighlighted];
+  
   if (isLeft) {
     self.navigationItem.leftBarButtonItem = navButton;
   } else {
@@ -103,7 +122,7 @@
   }
 }
 
-- (void)addButtonWithImage:(UIImage *)image andSelector:(SEL)selector isLeft:(BOOL)isLeft {
+- (void)addButtonWithImage:(UIImage *)image andSelector:(SEL)selector isLeft:(BOOL)isLeft type:(PSBarButtonType)type {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   button.frame = CGRectMake(0, 0, 60, 30);
   [button setBackgroundImage:image forState:UIControlStateNormal];

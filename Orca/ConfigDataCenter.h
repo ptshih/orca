@@ -20,6 +20,7 @@
 /**
  List of people in a pod
  */
+- (void)getMembersForPodId:(NSString *)podId;
 
 // Mutations
 
@@ -30,6 +31,7 @@
 /**
  Leave pod
  */
+- (void)leavePodForPodId:(NSString *)podId;
 
 /**
  Add friend to pod
@@ -40,11 +42,8 @@
  */
 
 /**
- Mute pod (optional duration)
+ Mute/Unmute pod (optional duration)
  */
-
-/**
- Unmute pod
- */
+- (void)mutePodForPodId:(NSString *)podId forDuration:(NSInteger)duration;
 
 @end
