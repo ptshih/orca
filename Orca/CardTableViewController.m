@@ -81,6 +81,7 @@
   
   // Add new background
   UIImageView *searchBackground = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"search_background.png"]] autorelease];
+  searchBackground.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   searchBackground.top -= 1;
   [_searchBar addSubview:searchBackground];
   [_searchBar addSubview:searchBarTextField];
@@ -89,7 +90,7 @@
 // SUBCLASS SHOULD CALL THIS
 - (void)setupTableViewWithFrame:(CGRect)frame andStyle:(UITableViewStyle)style andSeparatorStyle:(UITableViewCellSeparatorStyle)separatorStyle {
   _tableView = [[UITableView alloc] initWithFrame:frame style:style];
-  _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+  _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
   _tableView.separatorStyle = separatorStyle;
   _tableView.delegate = self;
   _tableView.dataSource = self;
@@ -133,13 +134,15 @@
 // Optional Header View
 - (void)setupHeaderWithView:(UIView *)headerView {
   _tableView.frame = CGRectMake(_tableView.left, _tableView.top + headerView.height, _tableView.width, _tableView.height - headerView.height);  
+  headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
   [self.view addSubview:headerView];
 }
 
 // Optional footer view
 - (void)setupFooterWithView:(UIView *)footerView {
   _tableView.frame = CGRectMake(_tableView.left, _tableView.top, _tableView.width, _tableView.height - footerView.height);
-  footerView.top = self.view.height - footerView.height - 44; // 44 navbar
+  footerView.top = self.view.height - footerView.height; // 44 navbar
+  footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
   [self.view addSubview:footerView];
 }
 
