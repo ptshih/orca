@@ -148,6 +148,7 @@
 		25AD6DCA13943A8000F43FEF /* media_progress_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 25AD6DC613943A8000F43FEF /* media_progress_bar.png */; };
 		25AD6DCB13943A8000F43FEF /* media_progress_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25AD6DC713943A8000F43FEF /* media_progress_bar@2x.png */; };
 		25AD6DD213943FE600F43FEF /* DDProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AD6DD113943FE600F43FEF /* DDProgressView.m */; };
+		25B2E9FA13AD74E000549DEB /* PSAlertCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2E9F913AD74E000549DEB /* PSAlertCenter.m */; };
 		25B2F4A9135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
 		25B9C765138DBB3F003FEE96 /* search_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B9C761138DBB3F003FEE96 /* search_background.png */; };
 		25B9C766138DBB3F003FEE96 /* search_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B9C762138DBB3F003FEE96 /* search_background@2x.png */; };
@@ -432,6 +433,8 @@
 		25AD6DC713943A8000F43FEF /* media_progress_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "media_progress_bar@2x.png"; sourceTree = "<group>"; };
 		25AD6DD013943FE500F43FEF /* DDProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDProgressView.h; sourceTree = "<group>"; };
 		25AD6DD113943FE600F43FEF /* DDProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDProgressView.m; sourceTree = "<group>"; };
+		25B2E9F813AD74E000549DEB /* PSAlertCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAlertCenter.h; sourceTree = "<group>"; };
+		25B2E9F913AD74E000549DEB /* PSAlertCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAlertCenter.m; sourceTree = "<group>"; };
 		25B2F4A7135180EB00DDF1BC /* PSNullView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNullView.h; sourceTree = "<group>"; };
 		25B2F4A8135180EB00DDF1BC /* PSNullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSNullView.m; sourceTree = "<group>"; };
 		25B9C761138DBB3F003FEE96 /* search_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_background.png; sourceTree = "<group>"; };
@@ -1083,6 +1086,8 @@
 		25FB8B2B133A036600C130A8 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				25B2E9F813AD74E000549DEB /* PSAlertCenter.h */,
+				25B2E9F913AD74E000549DEB /* PSAlertCenter.m */,
 				2594670D13A7FEC900CC6890 /* PSCoreDataOperationQueue.h */,
 				2594670E13A7FEC900CC6890 /* PSCoreDataOperationQueue.m */,
 				2564939013982E66005B7459 /* PSRandomSortDescriptor.h */,
@@ -1527,6 +1532,7 @@
 				2515FE6E13A9E592008F6943 /* ActivityViewController.m in Sources */,
 				2515FEB813AA6D29008F6943 /* Message.m in Sources */,
 				2515FEBB13AA6D2A008F6943 /* Pod.m in Sources */,
+				25B2E9FA13AD74E000549DEB /* PSAlertCenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
