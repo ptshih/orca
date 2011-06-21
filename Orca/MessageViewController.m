@@ -81,7 +81,7 @@
 }
 
 - (void)setupFooter {
-  UIView *footerView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)] autorelease];
+  UIView *footerView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44)] autorelease];
   
   // Setup the fake image view
   PSURLCacheImageView *profileImage = [[PSURLCacheImageView alloc] initWithFrame:CGRectMake(10, 7, 30, 30)];
@@ -93,7 +93,7 @@
   [profileImage release];
   
   // Setup the fake message button
-  UIButton *messageButton = [[UIButton alloc] initWithFrame:CGRectMake(45, 7, 265, 30)];
+  UIButton *messageButton = [[UIButton alloc] initWithFrame:CGRectMake(45, 7, self.view.width - 55, 30)];
   messageButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   messageButton.titleLabel.font = [UIFont systemFontOfSize:14];
   [messageButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];

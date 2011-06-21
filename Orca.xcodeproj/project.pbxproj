@@ -151,7 +151,6 @@
 		25B2EA0613AD86BC00549DEB /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2EA0513AD86BB00549DEB /* NSData+Base64.m */; };
 		25B2EA0913AD8CD500549DEB /* NSString+MIME.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2EA0813AD8CD500549DEB /* NSString+MIME.m */; };
 		25B2EA0F13AD99CC00549DEB /* NSDate+AWS.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2EA0E13AD99CC00549DEB /* NSDate+AWS.m */; };
-		25B2EA1213ADA4A000549DEB /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2EA1113ADA4A000549DEB /* Message.m */; };
 		25B2EA1D13AE006600549DEB /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2EA1C13AE006500549DEB /* UserCell.m */; };
 		25B2F4A9135180EB00DDF1BC /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2F4A8135180EB00DDF1BC /* PSNullView.m */; };
 		25B9C765138DBB3F003FEE96 /* search_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B9C761138DBB3F003FEE96 /* search_background.png */; };
@@ -206,6 +205,7 @@
 		25E56BDC138C63CE0026044A /* facebook-connect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25E56BDA138C63CE0026044A /* facebook-connect@2x.png */; };
 		25E5A6A513A5611B0096E4FE /* Pod+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E5A6A413A5611B0096E4FE /* Pod+Serialize.m */; };
 		25E5A6A813A5613F0096E4FE /* Message+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E5A6A713A5613E0096E4FE /* Message+Serialize.m */; };
+		25EAAB5D13AEBDC200C0D2DE /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EAAB5C13AEBDC200C0D2DE /* Message.m */; };
 		25EFD3861341E438000108B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EFD3851341E438000108B8 /* MobileCoreServices.framework */; };
 		25EFD3FF1343E18E000108B8 /* LoginDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD3FE1343E18E000108B8 /* LoginDataCenter.m */; };
 		25EFD4051343E774000108B8 /* HashValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD4041343E774000108B8 /* HashValue.m */; };
@@ -443,8 +443,6 @@
 		25B2EA0813AD8CD500549DEB /* NSString+MIME.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MIME.m"; sourceTree = "<group>"; };
 		25B2EA0D13AD99CC00549DEB /* NSDate+AWS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+AWS.h"; sourceTree = "<group>"; };
 		25B2EA0E13AD99CC00549DEB /* NSDate+AWS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+AWS.m"; sourceTree = "<group>"; };
-		25B2EA1013ADA4A000549DEB /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
-		25B2EA1113ADA4A000549DEB /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		25B2EA1B13AE006500549DEB /* UserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCell.h; sourceTree = "<group>"; };
 		25B2EA1C13AE006500549DEB /* UserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCell.m; sourceTree = "<group>"; };
 		25B2F4A7135180EB00DDF1BC /* PSNullView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNullView.h; sourceTree = "<group>"; };
@@ -534,6 +532,8 @@
 		25E5A6A413A5611B0096E4FE /* Pod+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Pod+Serialize.m"; sourceTree = "<group>"; };
 		25E5A6A613A5613E0096E4FE /* Message+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Message+Serialize.h"; sourceTree = "<group>"; };
 		25E5A6A713A5613E0096E4FE /* Message+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Message+Serialize.m"; sourceTree = "<group>"; };
+		25EAAB5B13AEBDC200C0D2DE /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		25EAAB5C13AEBDC200C0D2DE /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		25EFD3851341E438000108B8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		25EFD3FD1343E18D000108B8 /* LoginDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginDataCenter.h; sourceTree = "<group>"; };
 		25EFD3FE1343E18E000108B8 /* LoginDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LoginDataCenter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -997,8 +997,8 @@
 				25E5A6A413A5611B0096E4FE /* Pod+Serialize.m */,
 				2515FEB913AA6D2A008F6943 /* Pod.h */,
 				2515FEBA13AA6D2A008F6943 /* Pod.m */,
-				25B2EA1013ADA4A000549DEB /* Message.h */,
-				25B2EA1113ADA4A000549DEB /* Message.m */,
+				25EAAB5B13AEBDC200C0D2DE /* Message.h */,
+				25EAAB5C13AEBDC200C0D2DE /* Message.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1555,8 +1555,8 @@
 				25B2EA0613AD86BC00549DEB /* NSData+Base64.m in Sources */,
 				25B2EA0913AD8CD500549DEB /* NSString+MIME.m in Sources */,
 				25B2EA0F13AD99CC00549DEB /* NSDate+AWS.m in Sources */,
-				25B2EA1213ADA4A000549DEB /* Message.m in Sources */,
 				25B2EA1D13AE006600549DEB /* UserCell.m in Sources */,
+				25EAAB5D13AEBDC200C0D2DE /* Message.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

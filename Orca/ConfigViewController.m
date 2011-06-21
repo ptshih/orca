@@ -44,7 +44,7 @@
 }
 
 - (void)setupFooter {
-  UIView *footerView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)] autorelease];
+  UIView *footerView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44)] autorelease];
   
   _muteButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
   _muteButton.frame = CGRectMake(10, 7, 145, 30);

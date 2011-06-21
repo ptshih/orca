@@ -36,8 +36,9 @@ static dispatch_queue_t _urlCacheImageViewQueue = nil;
 
 - (void)loadImageAndDownload:(BOOL)download {
   if (_urlPath) {
+    NSString *urlPath = [[_urlPath copy] autorelease];
     dispatch_async(_urlCacheImageViewQueue, ^{
-      UIImage *image = [[PSImageCache sharedCache] imageForURLPath:_urlPath shouldDownload:download withDelegate:nil];
+      UIImage *image = [[PSImageCache sharedCache] imageForURLPath:urlPath shouldDownload:download withDelegate:nil];
       dispatch_async(dispatch_get_main_queue(), ^{
         if (image) { 
           self.image = image;

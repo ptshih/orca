@@ -200,6 +200,7 @@
   
   __block ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
   request.requestMethod = POST;
+  [request setShouldContinueWhenAppEntersBackground:YES];
   
   // Allow GZIP
   request.allowCompressedResponse = YES;

@@ -32,9 +32,6 @@ static UIImage *_actionImage = nil;
 }
 
 - (void)loadView {
-  [super loadView];
-  self.wantsFullScreenLayout = YES;
-  
   _tabBarController = [[UITabBarController alloc] init];
   _tabBarController.delegate = self;
   _tabBarController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -54,6 +51,7 @@ static UIImage *_actionImage = nil;
   _tabBarController.viewControllers = [NSArray arrayWithObjects:podsNav, moreNav, nil];
   
   // Add to view
+  _tabBarController.view.frame = CGRectMake(0, 20, 320, 460);
   self.view = _tabBarController.view;
   
   // Select previously chosen tab

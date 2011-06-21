@@ -41,11 +41,11 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.31</string>
+	<string>1.0.34</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleBlackTranslucent</string>
+	<string>UIStatusBarStyleBlackOpaque</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

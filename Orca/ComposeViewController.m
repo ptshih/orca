@@ -203,28 +203,34 @@ static UIImage *_imageBorderImage = nil;
   // Calculate the sequence hash
   NSString *sequence = [NSString md5:[NSString uuidString]];
   
-  // Fire off the S3 request if there is an attached photo
-  BOOL hasPhoto = NO;
+  // UserInfo
+  NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+  
+  // Does this message have an photo?
+  NSData *imageData = nil;
   if (_pickedImage) {
-    hasPhoto = YES;
-    [self sendS3WithSequence:sequence];
+    imageData = UIImageJPEGRepresentation(_pickedImage, 1.0);
+
+    [userInfo setObject:[NSNumber numberWithFloat:_pickedImage.size.width] forKey:@"photoWidth"];
+    [userInfo setObject:[NSNumber numberWithFloat:_pickedImage.size.height] forKey:@"photoHeight"];
+    
+    NSString *awsUrl = [NSString stringWithFormat:@"%@/%@.jpg", S3_BUCKET_URL, sequence];
+    [userInfo setValue:awsUrl forKey:@"photoUrl"];
+    
+    // Write the pickedImage to cache
+    [[PSImageCache sharedCache] cacheImage:imageData forURLPath:awsUrl];
   }
   
+  
   // Send it asynchronously and dismiss composer
-  [[ComposeDataCenter defaultCenter] sendMessage:_message.text andSequence:sequence forPodId:_podId hasPhoto:hasPhoto];
+  [[ComposeDataCenter defaultCenter] sendMessage:_message.text andSequence:sequence forPodId:_podId withPhotoData:imageData andUserInfo:userInfo];
+  
+  //====================//
   
   // We should create a local copy of this message
   NSTimeInterval currentTimestamp = [[NSDate date] timeIntervalSince1970];
   NSInteger currentTimestampInteger = floor(currentTimestamp);
   
-  NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-  if (_pickedImage) {
-    NSString *awsUrl = [NSString stringWithFormat:@"%@/%@.jpg", S3_BUCKET_URL, sequence];
-    [userInfo setValue:awsUrl forKey:@"attachmentUrl"];
-    
-    // Write the pickedImage to cache
-    [[PSImageCache sharedCache] cacheImage:UIImageJPEGRepresentation(_pickedImage, 1.0) forURLPath:awsUrl];
-  }
   [userInfo setValue:_message.text forKey:@"message"];
   [userInfo setValue:_podId forKey:@"podId"];
   [userInfo setValue:sequence forKey:@"sequence"];

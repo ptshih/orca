@@ -79,8 +79,6 @@
   _timestampLabel.text = nil;
   [_photoView unloadImage];
   _photoView.hidden = YES;
-  _photoWidth = 0;
-  _photoHeight = 0;
 }
 
 - (void)layoutSubviews {
@@ -117,11 +115,12 @@
   top = _messageLabel.bottom;
   
   // Photo
-  if (_photoView.urlPath) {
+  if (_photoView.urlPath && [_message.photoWidth floatValue] > 0 && [_message.photoHeight floatValue] > 0) {
     top += 5;
     _photoView.hidden = NO;
     _photoView.top = top;
     _photoView.left = left;
+    _photoView.height = floor([_message.photoHeight floatValue] / ([_message.photoWidth floatValue] / 250));
   }
 }
 
@@ -146,8 +145,10 @@
   desiredHeight += desiredSize.height;
   
   // Optional Photo
-  if (message.attachmentUrl) {
-    desiredHeight += 130;
+  if (message.photoUrl && [message.photoWidth floatValue] > 0 && [message.photoHeight floatValue] > 0) {
+    desiredHeight += 5;
+    desiredHeight += floor([message.photoHeight floatValue] / ([message.photoWidth floatValue] / 250));
+    desiredHeight += 5;
   }
   
   // Bottom margin
@@ -173,7 +174,7 @@
   _psImageView.urlPath = message.fromPictureUrl;
   
   // Photo
-  _photoView.urlPath = message.attachmentUrl;
+  _photoView.urlPath = message.photoUrl;
   [_photoView loadImageAndDownload:NO];
 }
 

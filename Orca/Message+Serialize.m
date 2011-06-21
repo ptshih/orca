@@ -24,7 +24,9 @@
     newMessage.fromName = [dictionary valueForKey:@"fromName"];
     newMessage.fromPictureUrl = [dictionary valueForKey:@"fromPictureUrl"];
     newMessage.message = [[dictionary valueForKey:@"message"] notNil] ? [dictionary valueForKey:@"message"] : nil;
-    newMessage.attachmentUrl = [[dictionary valueForKey:@"attachmentUrl"] notNil] ? [dictionary valueForKey:@"attachmentUrl"] : nil;
+    newMessage.photoUrl = [[dictionary valueForKey:@"photoUrl"] notNil] ? [dictionary valueForKey:@"photoUrl"] : nil;
+    newMessage.photoWidth = [[dictionary valueForKey:@"photoWidth"] notNil] ? [dictionary valueForKey:@"photoWidth"] : [NSNumber numberWithFloat:0];
+    newMessage.photoHeight = [[dictionary valueForKey:@"photoHeight"] notNil] ? [dictionary valueForKey:@"photoHeight"] : [NSNumber numberWithFloat:0];
     newMessage.lat = [[dictionary valueForKey:@"lat"] notNil] ? [dictionary valueForKey:@"lat"] : nil;
     newMessage.lng = [[dictionary valueForKey:@"lng"] notNil] ? [dictionary valueForKey:@"lng"] : nil;
     //    newMessage.location = [dictionary valueForKey:@"location"];
