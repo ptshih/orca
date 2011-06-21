@@ -9,9 +9,9 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "ComposeViewController.h"
 #import "ComposeDataCenter.h"
-#import "UIImage+ScalingAndCropping.h"
 #import "PSAlertCenter.h"
 #import "PSImageCache.h"
+#import "UIImage+SML.h"
 
 #define SPACING 4.0
 #define PORTRAIT_HEIGHT 180.0
@@ -201,7 +201,7 @@ static UIImage *_imageBorderImage = nil;
   _send.enabled = NO;
   
   // Calculate the sequence hash
-  NSString *sequence = [NSString md5:[NSString uuidString]];
+  NSString *sequence = [[NSString stringFromUUID] stringFromMD5Hash];
   
   // UserInfo
   NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];

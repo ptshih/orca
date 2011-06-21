@@ -8,20 +8,14 @@
  */
 
 #import "OrcaAppDelegate.h"
-#import "UIScreen+ConvertRect.h"
-#import "UIView+Additions.h"
-#import "UILabel+SizeToFitWidth.h"
-#import "NSDate+Helper.h"
-//#import "NSDate+HumanInterval.h"
-#import "NSURL+Util.h"
-#import "UIImage+NSCoding.h"
-#import "NSString+Util.h"
-#import "NSString+MD5.h"
-#import "PSRandomSortDescriptor.h"
+#import "NetworkConstants.h"
 
 #ifdef __APPLE__
   #include "TargetConditionals.h"
 #endif
+
+// Core Data
+#define CORE_DATA_MOM @"Orca"
 
 //#define CLEAR_ALL_CACHED_DATA_ON_WARNING
 

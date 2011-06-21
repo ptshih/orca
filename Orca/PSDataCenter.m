@@ -7,10 +7,6 @@
 //
 
 #import "PSDataCenter.h"
-#import "NSString+URLEncoding+PS.h"
-#import "NSData+Base64.h"
-#import "NSString+MIME.h"
-#import "NSDate+AWS.h"
 
 @interface PSDataCenter (Private)
 
@@ -278,7 +274,7 @@
   [request addRequestHeader:@"Content-MD5" value:contentMD5];
   [request addRequestHeader:@"Content-Type" value:@"image/jpeg"];
   [request addRequestHeader:@"Content-Length" value:[NSString stringWithFormat:@"%d", [data length]]];
-  [request addRequestHeader:@"Date" value:[[NSDate date] awsRequestFormat]];
+  [request addRequestHeader:@"Date" value:[[NSDate date] stringWithAWSRequestFormat]];
   [request addRequestHeader:@"x-amz-acl" value:@"public-read"];
 
   // Authorization header LAST
@@ -381,7 +377,7 @@
   NSArray *allValues = [params allValues];
   
   for (int i = 0; i < [params count]; i++) {
-    [encodedParameterPairs appendFormat:@"%@=%@", [[allKeys objectAtIndex:i] encodedURLParameterString], [[allValues objectAtIndex:i] encodedURLParameterString]];
+    [encodedParameterPairs appendFormat:@"%@=%@", [[allKeys objectAtIndex:i] stringByURLEncoding], [[allValues objectAtIndex:i] stringByURLEncoding]];
     if (i < [params count] - 1) {
       [encodedParameterPairs appendString:@"&"];
     }

@@ -7,8 +7,8 @@
 //
 
 #import "Message+Serialize.h"
-#import "NSObject+ConvenienceMethods.h"
-#import "NSString+ConvenienceMethods.h"
+#import "NSObject+SML.h"
+#import "NSString+SML.h"
 
 @implementation Message (Serialize)
 

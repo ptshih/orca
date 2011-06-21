@@ -7,9 +7,9 @@
 //
 
 #import "Pod+Serialize.h"
-#import "NSObject+ConvenienceMethods.h"
-#import "NSString+ConvenienceMethods.h"
 #import "NSDate+Helper.h"
+#import "NSObject+SML.h"
+#import "NSString+SML.h"
 
 @implementation Pod (Serialize)
 
