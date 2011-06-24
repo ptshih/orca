@@ -11,13 +11,16 @@
 #import "MessageDataCenter.h"
 #import "Message.h"
 #import "Pod.h"
-#import "MessageCell.h"
-#import "PhotoCell.h"
 #import "HeaderCell.h"
 #import "ComposeViewController.h"
 #import "ConfigViewController.h"
 #import "PSRollupView.h"
 #import "ConfigDataCenter.h"
+
+// Cells
+#import "MessageCell.h"
+#import "PhotoCell.h"
+#import "MapCell.h"
 
 @implementation MessageViewController
 
@@ -89,15 +92,15 @@
   [_podMembersView setHeaderText:[NSString stringWithFormat:@"There are %d friends are in this pod.", [memberPictures count]]];
   [_podMembersView setPictureURLArray:memberPictures];
   [_podMembersView layoutIfNeeded];
+  self.tableView.tableHeaderView = _podMembersView;
 }
 
 - (void)setupTableHeader {
   // Pod Members
   
   // Create Rollup
-  _podMembersView = [[PSRollupView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 63)];
+  _podMembersView = [[PSRollupView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 0)];
   [_podMembersView setBackgroundImage:[UIImage stretchableImageNamed:@"bg-darkgray-320x44.png" withLeftCapWidth:0 topCapWidth:0]];
-  self.tableView.tableHeaderView = _podMembersView;
 }
 
 - (void)setupTableFooter {
@@ -208,7 +211,7 @@
   if (message.photoUrl) {
     return [PhotoCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
   } else {
-    return [MessageCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
+    return [MapCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
   }
 }
 
@@ -226,7 +229,7 @@
   if (message.photoUrl) {
     cell = [self cellForType:MessageCellTypePhoto withObject:message];
   } else {
-    cell = [self cellForType:MessageCellTypeDefault withObject:message];
+    cell = [self cellForType:MessageCellTypeMap withObject:message];
   }
   return cell;
 }
@@ -244,6 +247,14 @@
       }
       [cell fillCellWithObject:object];
       [cell loadPhoto];
+      break;
+    case MessageCellTypeMap:
+      reuseIdentifier = [MapCell reuseIdentifier];
+      cell = (MapCell *)[_tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+      if(cell == nil) { 
+        cell = [[[MapCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+      }
+      [cell fillCellWithObject:object];
       break;
     default:
       // MessageCellTypeDefault

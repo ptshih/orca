@@ -160,6 +160,7 @@
 		2570A4EF13B495F0006CBCFE /* bg-table-header@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2570A4ED13B495F0006CBCFE /* bg-table-header@2x.png */; };
 		2570A4F113B495F5006CBCFE /* bg-rollup.png in Resources */ = {isa = PBXBuildFile; fileRef = 2570A4F013B495F5006CBCFE /* bg-rollup.png */; };
 		2570A4F413B49A53006CBCFE /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2570A4F313B49A52006CBCFE /* PhotoCell.m */; };
+		2570A4F713B4AF05006CBCFE /* MapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2570A4F613B4AF05006CBCFE /* MapCell.m */; };
 		259AD5491366B09100FA2B8D /* MessageDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 259AD5481366B09100FA2B8D /* MessageDataCenter.m */; };
 		259C7B4B1349733000C37AE1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C7B4A1349733000C37AE1 /* Reachability.m */; };
 		259C7B4E1349735D00C37AE1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 259C7B4D1349735D00C37AE1 /* CFNetwork.framework */; };
@@ -462,6 +463,8 @@
 		2570A4F013B495F5006CBCFE /* bg-rollup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-rollup.png"; sourceTree = "<group>"; };
 		2570A4F213B49A52006CBCFE /* PhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCell.h; sourceTree = "<group>"; };
 		2570A4F313B49A52006CBCFE /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCell.m; sourceTree = "<group>"; };
+		2570A4F513B4AF04006CBCFE /* MapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapCell.h; sourceTree = "<group>"; };
+		2570A4F613B4AF05006CBCFE /* MapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapCell.m; sourceTree = "<group>"; };
 		25733C26138F282400660556 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = SOURCE_ROOT; };
 		25961C9E134D46CD00A3D4CD /* MeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeDelegate.h; sourceTree = "<group>"; };
 		259AD5471366B09100FA2B8D /* MessageDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageDataCenter.h; sourceTree = "<group>"; };
@@ -1230,6 +1233,8 @@
 				25BB19F113A5A1BB00430C33 /* MessageCell.m */,
 				2570A4F213B49A52006CBCFE /* PhotoCell.h */,
 				2570A4F313B49A52006CBCFE /* PhotoCell.m */,
+				2570A4F513B4AF04006CBCFE /* MapCell.h */,
+				2570A4F613B4AF05006CBCFE /* MapCell.m */,
 				25B2EA1B13AE006500549DEB /* UserCell.h */,
 				25B2EA1C13AE006500549DEB /* UserCell.m */,
 			);
@@ -1518,6 +1523,7 @@
 				2570A47813B4904E006CBCFE /* UIView+SML.m in Sources */,
 				2570A4E313B494E9006CBCFE /* HeaderCell.m in Sources */,
 				2570A4F413B49A53006CBCFE /* PhotoCell.m in Sources */,
+				2570A4F713B4AF05006CBCFE /* MapCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

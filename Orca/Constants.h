@@ -15,6 +15,7 @@
 #endif
 
 // Core Data
+#define CORE_DATA_SQL_FILE @"orca.sqlite"
 #define CORE_DATA_MOM @"Orca"
 
 //#define CLEAR_ALL_CACHED_DATA_ON_WARNING

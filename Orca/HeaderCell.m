@@ -28,11 +28,11 @@ static UIImage *_bgImage = nil;
 - (id)initWithFrame:(CGRect)frame{
   self = [super initWithFrame:frame];
   if (self) {
-    self.backgroundColor = CELL_LIGHT_GRAY_COLOR;
-    self.layer.masksToBounds = NO;
-    self.layer.shadowColor = [[UIColor blackColor] CGColor];
-    self.layer.shadowOffset = CGSizeMake(0.0, 3.0);
-    self.layer.shadowOpacity = 0.25;
+    self.backgroundColor = CELL_BACKGROUND_COLOR;
+//    self.layer.masksToBounds = NO;
+//    self.layer.shadowColor = [[UIColor blackColor] CGColor];
+//    self.layer.shadowOffset = CGSizeMake(0.0, 3.0);
+//    self.layer.shadowOpacity = 0.25;
     
     _userNameLabel = [[UILabel alloc] init];
     _timestampLabel = [[UILabel alloc] init];
