@@ -9,101 +9,69 @@
 #import "MessageCell.h"
 #import "PSURLCacheImageView.h"
 
-//UILabel *_nameLabel;
-//UILabel *_messageLabel;
-//UILabel *_timestampLabel;
+static UIImage *_quoteImage = nil;
 
 @implementation MessageCell
+
++ (void)initialize {
+  _quoteImage = [[UIImage imageNamed:@"quote-mark.png"] retain];
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
     self.clipsToBounds = YES;
-    self.selectionStyle = UITableViewCellSelectionStyleBlue;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    _nameLabel = [[UILabel alloc] init];
     _messageLabel = [[UILabel alloc] init];
-    _timestampLabel = [[UILabel alloc] init];
     
     // Background Color
-    _nameLabel.backgroundColor = [UIColor clearColor];
     _messageLabel.backgroundColor = [UIColor clearColor];
-    _timestampLabel.backgroundColor = [UIColor clearColor];
     
     // Font
-    _nameLabel.font = TITLE_FONT;
     _messageLabel.font = NORMAL_FONT;
-    _timestampLabel.font = TIMESTAMP_FONT;
     
     // Text Color
-    _nameLabel.textColor = [UIColor darkTextColor];
     _messageLabel.textColor = [UIColor darkTextColor];
-    _timestampLabel.textColor = [UIColor darkTextColor];
     
     // Text Alignment
-    _timestampLabel.textAlignment = UITextAlignmentRight;
     
     // Line Break Mode
-    _nameLabel.lineBreakMode = UILineBreakModeTailTruncation;
     _messageLabel.lineBreakMode = UILineBreakModeWordWrap;
-    _timestampLabel.lineBreakMode = UILineBreakModeTailTruncation;
     
     // Number of Lines
-    _nameLabel.numberOfLines = 1;
     _messageLabel.numberOfLines = 0;
-    _timestampLabel.numberOfLines = 1;
     
     // Shadows
 //    _nameLabel.shadowColor = [UIColor whiteColor];
 //    _nameLabel.shadowOffset = CGSizeMake(0, -1);
     
-    // Photo
-    _photoView = [[PSURLCacheImageView alloc] initWithFrame:CGRectMake(0, 0, 250, 120)];
-    _photoView.hidden = YES;
-    [self.contentView addSubview:_photoView];
+    // Quote
+    _quoteView = [[UIImageView alloc] initWithImage:_quoteImage];
+    [self.contentView addSubview:_quoteView];
     
     // Add labels
-    [self.contentView addSubview:_nameLabel];
     [self.contentView addSubview:_messageLabel];
-    [self.contentView addSubview:_timestampLabel];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadPhotoFromNotification:) name:kMessageCellReloadPhoto object:nil];
   }
   return self;
 }
 
 - (void)prepareForReuse {
   [super prepareForReuse];
-  _nameLabel.text = nil;
   _messageLabel.text = nil;
-  _timestampLabel.text = nil;
-  [_photoView unloadImage];
-  _photoView.hidden = YES;
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
   
+  // Quote
+  _quoteView.top = MARGIN_Y;
+  _quoteView.left = MARGIN_X;
+  
   CGFloat top = MARGIN_Y;
-  CGFloat left = _psFrameView.right;
+  CGFloat left = _quoteView.right + 4.0 + MARGIN_X;
   CGFloat textWidth = self.contentView.width - MARGIN_X - left;
   CGSize desiredSize = CGSizeZero;
-  
-  // Timestamp
-  desiredSize = [UILabel sizeForText:_timestampLabel.text width:textWidth font:_timestampLabel.font numberOfLines:_timestampLabel.numberOfLines lineBreakMode:_timestampLabel.lineBreakMode];
-  _timestampLabel.width = desiredSize.width;
-  _timestampLabel.height = desiredSize.height;
-  _timestampLabel.top = top;
-  _timestampLabel.left = self.contentView.width - MARGIN_X - _timestampLabel.width;
-  
-  // Name
-  desiredSize = [UILabel sizeForText:_nameLabel.text width:(textWidth - _timestampLabel.width - MARGIN_X) font:_nameLabel.font numberOfLines:_nameLabel.numberOfLines lineBreakMode:_nameLabel.lineBreakMode];
-  _nameLabel.width = desiredSize.width;
-  _nameLabel.height = desiredSize.height;
-  _nameLabel.top = top;
-  _nameLabel.left = left;
-  
-  top = _nameLabel.bottom;
   
   // Message
   desiredSize = [UILabel sizeForText:_messageLabel.text width:textWidth font:_messageLabel.font numberOfLines:_messageLabel.numberOfLines lineBreakMode:_messageLabel.lineBreakMode];
@@ -111,17 +79,6 @@
   _messageLabel.height = desiredSize.height;
   _messageLabel.top = top;
   _messageLabel.left = left;
-  
-  top = _messageLabel.bottom;
-  
-  // Photo
-  if (_photoView.urlPath && [_message.photoWidth floatValue] > 0 && [_message.photoHeight floatValue] > 0) {
-    top += 5;
-    _photoView.hidden = NO;
-    _photoView.top = top;
-    _photoView.left = left;
-    _photoView.height = floor([_message.photoHeight floatValue] / ([_message.photoWidth floatValue] / 250));
-  }
 }
 
 #pragma mark -
@@ -130,33 +87,19 @@
   Message *message = (Message *)object;
   
   CGSize desiredSize = CGSizeZero;
-  CGFloat textWidth = [[self class] rowWidthForInterfaceOrientation:interfaceOrientation] - MARGIN_X - IMAGE_OFFSET; // minus image
+  CGFloat textWidth = [[self class] rowWidthForInterfaceOrientation:interfaceOrientation] - MARGIN_X * 2 - 16 - 4 - MARGIN_X; // minus quote
   
   CGFloat desiredHeight = 0;
   
   // Top margin
   desiredHeight += MARGIN_Y;
   
-  // Name
-  desiredHeight += 21; // desiredHeight from Name Label
-  
   // Message
   desiredSize = [UILabel sizeForText:message.message width:textWidth font:NORMAL_FONT numberOfLines:0 lineBreakMode:UILineBreakModeWordWrap];
   desiredHeight += desiredSize.height;
   
-  // Optional Photo
-  if (message.photoUrl && [message.photoWidth floatValue] > 0 && [message.photoHeight floatValue] > 0) {
-    desiredHeight += 5;
-    desiredHeight += floor([message.photoHeight floatValue] / ([message.photoWidth floatValue] / 250));
-    desiredHeight += 5;
-  }
-  
   // Bottom margin
   desiredHeight += MARGIN_Y;
-  
-  if (desiredHeight < 60) {
-    desiredHeight = 60;
-  }
   
   return desiredHeight;
 }
@@ -166,37 +109,12 @@
   _message = message;
   
   // Labels
-  _nameLabel.text = message.fromName;
   _messageLabel.text = message.message;
-  _timestampLabel.text = [NSDate stringForDisplayFromDate:message.timestamp];
-  
-  // Profile Picture
-  _psImageView.urlPath = message.fromPictureUrl;
-  
-  // Photo
-  _photoView.urlPath = message.photoUrl;
-  [_photoView loadImageAndDownload:NO];
-}
-
-- (void)loadPhoto {
-  if (_photoView.urlPath) {
-    [_photoView loadImageAndDownload:YES];
-  }
-}
-
-- (void)loadPhotoFromNotification:(NSNotification *)notification {
-  NSString *sequence = [[notification userInfo] objectForKey:@"sequence"];
-  if (sequence && [sequence isEqualToString:_message.sequence]) {
-    [self loadPhoto];
-  }
 }
 
 - (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:kMessageCellReloadPhoto object:nil];
-  RELEASE_SAFELY(_nameLabel);
   RELEASE_SAFELY(_messageLabel);
-  RELEASE_SAFELY(_timestampLabel);
-  RELEASE_SAFELY(_photoView);
+  RELEASE_SAFELY(_quoteView);
   [super dealloc];
 }
 

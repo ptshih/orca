@@ -12,6 +12,8 @@
 #import "Message.h"
 #import "Pod.h"
 #import "MessageCell.h"
+#import "PhotoCell.h"
+#import "HeaderCell.h"
 #import "ComposeViewController.h"
 #import "ConfigViewController.h"
 
@@ -22,7 +24,7 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _sectionNameKeyPathForFetchedResultsController = nil;
+    _sectionNameKeyPathForFetchedResultsController = [@"timestamp" retain];
     _headerCellCache = [[NSMutableDictionary alloc] init];
     self.hidesBottomBarWhenPushed = YES;
     [[MessageDataCenter defaultCenter] setDelegate:self];
@@ -161,23 +163,26 @@
 }
 
 #pragma mark - TableView
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//  Photo *photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:section];
-//  
-//  HeaderCell *headerCell = [[[HeaderCell alloc] initWithFrame:CGRectMake(0, 0, 320, 26)] autorelease];
-//  [headerCell fillCellWithObject:photo];
-//  //  [headerCell loadImage];
-//  [_headerCellCache setObject:headerCell forKey:[NSString stringWithFormat:@"%d", section]];
-//  return headerCell;
-//}
-//
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//  return 26.0;
-//}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+  Message *message = [[self.fetchedResultsController fetchedObjects] objectAtIndex:section];
+  
+  HeaderCell *headerCell = [[[HeaderCell alloc] initWithFrame:CGRectMake(0, 0, 320, [HeaderCell headerHeight])] autorelease];
+  [headerCell fillCellWithObject:message];
+  [_headerCellCache setObject:headerCell forKey:[NSString stringWithFormat:@"%d", section]];
+  return headerCell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+  return [HeaderCell headerHeight];
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   Message *message = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  return [MessageCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
+  if (message.photoUrl) {
+    return [PhotoCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
+  } else {
+    return [MessageCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
+  }
 }
 
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -188,18 +193,41 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  MessageCell *cell = nil;
-  NSString *reuseIdentifier = [MessageCell reuseIdentifier];
-  
-  cell = (MessageCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-  if(cell == nil) { 
-    cell = [[[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
-  }
-  
-  // Configure Cell
   Message *message = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  [cell fillCellWithObject:message];
+
+  id cell = nil;
+  if (message.photoUrl) {
+    cell = [self cellForType:MessageCellTypePhoto withObject:message];
+  } else {
+    cell = [self cellForType:MessageCellTypeDefault withObject:message];
+  }
+  return cell;
+}
+
+- (id)cellForType:(MessageCellType)cellType withObject:(id)object {
+  id cell = nil;
+  NSString *reuseIdentifier = nil;
   
+  switch (cellType) {
+    case MessageCellTypePhoto:
+      reuseIdentifier = [PhotoCell reuseIdentifier];
+      cell = (PhotoCell *)[_tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+      if(cell == nil) { 
+        cell = [[[PhotoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+      }
+      [cell fillCellWithObject:object];
+      [cell loadPhoto];
+      break;
+    default:
+      // MessageCellTypeDefault
+      reuseIdentifier = [MessageCell reuseIdentifier];
+      cell = (MessageCell *)[_tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+      if(cell == nil) { 
+        cell = [[[MessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+      }
+      [cell fillCellWithObject:object];
+      break;
+  }
   return cell;
 }
 
@@ -222,13 +250,6 @@
 //  _zoomView.caption = [[cell.captionLabel.text copy] autorelease];
 //  [_zoomView showZoom];
 //}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-  [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
-  [(MessageCell *)cell loadImage];
-  [(MessageCell *)cell loadPhoto];
-}
-
 
 #pragma mark -
 #pragma mark UISearchDisplayDelegate

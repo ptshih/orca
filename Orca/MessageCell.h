@@ -7,19 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PSImageCell.h"
+#import "PSCell.h"
 #import "Message.h"
 #import "Message+Serialize.h"
 
-@interface MessageCell : PSImageCell {
+@interface MessageCell : PSCell {
   Message *_message;
-  UILabel *_nameLabel;
   UILabel *_messageLabel;
-  UILabel *_timestampLabel;
-  PSURLCacheImageView *_photoView; // optional
+  UIImageView *_quoteView;
 }
-
-- (void)loadPhoto;
-- (void)loadPhotoFromNotification:(id)notification;
 
 @end

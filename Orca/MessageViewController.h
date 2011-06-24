@@ -10,6 +10,11 @@
 #import "CardCoreDataTableViewController.h"
 #import "ComposeDelegate.h"
 
+typedef enum {
+  MessageCellTypeDefault = 0,
+  MessageCellTypePhoto = 1
+} MessageCellType;
+
 @class Pod;
 
 @interface MessageViewController : CardCoreDataTableViewController <ComposeDelegate> {
@@ -20,6 +25,7 @@
 
 @property (nonatomic, assign) Pod *pod;
 
+- (id)cellForType:(MessageCellType)cellType withObject:(id)object;
 - (void)setupFooter;
 - (void)newMessage;
 - (void)config;
