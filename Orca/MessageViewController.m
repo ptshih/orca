@@ -16,6 +16,8 @@
 #import "HeaderCell.h"
 #import "ComposeViewController.h"
 #import "ConfigViewController.h"
+#import "PSRollupView.h"
+#import "ConfigDataCenter.h"
 
 @implementation MessageViewController
 
@@ -27,7 +29,6 @@
     _sectionNameKeyPathForFetchedResultsController = [@"timestamp" retain];
     _headerCellCache = [[NSMutableDictionary alloc] init];
     self.hidesBottomBarWhenPushed = YES;
-    [[MessageDataCenter defaultCenter] setDelegate:self];
   }
   return self;
 }
@@ -35,11 +36,15 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCardController) name:kReloadMessageController object:nil];
+  [[MessageDataCenter defaultCenter] setDelegate:self];
+  [[ConfigDataCenter defaultCenter] setDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kReloadMessageController object:nil];
+  [[MessageDataCenter defaultCenter] setDelegate:nil];
+  [[ConfigDataCenter defaultCenter] setDelegate:nil];
 }
 
 - (void)loadView {
@@ -72,8 +77,27 @@
 //  _album.lastViewed = [NSDate date];
 //  [PSCoreDataStack saveInContext:[_album managedObjectContext]];
   
+  [[ConfigDataCenter defaultCenter] getMembersForPodId:_pod.id];
+  
   // Get new from server
   [self reloadCardController];
+}
+
+- (void)setupPodMembersWithUserInfo:(NSDictionary *)userInfo {
+  NSArray *podMembers = [userInfo objectForKey:@"data"];
+  NSArray *memberPictures = [podMembers valueForKey:@"picture_url"];
+  [_podMembersView setHeaderText:[NSString stringWithFormat:@"There are %d friends are in this pod.", [memberPictures count]]];
+  [_podMembersView setPictureURLArray:memberPictures];
+  [_podMembersView layoutIfNeeded];
+}
+
+- (void)setupTableHeader {
+  // Pod Members
+  
+  // Create Rollup
+  _podMembersView = [[PSRollupView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 63)];
+  [_podMembersView setBackgroundImage:[UIImage stretchableImageNamed:@"bg-darkgray-320x44.png" withLeftCapWidth:0 topCapWidth:0]];
+  self.tableView.tableHeaderView = _podMembersView;
 }
 
 - (void)setupTableFooter {
@@ -127,6 +151,9 @@
 #pragma mark -
 #pragma mark PSDataCenterDelegate
 - (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
+  if ([[request.userInfo objectForKey:@"action"] isEqualToString:@"members"]) {
+    [self setupPodMembersWithUserInfo:response];
+  }
   [self dataSourceDidLoad];
 }
 
@@ -289,7 +316,7 @@
 }
 
 - (void)dealloc {
-  [[MessageDataCenter defaultCenter] setDelegate:nil];
+  RELEASE_SAFELY(_podMembersView);
   RELEASE_SAFELY(_headerCellCache);
   [super dealloc];
 }

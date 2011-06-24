@@ -46,7 +46,7 @@
 
 #pragma mark - Data Center
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {
-  id response = [[[request responseData] JSONValue] valueForKey:@"data"];
+  id response = [[request responseData] JSONValue];
   
   // Inform Delegate if all responses are parsed
   if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {

@@ -16,9 +16,11 @@ typedef enum {
 } MessageCellType;
 
 @class Pod;
+@class PSRollupView;
 
 @interface MessageViewController : CardCoreDataTableViewController <ComposeDelegate> {
   Pod *_pod;
+  PSRollupView *_podMembersView;
   
   NSMutableDictionary *_headerCellCache;
 }

@@ -19,9 +19,18 @@
 - (id)init {
   self = [super init];
   if (self) {
-    [[ConfigDataCenter defaultCenter] setDelegate:self];
   }
   return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [[ConfigDataCenter defaultCenter] setDelegate:self];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  [[ConfigDataCenter defaultCenter] setDelegate:nil];
 }
 
 - (void)loadView {
@@ -184,7 +193,7 @@
     [_sectionTitles addObject:@"Pod Members"];
     
     [self.items removeAllObjects];
-    [self.items addObject:response];
+    [self.items addObject:[response objectForKey:@"data"]];
     [self.tableView reloadData];
     [self updateState];
   }
@@ -225,7 +234,6 @@
 }
 
 - (void)dealloc {
-  [[ConfigDataCenter defaultCenter] setDelegate:nil];
   RELEASE_SAFELY(_muteButton);
   [super dealloc];
 }
