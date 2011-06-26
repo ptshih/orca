@@ -16,6 +16,7 @@
 		250B31E013411DBD0011EEDD /* textview_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31DE13411DBD0011EEDD /* textview_bg@2x.png */; };
 		250B31EF134165670011EEDD /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31ED134165670011EEDD /* bubble.png */; };
 		250B31F0134165670011EEDD /* bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B31EE134165670011EEDD /* bubble@2x.png */; };
+		250BA4D513B6FCC1000FF9AA /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 250BA4D413B6FCC1000FF9AA /* Pod.m */; };
 		2511A8E013657BE500C9CF9A /* ComposeDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2511A8DF13657BE500C9CF9A /* ComposeDataCenter.m */; };
 		2511A8E81365F96E00C9CF9A /* LauncherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2511A8E71365F96D00C9CF9A /* LauncherViewController.m */; };
 		2511A8F81365F9FE00C9CF9A /* PodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2511A8F71365F9FD00C9CF9A /* PodViewController.m */; };
@@ -43,7 +44,6 @@
 		2515FEB113AA253E008F6943 /* texture-spotlight-dark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FEAF13AA253E008F6943 /* texture-spotlight-dark@2x.png */; };
 		2515FEB413AA25C4008F6943 /* texture-spotlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FEB213AA25C4008F6943 /* texture-spotlight.png */; };
 		2515FEB513AA25C4008F6943 /* texture-spotlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FEB313AA25C4008F6943 /* texture-spotlight@2x.png */; };
-		2515FEBB13AA6D2A008F6943 /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = 2515FEBA13AA6D2A008F6943 /* Pod.m */; };
 		2515FEC113AA8243008F6943 /* table_footer_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FEBD13AA8243008F6943 /* table_footer_background.png */; };
 		2515FEC213AA8243008F6943 /* table_footer_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FEBE13AA8243008F6943 /* table_footer_background@2x.png */; };
 		2515FEC313AA8243008F6943 /* table_plain_header_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 2515FEBF13AA8243008F6943 /* table_plain_header_gray.png */; };
@@ -261,6 +261,8 @@
 		250B31DE13411DBD0011EEDD /* textview_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "textview_bg@2x.png"; sourceTree = "<group>"; };
 		250B31ED134165670011EEDD /* bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble.png; sourceTree = "<group>"; };
 		250B31EE134165670011EEDD /* bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble@2x.png"; sourceTree = "<group>"; };
+		250BA4D313B6FCC1000FF9AA /* Pod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pod.h; sourceTree = "<group>"; };
+		250BA4D413B6FCC1000FF9AA /* Pod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pod.m; sourceTree = "<group>"; };
 		2511A8DE13657BE500C9CF9A /* ComposeDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeDataCenter.h; sourceTree = "<group>"; };
 		2511A8DF13657BE500C9CF9A /* ComposeDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeDataCenter.m; sourceTree = "<group>"; };
 		2511A8E61365F96C00C9CF9A /* LauncherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LauncherViewController.h; sourceTree = "<group>"; };
@@ -295,8 +297,6 @@
 		2515FEAF13AA253E008F6943 /* texture-spotlight-dark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "texture-spotlight-dark@2x.png"; sourceTree = "<group>"; };
 		2515FEB213AA25C4008F6943 /* texture-spotlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "texture-spotlight.png"; sourceTree = "<group>"; };
 		2515FEB313AA25C4008F6943 /* texture-spotlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "texture-spotlight@2x.png"; sourceTree = "<group>"; };
-		2515FEB913AA6D2A008F6943 /* Pod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pod.h; sourceTree = "<group>"; };
-		2515FEBA13AA6D2A008F6943 /* Pod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pod.m; sourceTree = "<group>"; };
 		2515FEBD13AA8243008F6943 /* table_footer_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = table_footer_background.png; sourceTree = "<group>"; };
 		2515FEBE13AA8243008F6943 /* table_footer_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "table_footer_background@2x.png"; sourceTree = "<group>"; };
 		2515FEBF13AA8243008F6943 /* table_plain_header_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = table_plain_header_gray.png; sourceTree = "<group>"; };
@@ -1043,10 +1043,10 @@
 				25E5A6A713A5613E0096E4FE /* Message+Serialize.m */,
 				25E5A6A313A5611B0096E4FE /* Pod+Serialize.h */,
 				25E5A6A413A5611B0096E4FE /* Pod+Serialize.m */,
-				2515FEB913AA6D2A008F6943 /* Pod.h */,
-				2515FEBA13AA6D2A008F6943 /* Pod.m */,
 				25EAAB5B13AEBDC200C0D2DE /* Message.h */,
 				25EAAB5C13AEBDC200C0D2DE /* Message.m */,
+				250BA4D313B6FCC1000FF9AA /* Pod.h */,
+				250BA4D413B6FCC1000FF9AA /* Pod.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1536,7 +1536,6 @@
 				2515FE6713A9D703008F6943 /* ConfigViewController.m in Sources */,
 				2515FE6B13A9DA27008F6943 /* ConfigDataCenter.m in Sources */,
 				2515FE6E13A9E592008F6943 /* ActivityViewController.m in Sources */,
-				2515FEBB13AA6D2A008F6943 /* Pod.m in Sources */,
 				25B2EA1D13AE006600549DEB /* UserCell.m in Sources */,
 				25EAAB5D13AEBDC200C0D2DE /* Message.m in Sources */,
 				2570A45813B4904E006CBCFE /* NSArray+SML.m in Sources */,
@@ -1591,6 +1590,7 @@
 				256644AA13B6D17300B791A5 /* ASIS3ObjectRequest.m in Sources */,
 				256644AB13B6D17300B791A5 /* ASIS3Request.m in Sources */,
 				256644AC13B6D17300B791A5 /* ASIS3ServiceRequest.m in Sources */,
+				250BA4D513B6FCC1000FF9AA /* Pod.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

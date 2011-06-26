@@ -18,12 +18,12 @@
     Message *newMessage = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:context];
     
     newMessage.id = [NSString stringWithFormat:@"%@", [dictionary valueForKey:@"id"]];
-    newMessage.podId = [dictionary valueForKey:@"podId"];
+    newMessage.podId = [dictionary valueForKey:@"pod_id"];
     newMessage.sequence = [dictionary valueForKey:@"sequence"];
     newMessage.messageType = [[dictionary valueForKey:@"message_type"] notNil] ? [dictionary valueForKey:@"message_type"] : nil;
-    newMessage.fromId = [NSString stringWithFormat:@"%@", [dictionary valueForKey:@"fromId"]];
-    newMessage.fromName = [dictionary valueForKey:@"fromName"];
-    newMessage.fromPictureUrl = [dictionary valueForKey:@"fromPictureUrl"];
+    newMessage.fromId = [NSString stringWithFormat:@"%@", [dictionary valueForKey:@"from_id"]];
+    newMessage.fromName = [dictionary valueForKey:@"from_name"];
+    newMessage.fromPictureUrl = [dictionary valueForKey:@"from_picture_url"];
     newMessage.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     
     // Metadata

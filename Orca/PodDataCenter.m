@@ -131,11 +131,11 @@ static dispatch_queue_t _coreDataSerializationQueue = nil;
   // Userinfo has 3 keys (all strings)
   // message, podId, sequence
   
-  pod.fromId = [userInfo objectForKey:@"fromId"];
-  pod.fromName = [userInfo objectForKey:@"fromName"];
-  pod.fromPictureUrl = [userInfo objectForKey:@"fromPictureUrl"];
+  pod.fromId = [userInfo objectForKey:@"from_id"];
+  pod.fromName = [userInfo objectForKey:@"from_name"];
+  pod.fromPictureUrl = [userInfo objectForKey:@"from_picture_url"];
   pod.sequence = [userInfo objectForKey:@"sequence"];
-  pod.message = [userInfo objectForKey:@"message"];
+  pod.metadata = [userInfo objectForKey:@"metadata"];
   pod.timestamp = [NSDate dateWithTimeIntervalSince1970:[[userInfo objectForKey:@"timestamp"] longLongValue]];
   
   // Save to CoreData

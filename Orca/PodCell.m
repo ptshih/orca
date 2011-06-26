@@ -146,7 +146,7 @@ static UIImage *_unreadImage = nil;
   
   // Labels
   _nameLabel.text = pod.name;
-  _messageLabel.text = [NSString stringWithFormat:@"%@: %@", pod.fromName, pod.message];
+  _messageLabel.text = [NSString stringWithFormat:@"%@: %@", pod.fromName, [[pod meta] objectForKey:@"message"]];
   _timestampLabel.text = [NSDate stringForDisplayFromDate:pod.timestamp];
   _participantsLabel.text = [NSString stringWithFormat:@"%@", pod.participants];
   _unreadImageView.hidden = [pod.unread boolValue] ? NO : YES;

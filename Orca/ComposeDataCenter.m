@@ -62,12 +62,13 @@
   NSTimeInterval currentTimestamp = [[NSDate date] timeIntervalSince1970];
   NSInteger currentTimestampInteger = floor(currentTimestamp);
   NSMutableDictionary *cacheUserInfo = [NSMutableDictionary dictionaryWithCapacity:1];
-  [cacheUserInfo setValue:podId forKey:@"podId"];
+  [cacheUserInfo setValue:podId forKey:@"pod_id"];
   [cacheUserInfo setValue:sequence forKey:@"sequence"];
+  [cacheUserInfo setValue:messageType forKey:@"message_type"];
   [cacheUserInfo setValue:[NSNumber numberWithInteger:currentTimestampInteger] forKey:@"timestamp"];
-  [cacheUserInfo setValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookId"] forKey:@"fromId"];
-  [cacheUserInfo setValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookName"] forKey:@"fromName"];
-  [cacheUserInfo setValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookPictureUrl"] forKey:@"fromPictureUrl"];
+  [cacheUserInfo setValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookId"] forKey:@"from_id"];
+  [cacheUserInfo setValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookName"] forKey:@"from_name"];
+  [cacheUserInfo setValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookPictureUrl"] forKey:@"from_picture_url"];
   [cacheUserInfo setValue:metadataJSON forKey:@"metadata"];
   
   // Write a local copy to core data from composed message
