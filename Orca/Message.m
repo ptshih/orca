@@ -7,24 +7,20 @@
 //
 
 #import "Message.h"
+#import "JSON.h"
 
 #define USE_FAKE_LAT_LNG
 
 @implementation Message
 @dynamic id;
-@dynamic message;
 @dynamic timestamp;
 @dynamic fromName;
-@dynamic lat;
-@dynamic location;
 @dynamic podId;
-@dynamic photoUrl;
-@dynamic lng;
 @dynamic sequence;
 @dynamic fromPictureUrl;
 @dynamic fromId;
-@dynamic photoWidth;
-@dynamic photoHeight;
+@dynamic messageType;
+@dynamic metadata;
 
 - (CLLocationCoordinate2D)coordinate {
 	CLLocationCoordinate2D coordinate;
@@ -36,6 +32,10 @@
 	coordinate.latitude = [[self valueForKey:@"lat"] floatValue];
 #endif
 	return coordinate;
+}
+
+- (NSDictionary *)meta {
+  return [self.metadata JSONValue];
 }
 
 @end

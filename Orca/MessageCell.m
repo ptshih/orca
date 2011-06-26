@@ -23,7 +23,7 @@ static UIImage *_quoteImage = nil;
     self.clipsToBounds = YES;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    _messageLabel = [[UILabel alloc] init];
+    _messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     
     // Background Color
     _messageLabel.backgroundColor = [UIColor clearColor];
@@ -95,7 +95,7 @@ static UIImage *_quoteImage = nil;
   desiredHeight += MARGIN_Y;
   
   // Message
-  desiredSize = [UILabel sizeForText:message.message width:textWidth font:NORMAL_FONT numberOfLines:0 lineBreakMode:UILineBreakModeWordWrap];
+  desiredSize = [UILabel sizeForText:[[message meta] objectForKey:@"message"] width:textWidth font:NORMAL_FONT numberOfLines:0 lineBreakMode:UILineBreakModeWordWrap];
   desiredHeight += desiredSize.height;
   
   // Bottom margin
@@ -109,7 +109,7 @@ static UIImage *_quoteImage = nil;
   _message = message;
   
   // Labels
-  _messageLabel.text = message.message;
+  _messageLabel.text = [[message meta] objectForKey:@"message"];
 }
 
 - (void)dealloc {

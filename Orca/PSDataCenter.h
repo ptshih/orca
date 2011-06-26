@@ -10,6 +10,8 @@
 #import "PSObject.h"
 #import "PSDataCenterDelegate.h"
 #import "ASIHTTPRequest.h"
+#import "ASIS3Request.h"
+#import "ASIS3ObjectRequest.h"
 #import "ASIFormDataRequest.h"
 #import "JSON.h"
 #import "JSONKit.h"
@@ -44,6 +46,11 @@
 - (void)sendFormRequestWithURL:(NSURL *)url andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params andFile:(NSDictionary *)file andUserInfo:(NSDictionary *)userInfo;
 
 - (void)sendFacebookBatchRequestWithParams:(NSDictionary *)params andUserInfo:(NSDictionary *)userInfo;
+
+/**
+ ASI S3 Request
+ */
+- (void)sendS3RequestWithData:(NSData *)data forBucket:(NSString *)bucket forKey:(NSString *)key andUserInfo:(NSDictionary *)userInfo;
 
 /**
  AWS S3

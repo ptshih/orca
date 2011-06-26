@@ -16,6 +16,8 @@
 + (ComposeDataCenter *)defaultCenter;
 
 // Send a message
-- (void)sendMessage:(NSString *)message andSequence:(NSString *)sequence forPodId:(NSString *)podId withPhotoData:(NSData *)photoData andUserInfo:(NSDictionary *)userInfo;
+- (void)sendMessage:(NSString *)message forPodId:(NSString *)podId withSequence:(NSString *)sequence andMessageType:(NSString *)messageType andUserInfo:(NSDictionary *)userInfo;
+
+- (void)sendMessage:(NSString *)message forPodId:(NSString *)podId withSequence:(NSString *)sequence andMessageType:(NSString *)messageType andAttachmentData:(NSData *)attachmentData andUserInfo:(NSDictionary *)userInfo;
 
 @end

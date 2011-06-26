@@ -15,8 +15,11 @@
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
     // Photo
-    _photoView = [[PSURLCacheImageView alloc] initWithFrame:CGRectMake(0, 0, 270, 120)];
-    _photoView.hidden = YES;
+    _photoView = [[PSURLCacheImageView alloc] initWithFrame:CGRectZero];
+    _photoView.layer.cornerRadius = 5.0;
+    _photoView.layer.masksToBounds = YES;
+    _photoView.layer.borderColor = [SEPARATOR_COLOR CGColor];
+    _photoView.layer.borderWidth = 1.0;
     [self.contentView addSubview:_photoView];
 
     // Photo loaded notification
@@ -28,7 +31,6 @@
 - (void)prepareForReuse {
   [super prepareForReuse];
   [_photoView unloadImage];
-  _photoView.hidden = YES;
 }
 
 - (void)layoutSubviews {
@@ -38,13 +40,11 @@
   CGFloat left = _quoteView.right + 4.0 + MARGIN_X;
   
   // Photo
-  if (_photoView.urlPath && [_message.photoWidth floatValue] > 0 && [_message.photoHeight floatValue] > 0) {
     top += 5;
-    _photoView.hidden = NO;
-    _photoView.top = top;
-    _photoView.left = left;
-    _photoView.height = floor([_message.photoHeight floatValue] / ([_message.photoWidth floatValue] / 270));
-  }
+  _photoView.top = top;
+  _photoView.left = left;
+  _photoView.height = floor([[[_message meta] objectForKey:@"photoHeight"] floatValue] / ([[[_message meta] objectForKey:@"photoWidth"] floatValue] / 270));
+  _photoView.width = 270;
 }
 
 + (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -59,13 +59,13 @@
   desiredHeight += MARGIN_Y;
   
   // Message
-  desiredSize = [UILabel sizeForText:message.message width:textWidth font:NORMAL_FONT numberOfLines:0 lineBreakMode:UILineBreakModeWordWrap];
+  desiredSize = [UILabel sizeForText:[[message meta] objectForKey:@"message"] width:textWidth font:NORMAL_FONT numberOfLines:0 lineBreakMode:UILineBreakModeWordWrap];
   desiredHeight += desiredSize.height;
   
   // Optional Photo
-  if (message.photoUrl && [message.photoWidth floatValue] > 0 && [message.photoHeight floatValue] > 0) {
+  if ([[message meta] objectForKey:@"photoUrl"] && [[[message meta] objectForKey:@"photoWidth"] floatValue] > 0 && [[[message meta] objectForKey:@"photoHeight"] floatValue] > 0) {
     desiredHeight += 5;
-    desiredHeight += floor([message.photoHeight floatValue] / ([message.photoWidth floatValue] / 270));
+    desiredHeight += floor([[[message meta] objectForKey:@"photoHeight"] floatValue] / ([[[message meta] objectForKey:@"photoWidth"] floatValue] / 270));
     desiredHeight += 5;
   }
   
@@ -81,7 +81,7 @@
   Message *message = (Message *)object;
   
   // Photo
-  _photoView.urlPath = message.photoUrl;
+  _photoView.urlPath = [[message meta] objectForKey:@"photoUrl"];
   [_photoView loadImageAndDownload:NO];
 }
 

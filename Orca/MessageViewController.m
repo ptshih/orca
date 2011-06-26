@@ -21,6 +21,8 @@
 #import "MessageCell.h"
 #import "PhotoCell.h"
 #import "MapCell.h"
+//#import "VideoCell.h"
+#import "LinkCell.h"
 
 @implementation MessageViewController
 
@@ -175,11 +177,6 @@
 }
 
 - (void)composeDidSendWithUserInfo:(NSDictionary *)userInfo {
-  // Write a local copy to core data from composed message
-  [[MessageDataCenter defaultCenter] serializeComposedMessageWithUserInfo:userInfo];
-  
-  // Update pod with most recent message locally
-  [[PodDataCenter defaultCenter] updatePod:_pod withUserInfo:userInfo];
 }
 
 #pragma mark - Config
@@ -208,10 +205,21 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   Message *message = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  if (message.photoUrl) {
+  if ([message.messageType isEqualToString:@"photo"]) {
     return [PhotoCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
   } else {
-    return [MapCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
+    int i = [message.id intValue] % 3;
+    switch (i) {
+      case 0:
+        return [MapCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
+        break;
+      case 1:
+        return [LinkCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
+        break;
+      default:
+        return [MessageCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
+        break;
+    }
   }
 }
 
@@ -226,10 +234,21 @@
   Message *message = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
   id cell = nil;
-  if (message.photoUrl) {
+  if ([message.messageType isEqualToString:@"photo"]) {
     cell = [self cellForType:MessageCellTypePhoto withObject:message];
   } else {
-    cell = [self cellForType:MessageCellTypeMap withObject:message];
+    int i = [message.id intValue] % 3;
+    switch (i) {
+      case 0:
+        cell = [self cellForType:MessageCellTypeMap withObject:message];
+        break;
+      case 1:
+        cell = [self cellForType:MessageCellTypeLink withObject:message];
+        break;
+      default:
+        cell = [self cellForType:MessageCellTypeDefault withObject:message];
+        break;
+    }
   }
   return cell;
 }
@@ -253,6 +272,14 @@
       cell = (MapCell *)[_tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
       if(cell == nil) { 
         cell = [[[MapCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+      }
+      [cell fillCellWithObject:object];
+      break;
+    case MessageCellTypeLink:
+      reuseIdentifier = [LinkCell reuseIdentifier];
+      cell = (LinkCell *)[_tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+      if(cell == nil) { 
+        cell = [[[LinkCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
       }
       [cell fillCellWithObject:object];
       break;

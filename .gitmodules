@@ -1,3 +1,6 @@
 [submodule "Submodules/sevenminutelibrary"]
 	path = Submodules/sevenminutelibrary
 	url = git@github.com:pshih/sevenminutelibrary.git
+[submodule "Submodules/asi-http-request"]
+	path = Submodules/asi-http-request
+	url = https://github.com/pokeb/asi-http-request.git

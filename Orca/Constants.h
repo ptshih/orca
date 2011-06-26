@@ -64,6 +64,16 @@
 #define NORMAL_FONT [UIFont fontWithName:@"HelveticaNeue" size:14.0]
 #define SUBTITLE_FONT [UIFont fontWithName:@"HelveticaNeue" size:12.0]
 #define TIMESTAMP_FONT [UIFont fontWithName:@"HelveticaNeue" size:10.0]
+#define SOURCE_FONT [UIFont fontWithName:@"HelveticaNeue" size:10.0]
+#define SUMMARY_FONT [UIFont fontWithName:@"HelveticaNeue" size:12.0]
+
+// FONT COLORS
+#define TITLE_COLOR [UIColor blackColor]
+#define NORMAL_COLOR [UIColor blackColor]
+#define SUBTITLE_COLOR [UIColor blackColor]
+#define TIMESTAMP_COLOR [UIColor darkGrayColor]
+#define SOURCE_COLOR [UIColor darkGrayColor]
+#define SUMMARY_COLOR [UIColor darkGrayColor]
 
 // Colors
 // CELLS

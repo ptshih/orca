@@ -20,18 +20,15 @@
     newMessage.id = [NSString stringWithFormat:@"%@", [dictionary valueForKey:@"id"]];
     newMessage.podId = [dictionary valueForKey:@"podId"];
     newMessage.sequence = [dictionary valueForKey:@"sequence"];
+    newMessage.messageType = [[dictionary valueForKey:@"message_type"] notNil] ? [dictionary valueForKey:@"message_type"] : nil;
     newMessage.fromId = [NSString stringWithFormat:@"%@", [dictionary valueForKey:@"fromId"]];
     newMessage.fromName = [dictionary valueForKey:@"fromName"];
     newMessage.fromPictureUrl = [dictionary valueForKey:@"fromPictureUrl"];
-    newMessage.message = [[dictionary valueForKey:@"message"] notNil] ? [dictionary valueForKey:@"message"] : nil;
-    newMessage.photoUrl = [[dictionary valueForKey:@"photoUrl"] notNil] ? [dictionary valueForKey:@"photoUrl"] : nil;
-    newMessage.photoWidth = [[dictionary valueForKey:@"photoWidth"] notNil] ? [dictionary valueForKey:@"photoWidth"] : [NSNumber numberWithFloat:0];
-    newMessage.photoHeight = [[dictionary valueForKey:@"photoHeight"] notNil] ? [dictionary valueForKey:@"photoHeight"] : [NSNumber numberWithFloat:0];
-    newMessage.lat = [[dictionary valueForKey:@"lat"] notNil] ? [dictionary valueForKey:@"lat"] : nil;
-    newMessage.lng = [[dictionary valueForKey:@"lng"] notNil] ? [dictionary valueForKey:@"lng"] : nil;
-    //    newMessage.location = [dictionary valueForKey:@"location"];
     newMessage.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     
+    // Metadata
+    newMessage.metadata = [dictionary valueForKey:@"metadata"] ? [dictionary valueForKey:@"metadata"] : nil;
+        
     return newMessage;
   } else {
     // Invalid Input, Ignore Serialization
@@ -41,10 +38,18 @@
 
 - (Message *)updateMessageWithDictionary:(NSDictionary *)dictionary {
   if (dictionary) {
-    // Messages only change if there was originally no ID, and now there is
-    if (![self.id notNull]) {
+
+    NSDate *existingTimestamp = self.timestamp;
+    NSDate *newTimestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
+    
+    if (![existingTimestamp isEqualToDate:newTimestamp] || ![self.id notNull]) {
+      // Update basic data
       self.id = [dictionary valueForKey:@"id"];
+      self.messageType = [[dictionary valueForKey:@"message_type"] notNil] ? [dictionary valueForKey:@"message_type"] : nil;
       self.timestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
+      
+      // Update metadata
+      self.metadata = [dictionary valueForKey:@"metadata"] ? [dictionary valueForKey:@"metadata"] : nil;
     }
     return self;
   } else {

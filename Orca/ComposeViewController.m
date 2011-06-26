@@ -201,14 +201,17 @@ static UIImage *_imageBorderImage = nil;
   _send.enabled = NO;
   
   // Calculate the sequence hash
-  NSString *sequence = [[NSString stringFromUUID] stringFromMD5Hash];
+  NSString *sequence = [NSString stringFromUUID];
   
   // UserInfo
   NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
   
   // Does this message have an photo?
+  NSString *messageType = nil;
   NSData *imageData = nil;
   if (_pickedImage) {
+    messageType = @"photo";
+    
     imageData = UIImageJPEGRepresentation(_pickedImage, 1.0);
 
     [userInfo setObject:[NSNumber numberWithFloat:_pickedImage.size.width] forKey:@"photoWidth"];
@@ -219,29 +222,12 @@ static UIImage *_imageBorderImage = nil;
     
     // Write the pickedImage to cache
     [[PSImageCache sharedCache] cacheImage:imageData forURLPath:awsUrl];
+  } else {
+    messageType = @"message";
   }
-  
   
   // Send it asynchronously and dismiss composer
-  [[ComposeDataCenter defaultCenter] sendMessage:_message.text andSequence:sequence forPodId:_podId withPhotoData:imageData andUserInfo:userInfo];
-  
-  //====================//
-  
-  // We should create a local copy of this message
-  NSTimeInterval currentTimestamp = [[NSDate date] timeIntervalSince1970];
-  NSInteger currentTimestampInteger = floor(currentTimestamp);
-  
-  [userInfo setValue:_message.text forKey:@"message"];
-  [userInfo setValue:_podId forKey:@"podId"];
-  [userInfo setValue:sequence forKey:@"sequence"];
-  [userInfo setValue:[NSNumber numberWithInteger:currentTimestampInteger] forKey:@"timestamp"];
-  [userInfo setValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookId"] forKey:@"fromId"];
-  [userInfo setValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookName"] forKey:@"fromName"];
-  [userInfo setValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"facebookPictureUrl"] forKey:@"fromPictureUrl"];
-  
-  if (self.delegate && [self.delegate respondsToSelector:@selector(composeDidSendWithUserInfo:)]) {
-    [self.delegate performSelector:@selector(composeDidSendWithUserInfo:) withObject:userInfo];
-  }
+  [[ComposeDataCenter defaultCenter] sendMessage:_message.text forPodId:_podId withSequence:sequence andMessageType:messageType andAttachmentData:imageData andUserInfo:userInfo];
   
   [self cancel];
 }

@@ -260,6 +260,34 @@
   [request startAsynchronous];
 }
 
+#pragma mark - S3
+- (void)sendS3RequestWithData:(NSData *)data forBucket:(NSString *)bucket forKey:(NSString *)key andUserInfo:(NSDictionary *)userInfo {
+  // Prepare request
+  __block ASIS3ObjectRequest *request = [ASIS3ObjectRequest PUTRequestForData:data withBucket:bucket key:key];
+  
+  // Request userInfo
+  request.userInfo = userInfo;
+  
+  // Request Completion Block
+  [request setCompletionBlock:^{
+    [self dataCenterRequestFinished:request];
+    
+    // Remove request from pendingRequests
+    [_pendingRequests removeObject:request];
+  }];
+  
+  [request setFailedBlock:^{
+    [self dataCenterRequestFailed:request];
+    
+    // Remove request from pendingRequests
+    [_pendingRequests removeObject:request];
+  }];
+  
+  // Start the Request
+  [_pendingRequests addObject:request];
+  [request startAsynchronous];
+}
+
 - (void)sendAWSS3RequestWithData:(NSData *)data andUserInfo:(NSDictionary *)userInfo {
   NSString *sequence = [userInfo objectForKey:@"sequence"];
   NSString *resource = [NSString stringWithFormat:@"%@/%@.jpg", S3_BUCKET, sequence];

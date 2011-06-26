@@ -13,7 +13,9 @@
 typedef enum {
   MessageCellTypeDefault = 0,
   MessageCellTypePhoto = 1,
-  MessageCellTypeMap = 2
+  MessageCellTypeMap = 2,
+  MessageCellTypeLink = 3,
+  MessageCellTypeVideo = 4
 } MessageCellType;
 
 @class Pod;

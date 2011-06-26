@@ -25,10 +25,10 @@ static UIImage *_unreadImage = nil;
     self.clipsToBounds = YES;
     self.selectionStyle = UITableViewCellSelectionStyleBlue;
     
-    _nameLabel = [[UILabel alloc] init];
-    _messageLabel = [[UILabel alloc] init];
-    _timestampLabel = [[UILabel alloc] init];
-    _participantsLabel = [[UILabel alloc] init];
+    _nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    _messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    _timestampLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    _participantsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     
     // Background Color
     _nameLabel.backgroundColor = [UIColor clearColor];

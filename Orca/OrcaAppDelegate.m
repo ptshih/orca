@@ -13,6 +13,7 @@
 #import "LauncherViewController.h"
 #import "LoginDataCenter.h"
 #import "PSImageCache.h"
+#import "ASIS3Request.h"
 
 @implementation OrcaAppDelegate
 
@@ -42,6 +43,10 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  
+  // AWS S3
+  [ASIS3Request setSharedAccessKey:@"AKIAJRFSK3RWQ7XLGNFA"];
+  [ASIS3Request setSharedSecretAccessKey:@"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"];
   
   // Application Lifecycle States
   _applicationWasResigned = NO;
