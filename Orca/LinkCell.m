@@ -138,15 +138,27 @@
   
   Message *message = (Message *)object;
   
-  // If this is a YouTube share, enable play overlay
-  _overlayView.hidden = NO;
+  // read metadata
+  NSDictionary *metadata = [message meta];
   
-  _thumbnailView.urlPath = @"http://static5.businessinsider.com/image/4d8b73adcadcbb1d67220000-400-/colorxxx.jpg";
+  // If this is a YouTube share, enable play overlay
+  if ([message.messageType isEqualToString:@"youtube"]) {
+    _overlayView.hidden = NO;
+  }
+  
+  _thumbnailView.urlPath = [metadata objectForKey:@"link_thumbnail_url"] ? [metadata objectForKey:@"link_thumbnail_url"] : @"";
   [_thumbnailView loadImageAndDownload:YES];
   
-  _titleLabel.text = @"Color pivots again!";
-  _sourceLabel.text = @"techcrunch.com";
-  _summaryLabel.text = @"Color CEO decides to pivot again because he is retarded. He has no idea WTF they are doing, but decided to install a stripper pole in their office.";
+  _titleLabel.text = [metadata objectForKey:@"link_title"] ? [metadata objectForKey:@"link_title"] : @"";
+  _sourceLabel.text = [metadata objectForKey:@"link_source"] ? [metadata objectForKey:@"link_source"] : @"";
+  _summaryLabel.text = [metadata objectForKey:@"link_summary"] ? [metadata objectForKey:@"link_summary"] : @"";
+  
+//  _thumbnailView.urlPath = @"http://static5.businessinsider.com/image/4d8b73adcadcbb1d67220000-400-/colorxxx.jpg";
+//  [_thumbnailView loadImageAndDownload:YES];
+//  
+//  _titleLabel.text = @"Color pivots again!";
+//  _sourceLabel.text = @"techcrunch.com";
+//  _summaryLabel.text = @"Color CEO decides to pivot again because he is retarded. He has no idea WTF they are doing, but decided to install a stripper pole in their office.";
 }
 
 - (void)dealloc {

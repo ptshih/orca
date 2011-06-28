@@ -205,21 +205,15 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   Message *message = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
   if ([message.messageType isEqualToString:@"photo"]) {
     return [PhotoCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
+  } else if ([message.messageType isEqualToString:@"link"] || [message.messageType isEqualToString:@"youtube"]) {
+    return [LinkCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
+  } else if ([message.messageType isEqualToString:@"map"]) {
+    return [MapCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
   } else {
-    int i = [message.id intValue] % 3;
-    switch (i) {
-      case 0:
-        return [MapCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
-        break;
-      case 1:
-        return [LinkCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
-        break;
-      default:
-        return [MessageCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
-        break;
-    }
+    return [MessageCell rowHeightForObject:message forInterfaceOrientation:[self interfaceOrientation]];
   }
 }
 
@@ -234,22 +228,17 @@
   Message *message = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
   id cell = nil;
+  
   if ([message.messageType isEqualToString:@"photo"]) {
     cell = [self cellForType:MessageCellTypePhoto withObject:message];
+  } else if ([message.messageType isEqualToString:@"link"] || [message.messageType isEqualToString:@"youtube"]) {
+    cell = [self cellForType:MessageCellTypeLink withObject:message];
+  } else if ([message.messageType isEqualToString:@"map"]) {
+    cell = [self cellForType:MessageCellTypeMap withObject:message];
   } else {
-    int i = [message.id intValue] % 3;
-    switch (i) {
-      case 0:
-        cell = [self cellForType:MessageCellTypeMap withObject:message];
-        break;
-      case 1:
-        cell = [self cellForType:MessageCellTypeLink withObject:message];
-        break;
-      default:
-        cell = [self cellForType:MessageCellTypeDefault withObject:message];
-        break;
-    }
+    cell = [self cellForType:MessageCellTypeDefault withObject:message];
   }
+
   return cell;
 }
 

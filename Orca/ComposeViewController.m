@@ -223,7 +223,15 @@ static UIImage *_imageBorderImage = nil;
     // Write the pickedImage to cache
     [[PSImageCache sharedCache] cacheImage:imageData forURLPath:awsUrl];
   } else {
-    messageType = @"message";
+    // youtube
+    // youtu.be
+    NSRange yt = [_message.text rangeOfString:@"youtu"];
+    if (!NSEqualRanges(yt, NSMakeRange(NSNotFound, 0))) {
+      messageType = @"youtube";
+    } else {
+      messageType = @"link";
+    }
+      
   }
   
   // Send it asynchronously and dismiss composer
