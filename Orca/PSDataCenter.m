@@ -19,22 +19,16 @@
 @implementation PSDataCenter
 
 @synthesize delegate = _delegate;
-@synthesize pendingRequests = _pendingRequests;
 
 - (id)init {
   self = [super init];
   if (self) {
-    _pendingRequests = [[NSMutableArray alloc] initWithCapacity:1];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(coreDataDidReset) name:kCoreDataDidReset object:nil];
   }
   return self;
 }
 
 - (void)coreDataDidReset {
-  for (ASIHTTPRequest *request in _pendingRequests) {
-    [request clearDelegatesAndCancel];
-  }
-  [_pendingRequests removeAllObjects];
 }
 
 #pragma mark -
@@ -63,50 +57,6 @@
 
 #pragma mark -
 #pragma mark Send Operation
-- (void)sendFacebookBatchRequestWithParams:(NSDictionary *)params andUserInfo:(NSDictionary *)userInfo {
-  // Read any optional params
-  NSMutableDictionary *requestParams = [NSMutableDictionary dictionaryWithDictionary:params];
-  
-  // Send access_token as a parameter if exists
-  NSString *accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
-  if (accessToken) {
-    [requestParams setValue:accessToken forKey:@"access_token"];
-  }
-  
-  __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:FB_GRAPH]];
-  request.requestMethod = @"POST";
-  
-  // Allow GZIP
-  request.allowCompressedResponse = YES;
-  
-  // Request userInfo
-  request.userInfo = userInfo;
-  
-  // POST parameters
-  request.postBody = [self buildRequestParamsData:requestParams];
-  request.postLength = [request.postBody length];
-  
-  [request addRequestHeader:@"Accept" value:@"application/json"];
-  
-  // Request Completion Block
-  [request setCompletionBlock:^{
-    [self dataCenterRequestFinished:request];
-    
-    // Remove request from pendingRequests
-    [_pendingRequests removeObject:request];
-  }];
-  [request setFailedBlock:^{
-    [self dataCenterRequestFailed:request];
-    
-    // Remove request from pendingRequests
-    [_pendingRequests removeObject:request];
-  }];
-  
-  // Start the Request
-  [_pendingRequests addObject:request];
-  [request startAsynchronous];
-}
-
 - (void)sendRequestWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params andUserInfo:(NSDictionary *)userInfo {
   // Read any optional params
   NSMutableDictionary *requestParams = [NSMutableDictionary dictionaryWithDictionary:params];
@@ -169,22 +119,16 @@
   // Request Completion Block
   [request setCompletionBlock:^{
     [self dataCenterRequestFinished:request];
-    
-    // Remove request from pendingRequests
-    [_pendingRequests removeObject:request];
   }];
   [request setFailedBlock:^{
     [self dataCenterRequestFailed:request];
-    
-    // Remove request from pendingRequests
-    [_pendingRequests removeObject:request];
   }];
   
   // Start the Request
-  [_pendingRequests addObject:request];
-  [request startAsynchronous];
+  [[PSNetworkQueue sharedQueue] addOperation:request];
 }
 
+#pragma mark - Send FORM POST
 - (void)sendFormRequestWithURL:(NSURL *)url andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params andFile:(NSDictionary *)file andUserInfo:(NSDictionary *)userInfo {
   NSMutableDictionary *requestParams = [NSMutableDictionary dictionaryWithDictionary:params];
   
@@ -244,23 +188,16 @@
   // Request Completion Block
   [request setCompletionBlock:^{
     [self dataCenterRequestFinished:request];
-    
-    // Remove request from pendingRequests
-    [_pendingRequests removeObject:request];
   }];
   [request setFailedBlock:^{
     [self dataCenterRequestFailed:request];
-    
-    // Remove request from pendingRequests
-    [_pendingRequests removeObject:request];
   }];
   
   // Start the Request
-  [_pendingRequests addObject:request];
-  [request startAsynchronous];
+  [[PSNetworkQueue sharedQueue] addOperation:request];
 }
 
-#pragma mark - S3
+#pragma mark - Send ASIS3 AWS S3
 - (void)sendS3RequestWithData:(NSData *)data forBucket:(NSString *)bucket forKey:(NSString *)key andUserInfo:(NSDictionary *)userInfo {
   // Prepare request
   __block ASIS3ObjectRequest *request = [ASIS3ObjectRequest PUTRequestForData:data withBucket:bucket key:key];
@@ -271,23 +208,17 @@
   // Request Completion Block
   [request setCompletionBlock:^{
     [self dataCenterRequestFinished:request];
-    
-    // Remove request from pendingRequests
-    [_pendingRequests removeObject:request];
   }];
   
   [request setFailedBlock:^{
     [self dataCenterRequestFailed:request];
-    
-    // Remove request from pendingRequests
-    [_pendingRequests removeObject:request];
   }];
   
   // Start the Request
-  [_pendingRequests addObject:request];
-  [request startAsynchronous];
+  [[PSNetworkQueue sharedQueue] addOperation:request];
 }
 
+#pragma mark - Send AWS Custom (no ASIS3)
 - (void)sendAWSS3RequestWithData:(NSData *)data andUserInfo:(NSDictionary *)userInfo {
   NSString *sequence = [userInfo objectForKey:@"sequence"];
   NSString *resource = [NSString stringWithFormat:@"%@/%@.jpg", S3_BUCKET, sequence];
@@ -322,20 +253,51 @@
     [self dataCenterRequestFinished:request];
     // No need to notify, we've already faked the cache
 //    [[NSNotificationCenter defaultCenter] postNotificationName:kMessageCellReloadPhoto object:nil userInfo:[NSDictionary dictionaryWithObject:sequence forKey:@"sequence"]];
-    
-    // Remove request from pendingRequests
-    [_pendingRequests removeObject:request];
   }];
   [request setFailedBlock:^{
     [self dataCenterRequestFailed:request];
-    
-    // Remove request from pendingRequests
-    [_pendingRequests removeObject:request];
   }];
   
   // Start the Request
-  [_pendingRequests addObject:request];
-  [request startAsynchronous];
+  [[PSNetworkQueue sharedQueue] addOperation:request];
+}
+
+#pragma mark - Send Facebook Batch
+- (void)sendFacebookBatchRequestWithParams:(NSDictionary *)params andUserInfo:(NSDictionary *)userInfo {
+  // Read any optional params
+  NSMutableDictionary *requestParams = [NSMutableDictionary dictionaryWithDictionary:params];
+  
+  // Send access_token as a parameter if exists
+  NSString *accessToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"facebookAccessToken"];
+  if (accessToken) {
+    [requestParams setValue:accessToken forKey:@"access_token"];
+  }
+  
+  __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:FB_GRAPH]];
+  request.requestMethod = @"POST";
+  
+  // Allow GZIP
+  request.allowCompressedResponse = YES;
+  
+  // Request userInfo
+  request.userInfo = userInfo;
+  
+  // POST parameters
+  request.postBody = [self buildRequestParamsData:requestParams];
+  request.postLength = [request.postBody length];
+  
+  [request addRequestHeader:@"Accept" value:@"application/json"];
+  
+  // Request Completion Block
+  [request setCompletionBlock:^{
+    [self dataCenterRequestFinished:request];
+  }];
+  [request setFailedBlock:^{
+    [self dataCenterRequestFailed:request];
+  }];
+  
+  // Start the Request
+  [[PSNetworkQueue sharedQueue] addOperation:request];
 }
 
 #pragma mark -
@@ -438,11 +400,6 @@
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kCoreDataDidReset object:nil];
-  for (ASIHTTPRequest *request in _pendingRequests) {
-    [request clearDelegatesAndCancel];
-  }
-  [_pendingRequests removeAllObjects];
-  RELEASE_SAFELY(_pendingRequests);
   [super dealloc];
 }
 

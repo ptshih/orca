@@ -13,6 +13,7 @@
 #import "ASIS3Request.h"
 #import "ASIS3ObjectRequest.h"
 #import "ASIFormDataRequest.h"
+#import "PSNetworkQueue.h"
 #import "JSON.h"
 #import "JSONKit.h"
 #import "PSCoreDataStack.h"
@@ -22,21 +23,19 @@
 
 @interface PSDataCenter : PSObject <PSDataCenterDelegate> {
   id <PSDataCenterDelegate> _delegate;
-  NSMutableArray *_pendingRequests;
 }
 
 @property (nonatomic, assign) id <PSDataCenterDelegate> delegate;
-@property (nonatomic, retain) NSMutableArray *pendingRequests;
 
 /**
  Send network operation to server (GET/POST)
- 
  By default this will set all required headers
  
- url - required defined in Constants.h
- method - optional (defaults to GET) defined in Constants.h (should be GET or POST)
- headers - optional
- params - optional
+ @param url api endpoint to send request (required)
+ @param method http method (default GET) (optional)
+ @param headers
+ @param params
+ @param userInfo
  */
 - (void)sendRequestWithURL:(NSURL *)url andMethod:(NSString *)method andHeaders:(NSDictionary *)headers andParams:(NSDictionary *)params andUserInfo:(NSDictionary *)userInfo;
 

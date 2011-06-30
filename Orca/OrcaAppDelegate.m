@@ -204,7 +204,7 @@
   }];
   
   // Start the Request
-  [request startAsynchronous];
+  [[PSNetworkQueue sharedQueue] addOperation:request];
 }
 
 - (void)serializeMeWithResponse:(id)response {
@@ -268,7 +268,7 @@
   }];
   
   // Start the Request
-  [request startAsynchronous];
+  [[PSNetworkQueue sharedQueue] addOperation:request];
 }
 
 #pragma mark Register
@@ -316,7 +316,7 @@
   }];
   
   // Start the Request
-  [request startAsynchronous];
+  [[PSNetworkQueue sharedQueue] addOperation:request];
 }
 
 - (void)launchFinished {
@@ -369,7 +369,7 @@
   }];
   
   // Start the Request
-  [request startAsynchronous];
+  [[PSNetworkQueue sharedQueue] addOperation:request];
 }
 
 - (void)resetSessionKey {
