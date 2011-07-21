@@ -14,6 +14,10 @@
   #include "TargetConditionals.h"
 #endif
 
+#if NS_BLOCKS_AVAILABLE
+typedef void (^PSVoidBlock)(void);
+#endif
+
 // Core Data
 #define CORE_DATA_SQL_FILE @"orca.sqlite"
 #define CORE_DATA_MOM @"Orca"

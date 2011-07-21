@@ -40,7 +40,7 @@
 - (void)send;
 - (void)cancel;
 
-- (void)sendS3WithSequence:(NSString *)sequence;
+//- (void)sendS3WithSequence:(NSString *)sequence;
 
 - (void)moveTextViewForKeyboard:(NSNotification*)aNotification up:(BOOL)up;
 

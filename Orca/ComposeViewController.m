@@ -164,7 +164,7 @@ static UIImage *_imageBorderImage = nil;
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-//  [[ComposeDataCenter sharedInstance] setDelegate:self];
+  [[ComposeDataCenter defaultCenter] setDelegate:self];
   
   // Subclass should implement
   [_message becomeFirstResponder];
@@ -172,7 +172,7 @@ static UIImage *_imageBorderImage = nil;
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
-//  [[ComposeDataCenter sharedInstance] setDelegate:nil];
+  [[ComposeDataCenter defaultCenter] setDelegate:nil];
 }
 
 - (void)attachPhoto {
@@ -244,12 +244,21 @@ static UIImage *_imageBorderImage = nil;
   [_message resignFirstResponder];
 }
 
-- (void)sendS3WithSequence:(NSString *)sequence {  
-  NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-  [userInfo setValue:sequence forKey:@"sequence"];
+//- (void)sendS3WithSequence:(NSString *)sequence {  
+//  NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+//  [userInfo setValue:sequence forKey:@"sequence"];
+//  
+//  NSData *imageData = UIImageJPEGRepresentation(_pickedImage, 1.0);
+//  [[ComposeDataCenter defaultCenter] sendAWSS3RequestWithData:imageData andUserInfo:userInfo];
+//}
+
+#pragma mark - PSDataCenterDelegate
+- (void)dataCenterDidFinish:(ASIHTTPRequest *)request withResponse:(id)response {
   
-  NSData *imageData = UIImageJPEGRepresentation(_pickedImage, 1.0);
-  [[ComposeDataCenter defaultCenter] sendAWSS3RequestWithData:imageData andUserInfo:userInfo];
+}
+
+- (void)dataCenterDidFail:(ASIHTTPRequest *)request withError:(NSError *)error {
+  
 }
 
 #pragma mark -

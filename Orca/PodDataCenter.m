@@ -19,6 +19,7 @@ static dispatch_queue_t _coreDataSerializationQueue = nil;
   _coreDataSerializationQueue = dispatch_queue_create("com.sevenminutelabs.podCoreDataSerializationQueue", NULL);
 }
 
+#pragma mark - Shared Instance
 + (PodDataCenter *)defaultCenter {
   static PodDataCenter *defaultCenter = nil;
   if (!defaultCenter) {
@@ -27,18 +28,20 @@ static dispatch_queue_t _coreDataSerializationQueue = nil;
   return defaultCenter;
 }
 
-- (id)init {
-  self = [super init];
-  if (self) {
-  }
-  return self;
-}
-
 #pragma mark -
 #pragma mark Prepare Request
 - (void)getPods {
-  NSURL *podsURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/pods", API_BASE_URL]];
-  [self sendRequestWithURL:podsURL andMethod:GET andHeaders:nil andParams:nil andUserInfo:nil];
+  NSURL *podsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/pods", API_BASE_URL]];
+  
+  // Completion/Failed Blocks
+  PSVoidBlock completionBlock = ^{
+    
+  };
+  PSVoidBlock failedBlock = ^{
+    
+  };
+  
+  [self sendRequestWithURL:podsUrl andMethod:GET andHeaders:nil andParams:nil andUserInfo:nil withCompletionBlock:completionBlock andFailedBlock:failedBlock];
 }
 
 - (void)getPodsFromFixtures {
@@ -162,10 +165,6 @@ static dispatch_queue_t _coreDataSerializationQueue = nil;
   if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFail:withError:)]) {
     [_delegate performSelector:@selector(dataCenterDidFail:withError:) withObject:request withObject:[request error]];
   } 
-}
-
-- (void)dealloc {
-  [super dealloc];
 }
 
 @end

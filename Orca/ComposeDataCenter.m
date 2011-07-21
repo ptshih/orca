@@ -79,11 +79,17 @@
 }
 
 - (void)dataCenterRequestFinished:(ASIHTTPRequest *)request {
-  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadMessageController object:nil];
+  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFinish:withResponse:)]) {
+    [_delegate performSelector:@selector(dataCenterDidFinish:withResponse:) withObject:request withObject:nil];
+  }
+//  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadMessageController object:nil];
 }
 
 - (void)dataCenterRequestFailed:(ASIHTTPRequest *)request {
-  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadMessageController object:nil];
+  if (_delegate && [_delegate respondsToSelector:@selector(dataCenterDidFail:withError:)]) {
+    [_delegate performSelector:@selector(dataCenterDidFail:withError:) withObject:request withObject:[request error]];
+  }
+//  [[NSNotificationCenter defaultCenter] postNotificationName:kReloadMessageController object:nil];
 }
 
 @end

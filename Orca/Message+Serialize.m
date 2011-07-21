@@ -39,7 +39,8 @@
 - (Message *)updateMessageWithDictionary:(NSDictionary *)dictionary {
   if (dictionary) {
 
-    NSDate *existingTimestamp = self.timestamp;
+#warning debug always overwrite
+    NSDate *existingTimestamp = [NSDate distantPast];
     NSDate *newTimestamp = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKey:@"timestamp"] longLongValue]];
     
     if (![existingTimestamp isEqualToDate:newTimestamp] || ![self.id notNull]) {

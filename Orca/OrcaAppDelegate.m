@@ -285,7 +285,7 @@
   
   __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:registerURL];
   request.requestMethod = @"POST";
-  request.postBody = [[LoginDataCenter defaultCenter] buildRequestParamsData:params];
+  request.postBody = [NSMutableData dataFromRequestParams:params];
   request.postLength = [request.postBody length];
   
   // Accept JSON
@@ -346,7 +346,7 @@
   
   __block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:registerPushURL];
   request.requestMethod = @"POST";
-  request.postBody = [[LoginDataCenter defaultCenter] buildRequestParamsData:params];
+  request.postBody = [NSMutableData dataFromRequestParams:params];
   request.postLength = [request.postBody length];
   
   // Accept JSON

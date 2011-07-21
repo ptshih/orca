@@ -99,6 +99,10 @@
 		25197F3B13A49147007025A6 /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25197F3A13A49147007025A6 /* MoreViewController.m */; };
 		2538FF26133AD07100ACE127 /* pods.json in Resources */ = {isa = PBXBuildFile; fileRef = 2538FF25133AD07100ACE127 /* pods.json */; };
 		2538FFBD133C90A100ACE127 /* photo_frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 2538FFBC133C90A100ACE127 /* photo_frame.png */; };
+		253E20C213BD3F6E007AD367 /* PSDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 253E20BF13BD3F6A007AD367 /* PSDataCenter.m */; };
+		253E20C313BD3F6E007AD367 /* PSToastCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 253E20C113BD3F6C007AD367 /* PSToastCenter.m */; };
+		253E20C713BD4272007AD367 /* NSMutableData+SML.m in Sources */ = {isa = PBXBuildFile; fileRef = 253E20C613BD4271007AD367 /* NSMutableData+SML.m */; };
+		253E20CA13BD4334007AD367 /* NSDictionary+SML.m in Sources */ = {isa = PBXBuildFile; fileRef = 253E20C913BD4332007AD367 /* NSDictionary+SML.m */; };
 		254097411383517900EBE848 /* searchbar_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 2540973F1383517900EBE848 /* searchbar_bg.png */; };
 		254097421383517900EBE848 /* searchbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 254097401383517900EBE848 /* searchbar_bg@2x.png */; };
 		254097451383527600EBE848 /* UISearchBar+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 254097441383527600EBE848 /* UISearchBar+Custom.m */; };
@@ -238,7 +242,6 @@
 		25FB8B50133A038D00C130A8 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B3F133A038D00C130A8 /* SBJsonWriter.m */; };
 		25FB8B55133A03A100C130A8 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B54133A03A100C130A8 /* Appirater.m */; };
 		25FB8B59133A03AD00C130A8 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B58133A03AD00C130A8 /* EGORefreshTableHeaderView.m */; };
-		25FB8B9A133A069E00C130A8 /* PSDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8B98133A069E00C130A8 /* PSDataCenter.m */; };
 		25FB8BB5133A0D3D00C130A8 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BB4133A0D3D00C130A8 /* LoginViewController.m */; };
 		25FB8BD0133A1B9500C130A8 /* InitialDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */; };
 		25FB8BE2133AA6C700C130A8 /* CardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FB8BDF133AA6AB00C130A8 /* CardViewController.m */; };
@@ -353,6 +356,15 @@
 		25197F3A13A49147007025A6 /* MoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
 		2538FF25133AD07100ACE127 /* pods.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pods.json; sourceTree = "<group>"; };
 		2538FFBC133C90A100ACE127 /* photo_frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_frame.png; sourceTree = "<group>"; };
+		253E20BE13BD3F69007AD367 /* PSDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSDataCenter.h; sourceTree = "<group>"; };
+		253E20BF13BD3F6A007AD367 /* PSDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSDataCenter.m; sourceTree = "<group>"; };
+		253E20C013BD3F6B007AD367 /* PSToastCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSToastCenter.h; sourceTree = "<group>"; };
+		253E20C113BD3F6C007AD367 /* PSToastCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSToastCenter.m; sourceTree = "<group>"; };
+		253E20C413BD3FA7007AD367 /* PSDataCenterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSDataCenterDelegate.h; sourceTree = "<group>"; };
+		253E20C513BD4270007AD367 /* NSMutableData+SML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableData+SML.h"; sourceTree = "<group>"; };
+		253E20C613BD4271007AD367 /* NSMutableData+SML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableData+SML.m"; sourceTree = "<group>"; };
+		253E20C813BD4330007AD367 /* NSDictionary+SML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+SML.h"; sourceTree = "<group>"; };
+		253E20C913BD4332007AD367 /* NSDictionary+SML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+SML.m"; sourceTree = "<group>"; };
 		2540973F1383517900EBE848 /* searchbar_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchbar_bg.png; sourceTree = "<group>"; };
 		254097401383517900EBE848 /* searchbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchbar_bg@2x.png"; sourceTree = "<group>"; };
 		254097431383527600EBE848 /* UISearchBar+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISearchBar+Custom.h"; sourceTree = "<group>"; };
@@ -602,9 +614,6 @@
 		25FB8B54133A03A100C130A8 /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
 		25FB8B57133A03AD00C130A8 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		25FB8B58133A03AD00C130A8 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
-		25FB8B97133A069E00C130A8 /* PSDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSDataCenter.h; sourceTree = "<group>"; };
-		25FB8B98133A069E00C130A8 /* PSDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSDataCenter.m; sourceTree = "<group>"; };
-		25FB8B99133A069E00C130A8 /* PSDataCenterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSDataCenterDelegate.h; sourceTree = "<group>"; };
 		25FB8BB3133A0D3C00C130A8 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		25FB8BB4133A0D3D00C130A8 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		25FB8BCF133A1B9400C130A8 /* InitialDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InitialDefaults.plist; sourceTree = "<group>"; };
@@ -852,6 +861,10 @@
 			children = (
 				2570A41313B4904E006CBCFE /* NSArray+SML.h */,
 				2570A41413B4904E006CBCFE /* NSArray+SML.m */,
+				253E20C813BD4330007AD367 /* NSDictionary+SML.h */,
+				253E20C913BD4332007AD367 /* NSDictionary+SML.m */,
+				253E20C513BD4270007AD367 /* NSMutableData+SML.h */,
+				253E20C613BD4271007AD367 /* NSMutableData+SML.m */,
 				2570A41513B4904E006CBCFE /* NSData+SML.h */,
 				2570A41613B4904E006CBCFE /* NSData+SML.m */,
 				2570A41713B4904E006CBCFE /* NSDate+Helper.h */,
@@ -864,6 +877,11 @@
 				2570A41E13B4904E006CBCFE /* NSString+SML.m */,
 				2570A41F13B4904E006CBCFE /* NSURL+SML.h */,
 				2570A42013B4904E006CBCFE /* NSURL+SML.m */,
+				253E20BE13BD3F69007AD367 /* PSDataCenter.h */,
+				253E20BF13BD3F6A007AD367 /* PSDataCenter.m */,
+				253E20C413BD3FA7007AD367 /* PSDataCenterDelegate.h */,
+				253E20C013BD3F6B007AD367 /* PSToastCenter.h */,
+				253E20C113BD3F6C007AD367 /* PSToastCenter.m */,
 				2570A42113B4904E006CBCFE /* PSAlertCenter.h */,
 				2570A42213B4904E006CBCFE /* PSAlertCenter.m */,
 				2570A42313B4904E006CBCFE /* PSCell.h */,
@@ -1223,8 +1241,6 @@
 		25FB8B96133A065200C130A8 /* DataCenters */ = {
 			isa = PBXGroup;
 			children = (
-				25FB8B97133A069E00C130A8 /* PSDataCenter.h */,
-				25FB8B98133A069E00C130A8 /* PSDataCenter.m */,
 				25EFD3FD1343E18D000108B8 /* LoginDataCenter.h */,
 				25EFD3FE1343E18E000108B8 /* LoginDataCenter.m */,
 				2511A8DE13657BE500C9CF9A /* ComposeDataCenter.h */,
@@ -1266,7 +1282,6 @@
 			isa = PBXGroup;
 			children = (
 				25FB8BD3133A1DE400C130A8 /* LoginDelegate.h */,
-				25FB8B99133A069E00C130A8 /* PSDataCenterDelegate.h */,
 				25FB8BE9133AA7C400C130A8 /* HeaderTabViewDelegate.h */,
 				250B31AF133EC86A0011EEDD /* ComposeDelegate.h */,
 				25961C9E134D46CD00A3D4CD /* MeDelegate.h */,
@@ -1499,7 +1514,6 @@
 				25FB8B50133A038D00C130A8 /* SBJsonWriter.m in Sources */,
 				25FB8B55133A03A100C130A8 /* Appirater.m in Sources */,
 				25FB8B59133A03AD00C130A8 /* EGORefreshTableHeaderView.m in Sources */,
-				25FB8B9A133A069E00C130A8 /* PSDataCenter.m in Sources */,
 				25FB8BB5133A0D3D00C130A8 /* LoginViewController.m in Sources */,
 				25FB8BE2133AA6C700C130A8 /* CardViewController.m in Sources */,
 				25FB8BE3133AA6C700C130A8 /* CardTableViewController.m in Sources */,
@@ -1591,6 +1605,10 @@
 				256644AB13B6D17300B791A5 /* ASIS3Request.m in Sources */,
 				256644AC13B6D17300B791A5 /* ASIS3ServiceRequest.m in Sources */,
 				250BA4D513B6FCC1000FF9AA /* Pod.m in Sources */,
+				253E20C213BD3F6E007AD367 /* PSDataCenter.m in Sources */,
+				253E20C313BD3F6E007AD367 /* PSToastCenter.m in Sources */,
+				253E20C713BD4272007AD367 /* NSMutableData+SML.m in Sources */,
+				253E20CA13BD4334007AD367 /* NSDictionary+SML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

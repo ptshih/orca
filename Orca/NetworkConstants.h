@@ -46,6 +46,9 @@
   #define MESSAGES_ENDPOINT @"messages"
 #endif
 
+// DIFFBOT
+#define DIFFBOT_KEY @"965862e81bea448ffa44d8c902195820"
+
 // AWS S3
 #define S3_KEY @"AKIAJRFSK3RWQ7XLGNFA"
 #define S3_SECRET_KEY @"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"
